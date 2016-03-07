@@ -110,27 +110,104 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp" />
 
-                    <TableLayout
-                        android:id="@+id/test5_tableLayout2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-
-                    <TableLayout
-                        android:id="@+id/test5_tableLayout3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-
-                    <TableLayout
-                        android:id="@+id/test5_tableLayout4"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-
-                    <TableLayout
-                        android:id="@+id/test5_tableLayout5"
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="5dp" />
+                        android:orientation="vertical">
 
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                            <TableLayout
+                                android:id="@+id/test5_tableLayout2_1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+
+                            <TableLayout
+                                android:id="@+id/test5_tableLayout2_2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+
+                            <TableLayout
+                                android:id="@+id/test5_tableLayout2_3"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+                        </LinearLayout>
+
+                        <TableLayout
+                            android:id="@+id/test5_tableLayout2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TableLayout
+                            android:id="@+id/test5_tableLayout3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                        <TableLayout
+                            android:id="@+id/test5_tableLayout3_1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                            <TableLayout
+                                android:id="@+id/test5_tableLayout4_1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+
+                            <TableLayout
+                                android:id="@+id/test5_tableLayout4_2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+
+                            <TableLayout
+                                android:id="@+id/test5_tableLayout4_3"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+                        </LinearLayout>
+
+                        <TableLayout
+                            android:id="@+id/test5_tableLayout4"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TableLayout
+                            android:id="@+id/test5_tableLayout5"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="5dp" />
+
+                        <TableLayout
+                            android:id="@+id/test5_tableLayout5_1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="5dp" />
+                    </LinearLayout>
                 </LinearLayout>
 
             </HorizontalScrollView>
