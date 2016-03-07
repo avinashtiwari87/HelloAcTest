@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/test_table_1_header_l_ll"
+        style="@style/TextAppearance.AppCompat.header_top"
+        android:background="@color/black_overlay">
+
+        <TextView
+            style="@style/TextAppearance.AppCompat.header_text"
+            android:text="@string/header_title" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/instrument_and_username_layout"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_marginTop="10dp"
+        android:weightSum="2"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/instrument_used"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:textStyle="bold"
+                android:textColor="@android:color/black"
+                android:text="@string/instrument_used_test1" />
+
+            <TextView
+                android:id="@+id/instrument_no"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_toRightOf="@+id/instrument_used"
+                android:layout_marginLeft="5dp"
+                android:textColor="#000000"
+                android:text="@string/instrument_serial_no_details" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/testcunducted_by"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:textStyle="bold"
+                android:textColor="@android:color/black"
+                android:text="@string/tes_cunducted_buy_test1" />
+
+            <TextView
+                android:id="@+id/tester_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:textColor="#000000"
+                android:layout_toRightOf="@+id/testcunducted_by"
+                android:text="@string/header_title_result" />
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/test_table_1_header_2_ll"
+        style="@style/TextAppearance.AppCompat.header_top"
+        android:layout_marginTop="10dp"
+        android:background="@color/black_overlay">
+
+        <TextView
+            style="@style/TextAppearance.AppCompat.header_text"
+            android:text="@string/header_title_result" />
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <HorizontalScrollView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TableLayout
+                        android:id="@+id/tableLayout1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"></TableLayout>
+
+                    <TableLayout
+                        android:id="@+id/tableLayout2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignLeft="@+id/tableLayout1"></TableLayout>
+
+                    <TableLayout
+                        android:id="@+id/tableLayout3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"></TableLayout>
+
+                    <TableLayout
+                        android:id="@+id/tableLayout4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="5dp"></TableLayout>
+                </LinearLayout>
+            </HorizontalScrollView>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

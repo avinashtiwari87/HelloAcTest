@@ -1,0 +1,1463 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/test_entry_header"
+        style="@style/TextAppearance.AppCompat.header_top"
+        android:background="@color/black_overlay"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp">
+
+        <TextView
+            style="@style/TextAppearance.AppCompat.header_text"
+            android:text="@string/test_entry_header" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/test_entry_detail"
+        style="@style/TextAppearance.AppCompat.header_top"
+        android:background="@drawable/border1"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp">
+
+        <TextView
+            style="@style/TextAppearance.AppCompat.header_text"
+            android:text="@string/test_entry" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/border1">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="30"
+            android:background="@drawable/border1"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/TextAppearance.AppCompat.header_right"
+                android:ellipsize="end"
+                android:maxLines="3"
+                android:singleLine="false"
+                android:text="@string/customer" />
+
+            <TextView
+                style="@style/TextAppearance.AppCompat.header_right"
+                android:ellipsize="end"
+                android:maxLines="3"
+                android:singleLine="false"
+                android:text="   " />
+
+            <TextView
+                style="@style/TextAppearance.AppCompat.header_right"
+                android:ellipsize="end"
+                android:maxLines="3"
+                android:singleLine="false"
+                android:text="   " />
+
+            <TextView
+                style="@style/TextAppearance.AppCompat.header_right"
+                android:ellipsize="end"
+                android:maxLines="3"
+                android:singleLine="false"
+                android:text="@string/block_plant_name" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="30"
+            android:background="@drawable/border1"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/TextAppearance.AppCompat.header_right"
+                android:ellipsize="end"
+                android:maxLines="3"
+                android:singleLine="false"
+                android:text="@string/service_engineer" />
+
+            <TextView
+                style="@style/TextAppearance.AppCompat.header_right"
+                android:ellipsize="end"
+                android:maxLines="3"
+                android:singleLine="false"
+                android:text="@string/time_in" />
+
+            <TextView
+                style="@style/TextAppearance.AppCompat.header_right"
+                android:ellipsize="end"
+                android:maxLines="3"
+                android:singleLine="false"
+                android:text="@string/time_out" />
+
+            <TextView
+                style="@style/TextAppearance.AppCompat.header_right"
+                android:ellipsize="end"
+                android:maxLines="3"
+                android:singleLine="false"
+                android:text="   " />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="30"
+            android:background="@drawable/border1"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/TextAppearance.AppCompat.header_right"
+                android:text="@string/sr_no" />
+
+            <TextView
+                style="@style/TextAppearance.AppCompat.header_right"
+                android:text="@string/date" />
+
+            <TextView
+                style="@style/TextAppearance.AppCompat.header_right"
+                android:text="@string/customer_po" />
+
+            <TextView
+                style="@style/TextAppearance.AppCompat.header_right"
+                android:text="@string/work_order" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/test_detail"
+        style="@style/TextAppearance.AppCompat.header_top"
+        android:background="@color/black_overlay">
+
+        <TextView
+            style="@style/TextAppearance.AppCompat.header_text"
+            android:text="@string/test_details" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/border1"
+        android:padding="0dp">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/border1"
+            android:orientation="vertical"
+            android:padding="0dp">
+
+            <TextView
+                style="@style/TextAppearance.AppCompat.header_left"
+                android:layout_gravity="center"
+                android:text="@string/sr_nl" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:background="@color/dark_gray" />
+
+            <TextView
+                style="@style/TextAppearance.AppCompat.header_right"
+                android:layout_height="32dp"
+                android:layout_gravity="center"
+                android:text=" 1 " />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:background="@color/dark_gray" />
+
+            <TextView
+                style="@style/TextAppearance.AppCompat.header_right"
+                android:layout_height="32dp"
+                android:layout_gravity="center"
+                android:text=" 2 " />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:background="@color/dark_gray" />
+
+            <TextView
+                style="@style/TextAppearance.AppCompat.header_right"
+                android:layout_height="32dp"
+                android:layout_gravity="center"
+                android:text=" 3 " />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:background="@color/dark_gray" />
+
+            <TextView
+                style="@style/TextAppearance.AppCompat.header_right"
+                android:layout_height="32dp"
+                android:layout_gravity="center"
+                android:text=" 4 " />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:background="@color/dark_gray" />
+
+            <TextView
+                style="@style/TextAppearance.AppCompat.header_right"
+                android:layout_height="32dp"
+                android:layout_gravity="center"
+                android:text=" 5 " />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:background="@color/dark_gray" />
+
+            <TextView
+                style="@style/TextAppearance.AppCompat.header_right"
+                android:layout_height="32dp"
+                android:layout_gravity="center"
+                android:text=" 6 " />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:background="@color/dark_gray" />
+
+            <TextView
+                style="@style/TextAppearance.AppCompat.header_right"
+                android:layout_height="32dp"
+                android:layout_gravity="center"
+                android:text=" 7 " />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:background="@color/dark_gray" />
+
+            <TextView
+                style="@style/TextAppearance.AppCompat.header_right"
+                android:layout_height="32dp"
+                android:layout_gravity="center"
+                android:text=" 8 " />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:background="@color/dark_gray" />
+
+            <TextView
+                style="@style/TextAppearance.AppCompat.header_right"
+                android:layout_height="32dp"
+                android:layout_gravity="center"
+                android:text=" 9 " />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:background="@color/dark_gray" />
+
+            <TextView
+                style="@style/TextAppearance.AppCompat.header_right"
+                android:layout_height="32dp"
+                android:layout_gravity="center"
+                android:text=" 10 " />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:background="@color/dark_gray" />
+
+            <TextView
+                style="@style/TextAppearance.AppCompat.header_right"
+                android:layout_height="32dp"
+                android:layout_gravity="center"
+                android:text=" 11 " />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:background="@color/dark_gray" />
+
+            <TextView
+                style="@style/TextAppearance.AppCompat.header_right"
+                android:layout_height="32dp"
+                android:layout_gravity="center"
+                android:text=" 12 " />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:background="@color/dark_gray" />
+
+            <TextView
+                style="@style/TextAppearance.AppCompat.header_right"
+                android:layout_height="32dp"
+                android:layout_gravity="center"
+                android:text=" 13 " />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:background="@color/dark_gray" />
+
+            <TextView
+                style="@style/TextAppearance.AppCompat.header_right"
+                android:layout_height="32dp"
+                android:layout_gravity="center"
+                android:text=" 14 " />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:background="@color/dark_gray" />
+
+            <TextView
+                style="@style/TextAppearance.AppCompat.header_right"
+                android:layout_height="32dp"
+                android:layout_gravity="center"
+                android:text=" 15 " />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="6"
+            android:background="@drawable/border1"
+            android:orientation="vertical"
+            android:padding="0dp">
+
+            <TextView
+                style="@style/TextAppearance.AppCompat.header_left"
+                android:layout_gravity="center"
+                android:text="@string/type_of_test" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:background="@color/dark_gray" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:weightSum="5">
+
+                <TextView
+                    style="@style/TextAppearance.AppCompat.header_right"
+                    android:layout_width="0dp"
+                    android:layout_weight="4.5"
+                    android:paddingLeft="25dp"
+                    android:text="@string/avt_anemometer" />
+
+                <CheckBox
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_weight="1"
+                    android:checked="true" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:background="@color/dark_gray" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:weightSum="5">
+
+                <TextView
+                    style="@style/TextAppearance.AppCompat.header_right"
+                    android:layout_width="0dp"
+                    android:layout_weight="4.5"
+                    android:paddingLeft="25dp"
+                    android:text="@string/avt_anemometer" />
+
+                <CheckBox
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_weight="1" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:background="@color/dark_gray" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:weightSum="5">
+
+                <TextView
+                    style="@style/TextAppearance.AppCompat.header_right"
+                    android:layout_width="0dp"
+                    android:layout_weight="4.5"
+                    android:paddingLeft="25dp"
+                    android:text="@string/avt_anemometer" />
+
+                <CheckBox
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_weight="1"
+                    android:checked="true" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:background="@color/dark_gray" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:weightSum="5">
+
+                <TextView
+                    style="@style/TextAppearance.AppCompat.header_right"
+                    android:layout_width="0dp"
+                    android:layout_weight="4.5"
+                    android:paddingLeft="25dp"
+                    android:text="@string/avt_anemometer" />
+
+                <CheckBox
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_weight="1" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:background="@color/dark_gray" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:weightSum="5">
+
+                <TextView
+                    style="@style/TextAppearance.AppCompat.header_right"
+                    android:layout_width="0dp"
+                    android:layout_weight="4.5"
+                    android:paddingLeft="25dp"
+                    android:text="@string/avt_anemometer" />
+
+                <CheckBox
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_weight="1"
+                    android:checked="true" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:background="@color/dark_gray" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:weightSum="5">
+
+                <TextView
+                    style="@style/TextAppearance.AppCompat.header_right"
+                    android:layout_width="0dp"
+                    android:layout_weight="4.5"
+                    android:paddingLeft="25dp"
+                    android:text="@string/avt_anemometer" />
+
+                <CheckBox
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_weight="1" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:background="@color/dark_gray" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:weightSum="5">
+
+                <TextView
+                    style="@style/TextAppearance.AppCompat.header_right"
+                    android:layout_width="0dp"
+                    android:layout_weight="4.5"
+                    android:paddingLeft="25dp"
+                    android:text="@string/avt_anemometer" />
+
+                <CheckBox
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_weight="1" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:background="@color/dark_gray" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:weightSum="5">
+
+                <TextView
+                    style="@style/TextAppearance.AppCompat.header_right"
+                    android:layout_width="0dp"
+                    android:layout_weight="4.5"
+                    android:paddingLeft="25dp"
+                    android:text="@string/avt_anemometer" />
+
+                <CheckBox
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_weight="1" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:background="@color/dark_gray" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:weightSum="5">
+
+                <TextView
+                    style="@style/TextAppearance.AppCompat.header_right"
+                    android:layout_width="0dp"
+                    android:layout_weight="4.5"
+                    android:paddingLeft="25dp"
+                    android:text="@string/avt_anemometer" />
+
+                <CheckBox
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_weight="1" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:background="@color/dark_gray" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:weightSum="5">
+
+                <TextView
+                    style="@style/TextAppearance.AppCompat.header_right"
+                    android:layout_width="0dp"
+                    android:layout_weight="4.5"
+                    android:paddingLeft="25dp"
+                    android:text="@string/avt_anemometer" />
+
+                <CheckBox
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_weight="1" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:background="@color/dark_gray" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:weightSum="5">
+
+                <TextView
+                    style="@style/TextAppearance.AppCompat.header_right"
+                    android:layout_width="0dp"
+                    android:layout_weight="4.5"
+                    android:paddingLeft="25dp"
+                    android:text="@string/avt_anemometer" />
+
+                <CheckBox
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_weight="1" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:background="@color/dark_gray" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:weightSum="5">
+
+                <TextView
+                    style="@style/TextAppearance.AppCompat.header_right"
+                    android:layout_width="0dp"
+                    android:layout_weight="4.5"
+                    android:paddingLeft="25dp"
+                    android:text="@string/avt_anemometer" />
+
+                <CheckBox
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_weight="1" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:background="@color/dark_gray" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:weightSum="5">
+
+                <TextView
+                    style="@style/TextAppearance.AppCompat.header_right"
+                    android:layout_width="0dp"
+                    android:layout_weight="4.5"
+                    android:paddingLeft="25dp"
+                    android:text="@string/avt_anemometer" />
+
+                <CheckBox
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_weight="1" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:background="@color/dark_gray" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:weightSum="5">
+
+                <TextView
+                    style="@style/TextAppearance.AppCompat.header_right"
+                    android:layout_width="0dp"
+                    android:layout_weight="4.5"
+                    android:paddingLeft="25dp"
+                    android:text="@string/avt_anemometer" />
+
+                <CheckBox
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_weight="1" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:background="@color/dark_gray" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:weightSum="5">
+
+                <TextView
+                    style="@style/TextAppearance.AppCompat.header_right"
+                    android:layout_width="0dp"
+                    android:layout_weight="4.5"
+                    android:paddingLeft="25dp"
+                    android:text="@string/avt_anemometer" />
+
+                <CheckBox
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_weight="1" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:background="@drawable/border1"
+            android:orientation="vertical"
+            android:padding="0dp">
+
+            <TextView
+                style="@style/TextAppearance.AppCompat.header_left"
+                android:layout_gravity="center"
+                android:text="@string/area_of_test_entry_page" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:background="@color/dark_gray" />
+
+            <EditText
+                style="@style/Base.Widget.AppCompat.EditText.serviceEditText"
+                android:text="Filling Area" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:background="@color/dark_gray" />
+
+            <EditText
+                style="@style/Base.Widget.AppCompat.EditText.serviceEditText"
+                android:text="" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:background="@color/dark_gray" />
+
+            <EditText
+                style="@style/Base.Widget.AppCompat.EditText.serviceEditText"
+                android:text="Filling Area" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:background="@color/dark_gray" />
+
+            <EditText
+                style="@style/Base.Widget.AppCompat.EditText.serviceEditText"
+                android:text="" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:background="@color/dark_gray" />
+
+            <EditText
+                style="@style/Base.Widget.AppCompat.EditText.serviceEditText"
+                android:text="Filling Area" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:background="@color/dark_gray" />
+
+
+            <EditText
+                style="@style/Base.Widget.AppCompat.EditText.serviceEditText"
+                android:text="" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:background="@color/dark_gray" />
+
+
+            <EditText
+                style="@style/Base.Widget.AppCompat.EditText.serviceEditText"
+                android:text="" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:background="@color/dark_gray" />
+
+
+            <EditText
+                style="@style/Base.Widget.AppCompat.EditText.serviceEditText"
+                android:text="" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:background="@color/dark_gray" />
+
+
+            <EditText
+                style="@style/Base.Widget.AppCompat.EditText.serviceEditText"
+                android:text="" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:background="@color/dark_gray" />
+
+
+            <EditText
+                style="@style/Base.Widget.AppCompat.EditText.serviceEditText"
+                android:text="" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:background="@color/dark_gray" />
+
+
+            <EditText
+                style="@style/Base.Widget.AppCompat.EditText.serviceEditText"
+                android:text="" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:background="@color/dark_gray" />
+
+
+            <EditText
+                style="@style/Base.Widget.AppCompat.EditText.serviceEditText"
+                android:text="" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:background="@color/dark_gray" />
+
+            <EditText
+                style="@style/Base.Widget.AppCompat.EditText.serviceEditText"
+                android:text="" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:background="@color/dark_gray" />
+
+            <EditText
+                style="@style/Base.Widget.AppCompat.EditText.serviceEditText"
+                android:text="" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:background="@color/dark_gray" />
+
+
+            <EditText
+                style="@style/Base.Widget.AppCompat.EditText.serviceEditText"
+                android:text="" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:background="@drawable/border1"
+            android:orientation="vertical"
+            android:padding="0dp">
+
+            <TextView
+                style="@style/TextAppearance.AppCompat.header_left"
+                android:layout_gravity="center"
+                android:text="@string/equipment_type_no" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:background="@color/dark_gray" />
+
+
+            <EditText
+                style="@style/Base.Widget.AppCompat.EditText.serviceEditText"
+                android:text="" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:background="@color/dark_gray" />
+
+
+            <EditText
+                style="@style/Base.Widget.AppCompat.EditText.serviceEditText"
+                android:text="" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:background="@color/dark_gray" />
+
+
+            <EditText
+                style="@style/Base.Widget.AppCompat.EditText.serviceEditText"
+                android:text="" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:background="@color/dark_gray" />
+
+
+            <EditText
+                style="@style/Base.Widget.AppCompat.EditText.serviceEditText"
+                android:text="" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:background="@color/dark_gray" />
+
+
+            <EditText
+                style="@style/Base.Widget.AppCompat.EditText.serviceEditText"
+                android:text="" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:background="@color/dark_gray" />
+
+
+            <EditText
+                style="@style/Base.Widget.AppCompat.EditText.serviceEditText"
+                android:text="" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:background="@color/dark_gray" />
+
+
+            <EditText
+                style="@style/Base.Widget.AppCompat.EditText.serviceEditText"
+                android:text="" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:background="@color/dark_gray" />
+
+
+            <EditText
+                style="@style/Base.Widget.AppCompat.EditText.serviceEditText"
+                android:text="" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:background="@color/dark_gray" />
+
+
+            <EditText
+                style="@style/Base.Widget.AppCompat.EditText.serviceEditText"
+                android:text="" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:background="@color/dark_gray" />
+
+
+            <EditText
+                style="@style/Base.Widget.AppCompat.EditText.serviceEditText"
+                android:text="" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:background="@color/dark_gray" />
+
+
+            <EditText
+                style="@style/Base.Widget.AppCompat.EditText.serviceEditText"
+                android:text="" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:background="@color/dark_gray" />
+
+
+            <EditText
+                style="@style/Base.Widget.AppCompat.EditText.serviceEditText"
+                android:text="" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:background="@color/dark_gray" />
+
+
+            <EditText
+                style="@style/Base.Widget.AppCompat.EditText.serviceEditText"
+                android:text="" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:background="@color/dark_gray" />
+
+
+            <EditText
+                style="@style/Base.Widget.AppCompat.EditText.serviceEditText"
+                android:text="" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:background="@color/dark_gray" />
+
+            <EditText
+                style="@style/Base.Widget.AppCompat.EditText.serviceEditText"
+                android:text="" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:background="@drawable/border1"
+            android:orientation="vertical"
+            android:padding="0dp">
+
+            <TextView
+                style="@style/TextAppearance.AppCompat.header_left"
+                android:layout_gravity="center"
+                android:text="@string/no_of_location" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:background="@color/dark_gray" />
+
+            <EditText
+                style="@style/Base.Widget.AppCompat.EditText.serviceEditText"
+                android:text="" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:background="@color/dark_gray" />
+
+            <EditText
+                style="@style/Base.Widget.AppCompat.EditText.serviceEditText"
+                android:text="" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:background="@color/dark_gray" />
+
+            <EditText
+                style="@style/Base.Widget.AppCompat.EditText.serviceEditText"
+                android:text="" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:background="@color/dark_gray" />
+
+            <EditText
+                style="@style/Base.Widget.AppCompat.EditText.serviceEditText"
+                android:text="" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:background="@color/dark_gray" />
+
+            <EditText
+                style="@style/Base.Widget.AppCompat.EditText.serviceEditText"
+                android:text="" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:background="@color/dark_gray" />
+
+            <EditText
+                style="@style/Base.Widget.AppCompat.EditText.serviceEditText"
+                android:text="" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:background="@color/dark_gray" />
+
+            <EditText
+                style="@style/Base.Widget.AppCompat.EditText.serviceEditText"
+                android:text="" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:background="@color/dark_gray" />
+
+            <EditText
+                style="@style/Base.Widget.AppCompat.EditText.serviceEditText"
+                android:text="" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:background="@color/dark_gray" />
+
+            <EditText
+                style="@style/Base.Widget.AppCompat.EditText.serviceEditText"
+                android:text="" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:background="@color/dark_gray" />
+
+            <EditText
+                style="@style/Base.Widget.AppCompat.EditText.serviceEditText"
+                android:text="" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:background="@color/dark_gray" />
+
+            <EditText
+                style="@style/Base.Widget.AppCompat.EditText.serviceEditText"
+                android:text="" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:background="@color/dark_gray" />
+
+            <EditText
+                style="@style/Base.Widget.AppCompat.EditText.serviceEditText"
+                android:text="" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:background="@color/dark_gray" />
+
+            <EditText
+                style="@style/Base.Widget.AppCompat.EditText.serviceEditText"
+                android:text="" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:background="@color/dark_gray" />
+
+            <EditText
+                style="@style/Base.Widget.AppCompat.EditText.serviceEditText"
+                android:text="" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:background="@color/dark_gray" />
+
+            <EditText
+                style="@style/Base.Widget.AppCompat.EditText.serviceEditText"
+                android:text="" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:background="@drawable/border1"
+            android:orientation="vertical"
+            android:padding="0dp">
+
+            <TextView
+                style="@style/TextAppearance.AppCompat.header_left"
+                android:layout_gravity="center"
+                android:text="@string/no_of_days_hrs" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:background="@color/dark_gray" />
+
+            <EditText
+                style="@style/Base.Widget.AppCompat.EditText.serviceEditText"
+                android:text="1 Day" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:background="@color/dark_gray" />
+
+            <EditText
+                style="@style/Base.Widget.AppCompat.EditText.serviceEditText"
+                android:text="" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:background="@color/dark_gray" />
+
+            <EditText
+                style="@style/Base.Widget.AppCompat.EditText.serviceEditText"
+                android:text="1 Day" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:background="@color/dark_gray" />
+
+            <EditText
+                style="@style/Base.Widget.AppCompat.EditText.serviceEditText"
+                android:text="" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:background="@color/dark_gray" />
+
+            <EditText
+                style="@style/Base.Widget.AppCompat.EditText.serviceEditText"
+                android:text="1 Day" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:background="@color/dark_gray" />
+
+            <EditText
+                style="@style/Base.Widget.AppCompat.EditText.serviceEditText"
+                android:text="" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:background="@color/dark_gray" />
+
+            <EditText
+                style="@style/Base.Widget.AppCompat.EditText.serviceEditText"
+                android:text="" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:background="@color/dark_gray" />
+
+            <EditText
+                style="@style/Base.Widget.AppCompat.EditText.serviceEditText"
+                android:text="" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:background="@color/dark_gray" />
+
+            <EditText
+                style="@style/Base.Widget.AppCompat.EditText.serviceEditText"
+                android:text="" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:background="@color/dark_gray" />
+
+            <EditText
+                style="@style/Base.Widget.AppCompat.EditText.serviceEditText"
+                android:text="" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:background="@color/dark_gray" />
+
+            <EditText
+                style="@style/Base.Widget.AppCompat.EditText.serviceEditText"
+                android:text="" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:background="@color/dark_gray" />
+
+            <EditText
+                style="@style/Base.Widget.AppCompat.EditText.serviceEditText"
+                android:text="" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:background="@color/dark_gray" />
+
+            <EditText
+                style="@style/Base.Widget.AppCompat.EditText.serviceEditText"
+                android:text="" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:background="@color/dark_gray" />
+
+            <EditText
+                style="@style/Base.Widget.AppCompat.EditText.serviceEditText"
+                android:text="" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:background="@color/dark_gray" />
+
+            <EditText
+                style="@style/Base.Widget.AppCompat.EditText.serviceEditText"
+                android:text="" />
+        </LinearLayout>
+</LinearLayout>
+        <LinearLayout
+            style="@style/TextAppearance.AppCompat.header_top"
+            android:background="@drawable/border2">
+
+            <TextView
+                style="@style/TextAppearance.AppCompat.header_left"
+                android:gravity="left"
+                android:text="@string/work_status" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:background="@drawable/border"
+            android:orientation="vertical"
+            android:paddingBottom="1dp"
+            android:paddingLeft="1dp"
+            android:paddingTop="1dp">
+
+            <TextView
+                android:layout_marginBottom="10dp"
+                style="@style/TextAppearance.AppCompat.header_right"
+                android:text="@string/customer_remarks" />
+
+            <EditText
+                android:paddingTop="3dp"
+                style="@style/Base.Widget.AppCompat.EditText.serviceEditText"
+                android:text="All necessary Work is been completed and submit the documents along with Invoice" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/border"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/TextAppearance.AppCompat.header_left"
+                    android:layout_gravity="center"
+                    android:text="@string/tes_cunducted_buy" />
+
+                <TextView
+                    style="@style/TextAppearance.AppCompat.header_left"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:text="@string/test_cunduct_org" />
+
+                <EditText
+                    style="@style/Base.Widget.AppCompat.EditText.serviceEditText"
+                    android:paddingLeft="10dp"
+                    android:text="Azhar" />
+
+                <TextView
+                    style="@style/TextAppearance.AppCompat.header_right"
+                    android:layout_gravity="center"
+                    android:text="@string/name_sign_team" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/border"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/TextAppearance.AppCompat.header_left"
+                    android:layout_gravity="center"
+                    android:text="@string/tewst_witness_by" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/TextAppearance.AppCompat.header_left"
+                android:text="@string/notes" />
+
+            <Button
+                style="@style/Base.TextAppearance.AppCompat.Button.footerButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:text="@string/test_selection_submit" />
+
+        </LinearLayout>
+
+</LinearLayout>
+</ScrollView>

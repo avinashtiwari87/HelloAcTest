@@ -1,0 +1,1620 @@
+package com.project.valdoc;
+
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Typeface;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.text.Editable;
+import android.text.InputType;
+import android.text.TextUtils;
+import android.text.TextWatcher;
+import android.util.Log;
+import android.view.View;
+import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TableLayout;
+import android.widget.TableRow;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.project.valdoc.intity.ApplicableTestEquipment;
+import com.project.valdoc.intity.ApplicableTestRoom;
+import com.project.valdoc.intity.ClientInstrument;
+import com.project.valdoc.intity.Equipment;
+import com.project.valdoc.intity.PartnerInstrument;
+import com.project.valdoc.intity.Room;
+import com.project.valdoc.intity.RoomFilter;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+public class DynamicTableActivity extends AppCompatActivity implements View.OnClickListener {
+    private static final String TAG = "DynamicTableActivity";
+    //Test 1 View...
+    TableLayout table_layout, table_layout2, table_layout3, table_layout4;
+    //Test 2 View ...
+    TableLayout test2_table_layout, test2_table_layout2, test2_table_layout3, test2_table_layout4,
+            test2_table_layout5, test2_table_layout6, test2_table_layout7, test2_table_layout8;
+    //Test 3 View ...
+    TableLayout test3_table_layout, test3_table_layout2, test3_table_layout3, test3_table_layout4,
+            test3_table_layout5;
+    //Test 4 View ...
+    TableLayout test4_table_layout, test4_table_layout2, test4_table_layout3, test4_table_layout4,
+            test4_table_layout5, test4_table_layout6, test4_table_layout7;
+    //Test 5 View ...
+    TableLayout test5_table_layout, test5_table_layout2, test5_table_layout3, test5_table_layout4,
+            test5_table_layout5;
+    //Test 6 View ...
+    TableLayout test6A_table_layout, test6A_table_layout2, test6A_table_layout3;
+
+    Button verify_btn;
+    int rows, cols;
+    String testType;
+    ProgressDialog pr;
+    int idCountEtv = 200, idCountTv = 1;
+    ArrayList<TextView> txtViewList;
+    ArrayList<EditText> editTextList;
+    HashMap<Integer, Integer> inputDataList;
+    HashMap<Integer, Integer> resultDataList;
+    HashMap<Integer, Integer> rowTagList;
+    int kk = 0;
+    int sameId = 0;
+    boolean isTestFive = false;
+    private boolean isClearClicked = false;
+    // bundel data specification
+    private String loginUserType = "";
+    private String userName = "";
+    private ClientInstrument clientInstrument;
+    private PartnerInstrument partnerInstrument;
+    private String[] roomDetails;
+    private Equipment equipment;
+    private String[] filterList;
+    private String areaName;
+    private String ahuNumber;
+    private Room room;
+    private ArrayList<String> grillAndSizeFromGrill;
+    private ArrayList<RoomFilter> filterArrayList;
+    private String witnessFirst;
+    private String witnessSecond;
+    private String witnessThird;
+    private int applicableTestEquipmentLocation;
+    private int applicableTestRoomLocation;
+    private Button clear;
+    private TextView instrumentNo;
+    private TextView testerName;
+    private int noOfCycle;
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_dynamic_table);
+        clear = (Button) findViewById(R.id.clear);
+        clear.setOnClickListener(this);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+        pr = ProgressDialog.show(DynamicTableActivity.this, "Please Wait", "Loading...");
+        Log.d("valdoc", "DynamicTableActivity" + "onresume rows=progress shown");
+        if (getIntent().hasExtra("rows") && getIntent().hasExtra("cols")) {
+            rows = getIntent().getIntExtra("rows", 0);
+            cols = getIntent().getIntExtra("cols", 0);
+        }
+        testType = getIntent().getStringExtra("testType");
+        Log.d(TAG, " TestType : " + testType);
+        getExtraFromTestCreateActivity(savedInstanceState);
+
+        initRes();
+        initialization();
+        Log.d("valdoc", "DynamicTableActivity" + "onresume rows=init finished");
+        txtViewList = new ArrayList<TextView>();
+        editTextList = new ArrayList<EditText>();
+        inputDataList = new HashMap<Integer, Integer>();
+        resultDataList = new HashMap<Integer, Integer>();
+        rowTagList = new HashMap<Integer, Integer>();
+        createTableRowColum();
+    }
+
+    private void initialization() {
+        instrumentNo = (TextView) findViewById(R.id.instrument_no);
+        testerName = (TextView) findViewById(R.id.tester_name);
+        testerName.setText(userName);
+
+        Log.d("valdoc", "DynamicTableActivity loginUserType=" + loginUserType);
+        Log.d("valdoc", "DynamicTableActivity userName=" + userName);
+        if (loginUserType.equals("CLIENT")) {
+            instrumentNo.setText(clientInstrument.getcInstrumentName());
+            Log.d("valdoc", "DynamicTableActivity client instrumentNo=" + instrumentNo.getText().toString());
+        } else {
+            instrumentNo.setText(partnerInstrument.getpInstrumentName());
+            Log.d("valdoc", "DynamicTableActivity partner instrumentNo=" + instrumentNo.getText().toString());
+        }
+    }
+
+    private void getExtraFromTestCreateActivity(Bundle savedInstanceState) {
+        if (savedInstanceState == null) {
+            Bundle extras = getIntent().getExtras();
+            Log.d("valdoc", "DynamicTableActivity" + "onresume rows= getextra start");
+            if (extras == null) {
+                Log.d("valdoc", "DynamicTableActivity" + "onresume rows=extra null");
+                loginUserType = null;
+                clientInstrument = null;
+                partnerInstrument = null;
+                roomDetails = null;
+                equipment = null;
+                filterList = null;
+                areaName = null;
+                witnessFirst = null;
+                witnessSecond = null;
+                witnessThird = null;
+                applicableTestEquipmentLocation = 0;
+            } else {
+                loginUserType = extras.getString("USERTYPE");
+                userName = extras.getString("USERNAME");
+                Log.d("valdoc", "DynamicTableActivity bundel loginUserType=" + loginUserType);
+                Log.d("valdoc", "DynamicTableActivity bundel userName=" + userName);
+                witnessFirst = extras.getString("WITNESSFIRST");
+                witnessSecond = extras.getString("WITNESSSECOND");
+                witnessThird = extras.getString("WITNESSTHIRD");
+                //get area based on room area id
+                areaName = extras.getString("AREANAME");
+
+                if (loginUserType.equals("CLIENT")) {
+                    clientInstrument = (ClientInstrument) extras.getSerializable("ClientInstrument");
+                } else {
+                    partnerInstrument = (PartnerInstrument) extras.getSerializable("PartnerInstrument");
+                }
+                if ("RD_AV_5".equals(testType)) {
+                    roomDetails = extras.getStringArray("RoomDetails");
+                    equipment = (Equipment) extras.getSerializable("Equipment");
+                    //get filter list from equipment filter
+                    filterList = new String[extras.getStringArray("FILTERLIST").length];
+                    filterList = extras.getStringArray("FILTERLIST");
+                    Log.d("valdoc", "DynamicTableActivity" + "onresume rows=filterList=" + filterList.length);
+
+                    applicableTestEquipmentLocation = extras.getInt("LOCATION");
+                    Log.d("valdoc", "DynamicTableActivity" + "onresume rows=applicableTestEquipmentLocation" + applicableTestEquipmentLocation);
+                }
+
+                if ("RD_ACPH_AV".equals(testType)) {
+
+                    room = (Room) extras.getSerializable("Room");
+                    ahuNumber = extras.getString("AhuNumber");
+                    applicableTestRoomLocation = extras.getInt("LOCATION");
+                    grillAndSizeFromGrill = (ArrayList<String>) extras.getStringArrayList("GRILLIST");
+                }
+
+                if ("RD_ACPH_H".equals(testType)) {
+                    //get room name,roomNo,and area id
+                    room = (Room) extras.getSerializable("Room");
+                    ahuNumber = extras.getString("AhuNumber");
+                    //get filter list from grill filter
+                    grillAndSizeFromGrill = (ArrayList<String>) extras.getStringArrayList("GRILLIST");
+                }
+                if ("RD_FIT".equals(testType)) {
+                    room = (Room) extras.getSerializable("Room");
+                    ahuNumber = extras.getString("AhuNumber");
+                    //take test specification from room filter
+                    filterArrayList = (ArrayList<RoomFilter>) extras.getSerializable("RoomFilterList");
+                    //TO Do testspesification will be shown from room filter spesification
+                }
+                if ("RD_PC_3".equals(testType)) {
+                    room = (Room) extras.getSerializable("Room");
+                    ahuNumber = extras.getString("AhuNumber");
+                    applicableTestRoomLocation = extras.getInt("LOCATION");
+                    noOfCycle = extras.getInt("NOOFCYCLE");
+
+                }
+                if ("RD_RCT".equals(testType)) {
+                    room = (Room) extras.getSerializable("Room");
+                    ahuNumber = extras.getString("AhuNumber");
+                    applicableTestRoomLocation = extras.getInt("LOCATION");
+                    noOfCycle = extras.getInt("NOOFCYCLE");
+
+
+                }
+
+            }
+        }
+
+
+    }
+
+    private void createTableRowColum() {
+        Log.d("valdoc", "DynamicTableActivity" + "onresume rows=");
+        if ("RD_AV_5".equalsIgnoreCase(testType)) {
+            Log.d("valdoc", "DynamicTableActivity" + "rows=" + filterList.length + " cols=" + applicableTestEquipmentLocation);
+            BuildTable(filterList.length + 1, applicableTestEquipmentLocation);
+        }
+        if ("RD_ACPH_AV".equalsIgnoreCase(testType)) {
+            Log.d("valdoc", "DynamicTableActivity" + "rows=" + grillAndSizeFromGrill.size() + " cols=" + applicableTestRoomLocation);
+            BuildTableTest2(grillAndSizeFromGrill.size() + 1, applicableTestRoomLocation);
+        }
+        if ("RD_ACPH_H".equalsIgnoreCase(testType)) {
+            Log.d("valdoc", "DynamicTableActivity" + "rows=" + grillAndSizeFromGrill.size() + " cols=" + applicableTestRoomLocation);
+            BuildTableTest3(grillAndSizeFromGrill.size() + 1, applicableTestRoomLocation);
+        }
+        if ("RD_FIT".equalsIgnoreCase(testType)) {
+            Log.d("valdoc", "DynamicTableActivity" + "rows=" + grillAndSizeFromGrill.size() + " cols=" + applicableTestRoomLocation);
+            BuildTableTest4(grillAndSizeFromGrill.size(), cols);
+        }
+        if ("RD_PC_3".equalsIgnoreCase(testType)) {
+            Log.d("valdoc", "DynamicTableActivity" + "rows=" + grillAndSizeFromGrill.size() + " cols=" + applicableTestRoomLocation);
+            BuildTableTest5(grillAndSizeFromGrill.size(), cols);
+        }
+        if ("RD_RCT".equalsIgnoreCase(testType)) {
+            Log.d("valdoc", "DynamicTableActivity" + "rows=" + grillAndSizeFromGrill.size() + " cols=" + applicableTestRoomLocation);
+            BuildTableTest6(grillAndSizeFromGrill.size(), cols);
+        }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        //removeView();
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+
+    }
+
+    @Override
+    public void onClick(View view) {
+        if (view == verify_btn) {
+            Intent intent = null;
+            if ("RD_AV_5".equalsIgnoreCase(testType)) {
+                intent = new Intent(DynamicTableActivity.this, RDAV5UserEntryActivity.class);
+                // put bundel data
+                intent.putExtra("USERTYPE", loginUserType);
+                if (loginUserType.equals("CLIENT")) {
+                    intent.putExtra("ClientInstrument", clientInstrument);
+                } else {
+                    intent.putExtra("PartnerInstrument", partnerInstrument);
+                }
+                intent.putExtra("USERNAME", userName);
+                //get room name,roomNo,and area id
+                intent.putExtra("RoomDetails", roomDetails);
+                intent.putExtra("Equipment", equipment);
+                //get filter list from equipment filter
+                intent.putExtra("FILTERLIST", filterList);
+                //sending Result Data over Bundle
+                intent.putExtra("ResultData", resultDataList);
+                //get area based on room area id
+                intent.putExtra("AREANAME", areaName);
+                Log.d("valdoc", "DynamicTableActivity 2witness=" + witnessFirst);
+                intent.putExtra("WITNESSFIRST", witnessFirst);
+                intent.putExtra("WITNESSSECOND", witnessSecond);
+                intent.putExtra("WITNESSTHIRD", witnessThird);
+                intent.putExtra("LOCATION", applicableTestEquipmentLocation);
+                intent.putExtra("InputData", inputDataList);
+                intent.putExtra("rows", filterList.length + 1);
+                intent.putExtra("cols", applicableTestEquipmentLocation);
+                intent.putExtra("testType", testType);
+                startActivity(intent);
+            }
+            if ("RD_ACPH_AV".equalsIgnoreCase(testType)) {
+                intent = new Intent(DynamicTableActivity.this, RDACPHAVUserEntryActivity.class);
+                // put bundel data
+                intent.putExtra("USERTYPE", loginUserType);
+                intent.putExtra("USERNAME", userName);
+                intent.putExtra("WITNESSFIRST", witnessFirst);
+                intent.putExtra("WITNESSSECOND", witnessSecond);
+                intent.putExtra("WITNESSTHIRD", witnessThird);
+                intent.putExtra("testType", testType);
+                //get area based on room area id
+                intent.putExtra("AREANAME", areaName);
+
+                if (loginUserType.equals("CLIENT")) {
+                    intent.putExtra("ClientInstrument", clientInstrument);
+                } else {
+                    intent.putExtra("PartnerInstrument", partnerInstrument);
+                }
+                //get room name,roomNo,and area id
+                intent.putExtra("Room", room);
+                intent.putExtra("AhuNumber", ahuNumber);
+                intent.putExtra("LOCATION", applicableTestRoomLocation);
+                //get filter list from equipment filter
+                intent.putExtra("GRILLIST", grillAndSizeFromGrill);
+                intent.putExtra("rows", grillAndSizeFromGrill.size() + 1);
+                intent.putExtra("cols", applicableTestRoomLocation);
+                startActivity(intent);
+
+            }
+            if ("RD_ACPH_H".equalsIgnoreCase(testType)) {
+                intent = new Intent(DynamicTableActivity.this, RDACPHhUserEntryActivity.class);
+                // put bundel data
+                intent.putExtra("USERTYPE", loginUserType);
+                intent.putExtra("USERNAME", userName);
+                intent.putExtra("WITNESSFIRST", witnessFirst);
+                intent.putExtra("WITNESSSECOND", witnessSecond);
+                intent.putExtra("WITNESSTHIRD", witnessThird);
+                intent.putExtra("testType", testType);
+                //get area based on room area id
+                intent.putExtra("AREANAME", areaName);
+
+                if (loginUserType.equals("CLIENT")) {
+                    intent.putExtra("ClientInstrument", clientInstrument);
+                } else {
+                    intent.putExtra("PartnerInstrument", partnerInstrument);
+                }
+                intent.putExtra("Room", room);
+                intent.putExtra("AhuNumber", ahuNumber);
+                intent.putExtra("rows", grillAndSizeFromGrill.size() + 1);
+                intent.putExtra("cols", applicableTestRoomLocation);
+                intent.putExtra("GRILLIST", grillAndSizeFromGrill);
+                startActivity(intent);
+            }
+            if ("RD_FIT".equalsIgnoreCase(testType)) {
+                intent = new Intent(DynamicTableActivity.this, RDFITUserEntryActivity.class);
+                // put bundel data
+                intent.putExtra("USERTYPE", loginUserType);
+                intent.putExtra("USERNAME", userName);
+                intent.putExtra("WITNESSFIRST", witnessFirst);
+                intent.putExtra("WITNESSSECOND", witnessSecond);
+                intent.putExtra("WITNESSTHIRD", witnessThird);
+                intent.putExtra("testType", testType);
+                //get area based on room area id
+                intent.putExtra("AREANAME", areaName);
+
+                if (loginUserType.equals("CLIENT")) {
+                    intent.putExtra("ClientInstrument", clientInstrument);
+                } else {
+                    intent.putExtra("PartnerInstrument", partnerInstrument);
+                }
+                intent.putExtra("Room", room);
+                intent.putExtra("AhuNumber", ahuNumber);
+                intent.putExtra("RoomFilterList", filterArrayList);
+                intent.putExtra("rows", grillAndSizeFromGrill.size() + 1);
+                intent.putExtra("cols", applicableTestRoomLocation);
+                //TO Do testspesification will be shown from room filter spesification
+                // location will be the size off rommfilter list
+                startActivity(intent);
+            }
+            if ("RD_PC_3".equalsIgnoreCase(testType)) {
+                intent = new Intent(DynamicTableActivity.this, RDPC3UserEntryActivity.class);
+                // put bundel data
+                intent.putExtra("USERTYPE", loginUserType);
+                intent.putExtra("USERNAME", userName);
+                intent.putExtra("WITNESSFIRST", witnessFirst);
+                intent.putExtra("WITNESSSECOND", witnessSecond);
+                intent.putExtra("WITNESSTHIRD", witnessThird);
+                intent.putExtra("testType", testType);
+                //get area based on room area id
+                intent.putExtra("AREANAME", areaName);
+
+                if (loginUserType.equals("CLIENT")) {
+                    intent.putExtra("ClientInstrument", clientInstrument);
+                } else {
+                    intent.putExtra("PartnerInstrument", partnerInstrument);
+                }
+                intent.putExtra("Room", room);
+                intent.putExtra("AhuNumber", ahuNumber);
+                intent.putExtra("LOCATION", applicableTestRoomLocation);
+                intent.putExtra("NOOFCYCLE", noOfCycle);
+                intent.putExtra("rows", grillAndSizeFromGrill.size() + 1);
+                intent.putExtra("cols", applicableTestRoomLocation);
+                startActivity(intent);
+            }
+            if ("RD_RCT".equalsIgnoreCase(testType)) {
+                intent = new Intent(DynamicTableActivity.this, RDRCTUserEntryActivity.class);
+                // put bundel data
+                intent.putExtra("USERTYPE", loginUserType);
+                intent.putExtra("USERNAME", userName);
+                intent.putExtra("WITNESSFIRST", witnessFirst);
+                intent.putExtra("WITNESSSECOND", witnessSecond);
+                intent.putExtra("WITNESSTHIRD", witnessThird);
+                intent.putExtra("testType", testType);
+                //get area based on room area id
+                intent.putExtra("AREANAME", areaName);
+
+                if (loginUserType.equals("CLIENT")) {
+                    intent.putExtra("ClientInstrument", clientInstrument);
+                } else {
+                    intent.putExtra("PartnerInstrument", partnerInstrument);
+                }
+                intent.putExtra("Room", room);
+                intent.putExtra("AhuNumber", ahuNumber);
+                intent.putExtra("LOCATION", applicableTestRoomLocation);
+                intent.putExtra("NOOFCYCLE", noOfCycle);
+                intent.putExtra("rows", grillAndSizeFromGrill.size() + 1);
+                intent.putExtra("cols", applicableTestRoomLocation);
+                startActivity(intent);
+
+            }
+//            else {
+//                intent = new Intent(DynamicTableActivity.this, HomeActivity.class);
+//            }
+
+        }
+        if (view == clear) {
+            isClearClicked = true;
+            if (editTextList.size() > 0) {
+                for (int i = 0; i < editTextList.size(); i++) {
+                    if (editTextList.get(i).getText().toString().trim() != null
+                            && !"".equals(editTextList.get(i).getText().toString().trim())) {
+                        editTextList.get(i).setText("");
+                        inputDataList.put(editTextList.get(i).getId(), 0);
+                    }
+                }
+            }
+            if (txtViewList.size() > 0) {
+                for (int i = 0; i < txtViewList.size(); i++) {
+                    if (txtViewList.get(i).getText().toString().trim() != null
+                            && !"".equals(txtViewList.get(i).getText().toString().trim())) {
+                        txtViewList.get(i).setText("");
+                        resultDataList.put(txtViewList.get(i).getId(), 0);
+                    }
+                }
+            }
+            //Done clicked...hahaa..
+            isClearClicked = false;
+        }
+
+//            if(view ==clear) {
+//                inputDataList.clear();
+//                resultDataList.clear();
+//                if (editTextList.size() > 0) {
+//                    for (int i = 0; i < editTextList.size(); i++) {
+//                        editTextList.get(i).setText("");
+//                    }
+//                }
+//                if (txtViewList.size() > 0) {
+//                    for (int i = 0; i < txtViewList.size(); i++) {
+//                        txtViewList.get(i).setText("");
+//                    }
+//                }
+//                inputDataList.clear();
+//                resultDataList.clear();
+//            }
+
+        //startActivity(new Intent(DynamicTableActivity.this,HomeActivity.class));
+
+
+    }
+
+    private void BuildTableTest6(int rows, int cols) {
+        //first section
+        // outer for loop
+        for (int i = 1; i <= rows + 3; i++) {
+            TableRow row = new TableRow(this);
+            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+                    TableRow.LayoutParams.WRAP_CONTENT));
+            // inner for loop
+            for (int j = 1; j <= 1; j++) {
+                if (i == 1 && j == 1) {
+                    row.addView(addTextView(""));
+                }
+                if (i == 2 && j == 1) {
+                    row.addView(addTextView(" Initial Reading "));
+                }
+                if (i == 3 && j == 1) {
+                    row.addView(addTextView(" Worst case "));
+                } else if (i > 3) {
+                    row.addView(addTextView(" " + i));
+                }
+
+            }
+            test6A_table_layout.addView(row);
+        }
+        TableRow row1 = new TableRow(this);
+        row1.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+                TableRow.LayoutParams.WRAP_CONTENT));
+        row1.addView(addTextView(" Final Reading " + rows));
+        test6A_table_layout.addView(row1);
+
+
+        //Second section
+        // outer for loop
+        for (int i = 1; i <= rows + 4; i++) {
+            TableRow row = new TableRow(this);
+            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+                    TableRow.LayoutParams.WRAP_CONTENT));
+            // inner for loop
+            for (int j = 1; j <= 1; j++) {
+                if (i == 1 && j == 1) {
+                    row.addView(addTextView(" 0.5 µm/m³ "));
+                } else {
+                    row.addView(addEditTextView(i));
+                }
+
+            }
+            test6A_table_layout2.addView(row);
+        }
+
+        //Third section
+        // outer for loop
+        for (int i = 1; i <= rows + 4; i++) {
+            TableRow row = new TableRow(this);
+            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+                    TableRow.LayoutParams.WRAP_CONTENT));
+            // inner for loop
+            for (int j = 1; j <= 1; j++) {
+                if (i == 1 && j == 1) {
+                    row.addView(addTextView("   "));
+                } else {
+                    row.addView(addEditTextView(i + 5));
+                }
+            }
+            test6A_table_layout3.addView(row);
+        }
+
+
+        //dismiss progressbar
+        if (pr.isShowing())
+            pr.dismiss();
+
+
+    }
+
+    private void BuildTableTest5(int rows, int cols) {
+        isTestFive = true;
+        //first section
+        // outer for loop
+        for (int i = 1; i <= rows; i++) {
+            TableRow row = new TableRow(this);
+            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+                    TableRow.LayoutParams.WRAP_CONTENT));
+            // inner for loop
+            for (int j = 1; j <= 1; j++) {
+                if (i == 1 && j == 1) {
+                    row.addView(addTextView(" Location \n   "));
+                } else {
+                    row.addView(addTextView(" " + i));
+                }
+
+            }
+            test5_table_layout.addView(row);
+        }
+        for (int sk = 0; sk < 3; sk++) {
+            TableRow row = new TableRow(this);
+            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+                    TableRow.LayoutParams.WRAP_CONTENT));
+            row.addView(addTextView("    "));
+            test5_table_layout.addView(row);
+        }
+
+        //Second section
+        // outer for loop
+        for (int i = 1; i <= rows; i++) {
+            TableRow row = new TableRow(this);
+            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+                    TableRow.LayoutParams.WRAP_CONTENT));
+            // inner for loop
+            for (int j = 1; j <= 1; j++) {
+                if (i == 1 && j == 1) {
+                    row.addView(addTextView(" No. of Particles >0. 5 µm/m³ \n (R1 | R2 | R3) "));
+                } else {
+                    //row.addView(addTextView(" 4434 | 3434 | 1341 "));
+                    row.addView(addEditTextView(i));
+                }
+            }
+            test5_table_layout2.addView(row);
+        }
+        for (int sk = 0; sk < 3; sk++) {
+            TableRow row = new TableRow(this);
+            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+                    TableRow.LayoutParams.WRAP_CONTENT));
+            if (sk == 0) {
+                row.addView(addTextView("   Mean Average   "));
+            }
+            if (sk == 1) {
+                row.addView(addTextView("   Standard Deviation   "));
+            }
+            if (sk == 2) {
+                row.addView(addTextView("   95% UCL   "));
+            }
+            test5_table_layout2.addView(row);
+        }
+
+        //Third section
+        // outer for loop
+        for (int i = 1; i <= rows; i++) {
+            TableRow row = new TableRow(this);
+            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+                    TableRow.LayoutParams.WRAP_CONTENT));
+            // inner for loop
+            for (int j = 1; j <= 1; j++) {
+                if (i == 1 && j == 1) {
+                    row.addView(addTextView(" Average \n "));
+                } else {
+                    row.addView(addTextView(" 1919643" + i));
+                }
+
+            }
+            test5_table_layout3.addView(row);
+        }
+        for (int sk = 0; sk < 3; sk++) {
+            TableRow row = new TableRow(this);
+            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+                    TableRow.LayoutParams.WRAP_CONTENT));
+            if (sk == 0) {
+                row.addView(addTextView("   4878776542   "));
+            }
+            if (sk == 1) {
+                row.addView(addTextView("   78441734560   "));
+            }
+            if (sk == 2) {
+                row.addView(addTextView("   1129564326705   "));
+            }
+            test5_table_layout3.addView(row);
+        }
+
+
+        //Fourth section
+        // outer for loop
+        for (int i = 1; i <= rows; i++) {
+            TableRow row = new TableRow(this);
+            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+                    TableRow.LayoutParams.WRAP_CONTENT));
+            // inner for loop
+            for (int j = 1; j <= 1; j++) {
+                if (i == 1 && j == 1) {
+                    row.addView(addTextView(" No. of Particles > 5 µm/m³ \n (R1 | R2 |R3 )"));
+                } else {
+                    //row.addView(addTextView(" 13123 | 12323 | 1341 "));
+                    row.addView(addEditTextView(i));
+                }
+
+            }
+            test5_table_layout4.addView(row);
+        }
+        for (int sk = 0; sk < 3; sk++) {
+            TableRow row = new TableRow(this);
+            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+                    TableRow.LayoutParams.WRAP_CONTENT));
+            row.addView(addTextView("  "));
+            test5_table_layout4.addView(row);
+        }
+
+        //Fifth section
+        // outer for loop
+        for (int i = 1; i <= (rows + 3); i++) {
+            TableRow row = new TableRow(this);
+            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+                    TableRow.LayoutParams.WRAP_CONTENT));
+            // inner for loop
+            for (int j = 1; j <= 1; j++) {
+                if (i == 1 && j == 1) {
+                    row.addView(addTextView(" Average \n "));
+                } else {
+                    row.addView(addTextView(" 8893 "));
+                }
+
+            }
+            test5_table_layout5.addView(row);
+        }
+        //dismiss progressbar
+        if (pr.isShowing())
+            pr.dismiss();
+        isTestFive = false;
+    }
+
+    private void BuildTableTest4(int rows, int cols) {
+        //first section
+        // outer for loop
+        for (int i = 1; i <= rows; i++) {
+            TableRow row = new TableRow(this);
+            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+                    TableRow.LayoutParams.WRAP_CONTENT));
+            // inner for loop
+            for (int j = 1; j <= 1; j++) {
+                if (i == 1 && j == 1) {
+                    row.addView(addTextView(" Filter No \n         "));
+                } else {
+                    row.addView(addTextView(" LDU/EN/AHU/20/SG-0" + i));
+                }
+
+            }
+            test4_table_layout.addView(row);
+        }
+
+        //Second section
+        // outer for loop
+        for (int i = 1; i <= rows; i++) {
+            TableRow row = new TableRow(this);
+            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+                    TableRow.LayoutParams.WRAP_CONTENT));
+            // inner for loop
+            for (int j = 1; j <= 1; j++) {
+                if (i == 1 && j == 1) {
+                    row.addView(addTextView(" Filter Type  \n         "));
+                } else {
+                    row.addView(addTextView(" HEPA "));
+                }
+
+            }
+            test4_table_layout2.addView(row);
+        }
+
+        //Third section
+        // outer for loop
+        for (int i = 1; i <= rows; i++) {
+            TableRow row = new TableRow(this);
+            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+                    TableRow.LayoutParams.WRAP_CONTENT));
+            // inner for loop
+            for (int j = 1; j <= 1; j++) {
+                if (i == 1 && j == 1) {
+                    row.addView(addTextView(" Filter Efficiency\n at Particle Size* "));
+                } else {
+                    row.addView(addTextView(" 99.97% | 0.3µm "));
+                }
+
+            }
+            test4_table_layout3.addView(row);
+        }
+
+        //Fourth section
+        // outer for loop
+        for (int i = 1; i <= rows; i++) {
+            TableRow row = new TableRow(this);
+            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+                    TableRow.LayoutParams.WRAP_CONTENT));
+            // inner for loop
+            for (int j = 1; j <= 1; j++) {
+                if (i == 1 && j == 1) {
+                    row.addView(addTextView(" Average Up Stream\n Concentration (µg/liter) "));
+                } else {
+                    //row.addView(addTextView(" 42 "));
+                    row.addView(addEditTextView(i));
+                }
+
+            }
+            test4_table_layout4.addView(row);
+        }
+
+        //Fifth section
+        // outer for loop
+        for (int i = 1; i <= rows; i++) {
+            TableRow row = new TableRow(this);
+            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+                    TableRow.LayoutParams.WRAP_CONTENT));
+            // inner for loop
+            for (int j = 1; j <= 1; j++) {
+                if (i == 1 && j == 1) {
+                    row.addView(addTextView(" SLP of DL for Tests\n after Installation** "));
+                } else {
+                    row.addView(addTextView(" 0.01% "));
+                }
+
+            }
+            test4_table_layout5.addView(row);
+        }
+
+        //Sixth section
+        // outer for loop
+        for (int i = 1; i <= rows; i++) {
+            TableRow row = new TableRow(this);
+            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+                    TableRow.LayoutParams.WRAP_CONTENT));
+            // inner for loop
+            for (int j = 1; j <= 1; j++) {
+                if (i == 1 && j == 1) {
+                    row.addView(addTextView(" Obtained Test Results\n (% Leakage) "));
+                } else {
+                    row.addView(addTextView(" 0.0015 "));
+                }
+
+            }
+            test4_table_layout6.addView(row);
+        }
+
+        //Seventh section
+        // outer for loop
+        for (int i = 1; i <= rows; i++) {
+            TableRow row = new TableRow(this);
+            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+                    TableRow.LayoutParams.WRAP_CONTENT));
+            // inner for loop
+            for (int j = 1; j <= 1; j++) {
+                if (i == 1 && j == 1) {
+                    row.addView(addTextView(" Test Status\n    "));
+                } else {
+                    row.addView(addTextView(" Pass "));
+                }
+
+            }
+            test4_table_layout7.addView(row);
+        }
+
+        //dismiss progressbar
+        if (pr.isShowing())
+            pr.dismiss();
+
+    }
+
+
+    private void BuildTableTest3(int rows, int cols) {
+        //first section
+        // outer for loop
+        for (int i = 1; i <= rows; i++) {
+            TableRow row = new TableRow(this);
+            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+                    TableRow.LayoutParams.WRAP_CONTENT));
+            // inner for loop
+            for (int j = 1; j <= 1; j++) {
+                if (i == 1 && j == 1) {
+                    row.addView(addTextView(" Grille/Filter ID No\n "));
+                } else {
+                    row.addView(addTextView(" Filter No " + i));
+                }
+
+            }
+            test3_table_layout.addView(row);
+        }
+
+        //Second section
+        // outer for loop
+        for (int i = 1; i <= rows; i++) {
+            TableRow row = new TableRow(this);
+            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+                    TableRow.LayoutParams.WRAP_CONTENT));
+            // inner for loop
+            for (int j = 1; j <= 1; j++) {
+                if (i == 1 && j == 1) {
+                    row.addView(addTextView(" Measured Supply Air\n Velocity in cfm (in cfm) "));
+                } else {
+                    // row.addView(addResultTextView(i));
+                    //row.addView(addTextView(" "));
+                    row.addView(addEditTextView(i));
+                }
+            }
+            test3_table_layout2.addView(row);
+        }
+
+        //Third section
+        // outer for loop
+        for (int i = 1; i <= rows; i++) {
+            TableRow row = new TableRow(this);
+            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+                    TableRow.LayoutParams.WRAP_CONTENT));
+            // inner for loop
+            for (int j = 1; j <= 1; j++) {
+                if (i == 1 && j == 1) {
+                    row.addView(addTextView(" Total Air Flow Rate\n in cfm (TFR)"));
+                } else {
+                    //row.addView(addResultTextView(i));
+                    row.addView(addTextViewWithoutBorder("0"));
+                }
+            }
+            test3_table_layout3.addView(row);
+        }
+
+        //Fourth section
+        // outer for loop
+        for (int i = 1; i <= rows; i++) {
+            TableRow row = new TableRow(this);
+            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+                    TableRow.LayoutParams.WRAP_CONTENT));
+            // inner for loop
+            for (int j = 1; j <= 1; j++) {
+                if (i == 1 && j == 1) {
+                    row.addView(addTextView(" Room Volume in\n ft3(RV)"));
+                } else {
+                    //row.addView(addResultTextView(i));
+                    row.addView(addTextViewWithoutBorder("490"));
+                }
+            }
+            test3_table_layout4.addView(row);
+        }
+
+        //Fifth section
+        // outer for loop
+        for (int i = 1; i <= rows; i++) {
+            TableRow row = new TableRow(this);
+            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+                    TableRow.LayoutParams.WRAP_CONTENT));
+            // inner for loop
+            for (int j = 1; j <= 1; j++) {
+                if (i == 1 && j == 1) {
+                    row.addView(addTextView("No. of Air Changes/Hr\n ((TFR/RV)x60))"));
+                } else {
+                    //row.addView(addResultTextView(i));
+                    row.addView(addTextViewWithoutBorder("490"));
+                }
+            }
+            test3_table_layout5.addView(row);
+        }
+
+        //dismiss progressbar
+        if (pr.isShowing())
+            pr.dismiss();
+
+
+    }
+
+    private void BuildTableTest2(int rows, int cols) {
+        //first section
+        // outer for loop
+        for (int i = 1; i <= rows; i++) {
+            TableRow row = new TableRow(this);
+            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+                    TableRow.LayoutParams.WRAP_CONTENT));
+            // inner for loop
+            for (int j = 1; j <= 1; j++) {
+                if (i == 1 && j == 1) {
+                    row.addView(addTextView(" Grille / Filter ID\n "));
+                } else {
+                    row.addView(addTextView("AHU 2031/0.3MICRON/" + i));
+                }
+
+            }
+            test2_table_layout.addView(row);
+
+        }
+
+        //Second section
+        // outer for loop
+        for (int i = 1; i <= rows; i++) {
+            TableRow row = new TableRow(this);
+            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+                    TableRow.LayoutParams.WRAP_CONTENT));
+            // inner for loop
+            for (int j = 1; j <= 1; j++) {
+                if (i == 1 && j == 1) {
+                    row.addView(addTextView(" Grill/Filter Size\n in ft2(A)"));
+                } else {
+                    // row.addView(addResultTextView(i));
+                    row.addView(addTextView("1.9"));
+                }
+            }
+            test2_table_layout2.addView(row);
+
+        }
+
+        //Third section
+        // outer for loop
+        for (int i = 1; i <= rows; i++) {
+
+            TableRow row = new TableRow(this);
+            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+                    TableRow.LayoutParams.WRAP_CONTENT));
+
+            // inner for loop
+            for (int j = 1; j <= cols; j++) {
+                if (i == 1 && j <= cols) {
+                    row.addView(addTextView(" V " + j + "\n "));
+                } else {
+                    //tv.setText(84+i+j+"");
+                    row.addView(addEditTextView(i));
+                }
+            }
+            test2_table_layout3.addView(row);
+        }
+        //Fourth section
+        // outer for loop
+        for (int i = 1; i <= rows; i++) {
+            TableRow row = new TableRow(this);
+            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+                    TableRow.LayoutParams.WRAP_CONTENT));
+            // inner for loop
+            for (int j = 1; j <= 1; j++) {
+                if (i == 1 && j == 1) {
+                    row.addView(addTextView(" Avg Velocity in\n fpm(AV)"));
+                } else {
+                    //row.addView(addResultTextView(i));
+                    row.addView(addTextView("258"));
+                }
+            }
+            test2_table_layout4.addView(row);
+
+        }
+        //Fifth section
+        // outer for loop
+        for (int i = 1; i <= rows; i++) {
+            TableRow row = new TableRow(this);
+            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+                    TableRow.LayoutParams.WRAP_CONTENT));
+            // inner for loop
+            for (int j = 1; j <= 1; j++) {
+                if (i == 1 && j == 1) {
+                    row.addView(addTextView(" Air Flow Rate\n in cfm(AxAv)"));
+                } else {
+                    //row.addView(addResultTextView(i));
+                    row.addView(addTextView("490"));
+                }
+            }
+            test2_table_layout5.addView(row);
+
+        }
+
+        //Sixth section
+        // outer for loop
+        for (int i = 1; i <= rows; i++) {
+            TableRow row = new TableRow(this);
+            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+                    TableRow.LayoutParams.WRAP_CONTENT));
+            // inner for loop
+            for (int j = 1; j <= 1; j++) {
+                if (i == 1 && j == 1) {
+                    row.addView(addTextView(" Total Air Flow Rate\n in cfm (TFR)"));
+                } else {
+                    //row.addView(addResultTextView(i));
+                    row.addView(addTextViewWithoutBorder("490"));
+                }
+            }
+            test2_table_layout6.addView(row);
+        }
+
+        //Seventh section
+        // outer for loop
+        for (int i = 1; i <= rows; i++) {
+            TableRow row = new TableRow(this);
+            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+                    TableRow.LayoutParams.WRAP_CONTENT));
+            // inner for loop
+            for (int j = 1; j <= 1; j++) {
+                if (i == 1 && j == 1) {
+                    row.addView(addTextView(" Room Volume in\n ft3(RV)"));
+                } else {
+                    //row.addView(addResultTextView(i));
+                    row.addView(addTextViewWithoutBorder("490"));
+                }
+            }
+            test2_table_layout7.addView(row);
+        }
+
+        //Eight section
+        // outer for loop
+        for (int i = 1; i <= rows; i++) {
+            TableRow row = new TableRow(this);
+            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+                    TableRow.LayoutParams.WRAP_CONTENT));
+            // inner for loop
+            for (int j = 1; j <= 1; j++) {
+                if (i == 1 && j == 1) {
+                    row.addView(addTextView("No. of Air Changes/Hr\n ((TFR/RV)x60))"));
+                } else {
+                    //row.addView(addResultTextView(i));
+                    row.addView(addTextViewWithoutBorder("490"));
+                }
+            }
+            test2_table_layout8.addView(row);
+        }
+
+        //dismiss progressbar
+        if (pr.isShowing())
+            pr.dismiss();
+
+    }
+
+    private void BuildTable(int rows, int cols) {
+        //third section
+        // outer for loop
+        Log.d("valdoc", "DynamicTableActivity BuildTable" + "rows=" + rows + " cols=" + cols);
+        for (int i = 1; i <= rows; i++) {
+            TableRow row = new TableRow(this);
+            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+                    TableRow.LayoutParams.WRAP_CONTENT));
+            // inner for loop
+            for (int j = 1; j <= 1; j++) {
+                if (i == 1 && j == 1) {
+                    row.addView(addTextView(" V "));
+                } else {
+                    row.addView(addResultTextView(i));
+                }
+            }
+            table_layout3.addView(row);
+
+        }
+
+        //first section
+        // outer for loop
+        for (int i = 1; i <= rows; i++) {
+            TableRow row = new TableRow(this);
+            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+                    TableRow.LayoutParams.WRAP_CONTENT));
+
+            // inner for loop
+            for (int j = 1; j <= 1; j++) {
+                if (i == 1 && j == 1) {
+                    row.addView(addTextView("Grille / Filter ID"));
+                } else {
+                    //becouse i starts with 1 so that i-2
+                    row.addView(addTextView(filterList[i - 2]));
+                }
+
+            }
+
+            table_layout.addView(row);
+
+        }
+
+
+        //Second section
+        // outer for loop
+        for (int i = 1; i <= rows; i++) {
+
+            TableRow row = new TableRow(this);
+            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+                    TableRow.LayoutParams.WRAP_CONTENT));
+
+            // inner for loop
+            for (int j = 1; j <= cols; j++) {
+                if (i == 1 && j <= cols) {
+                    row.addView(addTextView(" V " + j));
+                } else {
+                    //tv.setText(84+i+j+"");
+                    row.addView(addEditTextView(i));
+                }
+            }
+            table_layout2.addView(row);
+        }
+
+        //fourth section
+        // outer for loop
+        for (int i = 1; i <= rows; i++) {
+            TableRow row = new TableRow(this);
+            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+                    TableRow.LayoutParams.WRAP_CONTENT));
+            // inner for loop
+            for (int j = 1; j <= 1; j++) {
+
+                if (i == 1 && j == 1) {
+                    row.addView(addTextView(" Result "));
+                } else {
+                    row.addView(addTextView(" PASS "));
+                }
+            }
+            table_layout4.addView(row);
+        }
+
+        //dismiss progressbar
+        if (pr.isShowing())
+            pr.dismiss();
+
+    }
+
+
+    private TextView addTextView(String textValue) {
+        TextView tv = new TextView(this);
+        tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+                TableRow.LayoutParams.WRAP_CONTENT));
+        tv.setBackgroundResource(R.drawable.border1);
+        //tv.setPadding(5, 5, 5, 5);
+        tv.setTextColor(getResources().getColor(R.color.black));
+        tv.setTextSize(getResources().getDimension(R.dimen.normal_text_size));
+        //tv.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD);
+        tv.setSingleLine(false);
+        tv.setMaxLines(3);
+        tv.setEllipsize(TextUtils.TruncateAt.END);
+        tv.setText(textValue);
+        return tv;
+    }
+
+    private TextView addTextViewWithoutBorder(String textValue) {
+        TextView tv = new TextView(this);
+        tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+                TableRow.LayoutParams.WRAP_CONTENT));
+        //tv.setBackgroundResource(R.drawable.border);
+        tv.setPadding(5, 5, 5, 5);
+        tv.setTextColor(getResources().getColor(R.color.black));
+        tv.setTextSize(getResources().getDimension(R.dimen.normal_text_size));
+        //tv.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD);
+        tv.setSingleLine(true);
+        tv.setEllipsize(TextUtils.TruncateAt.END);
+        //tv.setText(textValue);
+        return tv;
+    }
+
+    private TextView addResultTextView(int rowsNo) {
+        TextView tv = new TextView(this);
+        tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+                TableRow.LayoutParams.WRAP_CONTENT));
+        tv.setBackgroundResource(R.drawable.border);
+        tv.setPadding(5, 5, 5, 5);
+        tv.setTextColor(getResources().getColor(R.color.black));
+        tv.setTextSize(getResources().getDimension(R.dimen.normal_text_size));
+        //tv.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD);
+        tv.setEms(4);
+        tv.setSingleLine(true);
+        tv.setEllipsize(TextUtils.TruncateAt.END);
+        Log.d(TAG, " idCountTv " + idCountTv);
+        tv.setId(idCountTv);
+        tv.setTag(rowsNo);
+        idCountTv++;
+        txtViewList.add(tv);
+        return tv;
+    }
+
+    private EditText addEditTextView(int rowNo) {
+        EditText editTv = new EditText(this);
+        editTv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+                TableRow.LayoutParams.WRAP_CONTENT));
+        editTv.setBackgroundResource(R.drawable.border);
+        editTv.setPadding(8, 5, 8, 5);
+        editTv.setTextColor(getResources().getColor(R.color.black));
+        editTv.setTextSize(getResources().getDimension(R.dimen.normal_text_size));
+        //editTv.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD);
+        if (isTestFive)
+            editTv.setHint("Enter R1, R2 and R3 separated by ,");
+        editTv.setEms(4);
+        editTv.setSingleLine(true);
+        editTv.setInputType(InputType.TYPE_CLASS_NUMBER);
+        editTv.setEllipsize(TextUtils.TruncateAt.END);
+        Log.d(TAG, " idCountEtv " + idCountEtv);
+        editTv.setId(idCountEtv);
+        editTv.setTag(rowNo);
+        editTv.addTextChangedListener((new TextValidator(
+                DynamicTableActivity.this, idCountEtv)));
+        editTextList.add(editTv);
+        idCountEtv++;
+        return editTv;
+    }
+
+//    private EditText addEditTextView(int rowNo) {
+//        EditText editTv = new EditText(this);
+//        editTv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+//                TableRow.LayoutParams.WRAP_CONTENT));
+//        editTv.setBackgroundResource(R.drawable.border);
+//        editTv.setPadding(8, 5, 8, 5);
+//        editTv.setTextColor(getResources().getColor(R.color.black));
+//        editTv.setTextSize(getResources().getDimension(R.dimen.normal_text_size));
+//        //editTv.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD);
+//        if (isTestFive)
+//            editTv.setHint("Enter R1, R2 and R3 separated by ,");
+//        editTv.setEms(4);
+//        editTv.setSingleLine(true);
+//        editTv.setInputType(InputType.TYPE_CLASS_NUMBER);
+//        editTv.setEllipsize(TextUtils.TruncateAt.END);
+//        Log.d(TAG, " idCountEtv " + idCountEtv);
+//        editTv.setId(idCountEtv);
+//        editTv.setTag(rowNo);
+//        idCountEtv++;
+//        editTv.addTextChangedListener((new TextValidator(
+//                DynamicTableActivity.this, rowNo)));
+//        editTextList.add(editTv);
+//        return editTv;
+//    }
+
+
+    public class TextValidator implements TextWatcher {
+
+        private Context mContext;
+        private EditText mEditText;
+        private int ii = 0, tagF = 0;
+
+        public TextValidator(Context mContext, int viewById) {
+            this.mContext = mContext;
+            //this.mEditText = viewById;
+            this.ii = viewById;
+            // EditText mEditText = (EditText)findViewById(viewById.getId());
+            //TextView mTextView = (TextView)mContext.findViewById(R.id.textView1);
+        }
+
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            try {
+                if (!"".equals(charSequence.toString()))
+                    kk = kk - Integer.parseInt(charSequence.toString());
+                Log.d(TAG, " Removed KK " + kk);
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+            }
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) {
+            Log.d(TAG, " EdiTextChange : ii " + ii + " editable : " + editable.toString());
+            try {
+                if (!"".equals(editable.toString()))
+                    kk = Integer.parseInt(editable.toString());
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+            }
+            Log.d(TAG, " Added KK " + kk);
+
+            //Add EditText value in ArrayList with position
+            for (int i = 0; i < editTextList.size(); i++) {
+                if (editTextList.get(i).getId() == ii) {
+                    rowTagList.put(editTextList.get(i).getId(), (int) editTextList.get(i).getTag());
+                    inputDataList.put(editTextList.get(i).getId(), kk);
+                    tagF = (int) editTextList.get(i).getTag();
+                }
+            }
+
+            //TextView set Value;
+            for (int i = 0; i < txtViewList.size(); i++) {
+                Log.d(TAG, " TextView : Tag " + txtViewList.get(i).getTag() + " tagF " + tagF);
+                if (txtViewList.get(i).getTag().equals(tagF)) {
+                    TextView tvl = txtViewList.get(i);
+                    tvl.setText(getRoundedAverageValue(tagF) + "");
+                    resultDataList.put(tvl.getId(), getRoundedAverageValue(tagF));
+                }
+            }
+
+        }
+
+    }
+
+
+//    public class TextValidator implements TextWatcher {
+//
+//        private Context mContext;
+//        private EditText mEditText;
+//        private int ii = 0, tagF = 0;
+
+//        public TextValidator(Context mContext, int viewById) {
+//            this.mContext = mContext;
+//            //this.mEditText = viewById;
+//            this.ii = viewById;
+//            // EditText mEditText = (EditText)findViewById(viewById.getId());
+//            //TextView mTextView = (TextView)mContext.findViewById(R.id.textView1);
+//        }
+
+//        @Override
+//        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//            try {
+//                if (!"".equals(charSequence.toString()))
+//                    kk = kk - Integer.parseInt(charSequence.toString());
+//                Log.d(TAG, " Removed KK " + kk);
+//            } catch (NumberFormatException e) {
+//                e.printStackTrace();
+//            }
+//        }
+
+//        @Override
+//        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//        }
+
+//        @Override
+//        public void afterTextChanged(Editable editable) {
+//            Log.d(TAG, " EdiTextChange : ii " + ii + " editable : " + editable.toString());
+//            try {
+//                if (!"".equals(editable.toString()))
+//                    kk = Integer.parseInt(editable.toString());
+//            } catch (NumberFormatException e) {
+//                e.printStackTrace();
+//            }
+//            Log.d(TAG, " Added KK " + kk);
+//
+//            //Add EditText value in ArrayList with position
+//            for (int i = 0; i < editTextList.size(); i++) {
+//                if (editTextList.get(i).getId() == ii) {
+//                    rowTagList.put(editTextList.get(i).getId(), ii);
+//                    inputDataList.put(editTextList.get(i).getId(), kk);
+//                    tagF = (int) editTextList.get(i).getTag();
+//                }
+//            }
+//
+//            //TextView set Value;
+//            for (int i = 0; i < txtViewList.size(); i++) {
+//                Log.d(TAG, " TextView : Tag " + txtViewList.get(i).getTag() + " tagF " + tagF);
+//                if (txtViewList.get(i).getTag().equals(tagF)) {
+//                    TextView tvl = txtViewList.get(i);
+//                    tvl.setText(getRoundedAverageValue(ii) + "");
+//                    resultDataList.put(tvl.getId(), getRoundedAverageValue(ii));
+//                    //sameId = ii;
+//                }
+//            }
+//
+//        }
+//    }
+
+    private int getRoundedAverageValue(int count) {
+        int avg = 0;
+        int tagCount = 0;
+        if (!isClearClicked) {
+            try {
+                for (Map.Entry m : rowTagList.entrySet()) {
+                    if (m.getValue().equals(count)) {
+                        if (inputDataList.get(m.getKey()) != null &&
+                                !"".equals(inputDataList.get(m.getKey()))) {
+                            avg = avg + inputDataList.get(m.getKey());
+                            if (inputDataList.get(m.getKey()) > 0)
+                                tagCount = tagCount + 1;
+                        }
+                    }
+                    System.out.println(" Avg " + avg);
+                    System.out.println(m.getKey() + " " + m.getValue());
+                    System.out.println("inputDataList.get(m.getKey())" + "  " + inputDataList.get(m.getKey()));
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        Log.d(TAG, "Avg: Method sum: " + avg + " count : " + tagCount);
+        float abc = (float) avg / (float) tagCount;
+        Log.d(TAG, "Float Value :" + abc);
+        avg = Math.round(abc);
+        Log.d(TAG, "Avg: Method Avg: " + avg);
+        return avg;
+    }
+
+//    private int getRoundedAverageValue(int count) {
+//        int avg = 0;
+//        int tagCount = 0;
+//        if(!isClearClicked){
+//            try {
+//                for (Map.Entry m : rowTagList.entrySet()) {
+//                    if (m.getValue().equals(count ))
+//                    {
+//                        if(inputDataList.get(m.getKey())!= null &&
+//                                !"".equals(inputDataList.get(m.getKey()))){
+//                            avg = avg + inputDataList.get(m.getKey());
+//                            tagCount = tagCount+1;
+//                        }
+//                    }
+//                    System.out.println(" Avg " + avg);
+//                    System.out.println(m.getKey() + " " + m.getValue());
+//                    System.out.println("inputDataList.get(m.getKey())" + "  " + inputDataList.get(m.getKey()));
+//                }
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//        }
+//        Log.d(TAG, "Avg: Method sum: " + avg +" count : "+tagCount);
+//        float abc = (float) avg / (float) tagCount;
+//        Log.d(TAG, "Float Value :" + abc);
+//        avg = Math.round(abc);
+//        Log.d(TAG, "Avg: Method Avg: " + avg);
+//        tagCount=0;
+//        return avg;
+//    }
+
+//    private int getRoundedAverageValue(int rowTag) {
+//        int avg = 0;
+//        int count = 0;
+//        for (Map.Entry m : rowTagList.entrySet()) {
+//            ++count;
+//            avg = avg + inputDataList.get(m.getKey());
+//            System.out.println(" Avg " + avg);
+//            System.out.println(m.getKey() + " " + m.getValue());
+//            System.out.println("inputDataList.get(m.getKey())" + "  " + inputDataList.get(m.getKey()));
+//        }
+///*        for (int i = 0; i < rowTagList.size(); i++) {
+//            if (rowTagList.get(i) == rowTag) {
+//                count++;
+//                avg = avg + inputDataList.get(i);
+//            }
+//        }*/
+//        Log.d(TAG, "Avg: Method sum: " + avg);
+//        float abc = (float) avg / (float) count;
+//        Log.d(TAG, "Float Value :" + abc);
+//        avg = Math.round(abc);
+//        Log.d(TAG, "Avg: Method Avg: " + avg);
+//        return avg;
+//    }
+
+//    private int getRoundedAverageValue(int rowTag) {
+//        int avg = 0;
+//        int count = 0;
+//        for (Map.Entry m : rowTagList.entrySet()) {
+//            ++count;
+//            if (!inputDataList.isEmpty() && inputDataList.size() > 0)
+//                try {
+//                    avg = avg + inputDataList.get(m.getKey());
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                    inputDataList.clear();
+//                    resultDataList.clear();
+//                }
+//            System.out.println(" Avg " + avg);
+//            System.out.println(m.getKey() + " " + m.getValue());
+//            System.out.println("inputDataList.get(m.getKey())" + "  " + inputDataList.get(m.getKey()));
+//        }
+///*        for (int i = 0; i < rowTagList.size(); i++) {
+//            if (rowTagList.get(i) == rowTag) {
+//                count++;
+//                avg = avg + inputDataList.get(i);
+//            }
+//        }*/
+//        Log.d(TAG, "Avg: Method sum: " + avg);
+//        float abc = (float) avg / (float) count;
+//        Log.d(TAG, "Float Value :" + abc);
+//        avg = Math.round(abc);
+//        Log.d(TAG, "Avg: Method Avg: " + avg);
+//        return avg;
+//    }
+
+
+    private void initRes() {
+        verify_btn = (Button) findViewById(R.id.verify_btn);
+        verify_btn.setOnClickListener(this);
+
+        //Test 1
+        table_layout = (TableLayout) findViewById(R.id.tableLayout1);
+        table_layout2 = (TableLayout) findViewById(R.id.tableLayout2);
+        table_layout3 = (TableLayout) findViewById(R.id.tableLayout3);
+        table_layout4 = (TableLayout) findViewById(R.id.tableLayout4);
+        if ("RD_AV_5".equalsIgnoreCase(testType)) {
+            findViewById(R.id.test1_table_ll).setVisibility(View.VISIBLE);
+        }
+
+        //Test 2
+        test2_table_layout = (TableLayout) findViewById(R.id.test2_tableLayout1);
+        test2_table_layout2 = (TableLayout) findViewById(R.id.test2_tableLayout2);
+        test2_table_layout3 = (TableLayout) findViewById(R.id.test2_tableLayout3);
+        test2_table_layout4 = (TableLayout) findViewById(R.id.test2_tableLayout4);
+        test2_table_layout5 = (TableLayout) findViewById(R.id.test2_tableLayout5);
+        test2_table_layout6 = (TableLayout) findViewById(R.id.test2_tableLayout6);
+        test2_table_layout7 = (TableLayout) findViewById(R.id.test2_tableLayout7);
+        test2_table_layout8 = (TableLayout) findViewById(R.id.test2_tableLayout8);
+        if ("RD_ACPH_AV".equalsIgnoreCase(testType)) {
+            findViewById(R.id.test2_table_ll).setVisibility(View.VISIBLE);
+        }
+
+        //Test3
+        test3_table_layout = (TableLayout) findViewById(R.id.test3_tableLayout1);
+        test3_table_layout2 = (TableLayout) findViewById(R.id.test3_tableLayout2);
+        test3_table_layout3 = (TableLayout) findViewById(R.id.test3_tableLayout3);
+        test3_table_layout4 = (TableLayout) findViewById(R.id.test3_tableLayout4);
+        test3_table_layout5 = (TableLayout) findViewById(R.id.test3_tableLayout5);
+        if ("RD_ACPH_H".equalsIgnoreCase(testType)) {
+            findViewById(R.id.test3_table_ll).setVisibility(View.VISIBLE);
+        }
+
+        //Test4
+        test4_table_layout = (TableLayout) findViewById(R.id.test4_tableLayout1);
+        test4_table_layout2 = (TableLayout) findViewById(R.id.test4_tableLayout2);
+        test4_table_layout3 = (TableLayout) findViewById(R.id.test4_tableLayout3);
+        test4_table_layout4 = (TableLayout) findViewById(R.id.test4_tableLayout4);
+        test4_table_layout5 = (TableLayout) findViewById(R.id.test4_tableLayout5);
+        test4_table_layout6 = (TableLayout) findViewById(R.id.test4_tableLayout6);
+        test4_table_layout7 = (TableLayout) findViewById(R.id.test4_tableLayout7);
+        if ("RD_FIT".equalsIgnoreCase(testType)) {
+            findViewById(R.id.test4_table_ll).setVisibility(View.VISIBLE);
+        }
+
+        //Test5
+        test5_table_layout = (TableLayout) findViewById(R.id.test5_tableLayout1);
+        test5_table_layout2 = (TableLayout) findViewById(R.id.test5_tableLayout2);
+        test5_table_layout3 = (TableLayout) findViewById(R.id.test5_tableLayout3);
+        test5_table_layout4 = (TableLayout) findViewById(R.id.test5_tableLayout4);
+        test5_table_layout5 = (TableLayout) findViewById(R.id.test5_tableLayout5);
+        if ("RD_PC_3".equalsIgnoreCase(testType)) {
+            findViewById(R.id.test5_table_ll).setVisibility(View.VISIBLE);
+        }
+
+        //Test6
+        test6A_table_layout = (TableLayout) findViewById(R.id.test6A_tableLayout1);
+        test6A_table_layout2 = (TableLayout) findViewById(R.id.test6A_tableLayout2);
+        test6A_table_layout3 = (TableLayout) findViewById(R.id.test6A_tableLayout3);
+        if ("RD_RCT".equalsIgnoreCase(testType)) {
+            findViewById(R.id.test6A_table_ll).setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void removeView() {
+        //Test1
+        if ("RD_AV_5".equalsIgnoreCase(testType)) {
+            table_layout.removeAllViews();
+            table_layout2.removeAllViews();
+            table_layout3.removeAllViews();
+            table_layout4.removeAllViews();
+        }
+
+        //Test 2
+        if ("RD_ACPH_AV".equalsIgnoreCase(testType)) {
+            test2_table_layout.removeAllViews();
+            test2_table_layout2.removeAllViews();
+            test2_table_layout3.removeAllViews();
+            test2_table_layout4.removeAllViews();
+            test2_table_layout5.removeAllViews();
+            test2_table_layout6.removeAllViews();
+            test2_table_layout7.removeAllViews();
+            test2_table_layout8.removeAllViews();
+        }
+
+        //Test 3
+        if ("RD_ACPH_H".equalsIgnoreCase(testType)) {
+            test3_table_layout.removeAllViews();
+            test3_table_layout2.removeAllViews();
+            test3_table_layout3.removeAllViews();
+            test3_table_layout4.removeAllViews();
+            test3_table_layout5.removeAllViews();
+        }
+
+    }
+}

@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <!--    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@drawable/border"
+            android:orientation="horizontal"
+            android:paddingBottom="1dp"
+            android:paddingLeft="1dp"
+            android:paddingTop="1dp">
+
+
+            </LinearLayout>-->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/border"
+        android:orientation="horizontal"
+        android:paddingBottom="1dp"
+        android:paddingLeft="1dp"
+        android:paddingTop="1dp">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/black_overlay"
+            android:gravity="bottom"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/TextAppearance.AppCompat.header_left"
+                android:paddingBottom="5dp"
+                android:paddingLeft="10dp"
+                android:text="@string/inference" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/TextAppearance.AppCompat.header_right"
+                android:gravity="center"
+                android:maxLines="3"
+                android:paddingLeft="5dp"
+                android:paddingTop="10dp"
+                android:singleLine="false"
+                android:text="@string/infrance_value" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/border"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/TextAppearance.AppCompat.header_left"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:text="@string/tes_cunducted_buy" />
+            <TextView
+                android:id="@+id/testcunducter"
+                style="@style/TextAppearance.AppCompat.header_left"
+                android:layout_gravity="center"
+                android:text="@string/test_cunducter_name" />
+
+            <TextView
+                style="@style/TextAppearance.AppCompat.header_left"
+                android:layout_gravity="center"
+                android:text="@string/test_cunduct_org" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/border"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/testwitness"
+                style="@style/TextAppearance.AppCompat.header_left"
+                android:layout_gravity="center"
+                android:text="@string/test_witness_name" />
+
+            <TextView
+                style="@style/TextAppearance.AppCompat.header_left"
+                android:layout_gravity="center"
+                android:text="@string/tewst_witness_by" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingBottom="30dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="30dp">
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <Button
+            android:id="@+id/submit"
+            style="@style/Base.TextAppearance.AppCompat.Button.footerButton"
+            android:layout_weight="2"
+            android:text="@string/test_selection_submit" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <Button
+            android:id="@+id/clear"
+            style="@style/Base.TextAppearance.AppCompat.Button.footerButton"
+            android:layout_weight="2"
+            android:text="@string/test_selection_clear" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <Button
+            android:id="@+id/cancel"
+            style="@style/Base.TextAppearance.AppCompat.Button.footerButton"
+            android:layout_weight="2"
+            android:text="@string/test_selection_exit" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+    </LinearLayout>
+
+</LinearLayout>

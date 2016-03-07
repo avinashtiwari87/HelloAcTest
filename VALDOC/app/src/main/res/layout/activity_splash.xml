@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="com.app.voldoc.SplashActivity">
+
+    <TextView
+        android:id="@+id/welcome_txt1"
+        android:text="Hello World! Saurabh "
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:id="@+id/test_screen_1"
+        android:layout_below="@+id/welcome_txt1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal"
+        android:padding="5dp" >
+
+        <EditText
+            android:id="@+id/screen1_rowno_etv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:layout_marginRight="10dp"
+            android:ems="5"
+            android:hint="RowNo"
+            android:inputType="number" />
+
+        <EditText
+            android:id="@+id/screen1_colno_etv"
+            android:padding="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:hint="ColNo"
+            android:ems="5"
+            android:inputType="number" />
+
+        <Button
+            android:id="@+id/build_screen1_btn"
+            android:padding="20dp"
+            android:layout_marginLeft="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textColor="@color/blue"
+            android:typeface="normal"
+            android:textSize="22sp"
+            android:text="Test 1" />
+    </LinearLayout>
+
+<!-- Test 2 -->
+    <LinearLayout
+        android:id="@+id/test_screen_2"
+        android:layout_below="@+id/test_screen_1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp"
+        android:padding="5dp" >
+
+        <EditText
+            android:id="@+id/screen2_rowno_etv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:layout_marginRight="10dp"
+            android:ems="5"
+            android:hint="RowNo"
+            android:inputType="number" />
+
+        <EditText
+            android:id="@+id/screen2_colno_etv"
+            android:padding="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:hint="ColNo"
+            android:ems="5"
+            android:inputType="number" />
+
+        <Button
+            android:id="@+id/build_screen2_btn"
+            android:padding="20dp"
+            android:layout_marginLeft="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textColor="@color/blue"
+            android:typeface="normal"
+            android:textSize="22sp"
+            android:text="Test 2" />
+    </LinearLayout>
+
+    <!-- Test 3 -->
+    <LinearLayout
+        android:id="@+id/test_screen_3"
+        android:layout_below="@+id/test_screen_2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp"
+        android:padding="5dp" >
+
+        <EditText
+            android:id="@+id/screen3_rowno_etv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:layout_marginRight="10dp"
+            android:ems="5"
+            android:hint="RowNo"
+            android:inputType="number" />
+
+        <EditText
+            android:id="@+id/screen3_colno_etv"
+            android:padding="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:hint="ColNo"
+            android:ems="5"
+            android:inputType="number" />
+
+        <Button
+            android:id="@+id/build_screen3_btn"
+            android:padding="20dp"
+            android:layout_marginLeft="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textColor="@color/blue"
+            android:typeface="normal"
+            android:textSize="22sp"
+            android:text="Test 3" />
+    </LinearLayout>
+    <!-- Test 4 -->
+    <LinearLayout
+        android:id="@+id/test_screen_4"
+        android:layout_below="@+id/test_screen_3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp"
+        android:padding="5dp" >
+
+        <EditText
+            android:id="@+id/screen4_rowno_etv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:layout_marginRight="10dp"
+            android:ems="5"
+            android:hint="RowNo"
+            android:inputType="number" />
+
+        <EditText
+            android:id="@+id/screen4_colno_etv"
+            android:padding="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:hint="ColNo"
+            android:ems="5"
+            android:inputType="number" />
+
+        <Button
+            android:id="@+id/build_screen4_btn"
+            android:padding="20dp"
+            android:layout_marginLeft="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textColor="@color/blue"
+            android:typeface="normal"
+            android:textSize="22sp"
+            android:text="Test 4" />
+    </LinearLayout>
+    <!-- Test 5 -->
+    <LinearLayout
+        android:id="@+id/test_screen_5"
+        android:layout_below="@+id/test_screen_4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp"
+        android:padding="5dp" >
+
+        <EditText
+            android:id="@+id/screen5_rowno_etv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:layout_marginRight="10dp"
+            android:ems="5"
+            android:hint="RowNo"
+            android:inputType="number" />
+
+        <EditText
+            android:id="@+id/screen5_colno_etv"
+            android:padding="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:hint="ColNo"
+            android:ems="5"
+            android:inputType="number" />
+
+        <Button
+            android:id="@+id/build_screen5_btn"
+            android:padding="20dp"
+            android:layout_marginLeft="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textColor="@color/blue"
+            android:typeface="normal"
+            android:textSize="22sp"
+            android:text="Test 5" />
+    </LinearLayout>
+    <!-- Test 2 -->
+    <LinearLayout
+        android:id="@+id/test_screen_6"
+        android:layout_below="@+id/test_screen_5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp"
+        android:padding="5dp" >
+
+        <EditText
+            android:id="@+id/screen6_rowno_etv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:layout_marginRight="10dp"
+            android:ems="5"
+            android:hint="RowNo"
+            android:inputType="number" />
+
+        <EditText
+            android:id="@+id/screen6_colno_etv"
+            android:padding="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:hint="ColNo"
+            android:ems="5"
+            android:inputType="number" />
+
+        <Button
+            android:id="@+id/build_screen6_btn"
+            android:padding="20dp"
+            android:layout_marginLeft="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textColor="@color/blue"
+            android:typeface="normal"
+            android:textSize="22sp"
+            android:text="Test 6" />
+    </LinearLayout>
+
+</RelativeLayout>
