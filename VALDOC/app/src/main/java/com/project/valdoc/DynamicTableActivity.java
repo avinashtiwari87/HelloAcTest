@@ -48,9 +48,9 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
     TableLayout test4_table_layout, test4_table_layout2, test4_table_layout3, test4_table_layout4,
             test4_table_layout5, test4_table_layout6, test4_table_layout7;
     //Test 5 View ...
-    TableLayout test5_table_layout, test5_table_layout2, test5_table_layout2_1,test5_table_layout2_2,test5_table_layout2_3,
-            test5_table_layout3, test5_table_layout4,test5_table_layout4_1,test5_table_layout4_2,test5_table_layout4_3,
-            test5_table_layout5,test5_table_layout5_1,test5_table_layout3_1;
+    TableLayout test5_table_layout, test5_table_layout2, test5_table_layout2_1, test5_table_layout2_2, test5_table_layout2_3,
+            test5_table_layout3, test5_table_layout4, test5_table_layout4_1, test5_table_layout4_2, test5_table_layout4_3,
+            test5_table_layout5, test5_table_layout5_1, test5_table_layout3_1;
     //Test 6 View ...
     TableLayout test6A_table_layout, test6A_table_layout2, test6A_table_layout3;
 
@@ -68,7 +68,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
     int filterSizeIds = 100, airFlowRateIds = 300,
             totalAirFlowRateIds = 400;
     //Test 5 Variable
-    int test5CommonFormulaIds1 = 500,test5CommonFormulaIds2 = 600 ;
+    int test5CommonFormulaIds1 = 500, test5CommonFormulaIds2 = 600;
 
     ArrayList<TextView> txtViewList;
     ArrayList<EditText> editTextList;
@@ -77,9 +77,9 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
     ArrayList<TextView> totalAirFlowRateTxtList;
     ArrayList<TextView> roomVolumeTxtList;
     ArrayList<TextView> airChangeTxtList;
-    ArrayList<TextView>RDPC3TxtList,RDPC3TxtList2;
-    ArrayList<Integer>meanAverageList1;
-    ArrayList<Integer>meanAverageList2;
+    ArrayList<TextView> RDPC3TxtList, RDPC3TxtList2;
+    ArrayList<Integer> meanAverageList1;
+    ArrayList<Integer> meanAverageList2;
 
     HashMap<Integer, Integer> inputDataHashMap;
     HashMap<Integer, Integer> resultDataHashMap;
@@ -147,7 +147,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
 
 
         createTableRowColum();
-		        //setting the test 2 room volume
+        //setting the test 2 room volume
         if (roomVolumeTxtList != null && roomVolumeTxtList.size() > 0)
             roomVolumeTxtList.get((int) (roomVolumeTxtList.size() / 2)).setText("8500");
     }
@@ -257,15 +257,15 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         }
         if ("RD_FIT".equalsIgnoreCase(testType)) {
             Log.d("valdoc", "DynamicTableActivity" + "rows=" + grillAndSizeFromGrill.size() + " cols=" + applicableTestRoomLocation);
-            BuildTableTest4(grillAndSizeFromGrill.size(), cols);
+            BuildTableTest4(grillAndSizeFromGrill.size() + 1, cols);
         }
         if ("RD_PC_3".equalsIgnoreCase(testType)) {
             Log.d("valdoc", "DynamicTableActivity" + "rows=" + grillAndSizeFromGrill.size() + " cols=" + applicableTestRoomLocation);
-            BuildTableTest5(grillAndSizeFromGrill.size(), cols);
+            BuildTableTest5(grillAndSizeFromGrill.size() + 1, cols);
         }
         if ("RD_RCT".equalsIgnoreCase(testType)) {
             Log.d("valdoc", "DynamicTableActivity" + "rows=" + grillAndSizeFromGrill.size() + " cols=" + applicableTestRoomLocation);
-            BuildTableTest6(grillAndSizeFromGrill.size(), cols);
+            BuildTableTest6(grillAndSizeFromGrill.size() + 1, cols);
         }
     }
 
@@ -364,6 +364,9 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 }
                 intent.putExtra("Room", room);
                 intent.putExtra("AhuNumber", ahuNumber);
+                intent.putExtra("rows", grillAndSizeFromGrill.size() + 1);
+                intent.putExtra("cols", applicableTestRoomLocation);
+
                 intent.putExtra("GRILLIST", grillAndSizeFromGrill);
                 startActivity(intent);
             }
@@ -387,6 +390,9 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 intent.putExtra("Room", room);
                 intent.putExtra("AhuNumber", ahuNumber);
                 intent.putExtra("RoomFilterList", filterArrayList);
+                intent.putExtra("rows", grillAndSizeFromGrill.size() + 1);
+                intent.putExtra("cols", applicableTestRoomLocation);
+
                 //TO Do testspesification will be shown from room filter spesification
                 // location will be the size off rommfilter list
                 startActivity(intent);
@@ -412,6 +418,9 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 intent.putExtra("AhuNumber", ahuNumber);
                 intent.putExtra("LOCATION", applicableTestRoomLocation);
                 intent.putExtra("NOOFCYCLE", noOfCycle);
+                intent.putExtra("rows", grillAndSizeFromGrill.size() + 1);
+                intent.putExtra("cols", applicableTestRoomLocation);
+
                 startActivity(intent);
             }
             if ("RD_RCT".equalsIgnoreCase(testType)) {
@@ -435,6 +444,9 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 intent.putExtra("AhuNumber", ahuNumber);
                 intent.putExtra("LOCATION", applicableTestRoomLocation);
                 intent.putExtra("NOOFCYCLE", noOfCycle);
+                intent.putExtra("rows", grillAndSizeFromGrill.size() + 1);
+                intent.putExtra("cols", applicableTestRoomLocation);
+
                 startActivity(intent);
 
             }
@@ -664,7 +676,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 if (i == 1 && j == 1) {
                     row.addView(addTextView("R1"));
                 } else {
-                    row.addView(addEditTextView(rows+i));
+                    row.addView(addEditTextView(rows + i));
                 }
 
             }
@@ -678,7 +690,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 if (i == 1 && j == 1) {
                     row2.addView(addTextView("R2"));
                 } else {
-                    row2.addView(addEditTextView(rows+i));
+                    row2.addView(addEditTextView(rows + i));
                 }
 
             }
@@ -692,7 +704,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 if (i == 1 && j == 1) {
                     row3.addView(addTextView("R3"));
                 } else {
-                    row3.addView(addEditTextView(rows+i));
+                    row3.addView(addEditTextView(rows + i));
                 }
 
             }
@@ -718,7 +730,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 if (i == 1 && j == 1) {
                     row.addView(addTextView(" Average "));
                 } else {
-                    row.addView(addResultTextView(rows+i));
+                    row.addView(addResultTextView(rows + i));
                 }
 
             }
@@ -885,9 +897,9 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 if (i == 1 && j == 1) {
                     row.addView(addTextView(" Grille/Filter ID No\n "));
                 } else {
-                    if(filterList!= null && filterList.length>0){
+                    if (filterList != null && filterList.length > 0) {
                         row.addView(addTextView(filterList[i - 2]));
-                    }else{
+                    } else {
                         row.addView(addTextView("grillAndSizeFromGrill"));
                     }
                 }
@@ -942,8 +954,8 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 if (i == 1 && j == 1) {
                     row.addView(addTextView(" Room Volume in\n ft3(RV)"));
                 } else {
-                   // row.addView(addTextViewWithoutBorder("490"));
-                   row.addView(addTextViewWithIdsNoBorder(i, 0, roomVolumeTxtList));
+                    // row.addView(addTextViewWithoutBorder("490"));
+                    row.addView(addTextViewWithIdsNoBorder(i, 0, roomVolumeTxtList));
                 }
             }
             test3_table_layout4.addView(row);
@@ -986,9 +998,9 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 if (i == 1 && j == 1) {
                     row.addView(addTextView(" Grille / Filter ID\n "));
                 } else {
-                    if(filterList!=null && filterList.length>0){
+                    if (filterList != null && filterList.length > 0) {
                         row.addView(addTextView(filterList[i - 2]));
-                    }else{
+                    } else {
                         row.addView(addTextView("grillAndSizeFromGrill"));
                     }
                 }
@@ -1483,7 +1495,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 }
             }
             //Calculation Test 3 specific
-            if("RD_ACPH_H".equals(testType)){
+            if ("RD_ACPH_H".equals(testType)) {
 
                 //Total AirFlow Rate (sum of AirFlow Rate)
                 if (totalAirFlowRateTxtList != null && totalAirFlowRateTxtList.size() > 0) {
@@ -1521,14 +1533,14 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                         TextView tvl = txtViewList.get(i);
                         tvl.setText(getRoundedAverageValue(tagF) + "");
                         resultDataHashMap.put(tvl.getId(), getRoundedAverageValue(tagF));
-                        if(tagF<=rows){
+                        if (tagF <= rows) {
                             meanAverageList1.add(getRoundedAverageValue(tagF));
-                           // RDPC3TxtList.get(0).setText(getMeanAverageValue(meanAverageList1));
-                            Log.d(TAG, " RDPC3TxtList size : "+RDPC3TxtList.size()+" MAvg1 "+getMeanAverageValue(meanAverageList1));
-                        }else{
+                            // RDPC3TxtList.get(0).setText(getMeanAverageValue(meanAverageList1));
+                            Log.d(TAG, " RDPC3TxtList size : " + RDPC3TxtList.size() + " MAvg1 " + getMeanAverageValue(meanAverageList1));
+                        } else {
                             meanAverageList2.add(getRoundedAverageValue(tagF));
                             //RDPC3TxtList2.get(0).setText(getMeanAverageValue(meanAverageList2));
-                            Log.d(TAG, " RDPC3TxtList2 size : "+RDPC3TxtList2.size()+" MAvg2 : "+getMeanAverageValue(meanAverageList2));
+                            Log.d(TAG, " RDPC3TxtList2 size : " + RDPC3TxtList2.size() + " MAvg2 : " + getMeanAverageValue(meanAverageList2));
                         }
                     }
                 }
@@ -1577,7 +1589,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         }
         if (filterSizeTxtViewList != null && filterSizeTxtViewList.size() > 0) {
             for (int i = 0; i < filterSizeTxtViewList.size(); i++) {
-                if (filterSizeTxtViewList.get(i).getTag() == ids) {
+                if (filterSizeTxtViewList.get(i).getTag().equals(ids)) {
                     try {
                         filterSize = Float.parseFloat(
                                 filterSizeTxtViewList.get(i).getText().toString());
@@ -1603,7 +1615,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
 
     private float getSumOfAirSupply(ArrayList<EditText> airFlowRateTxtViewList) {
         float totalSum = 0.0f;
-        if(airFlowRateTxtViewList !=null && airFlowRateTxtViewList.size()>0){
+        if (airFlowRateTxtViewList != null && airFlowRateTxtViewList.size() > 0) {
             for (int i = 0; i < airFlowRateTxtViewList.size(); i++) {
                 if (airFlowRateTxtViewList.get(i).getText().toString() != null &&
                         !"".equals(airFlowRateTxtViewList.get(i).getText().toString()))
@@ -1621,11 +1633,11 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
 
     private int getMeanAverageValue(ArrayList<Integer> meanAverageList2) {
         int meanAvg = 0;
-        if(meanAverageList2 != null && meanAverageList2.size()>0){
-            for(int i = 0;i<meanAverageList2.size();i++){
-                meanAvg = meanAvg+meanAverageList2.get(i);
+        if (meanAverageList2 != null && meanAverageList2.size() > 0) {
+            for (int i = 0; i < meanAverageList2.size(); i++) {
+                meanAvg = meanAvg + meanAverageList2.get(i);
             }
-            meanAvg = meanAvg/meanAverageList2.size();
+            meanAvg = meanAvg / meanAverageList2.size();
         }
 
         return meanAvg;
