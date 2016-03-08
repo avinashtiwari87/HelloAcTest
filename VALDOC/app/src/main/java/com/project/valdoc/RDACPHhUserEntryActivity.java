@@ -24,11 +24,12 @@ import com.project.valdoc.intity.Room;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 
 public class RDACPHhUserEntryActivity extends AppCompatActivity {
     private static final String TAG = "RDACPHhUser";
     TextView headerText;
-    TableLayout test3_table_layout,test3_table_layout2,test3_table_layout3,test3_table_layout4,
+    TableLayout test3_table_layout, test3_table_layout2, test3_table_layout3, test3_table_layout4,
             test3_table_layout5;
 
     int rows, cols;
@@ -41,7 +42,7 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
     private PartnerInstrument partnerInstrument;
     private String ahuNumber;
     private Room room;
-    private ArrayList<String> grillAndSizeFromGrill;
+    private ArrayList<HashMap<String, String>> grillAndSizeFromGrill;
     private String areaName;
     private String witnessFirst;
     private String witnessSecond;
@@ -90,11 +91,11 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rdacphh_user_entry);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-        pr = ProgressDialog.show(this,"Please Wait", "Loading...");
+        pr = ProgressDialog.show(this, "Please Wait", "Loading...");
 
-        if(getIntent().hasExtra("rows") && getIntent().hasExtra("cols")){
-            rows = getIntent().getIntExtra("rows",0);
-            cols = getIntent().getIntExtra("cols",0);
+        if (getIntent().hasExtra("rows") && getIntent().hasExtra("cols")) {
+            rows = getIntent().getIntExtra("rows", 0);
+            cols = getIntent().getIntExtra("cols", 0);
             testType = getIntent().getStringExtra("testType");
             Log.d(TAG, " TestType : " + testType);
         }
@@ -197,11 +198,11 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
 
     }
 
-    private void initTextView(){
+    private void initTextView() {
         // layout data which is not in use
-        instrumentNoTextView = (TextView) findViewById(R.id.instrument_no);
+        instrumentNoTextView = (TextView) findViewById(R.id.instrument_no_test3);
         instrumentNoTextView.setVisibility(View.GONE);
-        testerNameTextView = (TextView) findViewById(R.id.tester_name);
+        testerNameTextView = (TextView) findViewById(R.id.tester_name_test3);
         testerNameTextView.setVisibility(View.GONE);
         instrumentUsedTextView = (TextView) findViewById(R.id.instrument_used);
         instrumentUsedTextView.setVisibility(View.GONE);
@@ -277,7 +278,7 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
                 clientInstrument = null;
                 partnerInstrument = null;
                 ahuNumber = null;
-                grillAndSizeFromGrill=null;
+                grillAndSizeFromGrill = null;
                 room = null;
                 areaName = null;
                 witnessFirst = null;
@@ -300,7 +301,7 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
 
                 room = (Room) extras.getSerializable("Room");
                 ahuNumber = extras.getString("AhuNumber");
-                grillAndSizeFromGrill = (ArrayList<String>) extras.getStringArrayList("GRILLIST");
+                grillAndSizeFromGrill = (ArrayList<HashMap<String, String>>) extras.getSerializable("GRILLIST");
 
             }
         }
@@ -317,9 +318,9 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
                     TableRow.LayoutParams.WRAP_CONTENT));
             // inner for loop
             for (int j = 1; j <= 1; j++) {
-                if(i==1 && j==1){
+                if (i == 1 && j == 1) {
                     row.addView(addTextView(" Grille/Filter ID No\n "));
-                }else{
+                } else {
                     row.addView(addTextView(" Filter No " + i));
                 }
 
@@ -335,9 +336,9 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
                     TableRow.LayoutParams.WRAP_CONTENT));
             // inner for loop
             for (int j = 1; j <= 1; j++) {
-                if(i==1 && j==1){
+                if (i == 1 && j == 1) {
                     row.addView(addTextView(" Measured Supply Air\n Velocity in cfm (in cfm) "));
-                }else{
+                } else {
                     // row.addView(addResultTextView(i));
                     row.addView(addTextView(" "));
                 }
@@ -353,9 +354,9 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
                     TableRow.LayoutParams.WRAP_CONTENT));
             // inner for loop
             for (int j = 1; j <= 1; j++) {
-                if(i==1 && j==1){
+                if (i == 1 && j == 1) {
                     row.addView(addTextView(" Total Air Flow Rate\n in cfm (TFR)"));
-                }else{
+                } else {
                     //row.addView(addResultTextView(i));
                     row.addView(addTextViewWithoutBorder("0"));
                 }
@@ -371,9 +372,9 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
                     TableRow.LayoutParams.WRAP_CONTENT));
             // inner for loop
             for (int j = 1; j <= 1; j++) {
-                if(i==1 && j==1){
+                if (i == 1 && j == 1) {
                     row.addView(addTextView(" Room Volume in\n ft3(RV)"));
-                }else{
+                } else {
                     //row.addView(addResultTextView(i));
                     row.addView(addTextViewWithoutBorder("490"));
                 }
@@ -389,9 +390,9 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
                     TableRow.LayoutParams.WRAP_CONTENT));
             // inner for loop
             for (int j = 1; j <= 1; j++) {
-                if(i==1 && j==1){
+                if (i == 1 && j == 1) {
                     row.addView(addTextView("No. of Air Changes/Hr\n ((TFR/RV)x60))"));
-                }else{
+                } else {
                     //row.addView(addResultTextView(i));
                     row.addView(addTextViewWithoutBorder("490"));
                 }
@@ -400,7 +401,7 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
         }
 
         //dismiss progressbar
-        if(pr.isShowing())
+        if (pr.isShowing())
             pr.dismiss();
 
 
@@ -438,7 +439,7 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
         return tv;
     }
 
-    private EditText addEditTextView(){
+    private EditText addEditTextView() {
         EditText editTv = new EditText(this);
         editTv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
                 TableRow.LayoutParams.WRAP_CONTENT));
@@ -453,15 +454,15 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
         return editTv;
     }
 
-    private void initRes(){
-        headerText = (TextView)findViewById(R.id.common_header_tv);
+    private void initRes() {
+        headerText = (TextView) findViewById(R.id.common_header_tv);
         headerText.setText("* Air Flow Velocity, Volume Testing and Determination of Air Changes per Hour Rates *");
         //Test3
-        test3_table_layout = (TableLayout)findViewById(R.id.test3_tableLayout1);
-        test3_table_layout2 = (TableLayout)findViewById(R.id.test3_tableLayout2);
-        test3_table_layout3 = (TableLayout)findViewById(R.id.test3_tableLayout3);
-        test3_table_layout4 = (TableLayout)findViewById(R.id.test3_tableLayout4);
-        test3_table_layout5 = (TableLayout)findViewById(R.id.test3_tableLayout5);
+        test3_table_layout = (TableLayout) findViewById(R.id.test3_tableLayout1);
+        test3_table_layout2 = (TableLayout) findViewById(R.id.test3_tableLayout2);
+        test3_table_layout3 = (TableLayout) findViewById(R.id.test3_tableLayout3);
+        test3_table_layout4 = (TableLayout) findViewById(R.id.test3_tableLayout4);
+        test3_table_layout5 = (TableLayout) findViewById(R.id.test3_tableLayout5);
         //Hide view coming form test tabl 1
         if ("RD_ACPH_H".equalsIgnoreCase(testType)) {
             findViewById(R.id.test_table_3_header_l_ll).setVisibility(View.GONE);

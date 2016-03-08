@@ -178,9 +178,9 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
 
     private void initTextView() {
         // layout data which is not in use
-        instrumentNoTextView = (TextView) findViewById(R.id.instrument_no);
+        instrumentNoTextView = (TextView) findViewById(R.id.instrument_no_test2);
         instrumentNoTextView.setVisibility(View.GONE);
-        testerNameTextView = (TextView) findViewById(R.id.tester_name);
+        testerNameTextView = (TextView) findViewById(R.id.tester_name_test2);
         testerNameTextView.setVisibility(View.GONE);
         instrumentUsedTextView = (TextView) findViewById(R.id.instrument_used);
         instrumentUsedTextView.setVisibility(View.GONE);

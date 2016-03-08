@@ -1547,11 +1547,11 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                         if(tagF<=rows){
                             Log.d(TAG, " RDPC3TxtList.size() " + RDPC3TxtList.size());
                             TextView txtView = RDPC3TxtList.get(0);
-                            txtView.setText(meanValue+"");
+                            txtView.setText(meanValue + "");
                         }else{
                             Log.d(TAG, " RDPC3TxtList2.size() " + RDPC3TxtList2.size());
                             TextView txtView = RDPC3TxtList2.get(0);
-                            txtView.setText(meanValue+"");
+                            txtView.setText(meanValue + "");
                         }
                     }
                 }
@@ -1689,6 +1689,14 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         table_layout3 = (TableLayout) findViewById(R.id.tableLayout3);
         table_layout4 = (TableLayout) findViewById(R.id.tableLayout4);
         if ("RD_AV_5".equalsIgnoreCase(testType)) {
+            instrumentNo = (TextView) findViewById(R.id.instrument_no);
+            testerName = (TextView) findViewById(R.id.tester_name);
+            testerName.setText(userName);
+            if (loginUserType.equals("CLIENT")) {
+                instrumentNo.setText(clientInstrument.getcInstrumentName());
+            } else {
+                instrumentNo.setText(partnerInstrument.getpInstrumentName());
+            }
             findViewById(R.id.test1_table_ll).setVisibility(View.VISIBLE);
         }
 
@@ -1702,6 +1710,14 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         test2_table_layout7 = (TableLayout) findViewById(R.id.test2_tableLayout7);
         test2_table_layout8 = (TableLayout) findViewById(R.id.test2_tableLayout8);
         if ("RD_ACPH_AV".equalsIgnoreCase(testType)) {
+            instrumentNo = (TextView) findViewById(R.id.instrument_no_test2);
+            testerName = (TextView) findViewById(R.id.tester_name_test2);
+            testerName.setText(userName);
+            if (loginUserType.equals("CLIENT")) {
+                instrumentNo.setText(clientInstrument.getcInstrumentName());
+            } else {
+                instrumentNo.setText(partnerInstrument.getpInstrumentName());
+            }
             findViewById(R.id.test2_table_ll).setVisibility(View.VISIBLE);
         }
 
@@ -1712,6 +1728,14 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         test3_table_layout4 = (TableLayout) findViewById(R.id.test3_tableLayout4);
         test3_table_layout5 = (TableLayout) findViewById(R.id.test3_tableLayout5);
         if ("RD_ACPH_H".equalsIgnoreCase(testType)) {
+            instrumentNo = (TextView) findViewById(R.id.instrument_no_test3);
+            testerName = (TextView) findViewById(R.id.tester_name_test3);
+            testerName.setText(userName);
+            if (loginUserType.equals("CLIENT")) {
+                instrumentNo.setText(clientInstrument.getcInstrumentName());
+            } else {
+                instrumentNo.setText(partnerInstrument.getpInstrumentName());
+            }
             findViewById(R.id.test3_table_ll).setVisibility(View.VISIBLE);
         }
 
@@ -1724,6 +1748,14 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         test4_table_layout6 = (TableLayout) findViewById(R.id.test4_tableLayout6);
         test4_table_layout7 = (TableLayout) findViewById(R.id.test4_tableLayout7);
         if ("RD_FIT".equalsIgnoreCase(testType)) {
+            instrumentNo = (TextView) findViewById(R.id.instrument_no_test4);
+            testerName = (TextView) findViewById(R.id.tester_name_test4);
+            testerName.setText(userName);
+            if (loginUserType.equals("CLIENT")) {
+                instrumentNo.setText(clientInstrument.getcInstrumentName());
+            } else {
+                instrumentNo.setText(partnerInstrument.getpInstrumentName());
+            }
             findViewById(R.id.test4_table_ll).setVisibility(View.VISIBLE);
         }
 
@@ -1742,6 +1774,14 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         test5_table_layout5 = (TableLayout) findViewById(R.id.test5_tableLayout5);
         test5_table_layout5_1 = (TableLayout) findViewById(R.id.test5_tableLayout5_1);
         if ("RD_PC_3".equalsIgnoreCase(testType)) {
+            instrumentNo = (TextView) findViewById(R.id.instrument_no_test5);
+            testerName = (TextView) findViewById(R.id.tester_name_test5);
+            testerName.setText(userName);
+            if (loginUserType.equals("CLIENT")) {
+                instrumentNo.setText(clientInstrument.getcInstrumentName());
+            } else {
+                instrumentNo.setText(partnerInstrument.getpInstrumentName());
+            }
             findViewById(R.id.test5_table_ll).setVisibility(View.VISIBLE);
         }
 
@@ -1750,6 +1790,14 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         test6A_table_layout2 = (TableLayout) findViewById(R.id.test6A_tableLayout2);
         test6A_table_layout3 = (TableLayout) findViewById(R.id.test6A_tableLayout3);
         if ("RD_RCT".equalsIgnoreCase(testType)) {
+            instrumentNo = (TextView) findViewById(R.id.instrument_no_test6);
+            testerName = (TextView) findViewById(R.id.tester_name_test6);
+            testerName.setText(userName);
+            if (loginUserType.equals("CLIENT")) {
+                instrumentNo.setText(clientInstrument.getcInstrumentName());
+            } else {
+                instrumentNo.setText(partnerInstrument.getpInstrumentName());
+            }
             findViewById(R.id.test6A_table_ll).setVisibility(View.VISIBLE);
         }
     }
