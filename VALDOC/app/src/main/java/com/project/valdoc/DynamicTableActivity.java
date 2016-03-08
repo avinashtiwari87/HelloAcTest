@@ -78,8 +78,6 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
     ArrayList<TextView> roomVolumeTxtList;
     ArrayList<TextView> airChangeTxtList;
     ArrayList<TextView> RDPC3TxtList, RDPC3TxtList2;
-    ArrayList<Integer> meanAverageList1;
-    ArrayList<Integer> meanAverageList2;
 
     HashMap<Integer, Integer> inputDataHashMap;
     HashMap<Integer, Integer> resultDataHashMap;
@@ -137,8 +135,6 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         airChangeTxtList = new ArrayList<TextView>();
         RDPC3TxtList = new ArrayList<TextView>();
         RDPC3TxtList2 = new ArrayList<TextView>();
-        meanAverageList1 = new ArrayList<>();
-        meanAverageList2 = new ArrayList<>();
 
 
         inputDataHashMap = new HashMap<Integer, Integer>();
@@ -230,42 +226,50 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                     room = (Room) extras.getSerializable("Room");
                     ahuNumber = extras.getString("AhuNumber");
                     applicableTestRoomLocation = extras.getInt("LOCATION");
-                    noOfCycle = extras.getInt("NOOFCYCLE");
-
-
+                    noOfCycle = extras.getInt("NOOFCYCLE");//throwing Exception...plz check tiwari jee
                 }
-
             }
         }
-
 
     }
 
     private void createTableRowColum() {
-        Log.d("valdoc", "DynamicTableActivity" + "onresume rows=");
         if ("RD_AV_5".equalsIgnoreCase(testType)) {
-            Log.d("valdoc", "DynamicTableActivity" + "rows=" + filterList.length + " cols=" + applicableTestEquipmentLocation);
-            BuildTable(filterList.length + 1, applicableTestEquipmentLocation);
+            if (filterList != null && filterList.length > 0)
+                BuildTable(filterList.length + 1, applicableTestEquipmentLocation);
+            else
+                BuildTable(3, 4);
         }
         if ("RD_ACPH_AV".equalsIgnoreCase(testType)) {
-            Log.d("valdoc", "DynamicTableActivity" + "rows=" + grillAndSizeFromGrill.size() + " cols=" + applicableTestRoomLocation);
-            BuildTableTest2(grillAndSizeFromGrill.size() + 1, applicableTestRoomLocation);
+            if (grillAndSizeFromGrill != null && grillAndSizeFromGrill.size() > 0)
+                BuildTableTest2(grillAndSizeFromGrill.size() + 1, applicableTestRoomLocation);
+            else
+                BuildTableTest2(3, 4);
         }
         if ("RD_ACPH_H".equalsIgnoreCase(testType)) {
-            Log.d("valdoc", "DynamicTableActivity" + "rows=" + grillAndSizeFromGrill.size() + " cols=" + applicableTestRoomLocation);
-            BuildTableTest3(grillAndSizeFromGrill.size() + 1, applicableTestRoomLocation);
+            if (grillAndSizeFromGrill != null && grillAndSizeFromGrill.size() > 0)
+                BuildTableTest3(grillAndSizeFromGrill.size() + 1, applicableTestRoomLocation);
+            else
+                BuildTableTest3(3, 4);
         }
         if ("RD_FIT".equalsIgnoreCase(testType)) {
-            Log.d("valdoc", "DynamicTableActivity" + "rows=" + grillAndSizeFromGrill.size() + " cols=" + applicableTestRoomLocation);
-            BuildTableTest4(grillAndSizeFromGrill.size() + 1, cols);
+            if (grillAndSizeFromGrill != null && grillAndSizeFromGrill.size() > 0)
+                BuildTableTest4(grillAndSizeFromGrill.size() + 1, cols);
+            else
+                BuildTableTest4(3, 4);
         }
         if ("RD_PC_3".equalsIgnoreCase(testType)) {
-            Log.d("valdoc", "DynamicTableActivity" + "rows=" + grillAndSizeFromGrill.size() + " cols=" + applicableTestRoomLocation);
-            BuildTableTest5(grillAndSizeFromGrill.size() + 1, cols);
+            if (grillAndSizeFromGrill != null && grillAndSizeFromGrill.size() > 0)
+                BuildTableTest5(grillAndSizeFromGrill.size() + 1, cols);
+            else
+                BuildTableTest5(4, 6);
+                rows = 4;cols = 6;
         }
         if ("RD_RCT".equalsIgnoreCase(testType)) {
-            Log.d("valdoc", "DynamicTableActivity" + "rows=" + grillAndSizeFromGrill.size() + " cols=" + applicableTestRoomLocation);
-            BuildTableTest6(grillAndSizeFromGrill.size() + 1, cols);
+            if (grillAndSizeFromGrill != null && grillAndSizeFromGrill.size() > 0)
+                BuildTableTest6(grillAndSizeFromGrill.size() + 1, cols);
+            else
+                BuildTableTest6(4, 6);
         }
     }
 
@@ -1533,18 +1537,18 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                         TextView tvl = txtViewList.get(i);
                         tvl.setText(getRoundedAverageValue(tagF) + "");
                         resultDataHashMap.put(tvl.getId(), getRoundedAverageValue(tagF));
-                        if (tagF <= rows) {
-                            meanAverageList1.add(getRoundedAverageValue(tagF));
-                            // RDPC3TxtList.get(0).setText(getMeanAverageValue(meanAverageList1));
-                            Log.d(TAG, " RDPC3TxtList size : " + RDPC3TxtList.size() + " MAvg1 " + getMeanAverageValue(meanAverageList1));
-                        } else {
-                            meanAverageList2.add(getRoundedAverageValue(tagF));
-                            //RDPC3TxtList2.get(0).setText(getMeanAverageValue(meanAverageList2));
-                            Log.d(TAG, " RDPC3TxtList2 size : " + RDPC3TxtList2.size() + " MAvg2 : " + getMeanAverageValue(meanAverageList2));
+                        int meanValue = getMeanAverageValue(resultDataHashMap,tagF);
+                        if(tagF<=rows){
+                            Log.d(TAG, " RDPC3TxtList.size() " + RDPC3TxtList.size());
+                            TextView txtView = RDPC3TxtList.get(0);
+                            txtView.setText(meanValue+"");
+                        }else{
+                            Log.d(TAG, " RDPC3TxtList2.size() " + RDPC3TxtList2.size());
+                            TextView txtView = RDPC3TxtList2.get(0);
+                            txtView.setText(meanValue+"");
                         }
                     }
                 }
-
             }
 
         }
@@ -1631,14 +1635,29 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         return (int) Math.round(((TFR / RV) * 60));
     }
 
-    private int getMeanAverageValue(ArrayList<Integer> meanAverageList2) {
+    private int getMeanAverageValue(HashMap<Integer, Integer> meanAverageList2, int tagF) {
         int meanAvg = 0;
-        if (meanAverageList2 != null && meanAverageList2.size() > 0) {
-            for (int i = 0; i < meanAverageList2.size(); i++) {
-                meanAvg = meanAvg + meanAverageList2.get(i);
+        int tagCount = 0;
+        for (Map.Entry m : meanAverageList2.entrySet()) {
+            if (meanAverageList2.get(m.getKey()) != null && !"".equals(meanAverageList2.get(m.getKey()))) {
+                if((int)m.getKey()<=rows && tagF<rows){
+                    meanAvg = meanAvg + meanAverageList2.get(m.getKey());
+                    if (meanAverageList2.get(m.getKey()) > 0)
+                        tagCount = tagCount + 1;
+                }else if((int)m.getKey()>=rows && tagF>rows){
+                    meanAvg = meanAvg + meanAverageList2.get(m.getKey());
+                    if (meanAverageList2.get(m.getKey()) > 0)
+                        tagCount = tagCount + 1;
+                }
+                System.out.println(" Mean Avg Add " + meanAvg);
+                System.out.println(" Mean Avg Key "+m.getKey() + " Mean Avg Value " + m.getValue());
             }
-            meanAvg = meanAvg / meanAverageList2.size();
         }
+        Log.d(TAG, "Mean Avg: Method sum: " + meanAvg + " count : " + tagCount);
+        float abc = (float) meanAvg / (float) tagCount;
+        Log.d(TAG, "Float Value :" + abc);
+        meanAvg = Math.round(abc);
+        Log.d(TAG, "Avg: Method Avg: " + meanAvg);
 
         return meanAvg;
     }
