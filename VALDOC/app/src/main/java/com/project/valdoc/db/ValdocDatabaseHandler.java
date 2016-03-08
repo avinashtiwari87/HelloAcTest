@@ -101,7 +101,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
     private static final String CREATE_TABLE_APLICABLE_TEST_ROOM = "CREATE TABLE " + APLICABLE_TEST_ROOM_TABLE_NAME
             + "(" + APLICABLE_TEST_ROOM_APLICABLE_TESTID + " INTEGER," + APLICABLE_TEST_ROOM_ROOMID + " INTEGER,"
             + APLICABLE_TEST_ROOM_TESTNAME + " TEXT," + APLICABLE_TEST_ROOM_PERIODICITY + " TEXT,"
-            + APLICABLE_TEST_ROOM_LOCATION + " TEXT," + APLICABLE_TEST_ROOM_NOOFCYCLE + " INTEGER,"
+            + APLICABLE_TEST_ROOM_LOCATION + " INTEGER," + APLICABLE_TEST_ROOM_NOOFCYCLE + " INTEGER,"
             + APLICABLE_TEST_ROOM_CREATIONDATE + " TEXT " + ")";
 
     //equipment able details
@@ -1057,22 +1057,23 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
     }
 
     // select data from grill table
-    public ArrayList<String[]> getGrillAndSizeFromGrill(int roomId) {
+    public ArrayList<HashMap<String, String>> getGrillAndSizeFromGrill(int roomId) {
         String selectQuery = " SELECT " + GRILL_GRILLCODE +"," + GRILL_EFFECTIVEAREA + " FROM " + GRILL_TABLE_NAME +
 //        String selectQuery = " SELECT * FROM " + PARTNERUSER_TABLE_NAME +
                 " WHERE " + ValdocDatabaseHandler.GRILL_ROOMID + " = " + roomId;
         SQLiteDatabase database = this.getWritableDatabase();
         Cursor cursor = database.rawQuery(selectQuery, null);
         Log.d("valdoc", "ValdocDatabaseHelper :grill code grill:=" + cursor.getCount());
-       ArrayList<String[]> grillList=new ArrayList<String[]>();
+       ArrayList<HashMap<String, String>> grillList=new ArrayList<HashMap<String, String>>();
         if (cursor.moveToFirst()) {
             do {
-                String[] strings = new String[2];
+                HashMap<String, String> hashMap = new HashMap<String, String>();
                 Log.d("valdoc", "ValdocDatabaseHelper :filter code equipment1:=" + cursor.getColumnIndex(GRILL_GRILLCODE));
-                strings[0] = cursor.getString(cursor.getColumnIndex(GRILL_GRILLCODE));
-                strings[1] = cursor.getString(cursor.getColumnIndex(GRILL_EFFECTIVEAREA));
-                grillList.add(strings);
-                Log.d("valdoc", "ValdocDatabaseHelper :equipment1:=" + strings[0] + "\nstrings[1]=" +strings[1] );
+                Log.d("valdoc", "ValdocDatabaseHelper :GRILL_GRILLCODE:=" + cursor.getString(cursor.getColumnIndex(GRILL_GRILLCODE)).toString() + "\n hashMap.get(GRILL_EFFECTIVEAREA) =" + cursor.getDouble(cursor.getColumnIndex(GRILL_EFFECTIVEAREA)));
+                hashMap.put(GRILL_GRILLCODE, cursor.getString(cursor.getColumnIndex(GRILL_GRILLCODE)).toString());
+                hashMap.put(GRILL_EFFECTIVEAREA, "" + cursor.getDouble(cursor.getColumnIndex(GRILL_EFFECTIVEAREA)));
+                Log.d("valdoc", "ValdocDatabaseHelper :equipment1:=" + hashMap.get(GRILL_GRILLCODE) + "\n hashMap.get(GRILL_EFFECTIVEAREA) =" + hashMap.get(GRILL_EFFECTIVEAREA)  );
+                grillList.add(hashMap);
             } while (cursor.moveToNext());
         } // return contact list return wordList; }
         return grillList;
@@ -1164,7 +1165,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 applicableTestRoom.setRoomId(cursor.getInt(1));
                 applicableTestRoom.setTestName(cursor.getString(2));
                 applicableTestRoom.setPeriodicity(cursor.getString(3));
-                applicableTestRoom.setLocation(cursor.getString(4));
+                applicableTestRoom.setLocation(cursor.getInt(4));
                 applicableTestRoom.setNoOfCycle(cursor.getInt(5));
                 applicableTestRoom.setCreationDate(cursor.getString(6));
                 applicableTestRoomArrayList.add(applicableTestRoom);

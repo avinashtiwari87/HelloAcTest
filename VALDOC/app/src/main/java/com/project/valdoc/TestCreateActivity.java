@@ -27,6 +27,7 @@ import com.project.valdoc.intity.RoomFilter;
 import com.project.valdoc.intity.User;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class TestCreateActivity extends Activity {
@@ -146,7 +147,7 @@ public class TestCreateActivity extends Activity {
 
         //get filter list from equipment filter
         Log.d("valdoc", "TestCreateActivity :equipment id equipment1:=" + room.getRoomId());
-        ArrayList<String[]> grillAndSizeFromGrill = mValdocDatabaseHandler.getGrillAndSizeFromGrill(room.getRoomId());
+        ArrayList<HashMap<String, String>> grillAndSizeFromGrill = mValdocDatabaseHandler.getGrillAndSizeFromGrill(room.getRoomId());
         intent.putExtra("GRILLIST", grillAndSizeFromGrill);
         Log.d("valdoc", "TestCreateActivity :grill size:=" + grillAndSizeFromGrill.size());
         startActivity(intent);
@@ -183,7 +184,7 @@ public class TestCreateActivity extends Activity {
 
         //get filter list from equipment filter
         Log.d("valdoc", "TestCreateActivity :equipment id equipment1:=" + room.getRoomId());
-        ArrayList<String[]> grillAndSizeFromGrill = mValdocDatabaseHandler.getGrillAndSizeFromGrill(room.getRoomId());
+        ArrayList<HashMap<String, String>> grillAndSizeFromGrill = mValdocDatabaseHandler.getGrillAndSizeFromGrill(room.getRoomId());
         intent.putExtra("GRILLIST", grillAndSizeFromGrill);
         Log.d("valdoc", "TestCreateActivity :grill size:=" + grillAndSizeFromGrill.size());
         startActivity(intent);
@@ -212,6 +213,7 @@ public class TestCreateActivity extends Activity {
 
         //take test specification from room filter
         ArrayList<RoomFilter> filterArrayList = mValdocDatabaseHandler.getFromRoomFilter(room.getRoomId());
+        Log.d("valdoc", "TestCreateActivity filterArrayList=" + filterArrayList.size());
         intent.putExtra("RoomFilterList", filterArrayList);
         //TO Do testspesification will be shown from room filter spesification
         intent.putExtra("AhuNumber", ahuSpinner.getSelectedItem().toString());

@@ -1,11 +1,12 @@
 package com.project.valdoc.intity;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Created by Avinash on 2/13/2016.
  */
-public class RoomFilter {
+public class RoomFilter implements Serializable{
 
     private String roomfilter;
     private int filterId;

@@ -320,10 +320,12 @@
                     android:text="@string/test_refrence" />
 
                 <TextView
+                    android:id="@+id/equipment_name_text"
                     style="@style/TextAppearance.AppCompat.header_left"
                     android:text="@string/equipment_name" />
 
                 <TextView
+                    android:id="@+id/equipment_no_text"
                     style="@style/TextAppearance.AppCompat.header_left"
                     android:text="@string/equipment_no" />
 

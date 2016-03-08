@@ -21,6 +21,7 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.project.valdoc.db.ValdocDatabaseHandler;
 import com.project.valdoc.intity.ApplicableTestEquipment;
 import com.project.valdoc.intity.ApplicableTestRoom;
 import com.project.valdoc.intity.ClientInstrument;
@@ -98,7 +99,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
     private String areaName;
     private String ahuNumber;
     private Room room;
-    private ArrayList<String> grillAndSizeFromGrill;
+    private ArrayList<HashMap<String, String>> grillAndSizeFromGrill;
     private ArrayList<RoomFilter> filterArrayList;
     private String witnessFirst;
     private String witnessSecond;
@@ -198,11 +199,10 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 }
 
                 if ("RD_ACPH_AV".equals(testType)) {
-
                     room = (Room) extras.getSerializable("Room");
                     ahuNumber = extras.getString("AhuNumber");
                     applicableTestRoomLocation = extras.getInt("LOCATION");
-                    grillAndSizeFromGrill = (ArrayList<String>) extras.getStringArrayList("GRILLIST");
+                    grillAndSizeFromGrill = (ArrayList<HashMap<String, String>>) extras.getSerializable("GRILLIST");
                 }
 
                 if ("RD_ACPH_H".equals(testType)) {
@@ -210,7 +210,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                     room = (Room) extras.getSerializable("Room");
                     ahuNumber = extras.getString("AhuNumber");
                     //get filter list from grill filter
-                    grillAndSizeFromGrill = (ArrayList<String>) extras.getStringArrayList("GRILLIST");
+                    grillAndSizeFromGrill = (ArrayList<HashMap<String, String>>) extras.getSerializable("GRILLIST");
                 }
                 if ("RD_FIT".equals(testType)) {
                     room = (Room) extras.getSerializable("Room");
@@ -257,7 +257,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         }
         if ("RD_FIT".equalsIgnoreCase(testType)) {
             Log.d("valdoc", "DynamicTableActivity" + "rows=" + grillAndSizeFromGrill.size() + " cols=" + applicableTestRoomLocation);
-            BuildTableTest4(grillAndSizeFromGrill.size() + 1, cols);
+            BuildTableTest4(filterArrayList.size() + 1, cols);
         }
         if ("RD_PC_3".equalsIgnoreCase(testType)) {
             Log.d("valdoc", "DynamicTableActivity" + "rows=" + grillAndSizeFromGrill.size() + " cols=" + applicableTestRoomLocation);
@@ -998,13 +998,14 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 if (i == 1 && j == 1) {
                     row.addView(addTextView(" Grille / Filter ID\n "));
                 } else {
-                    if (filterList != null && filterList.length > 0) {
-                        row.addView(addTextView(filterList[i - 2]));
+                    if (null != grillAndSizeFromGrill && grillAndSizeFromGrill.size() > 0) {
+                        HashMap<String, String> grill = (HashMap<String, String>) grillAndSizeFromGrill.get(i - 2);
+                        Log.d("valdoc", "DynamicTableActivity grillAndSizeFromGrill=" + grillAndSizeFromGrill.size() + "i=" + i);
+                        row.addView(addTextView(grill.get(ValdocDatabaseHandler.GRILL_GRILLCODE).toString()));
                     } else {
                         row.addView(addTextView("grillAndSizeFromGrill"));
                     }
                 }
-
             }
             test2_table_layout.addView(row);
 
@@ -1022,7 +1023,11 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                     row.addView(addTextView(" Grill/Filter Size\n in ft2(A)"));
                 } else {
                     // row.addView(addTextView("1.9"));
-                    row.addView(addTextViewWithTagIds(i, filterSizeIds, filterSizeTxtViewList, 1.9f));
+                    HashMap<String, String> grill = (HashMap<String, String>) grillAndSizeFromGrill.get(i - 2);
+                    float filterSize = 0.0f;
+                    if (!grill.isEmpty())
+                        filterSize = Float.parseFloat(grill.get(ValdocDatabaseHandler.GRILL_EFFECTIVEAREA).toString());
+                    row.addView(addTextViewWithTagIds(i, filterSizeIds, filterSizeTxtViewList, filterSize));
 
                 }
             }

@@ -59,6 +59,8 @@
     <string name="test_refrence">Test Referance</string>
     <string name="test_refrence_details">ISO 14644</string>
     <string name="equipment_name">Equipment Name</string>
+    <string name="ahu_no">AHU Number</string>
+    <string name="room_no">Room No</string>
     <string name="equipment_name_details">Dynamic Garment Qubical</string>
     <string name="equipment_no">Equipment No</string>
     <string name="equipment_no_details">QC/DGC/01</string>

@@ -394,7 +394,7 @@ public class SplashScreen extends Activity {
         applicableTestRoom.setRoomId(1);
         applicableTestRoom.setTestName("RD_ACPH_AV");
         applicableTestRoom.setPeriodicity("priodicity");
-        applicableTestRoom.setLocation("location");
+        applicableTestRoom.setLocation(5);
         applicableTestRoom.setNoOfCycle(5);
         applicableTestRoom.setCreationDate("2-feb-2016");
         applicableTestRoomArrayList.add(applicableTestRoom);
@@ -405,7 +405,7 @@ public class SplashScreen extends Activity {
         applicableTestRoom1.setRoomId(2);
         applicableTestRoom1.setTestName("RD_ACPH_H");
         applicableTestRoom1.setPeriodicity("priodicity1");
-        applicableTestRoom1.setLocation("location1");
+        applicableTestRoom1.setLocation(6);
         applicableTestRoom1.setNoOfCycle(6);
         applicableTestRoom1.setCreationDate("3-feb-2016");
         applicableTestRoomArrayList.add(applicableTestRoom1);
@@ -416,7 +416,7 @@ public class SplashScreen extends Activity {
         applicableTestRoom2.setRoomId(2);
         applicableTestRoom2.setTestName("RD_FIT");
         applicableTestRoom2.setPeriodicity("priodicity1");
-        applicableTestRoom2.setLocation("location1");
+        applicableTestRoom2.setLocation(6);
         applicableTestRoom2.setNoOfCycle(6);
         applicableTestRoom2.setCreationDate("3-feb-2016");
         applicableTestRoomArrayList.add(applicableTestRoom2);
@@ -427,7 +427,7 @@ public class SplashScreen extends Activity {
         applicableTestRoom3.setRoomId(2);
         applicableTestRoom3.setTestName("RD_PC_3");
         applicableTestRoom3.setPeriodicity("priodicity1");
-        applicableTestRoom3.setLocation("location1");
+        applicableTestRoom3.setLocation(5);
         applicableTestRoom3.setNoOfCycle(6);
         applicableTestRoom3.setCreationDate("3-feb-2016");
         applicableTestRoomArrayList.add(applicableTestRoom3);
@@ -438,7 +438,7 @@ public class SplashScreen extends Activity {
         applicableTestRoom4.setRoomId(2);
         applicableTestRoom4.setTestName("RD_RCT");
         applicableTestRoom4.setPeriodicity("priodicity1");
-        applicableTestRoom4.setLocation("location1");
+        applicableTestRoom4.setLocation(7);
         applicableTestRoom4.setNoOfCycle(6);
         applicableTestRoom4.setCreationDate("3-feb-2016");
         applicableTestRoomArrayList.add(applicableTestRoom4);

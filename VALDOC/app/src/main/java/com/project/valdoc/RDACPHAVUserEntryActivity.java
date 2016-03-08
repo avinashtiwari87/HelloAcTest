@@ -26,6 +26,7 @@ import com.project.valdoc.intity.Room;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 
 public class RDACPHAVUserEntryActivity extends AppCompatActivity {
     private static final String TAG = "RDACPHAV";
@@ -44,7 +45,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
     private PartnerInstrument partnerInstrument;
     private String ahuNumber;
     private Room room;
-    private ArrayList<String> grillAndSizeFromGrill;
+    private ArrayList<HashMap<String, String>> grillAndSizeFromGrill;
     private String areaName;
     private String witnessFirst;
     private String witnessSecond;
@@ -64,6 +65,8 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
     private TextView roomName;
     private TextView occupancyState;
     private TextView testRefrance;
+    private TextView equipmentNameText;
+    private TextView equipmentNoText;
     private TextView equipmentName;
     private TextView equipmentNo;
     private TextView testCundoctor;
@@ -156,8 +159,10 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
         occupancyState.setText(room.getOccupancyState().toString());
         Log.d("valdoc", "RDAV5UserEnryActivity 1witness= equipment.getTestReference()=" + room.getTestRef());
         testRefrance.setText("" + room.getTestRef().toString());
-        equipmentName.setText(room.getRoomName().toString());
-        equipmentNo.setText(room.getRoomNo().toString());
+        equipmentNameText.setText(getResources().getString(R.string.room_no));
+        equipmentNoText.setText(getResources().getString(R.string.ahu_no));
+        equipmentName.setText(room.getRoomNo().toString());
+        equipmentNo.setText(ahuNumber);
         testCundoctor.setText(userName);
         Log.d("valdoc", "RDAV5UserEnryActivity 1witness=" + witnessFirst);
         StringBuilder witness = new StringBuilder();
@@ -197,6 +202,8 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
         roomName = (TextView) findViewById(R.id.roomname);
         occupancyState = (TextView) findViewById(R.id.ocupancystate);
         testRefrance = (TextView) findViewById(R.id.testrefrence);
+        equipmentNameText= (TextView) findViewById(R.id.equipment_name_text);
+        equipmentNoText= (TextView) findViewById(R.id.equipment_no_text);
         equipmentName = (TextView) findViewById(R.id.equipmentname);
         equipmentNo = (TextView) findViewById(R.id.equipmentno);
         testCundoctor = (TextView) findViewById(R.id.testcunducter);
@@ -305,7 +312,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
 
                 room = (Room) extras.getSerializable("Room");
                 ahuNumber = extras.getString("AhuNumber");
-                grillAndSizeFromGrill = (ArrayList<String>) extras.getStringArrayList("GRILLIST");
+                grillAndSizeFromGrill = (ArrayList<HashMap<String, String>>) extras.getSerializable("GRILLIST");
 
             }
         }
@@ -325,7 +332,14 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
                 if (i == 1 && j == 1) {
                     row.addView(addTextView(" Grille / Filter ID\n "));
                 } else {
-                    row.addView(addTextView("AHU 2031/0.3MICRON/" + i));
+                    if (null != grillAndSizeFromGrill && grillAndSizeFromGrill.size() > 0) {
+                        HashMap<String, String> grill = (HashMap<String, String>) grillAndSizeFromGrill.get(i - 2);
+                        Log.d("valdoc", "DynamicTableActivity grillAndSizeFromGrill=" + grillAndSizeFromGrill.size() + "i=" + i);
+                        row.addView(addTextView(grill.get(ValdocDatabaseHandler.GRILL_GRILLCODE).toString()));
+                    } else {
+                        row.addView(addTextView("grillAndSizeFromGrill"));
+                    }
+//                    row.addView(addTextView("AHU 2031/0.3MICRON/" + i));
                 }
 
             }
@@ -345,7 +359,11 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
                     row.addView(addTextView(" Grill/Filter Size\n in ft2(A)"));
                 } else {
                     // row.addView(addResultTextView(i));
-                    row.addView(addTextView("1.9"));
+                    HashMap<String, String> grill = (HashMap<String, String>) grillAndSizeFromGrill.get(i - 2);
+                    float filterSize = 0.0f;
+                    if (!grill.isEmpty())
+                        filterSize = Float.parseFloat(grill.get(ValdocDatabaseHandler.GRILL_EFFECTIVEAREA).toString());
+                    row.addView(addTextView(""+filterSize));
                 }
             }
             test2_table_layout2.addView(row);
