@@ -105,6 +105,24 @@ public class SplashScreen extends Activity {
         roomFilter1.setIsSupplyFilter(51);
         roomFilter1.setCreationDate("3-feb-2016");
         filterArrayList.add(roomFilter1);
+
+        //3rd data
+        RoomFilter roomFilter12 = new RoomFilter();
+        roomFilter12.setFilterId(2);
+        roomFilter12.setFilterType("filter type12");
+        roomFilter12.setEfficiency(12.0);
+        roomFilter12.setFilterCode("filter code12");
+        roomFilter12.setParticleSize("particale size1");
+        roomFilter12.setRoomId(2);
+        roomFilter12.setSpecification(141);
+        roomFilter12.setLength(121);
+        roomFilter12.setWidth(151);
+        roomFilter12.setGrillArea(181);
+        roomFilter12.setEffectiveGrillArea(31);
+        roomFilter12.setIsSupplyFilter(51);
+        roomFilter12.setCreationDate("3-feb-2016");
+        filterArrayList.add(roomFilter12);
+
         return filterArrayList;
     }
         // create grill data
@@ -134,6 +152,32 @@ public class SplashScreen extends Activity {
             grill1.setAdditionalDetail(3);
             grill1.setCreationDate("3-feb-2016");
             grillArrayList.add(grill1);
+
+            //3rd data
+            Grill grill12 = new Grill();
+            grill12.setGrillId(2);
+            grill12.setGrillCode("GRILL Code12");
+            grill12.setRoomId(2);
+            grill12.setWidh(14);
+            grill12.setLength(12);
+            grill12.setEffectiveArea(15);
+            grill12.setIsSupplyGrill(18);
+            grill12.setAdditionalDetail(3);
+            grill12.setCreationDate("3-feb-2016");
+            grillArrayList.add(grill12);
+
+            //4th data
+            Grill grill123 = new Grill();
+            grill123.setGrillId(2);
+            grill123.setGrillCode("GRILL Code12");
+            grill123.setRoomId(2);
+            grill123.setWidh(14);
+            grill123.setLength(12);
+            grill123.setEffectiveArea(15);
+            grill123.setIsSupplyGrill(18);
+            grill123.setAdditionalDetail(3);
+            grill123.setCreationDate("3-feb-2016");
+            grillArrayList.add(grill123);
             return grillArrayList;
         }
 

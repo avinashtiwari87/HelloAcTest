@@ -175,7 +175,6 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
 
 
     }
-
     private void initTextView() {
         // layout data which is not in use
         instrumentNoTextView = (TextView) findViewById(R.id.instrument_no_test2);

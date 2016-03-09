@@ -147,7 +147,11 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         createTableRowColum();
         //setting the test 2 room volume
         if (roomVolumeTxtList != null && roomVolumeTxtList.size() > 0)
-            roomVolumeTxtList.get((int) (roomVolumeTxtList.size() / 2)).setText("8500");
+            if("RD_ACPH_H".equals(testType)) {
+                roomVolumeTxtList.get((int) (roomVolumeTxtList.size() / 2)).setText(""+room.getVolume());
+            }else{
+                roomVolumeTxtList.get((int) (roomVolumeTxtList.size() / 2)).setText("8500");
+            }
     }
 
     private void getExtraFromTestCreateActivity(Bundle savedInstanceState) {
@@ -254,9 +258,9 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 BuildTableTest3(3, 4);
         }
         if ("RD_FIT".equalsIgnoreCase(testType)) {
-            Log.d("valdoc", "DynamicTableActivity" + "rows=" + grillAndSizeFromGrill.size() + " cols=" + applicableTestRoomLocation);
-            if (grillAndSizeFromGrill != null && grillAndSizeFromGrill.size() > 0)
-                BuildTableTest4(grillAndSizeFromGrill.size() + 1, cols);
+            Log.d("valdoc", "DynamicTableActivity" + "rows=" + filterArrayList.size());
+            if (filterArrayList != null && filterArrayList.size() > 0)
+                BuildTableTest4(filterArrayList.size() + 1, cols);
             else
                 BuildTableTest4(3, 4);
         }
@@ -396,7 +400,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 intent.putExtra("Room", room);
                 intent.putExtra("AhuNumber", ahuNumber);
                 intent.putExtra("RoomFilterList", filterArrayList);
-                intent.putExtra("rows", grillAndSizeFromGrill.size() + 1);
+                intent.putExtra("rows", filterArrayList.size() + 1);
                 intent.putExtra("cols", applicableTestRoomLocation);
 
                 //TO Do testspesification will be shown from room filter spesification
@@ -768,7 +772,11 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 if (i == 1 && j == 1) {
                     row.addView(addTextView(" Filter No \n         "));
                 } else {
-                    row.addView(addTextView(" LDU/EN/AHU/20/SG-0" + i));
+                    if (null != filterArrayList && filterArrayList.size() > 0) {
+                        RoomFilter roomFilter =  filterArrayList.get(i - 2);
+                        Log.d("valdoc", "DynamicTableActivity filterArrayList=" + filterArrayList.size() + "i=" + i);
+                        row.addView(addTextView(roomFilter.getFilterCode()));
+                    }
                 }
 
             }
@@ -786,7 +794,10 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 if (i == 1 && j == 1) {
                     row.addView(addTextView(" Filter Type  \n         "));
                 } else {
-                    row.addView(addTextView(" HEPA "));
+                    if (null != filterArrayList && filterArrayList.size() > 0) {
+                        RoomFilter roomFilter =  filterArrayList.get(i - 2);
+                        row.addView(addTextView(roomFilter.getFilterType()));
+                    }
                 }
 
             }
@@ -804,7 +815,10 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 if (i == 1 && j == 1) {
                     row.addView(addTextView(" Filter Efficiency\n at Particle Size* "));
                 } else {
-                    row.addView(addTextView(" 99.97% | 0.3µm "));
+                    if (null != filterArrayList && filterArrayList.size() > 0) {
+                        RoomFilter roomFilter =  filterArrayList.get(i - 2);
+                        row.addView(addTextView(roomFilter.getEfficiency()+"%"+" | "+roomFilter.getParticleSize()+"µm"));
+                    }
                 }
 
             }
@@ -841,7 +855,10 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 if (i == 1 && j == 1) {
                     row.addView(addTextView(" SLP of DL for Tests\n after Installation** "));
                 } else {
-                    row.addView(addTextView(" 0.01% "));
+                    if (null != filterArrayList && filterArrayList.size() > 0) {
+                        RoomFilter roomFilter =  filterArrayList.get(i - 2);
+                        row.addView(addTextView(roomFilter.getSpecification()+"%"));
+                    }
                 }
 
             }
@@ -903,8 +920,10 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 if (i == 1 && j == 1) {
                     row.addView(addTextView(" Grille/Filter ID No\n "));
                 } else {
-                    if (filterList != null && filterList.length > 0) {
-                        row.addView(addTextView(filterList[i - 2]));
+                    if (null != grillAndSizeFromGrill && grillAndSizeFromGrill.size() > 0) {
+                        HashMap<String, String> grill = (HashMap<String, String>) grillAndSizeFromGrill.get(i - 2);
+                        Log.d("valdoc", "DynamicTableActivity grillAndSizeFromGrill=" + grillAndSizeFromGrill.size() + "i=" + i);
+                        row.addView(addTextView(grill.get(ValdocDatabaseHandler.GRILL_GRILLCODE).toString()));
                     } else {
                         row.addView(addTextView("grillAndSizeFromGrill"));
                     }

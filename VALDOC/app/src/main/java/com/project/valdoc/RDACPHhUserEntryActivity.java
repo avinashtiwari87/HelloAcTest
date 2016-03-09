@@ -64,6 +64,8 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
     private TextView testRefrance;
     private TextView equipmentName;
     private TextView equipmentNo;
+    private TextView equipmentNameText;
+    private TextView equipmentNoText;
     private TextView testCundoctor;
     private TextView testWitness;
     private TextView dateTextView;
@@ -183,8 +185,14 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
         occupancyState.setText(room.getOccupancyState().toString());
         Log.d("valdoc", "RDAV5UserEnryActivity 1witness= equipment.getTestReference()=" + room.getTestRef());
         testRefrance.setText("" + room.getTestRef().toString());
-        equipmentName.setText(room.getRoomName().toString());
-        equipmentNo.setText(room.getRoomNo().toString());
+//        equipmentName.setText(room.getRoomName().toString());
+//        equipmentNo.setText(room.getRoomNo().toString());
+        equipmentName.setText(room.getRoomNo().toString());
+        equipmentNo.setText(ahuNumber);
+        equipmentNameText.setText(getResources().getString(R.string.room_no));
+        equipmentNoText.setText(getResources().getString(R.string.ahu_no));
+
+
         testCundoctor.setText(userName);
         Log.d("valdoc", "RDAV5UserEnryActivity 1witness=" + witnessFirst);
         StringBuilder witness = new StringBuilder();
@@ -224,6 +232,8 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
         roomName = (TextView) findViewById(R.id.roomname);
         occupancyState = (TextView) findViewById(R.id.ocupancystate);
         testRefrance = (TextView) findViewById(R.id.testrefrence);
+        equipmentNameText= (TextView) findViewById(R.id.equipment_name_text);
+        equipmentNoText= (TextView) findViewById(R.id.equipment_no_text);
         equipmentName = (TextView) findViewById(R.id.equipmentname);
         equipmentNo = (TextView) findViewById(R.id.equipmentno);
         testCundoctor = (TextView) findViewById(R.id.testcunducter);
@@ -321,7 +331,14 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
                 if (i == 1 && j == 1) {
                     row.addView(addTextView(" Grille/Filter ID No\n "));
                 } else {
-                    row.addView(addTextView(" Filter No " + i));
+                    if (null != grillAndSizeFromGrill && grillAndSizeFromGrill.size() > 0) {
+                        HashMap<String, String> grill = (HashMap<String, String>) grillAndSizeFromGrill.get(i - 2);
+                        Log.d("valdoc", "DynamicTableActivity grillAndSizeFromGrill=" + grillAndSizeFromGrill.size() + "i=" + i);
+                        row.addView(addTextView(grill.get(ValdocDatabaseHandler.GRILL_GRILLCODE).toString()));
+                    } else {
+                        row.addView(addTextView("grillAndSizeFromGrill"));
+                    }
+//                    row.addView(addTextView(" Filter No " + i));
                 }
 
             }
@@ -376,7 +393,7 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
                     row.addView(addTextView(" Room Volume in\n ft3(RV)"));
                 } else {
                     //row.addView(addResultTextView(i));
-                    row.addView(addTextViewWithoutBorder("490"));
+                    row.addView(addTextViewWithoutBorder(""+room.getVolume()));
                 }
             }
             test3_table_layout4.addView(row);
