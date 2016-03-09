@@ -20,6 +20,7 @@ import com.project.valdoc.db.ValdocDatabaseHandler;
 import com.project.valdoc.intity.ClientInstrument;
 import com.project.valdoc.intity.PartnerInstrument;
 import com.project.valdoc.intity.Room;
+import com.project.valdoc.intity.RoomFilter;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -41,7 +42,7 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
     private PartnerInstrument partnerInstrument;
     private String ahuNumber;
     private Room room;
-    private ArrayList<HashMap<String, String>> grillAndSizeFromGrill;
+    private ArrayList<RoomFilter> filterArrayList;
     private String areaName;
     private String witnessFirst;
     private String witnessSecond;
@@ -61,6 +62,8 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
     private TextView roomName;
     private TextView occupancyState;
     private TextView testRefrance;
+    private TextView equipmentNameText;
+    private TextView equipmentNoText;
     private TextView equipmentName;
     private TextView equipmentNo;
     private TextView testCundoctor;
@@ -183,8 +186,10 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
         occupancyState.setText(room.getOccupancyState().toString());
         Log.d("valdoc", "RDAV5UserEnryActivity 1witness= equipment.getTestReference()=" + room.getTestRef());
         testRefrance.setText("" + room.getTestRef().toString());
-        equipmentName.setText(room.getRoomName().toString());
-        equipmentNo.setText(room.getRoomNo().toString());
+        equipmentNameText.setText(getResources().getString(R.string.room_no));
+        equipmentNoText.setText(getResources().getString(R.string.ahu_no));
+        equipmentName.setText(room.getRoomNo().toString());
+        equipmentNo.setText(ahuNumber);
         testCundoctor.setText(userName);
         Log.d("valdoc", "RDAV5UserEnryActivity 1witness=" + witnessFirst);
         StringBuilder witness = new StringBuilder();
@@ -224,6 +229,8 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
         roomName = (TextView) findViewById(R.id.roomname);
         occupancyState = (TextView) findViewById(R.id.ocupancystate);
         testRefrance = (TextView) findViewById(R.id.testrefrence);
+        equipmentNameText= (TextView) findViewById(R.id.equipment_name_text);
+        equipmentNoText= (TextView) findViewById(R.id.equipment_no_text);
         equipmentName = (TextView) findViewById(R.id.equipmentname);
         equipmentNo = (TextView) findViewById(R.id.equipmentno);
         testCundoctor = (TextView) findViewById(R.id.testcunducter);
@@ -277,7 +284,7 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
                 clientInstrument = null;
                 partnerInstrument = null;
                 ahuNumber = null;
-                grillAndSizeFromGrill = null;
+                filterArrayList = null;
                 room = null;
                 areaName = null;
                 witnessFirst = null;
@@ -300,7 +307,9 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
 
                 room = (Room) extras.getSerializable("Room");
                 ahuNumber = extras.getString("AhuNumber");
-                grillAndSizeFromGrill = (ArrayList<HashMap<String, String>>) extras.getSerializable("GRILLIST");
+                //take test specification from room filter
+                filterArrayList = (ArrayList<RoomFilter>) extras.getSerializable("RoomFilterList");
+                //TO Do testspesification will be shown from room filter spesification
 
             }
         }
@@ -326,7 +335,11 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
                 if (i == 1 && j == 1) {
                     row.addView(addTextView(" Filter No \n         "));
                 } else {
-                    row.addView(addTextView(" LDU/EN/AHU/20/SG-0" + i));
+                    if (null != filterArrayList && filterArrayList.size() > 0) {
+                        RoomFilter roomFilter =  filterArrayList.get(i - 2);
+                        Log.d("valdoc", "DynamicTableActivity filterArrayList=" + filterArrayList.size() + "i=" + i);
+                        row.addView(addTextView(roomFilter.getFilterCode()));
+                    }
                 }
 
             }
@@ -344,7 +357,10 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
                 if (i == 1 && j == 1) {
                     row.addView(addTextView(" Filter Type  \n         "));
                 } else {
-                    row.addView(addTextView(" HEPA "));
+                    if (null != filterArrayList && filterArrayList.size() > 0) {
+                        RoomFilter roomFilter =  filterArrayList.get(i - 2);
+                        row.addView(addTextView(roomFilter.getFilterType()));
+                    }
                 }
 
             }
@@ -362,7 +378,10 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
                 if (i == 1 && j == 1) {
                     row.addView(addTextView(" Filter Efficiency\n at Particle Size* "));
                 } else {
-                    row.addView(addTextView(" 99.97% | 0.3µm "));
+                    if (null != filterArrayList && filterArrayList.size() > 0) {
+                        RoomFilter roomFilter =  filterArrayList.get(i - 2);
+                        row.addView(addTextView(roomFilter.getEfficiency()+"%"+" | "+roomFilter.getParticleSize()+"µm"));
+                    }
                 }
 
             }
@@ -398,7 +417,10 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
                 if (i == 1 && j == 1) {
                     row.addView(addTextView(" SLP of DL for Tests\n after Installation** "));
                 } else {
-                    row.addView(addTextView(" 0.01% "));
+                    if (null != filterArrayList && filterArrayList.size() > 0) {
+                        RoomFilter roomFilter =  filterArrayList.get(i - 2);
+                        row.addView(addTextView(roomFilter.getSpecification()+"%"));
+                    }
                 }
 
             }

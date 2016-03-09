@@ -105,6 +105,24 @@ public class SplashScreen extends Activity {
         roomFilter1.setIsSupplyFilter(51);
         roomFilter1.setCreationDate("3-feb-2016");
         filterArrayList.add(roomFilter1);
+
+        //3rd data
+        RoomFilter roomFilter12 = new RoomFilter();
+        roomFilter12.setFilterId(2);
+        roomFilter12.setFilterType("filter type12");
+        roomFilter12.setEfficiency(12.0);
+        roomFilter12.setFilterCode("filter code12");
+        roomFilter12.setParticleSize("particale size1");
+        roomFilter12.setRoomId(2);
+        roomFilter12.setSpecification(141);
+        roomFilter12.setLength(121);
+        roomFilter12.setWidth(151);
+        roomFilter12.setGrillArea(181);
+        roomFilter12.setEffectiveGrillArea(31);
+        roomFilter12.setIsSupplyFilter(51);
+        roomFilter12.setCreationDate("3-feb-2016");
+        filterArrayList.add(roomFilter12);
+
         return filterArrayList;
     }
         // create grill data
