@@ -146,7 +146,11 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         createTableRowColum();
         //setting the test 2 room volume
         if (roomVolumeTxtList != null && roomVolumeTxtList.size() > 0)
-            roomVolumeTxtList.get((int) (roomVolumeTxtList.size() / 2)).setText("8500");
+            if("RD_ACPH_H".equals(testType)) {
+                roomVolumeTxtList.get((int) (roomVolumeTxtList.size() / 2)).setText(""+room.getVolume());
+            }else{
+                roomVolumeTxtList.get((int) (roomVolumeTxtList.size() / 2)).setText("8500");
+            }
     }
 
     private void getExtraFromTestCreateActivity(Bundle savedInstanceState) {
@@ -902,8 +906,10 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 if (i == 1 && j == 1) {
                     row.addView(addTextView(" Grille/Filter ID No\n "));
                 } else {
-                    if (filterList != null && filterList.length > 0) {
-                        row.addView(addTextView(filterList[i - 2]));
+                    if (null != grillAndSizeFromGrill && grillAndSizeFromGrill.size() > 0) {
+                        HashMap<String, String> grill = (HashMap<String, String>) grillAndSizeFromGrill.get(i - 2);
+                        Log.d("valdoc", "DynamicTableActivity grillAndSizeFromGrill=" + grillAndSizeFromGrill.size() + "i=" + i);
+                        row.addView(addTextView(grill.get(ValdocDatabaseHandler.GRILL_GRILLCODE).toString()));
                     } else {
                         row.addView(addTextView("grillAndSizeFromGrill"));
                     }

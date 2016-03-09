@@ -134,6 +134,32 @@ public class SplashScreen extends Activity {
             grill1.setAdditionalDetail(3);
             grill1.setCreationDate("3-feb-2016");
             grillArrayList.add(grill1);
+
+            //3rd data
+            Grill grill12 = new Grill();
+            grill12.setGrillId(2);
+            grill12.setGrillCode("GRILL Code12");
+            grill12.setRoomId(2);
+            grill12.setWidh(14);
+            grill12.setLength(12);
+            grill12.setEffectiveArea(15);
+            grill12.setIsSupplyGrill(18);
+            grill12.setAdditionalDetail(3);
+            grill12.setCreationDate("3-feb-2016");
+            grillArrayList.add(grill12);
+
+            //4th data
+            Grill grill123 = new Grill();
+            grill123.setGrillId(2);
+            grill123.setGrillCode("GRILL Code12");
+            grill123.setRoomId(2);
+            grill123.setWidh(14);
+            grill123.setLength(12);
+            grill123.setEffectiveArea(15);
+            grill123.setIsSupplyGrill(18);
+            grill123.setAdditionalDetail(3);
+            grill123.setCreationDate("3-feb-2016");
+            grillArrayList.add(grill123);
             return grillArrayList;
         }
 
