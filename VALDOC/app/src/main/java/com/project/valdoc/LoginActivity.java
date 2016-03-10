@@ -3,7 +3,9 @@ package com.project.valdoc;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -69,12 +71,13 @@ public class LoginActivity extends AppCompatActivity {
     private String loginUserName="";
     private String loginUserType="";
     private int userId;
-
+    SharedPreferences sharedpreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        sharedpreferences = getSharedPreferences("valdoc", Context.MODE_PRIVATE);
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
         //populateAutoComplete();
@@ -166,11 +169,19 @@ public class LoginActivity extends AppCompatActivity {
 //            mLoginTask.execute();//        execute(LoginActivity.this);
            if( login(email,password)){
                showProgress(false);
+               SharedPreferences.Editor editor = sharedpreferences.edit();
+               editor.putBoolean("login", true);
+               editor.putString("USERNAME", loginUserName);
+               editor.putString("USERTYPE", loginUserType);
+               editor.putInt("APPUSERID", userId);
+               editor.commit();
+
                Intent intent=new Intent(LoginActivity.this,AfterLoginActivity.class);
                intent.putExtra("USERNAME",loginUserName);
                intent.putExtra("USERTYPE",loginUserType);
                intent.putExtra("APPUSERID",userId);
                startActivity(intent);
+               finish();
            }else{
                showProgress(false);
                Toast toast=Toast.makeText(this,"Invalid user details",Toast.LENGTH_LONG);

@@ -73,4 +73,13 @@
 
     </LinearLayout>
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Log out"
+        android:id="@+id/logout"
+        style="@style/Base.TextAppearance.AppCompat.Button.footerButton"
+        android:layout_below="@+id/user_login_footer_ll"
+        android:layout_centerHorizontal="true" />
+
 </RelativeLayout>

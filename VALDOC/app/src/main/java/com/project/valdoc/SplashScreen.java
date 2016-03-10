@@ -38,14 +38,22 @@ public class SplashScreen extends Activity {
         setContentView(R.layout.activity_splash_screen);
         sharedpreferences = getSharedPreferences("valdoc", Context.MODE_PRIVATE);
         // Execute some code after 2 seconds have passed
-        if (sharedpreferences.getBoolean("table", false)==false)
-        insertDataInTable();
+        if (sharedpreferences.getBoolean("table", false) == false)
+            insertDataInTable();
 
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             public void run() {
-                Intent intent = new Intent(SplashScreen.this, LoginActivity.class);
-                startActivity(intent);
+                if (sharedpreferences.getBoolean("login", false) == false) {
+                    Intent intent = new Intent(SplashScreen.this, LoginActivity.class);
+                    startActivity(intent);
+                } else {
+                    Intent intent = new Intent(SplashScreen.this, AfterLoginActivity.class);
+                    intent.putExtra("USERNAME", sharedpreferences.getString("USERNAME", ""));
+                    intent.putExtra("USERTYPE", sharedpreferences.getString("USERTYPE", ""));
+                    intent.putExtra("APPUSERID", sharedpreferences.getInt("APPUSERID", 0));
+                    startActivity(intent);
+                }
             }
         }, 5000);
     }
