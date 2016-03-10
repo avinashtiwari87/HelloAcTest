@@ -27,6 +27,7 @@ import com.project.valdoc.intity.Room;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Map;
 
 public class RDACPHAVUserEntryActivity extends AppCompatActivity {
     private static final String TAG = "RDACPHAV";
@@ -38,6 +39,13 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
     String testType;
     ProgressDialog pr;
     LinearLayout test_table_1_footer, test_table_1_header_l, test_table_1_header_2;
+    //Test 2 Ids variable
+    int filterSizeIds = 100, airFlowRateIds = 300,
+            totalAirFlowRateIds = 400;
+    ArrayList<TextView> airFlowRateTxtViewList;
+    ArrayList<TextView> totalAirFlowRateTxtList;
+    ArrayList<TextView> roomVolumeTxtList;
+    ArrayList<TextView> airChangeTxtList;
 
     // bundel data specification
     private String loginUserType = "";
@@ -99,6 +107,14 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         pr = ProgressDialog.show(this, "Please Wait", "Loading...");
 
+        txtViewList = new ArrayList<TextView>();
+        resultTextViewList = new ArrayList<TextView>();
+        airFlowRateTxtViewList = new ArrayList<TextView>();
+        totalAirFlowRateTxtList = new ArrayList<TextView>();
+        roomVolumeTxtList = new ArrayList<TextView>();
+        airChangeTxtList = new ArrayList<TextView>();
+
+
         if (getIntent().hasExtra("rows") && getIntent().hasExtra("cols")) {
             rows = getIntent().getIntExtra("rows", 0);
             cols = getIntent().getIntExtra("cols", 0);
@@ -115,6 +131,49 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
         if ("RD_ACPH_AV".equalsIgnoreCase(testType)) {
             BuildTableTest2(rows, cols);
         }
+
+        //setting the test 2 room volume
+        if (roomVolumeTxtList != null && roomVolumeTxtList.size() > 0)
+            roomVolumeTxtList.get((int) (roomVolumeTxtList.size() / 2)).setText("8500");
+
+        //Receiving User Input Data from Bundle
+        HashMap<Integer, Integer> hashMap = (HashMap<Integer, Integer>) getIntent().getSerializableExtra("InputData");
+        for (Map.Entry m : hashMap.entrySet()) {
+            Log.v(TAG, m.getKey() + " " + m.getValue());
+        }
+        for (int i = 0; i < txtViewList.size(); i++) {
+            TextView tvl = txtViewList.get(i);
+            tvl.setText(hashMap.get(tvl.getId()) + "");
+        }
+
+        //Receiving Result Data from Bundle
+        HashMap<Integer, Integer> resultHashMap = (HashMap<Integer, Integer>) getIntent().getSerializableExtra("ResultData");
+        for (Map.Entry n : resultHashMap.entrySet()) {
+            Log.v(TAG, " Result: " + n.getKey() + " " + n.getValue());
+        }
+        for (int i = 0; i < resultTextViewList.size(); i++) {
+            TextView tvl = resultTextViewList.get(i);
+            tvl.setText(resultHashMap.get(tvl.getId()) + "");
+        }
+        //Air Flow Rate(AxAv)
+        HashMap<Integer, Float> resultHashMap2 = (HashMap<Integer, Float>) getIntent().getSerializableExtra("ResultData2");
+        for (int i = 0; i < airFlowRateTxtViewList.size(); i++) {
+            TextView tvl = airFlowRateTxtViewList.get(i);
+            tvl.setText(resultHashMap2.get(tvl.getId()) + "");
+        }
+        //Total AirFlow Rate (sum of AirFlow Rate)
+        if (totalAirFlowRateTxtList != null && totalAirFlowRateTxtList.size() > 0) {
+            int middleTxt = totalAirFlowRateTxtList.size() / 2;
+            TextView mtvl = totalAirFlowRateTxtList.get(middleTxt);
+            mtvl.setText(getIntent().getFloatExtra("totalAirFlowRate",0f) + "");
+        }
+        //AirFlow Change
+        if (airChangeTxtList != null && airChangeTxtList.size() > 0) {
+            TextView airChangeTxt = airChangeTxtList.get(airChangeTxtList.size() / 2);
+            airChangeTxt.setText(getIntent().getIntExtra("AirChangeValue",0) + "");
+        }
+
+
     }
 
 
@@ -382,8 +441,8 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
                 if (i == 1 && j <= cols) {
                     row.addView(addTextView(" V " + j + "\n "));
                 } else {
-                    //tv.setText(84+i+j+"");
-                    row.addView(addEditTextView());
+                    //row.addView(addEditTextView());
+                    row.addView(addInputDataTextView());
                 }
             }
             test2_table_layout3.addView(row);
@@ -399,8 +458,8 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
                 if (i == 1 && j == 1) {
                     row.addView(addTextView(" Avg Velocity in\n fpm(AV)"));
                 } else {
-                    //row.addView(addResultTextView(i));
-                    row.addView(addTextView("258"));
+                    //result data  set
+                    row.addView(addResultTextView(i));
                 }
             }
             test2_table_layout4.addView(row);
@@ -417,8 +476,9 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
                 if (i == 1 && j == 1) {
                     row.addView(addTextView(" Air Flow Rate\n in cfm(AxAv)"));
                 } else {
-                    //row.addView(addResultTextView(i));
-                    row.addView(addTextView("490"));
+                    //row.addView(addTextView("490"));
+                    row.addView(addTextViewWithTagIds(i, airFlowRateIds, airFlowRateTxtViewList, 0));
+                    airFlowRateIds++;
                 }
             }
             test2_table_layout5.addView(row);
@@ -436,8 +496,8 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
                 if (i == 1 && j == 1) {
                     row.addView(addTextView(" Total Air Flow Rate\n in cfm (TFR)"));
                 } else {
-                    //row.addView(addResultTextView(i));
-                    row.addView(addTextViewWithoutBorder("490"));
+                //row.addView(addTextViewWithoutBorder("490"));
+                  row.addView(addTextViewWithIdsNoBorder(i, totalAirFlowRateIds, totalAirFlowRateTxtList));
                 }
             }
             test2_table_layout6.addView(row);
@@ -454,8 +514,8 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
                 if (i == 1 && j == 1) {
                     row.addView(addTextView(" Room Volume in\n ft3(RV)"));
                 } else {
-                    //row.addView(addResultTextView(i));
-                    row.addView(addTextViewWithoutBorder("490"));
+                  //row.addView(addTextViewWithoutBorder("490"));
+                    row.addView(addTextViewWithIdsNoBorder(i, 0, roomVolumeTxtList));
                 }
             }
             test2_table_layout7.addView(row);
@@ -472,8 +532,8 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
                 if (i == 1 && j == 1) {
                     row.addView(addTextView("No. of Air Changes/Hr\n ((TFR/RV)x60))"));
                 } else {
-                    //row.addView(addResultTextView(i));
-                    row.addView(addTextViewWithoutBorder("490"));
+                    //row.addView(addTextViewWithoutBorder("490"));
+                    row.addView(addTextViewWithIdsNoBorder(i, 0, airChangeTxtList));
                 }
             }
             test2_table_layout8.addView(row);
@@ -501,7 +561,68 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
         return tv;
     }
 
-    private TextView addTextViewWithoutBorder(String textValue) {
+    int idCountEtv = 200;
+    private TextView addInputDataTextView() {
+        TextView tv = new TextView(this);
+        tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+                TableRow.LayoutParams.WRAP_CONTENT));
+        tv.setBackgroundResource(R.drawable.border1);
+        //tv.setPadding(5, 5, 5, 5);
+        tv.setTextColor(getResources().getColor(R.color.black));
+        tv.setTextSize(getResources().getDimension(R.dimen.normal_text_size));
+        //tv.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD);
+        tv.setId(idCountEtv);
+        tv.setSingleLine(false);
+        tv.setMaxLines(3);
+        tv.setEllipsize(TextUtils.TruncateAt.END);
+        idCountEtv++;
+        txtViewList.add(tv);
+        return tv;
+    }
+
+    int idCountTv = 1;
+    private TextView addResultTextView(int rowsNo) {
+        TextView tv = new TextView(this);
+        tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+                TableRow.LayoutParams.WRAP_CONTENT));
+        tv.setBackgroundResource(R.drawable.border);
+        tv.setPadding(5, 5, 5, 5);
+        tv.setTextColor(getResources().getColor(R.color.black));
+        tv.setTextSize(getResources().getDimension(R.dimen.normal_text_size));
+        //tv.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD);
+        tv.setEms(4);
+        tv.setSingleLine(true);
+        tv.setEllipsize(TextUtils.TruncateAt.END);
+        Log.d(TAG, " idCountTv " + idCountTv);
+        tv.setId(idCountTv);
+        tv.setTag(rowsNo);
+        idCountTv++;
+        resultTextViewList.add(tv);
+        return tv;
+    }
+
+    private TextView addTextViewWithTagIds(int Tag, int Ids,
+                                           ArrayList<TextView> txtViewList, float value) {
+        TextView tv = new TextView(this);
+        tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+                TableRow.LayoutParams.WRAP_CONTENT));
+        tv.setBackgroundResource(R.drawable.border);
+        tv.setPadding(5, 5, 5, 5);
+        tv.setTextColor(getResources().getColor(R.color.black));
+        tv.setTextSize(getResources().getDimension(R.dimen.normal_text_size));
+        tv.setEms(4);
+        tv.setSingleLine(true);
+        tv.setEllipsize(TextUtils.TruncateAt.END);
+        tv.setText(value + "");
+        Log.d(TAG, "TAG & idCountTv " + Ids);
+        tv.setId(Ids);
+        tv.setTag(Tag);
+        Ids++;
+        txtViewList.add(tv);
+        return tv;
+    }
+
+    private TextView addTextViewWithIdsNoBorder(int Tag, int ids, ArrayList<TextView> txtViewList) {
         TextView tv = new TextView(this);
         tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
                 TableRow.LayoutParams.WRAP_CONTENT));
@@ -512,7 +633,12 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
         //tv.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD);
         tv.setSingleLine(true);
         tv.setEllipsize(TextUtils.TruncateAt.END);
-        //tv.setText(textValue);
+        Log.d(TAG, "No Border idCountTv " + ids);
+        if (ids > 0)
+            tv.setId(ids);
+        tv.setTag(Tag);
+        ids++;
+        txtViewList.add(tv);
         return tv;
     }
 
