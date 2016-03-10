@@ -225,7 +225,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                     ahuNumber = extras.getString("AhuNumber");
                     applicableTestRoomLocation = extras.getInt("LOCATION");
                     noOfCycle = extras.getInt("NOOFCYCLE");
-
+                    Log.d("valdoc", "DynamicTableActivity" + "NOOFCYCLE NOOFCYCLE=" + noOfCycle+"location="+applicableTestRoomLocation);
                 }
                 if ("RD_RCT".equals(testType)) {
                     room = (Room) extras.getSerializable("Room");
@@ -265,11 +265,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 BuildTableTest4(3, 4);
         }
         if ("RD_PC_3".equalsIgnoreCase(testType)) {
-            if (grillAndSizeFromGrill != null && grillAndSizeFromGrill.size() > 0)
-                BuildTableTest5(grillAndSizeFromGrill.size() + 1, cols);
-            else
-                BuildTableTest5(4, 6);
-                rows = 4;cols = 6;
+                BuildTableTest5(applicableTestRoomLocation + 1, noOfCycle);
         }
         if ("RD_RCT".equalsIgnoreCase(testType)) {
             if (grillAndSizeFromGrill != null && grillAndSizeFromGrill.size() > 0)
@@ -428,8 +424,8 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 intent.putExtra("AhuNumber", ahuNumber);
                 intent.putExtra("LOCATION", applicableTestRoomLocation);
                 intent.putExtra("NOOFCYCLE", noOfCycle);
-                intent.putExtra("rows", grillAndSizeFromGrill.size() + 1);
-                intent.putExtra("cols", applicableTestRoomLocation);
+                intent.putExtra("rows", applicableTestRoomLocation + 1);
+                intent.putExtra("cols", noOfCycle);
 
                 startActivity(intent);
             }
@@ -574,7 +570,8 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 if (i == 1 && j == 1) {
                     row.addView(addTextView(" Location "));
                 } else {
-                    row.addView(addTextView(" " + i));
+                    int position=i-1;
+                    row.addView(addTextView(" " + position));
                 }
 
             }
