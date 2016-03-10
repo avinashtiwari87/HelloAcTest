@@ -82,8 +82,10 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
 
     HashMap<Integer, Integer> inputDataHashMap;
     HashMap<Integer, Integer> resultDataHashMap;
+    HashMap<Integer, Float> resultDataHashMap2;
     HashMap<Integer, Integer> rowTagHashMap;
-    int inputValue = 0;
+    int inputValue = 0,AirChangeValue = 0;
+    float totalAirFlowRate = 0f;
     private boolean isClearClicked = false;
 
     // bundel data specification
@@ -141,6 +143,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
 
         inputDataHashMap = new HashMap<Integer, Integer>();
         resultDataHashMap = new HashMap<Integer, Integer>();
+        resultDataHashMap2 = new HashMap<Integer, Float>();
         rowTagHashMap = new HashMap<Integer, Integer>();
 
 
@@ -308,8 +311,6 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 intent.putExtra("Equipment", equipment);
                 //get filter list from equipment filter
                 intent.putExtra("FILTERLIST", filterList);
-                //sending Result Data over Bundle
-                intent.putExtra("ResultData", resultDataHashMap);
                 //get area based on room area id
                 intent.putExtra("AREANAME", areaName);
                 Log.d("valdoc", "DynamicTableActivity 2witness=" + witnessFirst);
@@ -317,6 +318,9 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 intent.putExtra("WITNESSSECOND", witnessSecond);
                 intent.putExtra("WITNESSTHIRD", witnessThird);
                 intent.putExtra("LOCATION", applicableTestEquipmentLocation);
+                //sending Result Data over Bundle
+                intent.putExtra("ResultData", resultDataHashMap);
+                //sending Input Data
                 intent.putExtra("InputData", inputDataHashMap);
                 intent.putExtra("rows", filterList.length + 1);
                 intent.putExtra("cols", applicableTestEquipmentLocation);
@@ -348,6 +352,13 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 intent.putExtra("GRILLIST", grillAndSizeFromGrill);
                 intent.putExtra("rows", grillAndSizeFromGrill.size() + 1);
                 intent.putExtra("cols", applicableTestRoomLocation);
+                //sending Result Data over Bundle
+                intent.putExtra("ResultData", resultDataHashMap);
+                intent.putExtra("ResultData2", resultDataHashMap2);
+                intent.putExtra("totalAirFlowRate", totalAirFlowRate);
+                intent.putExtra("AirChangeValue", AirChangeValue);
+                //sending Input Data
+                intent.putExtra("InputData", inputDataHashMap);
                 startActivity(intent);
 
             }
@@ -1105,6 +1116,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 } else {
                     //row.addView(addTextView("490"));
                     row.addView(addTextViewWithTagIds(i, airFlowRateIds, airFlowRateTxtViewList, 0));
+                    airFlowRateIds++;
                 }
             }
             test2_table_layout5.addView(row);
@@ -1467,15 +1479,17 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                     if (airFlowRateTxtViewList.get(i).getTag().equals(tagF)) {
                         TextView tvl = airFlowRateTxtViewList.get(i);
                         tvl.setText(getMultiplicationAirFlow((int) tvl.getTag(), txtViewList.get(i).getText().toString()) + "");
-                        //resultDataHashMap.put(tvl.getId(), getRoundedAverageValue(tagF));
+                        resultDataHashMap2.put(tvl.getId(), getMultiplicationAirFlow((int) tvl.getTag(), txtViewList.get(i).getText().toString()));
                     }
                 }
                 //Total AirFlow Rate (sum of AirFlow Rate)
                 if (totalAirFlowRateTxtList != null && totalAirFlowRateTxtList.size() > 0) {
                     int middleTxt = totalAirFlowRateTxtList.size() / 2;
                     TextView mtvl = totalAirFlowRateTxtList.get(middleTxt);
-                    mtvl.setText(getSumofAirVelocity(airFlowRateTxtViewList) + "");
-                    Log.d(TAG, " middleTxt : " + middleTxt);
+                    totalAirFlowRate = getSumofAirVelocity(airFlowRateTxtViewList);
+                    mtvl.setText(totalAirFlowRate + "");
+                    Log.d(TAG, " SumofAirVelocity : " +totalAirFlowRate);
+
                 }
 
                 //AirFlow Change calculation
@@ -1492,7 +1506,9 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                     }
                     if (airChangeTxtList != null && airChangeTxtList.size() > 0) {
                         TextView airChangeTxt = airChangeTxtList.get(airChangeTxtList.size() / 2);
-                        airChangeTxt.setText(getAirChangeCalculation(TFR, roomVolume) + "");
+                        AirChangeValue = getAirChangeCalculation(TFR, roomVolume);
+                        airChangeTxt.setText(AirChangeValue + "");
+                        Log.d(TAG, " AirChangeValue : " + AirChangeValue);
                     }
                 }
             }
