@@ -383,8 +383,13 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 intent.putExtra("AhuNumber", ahuNumber);
                 intent.putExtra("rows", grillAndSizeFromGrill.size() + 1);
                 intent.putExtra("cols", applicableTestRoomLocation);
-
                 intent.putExtra("GRILLIST", grillAndSizeFromGrill);
+                //sending Result Data over Bundle
+                intent.putExtra("totalAirFlowRate", totalAirFlowRate);
+                intent.putExtra("AirChangeValue", AirChangeValue);
+                //sending Input Data
+                intent.putExtra("InputData", inputDataHashMap);
+
                 startActivity(intent);
             }
             if ("RD_FIT".equalsIgnoreCase(testType)) {
@@ -1519,8 +1524,9 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 if (totalAirFlowRateTxtList != null && totalAirFlowRateTxtList.size() > 0) {
                     int middleTxt = totalAirFlowRateTxtList.size() / 2;
                     TextView mtvl = totalAirFlowRateTxtList.get(middleTxt);
-                    mtvl.setText(getSumOfAirSupply(editTextList) + "");
-                    Log.d(TAG, " middleTxt : " + middleTxt);
+                    totalAirFlowRate = getSumOfAirSupply(editTextList);
+                    mtvl.setText(totalAirFlowRate + "");
+                    Log.d(TAG, " totalAirFlowValue : " + totalAirFlowRate);
                 }
 
                 //AirFlow Change calculation
@@ -1537,7 +1543,9 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                     }
                     if (airChangeTxtList != null && airChangeTxtList.size() > 0) {
                         TextView airChangeTxt = airChangeTxtList.get(airChangeTxtList.size() / 2);
-                        airChangeTxt.setText(getAirChangeCalculation(TFR, roomVolume) + "");
+                        AirChangeValue = getAirChangeCalculation(TFR, roomVolume);
+                        airChangeTxt.setText( AirChangeValue+ "");
+                        Log.d(TAG, " AirChangeValue : " + AirChangeValue);
                     }
                 }
             }

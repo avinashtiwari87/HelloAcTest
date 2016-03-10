@@ -25,6 +25,7 @@ import com.project.valdoc.intity.Room;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Map;
 
 public class RDACPHhUserEntryActivity extends AppCompatActivity {
     private static final String TAG = "RDACPHhUser";
@@ -35,6 +36,10 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
     int rows, cols;
     String testType;
     ProgressDialog pr;
+    ArrayList<TextView> roomVolumeTxtList;
+    ArrayList<TextView> totalAirFlowRateTxtList;
+    ArrayList<TextView> airChangeTxtList;
+    int totalAirFlowRateIds = 400;
 
     // bundel data specification
     private String loginUserType = "";
@@ -95,6 +100,11 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         pr = ProgressDialog.show(this, "Please Wait", "Loading...");
 
+        txtViewList = new ArrayList<TextView>();
+        roomVolumeTxtList = new ArrayList<TextView>();
+        totalAirFlowRateTxtList = new ArrayList<TextView>();
+        airChangeTxtList = new ArrayList<TextView>();
+
         if (getIntent().hasExtra("rows") && getIntent().hasExtra("cols")) {
             rows = getIntent().getIntExtra("rows", 0);
             cols = getIntent().getIntExtra("cols", 0);
@@ -111,6 +121,32 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
         if ("RD_ACPH_H".equalsIgnoreCase(testType)) {
             BuildTableTest3(rows, cols);
         }
+
+        //setting the test 2 room volume
+        if (roomVolumeTxtList != null && roomVolumeTxtList.size() > 0)
+            roomVolumeTxtList.get((int) (roomVolumeTxtList.size() / 2)).setText(""+room.getVolume());
+
+        //Receiving User Input Data from Bundle
+        HashMap<Integer, Integer> hashMap = (HashMap<Integer, Integer>) getIntent().getSerializableExtra("InputData");
+        for (Map.Entry m : hashMap.entrySet()) {
+            Log.v(TAG, m.getKey() + " " + m.getValue());
+        }
+        for (int i = 0; i < txtViewList.size(); i++) {
+            TextView tvl = txtViewList.get(i);
+            tvl.setText(hashMap.get(tvl.getId()) + "");
+        }
+        //Total AirFlow Rate (sum of AirFlow Rate)
+        if (totalAirFlowRateTxtList != null && totalAirFlowRateTxtList.size() > 0) {
+            int middleTxt = totalAirFlowRateTxtList.size() / 2;
+            TextView mtvl = totalAirFlowRateTxtList.get(middleTxt);
+            mtvl.setText(getIntent().getFloatExtra("totalAirFlowRate",0f) + "");
+        }
+        //AirFlow Change
+        if (airChangeTxtList != null && airChangeTxtList.size() > 0) {
+            TextView airChangeTxt = airChangeTxtList.get(airChangeTxtList.size() / 2);
+            airChangeTxt.setText(getIntent().getIntExtra("AirChangeValue", 0) + "");
+        }
+
     }
 
     private void datePicker() {
@@ -356,8 +392,8 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
                 if (i == 1 && j == 1) {
                     row.addView(addTextView(" Measured Supply Air\n Velocity in cfm (in cfm) "));
                 } else {
-                    // row.addView(addResultTextView(i));
-                    row.addView(addTextView(" "));
+                    //row.addView(addTextView(" "));
+                    row.addView(addInputDataTextView());
                 }
             }
             test3_table_layout2.addView(row);
@@ -374,8 +410,8 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
                 if (i == 1 && j == 1) {
                     row.addView(addTextView(" Total Air Flow Rate\n in cfm (TFR)"));
                 } else {
-                    //row.addView(addResultTextView(i));
-                    row.addView(addTextViewWithoutBorder("0"));
+                    //row.addView(addTextViewWithoutBorder("0"));
+                    row.addView(addTextViewWithIdsNoBorder(i, totalAirFlowRateIds, totalAirFlowRateTxtList));
                 }
             }
             test3_table_layout3.addView(row);
@@ -392,8 +428,8 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
                 if (i == 1 && j == 1) {
                     row.addView(addTextView(" Room Volume in\n ft3(RV)"));
                 } else {
-                    //row.addView(addResultTextView(i));
-                    row.addView(addTextViewWithoutBorder(""+room.getVolume()));
+                    //row.addView(addTextViewWithoutBorder(""+room.getVolume()));
+                    row.addView(addTextViewWithIdsNoBorder(i, 0, roomVolumeTxtList));
                 }
             }
             test3_table_layout4.addView(row);
@@ -410,8 +446,8 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
                 if (i == 1 && j == 1) {
                     row.addView(addTextView("No. of Air Changes/Hr\n ((TFR/RV)x60))"));
                 } else {
-                    //row.addView(addResultTextView(i));
-                    row.addView(addTextViewWithoutBorder("490"));
+                    //row.addView(addTextViewWithoutBorder("490"));
+                    row.addView(addTextViewWithIdsNoBorder(i, 0, airChangeTxtList));
                 }
             }
             test3_table_layout5.addView(row);
@@ -441,7 +477,26 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
         return tv;
     }
 
-    private TextView addTextViewWithoutBorder(String textValue) {
+    int idCountEtv = 200;
+    private TextView addInputDataTextView() {
+        TextView tv = new TextView(this);
+        tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+                TableRow.LayoutParams.WRAP_CONTENT));
+        tv.setBackgroundResource(R.drawable.border1);
+        //tv.setPadding(5, 5, 5, 5);
+        tv.setTextColor(getResources().getColor(R.color.black));
+        tv.setTextSize(getResources().getDimension(R.dimen.normal_text_size));
+        //tv.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD);
+        tv.setId(idCountEtv);
+        tv.setSingleLine(false);
+        tv.setMaxLines(3);
+        tv.setEllipsize(TextUtils.TruncateAt.END);
+        idCountEtv++;
+        txtViewList.add(tv);
+        return tv;
+    }
+
+    private TextView addTextViewWithIdsNoBorder(int Tag, int ids, ArrayList<TextView> txtViewList) {
         TextView tv = new TextView(this);
         tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
                 TableRow.LayoutParams.WRAP_CONTENT));
@@ -452,23 +507,13 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
         //tv.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD);
         tv.setSingleLine(true);
         tv.setEllipsize(TextUtils.TruncateAt.END);
-        //tv.setText(textValue);
+        Log.d(TAG, "No Border idCountTv " + ids);
+        if (ids > 0)
+            tv.setId(ids);
+        tv.setTag(Tag);
+        ids++;
+        txtViewList.add(tv);
         return tv;
-    }
-
-    private EditText addEditTextView() {
-        EditText editTv = new EditText(this);
-        editTv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
-                TableRow.LayoutParams.WRAP_CONTENT));
-        editTv.setBackgroundResource(R.drawable.border);
-        editTv.setPadding(5, 5, 5, 5);
-        editTv.setTextColor(getResources().getColor(R.color.black));
-        // editTv.setTextSize(getResources().getDimension(R.dimen.normal_text_size));
-        //editTv.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD);
-        editTv.setEms(3);
-        editTv.setSingleLine(true);
-        editTv.setEllipsize(TextUtils.TruncateAt.END);
-        return editTv;
     }
 
     private void initRes() {
