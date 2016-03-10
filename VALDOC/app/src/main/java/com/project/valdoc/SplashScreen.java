@@ -1,7 +1,9 @@
 package com.project.valdoc;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 
@@ -27,18 +29,22 @@ import java.util.List;
  * status bar and navigation/system bar) with user interaction.
  */
 public class SplashScreen extends Activity {
-
+    SharedPreferences sharedpreferences;
     private ValdocDatabaseHandler mValdocDatabaseHandler = new ValdocDatabaseHandler(SplashScreen.this);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
+        sharedpreferences = getSharedPreferences("valdoc", Context.MODE_PRIVATE);
         // Execute some code after 2 seconds have passed
+        if (sharedpreferences.getBoolean("table", false)==false)
         insertDataInTable();
+
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             public void run() {
-                Intent intent=new Intent(SplashScreen.this,LoginActivity.class);
+                Intent intent = new Intent(SplashScreen.this, LoginActivity.class);
                 startActivity(intent);
             }
         }, 5000);
@@ -63,6 +69,10 @@ public class SplashScreen extends Activity {
         mValdocDatabaseHandler.insertGrill(ValdocDatabaseHandler.GRILL_TABLE_NAME, createGrilData());
         mValdocDatabaseHandler.insertRoomFilter(ValdocDatabaseHandler.ROOMFILTER_TABLE_NAME, createRoomFilterData());
 
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+
+        editor.putBoolean("table", true);
+        editor.commit();
 //        if (tableExist(ValdocDatabaseHandler.USER_TABLE_NAME,valdocDatabaseHandler)==0) {
 
 //        }
@@ -125,64 +135,65 @@ public class SplashScreen extends Activity {
 
         return filterArrayList;
     }
-        // create grill data
-        private List<Grill> createGrilData() {
-            ArrayList<Grill> grillArrayList = new ArrayList<Grill>();
-            Grill grill = new Grill();
-            grill.setGrillId(1);
-            grill.setGrillCode("GRILL Code");
-            grill.setRoomId(1);
-            grill.setWidh(14);
-            grill.setLength(12);
-            grill.setEffectiveArea(15);
-            grill.setIsSupplyGrill(18);
-            grill.setAdditionalDetail(3);
-            grill.setCreationDate("2-feb-2016");
-            grillArrayList.add(grill);
 
-            //2nd data
-            Grill grill1 = new Grill();
-            grill1.setGrillId(2);
-            grill1.setGrillCode("GRILL Code1");
-            grill1.setRoomId(2);
-            grill1.setWidh(14);
-            grill1.setLength(12);
-            grill1.setEffectiveArea(15);
-            grill1.setIsSupplyGrill(18);
-            grill1.setAdditionalDetail(3);
-            grill1.setCreationDate("3-feb-2016");
-            grillArrayList.add(grill1);
+    // create grill data
+    private List<Grill> createGrilData() {
+        ArrayList<Grill> grillArrayList = new ArrayList<Grill>();
+        Grill grill = new Grill();
+        grill.setGrillId(1);
+        grill.setGrillCode("GRILL Code");
+        grill.setRoomId(1);
+        grill.setWidh(14);
+        grill.setLength(12);
+        grill.setEffectiveArea(15);
+        grill.setIsSupplyGrill(18);
+        grill.setAdditionalDetail(3);
+        grill.setCreationDate("2-feb-2016");
+        grillArrayList.add(grill);
 
-            //3rd data
-            Grill grill12 = new Grill();
-            grill12.setGrillId(2);
-            grill12.setGrillCode("GRILL Code12");
-            grill12.setRoomId(2);
-            grill12.setWidh(14);
-            grill12.setLength(12);
-            grill12.setEffectiveArea(15);
-            grill12.setIsSupplyGrill(18);
-            grill12.setAdditionalDetail(3);
-            grill12.setCreationDate("3-feb-2016");
-            grillArrayList.add(grill12);
+        //2nd data
+        Grill grill1 = new Grill();
+        grill1.setGrillId(2);
+        grill1.setGrillCode("GRILL Code1");
+        grill1.setRoomId(2);
+        grill1.setWidh(14);
+        grill1.setLength(12);
+        grill1.setEffectiveArea(15);
+        grill1.setIsSupplyGrill(18);
+        grill1.setAdditionalDetail(3);
+        grill1.setCreationDate("3-feb-2016");
+        grillArrayList.add(grill1);
 
-            //4th data
-            Grill grill123 = new Grill();
-            grill123.setGrillId(2);
-            grill123.setGrillCode("GRILL Code12");
-            grill123.setRoomId(2);
-            grill123.setWidh(14);
-            grill123.setLength(12);
-            grill123.setEffectiveArea(15);
-            grill123.setIsSupplyGrill(18);
-            grill123.setAdditionalDetail(3);
-            grill123.setCreationDate("3-feb-2016");
-            grillArrayList.add(grill123);
-            return grillArrayList;
-        }
+        //3rd data
+        Grill grill12 = new Grill();
+        grill12.setGrillId(2);
+        grill12.setGrillCode("GRILL Code12");
+        grill12.setRoomId(2);
+        grill12.setWidh(14);
+        grill12.setLength(12);
+        grill12.setEffectiveArea(15);
+        grill12.setIsSupplyGrill(18);
+        grill12.setAdditionalDetail(3);
+        grill12.setCreationDate("3-feb-2016");
+        grillArrayList.add(grill12);
+
+        //4th data
+        Grill grill123 = new Grill();
+        grill123.setGrillId(2);
+        grill123.setGrillCode("GRILL Code12");
+        grill123.setRoomId(2);
+        grill123.setWidh(14);
+        grill123.setLength(12);
+        grill123.setEffectiveArea(15);
+        grill123.setIsSupplyGrill(18);
+        grill123.setAdditionalDetail(3);
+        grill123.setCreationDate("3-feb-2016");
+        grillArrayList.add(grill123);
+        return grillArrayList;
+    }
 
 
-// create createEquipmentfilterData
+    // create createEquipmentfilterData
     private List<EquipmentFilter> createEquipmentfilterData() {
         ArrayList<EquipmentFilter> equipmentFilterArrayList = new ArrayList<EquipmentFilter>();
         EquipmentFilter equipmentFilter = new EquipmentFilter();
@@ -211,7 +222,6 @@ public class SplashScreen extends Activity {
         equipmentFilterArrayList.add(equipmentFilter1);
         return equipmentFilterArrayList;
     }
-
 
 
     //create test master data

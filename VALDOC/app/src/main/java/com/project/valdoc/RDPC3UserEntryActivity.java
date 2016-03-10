@@ -61,6 +61,8 @@ public class RDPC3UserEntryActivity extends AppCompatActivity {
     private TextView roomName;
     private TextView occupancyState;
     private TextView testRefrance;
+    private TextView equipmentNameText;
+    private TextView equipmentNoText;
     private TextView equipmentName;
     private TextView equipmentNo;
     private TextView testCundoctor;
@@ -182,8 +184,10 @@ public class RDPC3UserEntryActivity extends AppCompatActivity {
         occupancyState.setText(room.getOccupancyState().toString());
         Log.d("valdoc", "RDAV5UserEnryActivity 1witness= equipment.getTestReference()=" + room.getTestRef());
         testRefrance.setText("" + room.getTestRef().toString());
-        equipmentName.setText(room.getRoomName().toString());
-        equipmentNo.setText(room.getRoomNo().toString());
+        equipmentName.setText(room.getRoomNo().toString());
+        equipmentNo.setText(ahuNumber);
+        equipmentNameText.setText(getResources().getString(R.string.room_no));
+        equipmentNoText.setText(getResources().getString(R.string.ahu_no));
         testCundoctor.setText(userName);
         Log.d("valdoc", "RDAV5UserEnryActivity 1witness=" + witnessFirst);
         StringBuilder witness = new StringBuilder();
@@ -223,6 +227,8 @@ public class RDPC3UserEntryActivity extends AppCompatActivity {
         roomName = (TextView) findViewById(R.id.roomname);
         occupancyState = (TextView) findViewById(R.id.ocupancystate);
         testRefrance = (TextView) findViewById(R.id.testrefrence);
+        equipmentNameText= (TextView) findViewById(R.id.equipment_name_text);
+        equipmentNoText= (TextView) findViewById(R.id.equipment_no_text);
         equipmentName = (TextView) findViewById(R.id.equipmentname);
         equipmentNo = (TextView) findViewById(R.id.equipmentno);
         testCundoctor = (TextView) findViewById(R.id.testcunducter);
