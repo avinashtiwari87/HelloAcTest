@@ -127,7 +127,7 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
         }
 
         //Receiving Result Data from Bundle
-        HashMap<Integer, Integer> resultHashMap = (HashMap<Integer, Integer>) getIntent().getSerializableExtra("ResultData");
+        HashMap<Integer, Long> resultHashMap = (HashMap<Integer, Long>) getIntent().getSerializableExtra("ResultData");
         for (Map.Entry n : resultHashMap.entrySet()) {
             Log.v(TAG, " Result: " + n.getKey() + " " + n.getValue());
         }
