@@ -55,7 +55,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
     //Test 6 View ...
     TableLayout test6A_table_layout, test6A_table_layout2, test6A_table_layout3;
 
-    Button verify_btn, clear;
+    Button verify_btn, clear,cancel;
     int rows, cols;
     String testType;
     ProgressDialog pr;
@@ -304,6 +304,11 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
     }
 
     @Override
+    public void onBackPressed() {
+        finish();
+    }
+
+    @Override
     public void onClick(View view) {
         if (view == verify_btn) {
             Intent intent = null;
@@ -466,33 +471,35 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 startActivity(intent);
             }
             if ("RD_RCT".equalsIgnoreCase(testType)) {
-                intent = new Intent(DynamicTableActivity.this, RDRCTUserEntryActivity.class);
-                // put bundel data
-                intent.putExtra("USERTYPE", loginUserType);
-                intent.putExtra("USERNAME", userName);
-                intent.putExtra("WITNESSFIRST", witnessFirst);
-                intent.putExtra("WITNESSSECOND", witnessSecond);
-                intent.putExtra("WITNESSTHIRD", witnessThird);
-                intent.putExtra("testType", testType);
-                //get area based on room area id
-                intent.putExtra("AREANAME", areaName);
-
-                if (loginUserType.equals("CLIENT")) {
-                    intent.putExtra("ClientInstrument", clientInstrument);
-                } else {
-                    intent.putExtra("PartnerInstrument", partnerInstrument);
-                }
-                intent.putExtra("Room", room);
-                intent.putExtra("AhuNumber", ahuNumber);
-                intent.putExtra("LOCATION", applicableTestRoomLocation);
-                intent.putExtra("NOOFCYCLE", noOfCycle);
-                intent.putExtra("rows", grillAndSizeFromGrill.size() + 1);
-                intent.putExtra("cols", applicableTestRoomLocation);
-
-                startActivity(intent);
+                Toast.makeText(DynamicTableActivity.this, "Under development", Toast.LENGTH_LONG).show();
+//                intent = new Intent(DynamicTableActivity.this, RDRCTUserEntryActivity.class);
+//                // put bundel data
+//                intent.putExtra("USERTYPE", loginUserType);
+//                intent.putExtra("USERNAME", userName);
+//                intent.putExtra("WITNESSFIRST", witnessFirst);
+//                intent.putExtra("WITNESSSECOND", witnessSecond);
+//                intent.putExtra("WITNESSTHIRD", witnessThird);
+//                intent.putExtra("testType", testType);
+//                //get area based on room area id
+//                intent.putExtra("AREANAME", areaName);
+//
+//                if (loginUserType.equals("CLIENT")) {
+//                    intent.putExtra("ClientInstrument", clientInstrument);
+//                } else {
+//                    intent.putExtra("PartnerInstrument", partnerInstrument);
+//                }
+//                intent.putExtra("Room", room);
+//                intent.putExtra("AhuNumber", ahuNumber);
+//                intent.putExtra("LOCATION", applicableTestRoomLocation);
+//                intent.putExtra("NOOFCYCLE", noOfCycle);
+//                intent.putExtra("rows", grillAndSizeFromGrill.size() + 1);
+//                intent.putExtra("cols", applicableTestRoomLocation);
+//
+//                startActivity(intent);
 
             }
         }
+
         if (view == clear) {
             isClearClicked = true;
             if (editTextList.size() > 0) {
@@ -1799,7 +1806,14 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         clear.setOnClickListener(this);
         verify_btn = (Button) findViewById(R.id.verify_btn);
         verify_btn.setOnClickListener(this);
+        cancel = (Button) findViewById(R.id.cancel);
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+                finish();
+            }
+        });
         instrumentNo = (TextView) findViewById(R.id.instrument_no);
         testerName = (TextView) findViewById(R.id.tester_name);
         testerName.setText(userName);

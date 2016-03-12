@@ -473,7 +473,7 @@ public class TestCreateActivity extends Activity {
                     ahuSpinner.setVisibility(View.VISIBLE);
                     equipmentSpinner.setVisibility(View.GONE);
                     roomSpinner.setVisibility(View.VISIBLE);
-                    roomTestList.add("Select Room");
+//                    roomTestList.add("Select Room");
                     roomSpinner.setSelection(0);
                     ahuSpinner.setSelection(0);
                     testSpinner.setSelection(0);
@@ -675,7 +675,7 @@ public class TestCreateActivity extends Activity {
     @Override
     public void onBackPressed() {
         Intent afterLoginIntent = new Intent(TestCreateActivity.this, AfterLoginActivity.class);
-        TestCreateActivity.this.finish();
         startActivity(afterLoginIntent);
+        TestCreateActivity.this.finish();
     }
 }
