@@ -431,6 +431,10 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 intent.putExtra("RoomFilterList", filterArrayList);
                 intent.putExtra("rows", filterArrayList.size() + 1);
                 intent.putExtra("cols", applicableTestRoomLocation);
+                //sending Result Data over Bundle
+                intent.putExtra("PassFailData", passFailHashMap);
+                //sending Input Data
+                intent.putExtra("InputData", inputDataHashMap);
 
                 //TO Do testspesification will be shown from room filter spesification
                 // location will be the size off rommfilter list

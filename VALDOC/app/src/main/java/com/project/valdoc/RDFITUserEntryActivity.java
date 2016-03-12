@@ -29,6 +29,7 @@ import com.project.valdoc.intity.TestSpesificationValue;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Map;
 
 public class RDFITUserEntryActivity extends AppCompatActivity {
     private static final String TAG = "RDFITUser";
@@ -82,6 +83,7 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
     private TextView instrumentUsedTextView;
     private TextView testCunductedByTextView;
     ArrayList<TextView> txtViewList;
+    ArrayList<TextView> txtPassFailList;
     private Button submit;
     private Button clear;
     private Button cancel;
@@ -100,6 +102,9 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         pr = ProgressDialog.show(this, "Please Wait", "Loading...");
 
+        txtPassFailList = new ArrayList<TextView>();
+        txtViewList = new ArrayList<TextView>();
+
         if (getIntent().hasExtra("rows") && getIntent().hasExtra("cols")) {
             rows = getIntent().getIntExtra("rows", 0);
             cols = getIntent().getIntExtra("cols", 0);
@@ -117,6 +122,33 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
         if ("RD_FIT".equalsIgnoreCase(testType)) {
             BuildTableTest4(rows, cols);
         }
+
+
+        //Receiving User Input Data from Bundle
+        HashMap<Integer, Integer> hashMap = (HashMap<Integer, Integer>) getIntent().getSerializableExtra("InputData");
+        for (Map.Entry m : hashMap.entrySet()) {
+            Log.v(TAG, " InputData "+m.getKey() + " " + m.getValue());
+        }
+        for (int i = 0; i < txtViewList.size(); i++) {
+            TextView tvl = txtViewList.get(i);
+            tvl.setText(hashMap.get(tvl.getId()) + "");
+        }
+        //Receiving Pass Fail Data from Bundle
+        HashMap<Integer, Long> PassFailHashMap = (HashMap<Integer, Long>) getIntent().getSerializableExtra("PassFailData");
+        for (Map.Entry O : PassFailHashMap.entrySet()) {
+            Log.v(TAG, " PassFail " + O.getKey() + " " + O.getValue());
+        }
+        for (int i = 0; i < txtPassFailList.size(); i++) {
+            TextView tvl = txtPassFailList.get(i);
+            tvl.setText(PassFailHashMap.get(tvl.getId()) + "");
+            if("PASS".equalsIgnoreCase(tvl.getText().toString().trim())){
+                tvl.setTextColor(getResources().getColor(R.color.blue));
+            }else{
+                tvl.setTextColor(getResources().getColor(R.color.red));
+            }
+        }
+
+
     }
 
     private void datePicker() {
@@ -544,7 +576,8 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
                 if (i == 1 && j == 1) {
                     row.addView(addTextView(" Obtained Test Results\n (% Leakage) "));
                 } else {
-                    row.addView(addTextView(" 0.0015 "));
+                    //row.addView(addTextView(" 0.0015 "));
+                    row.addView(addInputDataTextView());
                 }
 
             }
@@ -562,7 +595,8 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
                 if (i == 1 && j == 1) {
                     row.addView(addTextView(" Test Status\n    "));
                 } else {
-                    row.addView(addTextView(" Pass "));
+                    //row.addView(addTextView(" Pass "));
+                    row.addView(addTextPassFail(" ", i));
                 }
 
             }
@@ -607,21 +641,45 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
         return tv;
     }
 
-    private EditText addEditTextView() {
-        EditText editTv = new EditText(this);
-        editTv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+    int idCountEtv = 200;
+    private TextView addInputDataTextView() {
+        TextView tv = new TextView(this);
+        tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
                 TableRow.LayoutParams.WRAP_CONTENT));
-        editTv.setBackgroundResource(R.drawable.border);
-        editTv.setPadding(5, 5, 5, 5);
-        editTv.setTextColor(getResources().getColor(R.color.black));
-        // editTv.setTextSize(getResources().getDimension(R.dimen.normal_text_size));
-        //editTv.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD);
-        editTv.setEms(3);
-        editTv.setSingleLine(true);
-        editTv.setEllipsize(TextUtils.TruncateAt.END);
-        return editTv;
+        tv.setBackgroundResource(R.drawable.border1);
+        //tv.setPadding(5, 5, 5, 5);
+        tv.setTextColor(getResources().getColor(R.color.black));
+        tv.setTextSize(getResources().getDimension(R.dimen.normal_text_size));
+        //tv.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD);
+        tv.setId(idCountEtv);
+        tv.setSingleLine(false);
+        tv.setMaxLines(3);
+        tv.setEllipsize(TextUtils.TruncateAt.END);
+        idCountEtv++;
+        txtViewList.add(tv);
+        return tv;
     }
 
+    int idPassFailTv = 300;
+    private TextView addTextPassFail(String textValue,int tagRows) {
+        TextView tv = new TextView(this);
+        tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+                TableRow.LayoutParams.WRAP_CONTENT));
+        tv.setBackgroundResource(R.drawable.border1);
+        //tv.setPadding(5, 5, 5, 5);
+        tv.setTextColor(getResources().getColor(R.color.black));
+        tv.setTextSize(getResources().getDimension(R.dimen.normal_text_size));
+        //tv.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD);
+        tv.setSingleLine(false);
+        tv.setTag(tagRows);
+        tv.setId(idPassFailTv);
+        tv.setMaxLines(3);
+        tv.setEllipsize(TextUtils.TruncateAt.END);
+        tv.setText(textValue);
+        idPassFailTv++;
+        txtPassFailList.add(tv);
+        return tv;
+    }
 
     private void initRes() {
         headerText = (TextView) findViewById(R.id.common_header_tv);
