@@ -68,7 +68,10 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
     //Test 2 Ids variable
     int filterSizeIds = 100, airFlowRateIds = 300,
             totalAirFlowRateIds = 400;
-    //Test 5 Variable
+    //Test 4 Ids & variable
+    int test4Id = 700;
+    ArrayList<TextView> txtSlpDlpList;
+    // Test 5 Variable
     int test5CommonFormulaIds1 = 500, test5CommonFormulaIds2 = 600;
     long meanValue1 = 0l, meanValue2 = 0l;
     double stdDev1 = 0.0, stdDev2 = 0.0;
@@ -144,6 +147,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         airChangeTxtList = new ArrayList<TextView>();
         RDPC3TxtList = new ArrayList<TextView>();
         RDPC3TxtList2 = new ArrayList<TextView>();
+        txtSlpDlpList = new ArrayList<TextView>();
 
 
         inputDataHashMap = new HashMap<Integer, Integer>();
@@ -672,7 +676,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             TableRow rowFooter = new TableRow(this);
             rowFooter.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
                     TableRow.LayoutParams.WRAP_CONTENT));
-            rowFooter.addView(addTextViewWithTagIds(sk, test5CommonFormulaIds1, RDPC3TxtList, 0));
+            rowFooter.addView(addTextViewWithTagIds(sk, test5CommonFormulaIds1, RDPC3TxtList, "0"));
             test5_table_layout3_1.addView(rowFooter);
             test5CommonFormulaIds1++;
         }
@@ -726,7 +730,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             TableRow rowFooter = new TableRow(this);
             rowFooter.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
                     TableRow.LayoutParams.WRAP_CONTENT));
-            rowFooter.addView(addTextViewWithTagIds(sk, test5CommonFormulaIds2, RDPC3TxtList2, 0));
+            rowFooter.addView(addTextViewWithTagIds(sk, test5CommonFormulaIds2, RDPC3TxtList2, "0"));
             test5_table_layout5_1.addView(rowFooter);
             test5CommonFormulaIds2++;
         }
@@ -811,8 +815,8 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 if (i == 1 && j == 1) {
                     row.addView(addTextView(" Average Up Stream\n Concentration (µg/liter) "));
                 } else {
-                    //row.addView(addTextView(" 42 "));
-                    row.addView(addEditTextView(i));
+                    row.addView(addTextView(" 42 "));
+                    //row.addView(addEditTextView(i));
                 }
 
             }
@@ -832,7 +836,9 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 } else {
                     if (null != filterArrayList && filterArrayList.size() > 0) {
                         RoomFilter roomFilter =  filterArrayList.get(i - 2);
-                        row.addView(addTextView(roomFilter.getSpecification()+"%"));
+                        //row.addView(addTextView(roomFilter.getSpecification()+"%"));
+                        row.addView(addTextViewWithTagIds(i,test4Id,txtSlpDlpList,roomFilter.getSpecification()+"%"));
+                        test4Id++;
                     }
                 }
 
@@ -851,7 +857,8 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 if (i == 1 && j == 1) {
                     row.addView(addTextView(" Obtained Test Results\n (% Leakage) "));
                 } else {
-                    row.addView(addTextView(" 0.0015 "));
+                    //row.addView(addTextView(" 0.0015 "));
+                    row.addView(addEditTextView(i));
                 }
 
             }
@@ -869,7 +876,8 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 if (i == 1 && j == 1) {
                     row.addView(addTextView(" Test Status\n    "));
                 } else {
-                    row.addView(addTextView(" Pass "));
+                    //row.addView(addTextView(" Pass "));
+                    row.addView(addTextPassFail("", i));
                 }
 
             }
@@ -1027,7 +1035,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                     float filterSize = 0.0f;
                     if (!grill.isEmpty())
                         filterSize = Float.parseFloat(grill.get(ValdocDatabaseHandler.GRILL_EFFECTIVEAREA).toString());
-                    row.addView(addTextViewWithTagIds(i, filterSizeIds, filterSizeTxtViewList, filterSize));
+                    row.addView(addTextViewWithTagIds(i, filterSizeIds, filterSizeTxtViewList, filterSize+""));
 
                 }
             }
@@ -1082,7 +1090,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                     row.addView(addTextView(" Air Flow Rate\n in cfm(AxAv)"));
                 } else {
                     //row.addView(addTextView("490"));
-                    row.addView(addTextViewWithTagIds(i, airFlowRateIds, airFlowRateTxtViewList, 0));
+                    row.addView(addTextViewWithTagIds(i, airFlowRateIds, airFlowRateTxtViewList, "0"));
                     airFlowRateIds++;
                 }
             }
@@ -1332,7 +1340,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
     }
 
     private TextView addTextViewWithTagIds(int Tag, int Ids,
-                                           ArrayList<TextView> txtViewList, float value) {
+                                           ArrayList<TextView> txtViewList, String value) {
         TextView tv = new TextView(this);
         tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
                 TableRow.LayoutParams.WRAP_CONTENT));
@@ -1343,7 +1351,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         tv.setEms(4);
         tv.setSingleLine(true);
         tv.setEllipsize(TextUtils.TruncateAt.END);
-        tv.setText(value + "");
+        tv.setText(value);
         Log.d(TAG, "TAG & idCountTv " + Ids);
         tv.setId(Ids);
         tv.setTag(Tag);
@@ -1552,6 +1560,33 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                     }
                 }
             }
+            //Calculation Test 4 Specific
+            if("RD_FIT".equals(testType)){
+                for (int i = 0; i < txtSlpDlpList.size(); i++) {
+                    //getLeakageValue(tagF);
+                    if (txtSlpDlpList.get(i).getTag().equals(tagF)) {
+                        if(txtSlpDlpList.get(i).getText().toString().trim()!= null
+                                && !"".equals(txtSlpDlpList.get(i).getText().toString().trim())){
+                            double slpDlpValue = Double.parseDouble(txtSlpDlpList.get(i).getText().toString().trim().replace("%","0"));
+                            // Pass Fail Calculation
+                            TextView txtPassFail = txtPassFailList.get(i);
+                            if(txtSlpDlpList.get(i).getTag()==txtPassFail.getTag()){
+                                if(slpDlpValue>getLeakageValue(tagF)){
+                                    txtPassFail.setTextColor(getResources().getColor(R.color.blue));
+                                    txtPassFail.setText(" PASS ");
+                                    passFailHashMap.put(txtPassFail.getId()," PASS ");
+                                }else{
+                                    txtPassFail.setTextColor(getResources().getColor(R.color.red));
+                                    txtPassFail.setText(" FAIL ");
+                                    passFailHashMap.put(txtPassFail.getId(), " FAIL ");
+                                }
+                            }
+                        }
+
+                    }
+                }
+
+            }
 
             //Calculation Test 5 Specific
             if ("RD_PC_3".equals(testType)) {
@@ -1726,7 +1761,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             resultVariance = temp /tagCount;
         }
 
-        System.out.println(" Variance Result " + resultVariance+" Rounded Value "+Math.round(resultVariance));
+        System.out.println(" Variance Result " + resultVariance + " Rounded Value " + Math.round(resultVariance));
         return Math.round(resultVariance);
     }
 
@@ -1735,6 +1770,28 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         double stdDev = Math.sqrt(getVariance(meanAverageList2, tagF));
         System.out.println(" getStdDev Result " + stdDev+" rounded StdValue "+Math.round(stdDev));
         return Math.round(stdDev);
+    }
+
+    //Test 4 Specific
+    private double getLeakageValue(int count) {
+        double leakageValue = 0.0;
+        if (!isClearClicked) {
+            try {
+                for (Map.Entry m : rowTagHashMap.entrySet()) {
+                    if (m.getValue().equals(count)) {
+                        if (inputDataHashMap.get(m.getKey()) != null &&
+                                !"".equals(inputDataHashMap.get(m.getKey()))) {
+                            leakageValue = inputDataHashMap.get(m.getKey());
+                        }
+                    }
+                    System.out.println("inputDataHashMap.get(m.getKey())" + "  " + inputDataHashMap.get(m.getKey()));
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        Log.d(TAG, "Leakage Value : " + leakageValue);
+        return leakageValue;
     }
 
     private void initRes() {
