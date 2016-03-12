@@ -662,7 +662,7 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
         test4_table_layout5 = (TableLayout) findViewById(R.id.test4_tableLayout5);
         test4_table_layout6 = (TableLayout) findViewById(R.id.test4_tableLayout6);
         test4_table_layout7 = (TableLayout) findViewById(R.id.test4_tableLayout7);
-        if ("Test4".equalsIgnoreCase(testType)) {
+        if ("RD_FIT".equalsIgnoreCase(testType)) {
             findViewById(R.id.test_table_4_header_l_ll).setVisibility(View.GONE);
             findViewById(R.id.test_table_4_header_2_ll).setVisibility(View.GONE);
         }
