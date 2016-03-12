@@ -87,6 +87,8 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
     private Button submit;
     private Button clear;
     private Button cancel;
+    HashMap<Integer, Integer> likageDataMap;
+    HashMap<Integer, Long> PassFailHashMap;
     ArrayList<TextView> resultTextViewList;
     private ValdocDatabaseHandler mValdocDatabaseHandler = new ValdocDatabaseHandler(RDFITUserEntryActivity.this);
 
@@ -125,30 +127,28 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
 
 
         //Receiving User Input Data from Bundle
-        HashMap<Integer, Integer> hashMap = (HashMap<Integer, Integer>) getIntent().getSerializableExtra("InputData");
-        for (Map.Entry m : hashMap.entrySet()) {
-            Log.v(TAG, " InputData "+m.getKey() + " " + m.getValue());
+        likageDataMap = (HashMap<Integer, Integer>) getIntent().getSerializableExtra("InputData");
+        for (Map.Entry m : likageDataMap.entrySet()) {
+            Log.v(TAG, " InputData " + m.getKey() + " " + m.getValue());
         }
         for (int i = 0; i < txtViewList.size(); i++) {
             TextView tvl = txtViewList.get(i);
-            tvl.setText(hashMap.get(tvl.getId()) + "");
+            tvl.setText(likageDataMap.get(tvl.getId()) + "");
         }
         //Receiving Pass Fail Data from Bundle
-        HashMap<Integer, Long> PassFailHashMap = (HashMap<Integer, Long>) getIntent().getSerializableExtra("PassFailData");
+        PassFailHashMap = (HashMap<Integer, Long>) getIntent().getSerializableExtra("PassFailData");
         for (Map.Entry O : PassFailHashMap.entrySet()) {
             Log.v(TAG, " PassFail " + O.getKey() + " " + O.getValue());
         }
         for (int i = 0; i < txtPassFailList.size(); i++) {
             TextView tvl = txtPassFailList.get(i);
             tvl.setText(PassFailHashMap.get(tvl.getId()) + "");
-            if("PASS".equalsIgnoreCase(tvl.getText().toString().trim())){
+            if ("PASS".equalsIgnoreCase(tvl.getText().toString().trim())) {
                 tvl.setTextColor(getResources().getColor(R.color.blue));
-            }else{
+            } else {
                 tvl.setTextColor(getResources().getColor(R.color.red));
             }
         }
-
-
     }
 
     private void datePicker() {
@@ -199,7 +199,7 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
         }
     };
 
-    private void textViewValueAssignment()  {
+    private void textViewValueAssignment() {
         if (loginUserType.equals("CLIENT")) {
             instrumentUsed.setText(clientInstrument.getcInstrumentName());
             make.setText(clientInstrument.getMake());
@@ -266,8 +266,8 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
         roomName = (TextView) findViewById(R.id.roomname);
         occupancyState = (TextView) findViewById(R.id.ocupancystate);
         testRefrance = (TextView) findViewById(R.id.testrefrence);
-        equipmentNameText= (TextView) findViewById(R.id.equipment_name_text);
-        equipmentNoText= (TextView) findViewById(R.id.equipment_no_text);
+        equipmentNameText = (TextView) findViewById(R.id.equipment_name_text);
+        equipmentNoText = (TextView) findViewById(R.id.equipment_no_text);
         equipmentName = (TextView) findViewById(R.id.equipmentname);
         equipmentNo = (TextView) findViewById(R.id.equipmentno);
         testCundoctor = (TextView) findViewById(R.id.testcunducter);
@@ -287,21 +287,17 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                if (mValdocDatabaseHandler.insertTestDetails(ValdocDatabaseHandler.TEST_DETAILS_TABLE_NAME, testDetailsDataCreation())) {
-//                    if (mValdocDatabaseHandler.insertTestReading(ValdocDatabaseHandler.TESTREADING_TABLE_NAME, testReading())) {
-//                        if (mValdocDatabaseHandler.insertTestSpesificationValue(ValdocDatabaseHandler.TESTSPECIFICATIONVALUE_TABLE_NAME, testSpesificationValue())) {
-//                            Toast.makeText(RDFITUserEntryActivity.this, "Data saved sussessfully", Toast.LENGTH_LONG).show();
-//                        } else {
-//                            Toast.makeText(RDFITUserEntryActivity.this, "Data not saved", Toast.LENGTH_LONG).show();
-//                        }
-//                    } else {
-//                        Toast.makeText(RDFITUserEntryActivity.this, "Data not saved", Toast.LENGTH_LONG).show();
-//                    }
-//
-//                } else {
-//                    Toast.makeText(RDFITUserEntryActivity.this, "Data not saved", Toast.LENGTH_LONG).show();
-//                }
-//
+                if (mValdocDatabaseHandler.insertTestDetails(ValdocDatabaseHandler.TEST_DETAILS_TABLE_NAME, testDetailsDataCreation())) {
+                    if (mValdocDatabaseHandler.insertTestReading(ValdocDatabaseHandler.TESTREADING_TABLE_NAME, testReading())) {
+                        Toast.makeText(RDFITUserEntryActivity.this, "Data saved sussessfully", Toast.LENGTH_LONG).show();
+                    } else {
+                        Toast.makeText(RDFITUserEntryActivity.this, "Data not saved", Toast.LENGTH_LONG).show();
+                    }
+
+                } else {
+                    Toast.makeText(RDFITUserEntryActivity.this, "Data not saved", Toast.LENGTH_LONG).show();
+                }
+
 ////                mValdocDatabaseHandler.insertTestSpesificationValue(ValdocDatabaseHandler.TESTSPECIFICATIONVALUE_TABLE_NAME, testSpesificationValueDataCreation());
             }
         });
@@ -315,58 +311,30 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
         });
     }
 
-    private ArrayList<TestSpesificationValue> testSpesificationValue() {
-        ArrayList<TestSpesificationValue> spesificationValueArrayList = new ArrayList<TestSpesificationValue>();
-        TestSpesificationValue testSpesificationValue = new TestSpesificationValue();
-        testSpesificationValue.setTest_specific_id(1);
-        testSpesificationValue.setTest_detail_id("1");
-        testSpesificationValue.setFieldName("TFR");
-        testSpesificationValue.setFieldValue("" + totalAirFlowRate);
-        spesificationValueArrayList.add(testSpesificationValue);
 
-        TestSpesificationValue testSpesificationValue1 = new TestSpesificationValue();
-        testSpesificationValue1.setTest_specific_id(1);
-        testSpesificationValue1.setTest_detail_id("1");
-        testSpesificationValue1.setFieldName("RV");
-        testSpesificationValue1.setFieldValue("" + room.getVolume());
-        spesificationValueArrayList.add(testSpesificationValue1);
+    private ArrayList<TestReading> testReading() {
+        ArrayList<TestReading> testReadingArrayList = new ArrayList<TestReading>();
+        int index = 0;
+        int hasMapKey = 200;
+        int passHasMapKey = 300;
+        for (RoomFilter roomFilter : filterArrayList) {
 
-        TestSpesificationValue testSpesificationValue2 = new TestSpesificationValue();
-        testSpesificationValue2.setTest_specific_id(1);
-        testSpesificationValue2.setTest_detail_id("1");
-        testSpesificationValue2.setFieldName("((TFR/RV)x60))");
-        testSpesificationValue2.setFieldValue("" + airChangeValue);
-        spesificationValueArrayList.add(testSpesificationValue2);
-
-        return spesificationValueArrayList;
+            TestReading testReading = new TestReading();
+            testReading.setTestReadingID(index);
+//        TO DO test details id is id of test details table
+            testReading.setTest_detail_id(index);
+            testReading.setEntityName(roomFilter.getFilterCode());
+            StringBuilder grilList = new StringBuilder();
+            grilList.append(roomFilter.getFilterType()).append(',').append(roomFilter.getEfficiency()).append(",").append(roomFilter.getSpecification()).append(",")
+                    .append(likageDataMap.get(hasMapKey)).append(",").append(PassFailHashMap.get(passHasMapKey));
+            passHasMapKey++;
+            hasMapKey++;
+            index++;
+            testReading.setValue(grilList.toString());
+            testReadingArrayList.add(testReading);
+        }
+        return testReadingArrayList;
     }
-
-//    private ArrayList<TestReading> testReading() {
-//        ArrayList<TestReading> testReadingArrayList = new ArrayList<TestReading>();
-//        int index = 0;
-//        int hasMapKey = 200;
-//        for (HashMap<String, String> filter : filterArrayList) {
-//            TestReading testReading = new TestReading();
-//            testReading.setTestReadingID(index);
-////        TO DO test details id is id of test details table
-//            testReading.setTest_detail_id(index);
-//            testReading.setEntityName(filter.get(ValdocDatabaseHandler.GRILL_GRILLCODE).toString());
-//            StringBuilder grilList = new StringBuilder();
-//            //v1,v2....value cration
-//            StringBuilder sb = new StringBuilder();
-//            for (int i = 0; i < applicableTestRoomLocation; i++) {
-//                if (i != 0)
-//                    sb.append(',');
-//                sb.append(userEnterdValue.get(hasMapKey).toString());
-//                hasMapKey++;
-//            }
-//            grilList.append(grill.get(ValdocDatabaseHandler.GRILL_EFFECTIVEAREA).toString()).append(',').append(sb).append(airFlowRateMap.get(index + 1)).append(totalAirFlowRateMap.get(index + 1));
-//            index++;
-//            testReading.setValue(grilList.toString());
-//            testReadingArrayList.add(testReading);
-//        }
-//        return testReadingArrayList;
-//    }
 
 
     private TestDetails testDetailsDataCreation() {
@@ -412,6 +380,7 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
         testWitness.setText(witness);
         return testDetails;
     }
+
     private void getExtraFromTestCreateActivity(Bundle savedInstanceState) {
         if (savedInstanceState == null) {
             Bundle extras = getIntent().getExtras();
@@ -474,7 +443,7 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
                     row.addView(addTextView(" Filter No \n         "));
                 } else {
                     if (null != filterArrayList && filterArrayList.size() > 0) {
-                        RoomFilter roomFilter =  filterArrayList.get(i - 2);
+                        RoomFilter roomFilter = filterArrayList.get(i - 2);
                         Log.d("valdoc", "DynamicTableActivity filterArrayList=" + filterArrayList.size() + "i=" + i);
                         row.addView(addTextView(roomFilter.getFilterCode()));
                     }
@@ -496,7 +465,7 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
                     row.addView(addTextView(" Filter Type  \n         "));
                 } else {
                     if (null != filterArrayList && filterArrayList.size() > 0) {
-                        RoomFilter roomFilter =  filterArrayList.get(i - 2);
+                        RoomFilter roomFilter = filterArrayList.get(i - 2);
                         row.addView(addTextView(roomFilter.getFilterType()));
                     }
                 }
@@ -517,8 +486,8 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
                     row.addView(addTextView(" Filter Efficiency\n at Particle Size* "));
                 } else {
                     if (null != filterArrayList && filterArrayList.size() > 0) {
-                        RoomFilter roomFilter =  filterArrayList.get(i - 2);
-                        row.addView(addTextView(roomFilter.getEfficiency()+"%"+" | "+roomFilter.getParticleSize()+"µm"));
+                        RoomFilter roomFilter = filterArrayList.get(i - 2);
+                        row.addView(addTextView(roomFilter.getEfficiency() + "%" + " | " + roomFilter.getParticleSize() + "µm"));
                     }
                 }
 
@@ -556,8 +525,8 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
                     row.addView(addTextView(" SLP of DL for Tests\n after Installation** "));
                 } else {
                     if (null != filterArrayList && filterArrayList.size() > 0) {
-                        RoomFilter roomFilter =  filterArrayList.get(i - 2);
-                        row.addView(addTextView(roomFilter.getSpecification()+"%"));
+                        RoomFilter roomFilter = filterArrayList.get(i - 2);
+                        row.addView(addTextView(roomFilter.getSpecification() + "%"));
                     }
                 }
 
@@ -642,6 +611,7 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
     }
 
     int idCountEtv = 200;
+
     private TextView addInputDataTextView() {
         TextView tv = new TextView(this);
         tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
@@ -661,7 +631,8 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
     }
 
     int idPassFailTv = 300;
-    private TextView addTextPassFail(String textValue,int tagRows) {
+
+    private TextView addTextPassFail(String textValue, int tagRows) {
         TextView tv = new TextView(this);
         tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
                 TableRow.LayoutParams.WRAP_CONTENT));

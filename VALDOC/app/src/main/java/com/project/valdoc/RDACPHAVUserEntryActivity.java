@@ -386,7 +386,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
                 sb.append(userEnterdValue.get(hasMapKey).toString());
                 hasMapKey++;
             }
-            grilList.append(grill.get(ValdocDatabaseHandler.GRILL_EFFECTIVEAREA).toString()).append(',').append(sb).append(airFlowRateMap.get(index + 1)).append(totalAirFlowRateMap.get(index + 1));
+            grilList.append(grill.get(ValdocDatabaseHandler.GRILL_EFFECTIVEAREA).toString()).append(',').append(sb).append(",").append(airFlowRateMap.get(index + 1)).append(",").append(totalAirFlowRateMap.get(index + 1));
             index++;
             testReading.setValue(grilList.toString());
             testReadingArrayList.add(testReading);
