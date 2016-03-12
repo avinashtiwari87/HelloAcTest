@@ -34,6 +34,7 @@
         <activity
             android:name=".LoginActivity"
             android:label="@string/title_activity_login"
+            android:noHistory = "true"
             android:screenOrientation="portrait" />
         <activity
             android:name=".TestCreateActivity"

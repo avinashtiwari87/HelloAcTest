@@ -56,10 +56,11 @@ public class AfterLoginActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(AfterLoginActivity.this, TestCreateActivity.class);
-                    intent.putExtra("USERNAME", userName);
-                    intent.putExtra("USERTYPE", loginUserType);
-                    intent.putExtra("APPUSERID", appUserId);
+                    intent.putExtra("USERNAME", sharedpreferences.getString("USERNAME",""));
+                    intent.putExtra("USERTYPE", sharedpreferences.getString("USERTYPE", ""));
+                    intent.putExtra("APPUSERID", sharedpreferences.getInt("APPUSERID", 0));
                     startActivity(intent);
+//                    finish();
                 }
             });
 
