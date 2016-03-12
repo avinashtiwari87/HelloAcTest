@@ -27,6 +27,7 @@ import com.project.valdoc.intity.PartnerInstrument;
 import com.project.valdoc.intity.Room;
 import com.project.valdoc.intity.TestDetails;
 import com.project.valdoc.intity.TestReading;
+import com.project.valdoc.intity.TestSpesificationValue;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -58,6 +59,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
     private String ahuNumber;
     private Room room;
     private ArrayList<HashMap<String, String>> grillAndSizeFromGrill;
+    private int applicableTestRoomLocation;
     private String areaName;
     private String witnessFirst;
     private String witnessSecond;
@@ -92,12 +94,16 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
     private TextView instrumentUsedTextView;
     private TextView testCunductedByTextView;
     ArrayList<TextView> txtViewList;
+    private double totalAirFlowRate = 0;
+    private double airChangeValue;
+    HashMap<Integer, Long> airFlowRateMap;
+    HashMap<Integer, Float> totalAirFlowRateMap;
     private Button submit;
     private Button clear;
     private Button cancel;
     ArrayList<TextView> resultTextViewList;
     private ValdocDatabaseHandler mValdocDatabaseHandler = new ValdocDatabaseHandler(RDACPHAVUserEntryActivity.this);
-
+    private HashMap<Integer, Integer> userEnterdValue;
     private int year;
     private int month;
     private int day;
@@ -141,43 +147,47 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
         if (roomVolumeTxtList != null && roomVolumeTxtList.size() > 0)
             roomVolumeTxtList.get((int) (roomVolumeTxtList.size() / 2)).setText("8500");
 
-        //Receiving User Input Data from Bundle
-        HashMap<Integer, Integer> hashMap = (HashMap<Integer, Integer>) getIntent().getSerializableExtra("InputData");
-        for (Map.Entry m : hashMap.entrySet()) {
+        //Receiving User Input Data from Bundle key start from 200
+        userEnterdValue = (HashMap<Integer, Integer>) getIntent().getSerializableExtra("InputData");
+        for (Map.Entry m : userEnterdValue.entrySet()) {
             Log.v(TAG, m.getKey() + " " + m.getValue());
         }
+        Log.v(TAG, " txtViewList size: " + txtViewList.size());
         for (int i = 0; i < txtViewList.size(); i++) {
             TextView tvl = txtViewList.get(i);
-            tvl.setText(hashMap.get(tvl.getId()) + "");
+            tvl.setText(userEnterdValue.get(tvl.getId()) + "");
         }
 
         //Receiving Result Data from Bundle
-        HashMap<Integer, Long> resultHashMap = (HashMap<Integer, Long>) getIntent().getSerializableExtra("ResultData");
-        for (Map.Entry n : resultHashMap.entrySet()) {
+        //average of v1 ,v2...where id is 1,2....
+        airFlowRateMap = (HashMap<Integer, Long>) getIntent().getSerializableExtra("ResultData");
+        for (Map.Entry n : airFlowRateMap.entrySet()) {
             Log.v(TAG, " Result: " + n.getKey() + " " + n.getValue());
         }
+
         for (int i = 0; i < resultTextViewList.size(); i++) {
             TextView tvl = resultTextViewList.get(i);
-            tvl.setText(resultHashMap.get(tvl.getId()) + "");
+            tvl.setText(airFlowRateMap.get(tvl.getId()) + "");
         }
         //Air Flow Rate(AxAv)
-        HashMap<Integer, Float> resultHashMap2 = (HashMap<Integer, Float>) getIntent().getSerializableExtra("ResultData2");
+        totalAirFlowRateMap = (HashMap<Integer, Float>) getIntent().getSerializableExtra("ResultData2");
         for (int i = 0; i < airFlowRateTxtViewList.size(); i++) {
             TextView tvl = airFlowRateTxtViewList.get(i);
-            tvl.setText(resultHashMap2.get(tvl.getId()) + "");
+            tvl.setText(totalAirFlowRateMap.get(tvl.getId()) + "");
         }
         //Total AirFlow Rate (sum of AirFlow Rate)
         if (totalAirFlowRateTxtList != null && totalAirFlowRateTxtList.size() > 0) {
             int middleTxt = totalAirFlowRateTxtList.size() / 2;
             TextView mtvl = totalAirFlowRateTxtList.get(middleTxt);
-            mtvl.setText(getIntent().getFloatExtra("totalAirFlowRate", 0f) + "");
+            totalAirFlowRate = getIntent().getFloatExtra("totalAirFlowRate", 0f);
+            mtvl.setText(totalAirFlowRate + "");
         }
         //AirFlow Change
         if (airChangeTxtList != null && airChangeTxtList.size() > 0) {
             TextView airChangeTxt = airChangeTxtList.get(airChangeTxtList.size() / 2);
-            airChangeTxt.setText(getIntent().getIntExtra("AirChangeValue", 0) + "");
+            airChangeValue = getIntent().getIntExtra("AirChangeValue", 0);
+            airChangeTxt.setText(airChangeValue + "");
         }
-
 
     }
 
@@ -304,7 +314,11 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (mValdocDatabaseHandler.insertTestDetails(ValdocDatabaseHandler.TEST_DETAILS_TABLE_NAME, testDetailsDataCreation())) {
                     if (mValdocDatabaseHandler.insertTestReading(ValdocDatabaseHandler.TESTREADING_TABLE_NAME, testReading())) {
-                        Toast.makeText(RDACPHAVUserEntryActivity.this, "Data saved sussessfully", Toast.LENGTH_LONG).show();
+                        if (mValdocDatabaseHandler.insertTestSpesificationValue(ValdocDatabaseHandler.TESTSPECIFICATIONVALUE_TABLE_NAME, testSpesificationValue())) {
+                            Toast.makeText(RDACPHAVUserEntryActivity.this, "Data saved sussessfully", Toast.LENGTH_LONG).show();
+                        } else {
+                            Toast.makeText(RDACPHAVUserEntryActivity.this, "Data not saved", Toast.LENGTH_LONG).show();
+                        }
                     } else {
                         Toast.makeText(RDACPHAVUserEntryActivity.this, "Data not saved", Toast.LENGTH_LONG).show();
                     }
@@ -327,35 +341,57 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
     }
 
 
-    private TestReading testReading() {
-        TestReading testReading = new TestReading();
-        testReading.setTestReadingID(1);
-//        TO DO test details id is id of test details table
-        testReading.setTest_detail_id(1);
+    private ArrayList<TestSpesificationValue> testSpesificationValue() {
+        ArrayList<TestSpesificationValue> spesificationValueArrayList = new ArrayList<TestSpesificationValue>();
+        TestSpesificationValue testSpesificationValue = new TestSpesificationValue();
+        testSpesificationValue.setTest_specific_id(1);
+        testSpesificationValue.setTest_detail_id("1");
+        testSpesificationValue.setFieldName("TFR");
+        testSpesificationValue.setFieldValue("" + totalAirFlowRate);
+        spesificationValueArrayList.add(testSpesificationValue);
 
-//        testReading.setEntityName(filterList);
-        StringBuilder sb = new StringBuilder();
+        TestSpesificationValue testSpesificationValue1 = new TestSpesificationValue();
+        testSpesificationValue1.setTest_specific_id(1);
+        testSpesificationValue1.setTest_detail_id("1");
+        testSpesificationValue1.setFieldName("RV");
+        testSpesificationValue1.setFieldValue("" + room.getVolume());
+        spesificationValueArrayList.add(testSpesificationValue1);
+
+        TestSpesificationValue testSpesificationValue2 = new TestSpesificationValue();
+        testSpesificationValue2.setTest_specific_id(1);
+        testSpesificationValue2.setTest_detail_id("1");
+        testSpesificationValue2.setFieldName("((TFR/RV)x60))");
+        testSpesificationValue2.setFieldValue("" + airChangeValue);
+        spesificationValueArrayList.add(testSpesificationValue2);
+
+        return spesificationValueArrayList;
+    }
+
+    private ArrayList<TestReading> testReading() {
+        ArrayList<TestReading> testReadingArrayList = new ArrayList<TestReading>();
         int index = 0;
-        for (TextView testvalue : txtViewList) {
-
-            if (index != 0)
-                sb.append(',');
+        int hasMapKey = 200;
+        for (HashMap<String, String> grill : grillAndSizeFromGrill) {
+            TestReading testReading = new TestReading();
+            testReading.setTestReadingID(index);
+//        TO DO test details id is id of test details table
+            testReading.setTest_detail_id(index);
+            testReading.setEntityName(grill.get(ValdocDatabaseHandler.GRILL_GRILLCODE).toString());
+            StringBuilder grilList = new StringBuilder();
+            //v1,v2....value cration
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < applicableTestRoomLocation; i++) {
+                if (i != 0)
+                    sb.append(',');
+                sb.append(userEnterdValue.get(hasMapKey).toString());
+                hasMapKey++;
+            }
+            grilList.append(grill.get(ValdocDatabaseHandler.GRILL_EFFECTIVEAREA).toString()).append(',').append(sb).append(airFlowRateMap.get(index + 1)).append(totalAirFlowRateMap.get(index + 1));
             index++;
-            sb.append(testvalue.getText());
+            testReading.setValue(grilList.toString());
+            testReadingArrayList.add(testReading);
         }
-
-        //Receiving Result Data from Bundle
-        HashMap<Integer, Integer> resultHashMap = (HashMap<Integer, Integer>) getIntent().getSerializableExtra("ResultData");
-        for (Map.Entry n : resultHashMap.entrySet()) {
-            Log.v(TAG, " Result: " + n.getKey() + " " + n.getValue());
-        }
-        for (int i = 0; i < resultTextViewList.size(); i++) {
-            TextView tvl = resultTextViewList.get(i);
-            sb.append(',');
-            sb.append(tvl.getText().toString());
-        }
-        testReading.setValue(sb.toString());
-        return testReading;
+        return testReadingArrayList;
     }
 
     private TestDetails testDetailsDataCreation() {
@@ -467,7 +503,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
                 witnessThird = extras.getString("WITNESSTHIRD");
                 //get area based on room area id
                 areaName = extras.getString("AREANAME");
-
+                applicableTestRoomLocation = extras.getInt("LOCATION");
                 if (loginUserType.equals("CLIENT")) {
                     clientInstrument = (ClientInstrument) extras.getSerializable("ClientInstrument");
                 } else {

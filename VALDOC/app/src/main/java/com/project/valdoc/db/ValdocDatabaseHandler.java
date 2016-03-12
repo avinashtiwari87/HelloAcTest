@@ -429,15 +429,21 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
 
 
     //insert daa in testreading table
-    public boolean insertTestReading(String tableName, TestReading testReading) {
+    public boolean insertTestReading(String tableName, ArrayList<TestReading> readingArrayList) {
         SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(TESTREADING_TESTREADINGID, testReading.getTestReadingID());
-        contentValues.put(TESTREADING_TEST_DETAIL_ID, testReading.getTest_detail_id());
-        contentValues.put(TESTREADING_ENTITYNAME, testReading.getEntityName());
-        contentValues.put(TESTREADING_VALUE, testReading.getValue());
-        db.insert(tableName, null, contentValues);
-        return true;
+        if (readingArrayList.size() != 0) {
+            for (TestReading testReading : readingArrayList) {
+                ContentValues contentValues = new ContentValues();
+                contentValues.put(TESTREADING_TESTREADINGID, testReading.getTestReadingID());
+                contentValues.put(TESTREADING_TEST_DETAIL_ID, testReading.getTest_detail_id());
+                contentValues.put(TESTREADING_ENTITYNAME, testReading.getEntityName());
+                contentValues.put(TESTREADING_VALUE, testReading.getValue());
+                db.insert(tableName, null, contentValues);
+            }
+            return true;
+        } else {
+            return false;
+        }
     }
 
     //insert daa in test details table
@@ -1058,13 +1064,13 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
 
     // select data from grill table
     public ArrayList<HashMap<String, String>> getGrillAndSizeFromGrill(int roomId) {
-        String selectQuery = " SELECT " + GRILL_GRILLCODE +"," + GRILL_EFFECTIVEAREA + " FROM " + GRILL_TABLE_NAME +
+        String selectQuery = " SELECT " + GRILL_GRILLCODE + "," + GRILL_EFFECTIVEAREA + " FROM " + GRILL_TABLE_NAME +
 //        String selectQuery = " SELECT * FROM " + PARTNERUSER_TABLE_NAME +
                 " WHERE " + ValdocDatabaseHandler.GRILL_ROOMID + " = " + roomId;
         SQLiteDatabase database = this.getWritableDatabase();
         Cursor cursor = database.rawQuery(selectQuery, null);
         Log.d("valdoc", "ValdocDatabaseHelper :grill code grill:=" + cursor.getCount());
-       ArrayList<HashMap<String, String>> grillList=new ArrayList<HashMap<String, String>>();
+        ArrayList<HashMap<String, String>> grillList = new ArrayList<HashMap<String, String>>();
         if (cursor.moveToFirst()) {
             do {
                 HashMap<String, String> hashMap = new HashMap<String, String>();
@@ -1072,7 +1078,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 Log.d("valdoc", "ValdocDatabaseHelper :GRILL_GRILLCODE:=" + cursor.getString(cursor.getColumnIndex(GRILL_GRILLCODE)).toString() + "\n hashMap.get(GRILL_EFFECTIVEAREA) =" + cursor.getDouble(cursor.getColumnIndex(GRILL_EFFECTIVEAREA)));
                 hashMap.put(GRILL_GRILLCODE, cursor.getString(cursor.getColumnIndex(GRILL_GRILLCODE)).toString());
                 hashMap.put(GRILL_EFFECTIVEAREA, "" + cursor.getDouble(cursor.getColumnIndex(GRILL_EFFECTIVEAREA)));
-                Log.d("valdoc", "ValdocDatabaseHelper :equipment1:=" + hashMap.get(GRILL_GRILLCODE) + "\n hashMap.get(GRILL_EFFECTIVEAREA) =" + hashMap.get(GRILL_EFFECTIVEAREA)  );
+                Log.d("valdoc", "ValdocDatabaseHelper :equipment1:=" + hashMap.get(GRILL_GRILLCODE) + "\n hashMap.get(GRILL_EFFECTIVEAREA) =" + hashMap.get(GRILL_EFFECTIVEAREA));
                 grillList.add(hashMap);
             } while (cursor.moveToNext());
         } // return contact list return wordList; }

@@ -308,11 +308,10 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
         if (null != witnessThird && witnessThird.length() > 0)
             witness.append("," + witnessThird);
         testWitness.setText(witness);
-
-
     }
 
-    private TestReading testReading() {
+    private ArrayList<TestReading> testReading() {
+        ArrayList<TestReading> readingArrayList=new ArrayList<TestReading>();
         TestReading testReading = new TestReading();
         testReading.setTestReadingID(1);
 //        TO DO test details id is id of test details table
@@ -322,7 +321,6 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
         StringBuilder sb = new StringBuilder();
         int index = 0;
         for (TextView testvalue : txtViewList) {
-
             if (index != 0)
                 sb.append(',');
             index++;
@@ -340,7 +338,8 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
             sb.append(tvl.getText().toString());
         }
         testReading.setValue(sb.toString());
-        return testReading;
+        readingArrayList.add(testReading);
+        return readingArrayList;
     }
 
     private TestDetails testDetailsDataCreation() {

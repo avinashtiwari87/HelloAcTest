@@ -1015,7 +1015,6 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 }
             }
             test2_table_layout.addView(row);
-
         }
 
         //Second section
