@@ -55,7 +55,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
     //Test 6 View ...
     TableLayout test6A_table_layout, test6A_table_layout2, test6A_table_layout3;
 
-    Button verify_btn, clear,cancel;
+    Button verify_btn, clear,cancel, addRow_Btn, deleteRow_Btn;
     int rows, cols;
     String testType;
     ProgressDialog pr;
@@ -75,6 +75,8 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
     int test5CommonFormulaIds1 = 500, test5CommonFormulaIds2 = 600;
     long meanValue1 = 0l, meanValue2 = 0l;
     double stdDev1 = 0.0, stdDev2 = 0.0;
+    //Test 6 Variable
+    int rowsCount = 1;
 
     ArrayList<TextView> txtPassFailList;
     ArrayList<TextView> txtViewList;
@@ -528,6 +530,19 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             isClearClicked = false;
         }
 
+        if(view == addRow_Btn){
+            addRowonButtonClick(rowsCount);
+            rowsCount++;
+        }
+        if(view == deleteRow_Btn){
+            if(rowsCount>2){
+                deleteRowButtonClick(rowsCount);
+                rowsCount--;
+            }else{
+                Toast.makeText(DynamicTableActivity.this, "Please Add Row First", Toast.LENGTH_SHORT).show();
+            }
+        }
+
 
     }
 
@@ -548,18 +563,13 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 }
                 if (i == 3 && j == 1) {
                     row.addView(addTextView(" Worst case "));
-                } else if (i > 3) {
+                } else if (i > 3 && i<4) {
                     row.addView(addTextView(" " + i));
                 }
 
             }
             test6A_table_layout.addView(row);
         }
-        TableRow row1 = new TableRow(this);
-        row1.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
-                TableRow.LayoutParams.WRAP_CONTENT));
-        row1.addView(addTextView(" Final Reading " + rows));
-        test6A_table_layout.addView(row1);
 
 
         //Second section
@@ -572,7 +582,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
                     row.addView(addTextView(" 0.5 µm/m³ "));
-                } else {
+                } else if( i>1 && i<4){
                     row.addView(addEditTextView(i));
                 }
 
@@ -580,7 +590,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             test6A_table_layout2.addView(row);
         }
 
-        //Third section
+/*        //Third section
         // outer for loop
         for (int i = 1; i <= rows + 4; i++) {
             TableRow row = new TableRow(this);
@@ -595,7 +605,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 }
             }
             test6A_table_layout3.addView(row);
-        }
+        }*/
 
 
         //dismiss progressbar
@@ -603,6 +613,28 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             pr.dismiss();
 
 
+    }
+
+    private void addRowonButtonClick(int rows){
+        TableRow row1 = new TableRow(this);
+        row1.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+                TableRow.LayoutParams.WRAP_CONTENT));
+        row1.setTag(rows);
+        row1.addView(addTextView(" " + rows));
+        test6A_table_layout.addView(row1, rows);
+
+        TableRow row2 = new TableRow(this);
+        row2.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+                TableRow.LayoutParams.WRAP_CONTENT));
+        row2.addView(addEditTextView(rows));
+        test6A_table_layout2.addView(row2,rows);
+
+    }
+
+
+    private void deleteRowButtonClick(int rows){
+        test6A_table_layout.removeViewAt(rows);
+        test6A_table_layout2.removeViewAt(rows);
     }
 
     private void BuildTableTest5(int rows, int cols) {
@@ -1809,6 +1841,10 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         clear.setOnClickListener(this);
         verify_btn = (Button) findViewById(R.id.verify_btn);
         verify_btn.setOnClickListener(this);
+        addRow_Btn = (Button) findViewById(R.id.add_row_btn);
+        addRow_Btn.setOnClickListener(this);
+        deleteRow_Btn = (Button) findViewById(R.id.delete_row_btn);
+        deleteRow_Btn.setOnClickListener(this);
         cancel = (Button) findViewById(R.id.cancel);
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
