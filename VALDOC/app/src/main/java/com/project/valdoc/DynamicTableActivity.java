@@ -49,8 +49,8 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
     TableLayout test4_table_layout, test4_table_layout2, test4_table_layout3, test4_table_layout4,
             test4_table_layout5, test4_table_layout6, test4_table_layout7;
     //Test 5 View ...
-    TableLayout test5_table_layout, test5_table_layout2, test5_table_layout2_1, test5_table_layout2_2, test5_table_layout2_3,
-            test5_table_layout3, test5_table_layout4, test5_table_layout4_1, test5_table_layout4_2, test5_table_layout4_3,
+    TableLayout test5_table_layout, test5_table_layout2, test5_table_layout2_1,
+            test5_table_layout3, test5_table_layout4, test5_table_layout4_1,
             test5_table_layout5, test5_table_layout5_1, test5_table_layout3_1;
     //Test 6 View ...
     TableLayout test6A_table_layout, test6A_table_layout2, test6A_table_layout3;
@@ -70,6 +70,8 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             totalAirFlowRateIds = 400;
     //Test 5 Variable
     int test5CommonFormulaIds1 = 500, test5CommonFormulaIds2 = 600;
+    long meanValue1 = 0l, meanValue2 = 0l;
+    double stdDev1 = 0.0, stdDev2 = 0.0;
 
     ArrayList<TextView> txtViewList;
     ArrayList<EditText> editTextList;
@@ -81,7 +83,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
     ArrayList<TextView> RDPC3TxtList, RDPC3TxtList2;
 
     HashMap<Integer, Integer> inputDataHashMap;
-    HashMap<Integer, Integer> resultDataHashMap;
+    HashMap<Integer, Long> resultDataHashMap;
     HashMap<Integer, Float> resultDataHashMap2;
     HashMap<Integer, Integer> rowTagHashMap;
     int inputValue = 0,AirChangeValue = 0;
@@ -142,7 +144,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
 
 
         inputDataHashMap = new HashMap<Integer, Integer>();
-        resultDataHashMap = new HashMap<Integer, Integer>();
+        resultDataHashMap = new HashMap<Integer, Long>();
         resultDataHashMap2 = new HashMap<Integer, Float>();
         rowTagHashMap = new HashMap<Integer, Integer>();
 
@@ -268,7 +270,8 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 BuildTableTest4(3, 4);
         }
         if ("RD_PC_3".equalsIgnoreCase(testType)) {
-                BuildTableTest5(applicableTestRoomLocation + 1, noOfCycle);
+            rows = applicableTestRoomLocation + 1;
+            BuildTableTest5(applicableTestRoomLocation + 1, noOfCycle);
         }
         if ("RD_RCT".equalsIgnoreCase(testType)) {
             if (grillAndSizeFromGrill != null && grillAndSizeFromGrill.size() > 0)
@@ -442,6 +445,14 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 intent.putExtra("NOOFCYCLE", noOfCycle);
                 intent.putExtra("rows", applicableTestRoomLocation + 1);
                 intent.putExtra("cols", noOfCycle);
+                //sending Input Data
+                intent.putExtra("InputData", inputDataHashMap);
+                //sending Result Data over Bundle
+                intent.putExtra("ResultData", resultDataHashMap);
+                intent.putExtra("meanValue1", meanValue1);
+                intent.putExtra("meanValue2", meanValue2);
+                intent.putExtra("stdDev1", stdDev1);
+                intent.putExtra("stdDev2", stdDev2);
 
                 startActivity(intent);
             }
@@ -489,7 +500,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                     if (txtViewList.get(i).getText().toString().trim() != null
                             && !"".equals(txtViewList.get(i).getText().toString().trim())) {
                         txtViewList.get(i).setText("");
-                        resultDataHashMap.put(txtViewList.get(i).getId(), 0);
+                        resultDataHashMap.put(txtViewList.get(i).getId(), 0l);
                     }
                 }
             }
@@ -608,41 +619,15 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
                     TableRow.LayoutParams.WRAP_CONTENT));
             // inner for loop 1
-            for (int j = 1; j <= 1; j++) {
-                if (i == 1 && j == 1) {
-                    row.addView(addTextView(" R1 "));
+            for (int j = 1; j <= cols; j++) {
+                if (i == 1 && j <= cols) {
+                    row.addView(addTextView(" R "+ j));
                 } else {
                     //row.addView(addTextView(" 4434 | 3434 | 1341 "));
                     row.addView(addEditTextView(i));
                 }
             }
             test5_table_layout2_1.addView(row);
-
-            // inner for loop 2
-            TableRow row2 = new TableRow(this);
-            row2.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
-                    TableRow.LayoutParams.WRAP_CONTENT));
-            for (int j = 1; j <= 1; j++) {
-                if (i == 1 && j == 1) {
-                    row.addView(addTextView(" R2 "));
-                } else {
-                    row.addView(addEditTextView(i));
-                }
-            }
-            test5_table_layout2_2.addView(row2);
-
-            // inner for loop 3
-            TableRow row3 = new TableRow(this);
-            row3.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
-                    TableRow.LayoutParams.WRAP_CONTENT));
-            for (int j = 1; j <= 1; j++) {
-                if (i == 1 && j == 1) {
-                    row.addView(addTextView(" R3 "));
-                } else {
-                    row.addView(addEditTextView(i));
-                }
-            }
-            test5_table_layout2_3.addView(row3);
         }
         for (int sk = 0; sk < 3; sk++) {
             TableRow row = new TableRow(this);
@@ -695,43 +680,15 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
                     TableRow.LayoutParams.WRAP_CONTENT));
             // inner for loop 1
-            for (int j = 1; j <= 1; j++) {
-                if (i == 1 && j == 1) {
-                    row.addView(addTextView("R1"));
+            for (int j = 1; j <= cols; j++) {
+                if (i == 1 && j <= cols) {
+                    row.addView(addTextView(" R " + j));
                 } else {
                     row.addView(addEditTextView(rows + i));
                 }
 
             }
             test5_table_layout4_1.addView(row);
-
-            // inner for loop 2
-            TableRow row2 = new TableRow(this);
-            row2.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
-                    TableRow.LayoutParams.WRAP_CONTENT));
-            for (int j = 1; j <= 1; j++) {
-                if (i == 1 && j == 1) {
-                    row2.addView(addTextView("R2"));
-                } else {
-                    row2.addView(addEditTextView(rows + i));
-                }
-
-            }
-            test5_table_layout4_2.addView(row2);
-
-            // inner for loop 3
-            TableRow row3 = new TableRow(this);
-            row3.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
-                    TableRow.LayoutParams.WRAP_CONTENT));
-            for (int j = 1; j <= 1; j++) {
-                if (i == 1 && j == 1) {
-                    row3.addView(addTextView("R3"));
-                } else {
-                    row3.addView(addEditTextView(rows + i));
-                }
-
-            }
-            test5_table_layout4_3.addView(row3);
 
         }
         for (int sk = 0; sk < 3; sk++) {
@@ -1302,7 +1259,10 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         tv.setTextSize(getResources().getDimension(R.dimen.normal_text_size));
         //tv.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD);
         tv.setSingleLine(false);
-        tv.setEms(12);
+        if (rows != 0)
+            tv.setEms(4 * rows);
+        else
+            tv.setEms(12);
         tv.setMaxLines(3);
         tv.setEllipsize(TextUtils.TruncateAt.END);
         tv.setText(textValue);
@@ -1560,23 +1520,25 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                         tvl.setText(getRoundedAverageValue(tagF) + "");
 
                         resultDataHashMap.put(tvl.getId(), getRoundedAverageValue(tagF));
-                        int meanValue = getMeanAverageValue(resultDataHashMap, tagF);
-
                         setMean(getRoundedAverageValue(tagF));
+
+                        Log.d(TAG, "TagF : "+tagF+" rows : "+rows);
                         if (tagF <= rows) {
-                            Log.d(TAG, " RDPC3TxtList.size() " + RDPC3TxtList.size());
+                            meanValue1 = getMeanAverageValue(resultDataHashMap, tagF);
                             TextView txtView = RDPC3TxtList.get(0);
-                            txtView.setText(meanValue + "");
+                            txtView.setText(meanValue1 + "");
 
+                            stdDev1 = getStdDev(resultDataHashMap, tagF);
                             TextView txtView2 = RDPC3TxtList.get(1);
-                            txtView2.setText(getStdDev(resultDataHashMap, tagF) + "");
+                            txtView2.setText(stdDev1 + "");
                         } else {
-                            Log.d(TAG, " RDPC3TxtList2.size() " + RDPC3TxtList2.size());
+                            meanValue2 = getMeanAverageValue(resultDataHashMap, tagF);
                             TextView txtView = RDPC3TxtList2.get(0);
-                            txtView.setText(meanValue + "");
+                            txtView.setText(meanValue2 + "");
 
+                            stdDev2 = getStdDev(resultDataHashMap, tagF);
                             TextView txtView2 = RDPC3TxtList2.get(1);
-                            txtView2.setText(getStdDev(resultDataHashMap, tagF) + "");
+                            txtView2.setText(stdDev2 + "");
                         }
                     }
                 }
@@ -1585,8 +1547,8 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         }
     }
 
-    private int getRoundedAverageValue(int count) {
-        int avg = 0;
+    private long getRoundedAverageValue(int count) {
+        long avg = 0;
         int tagCount = 0;
         if (!isClearClicked) {
             try {
@@ -1608,7 +1570,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             }
         }
         Log.d(TAG, "Avg: Method sum: " + avg + " count : " + tagCount);
-        float abc = (float) avg / (float) tagCount;
+        double abc = (double) avg / (double) tagCount;
         Log.d(TAG, "Float Value :" + abc);
         avg = Math.round(abc);
         Log.d(TAG, "Avg: Method Avg: " + avg);
@@ -1666,8 +1628,8 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         return (int) Math.round(((TFR / RV) * 60));
     }
 
-    private int getMeanAverageValue(HashMap<Integer, Integer> meanAverageList2, int tagF) {
-        int meanAvg = 0;
+    private long getMeanAverageValue(HashMap<Integer, Long> meanAverageList2, int tagF) {
+        long meanAvg = 0;
         int tagCount = 0;
         for (Map.Entry m : meanAverageList2.entrySet()) {
             if (meanAverageList2.get(m.getKey()) != null && !"".equals(meanAverageList2.get(m.getKey()))) {
@@ -1685,7 +1647,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             }
         }
         Log.d(TAG, "Mean Avg: Method sum: " + meanAvg + " count : " + tagCount);
-        float abc = (float) meanAvg / (float) tagCount;
+        double abc = (double) meanAvg / (double) tagCount;
         Log.d(TAG, "Float Value :" + abc);
         meanAvg = Math.round(abc);
         Log.d(TAG, "Avg: Method Avg: " + meanAvg);
@@ -1693,7 +1655,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         return meanAvg;
     }
 
-    private double getVariance(HashMap<Integer, Integer> meanAverageList2, int tagF) {
+    private double getVariance(HashMap<Integer, Long> meanAverageList2, int tagF) {
         double mean = getMean();
         double temp = 0;
         int tagCount = 0;
@@ -1725,7 +1687,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         return Math.round(resultVariance);
     }
 
-   private  double getStdDev(HashMap<Integer, Integer> meanAverageList2, int tagF)
+   private  double getStdDev(HashMap<Integer, Long> meanAverageList2, int tagF)
     {
         double stdDev = Math.sqrt(getVariance(meanAverageList2, tagF));
         System.out.println(" getStdDev Result " + stdDev+" rounded StdValue "+Math.round(stdDev));
@@ -1827,14 +1789,10 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         test5_table_layout = (TableLayout) findViewById(R.id.test5_tableLayout1);
         test5_table_layout2 = (TableLayout) findViewById(R.id.test5_tableLayout2);
         test5_table_layout2_1 = (TableLayout) findViewById(R.id.test5_tableLayout2_1);
-        test5_table_layout2_2 = (TableLayout) findViewById(R.id.test5_tableLayout2_2);
-        test5_table_layout2_3 = (TableLayout) findViewById(R.id.test5_tableLayout2_3);
         test5_table_layout3 = (TableLayout) findViewById(R.id.test5_tableLayout3);
         test5_table_layout3_1 = (TableLayout) findViewById(R.id.test5_tableLayout3_1);
         test5_table_layout4 = (TableLayout) findViewById(R.id.test5_tableLayout4);
         test5_table_layout4_1 = (TableLayout) findViewById(R.id.test5_tableLayout4_1);
-        test5_table_layout4_2 = (TableLayout) findViewById(R.id.test5_tableLayout4_2);
-        test5_table_layout4_3 = (TableLayout) findViewById(R.id.test5_tableLayout4_3);
         test5_table_layout5 = (TableLayout) findViewById(R.id.test5_tableLayout5);
         test5_table_layout5_1 = (TableLayout) findViewById(R.id.test5_tableLayout5_1);
         if ("RD_PC_3".equalsIgnoreCase(testType)) {

@@ -127,12 +127,14 @@
                             <TableLayout
                                 android:id="@+id/test5_tableLayout2_2"
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content" />
+                                android:layout_height="wrap_content"
+                                android:visibility="gone"/>
 
                             <TableLayout
                                 android:id="@+id/test5_tableLayout2_3"
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content" />
+                                android:layout_height="wrap_content"
+                                android:visibility="gone"/>
                         </LinearLayout>
 
                         <TableLayout
@@ -176,12 +178,14 @@
                             <TableLayout
                                 android:id="@+id/test5_tableLayout4_2"
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content" />
+                                android:layout_height="wrap_content"
+                                android:visibility="gone"/>
 
                             <TableLayout
                                 android:id="@+id/test5_tableLayout4_3"
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content" />
+                                android:layout_height="wrap_content"
+                                android:visibility="gone"/>
                         </LinearLayout>
 
                         <TableLayout
