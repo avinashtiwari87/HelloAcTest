@@ -16,11 +16,15 @@ import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.project.valdoc.db.ValdocDatabaseHandler;
 import com.project.valdoc.intity.ClientInstrument;
 import com.project.valdoc.intity.PartnerInstrument;
 import com.project.valdoc.intity.Room;
+import com.project.valdoc.intity.TestDetails;
+import com.project.valdoc.intity.TestReading;
+import com.project.valdoc.intity.TestSpesificationValue;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -85,6 +89,9 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
     private Button submit;
     private Button clear;
     private Button cancel;
+    private double totalAirFlowRate = 0;
+    private double airChangeValue;
+    HashMap<Integer, Integer> supplyAirVelocity;
     ArrayList<TextView> resultTextViewList;
     private ValdocDatabaseHandler mValdocDatabaseHandler = new ValdocDatabaseHandler(RDACPHhUserEntryActivity.this);
 
@@ -111,47 +118,51 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
             testType = getIntent().getStringExtra("testType");
             Log.d(TAG, " TestType : " + testType);
         }
-//dynamic data population
+        //dynamic data population
         getExtraFromTestCreateActivity(savedInstanceState);
         //text view initialization
         initTextView();
         textViewValueAssignment();
         initRes();
         datePicker();
+
         if ("RD_ACPH_H".equalsIgnoreCase(testType)) {
             BuildTableTest3(rows, cols);
         }
 
         //setting the test 2 room volume
         if (roomVolumeTxtList != null && roomVolumeTxtList.size() > 0)
-            roomVolumeTxtList.get((int) (roomVolumeTxtList.size() / 2)).setText(""+room.getVolume());
+            roomVolumeTxtList.get((int) (roomVolumeTxtList.size() / 2)).setText("" + room.getVolume());
 
         //Receiving User Input Data from Bundle
-        HashMap<Integer, Integer> hashMap = (HashMap<Integer, Integer>) getIntent().getSerializableExtra("InputData");
-        for (Map.Entry m : hashMap.entrySet()) {
+        supplyAirVelocity = (HashMap<Integer, Integer>) getIntent().getSerializableExtra("InputData");
+        for (Map.Entry m : supplyAirVelocity.entrySet()) {
             Log.v(TAG, m.getKey() + " " + m.getValue());
         }
         for (int i = 0; i < txtViewList.size(); i++) {
             TextView tvl = txtViewList.get(i);
-            tvl.setText(hashMap.get(tvl.getId()) + "");
+            tvl.setText(supplyAirVelocity.get(tvl.getId()) + "");
         }
+
         //Total AirFlow Rate (sum of AirFlow Rate)
         if (totalAirFlowRateTxtList != null && totalAirFlowRateTxtList.size() > 0) {
             int middleTxt = totalAirFlowRateTxtList.size() / 2;
             TextView mtvl = totalAirFlowRateTxtList.get(middleTxt);
-            mtvl.setText(getIntent().getFloatExtra("totalAirFlowRate",0f) + "");
+            totalAirFlowRate=getIntent().getFloatExtra("totalAirFlowRate", 0f);
+            mtvl.setText(totalAirFlowRate + "");
         }
+
         //AirFlow Change
         if (airChangeTxtList != null && airChangeTxtList.size() > 0) {
             TextView airChangeTxt = airChangeTxtList.get(airChangeTxtList.size() / 2);
-            airChangeTxt.setText(getIntent().getIntExtra("AirChangeValue", 0) + "");
+            airChangeValue=getIntent().getIntExtra("AirChangeValue", 0);
+            airChangeTxt.setText(airChangeValue + "");
         }
 
     }
 
     private void datePicker() {
         // Get current date by calender
-
         final Calendar c = Calendar.getInstance();
         year = c.get(Calendar.YEAR);
         month = c.get(Calendar.MONTH);
@@ -268,8 +279,8 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
         roomName = (TextView) findViewById(R.id.roomname);
         occupancyState = (TextView) findViewById(R.id.ocupancystate);
         testRefrance = (TextView) findViewById(R.id.testrefrence);
-        equipmentNameText= (TextView) findViewById(R.id.equipment_name_text);
-        equipmentNoText= (TextView) findViewById(R.id.equipment_no_text);
+        equipmentNameText = (TextView) findViewById(R.id.equipment_name_text);
+        equipmentNoText = (TextView) findViewById(R.id.equipment_no_text);
         equipmentName = (TextView) findViewById(R.id.equipmentname);
         equipmentNo = (TextView) findViewById(R.id.equipmentno);
         testCundoctor = (TextView) findViewById(R.id.testcunducter);
@@ -289,18 +300,22 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                if (mValdocDatabaseHandler.insertTestDetails(ValdocDatabaseHandler.TEST_DETAILS_TABLE_NAME, testDetailsDataCreation())) {
-//                    if (mValdocDatabaseHandler.insertTestReading(ValdocDatabaseHandler.TESTREADING_TABLE_NAME, testReading())) {
-//                        Toast.makeText(RDAV5UserEntryActivity.this, "Data saved sussessfully", Toast.LENGTH_LONG).show();
-//                    } else {
-//                        Toast.makeText(RDAV5UserEntryActivity.this, "Data not saved", Toast.LENGTH_LONG).show();
-//                    }
-//
-//                } else {
-//                    Toast.makeText(RDAV5UserEntryActivity.this, "Data not saved", Toast.LENGTH_LONG).show();
-//                }
-//
-////                mValdocDatabaseHandler.insertTestSpesificationValue(ValdocDatabaseHandler.TESTSPECIFICATIONVALUE_TABLE_NAME, testSpesificationValueDataCreation());
+                if (mValdocDatabaseHandler.insertTestDetails(ValdocDatabaseHandler.TEST_DETAILS_TABLE_NAME, testDetailsDataCreation())) {
+                    if (mValdocDatabaseHandler.insertTestReading(ValdocDatabaseHandler.TESTREADING_TABLE_NAME, testReading())) {
+                        if (mValdocDatabaseHandler.insertTestSpesificationValue(ValdocDatabaseHandler.TESTSPECIFICATIONVALUE_TABLE_NAME, testSpesificationValue())) {
+                            Toast.makeText(RDACPHhUserEntryActivity.this, "Data saved sussessfully", Toast.LENGTH_LONG).show();
+                        } else {
+                            Toast.makeText(RDACPHhUserEntryActivity.this, "Data not saved", Toast.LENGTH_LONG).show();
+                        }
+                    } else {
+                        Toast.makeText(RDACPHhUserEntryActivity.this, "Data not saved", Toast.LENGTH_LONG).show();
+                    }
+
+                } else {
+                    Toast.makeText(RDACPHhUserEntryActivity.this, "Data not saved", Toast.LENGTH_LONG).show();
+                }
+
+//                mValdocDatabaseHandler.insertTestSpesificationValue(ValdocDatabaseHandler.TESTSPECIFICATIONVALUE_TABLE_NAME, testSpesificationValueDataCreation());
             }
         });
 
@@ -313,6 +328,94 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
         });
     }
 
+    private ArrayList<TestSpesificationValue> testSpesificationValue() {
+        ArrayList<TestSpesificationValue> spesificationValueArrayList = new ArrayList<TestSpesificationValue>();
+        TestSpesificationValue testSpesificationValue = new TestSpesificationValue();
+        testSpesificationValue.setTest_specific_id(1);
+        testSpesificationValue.setTest_detail_id("1");
+        testSpesificationValue.setFieldName("TFR");
+        testSpesificationValue.setFieldValue("" + totalAirFlowRate);
+        spesificationValueArrayList.add(testSpesificationValue);
+
+        TestSpesificationValue testSpesificationValue1 = new TestSpesificationValue();
+        testSpesificationValue1.setTest_specific_id(1);
+        testSpesificationValue1.setTest_detail_id("1");
+        testSpesificationValue1.setFieldName("RV");
+        testSpesificationValue1.setFieldValue("" + room.getVolume());
+        spesificationValueArrayList.add(testSpesificationValue1);
+
+        TestSpesificationValue testSpesificationValue2 = new TestSpesificationValue();
+        testSpesificationValue2.setTest_specific_id(1);
+        testSpesificationValue2.setTest_detail_id("1");
+        testSpesificationValue2.setFieldName("((TFR/RV)x60))");
+        testSpesificationValue2.setFieldValue("" + airChangeValue);
+        spesificationValueArrayList.add(testSpesificationValue2);
+
+        return spesificationValueArrayList;
+    }
+
+
+    private ArrayList<TestReading> testReading() {
+        ArrayList<TestReading> testReadingArrayList = new ArrayList<TestReading>();
+        int index = 0;
+        int hasMapKey = 200;
+        for (HashMap<String, String> grill : grillAndSizeFromGrill) {
+            TestReading testReading = new TestReading();
+            testReading.setTestReadingID(index);
+//        TO DO test details id is id of test details table
+            testReading.setTest_detail_id(index);
+            testReading.setEntityName(grill.get(ValdocDatabaseHandler.GRILL_GRILLCODE).toString());
+            testReading.setValue(supplyAirVelocity.get(hasMapKey).toString());
+            hasMapKey++;
+            index++;
+            testReadingArrayList.add(testReading);
+        }
+        return testReadingArrayList;
+    }
+
+    private TestDetails testDetailsDataCreation() {
+        TestDetails testDetails = new TestDetails();
+//        TO DO: need to make it dynamic
+        testDetails.setTest_detail_id(1);
+        testDetails.setCustomer(customerName.getText().toString());
+        testDetails.setDateOfTest(dateTextView.getText().toString());
+        testDetails.setRawDataNo(certificateNo.getText().toString());
+        if (loginUserType.equals("CLIENT")) {
+            testDetails.setInstrumentUsed(clientInstrument.getcInstrumentName());
+            testDetails.setMake(clientInstrument.getMake());
+            testDetails.setModel(clientInstrument.getModel());
+            testDetails.setInstrumentNo(clientInstrument.getSerialNo());
+            testDetails.setCalibratedOn(clientInstrument.getLastCalibrated());
+            testDetails.setCalibratedDueOn(clientInstrument.getCalibrationDueDate());
+        } else {
+            testDetails.setInstrumentUsed(partnerInstrument.getpInstrumentName());
+            testDetails.setMake(partnerInstrument.getMake());
+            testDetails.setModel(partnerInstrument.getModel());
+            testDetails.setInstrumentNo("" + partnerInstrument.getpInstrumentId());
+            testDetails.setCalibratedOn(partnerInstrument.getLastCalibrated());
+            testDetails.setCalibratedDueOn(partnerInstrument.getCalibrationDueDate());
+        }
+
+
+        testDetails.setTestSpecification(testSpecification.getText().toString());
+        testDetails.setBlockName(plantName.getText().toString());
+        testDetails.setTestArea(areaOfTest.getText().toString());
+        testDetails.setRoomName(roomName.getText().toString());
+        testDetails.setRoomNo(equipmentName.getText().toString());
+        testDetails.setOccupencyState(occupancyState.getText().toString());
+        testDetails.setTestReference(testRefrance.getText().toString());
+        testDetails.setAhuNo(equipmentNo.getText().toString());
+        testDetails.setTesterName(testCundoctor.getText().toString());
+
+        StringBuilder witness = new StringBuilder();
+        witness.append(witnessFirst.toString());
+        if (null != witnessSecond && witnessSecond.length() > 0)
+            witness.append("," + witnessSecond);
+        if (null != witnessThird && witnessThird.length() > 0)
+            witness.append("," + witnessThird);
+        testWitness.setText(witness);
+        return testDetails;
+    }
 
     private void getExtraFromTestCreateActivity(Bundle savedInstanceState) {
         if (savedInstanceState == null) {
@@ -478,6 +581,7 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
     }
 
     int idCountEtv = 200;
+
     private TextView addInputDataTextView() {
         TextView tv = new TextView(this);
         tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
