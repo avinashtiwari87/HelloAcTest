@@ -73,6 +73,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
     long meanValue1 = 0l, meanValue2 = 0l;
     double stdDev1 = 0.0, stdDev2 = 0.0;
 
+    ArrayList<TextView> txtPassFailList;
     ArrayList<TextView> txtViewList;
     ArrayList<EditText> editTextList;
     ArrayList<TextView> filterSizeTxtViewList;
@@ -83,6 +84,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
     ArrayList<TextView> RDPC3TxtList, RDPC3TxtList2;
 
     HashMap<Integer, Integer> inputDataHashMap;
+    HashMap<Integer, String> passFailHashMap;
     HashMap<Integer, Long> resultDataHashMap;
     HashMap<Integer, Float> resultDataHashMap2;
     HashMap<Integer, Integer> rowTagHashMap;
@@ -132,6 +134,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
 
         initRes();
 
+        txtPassFailList = new ArrayList<TextView>();
         txtViewList = new ArrayList<TextView>();
         editTextList = new ArrayList<EditText>();
         filterSizeTxtViewList = new ArrayList<TextView>();
@@ -145,6 +148,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
 
         inputDataHashMap = new HashMap<Integer, Integer>();
         resultDataHashMap = new HashMap<Integer, Long>();
+        passFailHashMap = new HashMap<Integer, String>();
         resultDataHashMap2 = new HashMap<Integer, Float>();
         rowTagHashMap = new HashMap<Integer, Integer>();
 
@@ -323,6 +327,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 intent.putExtra("LOCATION", applicableTestEquipmentLocation);
                 //sending Result Data over Bundle
                 intent.putExtra("ResultData", resultDataHashMap);
+                intent.putExtra("PassFailData", passFailHashMap);
                 //sending Input Data
                 intent.putExtra("InputData", inputDataHashMap);
                 intent.putExtra("rows", filterList.length + 1);
@@ -1220,7 +1225,8 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 if (i == 1 && j == 1) {
                     row.addView(addTextView(" Result "));
                 } else {
-                    row.addView(addTextView(" PASS "));
+                    //row.addView(addTextView(" PASS "));
+                    row.addView(addTextPassFail(" ", i));
                 }
             }
             table_layout4.addView(row);
@@ -1246,6 +1252,27 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         tv.setMaxLines(3);
         tv.setEllipsize(TextUtils.TruncateAt.END);
         tv.setText(textValue);
+        return tv;
+    }
+
+    int idPassFailTv = 300;
+    private TextView addTextPassFail(String textValue,int tagRows) {
+        TextView tv = new TextView(this);
+        tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+                TableRow.LayoutParams.WRAP_CONTENT));
+        tv.setBackgroundResource(R.drawable.border1);
+        //tv.setPadding(5, 5, 5, 5);
+        tv.setTextColor(getResources().getColor(R.color.black));
+        tv.setTextSize(getResources().getDimension(R.dimen.normal_text_size));
+        //tv.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD);
+        tv.setSingleLine(false);
+        tv.setTag(tagRows);
+        tv.setId(idPassFailTv);
+        tv.setMaxLines(3);
+        tv.setEllipsize(TextUtils.TruncateAt.END);
+        tv.setText(textValue);
+        idPassFailTv++;
+        txtPassFailList.add(tv);
         return tv;
     }
 
@@ -1424,7 +1451,23 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                         TextView tvl = txtViewList.get(i);
                         tvl.setText(getRoundedAverageValue(tagF) + "");
                         resultDataHashMap.put(tvl.getId(), getRoundedAverageValue(tagF));
+
+                        // Pass Fail Calculation
+                        TextView txtPassFail = txtPassFailList.get(i);
+                        if(tvl.getTag()==txtPassFail.getTag()){
+                            if(getRoundedAverageValue(tagF)>72 && getRoundedAverageValue(tagF)<108){
+                                txtPassFail.setTextColor(getResources().getColor(R.color.blue));
+                                txtPassFail.setText(" PASS ");
+                                passFailHashMap.put(txtPassFail.getId()," PASS ");
+                            }else{
+                                txtPassFail.setTextColor(getResources().getColor(R.color.red));
+                                txtPassFail.setText(" FAIL ");
+                                passFailHashMap.put(txtPassFail.getId(), " FAIL ");
+                            }
+                        }
+
                     }
+
                 }
             }
             //calculation Test 2 specific
