@@ -15,12 +15,16 @@ import android.widget.EditText;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.project.valdoc.db.ValdocDatabaseHandler;
 import com.project.valdoc.intity.ClientInstrument;
 import com.project.valdoc.intity.PartnerInstrument;
 import com.project.valdoc.intity.Room;
 import com.project.valdoc.intity.RoomFilter;
+import com.project.valdoc.intity.TestDetails;
+import com.project.valdoc.intity.TestReading;
+import com.project.valdoc.intity.TestSpesificationValue;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -71,7 +75,8 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
     private TextView dateTextView;
     private TextView customerName;
     private TextView certificateNo;
-
+    private double totalAirFlowRate = 0;
+    private double airChangeValue;
     private TextView instrumentNoTextView;
     private TextView testerNameTextView;
     private TextView instrumentUsedTextView;
@@ -252,13 +257,17 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
             public void onClick(View v) {
 //                if (mValdocDatabaseHandler.insertTestDetails(ValdocDatabaseHandler.TEST_DETAILS_TABLE_NAME, testDetailsDataCreation())) {
 //                    if (mValdocDatabaseHandler.insertTestReading(ValdocDatabaseHandler.TESTREADING_TABLE_NAME, testReading())) {
-//                        Toast.makeText(RDAV5UserEntryActivity.this, "Data saved sussessfully", Toast.LENGTH_LONG).show();
+//                        if (mValdocDatabaseHandler.insertTestSpesificationValue(ValdocDatabaseHandler.TESTSPECIFICATIONVALUE_TABLE_NAME, testSpesificationValue())) {
+//                            Toast.makeText(RDFITUserEntryActivity.this, "Data saved sussessfully", Toast.LENGTH_LONG).show();
+//                        } else {
+//                            Toast.makeText(RDFITUserEntryActivity.this, "Data not saved", Toast.LENGTH_LONG).show();
+//                        }
 //                    } else {
-//                        Toast.makeText(RDAV5UserEntryActivity.this, "Data not saved", Toast.LENGTH_LONG).show();
+//                        Toast.makeText(RDFITUserEntryActivity.this, "Data not saved", Toast.LENGTH_LONG).show();
 //                    }
 //
 //                } else {
-//                    Toast.makeText(RDAV5UserEntryActivity.this, "Data not saved", Toast.LENGTH_LONG).show();
+//                    Toast.makeText(RDFITUserEntryActivity.this, "Data not saved", Toast.LENGTH_LONG).show();
 //                }
 //
 ////                mValdocDatabaseHandler.insertTestSpesificationValue(ValdocDatabaseHandler.TESTSPECIFICATIONVALUE_TABLE_NAME, testSpesificationValueDataCreation());
@@ -274,6 +283,103 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
         });
     }
 
+    private ArrayList<TestSpesificationValue> testSpesificationValue() {
+        ArrayList<TestSpesificationValue> spesificationValueArrayList = new ArrayList<TestSpesificationValue>();
+        TestSpesificationValue testSpesificationValue = new TestSpesificationValue();
+        testSpesificationValue.setTest_specific_id(1);
+        testSpesificationValue.setTest_detail_id("1");
+        testSpesificationValue.setFieldName("TFR");
+        testSpesificationValue.setFieldValue("" + totalAirFlowRate);
+        spesificationValueArrayList.add(testSpesificationValue);
+
+        TestSpesificationValue testSpesificationValue1 = new TestSpesificationValue();
+        testSpesificationValue1.setTest_specific_id(1);
+        testSpesificationValue1.setTest_detail_id("1");
+        testSpesificationValue1.setFieldName("RV");
+        testSpesificationValue1.setFieldValue("" + room.getVolume());
+        spesificationValueArrayList.add(testSpesificationValue1);
+
+        TestSpesificationValue testSpesificationValue2 = new TestSpesificationValue();
+        testSpesificationValue2.setTest_specific_id(1);
+        testSpesificationValue2.setTest_detail_id("1");
+        testSpesificationValue2.setFieldName("((TFR/RV)x60))");
+        testSpesificationValue2.setFieldValue("" + airChangeValue);
+        spesificationValueArrayList.add(testSpesificationValue2);
+
+        return spesificationValueArrayList;
+    }
+
+//    private ArrayList<TestReading> testReading() {
+//        ArrayList<TestReading> testReadingArrayList = new ArrayList<TestReading>();
+//        int index = 0;
+//        int hasMapKey = 200;
+//        for (HashMap<String, String> filter : filterArrayList) {
+//            TestReading testReading = new TestReading();
+//            testReading.setTestReadingID(index);
+////        TO DO test details id is id of test details table
+//            testReading.setTest_detail_id(index);
+//            testReading.setEntityName(filter.get(ValdocDatabaseHandler.GRILL_GRILLCODE).toString());
+//            StringBuilder grilList = new StringBuilder();
+//            //v1,v2....value cration
+//            StringBuilder sb = new StringBuilder();
+//            for (int i = 0; i < applicableTestRoomLocation; i++) {
+//                if (i != 0)
+//                    sb.append(',');
+//                sb.append(userEnterdValue.get(hasMapKey).toString());
+//                hasMapKey++;
+//            }
+//            grilList.append(grill.get(ValdocDatabaseHandler.GRILL_EFFECTIVEAREA).toString()).append(',').append(sb).append(airFlowRateMap.get(index + 1)).append(totalAirFlowRateMap.get(index + 1));
+//            index++;
+//            testReading.setValue(grilList.toString());
+//            testReadingArrayList.add(testReading);
+//        }
+//        return testReadingArrayList;
+//    }
+
+
+    private TestDetails testDetailsDataCreation() {
+        TestDetails testDetails = new TestDetails();
+//        TO DO: need to make it dynamic
+        testDetails.setTest_detail_id(1);
+        testDetails.setCustomer(customerName.getText().toString());
+        testDetails.setDateOfTest(dateTextView.getText().toString());
+        testDetails.setRawDataNo(certificateNo.getText().toString());
+        if (loginUserType.equals("CLIENT")) {
+            testDetails.setInstrumentUsed(clientInstrument.getcInstrumentName());
+            testDetails.setMake(clientInstrument.getMake());
+            testDetails.setModel(clientInstrument.getModel());
+            testDetails.setInstrumentNo(clientInstrument.getSerialNo());
+            testDetails.setCalibratedOn(clientInstrument.getLastCalibrated());
+            testDetails.setCalibratedDueOn(clientInstrument.getCalibrationDueDate());
+        } else {
+            testDetails.setInstrumentUsed(partnerInstrument.getpInstrumentName());
+            testDetails.setMake(partnerInstrument.getMake());
+            testDetails.setModel(partnerInstrument.getModel());
+            testDetails.setInstrumentNo("" + partnerInstrument.getpInstrumentId());
+            testDetails.setCalibratedOn(partnerInstrument.getLastCalibrated());
+            testDetails.setCalibratedDueOn(partnerInstrument.getCalibrationDueDate());
+        }
+
+
+        testDetails.setTestSpecification(testSpecification.getText().toString());
+        testDetails.setBlockName(plantName.getText().toString());
+        testDetails.setTestArea(areaOfTest.getText().toString());
+        testDetails.setRoomName(roomName.getText().toString());
+        testDetails.setRoomNo(equipmentName.getText().toString());
+        testDetails.setOccupencyState(occupancyState.getText().toString());
+        testDetails.setTestReference(testRefrance.getText().toString());
+        testDetails.setAhuNo(equipmentNo.getText().toString());
+        testDetails.setTesterName(testCundoctor.getText().toString());
+
+        StringBuilder witness = new StringBuilder();
+        witness.append(witnessFirst.toString());
+        if (null != witnessSecond && witnessSecond.length() > 0)
+            witness.append("," + witnessSecond);
+        if (null != witnessThird && witnessThird.length() > 0)
+            witness.append("," + witnessThird);
+        testWitness.setText(witness);
+        return testDetails;
+    }
     private void getExtraFromTestCreateActivity(Bundle savedInstanceState) {
         if (savedInstanceState == null) {
             Bundle extras = getIntent().getExtras();

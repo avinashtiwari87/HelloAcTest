@@ -394,6 +394,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
         return testReadingArrayList;
     }
 
+
     private TestDetails testDetailsDataCreation() {
         TestDetails testDetails = new TestDetails();
 //        TO DO: need to make it dynamic
