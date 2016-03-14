@@ -294,20 +294,20 @@ public class RDPC3UserEntryActivity extends AppCompatActivity {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mValdocDatabaseHandler.insertTestDetails(ValdocDatabaseHandler.TEST_DETAILS_TABLE_NAME, testDetailsDataCreation())) {
-                    if (mValdocDatabaseHandler.insertTestReading(ValdocDatabaseHandler.TESTREADING_TABLE_NAME, testReading())) {
-                        if (mValdocDatabaseHandler.insertTestSpesificationValue(ValdocDatabaseHandler.TESTSPECIFICATIONVALUE_TABLE_NAME, testSpesificationValue())) {
+//                if (mValdocDatabaseHandler.insertTestDetails(ValdocDatabaseHandler.TEST_DETAILS_TABLE_NAME, testDetailsDataCreation())) {
+//                    if (mValdocDatabaseHandler.insertTestReading(ValdocDatabaseHandler.TESTREADING_TABLE_NAME, testReading())) {
+//                        if (mValdocDatabaseHandler.insertTestSpesificationValue(ValdocDatabaseHandler.TESTSPECIFICATIONVALUE_TABLE_NAME, testSpesificationValue())) {
                             Toast.makeText(RDPC3UserEntryActivity.this, "Data saved successfully", Toast.LENGTH_LONG).show();
-                        } else {
-                            Toast.makeText(RDPC3UserEntryActivity.this, "Data not saved", Toast.LENGTH_LONG).show();
-                        }
-                    } else {
-                        Toast.makeText(RDPC3UserEntryActivity.this, "Data not saved", Toast.LENGTH_LONG).show();
-                    }
-
-                } else {
-                    Toast.makeText(RDPC3UserEntryActivity.this, "Data not saved", Toast.LENGTH_LONG).show();
-                }
+//                        } else {
+//                            Toast.makeText(RDPC3UserEntryActivity.this, "Data not saved", Toast.LENGTH_LONG).show();
+//                        }
+//                    } else {
+//                        Toast.makeText(RDPC3UserEntryActivity.this, "Data not saved", Toast.LENGTH_LONG).show();
+//                    }
+//
+//                } else {
+//                    Toast.makeText(RDPC3UserEntryActivity.this, "Data not saved", Toast.LENGTH_LONG).show();
+//                }
 
 //                mValdocDatabaseHandler.insertTestSpesificationValue(ValdocDatabaseHandler.TESTSPECIFICATIONVALUE_TABLE_NAME, testSpesificationValueDataCreation());
             }
