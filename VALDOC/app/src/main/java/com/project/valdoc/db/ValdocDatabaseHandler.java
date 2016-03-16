@@ -44,6 +44,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
     //ahu table details
     public static final String AHU_TABLE_NAME = "ahu";
     public static final String AHU_AHUID = "ahuId";
+    public static final String AHU_AHUNO = "ahuNo";
     public static final String AHU_AHUTYPE = "ahuType";
     public static final String AHU_CAPACITY = "capacity";
     public static final String AHU_RETURNAIRCFM = "returnAirCFM";
@@ -64,7 +65,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
     public static final String AHU_CREATIONDATE = "creationDate";
     // ahu table create statment
     private static final String CREATE_TABLE_AHU = "CREATE TABLE " + AHU_TABLE_NAME
-            + "(" + AHU_AHUID + " INTEGER," + AHU_AHUTYPE + " TEXT,"
+            + "(" + AHU_AHUID + " INTEGER," + AHU_AHUNO + " TEXT," + AHU_AHUTYPE + " TEXT,"
             + AHU_CAPACITY + " REAL," + AHU_RETURNAIRCFM + " REAL," + AHU_EXHAUSTAIRCFM + " REAL," + AHU_BLEEDFILTERTYPE + " TEXT,"
             + AHU_BLEEDFILTEREFFICIENCY + " REAL," + AHU_BLEEDAIRCFM + " REAL," + AHU_BLEEDFILTERQTY + " INTEGER,"
             + AHU_BLEEDFILTERSIZE + " TEXT," + AHU_FRESHFILTERTYPE + " TEXT," + AHU_FRESHAIRCFM + " REAL," + AHU_FRESHFILTERQTY
@@ -150,6 +151,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
     public static final String GRILL_ROOMID = "roomId";
     public static final String GRILL_LENGTH = "length";
     public static final String GRILL_WIDTH = "widh";
+    public static final String GRILL_GRILLAREA = "grillArea";
     public static final String GRILL_EFFECTIVEAREA = "effectiveArea";
     public static final String GRILL_ISSUPPLYGRILL = "isSupplyGrill";
     public static final String GRILL_ADDITIONALDETAIL = "additionalDetail";
@@ -158,7 +160,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
     // gril table create statment
     private static final String CREATE_TABLE_GRIL = "CREATE TABLE " + GRILL_TABLE_NAME
             + "(" + GRILL_GRILLID + " INTEGER," + GRILL_ROOMID + " INTEGER,"
-            + GRILL_GRILLCODE + " TEXT," + GRILL_LENGTH + " REAL," + GRILL_WIDTH + " REAL,"
+            + GRILL_GRILLCODE + " TEXT," + GRILL_LENGTH + " REAL," + GRILL_WIDTH + " REAL,"+GRILL_GRILLAREA+" REAL,"
             + GRILL_EFFECTIVEAREA + " REAL," + GRILL_ISSUPPLYGRILL + " INTEGER," + GRILL_ADDITIONALDETAIL + " INTEGER,"
             + GRILL_CREATIONDATE + " TEXT " + ")";
 
@@ -286,13 +288,19 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
     public static final String USER_ID = "id";
     public static final String USER_NAME = "name";
     public static final String USER_TYPE = "type";
+    public static final String USER_EMAIL = "email";
+    public static final String USER_CONTACT = "contact";
+    public static final String USER_DEPARTMENT = "department";
+    public static final String USER_ACTIVE = "active";
+    public static final String USER_DELETED = "deleted";
     public static final String USER_PASSWORD = "password";
     public static final String USER_CREATIONDATE = "creationDate";
 
     // user table create statment
     private static final String CREATE_TABLE_USER = "CREATE TABLE " + USER_TABLE_NAME
             + "(" + USER_ID + " INTEGER," + USER_NAME + " TEXT,"
-            + USER_TYPE + " REAL," + USER_PASSWORD + " TEXT, " + USER_CREATIONDATE + " TEXT " + ")";
+            + USER_TYPE + " REAL," + USER_EMAIL + " TEXT," + USER_CONTACT + " TEXT," + USER_DEPARTMENT + " TEXT,"
+            + USER_ACTIVE + " NUMERIC," + USER_DELETED + " NUMERIC," + USER_PASSWORD + " TEXT, " + USER_CREATIONDATE + " TEXT " + ")";
 
     //partner user table details
     public static final String PARTNERUSER_TABLE_NAME = "partneruser";
@@ -510,6 +518,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
             for (Ahu ahu : ahuArrayList) {
                 ContentValues contentValues = new ContentValues();
                 contentValues.put(AHU_AHUID, ahu.getAhuId());
+                contentValues.put(AHU_AHUNO,ahu.getAhuNo());
                 contentValues.put(AHU_AHUTYPE, ahu.getAhuType());
                 contentValues.put(AHU_CAPACITY, ahu.getCapacity());
                 contentValues.put(AHU_RETURNAIRCFM, ahu.getReturnAirCFM());
@@ -636,6 +645,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 contentValues.put(GRILL_ROOMID, grill.getRoomId());
                 contentValues.put(GRILL_LENGTH, grill.getLength());
                 contentValues.put(GRILL_WIDTH, grill.getWidh());
+                contentValues.put(GRILL_GRILLAREA,grill.getGrillArea());
                 contentValues.put(GRILL_EFFECTIVEAREA, grill.getEffectiveArea());
                 contentValues.put(GRILL_ISSUPPLYGRILL, grill.getIsSupplyGrill());
                 contentValues.put(GRILL_ADDITIONALDETAIL, grill.getAdditionalDetail());
@@ -777,6 +787,11 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 contentValues.put(USER_ID, user.getId());
                 contentValues.put(USER_NAME, user.getName());
                 contentValues.put(USER_TYPE, user.getType());
+                contentValues.put(USER_EMAIL, user.getEmail());
+                contentValues.put(USER_CONTACT, user.getContact());
+                contentValues.put(USER_DEPARTMENT, user.getDepartment());
+                contentValues.put(USER_ACTIVE, user.getActive());
+                contentValues.put(USER_DELETED, user.getDeleted());
                 contentValues.put(USER_PASSWORD, user.getPassword());
                 contentValues.put(USER_CREATIONDATE, user.getCreationDate());
                 db.insert(tableName, null, contentValues);
@@ -856,7 +871,12 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 user.setId(Integer.parseInt(cursor.getString(0)));
                 user.setName(cursor.getString(1));
                 user.setType(cursor.getString(2));
-                user.setPassword(cursor.getString(3));
+                user.setEmail(cursor.getString(3));
+                user.setContact(cursor.getString(4));
+                user.setDepartment(cursor.getString(5));
+                user.setActive(Integer.parseInt(cursor.getString(6)));
+                user.setDeleted(Integer.parseInt(cursor.getString(7)));
+                user.setPassword(cursor.getString(8));
                 userArrayList.add(user);
             } while (cursor.moveToNext());
         } // return contact list return wordList; }
@@ -946,24 +966,25 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
             do {
                 Ahu ahu = new Ahu();
                 ahu.setAhuId(cursor.getInt(0));
-                ahu.setAhuType(cursor.getString(1));
-                ahu.setCapacity(cursor.getDouble(2));
-                ahu.setReturnAirCFM(cursor.getDouble(3));
-                ahu.setExhaustAirCFM(cursor.getDouble(4));
-                ahu.setBleedFilterType(cursor.getString(5));
-                ahu.setBleedFilterEfficiency(cursor.getDouble(6));
-                ahu.setBleedAirCFM(cursor.getDouble(7));
-                ahu.setBleedFilterQty(cursor.getInt(8));
-                ahu.setBleedFilterSize(cursor.getString(9));
-                ahu.setFreshFilterType(cursor.getString(10));
-                ahu.setFreshAirCFM(cursor.getDouble(11));
-                ahu.setFreshFilterQty(cursor.getInt(12));
-                ahu.setFreshFilterSize(cursor.getString(13));
-                ahu.setAhuHEPAFilterQty(cursor.getInt(14));
-                ahu.setHepaFilterEfficiency(cursor.getDouble(15));
-                ahu.setHepaParticleSize(cursor.getString(16));
-                ahu.setHepaFilterSpecification(cursor.getDouble(17));
-                ahu.setCreationDate(cursor.getString(18));
+                ahu.setAhuNo(cursor.getString(1));
+                ahu.setAhuType(cursor.getString(2));
+                ahu.setCapacity(cursor.getDouble(3));
+                ahu.setReturnAirCFM(cursor.getDouble(4));
+                ahu.setExhaustAirCFM(cursor.getDouble(5));
+                ahu.setBleedFilterType(cursor.getString(6));
+                ahu.setBleedFilterEfficiency(cursor.getDouble(7));
+                ahu.setBleedAirCFM(cursor.getDouble(8));
+                ahu.setBleedFilterQty(cursor.getInt(9));
+                ahu.setBleedFilterSize(cursor.getString(10));
+                ahu.setFreshFilterType(cursor.getString(11));
+                ahu.setFreshAirCFM(cursor.getDouble(12));
+                ahu.setFreshFilterQty(cursor.getInt(13));
+                ahu.setFreshFilterSize(cursor.getString(14));
+                ahu.setAhuHEPAFilterQty(cursor.getInt(15));
+                ahu.setHepaFilterEfficiency(cursor.getDouble(16));
+                ahu.setHepaParticleSize(cursor.getString(17));
+                ahu.setHepaFilterSpecification(cursor.getDouble(18));
+                ahu.setCreationDate(cursor.getString(19));
                 Log.d("valdoc", "TestCreateActivity : ahu1");
                 ahuArrayList.add(ahu);
             } while (cursor.moveToNext());

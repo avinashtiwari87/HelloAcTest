@@ -12,6 +12,7 @@ public class Grill {
     private int roomId;
     private double length;
     private double widh;
+    private double grillArea;
     private double effectiveArea;
     private int isSupplyGrill;
     private int additionalDetail;
@@ -63,6 +64,14 @@ public class Grill {
 
     public void setWidh(double widh) {
         this.widh = widh;
+    }
+
+    public double getGrillArea() {
+        return grillArea;
+    }
+
+    public void setGrillArea(double grillArea) {
+        this.grillArea = grillArea;
     }
 
     public double getEffectiveArea() {

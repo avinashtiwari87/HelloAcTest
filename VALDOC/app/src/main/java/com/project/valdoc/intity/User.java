@@ -7,6 +7,11 @@ public class User {
     private int id;
     private String name;
     private String type;
+    private String email;
+    private String contact;
+    private String department;
+    private int active;
+    private int deleted;
     private String password;
     private String creationDate;
 
@@ -28,6 +33,46 @@ public class User {
 
     public String getType() {
         return type;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getContact() {
+        return contact;
+    }
+
+    public void setContact(String contact) {
+        this.contact = contact;
+    }
+
+    public String getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(String department) {
+        this.department = department;
+    }
+
+    public int getActive() {
+        return active;
+    }
+
+    public void setActive(int active) {
+        this.active = active;
+    }
+
+    public int getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(int deleted) {
+        this.deleted = deleted;
     }
 
     public void setType(String type) {
