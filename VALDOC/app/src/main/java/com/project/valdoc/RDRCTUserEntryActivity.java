@@ -112,10 +112,8 @@ public class RDRCTUserEntryActivity extends AppCompatActivity {
 //        test5_table_layout3 = (TableLayout)findViewById(R.id.test5_tableLayout3);
 //        test5_table_layout4 = (TableLayout)findViewById(R.id.test5_tableLayout4);
 //        test5_table_layout5 = (TableLayout)findViewById(R.id.test5_tableLayout5);
-//        if ("RD_PC_3".equalsIgnoreCase(testType)) {
 //            findViewById(R.id.test_table_5_header_l_ll).setVisibility(View.GONE);
 //            findViewById(R.id.test_table_5_header_2_ll).setVisibility(View.GONE);
-//        }
 //    }
     private void datePicker() {
         // Get current date by calender

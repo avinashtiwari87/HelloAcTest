@@ -66,10 +66,14 @@
 
             <EditText
                 android:id="@+id/witnessfirst"
+                android:nextFocusDown="@+id/witnesssecond"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:imeOptions="actionNext"
                 android:layout_toRightOf="@+id/witness1"
-                android:hint="@string/test_witness_hint" />
+                android:hint="@string/test_witness_hint">
+                <requestFocus/>
+                </EditText>
         </RelativeLayout>
 
         <RelativeLayout
@@ -87,8 +91,10 @@
 
             <EditText
                 android:id="@+id/witnesssecond"
+                android:nextFocusDown="@+id/witnessthird"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:imeOptions="actionNext"
                 android:layout_toRightOf="@+id/witness2"
                 android:hint="@string/test_witness_hint" />
         </RelativeLayout>
@@ -111,8 +117,12 @@
                 android:id="@+id/witnessthird"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:imeOptions="actionDone"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
                 android:layout_toRightOf="@+id/witness3"
-                android:hint="@string/test_witness_hint" />
+                android:hint="@string/test_witness_hint" >
+                </EditText>
         </RelativeLayout>
 
 

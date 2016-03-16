@@ -621,7 +621,6 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
     }
 
     private void initRes() {
-
         table_layout = (TableLayout) findViewById(R.id.tableLayout1);
         table_layout2 = (TableLayout) findViewById(R.id.tableLayout2);
         table_layout3 = (TableLayout) findViewById(R.id.tableLayout3);
@@ -630,10 +629,7 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
         test_table_1_footer = (LinearLayout) findViewById(R.id.test_table_footer_ll);
         test_table_1_header_l = (LinearLayout) findViewById(R.id.test_table_1_header_l_ll);
         test_table_1_header_2 = (LinearLayout) findViewById(R.id.test_table_1_header_2_ll);
-        if ("Test1".equalsIgnoreCase(testType)) {
-            test_table_1_header_l.setVisibility(View.GONE);
-            test_table_1_header_2.setVisibility(View.GONE);
-        }
-
+        test_table_1_header_l.setVisibility(View.GONE);
+        test_table_1_header_2.setVisibility(View.GONE);
     }
 }

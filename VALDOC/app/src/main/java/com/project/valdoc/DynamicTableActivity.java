@@ -53,7 +53,9 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             test5_table_layout3, test5_table_layout4, test5_table_layout4_1,
             test5_table_layout5, test5_table_layout5_1, test5_table_layout3_1;
     //Test 6 View ...
-    TableLayout test6A_table_layout, test6A_table_layout2, test6A_table_layout3;
+    TableLayout test6A_table_layout, test6A_table_layout2, test6A_table_layout3,
+            test6A_table_layout4;
+    TextView finalReadingTv,finalReadingValueTv;
 
     Button verify_btn, clear,cancel, addRow_Btn, deleteRow_Btn;
     int rows, cols;
@@ -76,7 +78,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
     long meanValue1 = 0l, meanValue2 = 0l;
     double stdDev1 = 0.0, stdDev2 = 0.0;
     //Test 6 Variable
-    int rowsCount = 1;
+    int rowsCount = 0;
 
     ArrayList<TextView> txtPassFailList;
     ArrayList<TextView> txtViewList;
@@ -531,11 +533,11 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         }
 
         if(view == addRow_Btn){
-            addRowonButtonClick(rowsCount);
+            addRowButtonClick(rowsCount);
             rowsCount++;
         }
         if(view == deleteRow_Btn){
-            if(rowsCount>2){
+            if(rowsCount>1){
                 deleteRowButtonClick(rowsCount);
                 rowsCount--;
             }else{
@@ -549,22 +551,26 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
     private void BuildTableTest6(int rows, int cols) {
         //first section
         // outer for loop
-        for (int i = 1; i <= rows + 3; i++) {
+        for (int i = 1; i <= rows; i++) {
             TableRow row = new TableRow(this);
             row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
                     TableRow.LayoutParams.WRAP_CONTENT));
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
-                    row.addView(addTextView(""));
+                    TextView tv = addTextView("");
+                    tv.setEms(10);
+                    row.addView(tv);
                 }
                 if (i == 2 && j == 1) {
-                    row.addView(addTextView(" Initial Reading "));
+                    TextView tv = addTextView(" Initial Reading ");
+                    tv.setEms(10);
+                    row.addView(tv);
                 }
                 if (i == 3 && j == 1) {
-                    row.addView(addTextView(" Worst case "));
-                } else if (i > 3 && i<4) {
-                    row.addView(addTextView(" " + i));
+                    TextView tv = addTextView(" Worst case ");
+                    tv.setEms(10);
+                    row.addView(tv);
                 }
 
             }
@@ -574,14 +580,16 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
 
         //Second section
         // outer for loop
-        for (int i = 1; i <= rows + 4; i++) {
+        for (int i = 1; i <= rows; i++) {
             TableRow row = new TableRow(this);
             row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
                     TableRow.LayoutParams.WRAP_CONTENT));
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
-                    row.addView(addTextView(" 0.5 µm/m³ "));
+                    TextView tv = addTextView(" 0.5 µm/m³ ");
+                    tv.setEms(10);
+                    row.addView(tv);
                 } else if( i>1 && i<4){
                     row.addView(addEditTextView(i));
                 }
@@ -589,25 +597,6 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             }
             test6A_table_layout2.addView(row);
         }
-
-/*        //Third section
-        // outer for loop
-        for (int i = 1; i <= rows + 4; i++) {
-            TableRow row = new TableRow(this);
-            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
-                    TableRow.LayoutParams.WRAP_CONTENT));
-            // inner for loop
-            for (int j = 1; j <= 1; j++) {
-                if (i == 1 && j == 1) {
-                    row.addView(addTextView("   "));
-                } else {
-                    row.addView(addEditTextView(i + 5));
-                }
-            }
-            test6A_table_layout3.addView(row);
-        }*/
-
-
         //dismiss progressbar
         if (pr.isShowing())
             pr.dismiss();
@@ -615,26 +604,34 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
 
     }
 
-    private void addRowonButtonClick(int rows){
+    private void addRowButtonClick(int rows){
         TableRow row1 = new TableRow(this);
         row1.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
                 TableRow.LayoutParams.WRAP_CONTENT));
         row1.setTag(rows);
-        row1.addView(addTextView(" " + rows));
-        test6A_table_layout.addView(row1, rows);
+        TextView tv = addTextView(rows+1+"");
+        tv.setEms(10);
+        row1.addView(tv);
+        test6A_table_layout3.addView(row1, rows);
 
         TableRow row2 = new TableRow(this);
         row2.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
                 TableRow.LayoutParams.WRAP_CONTENT));
-        row2.addView(addEditTextView(rows));
-        test6A_table_layout2.addView(row2,rows);
+        EditText et = addEditTextView(rows);
+        et.setEms(10);
+        row2.addView(et);
+        test6A_table_layout4.addView(row2, rows);
+        int totalReading = rows+1;
+        finalReadingTv.setText(" Final Reading "+totalReading);
 
     }
 
 
     private void deleteRowButtonClick(int rows){
-        test6A_table_layout.removeViewAt(rows);
-        test6A_table_layout2.removeViewAt(rows);
+        test6A_table_layout3.removeViewAt((rows-1));
+        test6A_table_layout4.removeViewAt((rows-1));
+        int totalReading = rows-1;
+        finalReadingTv.setText(" Final Reading "+totalReading);
     }
 
     private void BuildTableTest5(int rows, int cols) {
@@ -1427,7 +1424,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         editTv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
                 TableRow.LayoutParams.WRAP_CONTENT));
         editTv.setBackgroundResource(R.drawable.border);
-        editTv.setPadding(8, 5, 8, 5);
+        editTv.setPadding(8, 6, 8, 6);
         editTv.setTextColor(getResources().getColor(R.color.black));
         editTv.setTextSize(getResources().getDimension(R.dimen.normal_text_size));
         //editTv.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD);
@@ -1968,6 +1965,9 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         test6A_table_layout = (TableLayout) findViewById(R.id.test6A_tableLayout1);
         test6A_table_layout2 = (TableLayout) findViewById(R.id.test6A_tableLayout2);
         test6A_table_layout3 = (TableLayout) findViewById(R.id.test6A_tableLayout3);
+        test6A_table_layout4 = (TableLayout) findViewById(R.id.test6A_tableLayout4);
+        finalReadingTv = (TextView)findViewById(R.id.test6_final_reading_tv);
+        finalReadingValueTv = (TextView)findViewById(R.id.test6_final_reading_value_tv);
         if ("RD_RCT".equalsIgnoreCase(testType)) {
             instrumentNo = (TextView) findViewById(R.id.instrument_no_test6);
             testerName = (TextView) findViewById(R.id.tester_name_test6);
