@@ -88,7 +88,7 @@
 
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
@@ -98,44 +98,102 @@
                 android:layout_height="wrap_content">
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
                     android:orientation="horizontal">
 
-
-                    <TableLayout
-                        android:id="@+id/test6A_tableLayout1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp" />
-
-                    <TableLayout
-                        android:id="@+id/test6A_tableLayout2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-
-                    <TableLayout
-                        android:id="@+id/test6A_tableLayout3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="5dp"
-                        android:visibility="gone"/>
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TableLayout
+                                android:id="@+id/test6A_tableLayout1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="5dp">
+                            </TableLayout>
+
+                            <TableLayout
+                                android:id="@+id/test6A_tableLayout2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+                            </TableLayout>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TableLayout
+                                android:id="@+id/test6A_tableLayout3"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="5dp">
+                            </TableLayout>
+
+                            <TableLayout
+                                android:id="@+id/test6A_tableLayout4"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+                            </TableLayout>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/test6_final_reading_tv"
+                                android:layout_width="wrap_content"
+                                android:background="@drawable/border"
+                                android:layout_height="wrap_content"
+                                android:text=" Final Reading "
+                                android:textSize="20sp"
+                                android:textColor="@color/black"
+                                android:ems="10"/>
+
+                            <TextView
+                                android:id="@+id/test6_final_reading_value_tv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text=" "
+                                android:textSize="20sp"
+                                android:background="@drawable/border"
+                                android:textColor="@color/black"
+                                android:ems="9"/>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
                         <Button
                             android:id="@+id/add_row_btn"
+                            style="@style/Base.TextAppearance.AppCompat.Button.footerButton"
                             android:layout_width="wrap_content"
                             android:layout_margin="10dp"
-                            style="@style/Base.TextAppearance.AppCompat.Button.footerButton"
                             android:text="Row(+)" />
+
                         <Button
                             android:id="@+id/delete_row_btn"
-                            android:layout_margin="10dp"
-                            android:layout_width="wrap_content"
                             style="@style/Base.TextAppearance.AppCompat.Button.footerButton"
+                            android:layout_width="wrap_content"
+                            android:layout_margin="10dp"
                             android:text="Row(-)" />
                     </LinearLayout>
 
