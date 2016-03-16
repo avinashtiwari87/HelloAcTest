@@ -9,6 +9,7 @@ import java.sql.Date;
 public class Ahu {
     private String ahu;
     private int ahuId;
+    private String ahuNo;
     private String ahuType;
     private double capacity;
     private double returnAirCFM;
@@ -42,6 +43,14 @@ public class Ahu {
 
     public void setAhuId(int ahuId) {
         this.ahuId = ahuId;
+    }
+
+    public String getAhuNo() {
+        return ahuNo;
+    }
+
+    public void setAhuNo(String ahuNo) {
+        this.ahuNo = ahuNo;
     }
 
     public String getAhuType() {
