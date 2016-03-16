@@ -730,9 +730,7 @@ public class RDPC3UserEntryActivity extends AppCompatActivity {
         test5_table_layout4_1 = (TableLayout) findViewById(R.id.test5_tableLayout4_1);
         test5_table_layout5 = (TableLayout) findViewById(R.id.test5_tableLayout5);
         test5_table_layout5_1 = (TableLayout) findViewById(R.id.test5_tableLayout5_1);
-        if ("RD_PC_3".equalsIgnoreCase(testType)) {
-            findViewById(R.id.test_table_5_header_l_ll).setVisibility(View.GONE);
-            findViewById(R.id.test_table_5_header_2_ll).setVisibility(View.GONE);
-        }
+        findViewById(R.id.test_table_5_header_l_ll).setVisibility(View.GONE);
+        findViewById(R.id.test_table_5_header_2_ll).setVisibility(View.GONE);
     }
 }

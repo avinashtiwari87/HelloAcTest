@@ -1,12 +1,17 @@
 package com.project.valdoc;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -30,7 +35,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class TestCreateActivity extends Activity {
+public class TestCreateActivity extends Activity implements View.OnTouchListener {
     private Spinner instrumentSpiner, equipmentOrAhuSpinner, equipmentSpinner, ahuSpinner, roomSpinner, testSpinner;
     private List<String> instrumentList, equipmentOrAhuTestList, ahuTestList, equipmentTestList, roomTestList, applicableTestRoomList, applicableTestEquipmentList;
     private ArrayAdapter<String> instrumentAdapter, equipmentOrAhuAdapter, equipmentadApter, ahuAdapter, roomAdapter, applicableTestRoomAdapter, applicableTestequipmentAdapter;
@@ -373,16 +378,41 @@ public class TestCreateActivity extends Activity {
     public void spinerInitialization() {
         user_name = (TextView) findViewById(R.id.user_name);
         user_name.setText(userName);
+
         instrumentSpiner = (Spinner) findViewById(R.id.instrumentspiner);
+        instrumentSpiner.setOnTouchListener(this);
+
         equipmentOrAhuSpinner = (Spinner) findViewById(R.id.equipmentahuspinner);
+        equipmentOrAhuSpinner.setOnTouchListener(this);
+
         equipmentSpinner = (Spinner) findViewById(R.id.equipmentspinner);
+        equipmentSpinner.setOnTouchListener(this);
+
         ahuSpinner = (Spinner) findViewById(R.id.ahuspinner);
+        ahuSpinner.setOnTouchListener(this);
+
         roomSpinner = (Spinner) findViewById(R.id.roomspinner);
+        roomSpinner.setOnTouchListener(this);
+
         testSpinner = (Spinner) findViewById(R.id.testspinner);
+        testSpinner.setOnTouchListener(this);
+
         witnessFirst = (EditText) findViewById(R.id.witnessfirst);
         witnessSecond = (EditText) findViewById(R.id.witnesssecond);
         witnessThird = (EditText) findViewById(R.id.witnessthird);
 
+    }
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        witnessFirst.clearFocus();
+        witnessSecond.clearFocus();
+        witnessThird.clearFocus();
+        View view = this.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+        return false;
     }
 
     public void listItemCreation() {
@@ -465,6 +495,10 @@ public class TestCreateActivity extends Activity {
 
             public void onItemSelected(AdapterView<?> arg0, View arg1,
                                        int arg2, long arg3) {
+                witnessThird.clearFocus();
+                InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(witnessThird.getWindowToken(), 0);
+
                 ahuSpinner.setVisibility(View.GONE);
                 equipmentSpinner.setVisibility(View.GONE);
                 // TODO Auto-generated method stub

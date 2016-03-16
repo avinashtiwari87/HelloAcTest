@@ -629,10 +629,7 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
         test3_table_layout3 = (TableLayout) findViewById(R.id.test3_tableLayout3);
         test3_table_layout4 = (TableLayout) findViewById(R.id.test3_tableLayout4);
         test3_table_layout5 = (TableLayout) findViewById(R.id.test3_tableLayout5);
-        //Hide view coming form test tabl 1
-        if ("RD_ACPH_H".equalsIgnoreCase(testType)) {
-            findViewById(R.id.test_table_3_header_l_ll).setVisibility(View.GONE);
-            findViewById(R.id.test_table_3_header_2_ll).setVisibility(View.GONE);
-        }
+        findViewById(R.id.test_table_3_header_l_ll).setVisibility(View.GONE);
+        findViewById(R.id.test_table_3_header_2_ll).setVisibility(View.GONE);
     }
 }

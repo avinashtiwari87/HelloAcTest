@@ -818,9 +818,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
         //Hide view coming form test tabl 1
         test_table_1_header_l = (LinearLayout) findViewById(R.id.test_table_2_header_l_ll);
         test_table_1_header_2 = (LinearLayout) findViewById(R.id.test_table_2_header_2_ll);
-        if ("RD_ACPH_AV".equalsIgnoreCase(testType)) {
-            test_table_1_header_l.setVisibility(View.GONE);
-            test_table_1_header_2.setVisibility(View.GONE);
-        }
+        test_table_1_header_l.setVisibility(View.GONE);
+        test_table_1_header_2.setVisibility(View.GONE);
     }
 }
