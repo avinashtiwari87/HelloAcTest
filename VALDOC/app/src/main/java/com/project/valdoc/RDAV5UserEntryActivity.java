@@ -3,6 +3,7 @@ package com.project.valdoc;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -220,6 +221,11 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
                 if (mValdocDatabaseHandler.insertTestDetails(ValdocDatabaseHandler.TEST_DETAILS_TABLE_NAME, testDetailsDataCreation())) {
                     if (mValdocDatabaseHandler.insertTestReading(ValdocDatabaseHandler.TESTREADING_TABLE_NAME, testReading())) {
                         Toast.makeText(RDAV5UserEntryActivity.this, "Data saved successfully", Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(RDAV5UserEntryActivity.this, TestCreateActivity.class);
+                        intent.putExtra("RD_AV_5", true);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
+                        finish();
                     } else {
                         Toast.makeText(RDAV5UserEntryActivity.this, "Data not saved", Toast.LENGTH_LONG).show();
                     }

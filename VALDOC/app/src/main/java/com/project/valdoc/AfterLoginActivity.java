@@ -60,7 +60,7 @@ public class AfterLoginActivity extends AppCompatActivity {
                     intent.putExtra("USERTYPE", sharedpreferences.getString("USERTYPE", ""));
                     intent.putExtra("APPUSERID", sharedpreferences.getInt("APPUSERID", 0));
                     startActivity(intent);
-//                    finish();
+                    finish();
                 }
             });
 

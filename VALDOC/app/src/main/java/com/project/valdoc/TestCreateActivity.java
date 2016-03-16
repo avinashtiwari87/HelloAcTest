@@ -3,6 +3,7 @@ package com.project.valdoc;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -65,17 +66,25 @@ public class TestCreateActivity extends Activity implements View.OnTouchListener
     private String spinerRoom;
     private String spinerTestType;
     private int spinerEquipment;
+    SharedPreferences sharedpreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
+        sharedpreferences = getSharedPreferences("valdoc", Context.MODE_PRIVATE);
+
         //get user name from login screen
         Bundle extras = getIntent().getExtras();
         if (extras == null) {
             userName = null;
             loginUserType = null;
-        } else {
+        } else if(getIntent().hasExtra("RD_AV_5")){
+            userName = sharedpreferences.getString("USERNAME", "");
+            loginUserType = sharedpreferences.getString("USERTYPE", "");
+            appUserId =sharedpreferences.getInt("APPUSERID", 0);
+        }
+        else {
             userName = extras.getString("USERNAME");
             loginUserType = extras.getString("USERTYPE");
             appUserId = extras.getInt("APPUSERID");
