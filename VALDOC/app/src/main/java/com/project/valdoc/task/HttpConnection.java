@@ -38,44 +38,48 @@ public class HttpConnection {
 
     public HttpConnection(HttpUrlConnectionResponce connectionResponce) {
         mHttpUrlConnectionResponce = connectionResponce;
+        Log.d("VALDOC", "avinash HttpConnection");
     }
 //            new AsyncHttpTask().execute(url);
 
     public int getHttpGetConnection(String url) {
         InputStream inputStream = null;
-
+        Log.d("VALDOC", "avinash getHttpGetConnection 1");
         HttpURLConnection httpURLConnection = null;
         int statusCode = 0;
         try {
                 /* forming th java.net.URL object */
             URL urlConnection = new URL(url);
-
+            Log.d("VALDOC", "avinash getHttpGetConnection 2");
             httpURLConnection = (HttpURLConnection) urlConnection.openConnection();
 
                  /* optional request header */
             httpURLConnection.setRequestProperty("Content-Type", "application/json");
-
+            Log.d("VALDOC", "avinash getHttpGetConnection 3");
                 /* optional request header */
             httpURLConnection.setRequestProperty("Accept", "application/json");
 
             /* setting http connection time out */
             httpURLConnection.setConnectTimeout(2000);
+            Log.d("VALDOC", "avinash getHttpGetConnection 4");
                 /* for Get request */
             httpURLConnection.setRequestMethod("GET");
-
+            Log.d("VALDOC", "avinash getHttpGetConnection 5");
             statusCode = httpURLConnection.getResponseCode();
-
+            Log.d("VALDOC", "avinash getHttpGetConnection statusCode="+statusCode);
                 /* 200 represents HTTP OK */
             if (statusCode == HttpURLConnection.HTTP_OK) {
-
+                Log.d("VALDOC", "avinash getHttpGetConnection 6");
                 inputStream = new BufferedInputStream(httpURLConnection.getInputStream());
-
+                Log.d("VALDOC", "avinash getHttpGetConnection 7");
                 String response = convertInputStreamToString(inputStream);
-
-                mHttpUrlConnectionResponce.httpResponceResult(response,statusCode);
+                Log.d("VALDOC", "avinash getHttpGetConnection 8");
+                mHttpUrlConnectionResponce.httpResponceResult(response, statusCode);
+                Log.d("VALDOC", "avinash getHttpGetConnection 9");
             }
 
         } catch (Exception e) {
+            Log.d("VALDOC", "avinash getHttpGetConnection catch 5 e="+e.getMessage());
             Log.d(TAG, e.getLocalizedMessage());
         }
         return statusCode; //"Failed to fetch data!";

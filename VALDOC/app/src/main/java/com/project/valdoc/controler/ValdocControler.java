@@ -14,6 +14,7 @@ import com.project.valdoc.intity.Room;
 import com.project.valdoc.intity.RoomFilter;
 import com.project.valdoc.intity.User;
 import com.project.valdoc.task.HttpConnection;
+import com.project.valdoc.task.HttpConnectionTask;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -25,25 +26,26 @@ import java.util.HashMap;
 /**
  * Created by Avinash on 3/14/2016.
  */
-public class ValdocControler implements HttpConnection.HttpUrlConnectionResponce {
+public class ValdocControler  {
     Context mContext = null;
     ControlerResponse controlerResponse;
+    private String url = "http://valdoc.in:8080/valdoc/sync/getTableData?date=2015-11-12";
 
-    public void getAllDb(Context context) {
+    public void getHttpConectionforSync(Context context){
         mContext = context;
         controlerResponse = (ControlerResponse) context;
+        HttpConnectionTask httpConnectionTask = new HttpConnectionTask(mContext);
+        httpConnectionTask.execute(url);
     }
-
-    @Override
-    public void httpResponceResult(String resultData, int statusCode) {
+    public void getAllDb(int statusCode,String resultData) {
         if (statusCode == HttpURLConnection.HTTP_OK) {
-            HashMap<String, ArrayList> arrayListHashMap = praseResponse(resultData);
-            controlerResponse.controlerResult(arrayListHashMap, statusCode);
+            HashMap<String, ArrayList> arrayListHashMap = parseResponse(resultData);
+            controlerResponse.controlerResult("Data synked successfully");
         }
 
     }
 
-    private HashMap<String, ArrayList> praseResponse(String resultData) {
+    private HashMap<String, ArrayList> parseResponse(String resultData) {
         JSONObject jsonRootObject = null;
         HashMap<String, ArrayList> arrayListHashMap = new HashMap<String, ArrayList>();
         try {
@@ -51,40 +53,39 @@ public class ValdocControler implements HttpConnection.HttpUrlConnectionResponce
 
             //Get the instance of JSONArray that contains JSONObjects
             //user data parsing
-            ArrayList userArrayList=userData(jsonRootObject.optJSONArray("users"));
-            arrayListHashMap.put(ValdocDatabaseHandler.USER_TABLE_NAME,userArrayList);
+            ArrayList userArrayList = userData(jsonRootObject.optJSONArray("users"));
+            arrayListHashMap.put(ValdocDatabaseHandler.USER_TABLE_NAME, userArrayList);
 
             //AHU data parsing
-            ArrayList ahuArrayList=ahuData(jsonRootObject.optJSONArray("ahus"));
-            arrayListHashMap.put(ValdocDatabaseHandler.AREA_TABLE_NAME,ahuArrayList);
+            ArrayList ahuArrayList = ahuData(jsonRootObject.optJSONArray("ahus"));
+            arrayListHashMap.put(ValdocDatabaseHandler.AREA_TABLE_NAME, ahuArrayList);
 
             //Area data parsing
-            ArrayList areasArrayList=roomsData(jsonRootObject.optJSONArray("rooms"));
-            arrayListHashMap.put(ValdocDatabaseHandler.ROOM_TABLE_NAME,areasArrayList);
+            ArrayList areasArrayList = roomsData(jsonRootObject.optJSONArray("rooms"));
+            arrayListHashMap.put(ValdocDatabaseHandler.ROOM_TABLE_NAME, areasArrayList);
 
             //roomFilters data parsing
-            ArrayList roomFiltersArrayList=roomFiltersData(jsonRootObject.optJSONArray("roomFilters"));
-            arrayListHashMap.put(ValdocDatabaseHandler.ROOMFILTER_TABLE_NAME,roomFiltersArrayList);
+            ArrayList roomFiltersArrayList = roomFiltersData(jsonRootObject.optJSONArray("roomFilters"));
+            arrayListHashMap.put(ValdocDatabaseHandler.ROOMFILTER_TABLE_NAME, roomFiltersArrayList);
 
             //grills data parsing
-            ArrayList grillsArrayList=grillsData(jsonRootObject.optJSONArray("grills"));
-            arrayListHashMap.put(ValdocDatabaseHandler.GRILL_TABLE_NAME,roomFiltersArrayList);
+            ArrayList grillsArrayList = grillsData(jsonRootObject.optJSONArray("grills"));
+            arrayListHashMap.put(ValdocDatabaseHandler.GRILL_TABLE_NAME, roomFiltersArrayList);
 
             //applicableTestRooms data parsing
-            ArrayList applicableTestRoomsList=applicableTestRoomsData(jsonRootObject.optJSONArray("applicableTestRooms"));
-            arrayListHashMap.put(ValdocDatabaseHandler.APLICABLE_TEST_ROOM_TABLE_NAME,applicableTestRoomsList);
+            ArrayList applicableTestRoomsList = applicableTestRoomsData(jsonRootObject.optJSONArray("applicableTestRooms"));
+            arrayListHashMap.put(ValdocDatabaseHandler.APLICABLE_TEST_ROOM_TABLE_NAME, applicableTestRoomsList);
             //equipments data parsing
-            ArrayList equipmentsList=equipmentsData(jsonRootObject.optJSONArray("equipments"));
-            arrayListHashMap.put(ValdocDatabaseHandler.EQUIPMENT_TABLE_NAME,equipmentsList);
+            ArrayList equipmentsList = equipmentsData(jsonRootObject.optJSONArray("equipments"));
+            arrayListHashMap.put(ValdocDatabaseHandler.EQUIPMENT_TABLE_NAME, equipmentsList);
 
             //equipmentFilters data parsing
-            ArrayList equipmentFiltersList=equipmentFiltersData(jsonRootObject.optJSONArray("equipmentFilters"));
-            arrayListHashMap.put(ValdocDatabaseHandler.EQUIPMENTFILTER_TABLE_NAME,equipmentFiltersList);
+            ArrayList equipmentFiltersList = equipmentFiltersData(jsonRootObject.optJSONArray("equipmentFilters"));
+            arrayListHashMap.put(ValdocDatabaseHandler.EQUIPMENTFILTER_TABLE_NAME, equipmentFiltersList);
 
             //equipmentFilters data parsing
-            ArrayList applicableTestEquipmentsList=applicableTestEquipmentsData(jsonRootObject.optJSONArray("applicableTestEquipments"));
-            arrayListHashMap.put(ValdocDatabaseHandler.APLICABLE_TEST_EQUIPMENT_TABLE_NAME,applicableTestEquipmentsList);
-
+            ArrayList applicableTestEquipmentsList = applicableTestEquipmentsData(jsonRootObject.optJSONArray("applicableTestEquipments"));
+            arrayListHashMap.put(ValdocDatabaseHandler.APLICABLE_TEST_EQUIPMENT_TABLE_NAME, applicableTestEquipmentsList);
 
 
         } catch (Exception e) {
@@ -92,7 +93,6 @@ public class ValdocControler implements HttpConnection.HttpUrlConnectionResponce
         }
         return arrayListHashMap;
     }
-
 
 
     private ArrayList applicableTestEquipmentsData(JSONArray jsonArray) {
@@ -118,7 +118,6 @@ public class ValdocControler implements HttpConnection.HttpUrlConnectionResponce
     }
 
 
-
     private ArrayList equipmentFiltersData(JSONArray jsonArray) {
         ArrayList arrayList = new ArrayList();
         //Iterate the jsonArray and print the info of JSONObjects
@@ -133,9 +132,9 @@ public class ValdocControler implements HttpConnection.HttpUrlConnectionResponce
                 equipmentFilter.setLength(jsonObject.optDouble("length"));
                 equipmentFilter.setGrillArea(jsonObject.optDouble("grillArea"));
                 equipmentFilter.setEffectiveGrillArea(jsonObject.optDouble("effectiveGrillArea"));
-                if(jsonObject.optBoolean("supplyFilter")) {
+                if (jsonObject.optBoolean("supplyFilter")) {
                     equipmentFilter.setIsSupplyFilter(1);
-                }else{
+                } else {
                     equipmentFilter.setIsSupplyFilter(0);
                 }
                 equipmentFilter.setCreationDate(jsonObject.optString("createdDate").toString());
@@ -215,14 +214,14 @@ public class ValdocControler implements HttpConnection.HttpUrlConnectionResponce
                 grill.setGrillArea(jsonObject.optDouble("grillArea"));
                 grill.setEffectiveArea(jsonObject.optDouble("effectiveArea"));
 
-                if(jsonObject.optBoolean("supplyGrill")) {
+                if (jsonObject.optBoolean("supplyGrill")) {
                     grill.setIsSupplyGrill(1);
-                }else{
+                } else {
                     grill.setIsSupplyGrill(0);
                 }
-                if(jsonObject.optBoolean("additionalDetail")) {
+                if (jsonObject.optBoolean("additionalDetail")) {
                     grill.setAdditionalDetail(1);
-                }else{
+                } else {
                     grill.setAdditionalDetail(0);
                 }
                 grill.setCreationDate(jsonObject.optString("createdDate").toString());
@@ -233,7 +232,6 @@ public class ValdocControler implements HttpConnection.HttpUrlConnectionResponce
         }
         return arrayList;
     }
-
 
 
     private ArrayList roomFiltersData(JSONArray jsonArray) {
@@ -254,9 +252,9 @@ public class ValdocControler implements HttpConnection.HttpUrlConnectionResponce
                 roomFilter.setLength(jsonObject.optDouble("length"));
                 roomFilter.setGrillArea(jsonObject.optDouble("grillArea"));
                 roomFilter.setEffectiveGrillArea(jsonObject.optDouble("effectiveGrillArea"));
-                if(jsonObject.optBoolean("supplyFilter")) {
+                if (jsonObject.optBoolean("supplyFilter")) {
                     roomFilter.setIsSupplyFilter(1);
-                }else{
+                } else {
                     roomFilter.setIsSupplyFilter(0);
                 }
 
@@ -402,6 +400,6 @@ public class ValdocControler implements HttpConnection.HttpUrlConnectionResponce
     }
 
     public interface ControlerResponse {
-        public void controlerResult( HashMap<String, ArrayList> arrayListHashMap, int statusCode);
+        public void controlerResult(String message);
     }
 }
