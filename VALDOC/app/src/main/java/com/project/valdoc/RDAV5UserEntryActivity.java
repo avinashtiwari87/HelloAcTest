@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -223,7 +224,6 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
                         Toast.makeText(RDAV5UserEntryActivity.this, "Data saved successfully", Toast.LENGTH_LONG).show();
                         Intent intent = new Intent(RDAV5UserEntryActivity.this, TestCreateActivity.class);
                         intent.putExtra("RD_AV_5", true);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
                         finish();
                     } else {
