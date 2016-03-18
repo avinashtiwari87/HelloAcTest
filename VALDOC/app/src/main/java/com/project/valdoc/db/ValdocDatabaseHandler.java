@@ -26,6 +26,9 @@ import com.project.valdoc.intity.TestReading;
 import com.project.valdoc.intity.TestSpesificationValue;
 import com.project.valdoc.intity.User;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -1019,6 +1022,103 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
             } while (cursor.moveToNext());
         } // return contact list return wordList; }
         return equipmentArrayList;
+    }
+
+
+    // select data from test reading table
+    public JSONArray getTestReadingInfo() {
+        JSONArray  testReadingJsonArray;
+        testReadingJsonArray = new JSONArray();
+        String selectQuery = "SELECT * FROM " + CREATE_TABLE_TESTREADING;
+        SQLiteDatabase database = this.getWritableDatabase();
+        Cursor cursor = database.rawQuery(selectQuery, null);
+        if (cursor.moveToFirst()) {
+            do {
+                try {
+                    JSONObject jsonObject = new JSONObject();
+                    jsonObject.put(TESTREADING_TESTREADINGID, cursor.getInt(0));
+                    jsonObject.put(TESTREADING_TEST_DETAIL_ID, cursor.getInt(1));
+                    jsonObject.put(TESTREADING_ENTITYNAME, cursor.getString(2));
+                    jsonObject.put(TESTREADING_VALUE, cursor.getString(3));
+                    testReadingJsonArray.put(jsonObject);
+                }catch (Exception e){
+
+                }
+            } while (cursor.moveToNext());
+        } // return contact list return wordList; }
+        return testReadingJsonArray;
+    }
+
+
+    // select data from test details table
+    public JSONArray getTestDetailsInfo() {
+        JSONArray  testDetailsJsonArray;
+        testDetailsJsonArray = new JSONArray();
+        String selectQuery = "SELECT * FROM " + TEST_DETAILS_TABLE_NAME;
+        SQLiteDatabase database = this.getWritableDatabase();
+        Cursor cursor = database.rawQuery(selectQuery, null);
+        if (cursor.moveToFirst()) {
+            do {
+                try {
+                    JSONObject jsonObject = new JSONObject();
+                    jsonObject.put(TEST_DETAILS_TEST_DETAIL_ID, cursor.getInt(0));
+                    jsonObject.put(TEST_DETAILS_TESTNAME, cursor.getInt(1));
+                    jsonObject.put(TEST_DETAILS_CUSTOMER, cursor.getString(2));
+                    jsonObject.put(TEST_DETAILS_RAWDATANO, cursor.getString(3));
+
+                    jsonObject.put(TEST_DETAILS_DATEOFTEST, cursor.getInt(4));
+                    jsonObject.put(TEST_DETAILS_INSTRUMENTUSED, cursor.getInt(5));
+                    jsonObject.put(TEST_DETAILS_INSTRUMENTNO, cursor.getString(6));
+                    jsonObject.put(TEST_DETAILS_MAKE, cursor.getString(7));
+                    jsonObject.put(TEST_DETAILS_MODEL, cursor.getInt(8));
+                    jsonObject.put(TEST_DETAILS_CALIBRATEDON, cursor.getInt(9));
+                    jsonObject.put(TEST_DETAILS_CALIBRATEDDUEON, cursor.getString(10));
+                    jsonObject.put(TEST_DETAILS_TESTSPECIFICATION, cursor.getString(11));
+                    jsonObject.put(TEST_DETAILS_TEST_TESTREFERENCE, cursor.getInt(12));
+                    jsonObject.put(TEST_DETAILS_OCCUPENCYSTATE, cursor.getInt(13));
+                    jsonObject.put(TEST_DETAILS_BLOCKNAME, cursor.getString(14));
+                    jsonObject.put(TEST_DETAILS_TESTAREA, cursor.getString(15));
+
+                    jsonObject.put(TEST_DETAILS_AHUNO, cursor.getString(16));
+                    jsonObject.put(TEST_DETAILS_ROOMNO, cursor.getInt(17));
+                    jsonObject.put(TEST_DETAILS_ROOMNAME, cursor.getInt(18));
+                    jsonObject.put(TEST_DETAILS_EQUIPMENTNO, cursor.getString(19));
+                    jsonObject.put(TEST_DETAILS_EQUIPMENTNAME, cursor.getString(20));
+
+                    jsonObject.put(TEST_DETAILS_TESTERNAME, cursor.getInt(21));
+                    jsonObject.put(TEST_DETAILS_WITNESSNAME, cursor.getInt(22));
+                    jsonObject.put(TEST_DETAILS_PARTNERNAME, cursor.getString(23));
+                    testDetailsJsonArray.put(jsonObject);
+                }catch (Exception e){
+
+                }
+            } while (cursor.moveToNext());
+        } // return contact list return wordList; }
+        return testDetailsJsonArray;
+    }
+
+    // select data from test spesification value table
+    public JSONArray getTestSpecificationValueInfo() {
+        JSONArray  testSpecificationValueJsonArray;
+        testSpecificationValueJsonArray = new JSONArray();
+        String selectQuery = "SELECT * FROM " + TESTSPECIFICATIONVALUE_TABLE_NAME;
+        SQLiteDatabase database = this.getWritableDatabase();
+        Cursor cursor = database.rawQuery(selectQuery, null);
+        if (cursor.moveToFirst()) {
+            do {
+                try {
+                    JSONObject jsonObject = new JSONObject();
+                    jsonObject.put(TESTSPECIFICATIONVALUE_TEST_SPECIFIC_ID, cursor.getInt(0));
+                    jsonObject.put(TESTSPECIFICATIONVALUE_TEST_DETAIL_ID, cursor.getInt(1));
+                    jsonObject.put(TESTSPECIFICATIONVALUE_FIELDNAME, cursor.getString(2));
+                    jsonObject.put(TESTSPECIFICATIONVALUE_FIELDVALUE, cursor.getString(3));
+                    testSpecificationValueJsonArray.put(jsonObject);
+                }catch (Exception e){
+
+                }
+            } while (cursor.moveToNext());
+        } // return contact list return wordList; }
+        return testSpecificationValueJsonArray;
     }
 
     // select data from room table

@@ -21,12 +21,17 @@ import org.json.JSONObject;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Objects;
+
+import javax.net.ssl.HttpsURLConnection;
 
 public class HttpConnection {
 
@@ -60,13 +65,13 @@ public class HttpConnection {
             httpURLConnection.setRequestProperty("Accept", "application/json");
 
             /* setting http connection time out */
-            httpURLConnection.setConnectTimeout(2000);
+            httpURLConnection.setConnectTimeout(30000);
             Log.d("VALDOC", "avinash getHttpGetConnection 4");
                 /* for Get request */
             httpURLConnection.setRequestMethod("GET");
             Log.d("VALDOC", "avinash getting status....");
             statusCode = httpURLConnection.getResponseCode();
-            Log.d("VALDOC", "avinash getHttpGetConnection statusCode="+statusCode);
+            Log.d("VALDOC", "avinash getHttpGetConnection statusCode=" + statusCode);
                 /* 200 represents HTTP OK */
             if (statusCode == HttpURLConnection.HTTP_OK) {
                 Log.d("VALDOC", "avinash getHttpGetConnection 6");
@@ -79,9 +84,8 @@ public class HttpConnection {
             }
 
         } catch (Exception e) {
-            Log.d("VALDOC", "avinash getHttpGetConnection catch 5 e="+e.getMessage());
-        }
-        finally {
+            Log.d("VALDOC", "avinash getHttpGetConnection catch 5 e=" + e.getMessage());
+        } finally {
             if (inputStream != null) {
                 try {
                     inputStream.close();
@@ -113,29 +117,76 @@ public class HttpConnection {
         return result;
     }
 
-//    private void parseResult(String result) {
-//
-//        try {
-//            JSONObject response = new JSONObject(result);
-//
-//            JSONArray posts = response.optJSONArray("posts");
-//
-//            blogTitles = new String[posts.length()];
-//
-//            for (int i = 0; i < posts.length(); i++) {
-//                JSONObject post = posts.optJSONObject(i);
-//                String title = post.optString("title");
-//
-//                blogTitles[i] = title;
+
+    private int httpPostConnection(String url, JSONObject JsonDATA) {
+        BufferedReader reader = null;
+        String JsonResponse = null;
+        HttpsURLConnection conn = null;
+        int statusCode = 0;
+        try {
+            URL urlConnection = new URL(url);
+            conn = (HttpsURLConnection) urlConnection.openConnection();
+            conn.setReadTimeout(10000);
+            conn.setConnectTimeout(15000);
+            conn.setRequestMethod("POST");
+            conn.setDoInput(true);
+            conn.setDoOutput(true);
+            conn.setRequestMethod("POST");
+            conn.setRequestProperty("Content-Type", "application/json");
+            conn.setRequestProperty("Accept", "application/json");
+            //set headers and method
+            Writer writer = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream(), "UTF-8"));
+            writer.write(JsonDATA.toString());
+            // json data
+            writer.close();
+            InputStream inputStream = conn.getInputStream();
+            //input stream
+            StringBuffer buffer = new StringBuffer();
+//            if (inputStream == null) {
+//                // Nothing to do.
+//                return null;
 //            }
-//
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
-//    }
+            reader = new BufferedReader(new InputStreamReader(inputStream));
+
+            String inputLine;
+            while ((inputLine = reader.readLine()) != null)
+                buffer.append(inputLine + "\n");
+//            if (buffer.length() == 0) {
+//                // Stream was empty. No point in parsing.
+//                return null;
+//            }
+            JsonResponse = buffer.toString();
+//response data
+//            Log.i(TAG, JsonResponse);
+//            try {
+////send to post execute
+//                return JsonResponse;
+//            } catch (JSONException e) {
+//                e.printStackTrace();
+//            }
+//            return null;
+
+            statusCode = conn.getResponseCode();
+            mHttpUrlConnectionResponce.httpResponceResult(JsonResponse, statusCode);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (conn != null) {
+                conn.disconnect();
+            }
+            if (reader != null) {
+                try {
+                    reader.close();
+                } catch (final IOException e) {
+                    Log.e(TAG, "Error closing stream", e);
+                }
+            }
+        }
+        return statusCode;
+    }
 
     public interface HttpUrlConnectionResponce {
-        public void httpResponceResult(String resultData,int statusCode);
+        public void httpResponceResult(String resultData, int statusCode);
     }
 }
 
