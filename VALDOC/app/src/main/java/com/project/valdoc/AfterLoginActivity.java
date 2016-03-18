@@ -22,6 +22,8 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.HttpURLConnection;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class AfterLoginActivity extends AppCompatActivity implements HttpConnection.HttpUrlConnectionResponce, ValdocControler.ControlerResponse {
 
@@ -100,12 +102,10 @@ public class AfterLoginActivity extends AppCompatActivity implements HttpConnect
 //                    if (checkInternetConenction()) {
 //                        mValdocControler.getHttpConectionforSync(AfterLoginActivity.this);
 //                    } else {
-                        aleartDialog("Please check your internate connection !");
+//                        aleartDialog("Please check your internate connection !");
 //                    }
                 }
             });
-
-
         }
     }
 
@@ -142,10 +142,6 @@ public class AfterLoginActivity extends AppCompatActivity implements HttpConnect
         }
     }
 
-    @Override
-    public void controlerResult(String message) {
-        Log.d("VALDOC", "controler response data  message=" + message);
-    }
 
 
     private boolean checkInternetConenction() {
@@ -186,4 +182,9 @@ public class AfterLoginActivity extends AppCompatActivity implements HttpConnect
         }
     }
 
+    @Override
+    public void controlerResult(HashMap<String, ArrayList> arrayListHashMap, String message) {
+        Log.d("VALDOC", "controler response data  message=" + message);
+        aleartDialog(message);
+    }
 }

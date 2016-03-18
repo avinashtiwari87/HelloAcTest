@@ -783,6 +783,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         if (userList.size() != 0) {
             for (User user : userList) {
+                Log.d("valdoc", "insert user Login method :"+user.getName()+"\n"+user.getId());
                 ContentValues contentValues = new ContentValues();
                 contentValues.put(USER_ID, user.getId());
                 contentValues.put(USER_NAME, user.getName());
@@ -865,6 +866,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
         String selectQuery = "SELECT * FROM " + USER_TABLE_NAME;
         SQLiteDatabase database = this.getWritableDatabase();
         Cursor cursor = database.rawQuery(selectQuery, null);
+        Log.d("valdoc", "Login method :");
         if (cursor.moveToFirst()) {
             do {
                 User user = new User();
@@ -877,6 +879,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 user.setActive(Integer.parseInt(cursor.getString(6)));
                 user.setDeleted(Integer.parseInt(cursor.getString(7)));
                 user.setPassword(cursor.getString(8));
+                Log.d("valdoc", "Login method :" + user.getName() + "\n" + user.getPassword());
                 userArrayList.add(user);
             } while (cursor.moveToNext());
         } // return contact list return wordList; }

@@ -4,16 +4,19 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.ConnectivityManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
@@ -29,13 +32,17 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.project.valdoc.controler.ValdocControler;
 import com.project.valdoc.db.ValdocDatabaseHandler;
 import com.project.valdoc.intity.PartnerUser;
 import com.project.valdoc.intity.User;
+import com.project.valdoc.task.HttpConnection;
 import com.project.valdoc.task.UserLoginTask;
 
 import java.io.File;
+import java.net.HttpURLConnection;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import static android.Manifest.permission.READ_CONTACTS;
@@ -43,7 +50,7 @@ import static android.Manifest.permission.READ_CONTACTS;
 /**
  * A login screen that offers login via email/password.
  */
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity implements HttpConnection.HttpUrlConnectionResponce, ValdocControler.ControlerResponse {
 
     /**
      * Id to identity READ_CONTACTS permission request.
@@ -68,15 +75,17 @@ public class LoginActivity extends AppCompatActivity {
     private View mProgressView;
     private View mLoginFormView;
     private ValdocDatabaseHandler mValdocDatabaseHandler = new ValdocDatabaseHandler(LoginActivity.this);
-    private String loginUserName="";
-    private String loginUserType="";
+    private String loginUserName = "";
+    private String loginUserType = "";
     private int userId;
     SharedPreferences sharedpreferences;
+    ValdocControler mValdocControler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        mValdocControler = new ValdocControler();
         sharedpreferences = getSharedPreferences("valdoc", Context.MODE_PRIVATE);
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
@@ -106,10 +115,44 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+
+        findViewById(R.id.sync_btn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                if (checkInternetConenction()) {
+//                    mValdocControler.getHttpConectionforSync(LoginActivity.this);
+//                } else {
+//                    aleartDialog("Please check your internate connection !");
+//                }
+            }
+        });
+
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
 //create db and insert details
         insertDataInTable();
+    }
+
+
+    private boolean checkInternetConenction() {
+        // get Connectivity Manager object to check connection
+        ConnectivityManager connec = (ConnectivityManager) getSystemService(getBaseContext().CONNECTIVITY_SERVICE);
+
+        // Check for network connections
+        if (connec.getNetworkInfo(0).getState() == android.net.NetworkInfo.State.CONNECTED ||
+
+                connec.getNetworkInfo(0).getState() == android.net.NetworkInfo.State.CONNECTING ||
+                connec.getNetworkInfo(1).getState() == android.net.NetworkInfo.State.CONNECTING ||
+                connec.getNetworkInfo(1).getState() == android.net.NetworkInfo.State.CONNECTED) {
+            Toast.makeText(this, " Connected ", Toast.LENGTH_LONG).show();
+            return true;
+        } else if (
+                connec.getNetworkInfo(0).getState() == android.net.NetworkInfo.State.DISCONNECTED ||
+                        connec.getNetworkInfo(1).getState() == android.net.NetworkInfo.State.DISCONNECTED) {
+            Toast.makeText(this, " Not Connected ", Toast.LENGTH_LONG).show();
+            return false;
+        }
+        return false;
     }
 
 
@@ -122,7 +165,6 @@ public class LoginActivity extends AppCompatActivity {
         if (mLoginTask != null) {
             return;
         }
-
         // Reset errors.
         mEmailView.setError(null);
         mPasswordView.setError(null);
@@ -167,28 +209,52 @@ public class LoginActivity extends AppCompatActivity {
             showProgress(true);
 //            mLoginTask = new UserLoginTask(this,email, password);
 //            mLoginTask.execute();//        execute(LoginActivity.this);
-           if( login(email,password)){
-               showProgress(false);
-               SharedPreferences.Editor editor = sharedpreferences.edit();
-               editor.putBoolean("login", true);
-               editor.putString("USERNAME", loginUserName);
-               editor.putString("USERTYPE", loginUserType);
-               editor.putInt("APPUSERID", userId);
-               editor.commit();
+            if (login(email, password)) {
+                showProgress(false);
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putBoolean("login", true);
+                editor.putString("USERNAME", loginUserName);
+                editor.putString("USERTYPE", loginUserType);
+                editor.putInt("APPUSERID", userId);
+                editor.commit();
 
-               Intent intent=new Intent(LoginActivity.this,AfterLoginActivity.class);
-               intent.putExtra("USERNAME",loginUserName);
-               intent.putExtra("USERTYPE",loginUserType);
-               intent.putExtra("APPUSERID",userId);
-               startActivity(intent);
-               finish();
-           }else{
-               showProgress(false);
-               Toast toast=Toast.makeText(this,"Invalid user details",Toast.LENGTH_LONG);
-               toast.setGravity(Gravity.CENTER_VERTICAL,0,0);
-               toast.show();
-           }
+                Intent intent = new Intent(LoginActivity.this, AfterLoginActivity.class);
+                intent.putExtra("USERNAME", loginUserName);
+                intent.putExtra("USERTYPE", loginUserType);
+                intent.putExtra("APPUSERID", userId);
+                startActivity(intent);
+                finish();
+            } else {
+                showProgress(false);
+//               Toast toast=Toast.makeText(this,"Invalid user details",Toast.LENGTH_LONG);
+//               toast.setGravity(Gravity.CENTER_VERTICAL,0,0);
+//               toast.show();
+                aleartDialog("Invalid user details,Please sync the app to update the user details");
+            }
         }
+    }
+
+
+    public void aleartDialog(String message) {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setMessage(message);
+
+        alertDialogBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface arg0, int arg1) {
+//                finish();
+            }
+        });
+
+//        alertDialogBuilder.setNegativeButton("No",new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//                finish();
+//            }
+//        });
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
     }
 
     private boolean isEmailValid(String email) {
@@ -198,7 +264,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private boolean isPasswordValid(String password) {
         //TODO: Replace this with your own logic
-        return password.length() > 4;
+        return password.length() > 5;
     }
 
     /**
@@ -239,16 +305,16 @@ public class LoginActivity extends AppCompatActivity {
 
     private boolean login(String name, String password) {
         boolean login = false;
-        loginUserName="";
-        loginUserType="";
+        loginUserName = "";
+        loginUserType = "";
         for (User user : mValdocDatabaseHandler.getUserInfo()) {
-            Log.d("valdoc","Login method :"+user.getName()+"\n"+user.getPassword());
+            Log.d("valdoc", "Login method :" + user.getName() + "\n" + user.getPassword());
             if (user.getName().equals(name) && user.getPassword().equals(password)) {
-                Log.d("valdoc","Login method inside if :"+user.getName()+"\n"+user.getPassword());
+                Log.d("valdoc", "Login method inside if :" + user.getName() + "\n" + user.getPassword());
                 login = true;
-                loginUserName=user.getName();
-                loginUserType=user.getType();
-                userId=user.getId();
+                loginUserName = user.getName();
+                loginUserType = user.getType();
+                userId = user.getId();
                 break;
             }
         }
@@ -256,11 +322,10 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void insertDataInTable() {
-
         mValdocDatabaseHandler.insertUser(ValdocDatabaseHandler.USER_TABLE_NAME, createUserData());
         mValdocDatabaseHandler.insertPartnerUser(ValdocDatabaseHandler.PARTNERUSER_TABLE_NAME, createPartnerUserData());
 //        if (tableExist(ValdocDatabaseHandler.USER_TABLE_NAME,valdocDatabaseHandler)==0) {
-
+//
 //        }
         for (User user : mValdocDatabaseHandler.getUserInfo())
             Log.d("valdoc", "Login :" + "user details" + user.getId() + "\n" + user.getName() + "\n" + user.getPassword() + "\n" + user.getType());
@@ -286,7 +351,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     //create partner user table
-    private List<PartnerUser> createPartnerUserData(){
+    private List<PartnerUser> createPartnerUserData() {
         ArrayList<PartnerUser> partnerUserArrayList = new ArrayList<PartnerUser>();
         PartnerUser partnerUser = new PartnerUser();
         partnerUser.setPartner_user_id(1);
@@ -301,6 +366,7 @@ public class LoginActivity extends AppCompatActivity {
         partnerUserArrayList.add(partnerUser1);
         return partnerUserArrayList;
     }
+
     private int tableExist(String tableName, ValdocDatabaseHandler valdocDatabaseHandler) {
         SQLiteDatabase sqLiteDatabase = valdocDatabaseHandler.getWritableDatabase();
         Cursor cursor = sqLiteDatabase.rawQuery("SELECT name FROM " + ValdocDatabaseHandler.DATABASE_NAME
@@ -308,4 +374,103 @@ public class LoginActivity extends AppCompatActivity {
         return cursor.getCount();
     }
 
+
+    @Override
+    public void httpResponceResult(String resultData, int statusCode) {
+        if (statusCode == HttpURLConnection.HTTP_OK) {
+            Log.d("VALDOC", "response data=" + resultData);
+//            generateNoteOnSD(AfterLoginActivity.this,resultData);
+            mValdocControler.getAllDb(statusCode, resultData);
+        }
+    }
+
+    @Override
+    public void controlerResult(HashMap<String, ArrayList> arrayListHashMap, String message) {
+        Log.d("VALDOC", "controler response data  message=" + message);
+        boolean isertFlag=insertDataInTable(arrayListHashMap);
+        Log.d("VALDOC", "controler response data  isertFlag=" + isertFlag);
+        if(isertFlag) {
+            aleartDialog(message);
+        }else{
+            aleartDialog("Table is not created successfully,Please sync again !");
+        }
+    }
+
+    private boolean insertDataInTable(HashMap<String, ArrayList> arrayListHashMap){
+        boolean isertFlag=true;
+        Log.d("VALDOC", "controler response data  insert table");
+        ArrayList userArrayList=null;
+        try {
+             userArrayList = arrayListHashMap.get("users");
+        }catch(Exception e){
+            Log.d("VALDOC", "controler response data  exception="+e.getMessage());
+        }
+        Log.d("VALDOC", "controler response data  userArrayList.size()="+userArrayList.size());
+        if (null != userArrayList || userArrayList.size() > 0) {
+            Log.d("VALDOC", "controler response data  1");
+            isertFlag = mValdocDatabaseHandler.insertUser(ValdocDatabaseHandler.USER_TABLE_NAME, userArrayList);
+        }
+        ArrayList ahusArrayList = arrayListHashMap.get("ahus");
+        if (null != ahusArrayList || ahusArrayList.size() > 0) {
+            Log.d("VALDOC", "controler response data  2");
+            isertFlag = mValdocDatabaseHandler.insertAhu(ValdocDatabaseHandler.AHU_TABLE_NAME, ahusArrayList);
+        }
+//        ArrayList ahusArrayList = arrayListHashMap.get("ahus");
+//        if (null != ahusArrayList || ahusArrayList.size() > 0)
+//            isertFlag=mValdocDatabaseHandler.insertPartnerUser(ValdocDatabaseHandler.PARTNERUSER_TABLE_NAME, createPartnerUserData());
+        ArrayList equipmentsArrayList = arrayListHashMap.get("equipments");
+        if (null != equipmentsArrayList || equipmentsArrayList.size() > 0) {
+            Log.d("VALDOC", "controler response data  3");
+            isertFlag = mValdocDatabaseHandler.insertEquipment(ValdocDatabaseHandler.EQUIPMENT_TABLE_NAME, equipmentsArrayList);
+        }
+            ArrayList roomsArrayList = arrayListHashMap.get("rooms");
+        if (null != roomsArrayList || roomsArrayList.size() > 0) {
+            Log.d("VALDOC", "controler response data  4");
+            isertFlag = mValdocDatabaseHandler.insertRoom(ValdocDatabaseHandler.ROOM_TABLE_NAME, roomsArrayList);
+        }
+        ArrayList applicableTestRoomsArrayList = arrayListHashMap.get("applicableTestRooms");
+        if (null != applicableTestRoomsArrayList || applicableTestRoomsArrayList.size() > 0) {
+            Log.d("VALDOC", "controler response data  5");
+            isertFlag = mValdocDatabaseHandler.insertApplicableTestRoom(ValdocDatabaseHandler.APLICABLE_TEST_ROOM_TABLE_NAME, applicableTestRoomsArrayList);
+        }
+            ArrayList applicableTestEquipmentsArrayList = arrayListHashMap.get("applicableTestEquipments");
+        if (null != applicableTestEquipmentsArrayList || applicableTestEquipmentsArrayList.size() > 0) {
+            Log.d("VALDOC", "controler response data  6");
+            isertFlag = mValdocDatabaseHandler.insertApplicableTestEquipment(ValdocDatabaseHandler.APLICABLE_TEST_EQUIPMENT_TABLE_NAME, applicableTestEquipmentsArrayList);
+        }
+        ArrayList clientInstrumentsArrayList = arrayListHashMap.get("clientInstruments");
+        if (null != clientInstrumentsArrayList || clientInstrumentsArrayList.size() > 0) {
+            Log.d("VALDOC", "controler response data  7");
+            isertFlag = mValdocDatabaseHandler.insertClientInstrument(ValdocDatabaseHandler.CLIENT_INSTRUMENT_TABLE_NAME, clientInstrumentsArrayList);
+        }
+        ArrayList partnerInstrumentsArrayList = arrayListHashMap.get("partnerInstruments");
+        if (null != partnerInstrumentsArrayList || partnerInstrumentsArrayList.size() > 0) {
+            Log.d("VALDOC", "controler response data  8");
+            isertFlag = mValdocDatabaseHandler.insertPartnerInstrument(ValdocDatabaseHandler.PARTNER_INSTRUMENT_TABLE_NAME, partnerInstrumentsArrayList);
+        }
+//        ArrayList ahusArrayList = arrayListHashMap.get("ahus");
+//        if (null != ahusArrayList || ahusArrayList.size() > 0)
+//            isertFlag= mValdocDatabaseHandler.insertTestMaster(ValdocDatabaseHandler.TESTMASTER_TABLE_NAME, createTestMasterData());
+        ArrayList areasArrayList = arrayListHashMap.get("areas");
+        if (null != areasArrayList || areasArrayList.size() > 0) {
+            Log.d("VALDOC", "controler response data  9");
+            isertFlag = mValdocDatabaseHandler.insertTestArea(ValdocDatabaseHandler.AREA_TABLE_NAME, areasArrayList);
+        }
+        ArrayList equipmentFiltersArrayList = arrayListHashMap.get("equipmentFilters");
+        if (null != equipmentFiltersArrayList || equipmentFiltersArrayList.size() > 0) {
+            Log.d("VALDOC", "controler response data  10");
+            isertFlag = mValdocDatabaseHandler.insertEquipmentfilter(ValdocDatabaseHandler.EQUIPMENTFILTER_TABLE_NAME, equipmentFiltersArrayList);
+        }
+        ArrayList grillsArrayList = arrayListHashMap.get("grills");
+        if (null != grillsArrayList || grillsArrayList.size() > 0) {
+            Log.d("VALDOC", "controler response data  11");
+            isertFlag = mValdocDatabaseHandler.insertGrill(ValdocDatabaseHandler.GRILL_TABLE_NAME, grillsArrayList);
+        }
+        ArrayList roomFiltersArrayList = arrayListHashMap.get("roomFilters");
+        if (null != roomFiltersArrayList || roomFiltersArrayList.size() > 0) {
+            Log.d("VALDOC", "controler response data  12");
+            isertFlag = mValdocDatabaseHandler.insertRoomFilter(ValdocDatabaseHandler.ROOMFILTER_TABLE_NAME, roomFiltersArrayList);
+        }
+        return isertFlag;
+    }
 }

@@ -64,7 +64,7 @@ public class HttpConnection {
             Log.d("VALDOC", "avinash getHttpGetConnection 4");
                 /* for Get request */
             httpURLConnection.setRequestMethod("GET");
-            Log.d("VALDOC", "avinash getHttpGetConnection 5");
+            Log.d("VALDOC", "avinash getting status....");
             statusCode = httpURLConnection.getResponseCode();
             Log.d("VALDOC", "avinash getHttpGetConnection statusCode="+statusCode);
                 /* 200 represents HTTP OK */
@@ -80,7 +80,15 @@ public class HttpConnection {
 
         } catch (Exception e) {
             Log.d("VALDOC", "avinash getHttpGetConnection catch 5 e="+e.getMessage());
-            Log.d(TAG, e.getLocalizedMessage());
+        }
+        finally {
+            if (inputStream != null) {
+                try {
+                    inputStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         return statusCode; //"Failed to fetch data!";
     }

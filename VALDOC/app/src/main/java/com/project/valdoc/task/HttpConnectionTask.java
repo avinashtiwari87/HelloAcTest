@@ -22,7 +22,7 @@ public class HttpConnectionTask extends AsyncTask<String, Void, Integer> {
     public HttpConnectionTask(Context context) {
         mContext = context;
         mHttpConnection = new HttpConnection((HttpConnection.HttpUrlConnectionResponce) mContext);
-        mDialog = new ProgressDialog((AfterLoginActivity) mContext);
+        mDialog = new ProgressDialog( mContext);
         Log.d("VALDOC", "avinash HttpConnectionTask");
     }
 

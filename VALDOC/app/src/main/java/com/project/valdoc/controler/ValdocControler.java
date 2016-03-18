@@ -37,10 +37,11 @@ public class ValdocControler  {
         HttpConnectionTask httpConnectionTask = new HttpConnectionTask(mContext);
         httpConnectionTask.execute(url);
     }
+
     public void getAllDb(int statusCode,String resultData) {
         if (statusCode == HttpURLConnection.HTTP_OK) {
             HashMap<String, ArrayList> arrayListHashMap = parseResponse(resultData);
-            controlerResponse.controlerResult("Data synked successfully");
+            controlerResponse.controlerResult(arrayListHashMap,"Data synked successfully");
         }
 
     }
@@ -58,11 +59,15 @@ public class ValdocControler  {
 
             //AHU data parsing
             ArrayList ahuArrayList = ahuData(jsonRootObject.optJSONArray("ahus"));
-            arrayListHashMap.put(ValdocDatabaseHandler.AREA_TABLE_NAME, ahuArrayList);
+            arrayListHashMap.put(ValdocDatabaseHandler.AHU_TABLE_NAME, ahuArrayList);
 
             //Area data parsing
-            ArrayList areasArrayList = roomsData(jsonRootObject.optJSONArray("rooms"));
-            arrayListHashMap.put(ValdocDatabaseHandler.ROOM_TABLE_NAME, areasArrayList);
+            ArrayList areasArrayList = areaData(jsonRootObject.optJSONArray("areas"));
+            arrayListHashMap.put(ValdocDatabaseHandler.AREA_TABLE_NAME, areasArrayList);
+
+            //room data parsing
+            ArrayList roomArrayList = roomsData(jsonRootObject.optJSONArray("rooms"));
+            arrayListHashMap.put(ValdocDatabaseHandler.ROOM_TABLE_NAME, roomArrayList);
 
             //roomFilters data parsing
             ArrayList roomFiltersArrayList = roomFiltersData(jsonRootObject.optJSONArray("roomFilters"));
@@ -70,7 +75,7 @@ public class ValdocControler  {
 
             //grills data parsing
             ArrayList grillsArrayList = grillsData(jsonRootObject.optJSONArray("grills"));
-            arrayListHashMap.put(ValdocDatabaseHandler.GRILL_TABLE_NAME, roomFiltersArrayList);
+            arrayListHashMap.put(ValdocDatabaseHandler.GRILL_TABLE_NAME, grillsArrayList);
 
             //applicableTestRooms data parsing
             ArrayList applicableTestRoomsList = applicableTestRoomsData(jsonRootObject.optJSONArray("applicableTestRooms"));
@@ -104,7 +109,7 @@ public class ValdocControler  {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                 applicableTestEquipment.setAplicable_testId(jsonObject.optInt("aplicableTestId"));
                 applicableTestEquipment.setTestName(jsonObject.optString("testName").toString());
-                applicableTestEquipment.setEquipmentId(jsonObject.optInt("equipment"));
+                applicableTestEquipment.setEquipmentId(jsonObject.optInt("equipmentId"));
                 applicableTestEquipment.setPeriodicity(jsonObject.optString("periodicity").toString());
                 applicableTestEquipment.setLocation(jsonObject.optInt("location"));
                 applicableTestEquipment.setNoOfCycle(jsonObject.optInt("noOfCycle"));
@@ -127,7 +132,7 @@ public class ValdocControler  {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                 equipmentFilter.setFilterId(jsonObject.optInt("filterId"));
                 equipmentFilter.setFilterCode(jsonObject.optString("filterCode").toString());
-                equipmentFilter.setEquipmentId(jsonObject.optInt("equipment"));
+                equipmentFilter.setEquipmentId(jsonObject.optInt("equipmentId"));
                 equipmentFilter.setWidth(jsonObject.optDouble("width"));
                 equipmentFilter.setLength(jsonObject.optDouble("length"));
                 equipmentFilter.setGrillArea(jsonObject.optDouble("grillArea"));
@@ -155,7 +160,7 @@ public class ValdocControler  {
             try {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                 equipment.setEquipmentId(jsonObject.optInt("equipmentId"));
-                equipment.setRoomId(jsonObject.optInt("room"));
+                equipment.setRoomId(jsonObject.optInt("roomId"));
                 equipment.setOccupancyState(jsonObject.optString("occupancyState").toString());
                 equipment.setVelocity(jsonObject.optDouble("velocity"));
                 equipment.setFilterQuantity(jsonObject.optInt("filterQuantity"));
@@ -182,7 +187,7 @@ public class ValdocControler  {
             try {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                 applicableTestRoom.setAplicable_testId(jsonObject.optInt("aplicable_testId"));
-                applicableTestRoom.setRoomId(jsonObject.optInt("room"));
+                applicableTestRoom.setRoomId(jsonObject.optInt("roomId"));
                 applicableTestRoom.setTestName(jsonObject.optString("testName").toString());
 
                 applicableTestRoom.setPeriodicity(jsonObject.optString("periodicity").toString());
@@ -208,7 +213,7 @@ public class ValdocControler  {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                 grill.setGrillId(jsonObject.optInt("grillId"));
                 grill.setGrillCode(jsonObject.optString("grillCode").toString());
-                grill.setRoomId(jsonObject.optInt("room"));
+                grill.setRoomId(jsonObject.optInt("roomId"));
                 grill.setWidh(jsonObject.optDouble("width"));
                 grill.setLength(jsonObject.optDouble("length"));
                 grill.setGrillArea(jsonObject.optDouble("grillArea"));
@@ -243,7 +248,7 @@ public class ValdocControler  {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                 roomFilter.setFilterId(jsonObject.optInt("filterId"));
                 roomFilter.setFilterCode(jsonObject.optString("filterCode").toString());
-                roomFilter.setRoomId(jsonObject.optInt("room"));
+                roomFilter.setRoomId(jsonObject.optInt("roomId"));
                 roomFilter.setFilterType(jsonObject.optString("filterType").toString());
                 roomFilter.setEfficiency(jsonObject.optDouble("efficiency"));
                 roomFilter.setParticleSize(jsonObject.optString("particleSize").toString());
@@ -277,7 +282,7 @@ public class ValdocControler  {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                 room.setRoomId(jsonObject.optInt("roomId"));
                 room.setAreaId(jsonObject.optInt("areaId"));
-                room.setAhuId(jsonObject.optInt("ahu"));
+                room.setAhuId(jsonObject.optInt("ahuId"));
                 room.setRoomName(jsonObject.optString("roomName").toString());
                 room.setRoomNo(jsonObject.optString("roomNo").toString());
                 room.setWidth(jsonObject.optDouble("width"));
@@ -322,7 +327,7 @@ public class ValdocControler  {
             try {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                 area.setAreaId(jsonObject.optInt("areaId"));
-                area.setPlantId(jsonObject.optInt("plant"));
+                area.setPlantId(jsonObject.optInt("plantId"));
                 area.setAreaName(jsonObject.optString("areaName").toString());
                 area.setAdditionalDetails(jsonObject.optString("additionalDetails").toString());
                 area.setCreationDate(jsonObject.optString("createdDate").toString());
@@ -379,7 +384,7 @@ public class ValdocControler  {
 
                 user.setId(jsonObject.optInt("id"));
                 user.setName(jsonObject.optString("name").toString());
-                if (null == jsonObject.optString("partner").toString() || "".equals(jsonObject.optString("partner").toString())) {
+                if (null != jsonObject.optString("partnerId").toString() || "".equals(jsonObject.optString("partnerId").toString())) {
                     user.setType("CLIENT");
                 } else {
                     user.setType("PARTNER");
@@ -400,6 +405,6 @@ public class ValdocControler  {
     }
 
     public interface ControlerResponse {
-        public void controlerResult(String message);
+        public void controlerResult(HashMap<String, ArrayList> arrayListHashMap,String message);
     }
 }

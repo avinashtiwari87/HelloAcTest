@@ -72,6 +72,19 @@
                 android:text="@string/action_sign_in"
                 android:textStyle="bold" />
 
+            <Button
+                android:id="@+id/sync_btn"
+                android:layout_marginTop="50dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sync"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:textSize="25sp"
+                android:padding="30dp"
+                android:background="@drawable/title_right_on"
+                android:layout_gravity="center_horizontal" />
+
         </LinearLayout>
     </ScrollView>
 </LinearLayout>
