@@ -37,6 +37,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class TestCreateActivity extends Activity implements View.OnTouchListener {
+    private static final String TAG = "TestCreateActivity";
     private Spinner instrumentSpiner, equipmentOrAhuSpinner, equipmentSpinner, ahuSpinner, roomSpinner, testSpinner;
     private List<String> instrumentList, equipmentOrAhuTestList, ahuTestList, equipmentTestList, roomTestList, applicableTestRoomList, applicableTestEquipmentList;
     private ArrayAdapter<String> instrumentAdapter, equipmentOrAhuAdapter, equipmentadApter, ahuAdapter, roomAdapter, applicableTestRoomAdapter, applicableTestequipmentAdapter;
@@ -60,12 +61,21 @@ public class TestCreateActivity extends Activity implements View.OnTouchListener
     private ValdocDatabaseHandler mValdocDatabaseHandler = new ValdocDatabaseHandler(TestCreateActivity.this);
 
     //spiner data storage
-    private String spinerInstrument;
-    private String spinerAhuOrEquipment;
-    private int spinerAhu;
-    private String spinerRoom;
-    private String spinerTestType;
-    private int spinerEquipment;
+    private static String spinerInstrument;
+    private static String spinerAhuOrEquipment;
+    private static int spinerAhu;
+    private static String spinerRoom;
+    private static String spinerTestType;
+    private static int spinerEquipment;
+
+    //Storing spinner position to show selected
+     // after Certificate submit
+    int instrumentSpinerPos = 0,equipmentOrAhuSpinnerPos = 0,
+            equipmentSpinnerPos = 0,ahuSpinnerPos = 0,
+            roomSpinnerPos = 0, testSpinnerPos = 0;
+    String witness1, witness2, witness3;
+
+
     SharedPreferences sharedpreferences;
 
     @Override
@@ -74,15 +84,25 @@ public class TestCreateActivity extends Activity implements View.OnTouchListener
         setContentView(R.layout.activity_test);
         sharedpreferences = getSharedPreferences("valdoc", Context.MODE_PRIVATE);
 
+        //Resource Initialization
+        spinerInitialization();
+
         //get user name from login screen
         Bundle extras = getIntent().getExtras();
         if (extras == null) {
             userName = null;
             loginUserType = null;
-        } else if(getIntent().hasExtra("RD_AV_5")){
+        }
+        //Screen Navigation after submit button hit from Certificate screen
+        if (getIntent().hasExtra("RD_AV_5")) {
+            //Setting User Information
             userName = sharedpreferences.getString("USERNAME", "");
             loginUserType = sharedpreferences.getString("USERTYPE", "");
-            appUserId =sharedpreferences.getInt("APPUSERID", 0);
+            appUserId = sharedpreferences.getInt("APPUSERID", 0);
+            //Setting Witness Data
+            witnessFirst.setText(sharedpreferences.getString("witness1", ""));
+            witnessSecond.setText(sharedpreferences.getString("witness2", ""));
+            witnessThird.setText(sharedpreferences.getString("witness3",""));
         }
         else {
             userName = extras.getString("USERNAME");
@@ -90,14 +110,48 @@ public class TestCreateActivity extends Activity implements View.OnTouchListener
             appUserId = extras.getInt("APPUSERID");
         }
         //table creation
-//        insertDataInTable();
+        // insertDataInTable();
+        // Spinner Initialization
         //instrument spinner creation
         getInstrumentList(loginUserType);
-//Spinner Initialization
         listItemCreation();
-        spinerInitialization();
         spinnerCreation();
         initButton();
+
+
+       //Screen Navigation after submit button hit from Certificate screen
+        if (getIntent().hasExtra("RD_AV_5")) {
+            //Setting Spinner PreSelected position
+            instrumentSpiner.setSelection(sharedpreferences.getInt("instrumentSpinerPos",0));
+            equipmentOrAhuSpinner.setSelection(sharedpreferences.getInt("equipmentOrAhuSpinnerPos",0));
+            Log.d(TAG, "equipmentOrAhuSpinner : Pos:- "+sharedpreferences.getInt("equipmentOrAhuSpinnerPos",0));
+            if (sharedpreferences.getInt("equipmentOrAhuSpinnerPos",0)==1) {
+//                    createAhuList();
+                ahuSpinner.setVisibility(View.VISIBLE);
+                equipmentSpinner.setVisibility(View.GONE);
+                roomSpinner.setVisibility(View.VISIBLE);
+//                    roomTestList.add("Select Room");
+                roomSpinner.setSelection(0);
+                ahuSpinner.setSelection(0);
+                testSpinner.setSelection(0);
+                spinerAhuOrEquipment = "AHU";
+            } else if (sharedpreferences.getInt("equipmentOrAhuSpinnerPos",0)==0) {
+                ahuSpinner.setVisibility(View.GONE);
+                equipmentSpinner.setVisibility(View.VISIBLE);
+                roomSpinner.setVisibility(View.GONE);
+                testSpinner.setSelection(0);
+                spinerAhuOrEquipment = "EQUIPMENT";
+            }
+            equipmentSpinner.setSelection(sharedpreferences.getInt("equipmentSpinnerPos", 0));
+            Log.d(TAG, "equipmentSpinner : Pos:- " + sharedpreferences.getInt("equipmentSpinnerPos", 0));
+            ahuSpinner.setSelection(sharedpreferences.getInt("ahuSpinnerPos", 0));
+            Log.d(TAG, "ahuSpinner : Pos:- " + sharedpreferences.getInt("ahuSpinnerPos", 0));
+            roomSpinner.setSelection(sharedpreferences.getInt("roomSpinnerPos", 0));
+            Log.d(TAG, "roomSpinner : Pos:- " + sharedpreferences.getInt("roomSpinnerPos", 0));
+            testSpinner.setSelection(sharedpreferences.getInt("testSpinnerPos", 0));
+            Log.d(TAG, "testSpinner : Pos:- " + sharedpreferences.getInt("testSpinnerPos", 0));
+        }
+
     }
 
     private void initButton() {
@@ -106,6 +160,18 @@ public class TestCreateActivity extends Activity implements View.OnTouchListener
             @Override
             public void onClick(View v) {
                 if (validationSpiner()) {
+                    //Saving Data in Shared Preferences
+                    SharedPreferences.Editor editor = sharedpreferences.edit();
+                    editor.putInt("instrumentSpinerPos", instrumentSpinerPos);
+                    editor.putInt("equipmentOrAhuSpinnerPos", equipmentOrAhuSpinnerPos);                    editor.putInt("instrumentSpinerPos", instrumentSpinerPos);
+                    editor.putInt("equipmentSpinnerPos", equipmentSpinnerPos);
+                    editor.putInt("ahuSpinnerPos", ahuSpinnerPos);
+                    editor.putInt("roomSpinnerPos", roomSpinnerPos);
+                    editor.putInt("testSpinnerPos", testSpinnerPos);
+                    editor.putString("witness1", witnessFirst.getText().toString());
+                    editor.putString("witness2", witnessSecond.getText().toString());
+                    editor.putString("witness3", witnessThird.getText().toString());
+                    editor.commit();
                     if ("RD_AV_5".equals(spinerTestType = testSpinner.getSelectedItem().toString())) {
                         rdAv5Test();
                     } else if ("RD_ACPH_AV".equals(spinerTestType = testSpinner.getSelectedItem().toString())) {
@@ -492,6 +558,7 @@ public class TestCreateActivity extends Activity implements View.OnTouchListener
                 // TODO Auto-generated method stub
                 if (instrumentSpiner.getSelectedItemPosition() > 1)
                     spinerInstrument = instrumentList.get(instrumentSpiner.getSelectedItemPosition() - 1);
+                    instrumentSpinerPos = (instrumentSpiner.getSelectedItemPosition()-1);
             }
 
             public void onNothingSelected(AdapterView<?> arg0) {
@@ -510,6 +577,7 @@ public class TestCreateActivity extends Activity implements View.OnTouchListener
 
                 ahuSpinner.setVisibility(View.GONE);
                 equipmentSpinner.setVisibility(View.GONE);
+                equipmentOrAhuSpinnerPos = (equipmentOrAhuSpinner.getSelectedItemPosition()-1);
                 // TODO Auto-generated method stub
                 if (equipmentOrAhuSpinner.getSelectedItem().toString().equals("AHU")) {
 //                    createAhuList();
@@ -543,6 +611,7 @@ public class TestCreateActivity extends Activity implements View.OnTouchListener
             public void onItemSelected(AdapterView<?> arg0, View arg1,
                                        int arg2, long arg3) {
                 // TODO Auto-generated method stub
+                equipmentSpinnerPos = (equipmentSpinner.getSelectedItemPosition()-1);
                 Log.d("TestCreateActivity", "equipment :index= " + equipmentSpinner.getSelectedItemPosition() + "mEquipmentArrayList size=" + mEquipmentArrayList.size());
                 if (equipmentSpinner.getSelectedItemPosition() > 0) {
                     Equipment equipment = mEquipmentArrayList.get(equipmentSpinner.getSelectedItemPosition() - 1);
@@ -565,6 +634,8 @@ public class TestCreateActivity extends Activity implements View.OnTouchListener
                 roomSpinner.setVisibility(View.VISIBLE);
                 roomSpinner.setSelection(0);
                 testSpinner.setSelection(0);
+
+                ahuSpinnerPos = (ahuSpinner.getSelectedItemPosition()-1);
                 Log.d("TestCreateActivity", "ahuspiner :position= " + ahuSpinner.getSelectedItemPosition());
 
                 if (ahuSpinner.getSelectedItemPosition() > 0) {
@@ -587,6 +658,7 @@ public class TestCreateActivity extends Activity implements View.OnTouchListener
 
             public void onItemSelected(AdapterView<?> arg0, View arg1,
                                        int arg2, long arg3) {
+                roomSpinnerPos = (roomSpinner.getSelectedItemPosition()-1);
                 Log.d("TestCreateActivity", "equipment :index= " + roomSpinner.getSelectedItemPosition());
                 if (roomSpinner.getSelectedItemPosition() > 0) {
                     Room room = mRoomArrayList.get(roomSpinner.getSelectedItemPosition() - 1);
@@ -606,6 +678,7 @@ public class TestCreateActivity extends Activity implements View.OnTouchListener
             public void onItemSelected(AdapterView<?> arg0, View arg1,
                                        int arg2, long arg3) {
                 // TODO Auto-generated method stub
+                testSpinnerPos = (testSpinner.getSelectedItemPosition()-1);
                 spinerTestType = testSpinner.getSelectedItem().toString();
 //                Toast.makeText(getBaseContext(), TestList.get(arg2),
 //                        Toast.LENGTH_SHORT).show();
