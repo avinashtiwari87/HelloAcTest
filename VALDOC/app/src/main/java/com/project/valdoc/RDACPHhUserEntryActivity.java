@@ -3,6 +3,7 @@ package com.project.valdoc;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -304,6 +305,10 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
                     if (mValdocDatabaseHandler.insertTestReading(ValdocDatabaseHandler.TESTREADING_TABLE_NAME, testReading())) {
                         if (mValdocDatabaseHandler.insertTestSpesificationValue(ValdocDatabaseHandler.TESTSPECIFICATIONVALUE_TABLE_NAME, testSpesificationValue())) {
                             Toast.makeText(RDACPHhUserEntryActivity.this, "Data saved sussessfully", Toast.LENGTH_LONG).show();
+                            Intent intent = new Intent(RDACPHhUserEntryActivity.this, TestCreateActivity.class);
+                            intent.putExtra("RD_ACPH_H", true);
+                            startActivity(intent);
+                            finish();
                         } else {
                             Toast.makeText(RDACPHhUserEntryActivity.this, "Data not saved", Toast.LENGTH_LONG).show();
                         }

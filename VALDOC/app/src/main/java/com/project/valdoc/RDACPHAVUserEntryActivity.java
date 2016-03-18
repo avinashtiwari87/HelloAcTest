@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -316,6 +317,10 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
                     if (mValdocDatabaseHandler.insertTestReading(ValdocDatabaseHandler.TESTREADING_TABLE_NAME, testReading())) {
                         if (mValdocDatabaseHandler.insertTestSpesificationValue(ValdocDatabaseHandler.TESTSPECIFICATIONVALUE_TABLE_NAME, testSpesificationValue())) {
                             Toast.makeText(RDACPHAVUserEntryActivity.this, "Data saved successfully", Toast.LENGTH_LONG).show();
+                            Intent intent = new Intent(RDACPHAVUserEntryActivity.this, TestCreateActivity.class);
+                            intent.putExtra("RD_ACPH_AV", true);
+                            startActivity(intent);
+                            finish();
                         } else {
                             Toast.makeText(RDACPHAVUserEntryActivity.this, "Data not saved", Toast.LENGTH_LONG).show();
                         }
