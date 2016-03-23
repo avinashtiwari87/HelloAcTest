@@ -124,7 +124,7 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
         //Receiving User Input Data from Bundle
         HashMap<Integer, Integer> hashMap = (HashMap<Integer, Integer>) getIntent().getSerializableExtra("InputData");
         for (Map.Entry m : hashMap.entrySet()) {
-            Log.v(TAG, " InputData "+m.getKey() + " " + m.getValue());
+            Log.v(TAG, " InputData " + m.getKey() + " " + m.getValue());
         }
         for (int i = 0; i < txtViewList.size(); i++) {
             TextView tvl = txtViewList.get(i);
@@ -149,9 +149,9 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
         for (int i = 0; i < txtPassFailList.size(); i++) {
             TextView tvl = txtPassFailList.get(i);
             tvl.setText(PassFailHashMap.get(tvl.getId()) + "");
-            if("PASS".equalsIgnoreCase(tvl.getText().toString().trim())){
+            if ("PASS".equalsIgnoreCase(tvl.getText().toString().trim())) {
                 tvl.setTextColor(getResources().getColor(R.color.blue));
-            }else{
+            } else {
                 tvl.setTextColor(getResources().getColor(R.color.red));
             }
         }
@@ -160,18 +160,17 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
 
     private void datePicker() {
         // Get current date by calender
-
         final Calendar c = Calendar.getInstance();
         year = c.get(Calendar.YEAR);
         month = c.get(Calendar.MONTH);
         day = c.get(Calendar.DAY_OF_MONTH);
 
         // Show current date
+String date=new StringBuilder().append(month + 1).append("-").append(day).append("-").append(year).append(" ").toString();
+        // Month is 0 based, just add 1
 
-        dateTextView.setText(new StringBuilder()
-                // Month is 0 based, just add 1
-                .append(month + 1).append("-").append(day).append("-")
-                .append(year).append(" "));
+
+        dateTextView.setText(date);
     }
 
     private void initTextView() {
@@ -270,11 +269,9 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
             year = selectedYear;
             month = selectedMonth;
             day = selectedDay;
-
+            String date=new StringBuilder().append(month + 1).append("-").append(day).append("-").append(year).append(" ").toString();
             // Show selected date
-            dateTextView.setText(new StringBuilder().append(month + 1)
-                    .append("-").append(day).append("-").append(year)
-                    .append(" "));
+            dateTextView.setText(date);
 
         }
     };
@@ -284,25 +281,24 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
             instrumentUsed.setText(clientInstrument.getcInstrumentName());
             make.setText(clientInstrument.getMake());
             model.setText(clientInstrument.getModel());
-            instrumentSerialNo.setText(clientInstrument.getSerialNo());
+            instrumentSerialNo.setText("" + clientInstrument.getSerialNo());
             calibrationOn.setText(clientInstrument.getLastCalibrated());
             calibrationDueOn.setText(clientInstrument.getCalibrationDueDate());
         } else {
             instrumentUsed.setText(partnerInstrument.getpInstrumentName());
             make.setText(partnerInstrument.getMake());
             model.setText(partnerInstrument.getModel());
-            instrumentSerialNo.setText(partnerInstrument.getpInstrumentId());
+            instrumentSerialNo.setText("" + partnerInstrument.getpInstrumentId());
             calibrationOn.setText(partnerInstrument.getLastCalibrated());
             calibrationDueOn.setText(partnerInstrument.getCalibrationDueDate());
         }
 
         testSpecification.setText("" + equipment.getVelocity());
-//                plantName
         areaOfTest.setText(areaName);
         roomName.setText(roomDetails[1]);
         occupancyState.setText(equipment.getOccupancyState().toString());
         Log.d("valdoc", "RDAV5UserEnryActivity 1witness= equipment.getTestReference()=" + equipment.getTestReference());
-        testRefrance.setText(""+equipment.getTestReference().toString());
+        testRefrance.setText("" + equipment.getTestReference().toString());
         equipmentName.setText(equipment.getEquipmentName().toString());
         equipmentNo.setText(equipment.getEquipmentNo().toString());
         testCundoctor.setText(userName);
@@ -317,7 +313,7 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
     }
 
     private ArrayList<TestReading> testReading() {
-        ArrayList<TestReading> readingArrayList=new ArrayList<TestReading>();
+        ArrayList<TestReading> readingArrayList = new ArrayList<TestReading>();
         TestReading testReading = new TestReading();
         testReading.setTestReadingID(1);
 //        TO DO test details id is id of test details table
@@ -356,33 +352,35 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
         testDetails.setDateOfTest(dateTextView.getText().toString());
         testDetails.setRawDataNo(certificateNo.getText().toString());
         if (loginUserType.equals("CLIENT")) {
-            testDetails.setInstrumentUsed(clientInstrument.getcInstrumentName());
-            testDetails.setMake(clientInstrument.getMake());
-            testDetails.setModel(clientInstrument.getModel());
-            testDetails.setInstrumentNo(clientInstrument.getSerialNo());
-            testDetails.setCalibratedOn(clientInstrument.getLastCalibrated());
-            testDetails.setCalibratedDueOn(clientInstrument.getCalibrationDueDate());
+            Log.d("getCertificateData", "client instrumentUsed.getText()=" + instrumentUsed.getText());
+            testDetails.setInstrumentUsed("" + instrumentUsed.getText());
+            testDetails.setMake("" + make.getText());
+            testDetails.setModel("" + model.getText());
+            testDetails.setInstrumentNo(""+clientInstrument.getSerialNo());
+            testDetails.setCalibratedOn(""+clientInstrument.getLastCalibrated());
+            testDetails.setCalibratedDueOn(""+clientInstrument.getCalibrationDueDate());
         } else {
-            testDetails.setInstrumentUsed(partnerInstrument.getpInstrumentName());
-            testDetails.setMake(partnerInstrument.getMake());
-            testDetails.setModel(partnerInstrument.getModel());
+            Log.d("getCertificateData", "instrumentUsed.getText()=" + instrumentUsed.getText());
+            testDetails.setInstrumentUsed("" + instrumentUsed.getText());
+            testDetails.setMake("" + make.getText());
+            testDetails.setModel("" + model.getText());
             testDetails.setInstrumentNo("" + partnerInstrument.getpInstrumentId());
-            testDetails.setCalibratedOn(partnerInstrument.getLastCalibrated());
-            testDetails.setCalibratedDueOn(partnerInstrument.getCalibrationDueDate());
+            testDetails.setCalibratedOn(""+partnerInstrument.getLastCalibrated());
+            testDetails.setCalibratedDueOn(""+partnerInstrument.getCalibrationDueDate());
         }
 
 
         testDetails.setTestSpecification("" + equipment.getVelocity());
         testDetails.setBlockName(plantName.getText().toString());
-        testDetails.setTestArea(areaName);
-        testDetails.setRoomName(roomDetails[1]);
-        testDetails.setRoomNo(roomDetails[0]);
-        testDetails.setOccupencyState(equipment.getOccupancyState());
-        testDetails.setTestReference(equipment.getTestReference());
-        testDetails.setEquipmentName(equipment.getEquipmentName());
-        testDetails.setEquipmentNo(equipment.getEquipmentNo());
-        testDetails.setTesterName(userName);
-        testDetails.setWitnessName(witnessFirst + "," + witnessSecond + "," + witnessThird);
+        testDetails.setTestArea("" + areaName);
+        testDetails.setRoomName("" + roomName.getText());
+        testDetails.setRoomNo("" + roomDetails[0]);
+        testDetails.setOccupencyState("" + occupancyState.getText());
+        testDetails.setTestReference("" + testRefrance.getText());
+        testDetails.setEquipmentName("" + equipment.getEquipmentName());
+        testDetails.setEquipmentNo("" + equipment.getEquipmentNo());
+        testDetails.setTesterName(""+testCundoctor.getText());
+        testDetails.setWitnessName(""+testWitness.getText());
         return testDetails;
     }
 
@@ -606,7 +604,8 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
     }
 
     int idPassFailTv = 300;
-    private TextView addTextPassFail(String textValue,int tagRows) {
+
+    private TextView addTextPassFail(String textValue, int tagRows) {
         TextView tv = new TextView(this);
         tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
                 TableRow.LayoutParams.WRAP_CONTENT));

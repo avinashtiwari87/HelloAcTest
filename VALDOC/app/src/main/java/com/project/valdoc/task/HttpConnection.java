@@ -58,13 +58,13 @@ public class HttpConnection {
             Log.d("VALDOC", "avinash getHttpGetConnection 2");
             httpURLConnection = (HttpURLConnection) urlConnection.openConnection();
 
-                 /* optional request header */
+                /* optional request header */
             httpURLConnection.setRequestProperty("Content-Type", "application/json");
             Log.d("VALDOC", "avinash getHttpGetConnection 3");
                 /* optional request header */
             httpURLConnection.setRequestProperty("Accept", "application/json");
 
-            /* setting http connection time out */
+                /* setting http connection time out */
             httpURLConnection.setConnectTimeout(30000);
             Log.d("VALDOC", "avinash getHttpGetConnection 4");
                 /* for Get request */
@@ -86,6 +86,9 @@ public class HttpConnection {
         } catch (Exception e) {
             Log.d("VALDOC", "avinash getHttpGetConnection catch 5 e=" + e.getMessage());
         } finally {
+            if (httpURLConnection != null) {
+                httpURLConnection.disconnect();
+            }
             if (inputStream != null) {
                 try {
                     inputStream.close();
@@ -131,7 +134,6 @@ public class HttpConnection {
             conn.setRequestMethod("POST");
             conn.setDoInput(true);
             conn.setDoOutput(true);
-            conn.setRequestMethod("POST");
             conn.setRequestProperty("Content-Type", "application/json");
             conn.setRequestProperty("Accept", "application/json");
             //set headers and method

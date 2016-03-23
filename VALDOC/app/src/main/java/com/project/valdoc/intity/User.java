@@ -13,6 +13,7 @@ public class User {
     private int active;
     private int deleted;
     private String password;
+    private int partnerId;
     private String creationDate;
 
     public int getId() {
@@ -85,6 +86,14 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public int getPartnerId() {
+        return partnerId;
+    }
+
+    public void setPartnerId(int partnerId) {
+        this.partnerId = partnerId;
     }
 
     public String getCreationDate() {

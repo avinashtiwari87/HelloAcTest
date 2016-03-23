@@ -57,6 +57,7 @@ public class TestCreateActivity extends Activity implements View.OnTouchListener
     private String userName = "";
     private String loginUserType = "";
     private String loginUserPartnerId = "";
+    private int userPartnerId;
     private int appUserId;
     private ValdocDatabaseHandler mValdocDatabaseHandler = new ValdocDatabaseHandler(TestCreateActivity.this);
 
@@ -100,6 +101,7 @@ public class TestCreateActivity extends Activity implements View.OnTouchListener
             userName = sharedpreferences.getString("USERNAME", "");
             loginUserType = sharedpreferences.getString("USERTYPE", "");
             appUserId = sharedpreferences.getInt("APPUSERID", 0);
+            userPartnerId=sharedpreferences.getInt("PARTNERID", 0);
             //Setting Witness Data
             witnessFirst.setText(sharedpreferences.getString("witness1", ""));
             witnessSecond.setText(sharedpreferences.getString("witness2", ""));
@@ -108,6 +110,7 @@ public class TestCreateActivity extends Activity implements View.OnTouchListener
             userName = extras.getString("USERNAME");
             loginUserType = extras.getString("USERTYPE");
             appUserId = extras.getInt("APPUSERID");
+            userPartnerId=extras.getInt("PARTNERID");
         }
         //table creation
         // insertDataInTable();
@@ -147,7 +150,8 @@ public class TestCreateActivity extends Activity implements View.OnTouchListener
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (validationSpiner()) {
+                Log.d(TAG, "equipmentOrAhuSpinner : Pos:submit button clicked");
+                if (validationSpiner()) {Log.d(TAG, "equipmentOrAhuSpinner : Pos:submit button clicked validation complete");
                     //Saving Data in Shared Preferences
                     SharedPreferences.Editor editor = sharedpreferences.edit();
                     editor.putInt("instrumentSpinerPos", instrumentSpinerPos);
@@ -481,7 +485,6 @@ public class TestCreateActivity extends Activity implements View.OnTouchListener
     }
 
     public void listItemCreation() {
-
         equipmentOrAhuTestList = new ArrayList<String>();
         equipmentOrAhuTestList.add("Select Ahu or Equipment");
         equipmentOrAhuTestList.add("EQUIPMENT");
@@ -503,6 +506,7 @@ public class TestCreateActivity extends Activity implements View.OnTouchListener
 //        clientInstrumentArrayList.clear();
         instrumentList = new ArrayList<String>();
         instrumentList.add("Select Instrument");
+        Log.d("valdoc", "TestCreateActivity : client" + userType);
         if (userType.equals("CLIENT")) {
             clientInstrumentArrayList = mValdocDatabaseHandler.getClientInstrumentInfo();
 
@@ -512,10 +516,11 @@ public class TestCreateActivity extends Activity implements View.OnTouchListener
             }
 
         } else {
-            Log.d("valdoc", "TestCreateActivity :vendor" + appUserId);
-            loginUserPartnerId = mValdocDatabaseHandler.getPartnerIdFromPartnerUser(appUserId);
-            Log.d("valdoc", "TestCreateActivity :vendor loginUserPartnerId=" + loginUserPartnerId);
-            partnerInstrumentArrayList = mValdocDatabaseHandler.getPartnerInstrumentInfo(loginUserPartnerId);
+            Log.d("valdoc", "TestCreateActivity :vendor" + userPartnerId);
+//            loginUserPartnerId = mValdocDatabaseHandler.getPartnerIdFromPartnerUser(appUserId);
+//            Log.d("valdoc", "TestCreateActivity :vendor loginUserPartnerId=" + loginUserPartnerId);
+            partnerInstrumentArrayList = mValdocDatabaseHandler.getPartnerInstrumentInfo(userPartnerId);
+            Log.d("valdoc", "TestCreateActivity :vendor partnerInstrumentArrayList" + partnerInstrumentArrayList.size());
             for (PartnerInstrument partnerInstrument : partnerInstrumentArrayList) {
                 instrumentList.add(partnerInstrument.getpInstrumentName());
                 Log.d("valdoc", "TestCreateActivity :vendor" + partnerInstrument.getpInstrumentName());

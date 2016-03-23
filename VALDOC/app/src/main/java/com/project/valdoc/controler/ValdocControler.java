@@ -1,6 +1,8 @@
 package com.project.valdoc.controler;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.util.Log;
 
 import com.project.valdoc.db.ValdocDatabaseHandler;
 import com.project.valdoc.intity.Ahu;
@@ -10,6 +12,8 @@ import com.project.valdoc.intity.Area;
 import com.project.valdoc.intity.Equipment;
 import com.project.valdoc.intity.EquipmentFilter;
 import com.project.valdoc.intity.Grill;
+import com.project.valdoc.intity.PartnerInstrument;
+import com.project.valdoc.intity.Partners;
 import com.project.valdoc.intity.Room;
 import com.project.valdoc.intity.RoomFilter;
 import com.project.valdoc.intity.User;
@@ -26,22 +30,74 @@ import java.util.HashMap;
 /**
  * Created by Avinash on 3/14/2016.
  */
-public class ValdocControler  {
+public class ValdocControler {
     Context mContext = null;
     ControlerResponse controlerResponse;
-    private String url = "http://valdoc.in:8080/valdoc/sync/getTableData?date=2015-11-12";
+    SharedPreferences sharedpreferences;
+    private String lastSyncDate;
+    private ValdocDatabaseHandler mValdocDatabaseHandler;
+    private String url = "http://valdoc.in:8080/valdoc/sync/getTableData?date=";  //2015-11-12
+    private String postUrl = "http://valdoc.in:8080/valdoc/sync/postTableData";
 
-    public void getHttpConectionforSync(Context context){
+    public void getHttpConectionforSync(Context context, String method) {
         mContext = context;
         controlerResponse = (ControlerResponse) context;
-        HttpConnectionTask httpConnectionTask = new HttpConnectionTask(mContext);
-        httpConnectionTask.execute(url);
+        mValdocDatabaseHandler = new ValdocDatabaseHandler(mContext);
+        getConection(method);
     }
 
-    public void getAllDb(int statusCode,String resultData) {
+    public void httpPostSyncData(Context context,String method) {
+        mContext = context;
+        JSONObject jsonObject = getCertificateData();
+        postConnection(method, jsonObject);
+    }
+
+    private JSONObject getCertificateData() {
+        JSONObject jsonObject=null;
+        JSONArray testDetailsJsonArray=null;
+        JSONArray testReadingJsonArray=null;
+        JSONArray testSpecificationValueJsonArray=null;
+        JSONArray serviceReportJsonArray=null;
+        JSONArray serviceReportDetailsJsonArray=null;
+        jsonObject = new JSONObject();
+        try {
+            testDetailsJsonArray=mValdocDatabaseHandler.getTestDetailsInfo();
+            testReadingJsonArray=mValdocDatabaseHandler.getTestReadingInfo();
+            testSpecificationValueJsonArray=mValdocDatabaseHandler.getTestSpecificationValueInfo();
+            serviceReportJsonArray=mValdocDatabaseHandler.getServiceReport();
+            serviceReportDetailsJsonArray=mValdocDatabaseHandler.getServiceReportDetailsInfo();
+
+            jsonObject.put("serviceReportDTOs",serviceReportJsonArray );
+            jsonObject.put("serviceReportDetailDTOs",serviceReportDetailsJsonArray );
+            jsonObject.put("testDetailDTOs",testDetailsJsonArray );
+            jsonObject.put("testReadingDTOs",testReadingJsonArray );
+            jsonObject.put("testSpecificValueDTOs",testSpecificationValueJsonArray );
+        }catch(Exception e){
+            Log.d("getCertificateData", "certificate json exception=" + e.getMessage());
+        }
+
+        Log.d("getCertificateData", "certificate json=" + jsonObject.toString());
+        return jsonObject;
+    }
+
+
+    private void postConnection(String method, JSONObject jsonDATA) {
+        HttpConnectionTask httpConnectionTask = new HttpConnectionTask(mContext, method, jsonDATA);
+//        lastSyncDate = sharedpreferences.getString("lastSyncDate", "");
+        httpConnectionTask.execute(postUrl);
+    }
+
+    private void getConection(String method) {
+        sharedpreferences = mContext.getSharedPreferences("valdoc", Context.MODE_PRIVATE);
+        HttpConnectionTask httpConnectionTask = new HttpConnectionTask(mContext, method, new JSONObject());
+        lastSyncDate = sharedpreferences.getString("lastSyncDate", "");
+        httpConnectionTask.execute(url + lastSyncDate);
+    }
+
+    public void getAllDb(int statusCode, String resultData) {
         if (statusCode == HttpURLConnection.HTTP_OK) {
             HashMap<String, ArrayList> arrayListHashMap = parseResponse(resultData);
-            controlerResponse.controlerResult(arrayListHashMap,"Data synked successfully");
+            controlerResponse.controlerResult(arrayListHashMap, "Data synked successfully");
         }
 
     }
@@ -92,11 +148,81 @@ public class ValdocControler  {
             ArrayList applicableTestEquipmentsList = applicableTestEquipmentsData(jsonRootObject.optJSONArray("applicableTestEquipments"));
             arrayListHashMap.put(ValdocDatabaseHandler.APLICABLE_TEST_EQUIPMENT_TABLE_NAME, applicableTestEquipmentsList);
 
+            //partner instrument data parsing
+            ArrayList partnerInstrumentsList = partnerInstrumentsData(jsonRootObject.optJSONArray("partnerInstruments"));
+            arrayListHashMap.put(ValdocDatabaseHandler.PARTNER_INSTRUMENT_TABLE_NAME, partnerInstrumentsList);
+
+            //partner data parsing
+            ArrayList partnerList = partnersData(jsonRootObject.optJSONArray("partners"));
+            arrayListHashMap.put(ValdocDatabaseHandler.PARTNERS_TABLE_NAME, partnerList);
+
+            SharedPreferences.Editor editor = sharedpreferences.edit();
+            editor.putString("lastSyncDate", jsonRootObject.optString("lastSyncDate"));
+            editor.commit();
 
         } catch (Exception e) {
 
         }
         return arrayListHashMap;
+    }
+
+
+    private ArrayList partnersData(JSONArray jsonArray) {
+        ArrayList arrayList = new ArrayList();
+        //Iterate the jsonArray and print the info of JSONObjects
+        for (int i = 0; i < jsonArray.length(); i++) {
+            Partners partners = new Partners();
+            try {
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                partners.setId(jsonObject.optInt("id"));
+                partners.setName(jsonObject.optString("name"));
+                partners.setPartnerCode(jsonObject.optString("partnerCode").toString());
+                partners.setStatus(jsonObject.optString("status").toString());
+                partners.setApprovedSince(jsonObject.optInt("approvedSince"));
+                partners.setAddress(jsonObject.optString("address").toString());
+                partners.setDirectorName(jsonObject.optString("directorName").toString());
+                partners.setDirectorEmail(jsonObject.optString("directorEmail").toString());
+                partners.setDirectorCellNo(jsonObject.optString("directorCellNo").toString());
+                partners.setRegEmail(jsonObject.optString("regEmail").toString());
+                partners.setRegCellNo(jsonObject.optString("regCellNo").toString());
+                partners.setServiceIncharge(jsonObject.optString("serviceIncharge").toString());
+                partners.setEmail(jsonObject.optString("email").toString());
+                partners.setCellNo(jsonObject.optString("cellNo").toString());
+                partners.setCreationDate(jsonObject.optString("createdDate").toString());
+                Log.d("valdoc", "parse partner");
+                arrayList.add(partners);
+            } catch (Exception e) {
+
+            }
+        }
+        return arrayList;
+    }
+
+    private ArrayList partnerInstrumentsData(JSONArray jsonArray) {
+        ArrayList arrayList = new ArrayList();
+        //Iterate the jsonArray and print the info of JSONObjects
+        for (int i = 0; i < jsonArray.length(); i++) {
+            PartnerInstrument partnerInstrument = new PartnerInstrument();
+            try {
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                partnerInstrument.setpInstrumentId(jsonObject.optInt("pInstrumentId"));
+                partnerInstrument.setPartnerId(jsonObject.optInt("partnerId"));
+                partnerInstrument.setpInstrumentName(jsonObject.optString("pInstrumentName").toString());
+                partnerInstrument.setMake(jsonObject.optString("make").toString());
+                partnerInstrument.setModel(jsonObject.optString("model").toString());
+                partnerInstrument.setLastCalibrated(jsonObject.optString("lastCalibrationDate").toString());
+                partnerInstrument.setCalibrationDueDate(jsonObject.optString("calibrationDueDate").toString());
+                partnerInstrument.setCurrentLocation(jsonObject.optString("currentLocation").toString());
+                partnerInstrument.setStatus(jsonObject.optString("status").toString());
+                partnerInstrument.setTestId(jsonObject.optInt("testId"));
+                partnerInstrument.setCreationDate(jsonObject.optString("createdDate").toString());
+                Log.d("valdoc", "parse partner");
+                arrayList.add(partnerInstrument);
+            } catch (Exception e) {
+
+            }
+        }
+        return arrayList;
     }
 
 
@@ -384,7 +510,8 @@ public class ValdocControler  {
 
                 user.setId(jsonObject.optInt("id"));
                 user.setName(jsonObject.optString("name").toString());
-                if (null != jsonObject.optString("partnerId").toString() || "".equals(jsonObject.optString("partnerId").toString())) {
+                user.setPartnerId(jsonObject.optInt("partnerId"));
+                if (0 == jsonObject.optInt("partnerId")) {
                     user.setType("CLIENT");
                 } else {
                     user.setType("PARTNER");
@@ -405,6 +532,6 @@ public class ValdocControler  {
     }
 
     public interface ControlerResponse {
-        public void controlerResult(HashMap<String, ArrayList> arrayListHashMap,String message);
+        public void controlerResult(HashMap<String, ArrayList> arrayListHashMap, String message);
     }
 }

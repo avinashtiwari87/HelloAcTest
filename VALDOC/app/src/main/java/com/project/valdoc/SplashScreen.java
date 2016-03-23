@@ -38,8 +38,8 @@ public class SplashScreen extends Activity {
         setContentView(R.layout.activity_splash_screen);
         sharedpreferences = getSharedPreferences("valdoc", Context.MODE_PRIVATE);
         // Execute some code after 2 seconds have passed
-        if (sharedpreferences.getBoolean("table", false) == false)
-            insertDataInTable();
+//        if (sharedpreferences.getBoolean("table", false) == false)
+//            insertDataInTable();
 
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {

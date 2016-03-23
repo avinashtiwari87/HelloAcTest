@@ -117,7 +117,6 @@ public class RDRCTUserEntryActivity extends AppCompatActivity {
 //    }
     private void datePicker() {
         // Get current date by calender
-
         final Calendar c = Calendar.getInstance();
         year = c.get(Calendar.YEAR);
         month = c.get(Calendar.MONTH);
@@ -135,7 +134,6 @@ public class RDRCTUserEntryActivity extends AppCompatActivity {
     protected Dialog onCreateDialog(int id) {
         switch (id) {
             case DATE_PICKER_ID:
-
                 // open datepicker dialog.
                 // set date picker for current date
                 // add pickerListener listner to date picker
@@ -150,7 +148,6 @@ public class RDRCTUserEntryActivity extends AppCompatActivity {
         @Override
         public void onDateSet(DatePicker view, int selectedYear,
                               int selectedMonth, int selectedDay) {
-
             year = selectedYear;
             month = selectedMonth;
             day = selectedDay;
@@ -168,14 +165,14 @@ public class RDRCTUserEntryActivity extends AppCompatActivity {
             instrumentUsed.setText(clientInstrument.getcInstrumentName());
             make.setText(clientInstrument.getMake());
             model.setText(clientInstrument.getModel());
-            instrumentSerialNo.setText(clientInstrument.getSerialNo());
+            instrumentSerialNo.setText(""+clientInstrument.getSerialNo());
             calibrationOn.setText(clientInstrument.getLastCalibrated());
             calibrationDueOn.setText(clientInstrument.getCalibrationDueDate());
         } else {
             instrumentUsed.setText(partnerInstrument.getpInstrumentName());
             make.setText(partnerInstrument.getMake());
             model.setText(partnerInstrument.getModel());
-            instrumentSerialNo.setText(partnerInstrument.getpInstrumentId());
+            instrumentSerialNo.setText(""+partnerInstrument.getpInstrumentId());
             calibrationOn.setText(partnerInstrument.getLastCalibrated());
             calibrationDueOn.setText(partnerInstrument.getCalibrationDueDate());
         }

@@ -1,4 +1,8 @@
 <resources>
+    <string name="name">Name</string>
+    <string name="designation">Designation</string>
+    <string name="contact_no">Contact No</string>
+    <string name="email_id">Email Id</string>
     <string name="app_name">VALDOC</string>
     <string name="action_settings">Settings</string>
     <!--Login screen-->
@@ -48,7 +52,7 @@
     <string name="details_of_specification_area">Details Of Specification And Area</string>
     <string name="test_specification">Test Spesification</string>
     <string name="test_specification_details">Required Air Velocity 90 fpm +/- 20%</string>
-    <string name="block_plant_name">Blocak/Plant Name</string>
+    <string name="block_plant_name">Blocak/Plant Name :</string>
     <string name="block_plant_details">FTO3</string>
     <string name="area_of_test_label">Area Of Test</string>
     <string name="area_of_test_label_details">Micro Bialogy Area</string>
@@ -139,14 +143,31 @@
     <string name="equipment_type_no"> Equipment\n /AHU No\n</string>
     <string name="no_of_location"> No. of\n Location\n </string>
     <string name="no_of_days_hrs"> No. of\n Days/Hrs\n </string>
-    <string name="avt_anemometer">Air Velocity Test with Anemometer</string>
     <string name="avt_ach">Air Flow Test with Air Capture Hood</string>
-    <string name="work_status">Work Status: Completed / Pending</string>
+    <string name="work_status">Work Status :</string>
     <string name="customer_remarks">Customer Remarks (if Any):</string>
     <string name="name_sign_team">Name &amp; Signature (Team)</string>
     <string name="notes">Note: Per day Charges is for 8 hrs only, beyound which next day charges will be applicable.</string>
     <string name="header_title6">*Recovery Test for Non-Unidirectional Airflow Installations*</string>
+    <string name="title_activity_service_report">ServiceReportActivity</string>
 
+
+    <!--Service report Data details-->
+    <string name="air_velocity">Air Velocity Test with Anemometer</string>
+    <string name="air_flow">Air Flow Test with Air Capture Hood</string>
+    <string name="hepa_filter">HEPA Filter Integrity Test (PAO/DOP)</string>
+    <string name="hepa_integrity">HEPA Filter Integrity Test with Thermal Generator</string>
+    <string name="non_viable_28">Non Viable Particle Coun Test (28.3 LPM)</string>
+    <string name="non_viable_50">Non Viable Particle Coun Test (50 LPM)</string>
+    <string name="non_viable_75">Non Viable Particle Coun Test (75 LPM)</string>
+    <string name="non_viable_100">Non Viable Particle Coun Test (100 LPM)</string>
+    <string name="area_recovery">Area Recovery Test</string>
+    <string name="air_visualization">Air Flow Visualization Test</string>
+    <string name="pressure">Pressure Differential Test</string>
+    <string name="air_pressure">Area Pressure Balancing</string>
+    <string name="temprature">Temperature &amp; RH Test</string>
+    <string name="light">Light Level Test</string>
+    <string name="sound">Sound Level Test</string>
 </resources>
 
 

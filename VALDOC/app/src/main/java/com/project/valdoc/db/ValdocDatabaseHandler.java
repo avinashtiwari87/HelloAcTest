@@ -18,8 +18,11 @@ import com.project.valdoc.intity.EquipmentFilter;
 import com.project.valdoc.intity.Grill;
 import com.project.valdoc.intity.PartnerInstrument;
 import com.project.valdoc.intity.PartnerUser;
+import com.project.valdoc.intity.Partners;
 import com.project.valdoc.intity.Room;
 import com.project.valdoc.intity.RoomFilter;
+import com.project.valdoc.intity.ServiceReport;
+import com.project.valdoc.intity.ServiceReportDetail;
 import com.project.valdoc.intity.TestDetails;
 import com.project.valdoc.intity.TestMaster;
 import com.project.valdoc.intity.TestReading;
@@ -163,7 +166,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
     // gril table create statment
     private static final String CREATE_TABLE_GRIL = "CREATE TABLE " + GRILL_TABLE_NAME
             + "(" + GRILL_GRILLID + " INTEGER," + GRILL_ROOMID + " INTEGER,"
-            + GRILL_GRILLCODE + " TEXT," + GRILL_LENGTH + " REAL," + GRILL_WIDTH + " REAL,"+GRILL_GRILLAREA+" REAL,"
+            + GRILL_GRILLCODE + " TEXT," + GRILL_LENGTH + " REAL," + GRILL_WIDTH + " REAL," + GRILL_GRILLAREA + " REAL,"
             + GRILL_EFFECTIVEAREA + " REAL," + GRILL_ISSUPPLYGRILL + " INTEGER," + GRILL_ADDITIONALDETAIL + " INTEGER,"
             + GRILL_CREATIONDATE + " TEXT " + ")";
 
@@ -297,13 +300,15 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
     public static final String USER_ACTIVE = "active";
     public static final String USER_DELETED = "deleted";
     public static final String USER_PASSWORD = "password";
+    public static final String USER_PARTNERID = "partnerId";
     public static final String USER_CREATIONDATE = "creationDate";
 
     // user table create statment
     private static final String CREATE_TABLE_USER = "CREATE TABLE " + USER_TABLE_NAME
             + "(" + USER_ID + " INTEGER," + USER_NAME + " TEXT,"
             + USER_TYPE + " REAL," + USER_EMAIL + " TEXT," + USER_CONTACT + " TEXT," + USER_DEPARTMENT + " TEXT,"
-            + USER_ACTIVE + " NUMERIC," + USER_DELETED + " NUMERIC," + USER_PASSWORD + " TEXT, " + USER_CREATIONDATE + " TEXT " + ")";
+            + USER_ACTIVE + " NUMERIC," + USER_DELETED + " NUMERIC," + USER_PASSWORD + " TEXT, " + USER_PARTNERID + " INTEGER,"
+            + USER_CREATIONDATE + " TEXT " + ")";
 
     //partner user table details
     public static final String PARTNERUSER_TABLE_NAME = "partneruser";
@@ -408,6 +413,83 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
             + "(" + TESTSPECIFICATIONVALUE_TEST_SPECIFIC_ID + " INTEGER," + TESTSPECIFICATIONVALUE_TEST_DETAIL_ID + " INTEGER,"
             + TESTSPECIFICATIONVALUE_FIELDNAME + " TEXT, " + TESTSPECIFICATIONVALUE_FIELDVALUE + " TEXT " + ")";
 
+    //service report table creation
+    public static final String SERVICE_REPORT_TABLE_NAME = "service_report";
+    public static final String SERVICE_REPORT_ID = "id";
+    public static final String SERVICE_REPORT_CUSTOMER = "customer";
+    public static final String SERVICE_REPORT_SERVICEENGINEER = "serviceEngineer";
+    public static final String SERVICE_REPORT_TIMEIN = "timeIn";
+    public static final String SERVICE_REPORT_TIMEOUT = "timeOut";
+    public static final String SERVICE_REPORT_SRNO = "srNo";
+    public static final String SERVICE_REPORT_CUSTOMERPO = "customerPO";
+    public static final String SERVICE_REPORT_PLANT = "plant";
+    public static final String SERVICE_REPORT_STATUS = "status";
+    public static final String SERVICE_REPORT_TESTERNAME = "testerName";
+    public static final String SERVICE_REPORT_WITNESSNAME = "witnessName";
+    public static final String SERVICE_REPORT_WITNESSCONTACT = "witnessContact";
+    public static final String SERVICE_REPORT_WITNESSMAIL = "witnessMail";
+    public static final String SERVICE_REPORT_PARTNERNAME = "partnerName";
+    public static final String SERVICE_REPORT_SERVICEDATE = "serviceDate";
+    public static final String SERVICE_REPORT_REMARK = "remark";
+    public static final String SERVICE_REPORT_WORKORDER = "workOrder";
+    public static final String SERVICE_REPORT_WITNESSDESIGNATION = "witnessDesignation";
+
+
+    // test specification table create statment
+    private static final String CREATE_TABLE_SERVICE_REPORT = "CREATE TABLE " + SERVICE_REPORT_TABLE_NAME
+            + "(" + SERVICE_REPORT_ID + " INTEGER," + SERVICE_REPORT_CUSTOMER + " TEXT,"
+            + SERVICE_REPORT_SERVICEENGINEER + " TEXT," + SERVICE_REPORT_TIMEIN + " TEXT, " + SERVICE_REPORT_TIMEOUT + " TEXT," + SERVICE_REPORT_SRNO + " TEXT,"
+            + SERVICE_REPORT_CUSTOMERPO + " TEXT," + SERVICE_REPORT_PLANT + " TEXT," + SERVICE_REPORT_STATUS + " TEXT," + SERVICE_REPORT_TESTERNAME + " TEXT," + SERVICE_REPORT_WITNESSNAME + " TEXT,"
+            + SERVICE_REPORT_WITNESSCONTACT + " TEXT," + SERVICE_REPORT_WITNESSMAIL + " TEXT," + SERVICE_REPORT_PARTNERNAME + " TEXT," + SERVICE_REPORT_SERVICEDATE + " TEXT,"
+            + SERVICE_REPORT_REMARK + " TEXT," + SERVICE_REPORT_WORKORDER + " TEXT," + SERVICE_REPORT_WITNESSDESIGNATION + " TEXT " + ")";
+
+    //service_report_detail table creation
+    public static final String SERVICE_REPORT_DETAIL_TABLE_NAME = "service_report_detail";
+    public static final String SERVICE_REPORT_DETAIL_ID = "id";
+    public static final String SERVICE_REPORT_DETAIL_SERVICE_REPORT_ID = "service_report_id";
+    public static final String SERVICE_REPORT_DETAIL_TYPEOFTEST = "typeOfTest";
+    public static final String SERVICE_REPORT_DETAIL_AREAOFTEST = "areaOfTest";
+    public static final String SERVICE_REPORT_DETAIL_EQUIPMENTAHUNO = "equipmentAhuNo";
+    public static final String SERVICE_REPORT_DETAIL_NOOFLOC = "NoOfLoc";
+    public static final String SERVICE_REPORT_DETAIL_NOOFHOURDAYS = "NoOfHourDays";
+
+
+    // service_report_detail table create statment
+    private static final String CREATE_TABLE_SERVICE_REPORT_DETAIL = "CREATE TABLE " + SERVICE_REPORT_DETAIL_TABLE_NAME
+            + "(" + SERVICE_REPORT_DETAIL_ID + " INTEGER," + SERVICE_REPORT_DETAIL_SERVICE_REPORT_ID + " INTEGER,"
+            + SERVICE_REPORT_DETAIL_TYPEOFTEST + " TEXT," + SERVICE_REPORT_DETAIL_AREAOFTEST + " TEXT, " + SERVICE_REPORT_DETAIL_EQUIPMENTAHUNO + " TEXT,"
+            + SERVICE_REPORT_DETAIL_NOOFLOC + " INTEGER,"
+            + SERVICE_REPORT_DETAIL_NOOFHOURDAYS + " REAL" + ")";
+
+    //partners table creation
+    public static final String PARTNERS_TABLE_NAME = "partners";
+    public static final String PARTNERS_ID = "id";
+    public static final String PARTNERS_NAME = "name";
+    public static final String PARTNERS_PARTNERCODE = "partnerCode";
+    public static final String PARTNERS_STATUS = "status";
+    public static final String PARTNERS_APPROVEDSINCE = "approvedSince";
+    public static final String PARTNERS_ADDRESS = "address";
+    public static final String PARTNERS_DIRECTORNAME = "directorName";
+
+    public static final String PARTNERS_DIRECTOREMAIL = "directorEmail";
+    public static final String PARTNERS_DIRECTORCELLNO = "directorCellNo";
+    public static final String PARTNERS_REGEMAIL = "regEmail";
+    public static final String PARTNERS_REGCELLNO = "regCellNo";
+    public static final String PARTNERS_SERVICEINCHARGE = "serviceIncharge";
+    public static final String PARTNERS_EMAIL = "email";
+    public static final String PARTNERS_CELLNO = "cellNo";
+    public static final String PARTNERS_CREATIONDATE = "creationDate";
+
+
+    // service_report_detail table create statment
+    private static final String CREATE_TABLE_PARTNERS = "CREATE TABLE " + PARTNERS_TABLE_NAME
+            + "(" + PARTNERS_ID + " INTEGER," + PARTNERS_PARTNERCODE + " TEXT,"
+            + PARTNERS_NAME + " TEXT," + PARTNERS_STATUS + " TEXT, " + PARTNERS_APPROVEDSINCE + " INTEGER,"
+            + PARTNERS_ADDRESS + " TEXT," + PARTNERS_DIRECTORNAME + " TEXT," + PARTNERS_DIRECTOREMAIL + " TEXT," + PARTNERS_DIRECTORCELLNO + " TEXT,"
+            + PARTNERS_REGEMAIL + " TEXT," + PARTNERS_REGCELLNO + " TEXT," + PARTNERS_SERVICEINCHARGE + " TEXT," + PARTNERS_EMAIL + " TEXT," + PARTNERS_CELLNO + " TEXT,"
+            + PARTNERS_CREATIONDATE + " TEXT" + ")";
+
+
     public ValdocDatabaseHandler(Context context) {
 
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -435,9 +517,102 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_TESTREADING);
         db.execSQL(CREATE_TABLE_TESTDETAILS);
         db.execSQL(CREATE_TABLE_TESTSPECIFICATIONVALUE);
+        db.execSQL(CREATE_TABLE_SERVICE_REPORT);
+        db.execSQL(CREATE_TABLE_SERVICE_REPORT_DETAIL);
+        db.execSQL(CREATE_TABLE_PARTNERS);
         Log.d("valdoc", "table created success fully");
     }
 
+
+    //insert daa in servicereportdetails table
+    public boolean insertPartners(String tableName, ArrayList<Partners> partnersArrayList) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        if (partnersArrayList.size() != 0) {
+            for (Partners partners : partnersArrayList) {
+                ContentValues contentValues = new ContentValues();
+                contentValues.put(PARTNERS_ID, partners.getId());
+                contentValues.put(PARTNERS_NAME, partners.getName());
+                contentValues.put(PARTNERS_PARTNERCODE, partners.getPartnerCode());
+                contentValues.put(PARTNERS_STATUS, partners.getStatus());
+                contentValues.put(PARTNERS_APPROVEDSINCE, partners.getApprovedSince());
+                contentValues.put(PARTNERS_ADDRESS, partners.getAddress());
+                contentValues.put(PARTNERS_DIRECTORNAME, partners.getDirectorName());
+
+                contentValues.put(PARTNERS_DIRECTOREMAIL, partners.getDirectorEmail());
+                contentValues.put(PARTNERS_DIRECTORCELLNO, partners.getDirectorCellNo());
+                contentValues.put(PARTNERS_REGEMAIL, partners.getRegEmail());
+                contentValues.put(PARTNERS_REGCELLNO, partners.getRegCellNo());
+                contentValues.put(PARTNERS_SERVICEINCHARGE, partners.getServiceIncharge());
+                contentValues.put(PARTNERS_EMAIL, partners.getEmail());
+                contentValues.put(PARTNERS_CELLNO, partners.getCellNo());
+                contentValues.put(PARTNERS_CREATIONDATE, partners.getCreationDate());
+                db.insert(tableName, null, contentValues);
+            }
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
+    //insert daa in servicereportdetails table
+    public boolean insertServiceReportDetails(String tableName, ArrayList<ServiceReportDetail> reportDetailArrayList) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        if (reportDetailArrayList.size() != 0) {
+            for (ServiceReportDetail serviceReportDetail : reportDetailArrayList) {
+                ContentValues contentValues = new ContentValues();
+                contentValues.put(SERVICE_REPORT_DETAIL_ID, serviceReportDetail.getId());
+                contentValues.put(SERVICE_REPORT_DETAIL_SERVICE_REPORT_ID, serviceReportDetail.getService_report_id());
+                contentValues.put(SERVICE_REPORT_DETAIL_TYPEOFTEST, serviceReportDetail.getTypeOfTest());
+                contentValues.put(SERVICE_REPORT_DETAIL_AREAOFTEST, serviceReportDetail.getAreaOfTest());
+
+                contentValues.put(SERVICE_REPORT_DETAIL_EQUIPMENTAHUNO, serviceReportDetail.getEquipmentAhuNo());
+                contentValues.put(SERVICE_REPORT_DETAIL_NOOFLOC, serviceReportDetail.getNoOfLoc());
+                contentValues.put(SERVICE_REPORT_DETAIL_NOOFHOURDAYS, serviceReportDetail.getNoOfHourDays());
+                db.insert(tableName, null, contentValues);
+            }
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    //insert daa in servicereport table
+    public boolean insertServiceReport(String tableName, ServiceReport serviceReport) {
+        SQLiteDatabase db = this.getWritableDatabase();
+//        if (serviceReportArrayList.size() != 0) {
+//            for (ServiceReport serviceReport : serviceReportArrayList) {
+                ContentValues contentValues = new ContentValues();
+                contentValues.put(SERVICE_REPORT_ID, serviceReport.getId());
+                contentValues.put(SERVICE_REPORT_CUSTOMER, serviceReport.getCustomer());
+                contentValues.put(SERVICE_REPORT_SERVICEENGINEER, serviceReport.getServiceEngineer());
+                contentValues.put(SERVICE_REPORT_TIMEIN, serviceReport.getTimeIn());
+
+                contentValues.put(SERVICE_REPORT_TIMEOUT, serviceReport.getTimeOut());
+                contentValues.put(SERVICE_REPORT_SRNO, serviceReport.getSrNo());
+                contentValues.put(SERVICE_REPORT_CUSTOMERPO, serviceReport.getCustomerPO());
+                contentValues.put(SERVICE_REPORT_PLANT, serviceReport.getPlant());
+
+                contentValues.put(SERVICE_REPORT_STATUS, serviceReport.getStatus());
+                contentValues.put(SERVICE_REPORT_TESTERNAME, serviceReport.getTesterName());
+                contentValues.put(SERVICE_REPORT_WITNESSNAME, serviceReport.getWitnessName());
+                contentValues.put(SERVICE_REPORT_WITNESSCONTACT, serviceReport.getWitnessContact());
+
+                contentValues.put(SERVICE_REPORT_WITNESSMAIL, serviceReport.getWitnessMail());
+                contentValues.put(SERVICE_REPORT_PARTNERNAME, serviceReport.getPartnerName());
+                contentValues.put(SERVICE_REPORT_SERVICEDATE, serviceReport.getServiceDate());
+                contentValues.put(SERVICE_REPORT_REMARK, serviceReport.getRemark());
+
+                contentValues.put(SERVICE_REPORT_WORKORDER, serviceReport.getWorkOrder());
+                contentValues.put(SERVICE_REPORT_WITNESSDESIGNATION, serviceReport.getWitnessDesignation());
+                db.insert(tableName, null, contentValues);
+//            }
+//            return true;
+//        } else {
+//            return false;
+//        }
+        return true;
+    }
 
     //insert daa in testreading table
     public boolean insertTestReading(String tableName, ArrayList<TestReading> readingArrayList) {
@@ -521,7 +696,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
             for (Ahu ahu : ahuArrayList) {
                 ContentValues contentValues = new ContentValues();
                 contentValues.put(AHU_AHUID, ahu.getAhuId());
-                contentValues.put(AHU_AHUNO,ahu.getAhuNo());
+                contentValues.put(AHU_AHUNO, ahu.getAhuNo());
                 contentValues.put(AHU_AHUTYPE, ahu.getAhuType());
                 contentValues.put(AHU_CAPACITY, ahu.getCapacity());
                 contentValues.put(AHU_RETURNAIRCFM, ahu.getReturnAirCFM());
@@ -648,7 +823,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 contentValues.put(GRILL_ROOMID, grill.getRoomId());
                 contentValues.put(GRILL_LENGTH, grill.getLength());
                 contentValues.put(GRILL_WIDTH, grill.getWidh());
-                contentValues.put(GRILL_GRILLAREA,grill.getGrillArea());
+                contentValues.put(GRILL_GRILLAREA, grill.getGrillArea());
                 contentValues.put(GRILL_EFFECTIVEAREA, grill.getEffectiveArea());
                 contentValues.put(GRILL_ISSUPPLYGRILL, grill.getIsSupplyGrill());
                 contentValues.put(GRILL_ADDITIONALDETAIL, grill.getAdditionalDetail());
@@ -663,6 +838,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
 
     // insert datain PartnerInstrument table
     public boolean insertPartnerInstrument(String tableName, List<PartnerInstrument> partnerInstrumentList) {
+        Log.d("VALDOC", "controler response data  13=inserting=partnerInstrumentList=" + partnerInstrumentList.size());
         SQLiteDatabase db = this.getWritableDatabase();
         if (partnerInstrumentList.size() != 0) {
             for (PartnerInstrument partnerInstrument : partnerInstrumentList) {
@@ -678,6 +854,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 contentValues.put(PARTNER_INSTRUMENT_STATUS, partnerInstrument.getStatus());
                 contentValues.put(PARTNER_INSTRUMENT_TESTID, partnerInstrument.getTestId());
                 contentValues.put(PARTNER_INSTRUMENT_CREATIONDATE, partnerInstrument.getCreationDate());
+                Log.d("VALDOC", "controler response data  13=inserting=");
                 db.insert(tableName, null, contentValues);
             }
             return true;
@@ -786,7 +963,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         if (userList.size() != 0) {
             for (User user : userList) {
-                Log.d("valdoc", "insert user Login method :"+user.getName()+"\n"+user.getId());
+                Log.d("valdoc", "insert user Login method :" + user.getName() + "\n" + user.getId());
                 ContentValues contentValues = new ContentValues();
                 contentValues.put(USER_ID, user.getId());
                 contentValues.put(USER_NAME, user.getName());
@@ -797,6 +974,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 contentValues.put(USER_ACTIVE, user.getActive());
                 contentValues.put(USER_DELETED, user.getDeleted());
                 contentValues.put(USER_PASSWORD, user.getPassword());
+                contentValues.put(USER_PARTNERID, user.getPartnerId());
                 contentValues.put(USER_CREATIONDATE, user.getCreationDate());
                 db.insert(tableName, null, contentValues);
             }
@@ -882,6 +1060,8 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 user.setActive(Integer.parseInt(cursor.getString(6)));
                 user.setDeleted(Integer.parseInt(cursor.getString(7)));
                 user.setPassword(cursor.getString(8));
+                user.setPartnerId(cursor.getInt(9));
+                user.setCreationDate(cursor.getString(10));
                 Log.d("valdoc", "Login method :" + user.getName() + "\n" + user.getPassword());
                 userArrayList.add(user);
             } while (cursor.moveToNext());
@@ -918,11 +1098,11 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
     }
 
     // select data from partnerInstrument table
-    public ArrayList<PartnerInstrument> getPartnerInstrumentInfo(String partnerId) {
+    public ArrayList<PartnerInstrument> getPartnerInstrumentInfo(int partnerId) {
         ArrayList<PartnerInstrument> partnerInstrumentArrayList;
         partnerInstrumentArrayList = new ArrayList<PartnerInstrument>();
-        String selectQuery = "SELECT * FROM " + PARTNER_INSTRUMENT_TABLE_NAME +
-                " WHERE " + ValdocDatabaseHandler.PARTNER_INSTRUMENT_PARTNERID + " = " + partnerId;
+        String selectQuery = "SELECT * FROM " + PARTNER_INSTRUMENT_TABLE_NAME;
+//                " WHERE " + ValdocDatabaseHandler.PARTNER_INSTRUMENT_PARTNERID + " = " + partnerId;
         SQLiteDatabase database = this.getWritableDatabase();
         Cursor cursor = database.rawQuery(selectQuery, null);
         if (cursor.moveToFirst()) {
@@ -939,6 +1119,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 partnerInstrument.setStatus(cursor.getString(8));
                 partnerInstrument.setTestId(cursor.getInt(9));
                 partnerInstrument.setCreationDate(cursor.getString(10));
+                Log.d("valdoc", "partnerInstrument" + partnerInstrument.getpInstrumentId());
                 partnerInstrumentArrayList.add(partnerInstrument);
             } while (cursor.moveToNext());
         } // return contact list return wordList; }
@@ -999,6 +1180,23 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
     }
 
     // select data from user table
+    public ArrayList<String> getAhuNameInfo() {
+        ArrayList<String> arrayList;
+        arrayList = new ArrayList<String>();
+        String selectQuery = "SELECT " + AHU_AHUTYPE + " FROM " + AHU_TABLE_NAME;
+        SQLiteDatabase database = this.getWritableDatabase();
+        Cursor cursor = database.rawQuery(selectQuery, null);
+        String strings = "";
+        if (cursor.moveToFirst()) {
+            do {
+                strings = cursor.getString(cursor.getColumnIndex(AHU_AHUTYPE));
+                arrayList.add(strings);
+            } while (cursor.moveToNext());
+        } // return contact list return wordList; }
+        return arrayList;
+    }
+
+    // select data from user table
     public ArrayList<Equipment> getEquipmentInfo() {
         ArrayList<Equipment> equipmentArrayList;
         equipmentArrayList = new ArrayList<Equipment>();
@@ -1024,12 +1222,28 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
         return equipmentArrayList;
     }
 
+    // select data from user table
+    public ArrayList<String> getEquipmentNameInfo() {
+        ArrayList<String> arrayList;
+        arrayList = new ArrayList<String>();
+        String selectQuery = "SELECT " + EQUIPMENT_EQUIPMENTNAME + " FROM " + EQUIPMENT_TABLE_NAME;
+        SQLiteDatabase database = this.getWritableDatabase();
+        Cursor cursor = database.rawQuery(selectQuery, null);
+        String strings = "";
+        if (cursor.moveToFirst()) {
+            do {
+                strings = cursor.getString(cursor.getColumnIndex(EQUIPMENT_EQUIPMENTNAME));
+                arrayList.add(strings);
+            } while (cursor.moveToNext());
+        } // return contact list return wordList; }
+        return arrayList;
+    }
 
     // select data from test reading table
     public JSONArray getTestReadingInfo() {
-        JSONArray  testReadingJsonArray;
+        JSONArray testReadingJsonArray;
         testReadingJsonArray = new JSONArray();
-        String selectQuery = "SELECT * FROM " + CREATE_TABLE_TESTREADING;
+        String selectQuery = "SELECT * FROM " + TESTREADING_TABLE_NAME;
         SQLiteDatabase database = this.getWritableDatabase();
         Cursor cursor = database.rawQuery(selectQuery, null);
         if (cursor.moveToFirst()) {
@@ -1041,7 +1255,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                     jsonObject.put(TESTREADING_ENTITYNAME, cursor.getString(2));
                     jsonObject.put(TESTREADING_VALUE, cursor.getString(3));
                     testReadingJsonArray.put(jsonObject);
-                }catch (Exception e){
+                } catch (Exception e) {
 
                 }
             } while (cursor.moveToNext());
@@ -1052,7 +1266,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
 
     // select data from test details table
     public JSONArray getTestDetailsInfo() {
-        JSONArray  testDetailsJsonArray;
+        JSONArray testDetailsJsonArray;
         testDetailsJsonArray = new JSONArray();
         String selectQuery = "SELECT * FROM " + TEST_DETAILS_TABLE_NAME;
         SQLiteDatabase database = this.getWritableDatabase();
@@ -1062,34 +1276,35 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 try {
                     JSONObject jsonObject = new JSONObject();
                     jsonObject.put(TEST_DETAILS_TEST_DETAIL_ID, cursor.getInt(0));
-                    jsonObject.put(TEST_DETAILS_TESTNAME, cursor.getInt(1));
+                    jsonObject.put(TEST_DETAILS_TESTNAME, cursor.getString(1));
                     jsonObject.put(TEST_DETAILS_CUSTOMER, cursor.getString(2));
                     jsonObject.put(TEST_DETAILS_RAWDATANO, cursor.getString(3));
 
                     jsonObject.put(TEST_DETAILS_DATEOFTEST, cursor.getInt(4));
-                    jsonObject.put(TEST_DETAILS_INSTRUMENTUSED, cursor.getInt(5));
+                    jsonObject.put(TEST_DETAILS_INSTRUMENTUSED, cursor.getString(5));
                     jsonObject.put(TEST_DETAILS_INSTRUMENTNO, cursor.getString(6));
                     jsonObject.put(TEST_DETAILS_MAKE, cursor.getString(7));
-                    jsonObject.put(TEST_DETAILS_MODEL, cursor.getInt(8));
-                    jsonObject.put(TEST_DETAILS_CALIBRATEDON, cursor.getInt(9));
+                    jsonObject.put(TEST_DETAILS_MODEL, cursor.getString(8));
+                    jsonObject.put(TEST_DETAILS_CALIBRATEDON, cursor.getString(9));
                     jsonObject.put(TEST_DETAILS_CALIBRATEDDUEON, cursor.getString(10));
                     jsonObject.put(TEST_DETAILS_TESTSPECIFICATION, cursor.getString(11));
-                    jsonObject.put(TEST_DETAILS_TEST_TESTREFERENCE, cursor.getInt(12));
-                    jsonObject.put(TEST_DETAILS_OCCUPENCYSTATE, cursor.getInt(13));
+                    jsonObject.put(TEST_DETAILS_TEST_TESTREFERENCE, cursor.getString(12));
+                    jsonObject.put(TEST_DETAILS_OCCUPENCYSTATE, cursor.getString(13));
                     jsonObject.put(TEST_DETAILS_BLOCKNAME, cursor.getString(14));
                     jsonObject.put(TEST_DETAILS_TESTAREA, cursor.getString(15));
 
                     jsonObject.put(TEST_DETAILS_AHUNO, cursor.getString(16));
-                    jsonObject.put(TEST_DETAILS_ROOMNO, cursor.getInt(17));
-                    jsonObject.put(TEST_DETAILS_ROOMNAME, cursor.getInt(18));
+                    jsonObject.put(TEST_DETAILS_ROOMNO, cursor.getString(17));
+                    jsonObject.put(TEST_DETAILS_ROOMNAME, cursor.getString(18));
                     jsonObject.put(TEST_DETAILS_EQUIPMENTNO, cursor.getString(19));
                     jsonObject.put(TEST_DETAILS_EQUIPMENTNAME, cursor.getString(20));
 
-                    jsonObject.put(TEST_DETAILS_TESTERNAME, cursor.getInt(21));
-                    jsonObject.put(TEST_DETAILS_WITNESSNAME, cursor.getInt(22));
+                    jsonObject.put(TEST_DETAILS_TESTERNAME, cursor.getString(21));
+                    jsonObject.put(TEST_DETAILS_WITNESSNAME, cursor.getString(22));
                     jsonObject.put(TEST_DETAILS_PARTNERNAME, cursor.getString(23));
+                    Log.d("getCertificateData", "test details=" + jsonObject.toString());
                     testDetailsJsonArray.put(jsonObject);
-                }catch (Exception e){
+                } catch (Exception e) {
 
                 }
             } while (cursor.moveToNext());
@@ -1099,7 +1314,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
 
     // select data from test spesification value table
     public JSONArray getTestSpecificationValueInfo() {
-        JSONArray  testSpecificationValueJsonArray;
+        JSONArray testSpecificationValueJsonArray;
         testSpecificationValueJsonArray = new JSONArray();
         String selectQuery = "SELECT * FROM " + TESTSPECIFICATIONVALUE_TABLE_NAME;
         SQLiteDatabase database = this.getWritableDatabase();
@@ -1113,13 +1328,81 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                     jsonObject.put(TESTSPECIFICATIONVALUE_FIELDNAME, cursor.getString(2));
                     jsonObject.put(TESTSPECIFICATIONVALUE_FIELDVALUE, cursor.getString(3));
                     testSpecificationValueJsonArray.put(jsonObject);
-                }catch (Exception e){
+                } catch (Exception e) {
 
                 }
             } while (cursor.moveToNext());
         } // return contact list return wordList; }
         return testSpecificationValueJsonArray;
     }
+
+    // select data from ServiceReport table
+    public JSONArray getServiceReport() {
+        JSONArray serviceReportJsonArray;
+        serviceReportJsonArray = new JSONArray();
+        String selectQuery = "SELECT * FROM " + SERVICE_REPORT_TABLE_NAME;
+        SQLiteDatabase database = this.getWritableDatabase();
+        Cursor cursor = database.rawQuery(selectQuery, null);
+        if (cursor.moveToFirst()) {
+            do {
+                try {
+                    JSONObject jsonObject = new JSONObject();
+                    jsonObject.put(SERVICE_REPORT_ID, cursor.getInt(0));
+                    jsonObject.put(SERVICE_REPORT_CUSTOMER, cursor.getString(1));
+                    jsonObject.put(SERVICE_REPORT_SERVICEENGINEER, cursor.getString(2));
+                    jsonObject.put(SERVICE_REPORT_TIMEIN, cursor.getString(3));
+                    jsonObject.put(SERVICE_REPORT_TIMEOUT, cursor.getString(4));
+                    jsonObject.put(SERVICE_REPORT_SRNO, cursor.getString(5));
+                    jsonObject.put(SERVICE_REPORT_CUSTOMERPO, cursor.getString(6));
+                    jsonObject.put(SERVICE_REPORT_PLANT, cursor.getString(7));
+                    jsonObject.put(SERVICE_REPORT_STATUS, cursor.getString(8));
+                    jsonObject.put(SERVICE_REPORT_TESTERNAME, cursor.getString(9));
+
+                    jsonObject.put(SERVICE_REPORT_WITNESSNAME, cursor.getString(10));
+                    jsonObject.put(SERVICE_REPORT_WITNESSCONTACT, cursor.getString(11));
+                    jsonObject.put(SERVICE_REPORT_WITNESSMAIL, cursor.getString(12));
+                    jsonObject.put(SERVICE_REPORT_PARTNERNAME, cursor.getString(13));
+                    jsonObject.put(SERVICE_REPORT_SERVICEDATE, cursor.getString(14));
+                    jsonObject.put(SERVICE_REPORT_REMARK, cursor.getString(15));
+
+                    jsonObject.put(SERVICE_REPORT_WORKORDER, cursor.getString(16));
+                    jsonObject.put(SERVICE_REPORT_WITNESSDESIGNATION, cursor.getString(17));
+                    serviceReportJsonArray.put(jsonObject);
+                } catch (Exception e) {
+
+                }
+            } while (cursor.moveToNext());
+        } // return contact list return wordList; }
+        return serviceReportJsonArray;
+    }
+
+    // select data from ServiceReport Details table
+    public JSONArray getServiceReportDetailsInfo() {
+        JSONArray serviceReportJsonArray;
+        serviceReportJsonArray = new JSONArray();
+        String selectQuery = "SELECT * FROM " + SERVICE_REPORT_DETAIL_TABLE_NAME;
+        SQLiteDatabase database = this.getWritableDatabase();
+        Cursor cursor = database.rawQuery(selectQuery, null);
+        if (cursor.moveToFirst()) {
+            do {
+                try {
+                    JSONObject jsonObject = new JSONObject();
+                    jsonObject.put(SERVICE_REPORT_DETAIL_ID, cursor.getInt(0));
+                    jsonObject.put(SERVICE_REPORT_DETAIL_SERVICE_REPORT_ID, cursor.getInt(1));
+                    jsonObject.put(SERVICE_REPORT_DETAIL_TYPEOFTEST, cursor.getString(2));
+                    jsonObject.put(SERVICE_REPORT_DETAIL_AREAOFTEST, cursor.getString(3));
+                    jsonObject.put(SERVICE_REPORT_DETAIL_EQUIPMENTAHUNO, cursor.getString(4));
+                    jsonObject.put(SERVICE_REPORT_DETAIL_NOOFLOC, cursor.getInt(5));
+                    jsonObject.put(SERVICE_REPORT_DETAIL_NOOFHOURDAYS, cursor.getString(6));
+                    serviceReportJsonArray.put(jsonObject);
+                } catch (Exception e) {
+
+                }
+            } while (cursor.moveToNext());
+        } // return ServiceReportDetail list return
+        return serviceReportJsonArray;
+    }
+
 
     // select data from room table
     public String[] getRoomByEquipment(int roomId) {
@@ -1137,6 +1420,24 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
             } while (cursor.moveToNext());
         } // return contact list return wordList; }
         return strings;
+    }
+
+    // select data from area table
+    public ArrayList<String> getAreaName() {
+        ArrayList<String> arrayList = new ArrayList<String>();
+        String selectQuery = " SELECT " + AREA_AREANAME + " FROM " + AREA_TABLE_NAME;
+//        String selectQuery = " SELECT * FROM " + PARTNERUSER_TABLE_NAME +
+//                " WHERE " + ValdocDatabaseHandler.AREA_AREAID + " = " + areaId;
+        SQLiteDatabase database = this.getWritableDatabase();
+        Cursor cursor = database.rawQuery(selectQuery, null);
+        String strings = "";
+        if (cursor.moveToFirst()) {
+            do {
+                strings = cursor.getString(cursor.getColumnIndex(AREA_AREANAME));
+                arrayList.add(strings);
+            } while (cursor.moveToNext());
+        } // return contact list return wordList; }
+        return arrayList;
     }
 
     // select data from area table
@@ -1328,6 +1629,20 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
         return applicableTestEquipmentArrayList;
     }
 
+    // select name data from partners table
+    public String getPartnerNameInfo(int partnerId) {
+        String name = "";
+        String selectQuery = "SELECT" + PARTNERS_NAME + " FROM " + PARTNERS_TABLE_NAME +
+                " WHERE " + ValdocDatabaseHandler.PARTNERS_ID + " = " + partnerId;
+        SQLiteDatabase database = this.getWritableDatabase();
+        Cursor cursor = database.rawQuery(selectQuery, null);
+        if (cursor.moveToFirst()) {
+            do {
+                name = cursor.getString(cursor.getColumnIndex(PARTNERS_NAME));
+            } while (cursor.moveToNext());
+        } // return contact list return wordList; }
+        return name;
+    }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
