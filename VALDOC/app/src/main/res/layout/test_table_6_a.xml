@@ -158,16 +158,17 @@
                                 android:layout_width="wrap_content"
                                 android:background="@drawable/border"
                                 android:layout_height="wrap_content"
-                                android:text=" Final Reading "
+                                android:text="Final Reading"
                                 android:textSize="20sp"
                                 android:textColor="@color/black"
                                 android:ems="10"/>
 
-                            <TextView
+                            <EditText
                                 android:id="@+id/test6_final_reading_value_tv"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text=" "
+                                android:inputType="number"
                                 android:textSize="20sp"
                                 android:background="@drawable/border"
                                 android:textColor="@color/black"

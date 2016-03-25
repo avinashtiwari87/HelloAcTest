@@ -350,7 +350,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
 
     //test reading table details
     public static final String TESTREADING_TABLE_NAME = "testreading";
-    public static final String TESTREADING_TESTREADINGID = "testReadingID";
+    public static final String TESTREADING_TESTREADINGID = "testReadingId";
     public static final String TESTREADING_TEST_DETAIL_ID = "test_detail_id";
     public static final String TESTREADING_ENTITYNAME = "entityName";
     public static final String TESTREADING_VALUE = "value";
@@ -582,30 +582,30 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
 //        if (serviceReportArrayList.size() != 0) {
 //            for (ServiceReport serviceReport : serviceReportArrayList) {
-                ContentValues contentValues = new ContentValues();
-                contentValues.put(SERVICE_REPORT_ID, serviceReport.getId());
-                contentValues.put(SERVICE_REPORT_CUSTOMER, serviceReport.getCustomer());
-                contentValues.put(SERVICE_REPORT_SERVICEENGINEER, serviceReport.getServiceEngineer());
-                contentValues.put(SERVICE_REPORT_TIMEIN, serviceReport.getTimeIn());
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(SERVICE_REPORT_ID, serviceReport.getId());
+        contentValues.put(SERVICE_REPORT_CUSTOMER, serviceReport.getCustomer());
+        contentValues.put(SERVICE_REPORT_SERVICEENGINEER, serviceReport.getServiceEngineer());
+        contentValues.put(SERVICE_REPORT_TIMEIN, serviceReport.getTimeIn());
 
-                contentValues.put(SERVICE_REPORT_TIMEOUT, serviceReport.getTimeOut());
-                contentValues.put(SERVICE_REPORT_SRNO, serviceReport.getSrNo());
-                contentValues.put(SERVICE_REPORT_CUSTOMERPO, serviceReport.getCustomerPO());
-                contentValues.put(SERVICE_REPORT_PLANT, serviceReport.getPlant());
+        contentValues.put(SERVICE_REPORT_TIMEOUT, serviceReport.getTimeOut());
+        contentValues.put(SERVICE_REPORT_SRNO, serviceReport.getSrNo());
+        contentValues.put(SERVICE_REPORT_CUSTOMERPO, serviceReport.getCustomerPO());
+        contentValues.put(SERVICE_REPORT_PLANT, serviceReport.getPlant());
 
-                contentValues.put(SERVICE_REPORT_STATUS, serviceReport.getStatus());
-                contentValues.put(SERVICE_REPORT_TESTERNAME, serviceReport.getTesterName());
-                contentValues.put(SERVICE_REPORT_WITNESSNAME, serviceReport.getWitnessName());
-                contentValues.put(SERVICE_REPORT_WITNESSCONTACT, serviceReport.getWitnessContact());
+        contentValues.put(SERVICE_REPORT_STATUS, serviceReport.getStatus());
+        contentValues.put(SERVICE_REPORT_TESTERNAME, serviceReport.getTesterName());
+        contentValues.put(SERVICE_REPORT_WITNESSNAME, serviceReport.getWitnessName());
+        contentValues.put(SERVICE_REPORT_WITNESSCONTACT, serviceReport.getWitnessContact());
 
-                contentValues.put(SERVICE_REPORT_WITNESSMAIL, serviceReport.getWitnessMail());
-                contentValues.put(SERVICE_REPORT_PARTNERNAME, serviceReport.getPartnerName());
-                contentValues.put(SERVICE_REPORT_SERVICEDATE, serviceReport.getServiceDate());
-                contentValues.put(SERVICE_REPORT_REMARK, serviceReport.getRemark());
+        contentValues.put(SERVICE_REPORT_WITNESSMAIL, serviceReport.getWitnessMail());
+        contentValues.put(SERVICE_REPORT_PARTNERNAME, serviceReport.getPartnerName());
+        contentValues.put(SERVICE_REPORT_SERVICEDATE, serviceReport.getServiceDate());
+        contentValues.put(SERVICE_REPORT_REMARK, serviceReport.getRemark());
 
-                contentValues.put(SERVICE_REPORT_WORKORDER, serviceReport.getWorkOrder());
-                contentValues.put(SERVICE_REPORT_WITNESSDESIGNATION, serviceReport.getWitnessDesignation());
-                db.insert(tableName, null, contentValues);
+        contentValues.put(SERVICE_REPORT_WORKORDER, serviceReport.getWorkOrder());
+        contentValues.put(SERVICE_REPORT_WITNESSDESIGNATION, serviceReport.getWitnessDesignation());
+        db.insert(tableName, null, contentValues);
 //            }
 //            return true;
 //        } else {
@@ -1632,7 +1632,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
     // select name data from partners table
     public String getPartnerNameInfo(int partnerId) {
         String name = "";
-        String selectQuery = "SELECT" + PARTNERS_NAME + " FROM " + PARTNERS_TABLE_NAME +
+        String selectQuery = "SELECT " + PARTNERS_NAME + " FROM " + PARTNERS_TABLE_NAME +
                 " WHERE " + ValdocDatabaseHandler.PARTNERS_ID + " = " + partnerId;
         SQLiteDatabase database = this.getWritableDatabase();
         Cursor cursor = database.rawQuery(selectQuery, null);

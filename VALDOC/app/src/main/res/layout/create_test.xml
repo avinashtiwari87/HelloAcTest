@@ -47,7 +47,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
-                android:background="@color/light_gray"/>
+                android:background="@color/light_gray" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -66,14 +66,15 @@
 
             <EditText
                 android:id="@+id/witnessfirst"
-                android:nextFocusDown="@+id/witnesssecond"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:imeOptions="actionNext"
                 android:layout_toRightOf="@+id/witness1"
-                android:hint="@string/test_witness_hint">
-                <requestFocus/>
-                </EditText>
+                android:hint="@string/test_witness_hint"
+                android:imeOptions="actionNext"
+                android:nextFocusDown="@+id/witnesssecond">
+
+                <requestFocus />
+            </EditText>
         </RelativeLayout>
 
         <RelativeLayout
@@ -91,12 +92,12 @@
 
             <EditText
                 android:id="@+id/witnesssecond"
-                android:nextFocusDown="@+id/witnessthird"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:imeOptions="actionNext"
                 android:layout_toRightOf="@+id/witness2"
-                android:hint="@string/test_witness_hint" />
+                android:hint="@string/test_witness_hint"
+                android:imeOptions="actionNext"
+                android:nextFocusDown="@+id/witnessthird" />
         </RelativeLayout>
 
 
@@ -117,12 +118,11 @@
                 android:id="@+id/witnessthird"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:imeOptions="actionDone"
+                android:layout_toRightOf="@+id/witness3"
                 android:focusable="true"
                 android:focusableInTouchMode="true"
-                android:layout_toRightOf="@+id/witness3"
-                android:hint="@string/test_witness_hint" >
-                </EditText>
+                android:hint="@string/test_witness_hint"
+                android:imeOptions="actionDone"></EditText>
         </RelativeLayout>
 
 
@@ -136,7 +136,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:background="@color/light_gray"/>
+                android:background="@color/light_gray" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -178,7 +178,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:background="@color/light_gray"
-                android:visibility="gone"/>
+                android:visibility="gone" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -205,8 +205,12 @@
                 android:id="@+id/submit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@color/colorPrimary"
-                android:text="@string/test_selection_submit" />
+                android:background="@drawable/btn_gree"
+                android:padding="10dp"
+                android:text="@string/test_selection_submit"
+                android:textColor="@color/white"
+                android:textSize="@dimen/header_normal_text_size"
+                android:textStyle="bold" />
         </RelativeLayout>
     </LinearLayout>
 

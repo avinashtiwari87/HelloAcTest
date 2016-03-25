@@ -26,6 +26,7 @@ import com.project.valdoc.intity.TestDetails;
 import com.project.valdoc.intity.TestReading;
 import com.project.valdoc.intity.TestSpesificationValue;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -77,6 +78,7 @@ public class RDPC3UserEntryActivity extends AppCompatActivity {
     private TextView equipmentNoText;
     private TextView equipmentName;
     private TextView equipmentNo;
+    private TextView infarance;
     private TextView testCundoctor;
     private TextView testWitness;
     private TextView dateTextView;
@@ -88,6 +90,7 @@ public class RDPC3UserEntryActivity extends AppCompatActivity {
     private TextView instrumentUsedTextView;
     private TextView testCunductedByTextView;
     ArrayList<TextView> txtViewList;
+    private String mPartnerName;
     private Button submit;
     private Button clear;
     private Button cancel;
@@ -144,6 +147,7 @@ public class RDPC3UserEntryActivity extends AppCompatActivity {
             tvl.setText(averageResultHashMap.get(tvl.getId()) + "");
         }
 
+        infarance.setText("The Above Particle Count Test results confirms to ISO class 8");
         meanValue1 = getIntent().getLongExtra("meanValue1", 0l);
         meanValue2 = getIntent().getLongExtra("meanValue2", 0l);
         stdDev1 = getIntent().getDoubleExtra("stdDev1", 0.0);
@@ -158,8 +162,6 @@ public class RDPC3UserEntryActivity extends AppCompatActivity {
         txtView3.setText(stdDev1 + "");
         TextView txtView4 = RDPC3TxtList2.get(1);
         txtView4.setText(stdDev2 + "");
-
-
     }
 
     private void datePicker() {
@@ -169,12 +171,22 @@ public class RDPC3UserEntryActivity extends AppCompatActivity {
         month = c.get(Calendar.MONTH);
         day = c.get(Calendar.DAY_OF_MONTH);
 
-        // Show current date
 
-        dateTextView.setText(new StringBuilder()
-                // Month is 0 based, just add 1
-                .append(month + 1).append("-").append(day).append("-")
-                .append(year).append(" "));
+        //raw data no
+        SimpleDateFormat df = new SimpleDateFormat("HH:mm:ss");
+        String formattedDate = df.format(c.getTime());
+// Now formattedDate have current date/time
+        Toast.makeText(this, formattedDate, Toast.LENGTH_SHORT).show();
+        int mon = month + 1;
+        certificateNo.setText("C3/" + mon + "/" + year + "/" + formattedDate);
+
+        // Show current date
+        String date = new StringBuilder().append(year).append("-").append(month + 1).append("-").append(day).append(" ").toString();
+        dateTextView.setText(date);
+//        new StringBuilder()
+//                // Month is 0 based, just add 1
+//                .append(year).append("-").append(month + 1).append("-")
+//                .append(day).append(" "));
     }
 
     @Override
@@ -202,9 +214,11 @@ public class RDPC3UserEntryActivity extends AppCompatActivity {
             day = selectedDay;
 
             // Show selected date
-            dateTextView.setText(new StringBuilder().append(month + 1)
-                    .append("-").append(day).append("-").append(year)
-                    .append(" "));
+            String date = new StringBuilder().append(year).append("-").append(month + 1).append("-").append(day).append(" ").toString();
+            dateTextView.setText(date);
+//            new StringBuilder().append(year)
+//                    .append("-").append(month + 1).append("-").append(day)
+//                    .append(" "));
 
         }
     };
@@ -214,19 +228,19 @@ public class RDPC3UserEntryActivity extends AppCompatActivity {
             instrumentUsed.setText(clientInstrument.getcInstrumentName());
             make.setText(clientInstrument.getMake());
             model.setText(clientInstrument.getModel());
-            instrumentSerialNo.setText(""+clientInstrument.getSerialNo());
+            instrumentSerialNo.setText("" + clientInstrument.getSerialNo());
             calibrationOn.setText(clientInstrument.getLastCalibrated());
             calibrationDueOn.setText(clientInstrument.getCalibrationDueDate());
         } else {
             instrumentUsed.setText(partnerInstrument.getpInstrumentName());
             make.setText(partnerInstrument.getMake());
             model.setText(partnerInstrument.getModel());
-            instrumentSerialNo.setText(""+partnerInstrument.getpInstrumentId());
+            instrumentSerialNo.setText("" + partnerInstrument.getpInstrumentId());
             calibrationOn.setText(partnerInstrument.getLastCalibrated());
             calibrationDueOn.setText(partnerInstrument.getCalibrationDueDate());
         }
 
-        testSpecification.setText("" + room.getAcphNLT());
+        testSpecification.setText("ISO Class 8 " + room.getAcphNLT());
 //                plantName
         areaOfTest.setText(areaName);
         roomName.setText(room.getRoomName());
@@ -278,6 +292,7 @@ public class RDPC3UserEntryActivity extends AppCompatActivity {
         equipmentNoText = (TextView) findViewById(R.id.equipment_no_text);
         equipmentName = (TextView) findViewById(R.id.equipmentname);
         equipmentNo = (TextView) findViewById(R.id.equipmentno);
+        infarance = (TextView) findViewById(R.id.infarance);
         testCundoctor = (TextView) findViewById(R.id.testcunducter);
         testWitness = (TextView) findViewById(R.id.testwitness);
         submit = (Button) findViewById(R.id.submit);
@@ -295,24 +310,24 @@ public class RDPC3UserEntryActivity extends AppCompatActivity {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                if (mValdocDatabaseHandler.insertTestDetails(ValdocDatabaseHandler.TEST_DETAILS_TABLE_NAME, testDetailsDataCreation())) {
-//                    if (mValdocDatabaseHandler.insertTestReading(ValdocDatabaseHandler.TESTREADING_TABLE_NAME, testReading())) {
-//                        if (mValdocDatabaseHandler.insertTestSpesificationValue(ValdocDatabaseHandler.TESTSPECIFICATIONVALUE_TABLE_NAME, testSpesificationValue())) {
+                if (mValdocDatabaseHandler.insertTestDetails(ValdocDatabaseHandler.TEST_DETAILS_TABLE_NAME, testDetailsDataCreation())) {
+                    if (mValdocDatabaseHandler.insertTestReading(ValdocDatabaseHandler.TESTREADING_TABLE_NAME, testReading())) {
+                        if (mValdocDatabaseHandler.insertTestSpesificationValue(ValdocDatabaseHandler.TESTSPECIFICATIONVALUE_TABLE_NAME, testSpesificationValue())) {
                             Toast.makeText(RDPC3UserEntryActivity.this, "Data saved successfully", Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(RDPC3UserEntryActivity.this, TestCreateActivity.class);
-                intent.putExtra("RD_PC_3", true);
-                startActivity(intent);
-                finish();
-//                        } else {
-//                            Toast.makeText(RDPC3UserEntryActivity.this, "Data not saved", Toast.LENGTH_LONG).show();
-//                        }
-//                    } else {
-//                        Toast.makeText(RDPC3UserEntryActivity.this, "Data not saved", Toast.LENGTH_LONG).show();
-//                    }
-//
-//                } else {
-//                    Toast.makeText(RDPC3UserEntryActivity.this, "Data not saved", Toast.LENGTH_LONG).show();
-//                }
+                            Intent intent = new Intent(RDPC3UserEntryActivity.this, TestCreateActivity.class);
+                            intent.putExtra("RD_PC_3", true);
+                            startActivity(intent);
+                            finish();
+                        } else {
+                            Toast.makeText(RDPC3UserEntryActivity.this, "Data not saved", Toast.LENGTH_LONG).show();
+                        }
+                    } else {
+                        Toast.makeText(RDPC3UserEntryActivity.this, "Data not saved", Toast.LENGTH_LONG).show();
+                    }
+
+                } else {
+                    Toast.makeText(RDPC3UserEntryActivity.this, "Data not saved", Toast.LENGTH_LONG).show();
+                }
 
 //                mValdocDatabaseHandler.insertTestSpesificationValue(ValdocDatabaseHandler.TESTSPECIFICATIONVALUE_TABLE_NAME, testSpesificationValueDataCreation());
             }
@@ -368,24 +383,24 @@ public class RDPC3UserEntryActivity extends AppCompatActivity {
         ArrayList<TestReading> testReadingArrayList = new ArrayList<TestReading>();
         int hasMapKey = 200;
         for (int i = 0; i < rows; i++) {
-                TestReading testReading = new TestReading();
-                testReading.setTestReadingID(i);
+            TestReading testReading = new TestReading();
+            testReading.setTestReadingID(i);
 //        TO DO test details id is id of test details table
-                testReading.setTest_detail_id(i);
-                testReading.setEntityName("" + i);
-                StringBuilder grilList = new StringBuilder();
-                //v1,v2....value cration
-                StringBuilder sb = new StringBuilder();
-                for (int j = 0; j < cols; j++) {
-                    if (j != 0)
-                        sb.append(',');
-                    sb.append(rHashMap.get(hasMapKey).toString());
-                    hasMapKey++;
-                }
-                grilList.append(sb).append(",").append(averageResultHashMap.get(i));
-                testReading.setValue(grilList.toString());
-                testReadingArrayList.add(testReading);
+            testReading.setTest_detail_id(i);
+            testReading.setEntityName("" + i);
+            StringBuilder grilList = new StringBuilder();
+            //v1,v2....value cration
+            StringBuilder sb = new StringBuilder();
+            for (int j = 0; j < cols; j++) {
+                if (j != 0)
+                    sb.append(',');
+                sb.append(rHashMap.get(hasMapKey).toString());
+                hasMapKey++;
             }
+            grilList.append(sb).append(",").append(averageResultHashMap.get(i));
+            testReading.setValue(grilList.toString());
+            testReadingArrayList.add(testReading);
+        }
         return testReadingArrayList;
     }
 
@@ -397,6 +412,7 @@ public class RDPC3UserEntryActivity extends AppCompatActivity {
         testDetails.setCustomer(customerName.getText().toString());
         testDetails.setDateOfTest(dateTextView.getText().toString());
         testDetails.setRawDataNo(certificateNo.getText().toString());
+        testDetails.setPartnerName(""+mPartnerName);
         if (loginUserType.equals("CLIENT")) {
             testDetails.setInstrumentUsed(clientInstrument.getcInstrumentName());
             testDetails.setMake(clientInstrument.getMake());
@@ -459,7 +475,7 @@ public class RDPC3UserEntryActivity extends AppCompatActivity {
                 witnessThird = extras.getString("WITNESSTHIRD");
                 //get area based on room area id
                 areaName = extras.getString("AREANAME");
-
+                mPartnerName=extras.getString("PRTNERNAME");
                 if (loginUserType.equals("CLIENT")) {
                     clientInstrument = (ClientInstrument) extras.getSerializable("ClientInstrument");
                 } else {

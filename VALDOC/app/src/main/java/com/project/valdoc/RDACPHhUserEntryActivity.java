@@ -27,6 +27,7 @@ import com.project.valdoc.intity.TestDetails;
 import com.project.valdoc.intity.TestReading;
 import com.project.valdoc.intity.TestSpesificationValue;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -81,6 +82,7 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
     private TextView dateTextView;
     private TextView customerName;
     private TextView certificateNo;
+    private TextView infarance;
 
     private TextView instrumentNoTextView;
     private TextView testerNameTextView;
@@ -90,6 +92,7 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
     private Button submit;
     private Button clear;
     private Button cancel;
+    private String mPartnerName;
     private double totalAirFlowRate = 0;
     private double airChangeValue;
     HashMap<Integer, Integer> supplyAirVelocity;
@@ -157,6 +160,11 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
         if (airChangeTxtList != null && airChangeTxtList.size() > 0) {
             TextView airChangeTxt = airChangeTxtList.get(airChangeTxtList.size() / 2);
             airChangeValue=getIntent().getIntExtra("AirChangeValue", 0);
+            if (airChangeValue > room.getAcphNLT()) {
+                infarance.setText("The above Airflow Volume Test and Derived No.of Air chanages per hour meets the specificed requirement");
+            } else {
+                infarance.setText("The above Airflow Volume Test and Derived No.of Air chanages per hour do not meets the specificed requirement");
+            }
             airChangeTxt.setText(airChangeValue + "");
         }
 
@@ -169,12 +177,20 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
         month = c.get(Calendar.MONTH);
         day = c.get(Calendar.DAY_OF_MONTH);
 
-        // Show current date
+        //raw data no
+        SimpleDateFormat df = new SimpleDateFormat("HH:mm:ss");
+        String formattedDate = df.format(c.getTime());
+// Now formattedDate have current date/time
+//        Toast.makeText(this, formattedDate, Toast.LENGTH_SHORT).show();
+        int mon = month + 1;
+        certificateNo.setText("HH/" + mon + "/" + year + "/" + formattedDate);
 
-        dateTextView.setText(new StringBuilder()
-                // Month is 0 based, just add 1
-                .append(month + 1).append("-").append(day).append("-")
-                .append(year).append(" "));
+        // Show current date
+        String date = new StringBuilder().append(year).append("-").append(month + 1).append("-").append(day).append(" ").toString();
+        dateTextView.setText(date);
+//        new StringBuilder().append(year)
+//                .append("-").append(month + 1).append("-").append(day)
+//                .append(" "));
     }
 
     @Override
@@ -201,10 +217,13 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
             month = selectedMonth;
             day = selectedDay;
 
+
             // Show selected date
-            dateTextView.setText(new StringBuilder().append(month + 1)
-                    .append("-").append(day).append("-").append(year)
-                    .append(" "));
+            String date = new StringBuilder().append(year).append("-").append(month + 1).append("-").append(day).append(" ").toString();
+            dateTextView.setText(date);
+//            new StringBuilder().append(year)
+//                    .append("-").append(month + 1).append("-").append(day)
+//                    .append(" "));
 
         }
     };
@@ -226,7 +245,7 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
             calibrationDueOn.setText(partnerInstrument.getCalibrationDueDate());
         }
 
-        testSpecification.setText("" + room.getAcphNLT());
+        testSpecification.setText("Specified Air Change/hr NLT " + room.getAcphNLT());
 //                plantName
         areaOfTest.setText(areaName);
         roomName.setText(room.getRoomName());
@@ -284,6 +303,7 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
         equipmentNoText = (TextView) findViewById(R.id.equipment_no_text);
         equipmentName = (TextView) findViewById(R.id.equipmentname);
         equipmentNo = (TextView) findViewById(R.id.equipmentno);
+        infarance = (TextView) findViewById(R.id.infarance);
         testCundoctor = (TextView) findViewById(R.id.testcunducter);
         testWitness = (TextView) findViewById(R.id.testwitness);
         submit = (Button) findViewById(R.id.submit);
@@ -385,6 +405,7 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
         testDetails.setCustomer(customerName.getText().toString());
         testDetails.setDateOfTest(dateTextView.getText().toString());
         testDetails.setRawDataNo(certificateNo.getText().toString());
+        testDetails.setPartnerName(""+mPartnerName);
         if (loginUserType.equals("CLIENT")) {
             testDetails.setInstrumentUsed(clientInstrument.getcInstrumentName());
             testDetails.setMake(clientInstrument.getMake());
@@ -446,6 +467,7 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
                 witnessThird = extras.getString("WITNESSTHIRD");
                 //get area based on room area id
                 areaName = extras.getString("AREANAME");
+                mPartnerName=extras.getString("PRTNERNAME");
 
                 if (loginUserType.equals("CLIENT")) {
                     clientInstrument = (ClientInstrument) extras.getSerializable("ClientInstrument");

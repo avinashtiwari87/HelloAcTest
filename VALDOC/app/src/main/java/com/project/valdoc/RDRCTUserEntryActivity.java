@@ -2,6 +2,7 @@ package com.project.valdoc;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -9,14 +10,20 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.TableLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.project.valdoc.db.ValdocDatabaseHandler;
 import com.project.valdoc.intity.ClientInstrument;
 import com.project.valdoc.intity.PartnerInstrument;
 import com.project.valdoc.intity.Room;
+import com.project.valdoc.intity.TestDetails;
+import com.project.valdoc.intity.TestReading;
+import com.project.valdoc.intity.TestSpesificationValue;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -38,6 +45,9 @@ public class RDRCTUserEntryActivity extends AppCompatActivity {
     private String witnessSecond;
     private String witnessThird;
     private String userName = "";
+    HashMap<Integer, Integer> inputDataHashMap;
+    ArrayList<String> mValueList;
+    HashMap<Integer, Integer> mInputValue;
 
     //certificate view id creation
     private TextView instrumentUsed;
@@ -64,12 +74,24 @@ public class RDRCTUserEntryActivity extends AppCompatActivity {
     private TextView testerNameTextView;
     private TextView instrumentUsedTextView;
     private TextView testCunductedByTextView;
+
+    private TextView initialReading;
+    private TextView worstCase;
+    private TextView finalReading;
+    private TextView recoveryTime;
+
     ArrayList<TextView> txtViewList;
     private Button submit;
     private Button clear;
     private Button cancel;
     ArrayList<TextView> resultTextViewList;
     private ValdocDatabaseHandler mValdocDatabaseHandler = new ValdocDatabaseHandler(RDRCTUserEntryActivity.this);
+
+    String mInitialReading;
+    String mWorstReading;
+    String mFinalReading;
+    int mCount;
+    private String mPartnerName;
 
     private int year;
     private int month;
@@ -81,21 +103,22 @@ public class RDRCTUserEntryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rdrctuser_entry);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-        headerText = (TextView)findViewById(R.id.common_header_tv);
+        headerText = (TextView) findViewById(R.id.common_header_tv);
         headerText.setText(" * Recovery Test for Non-Unidirectional Airflow Installations * ");
-
-        if(getIntent().hasExtra("rows") && getIntent().hasExtra("cols")){
-            rows = getIntent().getIntExtra("rows",0);
-            cols = getIntent().getIntExtra("cols",0);
+        mInputValue = new HashMap<Integer, Integer>();
+        if (getIntent().hasExtra("rows") && getIntent().hasExtra("cols")) {
+            rows = getIntent().getIntExtra("rows", 0);
+            cols = getIntent().getIntExtra("cols", 0);
             testType = getIntent().getStringExtra("testType");
             Log.d(TAG, " TestType : " + testType);
         }
-//dynamic data population
+
+        //dynamic data population
         getExtraFromTestCreateActivity(savedInstanceState);
         //text view initialization
         initTextView();
         textViewValueAssignment();
-//        initRes();
+        //        initRes();
         datePicker();
 //        if ("RD_PC_3".equalsIgnoreCase(testType)) {
 //            BuildTableTest5(rows, cols);
@@ -115,6 +138,7 @@ public class RDRCTUserEntryActivity extends AppCompatActivity {
 //            findViewById(R.id.test_table_5_header_l_ll).setVisibility(View.GONE);
 //            findViewById(R.id.test_table_5_header_2_ll).setVisibility(View.GONE);
 //    }
+
     private void datePicker() {
         // Get current date by calender
         final Calendar c = Calendar.getInstance();
@@ -122,12 +146,21 @@ public class RDRCTUserEntryActivity extends AppCompatActivity {
         month = c.get(Calendar.MONTH);
         day = c.get(Calendar.DAY_OF_MONTH);
 
-        // Show current date
+        //raw data no
+        SimpleDateFormat df = new SimpleDateFormat("HH:mm:ss");
+        String formattedDate = df.format(c.getTime());
+// Now formattedDate have current date/time
+        Toast.makeText(this, formattedDate, Toast.LENGTH_SHORT).show();
+        int mon = month + 1;
+        certificateNo.setText("CT/" + mon + "/" + year + "/" + formattedDate);
 
-        dateTextView.setText(new StringBuilder()
-                // Month is 0 based, just add 1
-                .append(month + 1).append("-").append(day).append("-")
-                .append(year).append(" "));
+        // Show current date
+        String date = new StringBuilder().append(year).append("-").append(month + 1).append("-").append(day).append(" ").toString();
+        dateTextView.setText(date);
+//        new StringBuilder()
+//                // Month is 0 based, just add 1
+//                .append(year).append("-").append(month + 1).append("-")
+//                .append(day).append(" "));
     }
 
     @Override
@@ -153,28 +186,39 @@ public class RDRCTUserEntryActivity extends AppCompatActivity {
             day = selectedDay;
 
             // Show selected date
-            dateTextView.setText(new StringBuilder().append(month + 1)
-                    .append("-").append(day).append("-").append(year)
-                    .append(" "));
+            String date = new StringBuilder().append(year).append("-").append(month + 1).append("-").append(day).append(" ").toString();
+            dateTextView.setText(date);
+//            new StringBuilder().append(year)
+//                    .append("-").append(month + 1).append("-").append(day)
+//                    .append(" "));
 
         }
     };
 
-    private void textViewValueAssignment()  {
+    private void textViewValueAssignment() {
         if (loginUserType.equals("CLIENT")) {
             instrumentUsed.setText(clientInstrument.getcInstrumentName());
             make.setText(clientInstrument.getMake());
             model.setText(clientInstrument.getModel());
-            instrumentSerialNo.setText(""+clientInstrument.getSerialNo());
+            instrumentSerialNo.setText("" + clientInstrument.getSerialNo());
             calibrationOn.setText(clientInstrument.getLastCalibrated());
             calibrationDueOn.setText(clientInstrument.getCalibrationDueDate());
         } else {
             instrumentUsed.setText(partnerInstrument.getpInstrumentName());
             make.setText(partnerInstrument.getMake());
             model.setText(partnerInstrument.getModel());
-            instrumentSerialNo.setText(""+partnerInstrument.getpInstrumentId());
+            instrumentSerialNo.setText("" + partnerInstrument.getpInstrumentId());
             calibrationOn.setText(partnerInstrument.getLastCalibrated());
             calibrationDueOn.setText(partnerInstrument.getCalibrationDueDate());
+        }
+
+
+        initialReading.setText("" + mInitialReading);
+        worstCase.setText("" + mWorstReading);
+        finalReading.setText("" + mFinalReading);
+        if (mCount > 0) {
+            int count = mCount + 1;
+            recoveryTime.setText("" + count);
         }
 
         testSpecification.setText("" + room.getAcphNLT());
@@ -202,13 +246,17 @@ public class RDRCTUserEntryActivity extends AppCompatActivity {
     private void initTextView() {
         // layout data which is not in use
         instrumentNoTextView = (TextView) findViewById(R.id.instrument_no_test6);
-        instrumentNoTextView.setVisibility(View.GONE);
+//        instrumentNoTextView.setVisibility(View.GONE);
         testerNameTextView = (TextView) findViewById(R.id.tester_name_test6);
-        testerNameTextView.setVisibility(View.GONE);
+//        testerNameTextView.setVisibility(View.GONE);
         instrumentUsedTextView = (TextView) findViewById(R.id.instrument_used);
-        instrumentUsedTextView.setVisibility(View.GONE);
+//        instrumentUsedTextView.setVisibility(View.GONE);
         testCunductedByTextView = (TextView) findViewById(R.id.testcunducted_by);
-        testCunductedByTextView.setVisibility(View.GONE);
+//        testCunductedByTextView.setVisibility(View.GONE);
+        initialReading = (TextView) findViewById(R.id.initial_reading);
+        worstCase = (TextView) findViewById(R.id.worst_case);
+        finalReading = (TextView) findViewById(R.id.final_reading);
+        recoveryTime = (TextView) findViewById(R.id.recovery_time);
 
         dateTextView = (TextView) findViewById(R.id.datetextview);
         customerName = (TextView) findViewById(R.id.customer_name);
@@ -244,18 +292,26 @@ public class RDRCTUserEntryActivity extends AppCompatActivity {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                if (mValdocDatabaseHandler.insertTestDetails(ValdocDatabaseHandler.TEST_DETAILS_TABLE_NAME, testDetailsDataCreation())) {
-//                    if (mValdocDatabaseHandler.insertTestReading(ValdocDatabaseHandler.TESTREADING_TABLE_NAME, testReading())) {
-//                        Toast.makeText(RDAV5UserEntryActivity.this, "Data saved sussessfully", Toast.LENGTH_LONG).show();
-//                    } else {
-//                        Toast.makeText(RDAV5UserEntryActivity.this, "Data not saved", Toast.LENGTH_LONG).show();
-//                    }
-//
-//                } else {
-//                    Toast.makeText(RDAV5UserEntryActivity.this, "Data not saved", Toast.LENGTH_LONG).show();
-//                }
-//
-////                mValdocDatabaseHandler.insertTestSpesificationValue(ValdocDatabaseHandler.TESTSPECIFICATIONVALUE_TABLE_NAME, testSpesificationValueDataCreation());
+                if (mValdocDatabaseHandler.insertTestDetails(ValdocDatabaseHandler.TEST_DETAILS_TABLE_NAME, testDetailsDataCreation())) {
+                    if (mValdocDatabaseHandler.insertTestReading(ValdocDatabaseHandler.TESTREADING_TABLE_NAME, testReading())) {
+                        if (mValdocDatabaseHandler.insertTestSpesificationValue(ValdocDatabaseHandler.TESTSPECIFICATIONVALUE_TABLE_NAME, testSpesificationValue())) {
+                            Toast.makeText(RDRCTUserEntryActivity.this, "Data saved successfully", Toast.LENGTH_LONG).show();
+                            Intent intent = new Intent(RDRCTUserEntryActivity.this, TestCreateActivity.class);
+                            intent.putExtra("RD_PC_3", true);
+                            startActivity(intent);
+                            finish();
+                        } else {
+                            Toast.makeText(RDRCTUserEntryActivity.this, "Data not saved", Toast.LENGTH_LONG).show();
+                        }
+                    } else {
+                        Toast.makeText(RDRCTUserEntryActivity.this, "Data not saved", Toast.LENGTH_LONG).show();
+                    }
+
+                } else {
+                    Toast.makeText(RDRCTUserEntryActivity.this, "Data not saved", Toast.LENGTH_LONG).show();
+                }
+
+//                mValdocDatabaseHandler.insertTestSpesificationValue(ValdocDatabaseHandler.TESTSPECIFICATIONVALUE_TABLE_NAME, testSpesificationValueDataCreation());
             }
         });
 
@@ -266,6 +322,111 @@ public class RDRCTUserEntryActivity extends AppCompatActivity {
                 showDialog(DATE_PICKER_ID);
             }
         });
+    }
+
+
+    private ArrayList<TestSpesificationValue> testSpesificationValue() {
+        ArrayList<TestSpesificationValue> spesificationValueArrayList = new ArrayList<TestSpesificationValue>();
+        TestSpesificationValue testSpesificationValue = new TestSpesificationValue();
+        testSpesificationValue.setTest_specific_id(1);
+        testSpesificationValue.setTest_detail_id("1");
+        testSpesificationValue.setFieldName("Initial Reading");
+        testSpesificationValue.setFieldValue("" + initialReading.getText().toString());
+        spesificationValueArrayList.add(testSpesificationValue);
+
+
+        TestSpesificationValue testSpesificationValue1 = new TestSpesificationValue();
+        testSpesificationValue1.setTest_specific_id(1);
+        testSpesificationValue1.setTest_detail_id("1");
+        testSpesificationValue1.setFieldName("Worst Case Reading");
+        testSpesificationValue1.setFieldValue("" + worstCase.getText().toString());
+        spesificationValueArrayList.add(testSpesificationValue1);
+
+        TestSpesificationValue testSpesificationValue2 = new TestSpesificationValue();
+        testSpesificationValue2.setTest_specific_id(1);
+        testSpesificationValue2.setTest_detail_id("1");
+        testSpesificationValue2.setFieldName("Final Reading");
+        testSpesificationValue2.setFieldValue("" + finalReading.getText().toString());
+        spesificationValueArrayList.add(testSpesificationValue2);
+
+        TestSpesificationValue testSpesificationValue3 = new TestSpesificationValue();
+        testSpesificationValue3.setTest_specific_id(1);
+        testSpesificationValue3.setTest_detail_id("1");
+        testSpesificationValue3.setFieldName("Recovery Time");
+        testSpesificationValue3.setFieldValue("" + recoveryTime.getText().toString());
+        spesificationValueArrayList.add(testSpesificationValue3);
+        return spesificationValueArrayList;
+    }
+
+    private ArrayList<TestReading> testReading() {
+        ArrayList<TestReading> testReadingArrayList = new ArrayList<TestReading>();
+//        for (int i = 0; i < mValueList.size(); i++) {
+        TestReading testReading = new TestReading();
+        testReading.setTestReadingID(1);
+//        TO DO test details id is id of test details table
+        testReading.setTest_detail_id(1);
+        testReading.setEntityName("RecoveryTest");
+        StringBuilder grilList = new StringBuilder();
+        //v1,v2....value cration
+        StringBuilder sb = new StringBuilder();
+        int k = 200;
+        for (int j = 0; j < mInputValue.size(); j++) {
+            if (j != 0)
+                sb.append(',');
+            sb.append(mInputValue.get(k).toString());
+            k++;
+
+        }
+        sb.append("," + mFinalReading.trim());
+        testReading.setValue("" + sb);
+        testReadingArrayList.add(testReading);
+
+        return testReadingArrayList;
+    }
+
+
+    private TestDetails testDetailsDataCreation() {
+        TestDetails testDetails = new TestDetails();
+//        TO DO: need to make it dynamic
+        testDetails.setTest_detail_id(1);
+        testDetails.setCustomer(customerName.getText().toString());
+        testDetails.setDateOfTest(dateTextView.getText().toString());
+        testDetails.setRawDataNo(certificateNo.getText().toString());
+        if (loginUserType.equals("CLIENT")) {
+            testDetails.setInstrumentUsed(clientInstrument.getcInstrumentName());
+            testDetails.setMake(clientInstrument.getMake());
+            testDetails.setModel(clientInstrument.getModel());
+            testDetails.setInstrumentNo(clientInstrument.getSerialNo());
+            testDetails.setCalibratedOn(clientInstrument.getLastCalibrated());
+            testDetails.setCalibratedDueOn(clientInstrument.getCalibrationDueDate());
+        } else {
+            testDetails.setInstrumentUsed(partnerInstrument.getpInstrumentName());
+            testDetails.setMake(partnerInstrument.getMake());
+            testDetails.setModel(partnerInstrument.getModel());
+            testDetails.setInstrumentNo("" + partnerInstrument.getpInstrumentId());
+            testDetails.setCalibratedOn(partnerInstrument.getLastCalibrated());
+            testDetails.setCalibratedDueOn(partnerInstrument.getCalibrationDueDate());
+        }
+
+
+        testDetails.setTestSpecification(testSpecification.getText().toString());
+        testDetails.setBlockName(plantName.getText().toString());
+        testDetails.setTestArea(areaOfTest.getText().toString());
+        testDetails.setRoomName(roomName.getText().toString());
+        testDetails.setRoomNo(equipmentName.getText().toString());
+        testDetails.setOccupencyState(occupancyState.getText().toString());
+        testDetails.setTestReference(testRefrance.getText().toString());
+        testDetails.setAhuNo(equipmentNo.getText().toString());
+        testDetails.setTesterName(testCundoctor.getText().toString());
+        testDetails.setPartnerName("" + mPartnerName);
+        StringBuilder witness = new StringBuilder();
+        witness.append(witnessFirst.toString());
+        if (null != witnessSecond && witnessSecond.length() > 0)
+            witness.append("," + witnessSecond);
+        if (null != witnessThird && witnessThird.length() > 0)
+            witness.append("," + witnessThird);
+        testWitness.setText(witness);
+        return testDetails;
     }
 
     private void getExtraFromTestCreateActivity(Bundle savedInstanceState) {
@@ -292,7 +453,8 @@ public class RDRCTUserEntryActivity extends AppCompatActivity {
                 witnessThird = extras.getString("WITNESSTHIRD");
                 //get area based on room area id
                 areaName = extras.getString("AREANAME");
-
+                mPartnerName = extras.getString("PRTNERNAME");
+                Log.d("Avinash", "RDRCT mPartnerName=" + mPartnerName);
                 if (loginUserType.equals("CLIENT")) {
                     clientInstrument = (ClientInstrument) extras.getSerializable("ClientInstrument");
                 } else {
@@ -302,6 +464,18 @@ public class RDRCTUserEntryActivity extends AppCompatActivity {
                 room = (Room) extras.getSerializable("Room");
                 ahuNumber = extras.getString("AhuNumber");
                 grillAndSizeFromGrill = (ArrayList<HashMap<String, String>>) extras.getSerializable("GRILLIST");
+
+                mInitialReading = extras.getString("InitialReading");
+                mWorstReading = extras.getString("WorstCaseReading");
+                mFinalReading = extras.getString("FinalReading");
+                mCount = extras.getInt("RecoveryTime");
+                mValueList = extras.getStringArrayList("VALUE");
+                mInputValue = (HashMap<Integer, Integer>) getIntent().getSerializableExtra("InputData");
+                int j = 200;
+                for (int i = 0; i < mInputValue.size(); i++) {
+                    Log.d("Avinash", "test value" + mInputValue.get(j));
+                    j++;
+                }
 
             }
         }

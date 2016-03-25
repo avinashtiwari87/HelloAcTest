@@ -68,6 +68,7 @@ public class TestCreateActivity extends Activity implements View.OnTouchListener
     private static String spinerRoom;
     private static String spinerTestType;
     private static int spinerEquipment;
+    private String mPartnerName;
 
     //Storing spinner position to show selected
     // after Certificate submit
@@ -75,8 +76,6 @@ public class TestCreateActivity extends Activity implements View.OnTouchListener
             equipmentSpinnerPos = 0, ahuSpinnerPos = 0,
             roomSpinnerPos = 0, testSpinnerPos = 0;
     String witness1, witness2, witness3;
-
-
     SharedPreferences sharedpreferences;
 
     @Override
@@ -94,14 +93,16 @@ public class TestCreateActivity extends Activity implements View.OnTouchListener
             userName = null;
             loginUserType = null;
         }
+
         //Screen Navigation after submit button hit from Certificate screen
         else if (getIntent().hasExtra("RD_AV_5") || getIntent().hasExtra("RD_ACPH_AV") || getIntent().hasExtra("RD_ACPH_H")
                 || getIntent().hasExtra("RD_FIT") || getIntent().hasExtra("RD_PC_3") || getIntent().hasExtra("RD_RCT")) {
+
             //Setting User Information
             userName = sharedpreferences.getString("USERNAME", "");
             loginUserType = sharedpreferences.getString("USERTYPE", "");
             appUserId = sharedpreferences.getInt("APPUSERID", 0);
-            userPartnerId=sharedpreferences.getInt("PARTNERID", 0);
+            userPartnerId = sharedpreferences.getInt("PARTNERID", 0);
             //Setting Witness Data
             witnessFirst.setText(sharedpreferences.getString("witness1", ""));
             witnessSecond.setText(sharedpreferences.getString("witness2", ""));
@@ -110,8 +111,10 @@ public class TestCreateActivity extends Activity implements View.OnTouchListener
             userName = extras.getString("USERNAME");
             loginUserType = extras.getString("USERTYPE");
             appUserId = extras.getInt("APPUSERID");
-            userPartnerId=extras.getInt("PARTNERID");
+            userPartnerId = extras.getInt("PARTNERID");
         }
+
+        mPartnerName = getPartnerName();
         //table creation
         // insertDataInTable();
         // Spinner Initialization
@@ -121,28 +124,16 @@ public class TestCreateActivity extends Activity implements View.OnTouchListener
         spinnerCreation();
         initButton();
 
+    }
 
-        //Screen Navigation after submit button hit from Certificate screen
-        if (getIntent().hasExtra("RD_AV_5") || getIntent().hasExtra("RD_ACPH_AV") || getIntent().hasExtra("RD_ACPH_H")
-                || getIntent().hasExtra("RD_FIT") || getIntent().hasExtra("RD_PC_3") || getIntent().hasExtra("RD_RCT")) {
-            //Setting Spinner PreSelected position
-            instrumentSpiner.setSelection(sharedpreferences.getInt("instrumentSpinerPos", 0));
-            equipmentOrAhuSpinner.setSelection(sharedpreferences.getInt("equipmentOrAhuSpinnerPos", 0));
-            Log.d(TAG, "equipmentOrAhuSpinner : Pos:- " + sharedpreferences.getInt("equipmentOrAhuSpinnerPos", 0));
-            if (sharedpreferences.getInt("equipmentOrAhuSpinnerPos", 0) == 1) {
-                ahuSpinner.setVisibility(View.VISIBLE);
-                equipmentSpinner.setVisibility(View.GONE);
-                ahuSpinner.setSelection(sharedpreferences.getInt("ahuSpinnerPos", 0));
-                roomSpinner.setSelection(sharedpreferences.getInt("roomSpinnerPos", 0));
-            } else if (sharedpreferences.getInt("equipmentOrAhuSpinnerPos", 0) == 0) {
-                ahuSpinner.setVisibility(View.GONE);
-                equipmentSpinner.setVisibility(View.VISIBLE);
-                spinerAhuOrEquipment = "EQUIPMENT";
-                equipmentSpinner.setSelection(sharedpreferences.getInt("equipmentSpinnerPos", 0));
-                testSpinner.setSelection(sharedpreferences.getInt("testSpinnerPos", 0));
-            }
-        }
-
+    private String getPartnerName() {
+        String partnerName = "";
+        int partnerId = sharedpreferences.getInt("PARTNERID", 0);
+        Log.d("Avinash", "partnerId=" + partnerId);
+        if (partnerId != 0)
+            partnerName = mValdocDatabaseHandler.getPartnerNameInfo(partnerId);
+        Log.d("Avinash", "partnerName=" + partnerName);
+        return partnerName;
     }
 
     private void initButton() {
@@ -151,7 +142,8 @@ public class TestCreateActivity extends Activity implements View.OnTouchListener
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "equipmentOrAhuSpinner : Pos:submit button clicked");
-                if (validationSpiner()) {Log.d(TAG, "equipmentOrAhuSpinner : Pos:submit button clicked validation complete");
+                if (validationSpiner()) {
+                    Log.d(TAG, "equipmentOrAhuSpinner : Pos:submit button clicked validation complete");
                     //Saving Data in Shared Preferences
                     SharedPreferences.Editor editor = sharedpreferences.edit();
                     editor.putInt("instrumentSpinerPos", instrumentSpinerPos);
@@ -198,6 +190,7 @@ public class TestCreateActivity extends Activity implements View.OnTouchListener
         intent.putExtra("WITNESSFIRST", witnessFirst.getText().toString());
         intent.putExtra("WITNESSSECOND", witnessSecond.getText().toString());
         intent.putExtra("WITNESSTHIRD", witnessThird.getText().toString());
+        intent.putExtra("PRTNERNAME", mPartnerName);
 
         if (loginUserType.equals("CLIENT")) {
             intent.putExtra("ClientInstrument", clientInstrumentArrayList.get(instrumentSpiner.getSelectedItemPosition() - 1));
@@ -235,6 +228,7 @@ public class TestCreateActivity extends Activity implements View.OnTouchListener
         intent.putExtra("WITNESSFIRST", witnessFirst.getText().toString());
         intent.putExtra("WITNESSSECOND", witnessSecond.getText().toString());
         intent.putExtra("WITNESSTHIRD", witnessThird.getText().toString());
+        intent.putExtra("PRTNERNAME", mPartnerName);
 
         if (loginUserType.equals("CLIENT")) {
             intent.putExtra("ClientInstrument", clientInstrumentArrayList.get(instrumentSpiner.getSelectedItemPosition() - 1));
@@ -272,6 +266,7 @@ public class TestCreateActivity extends Activity implements View.OnTouchListener
         intent.putExtra("WITNESSFIRST", witnessFirst.getText().toString());
         intent.putExtra("WITNESSSECOND", witnessSecond.getText().toString());
         intent.putExtra("WITNESSTHIRD", witnessThird.getText().toString());
+        intent.putExtra("PRTNERNAME", mPartnerName);
 
         if (loginUserType.equals("CLIENT")) {
             intent.putExtra("ClientInstrument", clientInstrumentArrayList.get(instrumentSpiner.getSelectedItemPosition() - 1));
@@ -307,6 +302,7 @@ public class TestCreateActivity extends Activity implements View.OnTouchListener
         intent.putExtra("WITNESSFIRST", witnessFirst.getText().toString());
         intent.putExtra("WITNESSSECOND", witnessSecond.getText().toString());
         intent.putExtra("WITNESSTHIRD", witnessThird.getText().toString());
+        intent.putExtra("PRTNERNAME", mPartnerName);
 
         if (loginUserType.equals("CLIENT")) {
             intent.putExtra("ClientInstrument", clientInstrumentArrayList.get(instrumentSpiner.getSelectedItemPosition() - 1));
@@ -341,7 +337,8 @@ public class TestCreateActivity extends Activity implements View.OnTouchListener
         intent.putExtra("WITNESSFIRST", witnessFirst.getText().toString());
         intent.putExtra("WITNESSSECOND", witnessSecond.getText().toString());
         intent.putExtra("WITNESSTHIRD", witnessThird.getText().toString());
-
+        intent.putExtra("PRTNERNAME", mPartnerName);
+        Log.d("Avinash", "bundle mPartnerName=" + mPartnerName);
         if (loginUserType.equals("CLIENT")) {
             intent.putExtra("ClientInstrument", clientInstrumentArrayList.get(instrumentSpiner.getSelectedItemPosition() - 1));
         } else {
@@ -371,6 +368,7 @@ public class TestCreateActivity extends Activity implements View.OnTouchListener
         intent.putExtra("USERTYPE", loginUserType);
         intent.putExtra("USERNAME", userName);
         intent.putExtra("testType", "RD_AV_5");
+        intent.putExtra("PRTNERNAME", mPartnerName);
         if (loginUserType.equals("CLIENT")) {
             intent.putExtra("ClientInstrument", clientInstrumentArrayList.get(instrumentSpiner.getSelectedItemPosition() - 1));
         } else {

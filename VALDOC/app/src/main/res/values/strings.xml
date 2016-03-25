@@ -80,7 +80,8 @@
     <string name="result">Result</string>
     <string name="result_value">Pass</string>
     <string name="inference">INFERENCE</string>
-    <string name="infrance_value">The above Airflow Velocity Test value meets the specified Requirement</string>
+    <string name="meet_infrance_value">The above Airflow Velocity Test value meets the specified Requirement</string>
+    <string name="dont_meet_infrance_value">The above Airflow Velocity Test value do not meets the specified Requirement</string>
     <string name="tes_cunducted_buy">Test Cunducted By</string>
     <string name="tes_cunducted_buy_test1">Test Cunducted By :</string>
     <string name="tewst_witness_by">Test Witness By</string>

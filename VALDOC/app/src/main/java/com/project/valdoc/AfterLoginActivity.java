@@ -69,7 +69,6 @@ public class AfterLoginActivity extends AppCompatActivity implements HttpConnect
                     intent.putExtra("serviceReport", true);
                     //intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
-
                 }
             });
 

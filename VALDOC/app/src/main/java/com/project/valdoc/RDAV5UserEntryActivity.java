@@ -28,6 +28,7 @@ import com.project.valdoc.intity.TestDetails;
 import com.project.valdoc.intity.TestReading;
 import com.project.valdoc.intity.TestSpesificationValue;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -71,6 +72,7 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
     private TextView testRefrance;
     private TextView equipmentName;
     private TextView equipmentNo;
+    private TextView infarance;
     private TextView testCundoctor;
     private TextView testWitness;
     private TextView dateTextView;
@@ -86,6 +88,7 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
     private Button submit;
     private Button clear;
     private Button cancel;
+    private String mPartnerName;
     ArrayList<TextView> resultTextViewList;
     private ValdocDatabaseHandler mValdocDatabaseHandler = new ValdocDatabaseHandler(RDAV5UserEntryActivity.this);
 
@@ -150,9 +153,12 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
             TextView tvl = txtPassFailList.get(i);
             tvl.setText(PassFailHashMap.get(tvl.getId()) + "");
             if ("PASS".equalsIgnoreCase(tvl.getText().toString().trim())) {
+                infarance.setText(getResources().getString(R.string.meet_infrance_value));
                 tvl.setTextColor(getResources().getColor(R.color.blue));
             } else {
+                infarance.setText(getResources().getString(R.string.dont_meet_infrance_value));
                 tvl.setTextColor(getResources().getColor(R.color.red));
+
             }
         }
 
@@ -165,11 +171,17 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
         month = c.get(Calendar.MONTH);
         day = c.get(Calendar.DAY_OF_MONTH);
 
+        //raw data no
+        SimpleDateFormat df = new SimpleDateFormat("HH:mm:ss");
+        String formattedDate = df.format(c.getTime());
+// Now formattedDate have current date/time
+//        Toast.makeText(this, formattedDate, Toast.LENGTH_SHORT).show();
+        int mon = month + 1;
+        certificateNo.setText("V5/" + mon + "/" + year + "/" + formattedDate);
+
         // Show current date
-String date=new StringBuilder().append(month + 1).append("-").append(day).append("-").append(year).append(" ").toString();
+        String date = new StringBuilder().append(year).append("-").append(month + 1).append("-").append(day).append(" ").toString();
         // Month is 0 based, just add 1
-
-
         dateTextView.setText(date);
     }
 
@@ -201,6 +213,7 @@ String date=new StringBuilder().append(month + 1).append("-").append(day).append
         testRefrance = (TextView) findViewById(R.id.testrefrence);
         equipmentName = (TextView) findViewById(R.id.equipmentname);
         equipmentNo = (TextView) findViewById(R.id.equipmentno);
+        infarance = (TextView) findViewById(R.id.infarance);
         testCundoctor = (TextView) findViewById(R.id.testcunducter);
         testWitness = (TextView) findViewById(R.id.testwitness);
         submit = (Button) findViewById(R.id.submit);
@@ -269,7 +282,7 @@ String date=new StringBuilder().append(month + 1).append("-").append(day).append
             year = selectedYear;
             month = selectedMonth;
             day = selectedDay;
-            String date=new StringBuilder().append(month + 1).append("-").append(day).append("-").append(year).append(" ").toString();
+            String date = new StringBuilder().append(year).append("-").append(month + 1).append("-").append(day).append(" ").toString();
             // Show selected date
             dateTextView.setText(date);
 
@@ -293,7 +306,7 @@ String date=new StringBuilder().append(month + 1).append("-").append(day).append
             calibrationDueOn.setText(partnerInstrument.getCalibrationDueDate());
         }
 
-        testSpecification.setText("" + equipment.getVelocity());
+        testSpecification.setText("Required Air Velocity " + equipment.getVelocity() + "fpm +/- 20%");
         areaOfTest.setText(areaName);
         roomName.setText(roomDetails[1]);
         occupancyState.setText(equipment.getOccupancyState().toString());
@@ -351,22 +364,23 @@ String date=new StringBuilder().append(month + 1).append("-").append(day).append
         testDetails.setCustomer(customerName.getText().toString());
         testDetails.setDateOfTest(dateTextView.getText().toString());
         testDetails.setRawDataNo(certificateNo.getText().toString());
+        testDetails.setPartnerName("" + mPartnerName);
         if (loginUserType.equals("CLIENT")) {
             Log.d("getCertificateData", "client instrumentUsed.getText()=" + instrumentUsed.getText());
             testDetails.setInstrumentUsed("" + instrumentUsed.getText());
             testDetails.setMake("" + make.getText());
             testDetails.setModel("" + model.getText());
-            testDetails.setInstrumentNo(""+clientInstrument.getSerialNo());
-            testDetails.setCalibratedOn(""+clientInstrument.getLastCalibrated());
-            testDetails.setCalibratedDueOn(""+clientInstrument.getCalibrationDueDate());
+            testDetails.setInstrumentNo("" + clientInstrument.getSerialNo());
+            testDetails.setCalibratedOn("" + clientInstrument.getLastCalibrated());
+            testDetails.setCalibratedDueOn("" + clientInstrument.getCalibrationDueDate());
         } else {
             Log.d("getCertificateData", "instrumentUsed.getText()=" + instrumentUsed.getText());
             testDetails.setInstrumentUsed("" + instrumentUsed.getText());
             testDetails.setMake("" + make.getText());
             testDetails.setModel("" + model.getText());
             testDetails.setInstrumentNo("" + partnerInstrument.getpInstrumentId());
-            testDetails.setCalibratedOn(""+partnerInstrument.getLastCalibrated());
-            testDetails.setCalibratedDueOn(""+partnerInstrument.getCalibrationDueDate());
+            testDetails.setCalibratedOn("" + partnerInstrument.getLastCalibrated());
+            testDetails.setCalibratedDueOn("" + partnerInstrument.getCalibrationDueDate());
         }
 
 
@@ -379,8 +393,8 @@ String date=new StringBuilder().append(month + 1).append("-").append(day).append
         testDetails.setTestReference("" + testRefrance.getText());
         testDetails.setEquipmentName("" + equipment.getEquipmentName());
         testDetails.setEquipmentNo("" + equipment.getEquipmentNo());
-        testDetails.setTesterName(""+testCundoctor.getText());
-        testDetails.setWitnessName(""+testWitness.getText());
+        testDetails.setTesterName("" + testCundoctor.getText());
+        testDetails.setWitnessName("" + testWitness.getText());
         return testDetails;
     }
 
@@ -405,6 +419,7 @@ String date=new StringBuilder().append(month + 1).append("-").append(day).append
                 Log.d("valdoc", "DynamicTableActivity" + "onresume rows=extra not null");
                 loginUserType = extras.getString("USERTYPE");
                 userName = extras.getString("USERNAME");
+                mPartnerName = extras.getString("PRTNERNAME");
                 if (loginUserType.equals("CLIENT")) {
                     clientInstrument = (ClientInstrument) extras.getSerializable("ClientInstrument");
                 } else {

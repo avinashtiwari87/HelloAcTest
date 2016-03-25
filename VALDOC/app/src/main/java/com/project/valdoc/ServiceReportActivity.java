@@ -22,6 +22,7 @@ import com.project.valdoc.db.ValdocDatabaseHandler;
 import com.project.valdoc.intity.ServiceReport;
 import com.project.valdoc.intity.ServiceReportDetail;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -167,7 +168,7 @@ public class ServiceReportActivity extends AppCompatActivity implements View.OnC
         initTextView();
         textViewValueAssignment();
         datePicker();
-//        mPartnerName = getPartnerName();
+        mPartnerName = getPartnerName();
     }
 
 
@@ -726,8 +727,12 @@ public class ServiceReportActivity extends AppCompatActivity implements View.OnC
         day = c.get(Calendar.DAY_OF_MONTH);
 
 //        Sr No
+        SimpleDateFormat df = new SimpleDateFormat("HH:mm:ss");
+        String formattedDate = df.format(c.getTime());
+// Now formattedDate have current date/time
+        Toast.makeText(this, formattedDate, Toast.LENGTH_SHORT).show();
         int mon = month + 1;
-        serialNo.setText("SR/" + mon + "/" + year);
+        serialNo.setText("SR/" + mon + "/" + year+"/"+formattedDate);
         // Show current date
 
         date.setText(new StringBuilder()
