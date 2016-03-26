@@ -332,7 +332,7 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
 //        TO DO test details id is id of test details table
         testReading.setTest_detail_id(1);
 
-//        testReading.setEntityName(filterList);
+        testReading.setEntityName("filterList");
         StringBuilder sb = new StringBuilder();
         int index = 0;
         for (TextView testvalue : txtViewList) {
@@ -365,6 +365,7 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
         testDetails.setDateOfTest(dateTextView.getText().toString());
         testDetails.setRawDataNo(certificateNo.getText().toString());
         testDetails.setPartnerName("" + mPartnerName);
+        testDetails.setTestName("RD_AV_5");
         if (loginUserType.equals("CLIENT")) {
             Log.d("getCertificateData", "client instrumentUsed.getText()=" + instrumentUsed.getText());
             testDetails.setInstrumentUsed("" + instrumentUsed.getText());
@@ -395,6 +396,7 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
         testDetails.setEquipmentNo("" + equipment.getEquipmentNo());
         testDetails.setTesterName("" + testCundoctor.getText());
         testDetails.setWitnessName("" + testWitness.getText());
+        testDetails.setAhuNo("");
         return testDetails;
     }
 

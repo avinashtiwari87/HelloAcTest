@@ -450,8 +450,8 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
     public static final String SERVICE_REPORT_DETAIL_TYPEOFTEST = "typeOfTest";
     public static final String SERVICE_REPORT_DETAIL_AREAOFTEST = "areaOfTest";
     public static final String SERVICE_REPORT_DETAIL_EQUIPMENTAHUNO = "equipmentAhuNo";
-    public static final String SERVICE_REPORT_DETAIL_NOOFLOC = "NoOfLoc";
-    public static final String SERVICE_REPORT_DETAIL_NOOFHOURDAYS = "NoOfHourDays";
+    public static final String SERVICE_REPORT_DETAIL_NOOFLOC = "noOfLoc";
+    public static final String SERVICE_REPORT_DETAIL_NOOFHOURDAYS = "noOfHourDays";
 
 
     // service_report_detail table create statment
@@ -523,6 +523,20 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
         Log.d("valdoc", "table created success fully");
     }
 
+    public boolean deleteTable() {
+        SQLiteDatabase db = this.getWritableDatabase();
+//        db.delete("DROP TABLE IF EXISTS " + TEST_DETAILS_TABLE_NAME);
+//        db.execSQL("DROP TABLE IF EXISTS " + TESTREADING_TABLE_NAME);
+//        db.execSQL("DROP TABLE IF EXISTS " + TESTSPECIFICATIONVALUE_TABLE_NAME);
+//        db.execSQL("DROP TABLE IF EXISTS " + SERVICE_REPORT_TABLE_NAME);
+//        db.execSQL("DROP TABLE IF EXISTS " + SERVICE_REPORT_DETAIL_TABLE_NAME);
+        db.delete(TEST_DETAILS_TABLE_NAME,null,null);
+        db.delete(TESTREADING_TABLE_NAME,null,null);
+        db.delete(TESTSPECIFICATIONVALUE_TABLE_NAME,null,null);
+        db.delete(SERVICE_REPORT_TABLE_NAME,null,null);
+        db.delete(SERVICE_REPORT_DETAIL_TABLE_NAME,null,null);
+        return true;
+    }
 
     //insert daa in servicereportdetails table
     public boolean insertPartners(String tableName, ArrayList<Partners> partnersArrayList) {
@@ -547,6 +561,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 contentValues.put(PARTNERS_CELLNO, partners.getCellNo());
                 contentValues.put(PARTNERS_CREATIONDATE, partners.getCreationDate());
                 db.insert(tableName, null, contentValues);
+
             }
             return true;
         } else {

@@ -18,6 +18,8 @@ import com.project.valdoc.db.ValdocDatabaseHandler;
 import com.project.valdoc.task.HttpConnection;
 import com.project.valdoc.task.HttpPostConnection;
 
+import org.json.JSONObject;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -32,7 +34,7 @@ public class AfterLoginActivity extends AppCompatActivity implements HttpConnect
     private int appUserId;
     SharedPreferences sharedpreferences;
     ValdocControler mValdocControler;
-    private ValdocDatabaseHandler mValdocDatabaseHandler = new ValdocDatabaseHandler(AfterLoginActivity.this);
+    private ValdocDatabaseHandler mValdocDatabaseHandler;
     //?
 
 
@@ -41,6 +43,7 @@ public class AfterLoginActivity extends AppCompatActivity implements HttpConnect
         super.onCreate(savedInstanceState);
         sharedpreferences = getSharedPreferences("valdoc", Context.MODE_PRIVATE);
         mValdocControler = new ValdocControler();
+        mValdocDatabaseHandler = new ValdocDatabaseHandler(AfterLoginActivity.this);
         Bundle extras = getIntent().getExtras();
         if (extras == null) {
             userName = null;
@@ -337,7 +340,7 @@ public class AfterLoginActivity extends AppCompatActivity implements HttpConnect
 
 
     @Override
-    public void httpPostResponceResult(String resultData, int statusCode) {
+    public void httpPostResponceResult(final String resultData, int statusCode) {
         final int statuscode = statusCode;
         Log.d("VALDOC", "controler httpPostResponceResult response data1  statusCode=" + statusCode);
         Log.d("VALDOC", "controler httpPostResponceResult response data1  resultData=" + resultData);
@@ -345,7 +348,21 @@ public class AfterLoginActivity extends AppCompatActivity implements HttpConnect
             @Override
             public void run() {
                 if (statuscode == HttpURLConnection.HTTP_OK) {
-                    aleartDialog("Data synked successfully");
+                    JSONObject response;
+                    try {
+                        response = new JSONObject(resultData);
+                        if (response.getString("status").equalsIgnoreCase("success")) {
+                            if (mValdocDatabaseHandler.deleteTable()) {
+                                aleartDialog("Data synked successfully");
+                            } else {
+                                aleartDialog("Post Data not syncked successfully,Please sync again !");
+                            }
+                        }
+                    } catch (Exception e) {
+                        Log.d("valdoc", "AfterLoginActivity reponse exception=" + e.getMessage());
+                        aleartDialog("Post Data not syncked successfully,Please sync again !");
+                    }
+
                 } else {
                     aleartDialog("Post Data not syncked successfully,Please sync again !");
                 }

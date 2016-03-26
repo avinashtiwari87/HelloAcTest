@@ -398,7 +398,7 @@ public class RDPC3UserEntryActivity extends AppCompatActivity {
                 hasMapKey++;
             }
             grilList.append(sb).append(",").append(averageResultHashMap.get(i));
-            testReading.setValue(grilList.toString());
+            testReading.setValue("" + grilList.toString());
             testReadingArrayList.add(testReading);
         }
         return testReadingArrayList;
@@ -412,7 +412,8 @@ public class RDPC3UserEntryActivity extends AppCompatActivity {
         testDetails.setCustomer(customerName.getText().toString());
         testDetails.setDateOfTest(dateTextView.getText().toString());
         testDetails.setRawDataNo(certificateNo.getText().toString());
-        testDetails.setPartnerName(""+mPartnerName);
+        testDetails.setPartnerName("" + mPartnerName);
+        testDetails.setTestName("RD_PC_3");
         if (loginUserType.equals("CLIENT")) {
             testDetails.setInstrumentUsed(clientInstrument.getcInstrumentName());
             testDetails.setMake(clientInstrument.getMake());
@@ -439,14 +440,16 @@ public class RDPC3UserEntryActivity extends AppCompatActivity {
         testDetails.setTestReference(testRefrance.getText().toString());
         testDetails.setAhuNo(equipmentNo.getText().toString());
         testDetails.setTesterName(testCundoctor.getText().toString());
-
+        testDetails.setPartnerName("" + mPartnerName);
         StringBuilder witness = new StringBuilder();
         witness.append(witnessFirst.toString());
         if (null != witnessSecond && witnessSecond.length() > 0)
             witness.append("," + witnessSecond);
         if (null != witnessThird && witnessThird.length() > 0)
             witness.append("," + witnessThird);
-        testWitness.setText(witness);
+        testDetails.setWitnessName(""+witness);
+        testDetails.setEquipmentName("");
+        testDetails.setEquipmentNo("");
         return testDetails;
     }
 

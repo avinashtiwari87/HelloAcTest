@@ -392,20 +392,21 @@ public class RDRCTUserEntryActivity extends AppCompatActivity {
         testDetails.setCustomer(customerName.getText().toString());
         testDetails.setDateOfTest(dateTextView.getText().toString());
         testDetails.setRawDataNo(certificateNo.getText().toString());
+        testDetails.setTestName("RD_RCT");
         if (loginUserType.equals("CLIENT")) {
             testDetails.setInstrumentUsed(clientInstrument.getcInstrumentName());
             testDetails.setMake(clientInstrument.getMake());
             testDetails.setModel(clientInstrument.getModel());
-            testDetails.setInstrumentNo(clientInstrument.getSerialNo());
-            testDetails.setCalibratedOn(clientInstrument.getLastCalibrated());
-            testDetails.setCalibratedDueOn(clientInstrument.getCalibrationDueDate());
+            testDetails.setInstrumentNo(""+clientInstrument.getSerialNo());
+            testDetails.setCalibratedOn(""+clientInstrument.getLastCalibrated());
+            testDetails.setCalibratedDueOn(""+clientInstrument.getCalibrationDueDate());
         } else {
             testDetails.setInstrumentUsed(partnerInstrument.getpInstrumentName());
             testDetails.setMake(partnerInstrument.getMake());
             testDetails.setModel(partnerInstrument.getModel());
             testDetails.setInstrumentNo("" + partnerInstrument.getpInstrumentId());
-            testDetails.setCalibratedOn(partnerInstrument.getLastCalibrated());
-            testDetails.setCalibratedDueOn(partnerInstrument.getCalibrationDueDate());
+            testDetails.setCalibratedOn(""+partnerInstrument.getLastCalibrated());
+            testDetails.setCalibratedDueOn(""+partnerInstrument.getCalibrationDueDate());
         }
 
 
@@ -425,7 +426,10 @@ public class RDRCTUserEntryActivity extends AppCompatActivity {
             witness.append("," + witnessSecond);
         if (null != witnessThird && witnessThird.length() > 0)
             witness.append("," + witnessThird);
-        testWitness.setText(witness);
+
+        testDetails.setWitnessName("" + witness);
+        testDetails.setEquipmentName("");
+        testDetails.setEquipmentNo("");
         return testDetails;
     }
 

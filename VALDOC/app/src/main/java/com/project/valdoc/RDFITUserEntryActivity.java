@@ -144,20 +144,20 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
         for (Map.Entry O : PassFailHashMap.entrySet()) {
             Log.v(TAG, " PassFail " + O.getKey() + " " + O.getValue());
         }
-        int passFlag=1;
+        int passFlag = 1;
         for (int i = 0; i < txtPassFailList.size(); i++) {
             TextView tvl = txtPassFailList.get(i);
             tvl.setText(PassFailHashMap.get(tvl.getId()) + "");
             if ("PASS".equalsIgnoreCase(tvl.getText().toString().trim())) {
                 tvl.setTextColor(getResources().getColor(R.color.blue));
             } else {
-                passFlag=0;
+                passFlag = 0;
                 tvl.setTextColor(getResources().getColor(R.color.red));
             }
         }
-        if(passFlag==1) {
+        if (passFlag == 1) {
             infarance.setText("The HEPA Filter System do not Qualifies for the above leak test.");
-        }else{
+        } else {
             infarance.setText("The HEPA Filter System Qualifies for the above leak test.");
         }
     }
@@ -176,7 +176,7 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
 // Now formattedDate have current date/time
         Toast.makeText(this, formattedDate, Toast.LENGTH_SHORT).show();
         int mon = month + 1;
-        certificateNo.setText("IT/" + mon + "/" + year+"/"+formattedDate);
+        certificateNo.setText("IT/" + mon + "/" + year + "/" + formattedDate);
 
         // Show current date
         String date = new StringBuilder().append(year).append("-").append(month + 1).append("-").append(day).append(" ").toString();
@@ -226,19 +226,19 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
             instrumentUsed.setText(clientInstrument.getcInstrumentName());
             make.setText(clientInstrument.getMake());
             model.setText(clientInstrument.getModel());
-            instrumentSerialNo.setText(""+clientInstrument.getSerialNo());
+            instrumentSerialNo.setText("" + clientInstrument.getSerialNo());
             calibrationOn.setText(clientInstrument.getLastCalibrated());
             calibrationDueOn.setText(clientInstrument.getCalibrationDueDate());
         } else {
             instrumentUsed.setText(partnerInstrument.getpInstrumentName());
             make.setText(partnerInstrument.getMake());
             model.setText(partnerInstrument.getModel());
-            instrumentSerialNo.setText(""+partnerInstrument.getpInstrumentId());
+            instrumentSerialNo.setText("" + partnerInstrument.getpInstrumentId());
             calibrationOn.setText(partnerInstrument.getLastCalibrated());
             calibrationDueOn.setText(partnerInstrument.getCalibrationDueDate());
         }
 
-        testSpecification.setText("Maximum Permiceable leakage " + room.getAcphNLT()+"%");
+        testSpecification.setText("Maximum Permiceable leakage " + room.getAcphNLT() + "%");
 //                plantName
         areaOfTest.setText(areaName);
         roomName.setText(room.getRoomName());
@@ -371,7 +371,8 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
         testDetails.setCustomer(customerName.getText().toString());
         testDetails.setDateOfTest(dateTextView.getText().toString());
         testDetails.setRawDataNo(certificateNo.getText().toString());
-        testDetails.setPartnerName(""+mPartnerName);
+        testDetails.setPartnerName("" + mPartnerName);
+        testDetails.setTestName("RD_FIT");
         if (loginUserType.equals("CLIENT")) {
             testDetails.setInstrumentUsed(clientInstrument.getcInstrumentName());
             testDetails.setMake(clientInstrument.getMake());
@@ -405,7 +406,9 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
             witness.append("," + witnessSecond);
         if (null != witnessThird && witnessThird.length() > 0)
             witness.append("," + witnessThird);
-        testWitness.setText(witness);
+        testDetails.setWitnessName("" + witness);
+        testDetails.setEquipmentName("");
+        testDetails.setEquipmentNo("");
         return testDetails;
     }
 
@@ -433,7 +436,7 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
                 witnessThird = extras.getString("WITNESSTHIRD");
                 //get area based on room area id
                 areaName = extras.getString("AREANAME");
-                mPartnerName=extras.getString("PRTNERNAME");
+                mPartnerName = extras.getString("PRTNERNAME");
                 if (loginUserType.equals("CLIENT")) {
                     clientInstrument = (ClientInstrument) extras.getSerializable("ClientInstrument");
                 } else {

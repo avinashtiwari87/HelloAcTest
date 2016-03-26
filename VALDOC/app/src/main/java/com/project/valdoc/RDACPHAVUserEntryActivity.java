@@ -426,7 +426,8 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
         testDetails.setCustomer(customerName.getText().toString());
         testDetails.setDateOfTest(dateTextView.getText().toString());
         testDetails.setRawDataNo(certificateNo.getText().toString());
-        testDetails.setPartnerName(""+mPartnerName);
+        testDetails.setPartnerName("" + mPartnerName);
+        testDetails.setTestName("RD_ACPH_AV");
         if (loginUserType.equals("CLIENT")) {
             testDetails.setInstrumentUsed(clientInstrument.getcInstrumentName());
             testDetails.setMake(clientInstrument.getMake());
@@ -460,6 +461,9 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
         if (null != witnessThird && witnessThird.length() > 0)
             witness.append("," + witnessThird);
         testWitness.setText(witness);
+        testDetails.setWitnessName("" + witness);
+        testDetails.setEquipmentName("");
+        testDetails.setEquipmentNo("");
         return testDetails;
     }
 
