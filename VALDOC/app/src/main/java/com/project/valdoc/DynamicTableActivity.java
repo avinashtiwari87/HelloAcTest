@@ -2,8 +2,10 @@ package com.project.valdoc;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -11,7 +13,9 @@ import android.text.InputType;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -47,10 +51,10 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             test3_table_layout5;
     //Test 4 View ...
     TableLayout test4_table_layout, test4_table_layout2, test4_table_layout3, test4_table_layout4,
-            test4_table_layout5, test4_table_layout6, test4_table_layout7;
+            test4_table_layout5, test4_table_layout6, test4_table_layout7, test4_table_layout8;
     //Test 5 View ...
-    TableLayout test5_table_layout, test5_table_layout2, test5_table_layout2_1,
-            test5_table_layout3, test5_table_layout4, test5_table_layout4_1,
+    TableLayout test5_table_layout, test5_table_layout2, test5_table_layout2_1, test5_tableLayout2_2,
+            test5_table_layout3, test5_table_layout4, test5_tableLayout4_2, test5_table_layout4_1,
             test5_table_layout5, test5_table_layout5_1, test5_table_layout3_1;
     //Test 6 View ...
     TableLayout test6A_table_layout, test6A_table_layout2, test6A_table_layout3,
@@ -67,7 +71,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
            must be defined in Constant Class
     * */
     //Test 1 Ids variable also used in test 2
-    int idCountEtv = 200, idCountTv = 1;
+    int idCountEtv = 200, idCountTv = 1, idCountFitStrm = 800, idCountFitAftStrm = 900;
     //Test 2 Ids variable
     int filterSizeIds = 100, airFlowRateIds = 300,
             totalAirFlowRateIds = 400;
@@ -92,12 +96,14 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
     ArrayList<TextView> airChangeTxtList;
     ArrayList<TextView> RDPC3TxtList, RDPC3TxtList2;
 
+    HashMap<Integer, Double> rdFitInputDataHashMap;
     HashMap<Integer, Integer> inputDataHashMap;
     HashMap<Integer, String> passFailHashMap;
     HashMap<Integer, Long> resultDataHashMap;
     HashMap<Integer, Float> resultDataHashMap2;
     HashMap<Integer, Integer> rowTagHashMap;
     int inputValue = 0, AirChangeValue = 0;
+    double fitInputValue = 0.0;
     float totalAirFlowRate = 0f;
     private boolean isClearClicked = false;
 
@@ -119,6 +125,8 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
     private String witnessThird;
     private int applicableTestEquipmentLocation;
     private int applicableTestRoomLocation;
+    private TextView roomName;
+    private TextView instrumentName;
     private TextView instrumentNo;
     private TextView testerName;
     private int noOfCycle;
@@ -156,7 +164,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         RDPC3TxtList2 = new ArrayList<TextView>();
         txtSlpDlpList = new ArrayList<TextView>();
 
-
+        rdFitInputDataHashMap = new HashMap<Integer, Double>();
         inputDataHashMap = new HashMap<Integer, Integer>();
         resultDataHashMap = new HashMap<Integer, Long>();
         passFailHashMap = new HashMap<Integer, String>();
@@ -167,7 +175,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         createTableRowColum();
         //setting the test 2 room volume
         if (roomVolumeTxtList != null && roomVolumeTxtList.size() > 0)
-            if ("RD_ACPH_H".equals(testType)) {
+            if (TestCreateActivity.ACPHH.equals(testType)) {
                 roomVolumeTxtList.get((int) (roomVolumeTxtList.size() / 2)).setText("" + room.getVolume());
             } else {
                 roomVolumeTxtList.get((int) (roomVolumeTxtList.size() / 2)).setText("8500");
@@ -207,7 +215,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 } else {
                     partnerInstrument = (PartnerInstrument) extras.getSerializable("PartnerInstrument");
                 }
-                if ("RD_AV_5".equals(testType)) {
+                if (TestCreateActivity.AV.equals(testType)) {
                     roomDetails = extras.getStringArray("RoomDetails");
                     equipment = (Equipment) extras.getSerializable("Equipment");
                     //get filter list from equipment filter
@@ -219,35 +227,35 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                     Log.d("valdoc", "DynamicTableActivity" + "onresume rows=applicableTestEquipmentLocation" + applicableTestEquipmentLocation);
                 }
 
-                if ("RD_ACPH_AV".equals(testType)) {
+                if (TestCreateActivity.ACPHAV.equals(testType)) {
                     room = (Room) extras.getSerializable("Room");
                     ahuNumber = extras.getString("AhuNumber");
                     applicableTestRoomLocation = extras.getInt("LOCATION");
                     grillAndSizeFromGrill = (ArrayList<HashMap<String, String>>) extras.getSerializable("GRILLIST");
                 }
 
-                if ("RD_ACPH_H".equals(testType)) {
+                if (TestCreateActivity.ACPHH.equals(testType)) {
                     //get room name,roomNo,and area id
                     room = (Room) extras.getSerializable("Room");
                     ahuNumber = extras.getString("AhuNumber");
                     //get filter list from grill filter
                     grillAndSizeFromGrill = (ArrayList<HashMap<String, String>>) extras.getSerializable("GRILLIST");
                 }
-                if ("RD_FIT".equals(testType)) {
+                if (TestCreateActivity.FIT.equals(testType)) {
                     room = (Room) extras.getSerializable("Room");
                     ahuNumber = extras.getString("AhuNumber");
                     //take test specification from room filter
                     filterArrayList = (ArrayList<RoomFilter>) extras.getSerializable("RoomFilterList");
                     //TO Do testspesification will be shown from room filter spesification
                 }
-                if ("RD_PC_3".equals(testType)) {
+                if (TestCreateActivity.PCT.equals(testType)) {
                     room = (Room) extras.getSerializable("Room");
                     ahuNumber = extras.getString("AhuNumber");
                     applicableTestRoomLocation = extras.getInt("LOCATION");
                     noOfCycle = extras.getInt("NOOFCYCLE");
                     Log.d("valdoc", "DynamicTableActivity" + "NOOFCYCLE NOOFCYCLE=" + noOfCycle + "location=" + applicableTestRoomLocation);
                 }
-                if ("RD_RCT".equals(testType)) {
+                if (TestCreateActivity.RCT.equals(testType)) {
                     room = (Room) extras.getSerializable("Room");
                     ahuNumber = extras.getString("AhuNumber");
                     applicableTestRoomLocation = extras.getInt("LOCATION");
@@ -258,42 +266,71 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
 
     }
 
+    public void aleartDialog(String message) {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setMessage(message);
+
+        alertDialogBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface arg0, int arg1) {
+//                finish();
+            }
+        });
+
+//        alertDialogBuilder.setNegativeButton("No",new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//                finish();
+//            }
+//        });
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+    }
+
     private void createTableRowColum() {
-        if ("RD_AV_5".equalsIgnoreCase(testType)) {
+        if (TestCreateActivity.AV.equalsIgnoreCase(testType)) {
             if (filterList != null && filterList.length > 0)
                 BuildTable(filterList.length + 1, applicableTestEquipmentLocation);
             else
-                BuildTable(3, 4);
+                aleartDialog("There is no filter or equipment location");
         }
-        if ("RD_ACPH_AV".equalsIgnoreCase(testType)) {
-            if (grillAndSizeFromGrill != null && grillAndSizeFromGrill.size() > 0)
+        if (TestCreateActivity.ACPHAV.equalsIgnoreCase(testType)) {
+            if (grillAndSizeFromGrill != null && grillAndSizeFromGrill.size() > 0 && applicableTestRoomLocation > 0)
                 BuildTableTest2(grillAndSizeFromGrill.size() + 1, applicableTestRoomLocation);
             else
-                BuildTableTest2(3, 4);
+                aleartDialog("There is no gril or applicable test room location");
         }
-        if ("RD_ACPH_H".equalsIgnoreCase(testType)) {
+        if (TestCreateActivity.ACPHH.equalsIgnoreCase(testType)) {
             if (grillAndSizeFromGrill != null && grillAndSizeFromGrill.size() > 0)
                 BuildTableTest3(grillAndSizeFromGrill.size() + 1, applicableTestRoomLocation);
             else
-                BuildTableTest3(3, 4);
+                aleartDialog("There is no gril or applicable test room location");
         }
-        if ("RD_FIT".equalsIgnoreCase(testType)) {
+        if (TestCreateActivity.FIT.equalsIgnoreCase(testType)) {
             Log.d("valdoc", "DynamicTableActivity" + "rows=" + filterArrayList.size());
             if (filterArrayList != null && filterArrayList.size() > 0)
                 BuildTableTest4(filterArrayList.size() + 1, cols);
             else
-                BuildTableTest4(3, 4);
+                aleartDialog("There is no filter ");
         }
-        if ("RD_PC_3".equalsIgnoreCase(testType)) {
+        if (TestCreateActivity.PCT.equalsIgnoreCase(testType)) {
             rows = applicableTestRoomLocation + 1;
-            BuildTableTest5(applicableTestRoomLocation + 1, noOfCycle);
+            if (rows >= 1) {
+                BuildTableTest5(applicableTestRoomLocation + 1, noOfCycle);
+            } else
+                aleartDialog("There is no noOfCycle or applicable test room location");
         }
-        if ("RD_RCT".equalsIgnoreCase(testType)) {
-            if (grillAndSizeFromGrill != null && grillAndSizeFromGrill.size() > 0)
-                BuildTableTest6(grillAndSizeFromGrill.size() + 1, cols);
-            else
-                BuildTableTest6(4, 6);
+        if (TestCreateActivity.RCT.equalsIgnoreCase(testType)) {
+//            if (grillAndSizeFromGrill != null && grillAndSizeFromGrill.size() > 0)
+//                BuildTableTest6(grillAndSizeFromGrill.size() + 1, cols);
+            BuildTableTest6( 3, 1);
+//            else
+//                aleartDialog("There is no gril");
         }
+
+        if (pr.isShowing())
+            pr.dismiss();
     }
 
     @Override
@@ -319,7 +356,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
     public void onClick(View view) {
         if (view == verify_btn) {
             Intent intent = null;
-            if ("RD_AV_5".equalsIgnoreCase(testType)) {
+            if (TestCreateActivity.AV.equalsIgnoreCase(testType)) {
                 intent = new Intent(DynamicTableActivity.this, RDAV5UserEntryActivity.class);
                 // put bundel data
                 intent.putExtra("USERTYPE", loginUserType);
@@ -352,7 +389,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 intent.putExtra("testType", testType);
                 startActivity(intent);
             }
-            if ("RD_ACPH_AV".equalsIgnoreCase(testType)) {
+            if (TestCreateActivity.ACPHAV.equalsIgnoreCase(testType)) {
                 intent = new Intent(DynamicTableActivity.this, RDACPHAVUserEntryActivity.class);
                 // put bundel data
                 intent.putExtra("USERTYPE", loginUserType);
@@ -388,7 +425,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 startActivity(intent);
 
             }
-            if ("RD_ACPH_H".equalsIgnoreCase(testType)) {
+            if (TestCreateActivity.ACPHH.equalsIgnoreCase(testType)) {
                 intent = new Intent(DynamicTableActivity.this, RDACPHhUserEntryActivity.class);
                 // put bundel data
                 intent.putExtra("USERTYPE", loginUserType);
@@ -419,7 +456,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
 
                 startActivity(intent);
             }
-            if ("RD_FIT".equalsIgnoreCase(testType)) {
+            if (TestCreateActivity.FIT.equalsIgnoreCase(testType)) {
                 intent = new Intent(DynamicTableActivity.this, RDFITUserEntryActivity.class);
                 // put bundel data
                 intent.putExtra("USERTYPE", loginUserType);
@@ -445,13 +482,13 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 //sending Result Data over Bundle
                 intent.putExtra("PassFailData", passFailHashMap);
                 //sending Input Data
-                intent.putExtra("InputData", inputDataHashMap);
+                intent.putExtra("InputData", rdFitInputDataHashMap);
 
                 //TO Do testspesification will be shown from room filter spesification
                 // location will be the size off rommfilter list
                 startActivity(intent);
             }
-            if ("RD_PC_3".equalsIgnoreCase(testType)) {
+            if (TestCreateActivity.PCT.equalsIgnoreCase(testType)) {
                 intent = new Intent(DynamicTableActivity.this, RDPC3UserEntryActivity.class);
                 // put bundel data
                 intent.putExtra("USERTYPE", loginUserType);
@@ -483,10 +520,13 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 intent.putExtra("meanValue2", meanValue2);
                 intent.putExtra("stdDev1", stdDev1);
                 intent.putExtra("stdDev2", stdDev2);
+//                intent.putExtra("RDPC3TxtList", RDPC3TxtList);
+//                intent.putExtra("RDPC3TxtList2", RDPC3TxtList2);
+
 
                 startActivity(intent);
             }
-            if ("RD_RCT".equalsIgnoreCase(testType)) {
+            if (TestCreateActivity.RCT.equalsIgnoreCase(testType)) {
 //                Toast.makeText(DynamicTableActivity.this, "Under development", Toast.LENGTH_LONG).show();
                 intent = new Intent(DynamicTableActivity.this, RDRCTUserEntryActivity.class);
                 // put bundel data
@@ -509,12 +549,12 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 intent.putExtra("AhuNumber", ahuNumber);
                 intent.putExtra("LOCATION", applicableTestRoomLocation);
                 intent.putExtra("NOOFCYCLE", noOfCycle);
-                intent.putExtra("InitialReading", "" +  inputDataHashMap.get(200));
+                intent.putExtra("InitialReading", "" + inputDataHashMap.get(200));
                 intent.putExtra("WorstCaseReading", "" + inputDataHashMap.get(201));
                 intent.putExtra("FinalReading", "" + finalReadingValueTv.getText().toString());
                 intent.putExtra("RecoveryTime", rowsCount);
                 intent.putExtra("InputData", inputDataHashMap);
-                intent.putExtra("VALUE",testReadingEditTextList);
+                intent.putExtra("VALUE", testReadingEditTextList);
 //                intent.putExtra("rows", grillAndSizeFromGrill.size() + 1);
 //                intent.putExtra("cols", applicableTestRoomLocation);
 
@@ -531,8 +571,10 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                             && !"".equals(editTextList.get(i).getText().toString().trim())) {
                         editTextList.get(i).setText("");
                         inputDataHashMap.put(editTextList.get(i).getId(), 0);
+                        rdFitInputDataHashMap.put(editTextList.get(i).getId(), 0.0);
                     }
                 }
+
             }
             if (txtViewList.size() > 0) {
                 for (int i = 0; i < txtViewList.size(); i++) {
@@ -659,7 +701,12 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
-                    row.addView(addTextView(" Location "));
+
+                    TextView textView = addTextView(" Location ");
+                    ViewGroup.LayoutParams params = textView.getLayoutParams();
+                    params.height = getResources().getDimensionPixelSize(R.dimen.text_view_height);
+                    textView.setLayoutParams(params);
+                    row.addView(textView);
                 } else {
                     int position = i - 1;
                     row.addView(addTextView(" " + position));
@@ -676,12 +723,23 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             test5_table_layout.addView(row);
         }
 
+// adding no of partical text
+//        if(i==1) {
+        TableRow row1 = new TableRow(this);
+        row1.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
+                TableRow.LayoutParams.MATCH_PARENT));
+        row1.addView(addTextView(" No. of Particles >=0. 5 µm/m³"));
+        test5_tableLayout2_2.addView(row1);
+//        test5_table_layout2_1.addView(row1);
+//        }
+
         //Second section
         // outer for loop
         for (int i = 1; i <= rows; i++) {
             TableRow row = new TableRow(this);
             row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
                     TableRow.LayoutParams.WRAP_CONTENT));
+
             // inner for loop 1
             for (int j = 1; j <= cols; j++) {
                 if (i == 1 && j <= cols) {
@@ -718,7 +776,11 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
-                    row.addView(addTextView(" Average "));
+                    TextView textView = addTextView(" Average ");
+                    ViewGroup.LayoutParams params = textView.getLayoutParams();
+                    params.height = getResources().getDimensionPixelSize(R.dimen.text_view_height);
+                    textView.setLayoutParams(params);
+                    row.addView(textView);
                 } else {
                     row.addView(addResultTextView(i));
                 }
@@ -735,6 +797,13 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             test5_table_layout3_1.addView(rowFooter);
             test5CommonFormulaIds1++;
         }
+
+
+        TableRow row2 = new TableRow(this);
+        row2.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
+                TableRow.LayoutParams.MATCH_PARENT));
+        row2.addView(addTextView(" No. of Particles >= 5 µm/m³  "));
+        test5_tableLayout4_2.addView(row2);
 
 
         //Fourth section
@@ -759,9 +828,35 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             TableRow row = new TableRow(this);
             row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
                     TableRow.LayoutParams.WRAP_CONTENT));
-            row.addView(addStretchedTextView("  "));
+            if (sk == 0) {
+                row.addView(addStretchedTextView(" Mean Average "));
+            }
+            if (sk == 1) {
+                row.addView(addStretchedTextView(" Standard Deviation "));
+            }
+            if (sk == 2) {
+                row.addView(addStretchedTextView(" 95% UCL "));
+            }
+//            row.addView(addStretchedTextView(" Mean Average  "));
             test5_table_layout4.addView(row);
         }
+
+//        for (int sk = 0; sk < 3; sk++) {
+//            TableRow row = new TableRow(this);
+//            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+//                    TableRow.LayoutParams.WRAP_CONTENT));
+//            if (sk == 0) {
+//                row.addView(addStretchedTextView(" Mean Average "));
+//            }
+//            if (sk == 1) {
+//                row.addView(addStretchedTextView(" Standard Deviation "));
+//            }
+//            if (sk == 2) {
+//                row.addView(addStretchedTextView(" 95% UCL "));
+//            }
+//            test5_table_layout2.addView(row);
+//        }
+
 
         //Fifth section
         // outer for loop
@@ -772,7 +867,11 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
-                    row.addView(addTextView(" Average "));
+                    TextView textView = addTextView(" Average ");
+                    ViewGroup.LayoutParams params = textView.getLayoutParams();
+                    params.height = getResources().getDimensionPixelSize(R.dimen.text_view_height);
+                    textView.setLayoutParams(params);
+                    row.addView(textView);
                 } else {
                     row.addView(addResultTextView(rows + i));
                 }
@@ -868,9 +967,9 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
-                    row.addView(addTextView(" Average Up Stream\n Concentration (µg/liter) "));
+                    row.addView(addTextView(" Average Up Stream\nConcentration (µg/liter) "));
                 } else {
-                    row.addView(addTextView(" 42 "));
+                    row.addView(addEditTextViewbeforestream(i));
                     //row.addView(addEditTextView(i));
                 }
 
@@ -878,12 +977,31 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             test4_table_layout4.addView(row);
         }
 
-        //Fifth section
+        //Fifthe section section
         // outer for loop
         for (int i = 1; i <= rows; i++) {
             TableRow row = new TableRow(this);
             row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
                     TableRow.LayoutParams.WRAP_CONTENT));
+            // inner for loop
+            for (int j = 1; j <= 1; j++) {
+                if (i == 1 && j == 1) {
+                    row.addView(addTextView(" Average Up Stream after\nConcentration (µg/liter) "));
+                } else {
+                    row.addView(addEditTextViewAfterStream(i));
+                    //row.addView(addEditTextView(i));
+                }
+
+            }
+            test4_table_layout5.addView(row);
+        }
+
+        //sixth section
+        // outer for loop
+        for (int i = 1; i <= rows; i++) {
+            TableRow row = new TableRow(this);
+            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+                    TableRow.LayoutParams.MATCH_PARENT));
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
@@ -898,10 +1016,10 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 }
 
             }
-            test4_table_layout5.addView(row);
+            test4_table_layout6.addView(row);
         }
 
-        //Sixth section
+        //seventh section
         // outer for loop
         for (int i = 1; i <= rows; i++) {
             TableRow row = new TableRow(this);
@@ -917,10 +1035,10 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 }
 
             }
-            test4_table_layout6.addView(row);
+            test4_table_layout7.addView(row);
         }
 
-        //Seventh section
+        //Eighth section
         // outer for loop
         for (int i = 1; i <= rows; i++) {
             TableRow row = new TableRow(this);
@@ -936,7 +1054,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 }
 
             }
-            test4_table_layout7.addView(row);
+            test4_table_layout8.addView(row);
         }
 
         //dismiss progressbar
@@ -963,7 +1081,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                         Log.d("valdoc", "DynamicTableActivity grillAndSizeFromGrill=" + grillAndSizeFromGrill.size() + "i=" + i);
                         row.addView(addTextView(grill.get(ValdocDatabaseHandler.GRILL_GRILLCODE).toString()));
                     } else {
-                        row.addView(addTextView("grillAndSizeFromGrill"));
+//                        row.addView(addTextView("grillAndSizeFromGrill"));
                     }
                 }
 
@@ -1066,7 +1184,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                         Log.d("valdoc", "DynamicTableActivity grillAndSizeFromGrill=" + grillAndSizeFromGrill.size() + "i=" + i);
                         row.addView(addTextView(grill.get(ValdocDatabaseHandler.GRILL_GRILLCODE).toString()));
                     } else {
-                        row.addView(addTextView("grillAndSizeFromGrill"));
+//                        row.addView(addTextView("grillAndSizeFromGrill"));
                     }
                 }
             }
@@ -1085,11 +1203,13 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                     row.addView(addTextView(" Grill/Filter Size\n in ft2(A)"));
                 } else {
                     // row.addView(addTextView("1.9"));
-                    HashMap<String, String> grill = (HashMap<String, String>) grillAndSizeFromGrill.get(i - 2);
-                    float filterSize = 0.0f;
-                    if (!grill.isEmpty())
-                        filterSize = Float.parseFloat(grill.get(ValdocDatabaseHandler.GRILL_EFFECTIVEAREA).toString());
-                    row.addView(addTextViewWithTagIds(i, filterSizeIds, filterSizeTxtViewList, filterSize + ""));
+                    if (null != grillAndSizeFromGrill && grillAndSizeFromGrill.size() > 0) {
+                        HashMap<String, String> grill = (HashMap<String, String>) grillAndSizeFromGrill.get(i - 2);
+                        float filterSize = 0.0f;
+                        if (!grill.isEmpty())
+                            filterSize = Float.parseFloat(grill.get(ValdocDatabaseHandler.GRILL_EFFECTIVEAREA).toString());
+                        row.addView(addTextViewWithTagIds(i, filterSizeIds, filterSizeTxtViewList, filterSize + ""));
+                    }
 
                 }
             }
@@ -1223,7 +1343,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
-                    row.addView(addTextView(" V "));
+                    row.addView(addTextView(" Average(V) "));
                 } else {
                     row.addView(addResultTextView(i));
                 }
@@ -1306,9 +1426,11 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
                 TableRow.LayoutParams.WRAP_CONTENT));
         tv.setBackgroundResource(R.drawable.border1);
+        tv.setGravity(Gravity.CENTER);
         //tv.setPadding(5, 5, 5, 5);
         tv.setTextColor(getResources().getColor(R.color.black));
         tv.setTextSize(getResources().getDimension(R.dimen.normal_text_size));
+        tv.setGravity(Gravity.CENTER);
         //tv.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD);
         tv.setSingleLine(false);
         tv.setMaxLines(3);
@@ -1327,6 +1449,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         //tv.setPadding(5, 5, 5, 5);
         tv.setTextColor(getResources().getColor(R.color.black));
         tv.setTextSize(getResources().getDimension(R.dimen.normal_text_size));
+        tv.setGravity(Gravity.CENTER);
         //tv.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD);
         tv.setSingleLine(false);
         tv.setTag(tagRows);
@@ -1347,6 +1470,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         //tv.setPadding(5, 5, 5, 5);
         tv.setTextColor(getResources().getColor(R.color.black));
         tv.setTextSize(getResources().getDimension(R.dimen.normal_text_size));
+        tv.setGravity(Gravity.CENTER);
         //tv.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD);
         tv.setSingleLine(false);
         if (rows != 0)
@@ -1367,6 +1491,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         tv.setPadding(5, 5, 5, 5);
         tv.setTextColor(getResources().getColor(R.color.black));
         tv.setTextSize(getResources().getDimension(R.dimen.normal_text_size));
+        tv.setGravity(Gravity.CENTER);
         //tv.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD);
         tv.setSingleLine(true);
         tv.setEllipsize(TextUtils.TruncateAt.END);
@@ -1384,6 +1509,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         tv.setTextSize(getResources().getDimension(R.dimen.normal_text_size));
         //tv.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD);
         tv.setSingleLine(true);
+        tv.setGravity(Gravity.CENTER);
         tv.setEllipsize(TextUtils.TruncateAt.END);
         Log.d(TAG, "No Border idCountTv " + ids);
         if (ids > 0)
@@ -1407,6 +1533,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         tv.setSingleLine(true);
         tv.setEllipsize(TextUtils.TruncateAt.END);
         tv.setText(value);
+        tv.setGravity(Gravity.CENTER);
         Log.d(TAG, "TAG & idCountTv " + Ids);
         tv.setId(Ids);
         tv.setTag(Tag);
@@ -1423,6 +1550,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         tv.setPadding(5, 5, 5, 5);
         tv.setTextColor(getResources().getColor(R.color.black));
         tv.setTextSize(getResources().getDimension(R.dimen.normal_text_size));
+        tv.setGravity(Gravity.CENTER);
         //tv.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD);
         tv.setEms(4);
         tv.setSingleLine(true);
@@ -1435,6 +1563,59 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         return tv;
     }
 
+    //Fit up stream after
+    private EditText addEditTextViewAfterStream(int rowNo) {
+        EditText editTv = new EditText(this);
+        editTv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+                TableRow.LayoutParams.WRAP_CONTENT));
+        editTv.setBackgroundResource(R.drawable.border);
+        editTv.setPadding(8, 6, 8, 6);
+        editTv.setTextColor(getResources().getColor(R.color.black));
+        editTv.setTextSize(getResources().getDimension(R.dimen.normal_text_size));
+        editTv.setGravity(Gravity.CENTER);
+        //editTv.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD);
+        editTv.setEms(4);
+        editTv.setSingleLine(true);
+        editTv.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+        editTv.setEllipsize(TextUtils.TruncateAt.END);
+        Log.d(TAG, "EditText idCountFitAftStrm " + idCountFitAftStrm);
+        editTv.setId(idCountFitAftStrm);
+        editTv.setTag(rowNo);
+        editTv.addTextChangedListener((new TextValidator(
+                DynamicTableActivity.this, idCountFitAftStrm)));
+        editTextList.add(editTv);
+        testReadingEditTextList.add(editTv.getText().toString());
+        idCountFitAftStrm++;
+        return editTv;
+    }
+
+    //Fit upstream before
+    private EditText addEditTextViewbeforestream(int rowNo) {
+        EditText editTv = new EditText(this);
+        editTv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+                TableRow.LayoutParams.WRAP_CONTENT));
+        editTv.setBackgroundResource(R.drawable.border);
+        editTv.setPadding(8, 6, 8, 6);
+        editTv.setTextColor(getResources().getColor(R.color.black));
+        editTv.setTextSize(getResources().getDimension(R.dimen.normal_text_size));
+        editTv.setGravity(Gravity.CENTER);
+        //editTv.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD);
+        editTv.setEms(4);
+        editTv.setSingleLine(true);
+        editTv.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+        editTv.setEllipsize(TextUtils.TruncateAt.END);
+        Log.d(TAG, "EditText idCountFitStrm " + idCountFitStrm);
+        editTv.setId(idCountFitStrm);
+        editTv.setTag(rowNo);
+        editTv.addTextChangedListener((new TextValidator(
+                DynamicTableActivity.this, idCountFitStrm)));
+        editTextList.add(editTv);
+        testReadingEditTextList.add(editTv.getText().toString());
+        idCountFitStrm++;
+        return editTv;
+    }
+
+    //Fit Likage
     private EditText addEditTextView(int rowNo) {
         EditText editTv = new EditText(this);
         editTv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
@@ -1443,10 +1624,11 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         editTv.setPadding(8, 6, 8, 6);
         editTv.setTextColor(getResources().getColor(R.color.black));
         editTv.setTextSize(getResources().getDimension(R.dimen.normal_text_size));
+        editTv.setGravity(Gravity.CENTER);
         //editTv.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD);
         editTv.setEms(4);
         editTv.setSingleLine(true);
-        editTv.setInputType(InputType.TYPE_CLASS_NUMBER);
+        editTv.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
         editTv.setEllipsize(TextUtils.TruncateAt.END);
         Log.d(TAG, "EditText idCountEtv " + idCountEtv);
         editTv.setId(idCountEtv);
@@ -1475,7 +1657,11 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
             try {
                 if (!"".equals(charSequence.toString()))
-                    inputValue = inputValue - Integer.parseInt(charSequence.toString());
+                    if (TestCreateActivity.FIT.equals(testType)) {
+                        fitInputValue = fitInputValue - Double.parseDouble(charSequence.toString());
+                    } else {
+                        inputValue = inputValue - Integer.parseInt(charSequence.toString());
+                    }
                 Log.d(TAG, " Removed inputValue " + inputValue);
             } catch (NumberFormatException e) {
                 e.printStackTrace();
@@ -1491,7 +1677,11 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             Log.d(TAG, " EdiTextChange : ii " + viewById + " editable : " + editable.toString());
             try {
                 if (!"".equals(editable.toString()))
-                    inputValue = Integer.parseInt(editable.toString());
+                    if (TestCreateActivity.FIT.equals(testType)) {
+                        fitInputValue = Double.parseDouble(editable.toString());
+                    } else {
+                        inputValue = Integer.parseInt(editable.toString());
+                    }
             } catch (NumberFormatException e) {
                 e.printStackTrace();
             }
@@ -1501,13 +1691,17 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             for (int i = 0; i < editTextList.size(); i++) {
                 if (editTextList.get(i).getId() == viewById) {
                     rowTagHashMap.put(editTextList.get(i).getId(), (int) editTextList.get(i).getTag());
-                    inputDataHashMap.put(editTextList.get(i).getId(), inputValue);
+                    if (TestCreateActivity.FIT.equals(testType)) {
+                        rdFitInputDataHashMap.put(editTextList.get(i).getId(), fitInputValue);
+                    } else {
+                        inputDataHashMap.put(editTextList.get(i).getId(), inputValue);
+                    }
                     tagF = (int) editTextList.get(i).getTag();
                 }
             }
 
             //Calculation Test 1 Specific
-            if ("RD_AV_5".equals(testType)) {
+            if (TestCreateActivity.AV.equals(testType)) {
                 //TextView set Value;
                 for (int i = 0; i < txtViewList.size(); i++) {
                     Log.d(TAG, " TextView : Tag " + txtViewList.get(i).getTag() + " tagF " + tagF);
@@ -1519,10 +1713,9 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                         // Pass Fail Calculation
                         TextView txtPassFail = txtPassFailList.get(i);
                         if (tvl.getTag() == txtPassFail.getTag()) {
-                            double valocity = equipment.getVelocity();
-                            double percentValue = ((valocity * 20) / 100);
-                            double minvalue = (valocity - percentValue);
-                            double maxValue = (valocity + percentValue);
+                            double minvalue = equipment.getMinVelocity();
+                            double maxValue = equipment.getMaxVelocity();
+//                            double percentValue = ((valocity * 20) / 100);
                             if (minvalue <= getRoundedAverageValue(tagF) && getRoundedAverageValue(tagF) <= maxValue) {
                                 txtPassFail.setTextColor(getResources().getColor(R.color.blue));
                                 txtPassFail.setText(" PASS ");
@@ -1539,7 +1732,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 }
             }
             //calculation Test 2 specific
-            if ("RD_ACPH_AV".equals(testType)) {
+            if (TestCreateActivity.ACPHAV.equals(testType)) {
                 //TextView set Value;
                 for (int i = 0; i < txtViewList.size(); i++) {
                     Log.d(TAG, " TextView : Tag " + txtViewList.get(i).getTag() + " tagF " + tagF);
@@ -1589,7 +1782,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 }
             }
             //Calculation Test 3 specific
-            if ("RD_ACPH_H".equals(testType)) {
+            if (TestCreateActivity.ACPHH.equals(testType)) {
 
                 //Total AirFlow Rate (sum of AirFlow Rate)
                 if (totalAirFlowRateTxtList != null && totalAirFlowRateTxtList.size() > 0) {
@@ -1621,35 +1814,38 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 }
             }
             //Calculation Test 4 Specific
-            if ("RD_FIT".equals(testType)) {
-                for (int i = 0; i < txtSlpDlpList.size(); i++) {
-                    //getLeakageValue(tagF);
-                    if (txtSlpDlpList.get(i).getTag().equals(tagF)) {
-                        if (txtSlpDlpList.get(i).getText().toString().trim() != null
-                                && !"".equals(txtSlpDlpList.get(i).getText().toString().trim())) {
-                            double slpDlpValue = Double.parseDouble(txtSlpDlpList.get(i).getText().toString().trim().replace("%", "0"));
-                            // Pass Fail Calculation
-                            TextView txtPassFail = txtPassFailList.get(i);
-                            if (txtSlpDlpList.get(i).getTag() == txtPassFail.getTag()) {
-                                if (slpDlpValue > getLeakageValue(tagF)) {
-                                    txtPassFail.setTextColor(getResources().getColor(R.color.blue));
-                                    txtPassFail.setText(" PASS ");
-                                    passFailHashMap.put(txtPassFail.getId(), " PASS ");
-                                } else {
-                                    txtPassFail.setTextColor(getResources().getColor(R.color.red));
-                                    txtPassFail.setText(" FAIL ");
-                                    passFailHashMap.put(txtPassFail.getId(), " FAIL ");
+            if (TestCreateActivity.FIT.equals(testType)) {
+                Log.d("Avinash", "viewById=" + viewById);
+                if (viewById < 800) {
+                    for (int i = 0; i < txtSlpDlpList.size(); i++) {
+                        //getLeakageValue(tagF);
+                        if (txtSlpDlpList.get(i).getTag().equals(tagF)) {
+                            if (txtSlpDlpList.get(i).getText().toString().trim() != null
+                                    && !"".equals(txtSlpDlpList.get(i).getText().toString().trim())) {
+                                double slpDlpValue = Double.parseDouble(txtSlpDlpList.get(i).getText().toString().trim().replace("%", "0"));
+                                // Pass Fail Calculation
+                                TextView txtPassFail = txtPassFailList.get(i);
+                                if (txtSlpDlpList.get(i).getTag() == txtPassFail.getTag()) {
+                                    Log.d("Avinash", "getLeakageValue(tagF)=" + getLeakageValue(tagF) + "  =tagF=" + tagF);
+                                    if (slpDlpValue > getLeakageValue(tagF)) {
+                                        txtPassFail.setTextColor(getResources().getColor(R.color.blue));
+                                        txtPassFail.setText(" PASS ");
+                                        passFailHashMap.put(txtPassFail.getId(), " PASS ");
+                                    } else {
+                                        txtPassFail.setTextColor(getResources().getColor(R.color.red));
+                                        txtPassFail.setText(" FAIL ");
+                                        passFailHashMap.put(txtPassFail.getId(), " FAIL ");
+                                    }
                                 }
                             }
-                        }
 
+                        }
                     }
                 }
-
             }
 
             //Calculation Test 5 Specific
-            if ("RD_PC_3".equals(testType)) {
+            if (TestCreateActivity.PCT.equals(testType)) {
                 //TextView set Value;
                 for (int i = 0; i < txtViewList.size(); i++) {
                     Log.d(TAG, " TextView : Tag " + txtViewList.get(i).getTag() + " tagF " + tagF);
@@ -1838,12 +2034,12 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             try {
                 for (Map.Entry m : rowTagHashMap.entrySet()) {
                     if (m.getValue().equals(count)) {
-                        if (inputDataHashMap.get(m.getKey()) != null &&
-                                !"".equals(inputDataHashMap.get(m.getKey()))) {
-                            leakageValue = inputDataHashMap.get(m.getKey());
+                        if (rdFitInputDataHashMap.get(m.getKey()) != null &&
+                                !"".equals(rdFitInputDataHashMap.get(m.getKey())) && ((int) (m.getKey())) < 800) {
+                            leakageValue = rdFitInputDataHashMap.get(m.getKey());
                         }
                     }
-                    System.out.println("inputDataHashMap.get(m.getKey())" + "  " + inputDataHashMap.get(m.getKey()));
+                    System.out.println("inputDataHashMap.get(m.getKey())" + "count=" + count + " m.getKey()= " + m.getKey() + "=" + rdFitInputDataHashMap.get(m.getKey()).doubleValue());
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -1872,11 +2068,16 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         });
         instrumentNo = (TextView) findViewById(R.id.instrument_no);
         testerName = (TextView) findViewById(R.id.tester_name);
+        roomName = (TextView) findViewById(R.id.room_name1);
+        instrumentName = (TextView) findViewById(R.id.instrument_name);
         testerName.setText(userName);
+
         if (loginUserType.equals("CLIENT")) {
-            instrumentNo.setText("" + clientInstrument.getcInstrumentName());
+            instrumentName.setText("" + clientInstrument.getcInstrumentName());
+            instrumentNo.setText("" + clientInstrument.getSerialNo());
         } else {
-            instrumentNo.setText("" + partnerInstrument.getpInstrumentName());
+            instrumentName.setText("" + partnerInstrument.getpInstrumentName());
+            instrumentNo.setText("" + partnerInstrument.getSerialNo());
         }
 
         //Test 1
@@ -1884,14 +2085,20 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         table_layout2 = (TableLayout) findViewById(R.id.tableLayout2);
         table_layout3 = (TableLayout) findViewById(R.id.tableLayout3);
         table_layout4 = (TableLayout) findViewById(R.id.tableLayout4);
-        if ("RD_AV_5".equalsIgnoreCase(testType)) {
+        if (TestCreateActivity.AV.equalsIgnoreCase(testType)) {
             instrumentNo = (TextView) findViewById(R.id.instrument_no);
             testerName = (TextView) findViewById(R.id.tester_name);
+            roomName = (TextView) findViewById(R.id.room_name1);
+            instrumentName = (TextView) findViewById(R.id.instrument_name);
+            roomName.setText("" + roomDetails[1]);
             testerName.setText(userName);
+
             if (loginUserType.equals("CLIENT")) {
-                instrumentNo.setText(clientInstrument.getcInstrumentName());
+                instrumentName.setText(clientInstrument.getcInstrumentName());
+                instrumentNo.setText("" + clientInstrument.getSerialNo());
             } else {
-                instrumentNo.setText(partnerInstrument.getpInstrumentName());
+                instrumentName.setText(partnerInstrument.getpInstrumentName());
+                instrumentNo.setText("" + partnerInstrument.getSerialNo());
             }
             findViewById(R.id.test1_table_ll).setVisibility(View.VISIBLE);
         }
@@ -1905,14 +2112,19 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         test2_table_layout6 = (TableLayout) findViewById(R.id.test2_tableLayout6);
         test2_table_layout7 = (TableLayout) findViewById(R.id.test2_tableLayout7);
         test2_table_layout8 = (TableLayout) findViewById(R.id.test2_tableLayout8);
-        if ("RD_ACPH_AV".equalsIgnoreCase(testType)) {
-            instrumentNo = (TextView) findViewById(R.id.instrument_no_test2);
+        if (TestCreateActivity.ACPHAV.equalsIgnoreCase(testType)) {
+            instrumentNo = (TextView) findViewById(R.id.instrument_no2);
             testerName = (TextView) findViewById(R.id.tester_name_test2);
+            roomName = (TextView) findViewById(R.id.room_name2);
+            instrumentName = (TextView) findViewById(R.id.instrument_name2);
+            roomName.setText("" + room.getRoomName());
             testerName.setText(userName);
             if (loginUserType.equals("CLIENT")) {
-                instrumentNo.setText(clientInstrument.getcInstrumentName());
+                instrumentName.setText(clientInstrument.getcInstrumentName());
+                instrumentNo.setText("" + clientInstrument.getSerialNo());
             } else {
-                instrumentNo.setText(partnerInstrument.getpInstrumentName());
+                instrumentName.setText(partnerInstrument.getpInstrumentName());
+                instrumentNo.setText("" + partnerInstrument.getSerialNo());
             }
             findViewById(R.id.test2_table_ll).setVisibility(View.VISIBLE);
         }
@@ -1923,14 +2135,19 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         test3_table_layout3 = (TableLayout) findViewById(R.id.test3_tableLayout3);
         test3_table_layout4 = (TableLayout) findViewById(R.id.test3_tableLayout4);
         test3_table_layout5 = (TableLayout) findViewById(R.id.test3_tableLayout5);
-        if ("RD_ACPH_H".equalsIgnoreCase(testType)) {
-            instrumentNo = (TextView) findViewById(R.id.instrument_no_test3);
+        if (TestCreateActivity.ACPHH.equalsIgnoreCase(testType)) {
+            instrumentNo = (TextView) findViewById(R.id.instrument_no3);
             testerName = (TextView) findViewById(R.id.tester_name_test3);
+            roomName = (TextView) findViewById(R.id.room_name3);
+            instrumentName = (TextView) findViewById(R.id.instrument_name3);
+            roomName.setText("" + room.getRoomName());
             testerName.setText(userName);
             if (loginUserType.equals("CLIENT")) {
-                instrumentNo.setText(clientInstrument.getcInstrumentName());
+                instrumentName.setText(clientInstrument.getcInstrumentName());
+                instrumentNo.setText("" + clientInstrument.getSerialNo());
             } else {
-                instrumentNo.setText(partnerInstrument.getpInstrumentName());
+                instrumentName.setText(partnerInstrument.getpInstrumentName());
+                instrumentNo.setText("" + partnerInstrument.getSerialNo());
             }
             findViewById(R.id.test3_table_ll).setVisibility(View.VISIBLE);
         }
@@ -1943,14 +2160,20 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         test4_table_layout5 = (TableLayout) findViewById(R.id.test4_tableLayout5);
         test4_table_layout6 = (TableLayout) findViewById(R.id.test4_tableLayout6);
         test4_table_layout7 = (TableLayout) findViewById(R.id.test4_tableLayout7);
-        if ("RD_FIT".equalsIgnoreCase(testType)) {
-            instrumentNo = (TextView) findViewById(R.id.instrument_no_test4);
+        test4_table_layout8 = (TableLayout) findViewById(R.id.test4_tableLayout8);
+        if (TestCreateActivity.FIT.equalsIgnoreCase(testType)) {
+            instrumentNo = (TextView) findViewById(R.id.instrument_no4);
             testerName = (TextView) findViewById(R.id.tester_name_test4);
+            roomName = (TextView) findViewById(R.id.room_name4);
+            instrumentName = (TextView) findViewById(R.id.instrument_name4);
+            roomName.setText("" + room.getRoomName());
             testerName.setText(userName);
             if (loginUserType.equals("CLIENT")) {
-                instrumentNo.setText(clientInstrument.getcInstrumentName());
+                instrumentName.setText(clientInstrument.getcInstrumentName());
+                instrumentNo.setText("" + clientInstrument.getSerialNo());
             } else {
-                instrumentNo.setText(partnerInstrument.getpInstrumentName());
+                instrumentName.setText(partnerInstrument.getpInstrumentName());
+                instrumentNo.setText("" + partnerInstrument.getSerialNo());
             }
             findViewById(R.id.test4_table_ll).setVisibility(View.VISIBLE);
         }
@@ -1959,20 +2182,27 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         test5_table_layout = (TableLayout) findViewById(R.id.test5_tableLayout1);
         test5_table_layout2 = (TableLayout) findViewById(R.id.test5_tableLayout2);
         test5_table_layout2_1 = (TableLayout) findViewById(R.id.test5_tableLayout2_1);
+        test5_tableLayout2_2 = (TableLayout) findViewById(R.id.test5_tableLayout2_2);
         test5_table_layout3 = (TableLayout) findViewById(R.id.test5_tableLayout3);
         test5_table_layout3_1 = (TableLayout) findViewById(R.id.test5_tableLayout3_1);
         test5_table_layout4 = (TableLayout) findViewById(R.id.test5_tableLayout4);
+        test5_tableLayout4_2 = (TableLayout) findViewById(R.id.test5_tableLayout4_2);
         test5_table_layout4_1 = (TableLayout) findViewById(R.id.test5_tableLayout4_1);
         test5_table_layout5 = (TableLayout) findViewById(R.id.test5_tableLayout5);
         test5_table_layout5_1 = (TableLayout) findViewById(R.id.test5_tableLayout5_1);
-        if ("RD_PC_3".equalsIgnoreCase(testType)) {
-            instrumentNo = (TextView) findViewById(R.id.instrument_no_test5);
+        if (TestCreateActivity.PCT.equalsIgnoreCase(testType)) {
+            instrumentNo = (TextView) findViewById(R.id.instrument_no5);
             testerName = (TextView) findViewById(R.id.tester_name_test5);
+            roomName = (TextView) findViewById(R.id.room_name5);
+            instrumentName = (TextView) findViewById(R.id.instrument_name5);
+            roomName.setText("" + room.getRoomName());
             testerName.setText(userName);
             if (loginUserType.equals("CLIENT")) {
-                instrumentNo.setText(clientInstrument.getcInstrumentName());
+                instrumentName.setText(clientInstrument.getcInstrumentName());
+                instrumentNo.setText("" + clientInstrument.getSerialNo());
             } else {
-                instrumentNo.setText(partnerInstrument.getpInstrumentName());
+                instrumentName.setText(partnerInstrument.getpInstrumentName());
+                instrumentNo.setText("" + partnerInstrument.getSerialNo());
             }
             findViewById(R.id.test5_table_ll).setVisibility(View.VISIBLE);
         }
@@ -1984,14 +2214,19 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         test6A_table_layout4 = (TableLayout) findViewById(R.id.test6A_tableLayout4);
         finalReadingTv = (TextView) findViewById(R.id.test6_final_reading_tv);
         finalReadingValueTv = (EditText) findViewById(R.id.test6_final_reading_value_tv);
-        if ("RD_RCT".equalsIgnoreCase(testType)) {
-            instrumentNo = (TextView) findViewById(R.id.instrument_no_test6);
+        if (TestCreateActivity.RCT.equalsIgnoreCase(testType)) {
+            instrumentNo = (TextView) findViewById(R.id.instrument_no6);
             testerName = (TextView) findViewById(R.id.tester_name_test6);
+            roomName = (TextView) findViewById(R.id.room_name6);
+            instrumentName = (TextView) findViewById(R.id.instrument_name6);
+            roomName.setText("" + room.getRoomName());
             testerName.setText(userName);
             if (loginUserType.equals("CLIENT")) {
-                instrumentNo.setText(clientInstrument.getcInstrumentName());
+                instrumentName.setText(clientInstrument.getcInstrumentName());
+                instrumentNo.setText("" + clientInstrument.getSerialNo());
             } else {
-                instrumentNo.setText(partnerInstrument.getpInstrumentName());
+                instrumentName.setText(partnerInstrument.getpInstrumentName());
+                instrumentNo.setText("" + partnerInstrument.getSerialNo());
             }
             findViewById(R.id.test6A_table_ll).setVisibility(View.VISIBLE);
         }
@@ -1999,7 +2234,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
 
     private void removeView() {
         //Test1
-        if ("RD_AV_5".equalsIgnoreCase(testType)) {
+        if (TestCreateActivity.AV.equalsIgnoreCase(testType)) {
             table_layout.removeAllViews();
             table_layout2.removeAllViews();
             table_layout3.removeAllViews();
@@ -2007,7 +2242,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         }
 
         //Test 2
-        if ("RD_ACPH_AV".equalsIgnoreCase(testType)) {
+        if (TestCreateActivity.ACPHAV.equalsIgnoreCase(testType)) {
             test2_table_layout.removeAllViews();
             test2_table_layout2.removeAllViews();
             test2_table_layout3.removeAllViews();
@@ -2019,7 +2254,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         }
 
         //Test 3
-        if ("RD_ACPH_H".equalsIgnoreCase(testType)) {
+        if (TestCreateActivity.ACPHH.equalsIgnoreCase(testType)) {
             test3_table_layout.removeAllViews();
             test3_table_layout2.removeAllViews();
             test3_table_layout3.removeAllViews();

@@ -44,6 +44,8 @@ public class AfterLoginActivity extends AppCompatActivity implements HttpConnect
         sharedpreferences = getSharedPreferences("valdoc", Context.MODE_PRIVATE);
         mValdocControler = new ValdocControler();
         mValdocDatabaseHandler = new ValdocDatabaseHandler(AfterLoginActivity.this);
+//        getActionBar().setTitle("Test Data Entry");
+//        getSupportActionBar().setTitle("Test Data Entry");  // provide compatibility to all the versions
         Bundle extras = getIntent().getExtras();
         if (extras == null) {
             userName = null;
@@ -65,6 +67,7 @@ public class AfterLoginActivity extends AppCompatActivity implements HttpConnect
 
         } else {
             setContentView(R.layout.activity_after_login);
+
             findViewById(R.id.service_report_btn).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

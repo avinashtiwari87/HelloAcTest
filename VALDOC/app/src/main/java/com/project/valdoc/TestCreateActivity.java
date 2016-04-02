@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -61,6 +62,23 @@ public class TestCreateActivity extends Activity implements View.OnTouchListener
     private int appUserId;
     private ValdocDatabaseHandler mValdocDatabaseHandler = new ValdocDatabaseHandler(TestCreateActivity.this);
 
+    //test name and details
+    public static final String AV="AV";
+    public static final String ACPHAV="ACPHAV";
+    public static final String ACPHH="ACPHH";
+    public static final String FIT="FIT";
+    public static final String PCT="PCT";
+    public static final String RCT="RCT";
+
+
+    //old
+//    public static final String AV = "RD_AV_5";
+//    public static final String ACPHAV = "RD_ACPH_AV";
+//    public static final String ACPHH = "RD_ACPH_H";
+//    public static final String FIT = "RD_FIT";
+//    public static final String PCT = "RD_PC_3";
+//    public static final String RCT = "RD_RCT";
+
     //spiner data storage
     private static String spinerInstrument;
     private static String spinerAhuOrEquipment;
@@ -95,8 +113,8 @@ public class TestCreateActivity extends Activity implements View.OnTouchListener
         }
 
         //Screen Navigation after submit button hit from Certificate screen
-        else if (getIntent().hasExtra("RD_AV_5") || getIntent().hasExtra("RD_ACPH_AV") || getIntent().hasExtra("RD_ACPH_H")
-                || getIntent().hasExtra("RD_FIT") || getIntent().hasExtra("RD_PC_3") || getIntent().hasExtra("RD_RCT")) {
+        else if (getIntent().hasExtra(AV) || getIntent().hasExtra(ACPHAV) || getIntent().hasExtra(ACPHH)
+                || getIntent().hasExtra(FIT) || getIntent().hasExtra(PCT) || getIntent().hasExtra(RCT)) {
 
             //Setting User Information
             userName = sharedpreferences.getString("USERNAME", "");
@@ -157,17 +175,18 @@ public class TestCreateActivity extends Activity implements View.OnTouchListener
                     editor.putString("witness2", witnessSecond.getText().toString());
                     editor.putString("witness3", witnessThird.getText().toString());
                     editor.commit();
-                    if ("RD_AV_5".equals(spinerTestType = testSpinner.getSelectedItem().toString())) {
+                    if (AV.equals(spinerTestType = testSpinner.getSelectedItem().toString())) {
                         rdAv5Test();
-                    } else if ("RD_ACPH_AV".equals(spinerTestType = testSpinner.getSelectedItem().toString())) {
+                    } else if (ACPHAV.equals(spinerTestType = testSpinner.getSelectedItem().toString())) {
                         rdAcphAv();
-                    } else if ("RD_ACPH_H".equals(spinerTestType = testSpinner.getSelectedItem().toString())) {
+                    } else if (ACPHH.equals(spinerTestType = testSpinner.getSelectedItem().toString())) {
                         rdAcphH();
-                    } else if ("RD_FIT".equals(spinerTestType = testSpinner.getSelectedItem().toString())) {
+                    } else if (FIT.equals(spinerTestType = testSpinner.getSelectedItem().toString())) {
                         rdFit();
-                    } else if ("RD_PC_3".equals(spinerTestType = testSpinner.getSelectedItem().toString())) {
+                    } else if (PCT.equals(spinerTestType = testSpinner.getSelectedItem().toString())) {
+//                        Toast.makeText(TestCreateActivity.this,"Under development",Toast.LENGTH_LONG).show();
                         rdPc3();
-                    } else if ("RD_RCT".equals(spinerTestType = testSpinner.getSelectedItem().toString())) {
+                    } else if (RCT.equals(spinerTestType = testSpinner.getSelectedItem().toString())) {
                         rdRct();
                     }
                 } else {
@@ -182,7 +201,7 @@ public class TestCreateActivity extends Activity implements View.OnTouchListener
         Intent intent = new Intent(TestCreateActivity.this, DynamicTableActivity.class);
         intent.putExtra("USERTYPE", loginUserType);
         intent.putExtra("USERNAME", userName);
-        intent.putExtra("testType", "RD_ACPH_AV");
+        intent.putExtra("testType", ACPHAV);
         Log.d("valdoc", "TestCreateActivity loginUserType=" + loginUserType);
         Log.d("valdoc", "TestCreateActivity userName=" + userName);
 
@@ -223,7 +242,7 @@ public class TestCreateActivity extends Activity implements View.OnTouchListener
         Intent intent = new Intent(TestCreateActivity.this, DynamicTableActivity.class);
         intent.putExtra("USERTYPE", loginUserType);
         intent.putExtra("USERNAME", userName);
-        intent.putExtra("testType", "RD_ACPH_H");
+        intent.putExtra("testType", ACPHH);
         Log.d("valdoc", "TestCreateActivity witness=" + witnessFirst.getText());
         intent.putExtra("WITNESSFIRST", witnessFirst.getText().toString());
         intent.putExtra("WITNESSSECOND", witnessSecond.getText().toString());
@@ -261,7 +280,7 @@ public class TestCreateActivity extends Activity implements View.OnTouchListener
         Intent intent = new Intent(TestCreateActivity.this, DynamicTableActivity.class);
         intent.putExtra("USERTYPE", loginUserType);
         intent.putExtra("USERNAME", userName);
-        intent.putExtra("testType", "RD_FIT");
+        intent.putExtra("testType", FIT);
         Log.d("valdoc", "TestCreateActivity witness=" + witnessFirst.getText());
         intent.putExtra("WITNESSFIRST", witnessFirst.getText().toString());
         intent.putExtra("WITNESSSECOND", witnessSecond.getText().toString());
@@ -297,7 +316,7 @@ public class TestCreateActivity extends Activity implements View.OnTouchListener
         Intent intent = new Intent(TestCreateActivity.this, DynamicTableActivity.class);
         intent.putExtra("USERTYPE", loginUserType);
         intent.putExtra("USERNAME", userName);
-        intent.putExtra("testType", "RD_PC_3");
+        intent.putExtra("testType", PCT);
         Log.d("valdoc", "TestCreateActivity witness=" + witnessFirst.getText());
         intent.putExtra("WITNESSFIRST", witnessFirst.getText().toString());
         intent.putExtra("WITNESSSECOND", witnessSecond.getText().toString());
@@ -332,7 +351,7 @@ public class TestCreateActivity extends Activity implements View.OnTouchListener
         Intent intent = new Intent(TestCreateActivity.this, DynamicTableActivity.class);
         intent.putExtra("USERTYPE", loginUserType);
         intent.putExtra("USERNAME", userName);
-        intent.putExtra("testType", "RD_RCT");
+        intent.putExtra("testType", RCT);
         Log.d("valdoc", "TestCreateActivity witness=" + witnessFirst.getText());
         intent.putExtra("WITNESSFIRST", witnessFirst.getText().toString());
         intent.putExtra("WITNESSSECOND", witnessSecond.getText().toString());
@@ -367,7 +386,7 @@ public class TestCreateActivity extends Activity implements View.OnTouchListener
         Intent intent = new Intent(TestCreateActivity.this, DynamicTableActivity.class);
         intent.putExtra("USERTYPE", loginUserType);
         intent.putExtra("USERNAME", userName);
-        intent.putExtra("testType", "RD_AV_5");
+        intent.putExtra("testType", AV);
         intent.putExtra("PRTNERNAME", mPartnerName);
         if (loginUserType.equals("CLIENT")) {
             intent.putExtra("ClientInstrument", clientInstrumentArrayList.get(instrumentSpiner.getSelectedItemPosition() - 1));
@@ -443,7 +462,7 @@ public class TestCreateActivity extends Activity implements View.OnTouchListener
 
     public void spinerInitialization() {
         user_name = (TextView) findViewById(R.id.user_name);
-        user_name.setText(userName);
+        user_name.setText("" + sharedpreferences.getString("USERNAME", ""));
 
         instrumentSpiner = (Spinner) findViewById(R.id.instrumentspiner);
         instrumentSpiner.setOnTouchListener(this);
@@ -504,13 +523,13 @@ public class TestCreateActivity extends Activity implements View.OnTouchListener
 //        clientInstrumentArrayList.clear();
         instrumentList = new ArrayList<String>();
         instrumentList.add("Select Instrument");
-        Log.d("valdoc", "TestCreateActivity : client" + userType);
-        if (userType.equals("CLIENT")) {
+        Log.d("valdoc", "TestCreateActivity : client usertype" + userType);
+        if (null != userType && userType.equalsIgnoreCase("CLIENT")) {
             clientInstrumentArrayList = mValdocDatabaseHandler.getClientInstrumentInfo();
 
             for (ClientInstrument clientInstrument : clientInstrumentArrayList) {
                 instrumentList.add(clientInstrument.getcInstrumentName());
-                Log.d("valdoc", "TestCreateActivity : client" + clientInstrument.getcInstrumentName());
+                Log.d("valdoc", "TestCreateActivity : client instrument list" + clientInstrument.getcInstrumentName());
             }
 
         } else {
@@ -530,12 +549,12 @@ public class TestCreateActivity extends Activity implements View.OnTouchListener
 
     public void spinnerCreation() {
 
-        instrumentAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, instrumentList);
-        equipmentOrAhuAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, equipmentOrAhuTestList);
-        equipmentadApter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, equipmentTestList);
-        roomAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, roomTestList);
-        applicableTestRoomAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, applicableTestRoomList);
-        applicableTestequipmentAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, applicableTestEquipmentList);
+        instrumentAdapter = new ArrayAdapter<String>(this, R.layout.spiner_text, instrumentList);
+        equipmentOrAhuAdapter = new ArrayAdapter<String>(this, R.layout.spiner_text, equipmentOrAhuTestList);
+        equipmentadApter = new ArrayAdapter<String>(this, R.layout.spiner_text, equipmentTestList);
+        roomAdapter = new ArrayAdapter<String>(this, R.layout.spiner_text, roomTestList);
+        applicableTestRoomAdapter = new ArrayAdapter<String>(this, R.layout.spiner_text, applicableTestRoomList);
+        applicableTestequipmentAdapter = new ArrayAdapter<String>(this, R.layout.spiner_text, applicableTestEquipmentList);
 
         instrumentSpiner.setAdapter(instrumentAdapter);
         equipmentOrAhuSpinner.setAdapter(equipmentOrAhuAdapter);
@@ -546,9 +565,17 @@ public class TestCreateActivity extends Activity implements View.OnTouchListener
 
         instrumentSpiner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
-            public void onItemSelected(AdapterView<?> arg0, View arg1,
-                                       int arg2, long arg3) {
+            public void onItemSelected(AdapterView<?> parent, View arg1,
+                                       int pos, long arg3) {
                 // TODO Auto-generated method stub
+                TextView selectedText = (TextView) parent.getChildAt(0);
+                if (null != selectedText) {
+                    if (pos == 0) {
+                        selectedText.setTextColor(Color.GRAY);
+                    } else {
+                        selectedText.setTextColor(Color.BLACK);
+                    }
+                }
                 if (instrumentSpiner.getSelectedItemPosition() > 1)
                     spinerInstrument = instrumentList.get(instrumentSpiner.getSelectedItemPosition() - 1);
                 instrumentSpinerPos = instrumentSpiner.getSelectedItemPosition();
@@ -562,8 +589,16 @@ public class TestCreateActivity extends Activity implements View.OnTouchListener
 
         equipmentOrAhuSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
-            public void onItemSelected(AdapterView<?> arg0, View arg1,
-                                       int arg2, long arg3) {
+            public void onItemSelected(AdapterView<?> parent, View arg1,
+                                       int pos, long arg3) {
+                TextView selectedText = (TextView) parent.getChildAt(0);
+                if (null != selectedText) {
+                    if (pos == 0) {
+                        selectedText.setTextColor(Color.GRAY);
+                    } else {
+                        selectedText.setTextColor(Color.BLACK);
+                    }
+                }
                 witnessThird.clearFocus();
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(witnessThird.getWindowToken(), 0);
@@ -601,9 +636,17 @@ public class TestCreateActivity extends Activity implements View.OnTouchListener
 
         equipmentSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
-            public void onItemSelected(AdapterView<?> arg0, View arg1,
-                                       int arg2, long arg3) {
+            public void onItemSelected(AdapterView<?> parent, View arg1,
+                                       int pos, long arg3) {
                 // TODO Auto-generated method stub
+                TextView selectedText = (TextView) parent.getChildAt(0);
+                if (null != selectedText) {
+                    if (pos == 0) {
+                        selectedText.setTextColor(Color.GRAY);
+                    } else {
+                        selectedText.setTextColor(Color.BLACK);
+                    }
+                }
                 equipmentSpinnerPos = equipmentSpinner.getSelectedItemPosition();
                 Log.d("TestCreateActivity", "equipment :index= " + equipmentSpinner.getSelectedItemPosition() + "mEquipmentArrayList size=" + mEquipmentArrayList.size());
                 if (equipmentSpinner.getSelectedItemPosition() > 0) {
@@ -621,9 +664,17 @@ public class TestCreateActivity extends Activity implements View.OnTouchListener
 
         ahuSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
-            public void onItemSelected(AdapterView<?> arg0, View arg1,
-                                       int arg2, long arg3) {
+            public void onItemSelected(AdapterView<?> parent, View arg1,
+                                       int pos, long arg3) {
                 // TODO Auto-generated method stub
+                TextView selectedText = (TextView) parent.getChildAt(0);
+                if (null != selectedText) {
+                    if (pos == 0) {
+                        selectedText.setTextColor(Color.GRAY);
+                    } else {
+                        selectedText.setTextColor(Color.BLACK);
+                    }
+                }
                 roomSpinner.setVisibility(View.VISIBLE);
                 roomSpinner.setSelection(0);
                 testSpinner.setSelection(0);
@@ -647,10 +698,20 @@ public class TestCreateActivity extends Activity implements View.OnTouchListener
 
             }
         });
+
         roomSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
-            public void onItemSelected(AdapterView<?> arg0, View arg1,
-                                       int arg2, long arg3) {
+            public void onItemSelected(AdapterView<?> parent, View arg1,
+                                       int pos, long arg3) {
+                TextView selectedText = (TextView) parent.getChildAt(0);
+                if (null != selectedText) {
+                    if (pos == 0) {
+                        selectedText.setTextColor(Color.GRAY);
+                    } else {
+                        selectedText.setTextColor(Color.BLACK);
+                    }
+                }
+                testSpinner.setSelection(0);
                 roomSpinnerPos = roomSpinner.getSelectedItemPosition();
                 Log.d("TestCreateActivity", "equipment :index= " + roomSpinner.getSelectedItemPosition());
                 if (roomSpinner.getSelectedItemPosition() > 0) {
@@ -658,6 +719,7 @@ public class TestCreateActivity extends Activity implements View.OnTouchListener
                     createApplicableTestRoomList(room.getRoomId());
                     spinerRoom = room.getRoomName();
                 }
+
             }
 
             public void onNothingSelected(AdapterView<?> arg0) {
@@ -668,8 +730,16 @@ public class TestCreateActivity extends Activity implements View.OnTouchListener
 
         testSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
-            public void onItemSelected(AdapterView<?> arg0, View arg1,
-                                       int arg2, long arg3) {
+            public void onItemSelected(AdapterView<?> parent, View arg1,
+                                       int pos, long arg3) {
+                TextView selectedText = (TextView) parent.getChildAt(0);
+                if (null != selectedText) {
+                    if (pos == 0) {
+                        selectedText.setTextColor(Color.GRAY);
+                    } else {
+                        selectedText.setTextColor(Color.BLACK);
+                    }
+                }
                 // TODO Auto-generated method stub
                 testSpinnerPos = testSpinner.getSelectedItemPosition();
                 spinerTestType = testSpinner.getSelectedItem().toString();
@@ -694,10 +764,10 @@ public class TestCreateActivity extends Activity implements View.OnTouchListener
         mAhuArrayList = mValdocDatabaseHandler.getAhuInfo();
         Log.d("valdoc", "TestCreateActivity : ahu size" + mAhuArrayList.size());
         for (Ahu ahu : mAhuArrayList) {
-            ahuTestList.add(ahu.getAhuId() + "");
+            ahuTestList.add(ahu.getAhuNo() + "");
             Log.d("valdoc", "TestCreateActivity : ahu" + ahu.getAhuType());
         }
-        ahuAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, ahuTestList);
+        ahuAdapter = new ArrayAdapter<String>(this, R.layout.spiner_text, ahuTestList);
 //        ahuSpinner.setAdapter(ahuAdapter1);
         ahuAdapter.notifyDataSetChanged();
     }
@@ -715,7 +785,7 @@ public class TestCreateActivity extends Activity implements View.OnTouchListener
             equipmentTestList.add(equipment.getEquipmentNo());
             Log.d("valdoc", "TestCreateActivity : ahu" + equipment.getEquipmentName());
         }
-        equipmentadApter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, equipmentTestList);
+        equipmentadApter = new ArrayAdapter<String>(this, R.layout.spiner_text, equipmentTestList);
 //        equipmentSpinner.setAdapter(equipmentadApter);
         equipmentadApter.notifyDataSetChanged();
     }
@@ -737,7 +807,7 @@ public class TestCreateActivity extends Activity implements View.OnTouchListener
             roomTestList.add(room.getRoomName());
             Log.d("valdoc", "TestCreateActivity : ahu" + room.getRoomName());
         }
-        roomAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, roomTestList);
+        roomAdapter = new ArrayAdapter<String>(this, R.layout.spiner_text, roomTestList);
 //        roomSpinner.setAdapter(roomAdapter);
         roomAdapter.notifyDataSetChanged();
     }
@@ -757,8 +827,9 @@ public class TestCreateActivity extends Activity implements View.OnTouchListener
             applicableTestRoomList.add(applicableTestRoom.getTestName());
             Log.d("valdoc", "TestCreateActivity : ahu" + applicableTestRoom.getTestName());
         }
-        applicableTestRoomAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, applicableTestRoomList);
+        applicableTestRoomAdapter = new ArrayAdapter<String>(this, R.layout.spiner_text, applicableTestRoomList);
         testSpinner.setAdapter(applicableTestRoomAdapter);
+        testSpinner.setSelection(0);
         applicableTestRoomAdapter.notifyDataSetChanged();
     }
 
@@ -776,7 +847,7 @@ public class TestCreateActivity extends Activity implements View.OnTouchListener
             applicableTestEquipmentList.add(applicableTestEquipment.getTestName());
             Log.d("valdoc", "TestCreateActivity : applicableTestEquipment" + applicableTestEquipment.getTestName());
         }
-        applicableTestequipmentAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, applicableTestEquipmentList);
+        applicableTestequipmentAdapter = new ArrayAdapter<String>(this, R.layout.spiner_text, applicableTestEquipmentList);
         testSpinner.setAdapter(applicableTestequipmentAdapter);
         applicableTestequipmentAdapter.notifyDataSetChanged();
     }

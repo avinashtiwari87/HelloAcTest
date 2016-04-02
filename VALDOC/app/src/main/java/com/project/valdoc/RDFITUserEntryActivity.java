@@ -3,7 +3,9 @@ package com.project.valdoc;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -26,6 +28,7 @@ import com.project.valdoc.intity.RoomFilter;
 import com.project.valdoc.intity.TestDetails;
 import com.project.valdoc.intity.TestReading;
 import com.project.valdoc.intity.TestSpesificationValue;
+import com.project.valdoc.utility.Utilityies;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -37,7 +40,7 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
     private static final String TAG = "RDFITUser";
     TextView headerText;
     TableLayout test4_table_layout, test4_table_layout2, test4_table_layout3, test4_table_layout4,
-            test4_table_layout5, test4_table_layout6, test4_table_layout7;
+            test4_table_layout5, test4_table_layout6, test4_table_layout7, test4_table_layout8;
 
     int rows, cols;
     String testType;
@@ -69,10 +72,10 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
     private TextView roomName;
     private TextView occupancyState;
     private TextView testRefrance;
-    private TextView equipmentNameText;
-    private TextView equipmentNoText;
-    private TextView equipmentName;
-    private TextView equipmentNo;
+//    private TextView equipmentNameText;
+//    private TextView equipmentNoText;
+    private TextView roomNo;
+    private TextView ahuNo;
     private TextView infarance;
     private TextView testCundoctor;
     private TextView testWitness;
@@ -85,17 +88,23 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
     private TextView testerNameTextView;
     private TextView instrumentUsedTextView;
     private TextView testCunductedByTextView;
+    private TextView roomNameLable;
+    private TextView instrumentNoLable;
+    private TextView roomNameTest;
+    private TextView instrument_name;
+
     ArrayList<TextView> txtViewList;
     ArrayList<TextView> txtPassFailList;
     private Button submit;
     private Button clear;
     private Button cancel;
     private String mPartnerName;
-    HashMap<Integer, Integer> likageDataMap;
+    HashMap<Integer, Double> likageDataMap;
     HashMap<Integer, Long> PassFailHashMap;
     ArrayList<TextView> resultTextViewList;
     private ValdocDatabaseHandler mValdocDatabaseHandler = new ValdocDatabaseHandler(RDFITUserEntryActivity.this);
-
+    SharedPreferences sharedpreferences;
+    int testDetailsId=0;
     private int year;
     private int month;
     private int day;
@@ -111,6 +120,9 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
         txtPassFailList = new ArrayList<TextView>();
         txtViewList = new ArrayList<TextView>();
 
+        sharedpreferences = getSharedPreferences("valdoc", Context.MODE_PRIVATE);
+        testDetailsId = (sharedpreferences.getInt("TESTDETAILSID", 0)+1);
+
         if (getIntent().hasExtra("rows") && getIntent().hasExtra("cols")) {
             rows = getIntent().getIntExtra("rows", 0);
             cols = getIntent().getIntExtra("cols", 0);
@@ -125,13 +137,13 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
         textViewValueAssignment();
         initRes();
         datePicker();
-        if ("RD_FIT".equalsIgnoreCase(testType)) {
+        if (TestCreateActivity.FIT.equalsIgnoreCase(testType)) {
             BuildTableTest4(rows, cols);
         }
 
 
         //Receiving User Input Data from Bundle
-        likageDataMap = (HashMap<Integer, Integer>) getIntent().getSerializableExtra("InputData");
+        likageDataMap = (HashMap<Integer, Double>) getIntent().getSerializableExtra("InputData");
         for (Map.Entry m : likageDataMap.entrySet()) {
             Log.v(TAG, " InputData " + m.getKey() + " " + m.getValue());
         }
@@ -155,16 +167,17 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
                 tvl.setTextColor(getResources().getColor(R.color.red));
             }
         }
-        if (passFlag == 1) {
+        if (passFlag == 0) {
             infarance.setText("The HEPA Filter System do not Qualifies for the above leak test.");
-        } else {
+        } else if(passFlag == 1){
             infarance.setText("The HEPA Filter System Qualifies for the above leak test.");
+        }else{
+            infarance.setText("");
         }
     }
 
     private void datePicker() {
         // Get current date by calender
-
         final Calendar c = Calendar.getInstance();
         year = c.get(Calendar.YEAR);
         month = c.get(Calendar.MONTH);
@@ -179,7 +192,7 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
         certificateNo.setText("IT/" + mon + "/" + year + "/" + formattedDate);
 
         // Show current date
-        String date = new StringBuilder().append(year).append("-").append(month + 1).append("-").append(day).append(" ").toString();
+        String date = new StringBuilder().append(day).append("-").append(month + 1).append("-").append(year).append(" ").toString();
         dateTextView.setText(date);
 //        new StringBuilder()
 //                // Month is 0 based, just add 1
@@ -206,13 +219,12 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
         @Override
         public void onDateSet(DatePicker view, int selectedYear,
                               int selectedMonth, int selectedDay) {
-
             year = selectedYear;
             month = selectedMonth;
             day = selectedDay;
 
             // Show selected date
-            String date = new StringBuilder().append(year).append("-").append(month + 1).append("-").append(day).append(" ").toString();
+            String date = new StringBuilder().append(day).append("-").append(month + 1).append("-").append(year).append(" ").toString();
             dateTextView.setText(date);
 //            new StringBuilder().append(year)
 //                    .append("-").append(month + 1).append("-").append(day)
@@ -227,15 +239,15 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
             make.setText(clientInstrument.getMake());
             model.setText(clientInstrument.getModel());
             instrumentSerialNo.setText("" + clientInstrument.getSerialNo());
-            calibrationOn.setText(clientInstrument.getLastCalibrated());
-            calibrationDueOn.setText(clientInstrument.getCalibrationDueDate());
+            calibrationOn.setText(Utilityies.parseDateToddMMyyyy(clientInstrument.getLastCalibrated()));
+            calibrationDueOn.setText(Utilityies.parseDateToddMMyyyy(clientInstrument.getCalibrationDueDate()));
         } else {
             instrumentUsed.setText(partnerInstrument.getpInstrumentName());
             make.setText(partnerInstrument.getMake());
             model.setText(partnerInstrument.getModel());
             instrumentSerialNo.setText("" + partnerInstrument.getpInstrumentId());
-            calibrationOn.setText(partnerInstrument.getLastCalibrated());
-            calibrationDueOn.setText(partnerInstrument.getCalibrationDueDate());
+            calibrationOn.setText(Utilityies.parseDateToddMMyyyy(partnerInstrument.getLastCalibrated()));
+            calibrationDueOn.setText(Utilityies.parseDateToddMMyyyy(partnerInstrument.getCalibrationDueDate()));
         }
 
         testSpecification.setText("Maximum Permiceable leakage " + room.getAcphNLT() + "%");
@@ -245,10 +257,10 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
         occupancyState.setText(room.getOccupancyState().toString());
         Log.d("valdoc", "RDAV5UserEnryActivity 1witness= equipment.getTestReference()=" + room.getTestRef());
         testRefrance.setText("" + room.getTestRef().toString());
-        equipmentNameText.setText(getResources().getString(R.string.room_no));
-        equipmentNoText.setText(getResources().getString(R.string.ahu_no));
-        equipmentName.setText(room.getRoomNo().toString());
-        equipmentNo.setText(ahuNumber);
+//        equipmentNameText.setText(getResources().getString(R.string.room_no));
+//        equipmentNoText.setText(getResources().getString(R.string.ahu_no));
+        roomNo.setText(room.getRoomNo().toString());
+        ahuNo.setText(ahuNumber);
         testCundoctor.setText(userName);
         Log.d("valdoc", "RDAV5UserEnryActivity 1witness=" + witnessFirst);
         StringBuilder witness = new StringBuilder();
@@ -264,7 +276,7 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
 
     private void initTextView() {
         // layout data which is not in use
-        instrumentNoTextView = (TextView) findViewById(R.id.instrument_no_test4);
+        instrumentNoTextView = (TextView) findViewById(R.id.instrument_no4);
         instrumentNoTextView.setVisibility(View.GONE);
         testerNameTextView = (TextView) findViewById(R.id.tester_name_test4);
         testerNameTextView.setVisibility(View.GONE);
@@ -272,6 +284,16 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
         instrumentUsedTextView.setVisibility(View.GONE);
         testCunductedByTextView = (TextView) findViewById(R.id.testcunducted_by);
         testCunductedByTextView.setVisibility(View.GONE);
+        testerNameTextView = (TextView) findViewById(R.id.tester_name_test4);
+        testerNameTextView.setVisibility(View.GONE);
+        roomNameLable = (TextView) findViewById(R.id.room_name_lable4);
+        roomNameLable.setVisibility(View.GONE);
+        instrumentNoLable = (TextView) findViewById(R.id.instrument_no_lable);
+        instrumentNoLable.setVisibility(View.GONE);
+        roomNameTest = (TextView) findViewById(R.id.room_name4);
+        roomNameTest.setVisibility(View.GONE);
+        instrument_name = (TextView) findViewById(R.id.instrument_name4);
+        instrument_name.setVisibility(View.GONE);
 
         dateTextView = (TextView) findViewById(R.id.datetextview);
         customerName = (TextView) findViewById(R.id.customer_name);
@@ -285,13 +307,13 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
         testSpecification = (TextView) findViewById(R.id.testspecification);
         plantName = (TextView) findViewById(R.id.plantname);
         areaOfTest = (TextView) findViewById(R.id.areaoftest);
-        roomName = (TextView) findViewById(R.id.roomname);
+        roomName = (TextView) findViewById(R.id.room_name);
         occupancyState = (TextView) findViewById(R.id.ocupancystate);
         testRefrance = (TextView) findViewById(R.id.testrefrence);
-        equipmentNameText = (TextView) findViewById(R.id.equipment_name_text);
-        equipmentNoText = (TextView) findViewById(R.id.equipment_no_text);
-        equipmentName = (TextView) findViewById(R.id.equipmentname);
-        equipmentNo = (TextView) findViewById(R.id.equipmentno);
+//        equipmentNameText = (TextView) findViewById(R.id.equipment_name_text);
+//        equipmentNoText = (TextView) findViewById(R.id.equipment_no_text);
+        roomNo = (TextView) findViewById(R.id.room_no);
+        ahuNo = (TextView) findViewById(R.id.ahu_no);
         infarance = (TextView) findViewById(R.id.infarance);
         testCundoctor = (TextView) findViewById(R.id.testcunducter);
         testWitness = (TextView) findViewById(R.id.testwitness);
@@ -312,9 +334,13 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (mValdocDatabaseHandler.insertTestDetails(ValdocDatabaseHandler.TEST_DETAILS_TABLE_NAME, testDetailsDataCreation())) {
                     if (mValdocDatabaseHandler.insertTestReading(ValdocDatabaseHandler.TESTREADING_TABLE_NAME, testReading())) {
+                        SharedPreferences.Editor editor = sharedpreferences.edit();
+                        editor.putInt("TESTDETAILSID", testDetailsId);
+                        editor.commit();
+
                         Toast.makeText(RDFITUserEntryActivity.this, "Data saved sussessfully", Toast.LENGTH_LONG).show();
                         Intent intent = new Intent(RDFITUserEntryActivity.this, TestCreateActivity.class);
-                        intent.putExtra("RD_FIT", true);
+                        intent.putExtra(TestCreateActivity.FIT, true);
                         startActivity(intent);
                         finish();
                     } else {
@@ -343,17 +369,22 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
         ArrayList<TestReading> testReadingArrayList = new ArrayList<TestReading>();
         int index = 0;
         int hasMapKey = 200;
+        int hasStreamBefore=800;
+        int hashstreamAfter=900;
         int passHasMapKey = 300;
         for (RoomFilter roomFilter : filterArrayList) {
 
             TestReading testReading = new TestReading();
             testReading.setTestReadingID(index);
 //        TO DO test details id is id of test details table
-            testReading.setTest_detail_id(index);
+            testReading.setTest_detail_id(testDetailsId);
             testReading.setEntityName(roomFilter.getFilterCode());
             StringBuilder grilList = new StringBuilder();
-            grilList.append(roomFilter.getFilterType()).append(',').append(roomFilter.getEfficiency()).append(",").append(roomFilter.getSpecification()).append(",")
+            grilList.append(roomFilter.getFilterType()).append(',').append(roomFilter.getEfficiency()).append(",").append(likageDataMap.get(hasStreamBefore)).append(",")
+                    .append(likageDataMap.get(hashstreamAfter)).append(",").append(roomFilter.getSpecification()).append(",")
                     .append(likageDataMap.get(hasMapKey)).append(",").append(PassFailHashMap.get(passHasMapKey));
+            hasStreamBefore++;
+            hashstreamAfter++;
             passHasMapKey++;
             hasMapKey++;
             index++;
@@ -367,12 +398,13 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
     private TestDetails testDetailsDataCreation() {
         TestDetails testDetails = new TestDetails();
 //        TO DO: need to make it dynamic
-        testDetails.setTest_detail_id(1);
+        testDetails.setTest_detail_id(testDetailsId);
         testDetails.setCustomer(customerName.getText().toString());
-        testDetails.setDateOfTest(dateTextView.getText().toString());
+        String date = year+"-"+(month + 1)+"-"+day+" ";
+        testDetails.setDateOfTest(date);
         testDetails.setRawDataNo(certificateNo.getText().toString());
         testDetails.setPartnerName("" + mPartnerName);
-        testDetails.setTestName("RD_FIT");
+        testDetails.setTestName(TestCreateActivity.FIT);
         if (loginUserType.equals("CLIENT")) {
             testDetails.setInstrumentUsed(clientInstrument.getcInstrumentName());
             testDetails.setMake(clientInstrument.getMake());
@@ -394,10 +426,10 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
         testDetails.setBlockName(plantName.getText().toString());
         testDetails.setTestArea(areaOfTest.getText().toString());
         testDetails.setRoomName(roomName.getText().toString());
-        testDetails.setRoomNo(equipmentName.getText().toString());
+        testDetails.setRoomNo(roomNo.getText().toString());
         testDetails.setOccupencyState(occupancyState.getText().toString());
         testDetails.setTestReference(testRefrance.getText().toString());
-        testDetails.setAhuNo(equipmentNo.getText().toString());
+        testDetails.setAhuNo(ahuNo.getText().toString());
         testDetails.setTesterName(testCundoctor.getText().toString());
 
         StringBuilder witness = new StringBuilder();
@@ -458,7 +490,7 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        headerText.setText("*  Installed HEPA Filter System Leakage Test *");
+//        headerText.setText("*  Installed HEPA Filter System Leakage Test *");
     }
 
     private void BuildTableTest4(int rows, int cols) {
@@ -537,14 +569,33 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
                 if (i == 1 && j == 1) {
                     row.addView(addTextView(" Average Up Stream\n Concentration (µg/liter) "));
                 } else {
-                    row.addView(addTextView(" 42 "));
+                    row.addView(addInputDataTextViewBeforeStream());
                 }
 
             }
             test4_table_layout4.addView(row);
         }
 
-        //Fifth section
+        //Fifthe section section
+        // outer for loop
+        for (int i = 1; i <= rows; i++) {
+            TableRow row = new TableRow(this);
+            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+                    TableRow.LayoutParams.WRAP_CONTENT));
+            // inner for loop
+            for (int j = 1; j <= 1; j++) {
+                if (i == 1 && j == 1) {
+                    row.addView(addTextView(" Average Up Stream after\nConcentration (µg/liter) "));
+                } else {
+                    row.addView(addInputDataTextViewAfterStream());
+                    //row.addView(addEditTextView(i));
+                }
+
+            }
+            test4_table_layout5.addView(row);
+        }
+
+        //Sixth section
         // outer for loop
         for (int i = 1; i <= rows; i++) {
             TableRow row = new TableRow(this);
@@ -562,7 +613,7 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
                 }
 
             }
-            test4_table_layout5.addView(row);
+            test4_table_layout6.addView(row);
         }
 
         //Sixth section
@@ -581,7 +632,7 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
                 }
 
             }
-            test4_table_layout6.addView(row);
+            test4_table_layout7.addView(row);
         }
 
         //Seventh section
@@ -598,9 +649,8 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
                     //row.addView(addTextView(" Pass "));
                     row.addView(addTextPassFail(" ", i));
                 }
-
             }
-            test4_table_layout7.addView(row);
+            test4_table_layout8.addView(row);
         }
 
         //dismiss progressbar
@@ -641,6 +691,50 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
         return tv;
     }
 
+    // Fit before stream
+    int idCountEtvBefore = 800;
+
+    private TextView addInputDataTextViewBeforeStream() {
+        TextView tv = new TextView(this);
+        tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+                TableRow.LayoutParams.WRAP_CONTENT));
+        tv.setBackgroundResource(R.drawable.border1);
+        //tv.setPadding(5, 5, 5, 5);
+        tv.setTextColor(getResources().getColor(R.color.black));
+        tv.setTextSize(getResources().getDimension(R.dimen.normal_text_size));
+        //tv.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD);
+        tv.setId(idCountEtvBefore);
+        tv.setSingleLine(false);
+        tv.setMaxLines(3);
+        tv.setEllipsize(TextUtils.TruncateAt.END);
+        idCountEtvBefore++;
+        txtViewList.add(tv);
+        return tv;
+    }
+
+
+
+    //Fit After stream
+    int idCountEtvAfter = 900;
+    private TextView addInputDataTextViewAfterStream() {
+        TextView tv = new TextView(this);
+        tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+                TableRow.LayoutParams.WRAP_CONTENT));
+        tv.setBackgroundResource(R.drawable.border1);
+        //tv.setPadding(5, 5, 5, 5);
+        tv.setTextColor(getResources().getColor(R.color.black));
+        tv.setTextSize(getResources().getDimension(R.dimen.normal_text_size));
+        //tv.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD);
+        tv.setId(idCountEtvAfter);
+        tv.setSingleLine(false);
+        tv.setMaxLines(3);
+        tv.setEllipsize(TextUtils.TruncateAt.END);
+        idCountEtvAfter++;
+        txtViewList.add(tv);
+        return tv;
+    }
+
+    //obtained result
     int idCountEtv = 200;
 
     private TextView addInputDataTextView() {
@@ -693,6 +787,7 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
         test4_table_layout5 = (TableLayout) findViewById(R.id.test4_tableLayout5);
         test4_table_layout6 = (TableLayout) findViewById(R.id.test4_tableLayout6);
         test4_table_layout7 = (TableLayout) findViewById(R.id.test4_tableLayout7);
+        test4_table_layout8 = (TableLayout) findViewById(R.id.test4_tableLayout8);
         findViewById(R.id.test_table_4_header_l_ll).setVisibility(View.GONE);
         findViewById(R.id.test_table_4_header_2_ll).setVisibility(View.GONE);
     }

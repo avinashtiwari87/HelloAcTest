@@ -99,15 +99,22 @@
             android:orientation="vertical">
 
             <TextView
+                style="@style/TextAppearance.AppCompat.header_left"
+                android:layout_gravity="center"
+                android:text="@string/tewst_witness_by" />
+
+            <TextView
                 android:id="@+id/testwitness"
                 style="@style/TextAppearance.AppCompat.header_left"
                 android:layout_gravity="center"
                 android:text="@string/test_witness_name" />
 
             <TextView
+                android:id="@+id/testwitness_org"
                 style="@style/TextAppearance.AppCompat.header_left"
                 android:layout_gravity="center"
-                android:text="@string/tewst_witness_by" />
+                android:text="@string/test_witness_org" />
+
         </LinearLayout>
 
     </LinearLayout>

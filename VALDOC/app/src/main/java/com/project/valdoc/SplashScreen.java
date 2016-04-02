@@ -354,7 +354,8 @@ public class SplashScreen extends Activity {
         equipment.setEquipmentName("Equipment name");
         equipment.setRoomId(1);
         equipment.setOccupancyState("OccupancyState");
-        equipment.setVelocity(200);
+        equipment.setMinVelocity(200);
+        equipment.setMaxVelocity(300);
         equipment.setTestReference("TestReference");
         equipment.setFilterQuantity(5);
         equipment.setEquipmentLoad(100);
@@ -368,7 +369,8 @@ public class SplashScreen extends Activity {
         equipment1.setEquipmentName("Equipment name1");
         equipment1.setRoomId(2);
         equipment1.setOccupancyState("OccupancyState1");
-        equipment1.setVelocity(2001);
+        equipment.setMinVelocity(200);
+        equipment.setMaxVelocity(300);
         equipment1.setTestReference("TestReference1");
         equipment1.setFilterQuantity(6);
         equipment1.setEquipmentLoad(1001);

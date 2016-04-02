@@ -10,6 +10,7 @@ public class PartnerInstrument implements Serializable{
     private String partner_instrument;
     private int pInstrumentId;
     private int partnerId;
+    private String serialNo;
     private String pInstrumentName;
     private String make;
     private String model;
@@ -42,6 +43,14 @@ public class PartnerInstrument implements Serializable{
 
     public void setPartnerId(int partnerId) {
         this.partnerId = partnerId;
+    }
+
+    public String getSerialNo() {
+        return serialNo;
+    }
+
+    public void setSerialNo(String serialNo) {
+        this.serialNo = serialNo;
     }
 
     public String getpInstrumentName() {

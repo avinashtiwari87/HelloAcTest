@@ -13,7 +13,8 @@ public class Equipment implements Serializable{
     private String equipmentName;
     private int roomId;
     private String occupancyState;
-    private double velocity;
+    private double minVelocity;
+    private double maxVelocity;
     private String testReference;
     private int filterQuantity;
     private double equipmentLoad;
@@ -67,8 +68,20 @@ public class Equipment implements Serializable{
         this.occupancyState = occupancyState;
     }
 
-    public double getVelocity() {
-        return velocity;
+    public double getMinVelocity() {
+        return minVelocity;
+    }
+
+    public void setMinVelocity(double minVelocity) {
+        this.minVelocity = minVelocity;
+    }
+
+    public double getMaxVelocity() {
+        return maxVelocity;
+    }
+
+    public void setMaxVelocity(double maxVelocity) {
+        this.maxVelocity = maxVelocity;
     }
 
     public String getTestReference() {
@@ -77,10 +90,6 @@ public class Equipment implements Serializable{
 
     public void setTestReference(String testReference) {
         this.testReference = testReference;
-    }
-
-    public void setVelocity(double velocity) {
-        this.velocity = velocity;
     }
 
     public int getFilterQuantity() {

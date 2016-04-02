@@ -2,6 +2,7 @@ package com.project.valdoc.controler;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Base64;
 import android.util.Log;
 
 import com.project.valdoc.db.ValdocDatabaseHandler;
@@ -9,6 +10,7 @@ import com.project.valdoc.intity.Ahu;
 import com.project.valdoc.intity.ApplicableTestEquipment;
 import com.project.valdoc.intity.ApplicableTestRoom;
 import com.project.valdoc.intity.Area;
+import com.project.valdoc.intity.ClientInstrument;
 import com.project.valdoc.intity.Equipment;
 import com.project.valdoc.intity.EquipmentFilter;
 import com.project.valdoc.intity.Grill;
@@ -46,33 +48,33 @@ public class ValdocControler {
         getConection(method);
     }
 
-    public void httpPostSyncData(Context context,String method) {
+    public void httpPostSyncData(Context context, String method) {
         mContext = context;
         JSONObject jsonObject = getCertificateData();
         postConnection(method, jsonObject);
     }
 
     private JSONObject getCertificateData() {
-        JSONObject jsonObject=null;
-        JSONArray testDetailsJsonArray=null;
-        JSONArray testReadingJsonArray=null;
-        JSONArray testSpecificationValueJsonArray=null;
-        JSONArray serviceReportJsonArray=null;
-        JSONArray serviceReportDetailsJsonArray=null;
+        JSONObject jsonObject = null;
+        JSONArray testDetailsJsonArray = null;
+        JSONArray testReadingJsonArray = null;
+        JSONArray testSpecificationValueJsonArray = null;
+        JSONArray serviceReportJsonArray = null;
+        JSONArray serviceReportDetailsJsonArray = null;
         jsonObject = new JSONObject();
         try {
-            testDetailsJsonArray=mValdocDatabaseHandler.getTestDetailsInfo();
-            testReadingJsonArray=mValdocDatabaseHandler.getTestReadingInfo();
-            testSpecificationValueJsonArray=mValdocDatabaseHandler.getTestSpecificationValueInfo();
-            serviceReportJsonArray=mValdocDatabaseHandler.getServiceReport();
-            serviceReportDetailsJsonArray=mValdocDatabaseHandler.getServiceReportDetailsInfo();
+            testDetailsJsonArray = mValdocDatabaseHandler.getTestDetailsInfo();
+            testReadingJsonArray = mValdocDatabaseHandler.getTestReadingInfo();
+            testSpecificationValueJsonArray = mValdocDatabaseHandler.getTestSpecificationValueInfo();
+            serviceReportJsonArray = mValdocDatabaseHandler.getServiceReport();
+            serviceReportDetailsJsonArray = mValdocDatabaseHandler.getServiceReportDetailsInfo();
 
-            jsonObject.put("serviceReportDTOs",serviceReportJsonArray );
-            jsonObject.put("serviceReportDetailDTOs",serviceReportDetailsJsonArray );
-            jsonObject.put("testDetailDTOs",testDetailsJsonArray );
-            jsonObject.put("testReadingDTOs",testReadingJsonArray );
-            jsonObject.put("testSpecificValueDTOs",testSpecificationValueJsonArray );
-        }catch(Exception e){
+            jsonObject.put("serviceReportDTOs", serviceReportJsonArray);
+            jsonObject.put("serviceReportDetailDTOs", serviceReportDetailsJsonArray);
+            jsonObject.put("testDetailDTOs", testDetailsJsonArray);
+            jsonObject.put("testReadingDTOs", testReadingJsonArray);
+            jsonObject.put("testSpecificValueDTOs", testSpecificationValueJsonArray);
+        } catch (Exception e) {
             Log.d("getCertificateData", "certificate json exception=" + e.getMessage());
         }
 
@@ -148,6 +150,11 @@ public class ValdocControler {
             ArrayList applicableTestEquipmentsList = applicableTestEquipmentsData(jsonRootObject.optJSONArray("applicableTestEquipments"));
             arrayListHashMap.put(ValdocDatabaseHandler.APLICABLE_TEST_EQUIPMENT_TABLE_NAME, applicableTestEquipmentsList);
 
+
+            //client instrument data parsing
+            ArrayList clientInstrumentsList = clientInstrumentsData(jsonRootObject.optJSONArray("clientInstruments"));
+            arrayListHashMap.put(ValdocDatabaseHandler.CLIENT_INSTRUMENT_TABLE_NAME, clientInstrumentsList);
+
             //partner instrument data parsing
             ArrayList partnerInstrumentsList = partnerInstrumentsData(jsonRootObject.optJSONArray("partnerInstruments"));
             arrayListHashMap.put(ValdocDatabaseHandler.PARTNER_INSTRUMENT_TABLE_NAME, partnerInstrumentsList);
@@ -198,6 +205,35 @@ public class ValdocControler {
         return arrayList;
     }
 
+    private ArrayList clientInstrumentsData(JSONArray jsonArray) {
+        ArrayList arrayList = new ArrayList();
+        //Iterate the jsonArray and print the info of JSONObjects
+        for (int i = 0; i < jsonArray.length(); i++) {
+            ClientInstrument clientInstrument = new ClientInstrument();
+            try {
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                clientInstrument.setcInstrumentId(jsonObject.optInt("cInstrumentId"));
+                clientInstrument.setInstrumentId(jsonObject.optString("instrumentId", ""));
+                clientInstrument.setSerialNo(jsonObject.optString("serialNo","").toString());
+                clientInstrument.setcInstrumentName(jsonObject.optString("cInstrumentName").toString());
+                clientInstrument.setMake(jsonObject.optString("make").toString());
+                clientInstrument.setModel(jsonObject.optString("model").toString());
+                clientInstrument.setLastCalibrated(jsonObject.optString("lastCalibrationDate").toString());
+                clientInstrument.setCalibrationDueDate(jsonObject.optString("calibrationDueDate").toString());
+                clientInstrument.setCurrentLocation(jsonObject.optString("currentLocation").toString());
+                clientInstrument.setStatus(jsonObject.optString("status").toString());
+                clientInstrument.setTestId(jsonObject.optInt("testId"));
+                clientInstrument.setCreationDate(jsonObject.optString("createdDate").toString());
+                Log.d("valdoc", "parse partner");
+                arrayList.add(clientInstrument);
+            } catch (Exception e) {
+
+            }
+        }
+        return arrayList;
+    }
+
+
     private ArrayList partnerInstrumentsData(JSONArray jsonArray) {
         ArrayList arrayList = new ArrayList();
         //Iterate the jsonArray and print the info of JSONObjects
@@ -207,6 +243,7 @@ public class ValdocControler {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                 partnerInstrument.setpInstrumentId(jsonObject.optInt("pInstrumentId"));
                 partnerInstrument.setPartnerId(jsonObject.optInt("partnerId"));
+                partnerInstrument.setSerialNo(jsonObject.optString("serialNo").toString());
                 partnerInstrument.setpInstrumentName(jsonObject.optString("pInstrumentName").toString());
                 partnerInstrument.setMake(jsonObject.optString("make").toString());
                 partnerInstrument.setModel(jsonObject.optString("model").toString());
@@ -288,14 +325,16 @@ public class ValdocControler {
                 equipment.setEquipmentId(jsonObject.optInt("equipmentId"));
                 equipment.setRoomId(jsonObject.optInt("roomId"));
                 equipment.setOccupancyState(jsonObject.optString("occupancyState").toString());
-                equipment.setVelocity(jsonObject.optDouble("velocity"));
+                equipment.setMinVelocity(jsonObject.optDouble("minVelocity"));
+                equipment.setMaxVelocity(jsonObject.optDouble("maxVelocity"));
                 equipment.setFilterQuantity(jsonObject.optInt("filterQuantity"));
                 equipment.setEquipmentLoad(jsonObject.optDouble("equipmentLoad"));
                 equipment.setEquipmentName(jsonObject.optString("equipmentName").toString());
                 equipment.setTestReference(jsonObject.optString("testReference").toString());
                 equipment.setEquipmentNo(jsonObject.optString("equipmentNo").toString());
-
                 equipment.setCreationDate(jsonObject.optString("createdDate").toString());
+                Log.d("Avinash", "parsing equipment db minvalocity=" + equipment.getMinVelocity() + "equipment.getMaxVelocity()=" + equipment.getMaxVelocity());
+
                 arrayList.add(equipment);
             } catch (Exception e) {
 
@@ -511,17 +550,18 @@ public class ValdocControler {
                 user.setId(jsonObject.optInt("id"));
                 user.setName(jsonObject.optString("name").toString());
                 user.setPartnerId(jsonObject.optInt("partnerId"));
-                if (0 == jsonObject.optInt("partnerId")) {
-                    user.setType("CLIENT");
-                } else {
+                if (jsonObject.optString("userType").equalsIgnoreCase("PARTNER")) {
                     user.setType("PARTNER");
+                } else {
+                    user.setType("CLIENT");
                 }
                 user.setEmail(jsonObject.optString("email").toString());
                 user.setContact(jsonObject.optString("contact").toString());
                 user.setDepartment(jsonObject.optString("department").toString());
                 user.setActive(jsonObject.optInt("active"));
                 user.setDeleted(jsonObject.optInt("deleted"));
-                user.setPassword(jsonObject.optString("password").toString());
+
+                user.setPassword(passwordDecryption(jsonObject.optString("password").toString()));
                 user.setCreationDate(jsonObject.optString("lastUpdated").toString());
                 arrayList.add(user);
             } catch (Exception e) {
@@ -529,6 +569,23 @@ public class ValdocControler {
             }
         }
         return arrayList;
+    }
+
+    public String passwordDecryption(String password) {
+        String text = "";
+        if (!"".equalsIgnoreCase(password)) {
+            try {
+                byte[] data = Base64.decode(password, Base64.DEFAULT);
+                text = new String(data, "UTF-8");
+                Log.d("Avinash", "decrypted password" + text);
+            } catch (Exception e) {
+
+            }
+        } else {
+            text = password;
+        }
+
+        return text;
     }
 
     public interface ControlerResponse {

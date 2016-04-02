@@ -19,6 +19,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Base64;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -132,6 +133,19 @@ public class LoginActivity extends AppCompatActivity implements HttpConnection.H
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
+
+        // Sending side
+//        byte[] data = text.getBytes("UTF-8");
+//        String base64 = Base64.encodeToString(data, Base64.DEFAULT);
+
+// Receiving side
+//        try {
+//            byte[] data = Base64.decode("UmFqZWV2MTIz", Base64.DEFAULT);
+//            String text = new String(data, "UTF-8");
+//            Log.d("Avinash","decrypted password"+text);
+//        }catch(Exception e){
+//
+//        }
 //create db and insert details
 //        insertDataInTable();
     }
@@ -312,8 +326,8 @@ public class LoginActivity extends AppCompatActivity implements HttpConnection.H
         loginUserName = "";
         loginUserType = "";
         for (User user : mValdocDatabaseHandler.getUserInfo()) {
-            Log.d("valdoc", "Login method :" + user.getName() + "\n" + user.getPassword());
-            if (user.getName().equals(name) && user.getPassword().equals(password)) {
+            Log.d("valdoc", "Login method :" + user.getEmail() + "\n" + user.getPassword());
+            if (user.getEmail().equals(name) && user.getPassword().equals(password)) {
                 Log.d("valdoc", "Login method inside if :" + user.getName() + "\n" + user.getPassword());
                 login = true;
                 loginUserName = user.getName();

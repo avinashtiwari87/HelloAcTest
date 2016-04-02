@@ -37,7 +37,7 @@
                 android:text="@string/instrument_used_test1" />
 
             <TextView
-                android:id="@+id/instrument_no"
+                android:id="@+id/instrument_name"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
                 android:layout_toRightOf="@+id/instrument_used"
@@ -67,6 +67,63 @@
                 android:textColor="#000000"
                 android:layout_toRightOf="@+id/testcunducted_by"
                 android:text="@string/header_title_result" />
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/instrument_no_and_roomname_layout"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_marginTop="10dp"
+        android:weightSum="2"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/instrument_no_lable"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:textStyle="bold"
+                android:textColor="@android:color/black"
+                android:text="@string/instrument_no_lable" />
+
+            <TextView
+                android:id="@+id/instrument_no"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_toRightOf="@+id/instrument_no_lable"
+                android:layout_marginLeft="5dp"
+                android:textColor="#000000"
+                android:text="" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/room_name_lable1"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:textStyle="bold"
+                android:textColor="@android:color/black"
+                android:text="@string/room_name_lable" />
+
+            <TextView
+                android:id="@+id/room_name1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:textColor="#000000"
+                android:layout_toRightOf="@+id/room_name_lable1"
+                android:text="" />
         </RelativeLayout>
 
     </LinearLayout>

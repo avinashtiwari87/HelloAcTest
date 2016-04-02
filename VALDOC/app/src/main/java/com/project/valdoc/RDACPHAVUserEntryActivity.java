@@ -29,6 +29,7 @@ import com.project.valdoc.intity.Room;
 import com.project.valdoc.intity.TestDetails;
 import com.project.valdoc.intity.TestReading;
 import com.project.valdoc.intity.TestSpesificationValue;
+import com.project.valdoc.utility.Utilityies;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -82,10 +83,10 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
     private TextView roomName;
     private TextView occupancyState;
     private TextView testRefrance;
-    private TextView equipmentNameText;
-    private TextView equipmentNoText;
-    private TextView equipmentName;
-    private TextView equipmentNo;
+//    private TextView equipmentNameText;
+//    private TextView equipmentNoText;
+    private TextView roomNo;
+    private TextView ahuNo;
     private TextView testCundoctor;
     private TextView testWitness;
     private TextView dateTextView;
@@ -96,6 +97,12 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
     private TextView testerNameTextView;
     private TextView instrumentUsedTextView;
     private TextView testCunductedByTextView;
+
+    private TextView roomNameLable;
+    private TextView instrumentNoLable;
+    private TextView roomNameTest;
+    private TextView instrument_name;
+
     ArrayList<TextView> txtViewList;
     private double totalAirFlowRate = 0;
     private double airChangeValue;
@@ -107,6 +114,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
     private String mPartnerName;
     ArrayList<TextView> resultTextViewList;
     private ValdocDatabaseHandler mValdocDatabaseHandler = new ValdocDatabaseHandler(RDACPHAVUserEntryActivity.this);
+    int testDetailsId=0;
     private HashMap<Integer, Integer> userEnterdValue;
     private int year;
     private int month;
@@ -121,6 +129,9 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
         sharedpreferences = getSharedPreferences("valdoc", Context.MODE_PRIVATE);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         pr = ProgressDialog.show(this, "Please Wait", "Loading...");
+
+        sharedpreferences = getSharedPreferences("valdoc", Context.MODE_PRIVATE);
+        testDetailsId = (sharedpreferences.getInt("TESTDETAILSID", 0)+1);
 
         txtViewList = new ArrayList<TextView>();
         resultTextViewList = new ArrayList<TextView>();
@@ -143,7 +154,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
         textViewValueAssignment();
         initRes();
         datePicker();
-        if ("RD_ACPH_AV".equalsIgnoreCase(testType)) {
+        if (TestCreateActivity.ACPHAV.equalsIgnoreCase(testType)) {
             BuildTableTest2(rows, cols);
         }
 
@@ -229,7 +240,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
 //        editor.commit();
 
         // Show current date
-        String date = new StringBuilder().append(year).append("-").append(month + 1).append("-").append(day).append(" ").toString();
+        String date = new StringBuilder().append(day).append("-").append(month + 1).append("-").append(year).append(" ").toString();
         dateTextView.setText(date);
 //        new StringBuilder()
 //                // Month is 0 based, just add 1
@@ -244,15 +255,15 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
             make.setText(clientInstrument.getMake());
             model.setText(clientInstrument.getModel());
             instrumentSerialNo.setText("" + clientInstrument.getSerialNo());
-            calibrationOn.setText(clientInstrument.getLastCalibrated());
-            calibrationDueOn.setText(clientInstrument.getCalibrationDueDate());
+            calibrationOn.setText(Utilityies.parseDateToddMMyyyy(clientInstrument.getLastCalibrated()));
+            calibrationDueOn.setText(Utilityies.parseDateToddMMyyyy(clientInstrument.getCalibrationDueDate()));
         } else {
             instrumentUsed.setText(partnerInstrument.getpInstrumentName());
             make.setText(partnerInstrument.getMake());
             model.setText(partnerInstrument.getModel());
             instrumentSerialNo.setText("" + partnerInstrument.getpInstrumentId());
-            calibrationOn.setText(partnerInstrument.getLastCalibrated());
-            calibrationDueOn.setText(partnerInstrument.getCalibrationDueDate());
+            calibrationOn.setText(Utilityies.parseDateToddMMyyyy(partnerInstrument.getLastCalibrated()));
+            calibrationDueOn.setText(Utilityies.parseDateToddMMyyyy(partnerInstrument.getCalibrationDueDate()));
         }
 
         testSpecification.setText("Specified Air Change/hr NLT " + room.getAcphNLT());
@@ -262,10 +273,10 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
         occupancyState.setText(room.getOccupancyState().toString());
         Log.d("valdoc", "RDAV5UserEnryActivity 1witness= equipment.getTestReference()=" + room.getTestRef());
         testRefrance.setText("" + room.getTestRef().toString());
-        equipmentNameText.setText(getResources().getString(R.string.room_no));
-        equipmentNoText.setText(getResources().getString(R.string.ahu_no));
-        equipmentName.setText(room.getRoomNo().toString());
-        equipmentNo.setText(ahuNumber);
+//        equipmentNameText.setText(getResources().getString(R.string.room_no));
+//        equipmentNoText.setText(getResources().getString(R.string.ahu_no));
+        roomNo.setText(room.getRoomNo().toString());
+        ahuNo.setText(ahuNumber);
         testCundoctor.setText(userName);
         Log.d("valdoc", "RDAV5UserEnryActivity 1witness=" + witnessFirst);
         StringBuilder witness = new StringBuilder();
@@ -281,7 +292,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
 
     private void initTextView() {
         // layout data which is not in use
-        instrumentNoTextView = (TextView) findViewById(R.id.instrument_no_test2);
+        instrumentNoTextView = (TextView) findViewById(R.id.instrument_no2);
         instrumentNoTextView.setVisibility(View.GONE);
         testerNameTextView = (TextView) findViewById(R.id.tester_name_test2);
         testerNameTextView.setVisibility(View.GONE);
@@ -289,6 +300,15 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
         instrumentUsedTextView.setVisibility(View.GONE);
         testCunductedByTextView = (TextView) findViewById(R.id.testcunducted_by);
         testCunductedByTextView.setVisibility(View.GONE);
+
+        roomNameLable= (TextView) findViewById(R.id.room_name_lable2);
+        roomNameLable.setVisibility(View.GONE);
+        instrumentNoLable= (TextView) findViewById(R.id.instrument_no_lable);
+        instrumentNoLable.setVisibility(View.GONE);
+        roomNameTest= (TextView) findViewById(R.id.room_name2);
+        roomNameTest.setVisibility(View.GONE);
+        instrument_name= (TextView) findViewById(R.id.instrument_name2);
+        instrument_name.setVisibility(View.GONE);
 
         dateTextView = (TextView) findViewById(R.id.datetextview);
         customerName = (TextView) findViewById(R.id.customer_name);
@@ -302,13 +322,13 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
         testSpecification = (TextView) findViewById(R.id.testspecification);
         plantName = (TextView) findViewById(R.id.plantname);
         areaOfTest = (TextView) findViewById(R.id.areaoftest);
-        roomName = (TextView) findViewById(R.id.roomname);
         occupancyState = (TextView) findViewById(R.id.ocupancystate);
         testRefrance = (TextView) findViewById(R.id.testrefrence);
-        equipmentNameText = (TextView) findViewById(R.id.equipment_name_text);
-        equipmentNoText = (TextView) findViewById(R.id.equipment_no_text);
-        equipmentName = (TextView) findViewById(R.id.equipmentname);
-        equipmentNo = (TextView) findViewById(R.id.equipmentno);
+//        equipmentNameText = (TextView) findViewById(R.id.room);
+//        equipmentNoText = (TextView) findViewById(R.id.equipment_no_text);
+        roomName = (TextView) findViewById(R.id.room_name);
+        roomNo = (TextView) findViewById(R.id.room_no);
+        ahuNo = (TextView) findViewById(R.id.ahu_no);
         infarance = (TextView) findViewById(R.id.infarance);
         testCundoctor = (TextView) findViewById(R.id.testcunducter);
         testWitness = (TextView) findViewById(R.id.testwitness);
@@ -330,10 +350,13 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
                 if (mValdocDatabaseHandler.insertTestDetails(ValdocDatabaseHandler.TEST_DETAILS_TABLE_NAME, testDetailsDataCreation())) {
                     if (mValdocDatabaseHandler.insertTestReading(ValdocDatabaseHandler.TESTREADING_TABLE_NAME, testReading())) {
                         if (mValdocDatabaseHandler.insertTestSpesificationValue(ValdocDatabaseHandler.TESTSPECIFICATIONVALUE_TABLE_NAME, testSpesificationValue())) {
+                            SharedPreferences.Editor editor = sharedpreferences.edit();
+                            editor.putInt("TESTDETAILSID", testDetailsId);
+                            editor.commit();
                             Toast.makeText(RDACPHAVUserEntryActivity.this, "Data saved successfully", Toast.LENGTH_LONG).show();
                             Intent intent = new Intent(RDACPHAVUserEntryActivity.this, TestCreateActivity.class);
-                            intent.putExtra("RD_ACPH_AV", true);
-                            startActivity(intent);
+                            intent.putExtra(TestCreateActivity.ACPHAV, true);
+                                    startActivity(intent);
                             finish();
                         } else {
                             Toast.makeText(RDACPHAVUserEntryActivity.this, "Data not saved", Toast.LENGTH_LONG).show();
@@ -364,7 +387,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
         ArrayList<TestSpesificationValue> spesificationValueArrayList = new ArrayList<TestSpesificationValue>();
         TestSpesificationValue testSpesificationValue = new TestSpesificationValue();
         testSpesificationValue.setTest_specific_id(1);
-        testSpesificationValue.setTest_detail_id("1");
+        testSpesificationValue.setTest_detail_id(""+testDetailsId);
         testSpesificationValue.setFieldName("TFR");
         testSpesificationValue.setFieldValue("" + totalAirFlowRate);
         spesificationValueArrayList.add(testSpesificationValue);
@@ -394,7 +417,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
             TestReading testReading = new TestReading();
             testReading.setTestReadingID(index);
 //        TO DO test details id is id of test details table
-            testReading.setTest_detail_id(index);
+            testReading.setTest_detail_id(testDetailsId);
             testReading.setEntityName("" + grill.get(ValdocDatabaseHandler.GRILL_GRILLCODE).toString());
             StringBuilder grilList = new StringBuilder();
             //v1,v2....value cration
@@ -422,12 +445,13 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
     private TestDetails testDetailsDataCreation() {
         TestDetails testDetails = new TestDetails();
 //        TO DO: need to make it dynamic
-        testDetails.setTest_detail_id(1);
+        testDetails.setTest_detail_id(testDetailsId);
         testDetails.setCustomer(customerName.getText().toString());
-        testDetails.setDateOfTest(dateTextView.getText().toString());
+        String date =year+"-"+(month + 1)+"-"+(day)+" ";
+        testDetails.setDateOfTest(date);
         testDetails.setRawDataNo(certificateNo.getText().toString());
         testDetails.setPartnerName("" + mPartnerName);
-        testDetails.setTestName("RD_ACPH_AV");
+        testDetails.setTestName(TestCreateActivity.ACPHAV);
         if (loginUserType.equals("CLIENT")) {
             testDetails.setInstrumentUsed(clientInstrument.getcInstrumentName());
             testDetails.setMake(clientInstrument.getMake());
@@ -448,10 +472,10 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
         testDetails.setBlockName(plantName.getText().toString());
         testDetails.setTestArea(areaOfTest.getText().toString());
         testDetails.setRoomName(roomName.getText().toString());
-        testDetails.setRoomNo(equipmentName.getText().toString());
+        testDetails.setRoomNo(roomNo.getText().toString());
         testDetails.setOccupencyState(occupancyState.getText().toString());
         testDetails.setTestReference(testRefrance.getText().toString());
-        testDetails.setAhuNo(equipmentNo.getText().toString());
+        testDetails.setAhuNo(ahuNo.getText().toString());
         testDetails.setTesterName(testCundoctor.getText().toString());
 
         StringBuilder witness = new StringBuilder();
@@ -501,7 +525,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
 //            editor.commit();
 
             // Show selected date
-            String date = new StringBuilder().append(year).append("-").append(month + 1).append("-").append(day).append(" ").toString();
+            String date = new StringBuilder().append(day).append("-").append(month + 1).append("-").append(year).append(" ").toString();
             dateTextView.setText(date);
 //            new StringBuilder().append(year)
 //                    .append("-").append(month + 1).append("-").append(day)
@@ -836,7 +860,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
 
     private void initRes() {
         headerText = (TextView) findViewById(R.id.common_header_tv);
-        headerText.setText("* Air Flow Velocity, Volume Testing and Determination of Air Changes per Hour Rates  *");
+//        headerText.setText("* Air Flow Velocity, Volume Testing and Determination of Air Changes per Hour Rates  *");
         //Test 2
         test2_table_layout = (TableLayout) findViewById(R.id.test2_tableLayout1);
         test2_table_layout2 = (TableLayout) findViewById(R.id.test2_tableLayout2);

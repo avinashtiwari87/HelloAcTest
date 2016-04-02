@@ -15,7 +15,7 @@
     <string name="user_name">User Name</string>
     <string name="test_data_sheet">Test Data Enry</string>
     <string name="update_serial_no">Update Serial No :</string>
-    <string name="witness">Witness</string>
+    <string name="witness">Witness :</string>
     <string name="update_service_engg">Update Service Engineer :</string>
     <string name="test_witness_hint">Enter Test Witness Name</string>
     <string name="area_of_test">Area Of Test</string>
@@ -52,7 +52,7 @@
     <string name="details_of_specification_area">Details Of Specification And Area</string>
     <string name="test_specification">Test Spesification</string>
     <string name="test_specification_details">Required Air Velocity 90 fpm +/- 20%</string>
-    <string name="block_plant_name">Blocak/Plant Name :</string>
+    <string name="block_plant_name">Block/Plant Name</string>
     <string name="block_plant_details">FTO3</string>
     <string name="area_of_test_label">Area Of Test</string>
     <string name="area_of_test_label_details">Micro Bialogy Area</string>
@@ -84,14 +84,18 @@
     <string name="dont_meet_infrance_value">The above Airflow Velocity Test value do not meets the specified Requirement</string>
     <string name="tes_cunducted_buy">Test Cunducted By</string>
     <string name="tes_cunducted_buy_test1">Test Cunducted By :</string>
+    <string name="instrument_no_lable">Instrument No</string>
+    <string name="room_name_lable">Room name</string>
     <string name="tewst_witness_by">Test Witness By</string>
     <string name="test_cunduct_org">(for Castor Engineering Pvt Ltd)</string>
     <string name="test_cunducter_name">TestCundoctorName</string>
     <string name="test_witness_name">TestWitnessName</string>
+    <string name="test_witness_org">Biopharma Private Ltd</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="header_title">* Average Air Flow Velocity Testing *</string>
+    <string name="verify_test_header">Measured Test Value</string>
     <string name="header2_title">Details of Instruments Used for testing</string>
     <string name="header3_title">Details of Specification and Area</string>
     <string name="header_title_result">* Obtained Test  Results *</string>

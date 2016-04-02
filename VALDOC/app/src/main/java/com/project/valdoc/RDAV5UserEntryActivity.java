@@ -3,11 +3,15 @@ package com.project.valdoc;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
@@ -27,6 +31,7 @@ import com.project.valdoc.intity.PartnerInstrument;
 import com.project.valdoc.intity.TestDetails;
 import com.project.valdoc.intity.TestReading;
 import com.project.valdoc.intity.TestSpesificationValue;
+import com.project.valdoc.utility.Utilityies;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -68,10 +73,12 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
     private TextView plantName;
     private TextView areaOfTest;
     private TextView roomName;
+    private TextView roomNoLable;
     private TextView occupancyState;
     private TextView testRefrance;
     private TextView equipmentName;
     private TextView equipmentNo;
+    private TextView roomNameText;
     private TextView infarance;
     private TextView testCundoctor;
     private TextView testWitness;
@@ -83,6 +90,11 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
     private TextView testerNameTextView;
     private TextView instrumentUsedTextView;
     private TextView testCunductedByTextView;
+    private TextView roomNameLable;
+    private TextView instrumentNoLable;
+    private TextView roomNameTest;
+    private TextView instrument_name;
+
     ArrayList<TextView> txtViewList;
     ArrayList<TextView> txtPassFailList;
     private Button submit;
@@ -91,7 +103,8 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
     private String mPartnerName;
     ArrayList<TextView> resultTextViewList;
     private ValdocDatabaseHandler mValdocDatabaseHandler = new ValdocDatabaseHandler(RDAV5UserEntryActivity.this);
-
+    SharedPreferences sharedpreferences;
+    int testDetailsId=0;
     private int year;
     private int month;
     private int day;
@@ -108,6 +121,9 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
         txtViewList = new ArrayList<TextView>();
         resultTextViewList = new ArrayList<TextView>();
 
+        sharedpreferences = getSharedPreferences("valdoc", Context.MODE_PRIVATE);
+        testDetailsId = (sharedpreferences.getInt("TESTDETAILSID", 0)+1);
+
         if (getIntent().hasExtra("rows") && getIntent().hasExtra("cols")) {
             rows = getIntent().getIntExtra("rows", 0);
             cols = getIntent().getIntExtra("cols", 0);
@@ -120,7 +136,7 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
         textViewValueAssignment();
         initRes();
         datePicker();
-        if ("RD_AV_5".equalsIgnoreCase(testType)) {
+        if (TestCreateActivity.AV.equalsIgnoreCase(testType)) {
             BuildTable(rows, cols);
         }
 
@@ -180,7 +196,7 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
         certificateNo.setText("V5/" + mon + "/" + year + "/" + formattedDate);
 
         // Show current date
-        String date = new StringBuilder().append(year).append("-").append(month + 1).append("-").append(day).append(" ").toString();
+        String date = new StringBuilder().append(day).append("-").append(month + 1).append("-").append(year).append(" ").toString();
         // Month is 0 based, just add 1
         dateTextView.setText(date);
     }
@@ -195,6 +211,14 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
         instrumentUsedTextView.setVisibility(View.GONE);
         testCunductedByTextView = (TextView) findViewById(R.id.testcunducted_by);
         testCunductedByTextView.setVisibility(View.GONE);
+        roomNameLable = (TextView) findViewById(R.id.room_name_lable1);
+        roomNameLable.setVisibility(View.GONE);
+        instrumentNoLable = (TextView) findViewById(R.id.instrument_no_lable);
+        instrumentNoLable.setVisibility(View.GONE);
+        roomNameTest = (TextView) findViewById(R.id.room_name1);
+        roomNameTest.setVisibility(View.GONE);
+        instrument_name = (TextView) findViewById(R.id.instrument_name);
+        instrument_name.setVisibility(View.GONE);
 
         dateTextView = (TextView) findViewById(R.id.datetextview);
         customerName = (TextView) findViewById(R.id.customer_name);
@@ -208,11 +232,18 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
         testSpecification = (TextView) findViewById(R.id.testspecification);
         plantName = (TextView) findViewById(R.id.plantname);
         areaOfTest = (TextView) findViewById(R.id.areaoftest);
-        roomName = (TextView) findViewById(R.id.roomname);
+
+//        roomNameLable = (TextView) findViewById(R.id.ahu_no_lable);
+//        roomNameLable.setText(getResources().getString(R.string.room_name));
+        roomName = (TextView) findViewById(R.id.ahu_no);
         occupancyState = (TextView) findViewById(R.id.ocupancystate);
         testRefrance = (TextView) findViewById(R.id.testrefrence);
-        equipmentName = (TextView) findViewById(R.id.equipmentname);
-        equipmentNo = (TextView) findViewById(R.id.equipmentno);
+        roomNameText = (TextView) findViewById(R.id.room_name_lable);
+        roomNameText.setText(getResources().getString(R.string.equipment_name));
+        roomNoLable = (TextView) findViewById(R.id.room_no_lable);
+        roomNoLable.setText(getResources().getString(R.string.equipment_no));
+        equipmentName = (TextView) findViewById(R.id.room_name);
+        equipmentNo = (TextView) findViewById(R.id.room_no);
         infarance = (TextView) findViewById(R.id.infarance);
         testCundoctor = (TextView) findViewById(R.id.testcunducter);
         testWitness = (TextView) findViewById(R.id.testwitness);
@@ -233,9 +264,13 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (mValdocDatabaseHandler.insertTestDetails(ValdocDatabaseHandler.TEST_DETAILS_TABLE_NAME, testDetailsDataCreation())) {
                     if (mValdocDatabaseHandler.insertTestReading(ValdocDatabaseHandler.TESTREADING_TABLE_NAME, testReading())) {
+                        SharedPreferences.Editor editor = sharedpreferences.edit();
+                        editor.putInt("TESTDETAILSID", testDetailsId);
+                        editor.commit();
+
                         Toast.makeText(RDAV5UserEntryActivity.this, "Data saved successfully", Toast.LENGTH_LONG).show();
                         Intent intent = new Intent(RDAV5UserEntryActivity.this, TestCreateActivity.class);
-                        intent.putExtra("RD_AV_5", true);
+                        intent.putExtra(TestCreateActivity.AV, true);
                         startActivity(intent);
                         finish();
                     } else {
@@ -282,7 +317,7 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
             year = selectedYear;
             month = selectedMonth;
             day = selectedDay;
-            String date = new StringBuilder().append(year).append("-").append(month + 1).append("-").append(day).append(" ").toString();
+            String date = new StringBuilder().append(day).append("-").append(month + 1).append("-").append(year).append(" ").toString();
             // Show selected date
             dateTextView.setText(date);
 
@@ -295,18 +330,18 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
             make.setText(clientInstrument.getMake());
             model.setText(clientInstrument.getModel());
             instrumentSerialNo.setText("" + clientInstrument.getSerialNo());
-            calibrationOn.setText(clientInstrument.getLastCalibrated());
-            calibrationDueOn.setText(clientInstrument.getCalibrationDueDate());
+            calibrationOn.setText(Utilityies.parseDateToddMMyyyy(clientInstrument.getLastCalibrated()));
+            calibrationDueOn.setText(Utilityies.parseDateToddMMyyyy(clientInstrument.getCalibrationDueDate()));
         } else {
             instrumentUsed.setText(partnerInstrument.getpInstrumentName());
             make.setText(partnerInstrument.getMake());
             model.setText(partnerInstrument.getModel());
             instrumentSerialNo.setText("" + partnerInstrument.getpInstrumentId());
-            calibrationOn.setText(partnerInstrument.getLastCalibrated());
-            calibrationDueOn.setText(partnerInstrument.getCalibrationDueDate());
+            calibrationOn.setText(Utilityies.parseDateToddMMyyyy(partnerInstrument.getLastCalibrated()));
+            calibrationDueOn.setText(Utilityies.parseDateToddMMyyyy(partnerInstrument.getCalibrationDueDate()));
         }
 
-        testSpecification.setText("Required Air Velocity " + equipment.getVelocity() + "fpm +/- 20%");
+        testSpecification.setText("Required Air Velocity " + equipment.getMinVelocity()+"-"+equipment.getMaxVelocity() + "fpm");
         areaOfTest.setText(areaName);
         roomName.setText(roomDetails[1]);
         occupancyState.setText(equipment.getOccupancyState().toString());
@@ -319,9 +354,9 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
         StringBuilder witness = new StringBuilder();
         witness.append(witnessFirst.toString());
         if (null != witnessSecond && witnessSecond.length() > 0)
-            witness.append("," + witnessSecond);
+            witness.append(",   " + witnessSecond);
         if (null != witnessThird && witnessThird.length() > 0)
-            witness.append("," + witnessThird);
+            witness.append(",   " + witnessThird);
         testWitness.setText(witness);
     }
 
@@ -330,7 +365,7 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
         TestReading testReading = new TestReading();
         testReading.setTestReadingID(1);
 //        TO DO test details id is id of test details table
-        testReading.setTest_detail_id(1);
+        testReading.setTest_detail_id(testDetailsId);
 
         testReading.setEntityName("filterList");
         StringBuilder sb = new StringBuilder();
@@ -360,12 +395,13 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
     private TestDetails testDetailsDataCreation() {
         TestDetails testDetails = new TestDetails();
 //        TO DO: need to make it dynamic
-        testDetails.setTest_detail_id(1);
+        testDetails.setTest_detail_id(testDetailsId);
         testDetails.setCustomer(customerName.getText().toString());
-        testDetails.setDateOfTest(dateTextView.getText().toString());
+        int newmonth = month + 1;
+        testDetails.setDateOfTest("" + year + "-" + newmonth + "-" + day);
         testDetails.setRawDataNo(certificateNo.getText().toString());
         testDetails.setPartnerName("" + mPartnerName);
-        testDetails.setTestName("RD_AV_5");
+        testDetails.setTestName(TestCreateActivity.AV);
         if (loginUserType.equals("CLIENT")) {
             Log.d("getCertificateData", "client instrumentUsed.getText()=" + instrumentUsed.getText());
             testDetails.setInstrumentUsed("" + instrumentUsed.getText());
@@ -385,7 +421,7 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
         }
 
 
-        testDetails.setTestSpecification("" + equipment.getVelocity());
+        testDetails.setTestSpecification("" + equipment.getMinVelocity()+"-"+equipment.getMaxVelocity());
         testDetails.setBlockName(plantName.getText().toString());
         testDetails.setTestArea("" + areaName);
         testDetails.setRoomName("" + roomName.getText());
@@ -498,7 +534,7 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
-                    row.addView(addTextView(" V "));
+                    row.addView(addTextView(" Average(V) "));
                 } else {
                     //result data  set
                     row.addView(addResultTextView(i));
@@ -515,7 +551,6 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
                     TableRow.LayoutParams.WRAP_CONTENT));
             // inner for loop
             for (int j = 1; j <= 1; j++) {
-
                 if (i == 1 && j == 1) {
                     row.addView(addTextView(" Result "));
                 } else {
@@ -537,9 +572,11 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
         tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
                 TableRow.LayoutParams.WRAP_CONTENT));
         tv.setBackgroundResource(R.drawable.border1);
+        tv.setGravity(Gravity.CENTER);
         //tv.setPadding(5, 5, 5, 5);
         tv.setTextColor(getResources().getColor(R.color.black));
         tv.setTextSize(getResources().getDimension(R.dimen.normal_text_size));
+        tv.setGravity(Gravity.CENTER);
         //tv.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD);
         tv.setSingleLine(false);
         tv.setMaxLines(3);
@@ -558,8 +595,10 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
         //tv.setPadding(5, 5, 5, 5);
         tv.setTextColor(getResources().getColor(R.color.black));
         tv.setTextSize(getResources().getDimension(R.dimen.normal_text_size));
+        tv.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
         //tv.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD);
         tv.setId(idCountEtv);
+        tv.setGravity(Gravity.CENTER);
         tv.setSingleLine(false);
         tv.setMaxLines(3);
         tv.setEllipsize(TextUtils.TruncateAt.END);
@@ -578,6 +617,8 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
         tv.setPadding(5, 5, 5, 5);
         tv.setTextColor(getResources().getColor(R.color.black));
         tv.setTextSize(getResources().getDimension(R.dimen.normal_text_size));
+        tv.setGravity(Gravity.CENTER);
+        tv.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
         //tv.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD);
         tv.setEms(4);
         tv.setSingleLine(true);
@@ -598,6 +639,7 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
         tv.setPadding(5, 5, 5, 5);
         tv.setTextColor(getResources().getColor(R.color.black));
         tv.setTextSize(getResources().getDimension(R.dimen.normal_text_size));
+        tv.setGravity(Gravity.CENTER);
         //tv.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD);
         tv.setSingleLine(true);
         tv.setEllipsize(TextUtils.TruncateAt.END);
@@ -612,6 +654,7 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
         editTv.setBackgroundResource(R.drawable.border);
         editTv.setPadding(5, 5, 5, 5);
         editTv.setTextColor(getResources().getColor(R.color.black));
+        editTv.setGravity(Gravity.CENTER);
         // editTv.setTextSize(getResources().getDimension(R.dimen.normal_text_size));
         //editTv.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD);
         editTv.setEms(3);
@@ -637,6 +680,7 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
         tv.setMaxLines(3);
         tv.setEllipsize(TextUtils.TruncateAt.END);
         tv.setText(textValue);
+        tv.setGravity(Gravity.CENTER);
         idPassFailTv++;
         txtPassFailList.add(tv);
         return tv;

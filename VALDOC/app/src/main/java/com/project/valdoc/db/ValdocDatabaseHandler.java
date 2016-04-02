@@ -118,7 +118,8 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
     public static final String EQUIPMENT_EQUIPMENTNO = "equipmentNo";
     public static final String EQUIPMENT_EQUIPMENTNAME = "equipmentName";
     public static final String EQUIPMENT_OCCUPANCYSTATE = "occupancyState";
-    public static final String EQUIPMENT_VELOCITY = "velocity";
+    public static final String EQUIPMENT_MINVELOCITY = "minVelocity";
+    public static final String EQUIPMENT_MAXVELOCITY = "maxVelocity";
     public static final String EQUIPMENT_TESTREFERENCE = "testReference";
     public static final String EQUIPMENT_FILTERQUANTITY = "filterQuantity";
     public static final String EQUIPMENT_EQUIPMENTLOAD = "equipmentLoad";
@@ -127,7 +128,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
     private static final String CREATE_TABLE_EQUIPMENT = "CREATE TABLE " + EQUIPMENT_TABLE_NAME
             + "(" + EQUIPMENT_EQUIPMENTID + " INTEGER," + EQUIPMENT_ROOMID + " INTEGER,"
             + EQUIPMENT_OCCUPANCYSTATE + " TEXT," + EQUIPMENT_EQUIPMENTNO + " TEXT," + EQUIPMENT_EQUIPMENTNAME + " TEXT,"
-            + EQUIPMENT_VELOCITY + " REAL," + EQUIPMENT_TESTREFERENCE + " TEXT," + EQUIPMENT_FILTERQUANTITY + " INTEGER," + EQUIPMENT_EQUIPMENTLOAD + " REAL,"
+            + EQUIPMENT_MINVELOCITY + " REAL," + EQUIPMENT_MAXVELOCITY + " REAL," + EQUIPMENT_TESTREFERENCE + " TEXT," + EQUIPMENT_FILTERQUANTITY + " INTEGER," + EQUIPMENT_EQUIPMENTLOAD + " REAL,"
             + EQUIPMENT_CREATIONDATE + " TEXT " + ")";
 
 
@@ -175,6 +176,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
     public static final String PARTNER_INSTRUMENT_TABLE_NAME = "partner_instrument";
     public static final String PARTNER_INSTRUMENT_PINSTRUMENTID = "pInstrumentId";
     public static final String PARTNER_INSTRUMENT_PARTNERID = "partnerId";
+    public static final String PARTNER_INSTRUMENT_SERIALNO = "serialNo";
     public static final String PARTNER_INSTRUMENT_PINSTRUMENTNAME = "pInstrumentName";
     public static final String PARTNER_INSTRUMENT_MAKE = "make";
     public static final String PARTNER_INSTRUMENT_MODEL = "model";
@@ -188,7 +190,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
     // partner instrument table create statment
     private static final String CREATE_TABLE_PARTNER_INSTRUMENT = "CREATE TABLE " + PARTNER_INSTRUMENT_TABLE_NAME
             + "(" + PARTNER_INSTRUMENT_PINSTRUMENTID + " INTEGER," + PARTNER_INSTRUMENT_PARTNERID + " INTEGER,"
-            + PARTNER_INSTRUMENT_PINSTRUMENTNAME + " TEXT," + PARTNER_INSTRUMENT_MAKE + " TEXT," + PARTNER_INSTRUMENT_MODEL + " TEXT,"
+            + PARTNER_INSTRUMENT_SERIALNO + " TEXT," + PARTNER_INSTRUMENT_PINSTRUMENTNAME + " TEXT," + PARTNER_INSTRUMENT_MAKE + " TEXT," + PARTNER_INSTRUMENT_MODEL + " TEXT,"
             + PARTNER_INSTRUMENT_LASTCALIBRATED + " NUMERIC," + PARTNER_INSTRUMENT_CALIBRATIONDUEDATE + " NUMERIC,"
             + PARTNER_INSTRUMENT_CURRENTLOCATION + " TEXT," + PARTNER_INSTRUMENT_STATUS + " TEXT," + PARTNER_INSTRUMENT_TESTID
             + " INTEGER," + PARTNER_INSTRUMENT_CREATIONDATE + " TEXT " + ")";
@@ -530,13 +532,32 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
 //        db.execSQL("DROP TABLE IF EXISTS " + TESTSPECIFICATIONVALUE_TABLE_NAME);
 //        db.execSQL("DROP TABLE IF EXISTS " + SERVICE_REPORT_TABLE_NAME);
 //        db.execSQL("DROP TABLE IF EXISTS " + SERVICE_REPORT_DETAIL_TABLE_NAME);
-        db.delete(TEST_DETAILS_TABLE_NAME,null,null);
-        db.delete(TESTREADING_TABLE_NAME,null,null);
-        db.delete(TESTSPECIFICATIONVALUE_TABLE_NAME,null,null);
-        db.delete(SERVICE_REPORT_TABLE_NAME,null,null);
-        db.delete(SERVICE_REPORT_DETAIL_TABLE_NAME,null,null);
+        db.delete(TEST_DETAILS_TABLE_NAME, null, null);
+        db.delete(TESTREADING_TABLE_NAME, null, null);
+        db.delete(TESTSPECIFICATIONVALUE_TABLE_NAME, null, null);
+        db.delete(SERVICE_REPORT_TABLE_NAME, null, null);
+        db.delete(SERVICE_REPORT_DETAIL_TABLE_NAME, null, null);
         return true;
     }
+
+    // chek id in db table
+    public int getExistingId(String tableName, String tableId, int id) {
+        Cursor cursor = null;
+        int count = 0;
+        try {
+            String selectQuery = " SELECT " + tableId + " FROM " + tableName +
+//        String selectQuery = " SELECT * FROM " + PARTNERUSER_TABLE_NAME +
+                    " WHERE " + tableId + " = " + id;
+            SQLiteDatabase database = this.getWritableDatabase();
+            cursor = database.rawQuery(selectQuery, null);
+            if (null != cursor)
+                count = cursor.getCount();
+        } catch (Exception e) {
+            Log.d("Avinash", "db update exception=" + e.getMessage());
+        }
+        return count;
+    }
+
 
     //insert daa in servicereportdetails table
     public boolean insertPartners(String tableName, ArrayList<Partners> partnersArrayList) {
@@ -560,7 +581,12 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 contentValues.put(PARTNERS_EMAIL, partners.getEmail());
                 contentValues.put(PARTNERS_CELLNO, partners.getCellNo());
                 contentValues.put(PARTNERS_CREATIONDATE, partners.getCreationDate());
-                db.insert(tableName, null, contentValues);
+
+                if (getExistingId(tableName, PARTNERS_ID, partners.getId()) > 0) {
+                    db.update(tableName, contentValues, PARTNERS_ID + "=" + partners.getId(), null);
+                } else {
+                    db.insert(tableName, null, contentValues);
+                }
 
             }
             return true;
@@ -584,7 +610,13 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 contentValues.put(SERVICE_REPORT_DETAIL_EQUIPMENTAHUNO, serviceReportDetail.getEquipmentAhuNo());
                 contentValues.put(SERVICE_REPORT_DETAIL_NOOFLOC, serviceReportDetail.getNoOfLoc());
                 contentValues.put(SERVICE_REPORT_DETAIL_NOOFHOURDAYS, serviceReportDetail.getNoOfHourDays());
+
+//                if (getExistingId(tableName, SERVICE_REPORT_DETAIL_ID, serviceReportDetail.getId()) > 0) {
                 db.insert(tableName, null, contentValues);
+//                } else {
+//                    db.update(tableName, contentValues, SERVICE_REPORT_DETAIL_ID + "=" + serviceReportDetail.getId(),null);
+//                }
+
             }
             return true;
         } else {
@@ -620,7 +652,13 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
 
         contentValues.put(SERVICE_REPORT_WORKORDER, serviceReport.getWorkOrder());
         contentValues.put(SERVICE_REPORT_WITNESSDESIGNATION, serviceReport.getWitnessDesignation());
+
+//        if (getExistingId(tableName, SERVICE_REPORT_ID, serviceReport.getId()) > 0) {
         db.insert(tableName, null, contentValues);
+//        } else {
+//            db.update(tableName, contentValues, SERVICE_REPORT_ID + "=" + serviceReport.getId(),null);
+//        }
+
 //            }
 //            return true;
 //        } else {
@@ -639,7 +677,14 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 contentValues.put(TESTREADING_TEST_DETAIL_ID, testReading.getTest_detail_id());
                 contentValues.put(TESTREADING_ENTITYNAME, testReading.getEntityName());
                 contentValues.put(TESTREADING_VALUE, testReading.getValue());
+
+//                if (getExistingId(tableName, TESTREADING_TESTREADINGID, testReading.getId()) > 0) {
                 db.insert(tableName, null, contentValues);
+//                } else {
+//                    db.update(tableName, contentValues, TESTREADING_TESTREADINGID + "=" + testReading.getId(),null);
+//                }
+
+
             }
             return true;
         } else {
@@ -730,7 +775,13 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 contentValues.put(AHU_HEPAPARTICLESIZE, ahu.getHepaParticleSize());
                 contentValues.put(AHU_HEPAFILTERSPECIFICATION, ahu.getHepaFilterSpecification());
                 contentValues.put(AHU_CREATIONDATE, ahu.getCreationDate());
-                db.insert(tableName, null, contentValues);
+
+                if (getExistingId(tableName, AHU_AHUID, ahu.getAhuId()) > 0) {
+                    db.update(tableName, contentValues, AHU_AHUID + "=" + ahu.getAhuId(), null);
+                } else {
+                    db.insert(tableName, null, contentValues);
+
+                }
             }
             return true;
         } else {
@@ -751,7 +802,12 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 contentValues.put(APLICABLE_TEST_EQUIPMENT_LOCATION, applicableTestEquipment.getLocation());
                 contentValues.put(APLICABLE_TEST_EQUIPMENT_NOOFCYCLE, applicableTestEquipment.getNoOfCycle());
                 contentValues.put(APLICABLE_TEST_EQUIPMENT_CREATIONDATE, applicableTestEquipment.getCreationDate());
-                db.insert(tableName, null, contentValues);
+
+                if (getExistingId(tableName, APLICABLE_TEST_EQUIPMENT_APLICABLE_TESTID, applicableTestEquipment.getAplicable_testId()) > 0) {
+                    db.update(tableName, contentValues, APLICABLE_TEST_EQUIPMENT_APLICABLE_TESTID + "=" + applicableTestEquipment.getAplicable_testId(), null);
+                } else {
+                    db.insert(tableName, null, contentValues);
+                }
             }
             return true;
         } else {
@@ -772,7 +828,14 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 contentValues.put(APLICABLE_TEST_ROOM_LOCATION, applicableTestRoom.getLocation());
                 contentValues.put(APLICABLE_TEST_ROOM_NOOFCYCLE, applicableTestRoom.getNoOfCycle());
                 contentValues.put(APLICABLE_TEST_ROOM_CREATIONDATE, applicableTestRoom.getCreationDate());
-                db.insert(tableName, null, contentValues);
+
+                if (getExistingId(tableName, APLICABLE_TEST_ROOM_APLICABLE_TESTID, applicableTestRoom.getAplicable_testId()) > 0) {
+                    db.update(tableName, contentValues, APLICABLE_TEST_ROOM_APLICABLE_TESTID + "=" + applicableTestRoom.getAplicable_testId(), null);
+                } else {
+                    db.insert(tableName, null, contentValues);
+
+                }
+
             }
             return true;
         } else {
@@ -791,12 +854,19 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 contentValues.put(EQUIPMENT_EQUIPMENTNO, equipment.getEquipmentNo());
                 contentValues.put(EQUIPMENT_EQUIPMENTNAME, equipment.getEquipmentName());
                 contentValues.put(EQUIPMENT_OCCUPANCYSTATE, equipment.getOccupancyState());
-                contentValues.put(EQUIPMENT_VELOCITY, equipment.getVelocity());
+                contentValues.put(EQUIPMENT_MINVELOCITY, equipment.getMinVelocity());
+                contentValues.put(EQUIPMENT_MAXVELOCITY, equipment.getMaxVelocity());
                 contentValues.put(EQUIPMENT_TESTREFERENCE, equipment.getTestReference());
                 contentValues.put(EQUIPMENT_FILTERQUANTITY, equipment.getFilterQuantity());
                 contentValues.put(EQUIPMENT_EQUIPMENTLOAD, equipment.getEquipmentLoad());
                 contentValues.put(EQUIPMENT_CREATIONDATE, equipment.getCreationDate());
-                db.insert(tableName, null, contentValues);
+                Log.d("Avinash", "isert db minvalocity=" + equipment.getMinVelocity() + "equipment.getMaxVelocity()=" + equipment.getMaxVelocity());
+                if (getExistingId(tableName, EQUIPMENT_EQUIPMENTID, equipment.getEquipmentId()) > 0) {
+                    db.update(tableName, contentValues, EQUIPMENT_EQUIPMENTID + "=" + equipment.getEquipmentId(), null);
+                } else {
+                    db.insert(tableName, null, contentValues);
+
+                }
             }
             return true;
         } else {
@@ -819,7 +889,14 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 contentValues.put(EQUIPMENTFILTER_EFFECTIVEGRILLAREA, equipmentFilter.getEffectiveGrillArea());
                 contentValues.put(EQUIPMENTFILTER_ISSUPPLYFILTER, equipmentFilter.getIsSupplyFilter());
                 contentValues.put(EQUIPMENTFILTER_CREATIONDATE, equipmentFilter.getCreationDate());
-                db.insert(tableName, null, contentValues);
+
+                if (getExistingId(tableName, EQUIPMENTFILTER_FILTERID, equipmentFilter.getFilterId()) > 0) {
+                    db.update(tableName, contentValues, EQUIPMENTFILTER_FILTERID + "=" + equipmentFilter.getFilterId(), null);
+                } else {
+                    db.insert(tableName, null, contentValues);
+
+                }
+
             }
             return true;
         } else {
@@ -842,7 +919,13 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 contentValues.put(GRILL_EFFECTIVEAREA, grill.getEffectiveArea());
                 contentValues.put(GRILL_ISSUPPLYGRILL, grill.getIsSupplyGrill());
                 contentValues.put(GRILL_ADDITIONALDETAIL, grill.getAdditionalDetail());
-                db.insert(tableName, null, contentValues);
+
+                if (getExistingId(tableName, GRILL_GRILLID, grill.getGrillId()) > 0) {
+                    db.update(tableName, contentValues, GRILL_GRILLID + "=" + grill.getGrillId(), null);
+                } else {
+                    db.insert(tableName, null, contentValues);
+                }
+
             }
             return true;
         } else {
@@ -860,6 +943,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 ContentValues contentValues = new ContentValues();
                 contentValues.put(PARTNER_INSTRUMENT_PINSTRUMENTID, partnerInstrument.getpInstrumentId());
                 contentValues.put(PARTNER_INSTRUMENT_PARTNERID, partnerInstrument.getPartnerId());
+                contentValues.put(PARTNER_INSTRUMENT_SERIALNO, partnerInstrument.getSerialNo());
                 contentValues.put(PARTNER_INSTRUMENT_PINSTRUMENTNAME, partnerInstrument.getpInstrumentName());
                 contentValues.put(PARTNER_INSTRUMENT_MAKE, partnerInstrument.getMake());
                 contentValues.put(PARTNER_INSTRUMENT_MODEL, partnerInstrument.getModel());
@@ -870,7 +954,14 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 contentValues.put(PARTNER_INSTRUMENT_TESTID, partnerInstrument.getTestId());
                 contentValues.put(PARTNER_INSTRUMENT_CREATIONDATE, partnerInstrument.getCreationDate());
                 Log.d("VALDOC", "controler response data  13=inserting=");
-                db.insert(tableName, null, contentValues);
+
+                if (getExistingId(tableName, PARTNER_INSTRUMENT_PINSTRUMENTID, partnerInstrument.getpInstrumentId()) > 0) {
+                    db.update(tableName, contentValues, PARTNER_INSTRUMENT_PINSTRUMENTID + "=" + partnerInstrument.getpInstrumentId(), null);
+                } else {
+                    db.insert(tableName, null, contentValues);
+
+                }
+
             }
             return true;
         } else {
@@ -896,7 +987,13 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 contentValues.put(CLIENT_INSTRUMENT_STATUS, clientInstrument.getStatus());
                 contentValues.put(CLIENT_INSTRUMENT_TESTID, clientInstrument.getTestId());
                 contentValues.put(CLIENT_INSTRUMENT_CREATIONDATE, clientInstrument.getCreationDate());
-                db.insert(tableName, null, contentValues);
+
+                if (getExistingId(tableName, CLIENT_INSTRUMENT_CINSTRUMENTID, clientInstrument.getcInstrumentId()) > 0) {
+                    db.update(tableName, contentValues, CLIENT_INSTRUMENT_CINSTRUMENTID + "=" + clientInstrument.getcInstrumentId(), null);
+                } else {
+                    db.insert(tableName, null, contentValues);
+
+                }
             }
             return true;
         } else {
@@ -939,7 +1036,14 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 contentValues.put(ROOM_RETURNAIRFILTERQTY, room.getReturnAirFilterQTY());
                 contentValues.put(ROOM_REMARKS, room.getRemarks());
                 contentValues.put(ROOM_CREATIONDATE, room.getCreationDate());
-                db.insert(tableName, null, contentValues);
+
+                if (getExistingId(tableName, ROOM_ROOMID, room.getRoomId()) > 0) {
+                    db.update(tableName, contentValues, ROOM_ROOMID + "=" + room.getRoomId(), null);
+                } else {
+                    db.insert(tableName, null, contentValues);
+
+                }
+
             }
             return true;
         } else {
@@ -965,7 +1069,13 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 contentValues.put(ROOMFILTER_EFFECTIVEGRILLAREA, roomFilter.getEffectiveGrillArea());
                 contentValues.put(ROOMFILTER_ISSUPPLYFILTER, roomFilter.getIsSupplyFilter());
                 contentValues.put(ROOMFILTER_CREATIONDATE, roomFilter.getCreationDate());
-                db.insert(tableName, null, contentValues);
+
+                if (getExistingId(tableName, ROOMFILTER_FILTERID, roomFilter.getFilterId()) > 0) {
+                    db.update(tableName, contentValues, ROOMFILTER_FILTERID + "=" + roomFilter.getFilterId(), null);
+                } else {
+                    db.insert(tableName, null, contentValues);
+
+                }
             }
             return true;
         } else {
@@ -991,7 +1101,13 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 contentValues.put(USER_PASSWORD, user.getPassword());
                 contentValues.put(USER_PARTNERID, user.getPartnerId());
                 contentValues.put(USER_CREATIONDATE, user.getCreationDate());
-                db.insert(tableName, null, contentValues);
+
+                if (getExistingId(tableName, USER_ID, user.getId()) > 0) {
+                    db.update(tableName, contentValues, USER_ID + "=" + user.getId(), null);
+                } else {
+                    db.insert(tableName, null, contentValues);
+
+                }
             }
             return true;
         } else {
@@ -1009,7 +1125,14 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 contentValues.put(PARTNERUSER_APP_USER_ID, partnerUser.getApp_user_id());
                 contentValues.put(PARTNERUSER_PARTNERID, partnerUser.getPartnerId());
                 contentValues.put(PARTNERUSER_CREATIONDATE, partnerUser.getCreationDate());
-                db.insert(tableName, null, contentValues);
+
+                if (getExistingId(tableName, PARTNERUSER_PARTNER_USER_ID, partnerUser.getPartner_user_id()) > 0) {
+                    db.update(tableName, contentValues, PARTNERUSER_PARTNER_USER_ID + "=" + partnerUser.getPartner_user_id(), null);
+                } else {
+                    db.insert(tableName, null, contentValues);
+
+                }
+
             }
             return true;
         } else {
@@ -1027,7 +1150,14 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 contentValues.put(TESTMASTER_TESTNAME, testMaster.getTestName());
                 contentValues.put(TESTMASTER_SPECIFICATION, testMaster.getSpecification());
                 contentValues.put(TESTMASTER_CREATIONDATE, testMaster.getCreationDate());
-                db.insert(tableName, null, contentValues);
+
+                if (getExistingId(tableName, TESTMASTER_TESTID, testMaster.getTestid()) > 0) {
+                    db.update(tableName, contentValues, TESTMASTER_TESTID + "=" + testMaster.getTestid(), null);
+                } else {
+                    db.insert(tableName, null, contentValues);
+
+                }
+
             }
             return true;
         } else {
@@ -1046,7 +1176,14 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 contentValues.put(AREA_AREANAME, area.getAreaName());
                 contentValues.put(AREA_CREATIONDATE, area.getCreationDate());
                 contentValues.put(AREA_CREATIONDATE, area.getCreationDate());
-                db.insert(tableName, null, contentValues);
+
+                if (getExistingId(tableName, AREA_AREAID, area.getAreaId()) > 0) {
+                    db.update(tableName, contentValues, AREA_AREAID + "=" + area.getAreaId(), null);
+                } else {
+                    db.insert(tableName, null, contentValues);
+
+                }
+
             }
             return true;
         } else {
@@ -1090,6 +1227,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
         clientInstrumentArrayList = new ArrayList<ClientInstrument>();
         String selectQuery = "SELECT * FROM " + CLIENT_INSTRUMENT_TABLE_NAME;
         SQLiteDatabase database = this.getWritableDatabase();
+        Log.d("Avinash", "db clientInstrument");
         Cursor cursor = database.rawQuery(selectQuery, null);
         if (cursor.moveToFirst()) {
             do {
@@ -1106,6 +1244,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 clientInstrument.setStatus(cursor.getString(9));
                 clientInstrument.setTestId(cursor.getInt(10));
                 clientInstrument.setCreationDate(cursor.getString(11));
+                Log.d("Avinash", "db clientInstrument" + clientInstrument.getSerialNo());
                 clientInstrumentArrayList.add(clientInstrument);
             } while (cursor.moveToNext());
         } // return contact list return wordList; }
@@ -1125,15 +1264,16 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 PartnerInstrument partnerInstrument = new PartnerInstrument();
                 partnerInstrument.setpInstrumentId(cursor.getInt(0));
                 partnerInstrument.setPartnerId(cursor.getInt(1));
-                partnerInstrument.setpInstrumentName(cursor.getString(2));
-                partnerInstrument.setMake(cursor.getString(3));
-                partnerInstrument.setModel(cursor.getString(4));
-                partnerInstrument.setLastCalibrated(cursor.getString(5));
-                partnerInstrument.setCalibrationDueDate(cursor.getString(6));
-                partnerInstrument.setCurrentLocation(cursor.getString(7));
-                partnerInstrument.setStatus(cursor.getString(8));
-                partnerInstrument.setTestId(cursor.getInt(9));
-                partnerInstrument.setCreationDate(cursor.getString(10));
+                partnerInstrument.setSerialNo(cursor.getString(2));
+                partnerInstrument.setpInstrumentName(cursor.getString(3));
+                partnerInstrument.setMake(cursor.getString(4));
+                partnerInstrument.setModel(cursor.getString(5));
+                partnerInstrument.setLastCalibrated(cursor.getString(6));
+                partnerInstrument.setCalibrationDueDate(cursor.getString(7));
+                partnerInstrument.setCurrentLocation(cursor.getString(8));
+                partnerInstrument.setStatus(cursor.getString(9));
+                partnerInstrument.setTestId(cursor.getInt(10));
+                partnerInstrument.setCreationDate(cursor.getString(11));
                 Log.d("valdoc", "partnerInstrument" + partnerInstrument.getpInstrumentId());
                 partnerInstrumentArrayList.add(partnerInstrument);
             } while (cursor.moveToNext());
@@ -1226,11 +1366,14 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 equipment.setOccupancyState(cursor.getString(2));
                 equipment.setEquipmentNo(cursor.getString(3));
                 equipment.setEquipmentName(cursor.getString(4));
-                equipment.setVelocity(cursor.getDouble(5));
-                equipment.setTestReference(cursor.getString(6));
-                equipment.setFilterQuantity(cursor.getInt(7));
-                equipment.setEquipmentLoad(cursor.getInt(8));
-                equipment.setCreationDate(cursor.getString(9));
+                equipment.setMinVelocity(cursor.getDouble(5));
+                equipment.setMaxVelocity(cursor.getDouble(6));
+                equipment.setTestReference(cursor.getString(7));
+                equipment.setFilterQuantity(cursor.getInt(8));
+                equipment.setEquipmentLoad(cursor.getInt(9));
+                equipment.setCreationDate(cursor.getString(10));
+                Log.d("Avinash", "get equipment db minvalocity=" + cursor.getDouble(5) + "equipment.getMaxVelocity()=" + cursor.getDouble(6));
+
                 equipmentArrayList.add(equipment);
             } while (cursor.moveToNext());
         } // return contact list return wordList; }

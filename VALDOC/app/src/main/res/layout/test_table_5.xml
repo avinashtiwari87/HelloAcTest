@@ -37,7 +37,7 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/instrument_no_test5"
+                android:id="@+id/instrument_name5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
@@ -66,6 +66,63 @@
                 android:layout_marginLeft="5dp"
                 android:layout_toRightOf="@+id/testcunducted_by"
                 android:text="@string/header_title_result"
+                android:textColor="#000000" />
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/instrument_no_and_roomname_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/instrument_no_lable"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/instrument_no_lable"
+                android:textColor="@android:color/black"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/instrument_no5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_toRightOf="@+id/instrument_no_lable"
+                android:text=""
+                android:textColor="#000000" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/room_name_lable5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/room_name_lable"
+                android:textColor="@android:color/black"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/room_name5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_toRightOf="@+id/room_name_lable5"
+                android:text=""
                 android:textColor="#000000" />
         </RelativeLayout>
 
@@ -108,33 +165,36 @@
                         android:id="@+id/test5_tableLayout1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp" />
+                        android:layout_marginLeft="5dp"
+                        android:layout_weight="1" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_weight="3"
                         android:orientation="vertical">
+
+                        <TableLayout
+                            android:id="@+id/test5_tableLayout2_2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
 
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content">
+
 
                             <TableLayout
                                 android:id="@+id/test5_tableLayout2_1"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content" />
 
-                            <TableLayout
-                                android:id="@+id/test5_tableLayout2_2"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:visibility="gone"/>
 
                             <TableLayout
                                 android:id="@+id/test5_tableLayout2_3"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:visibility="gone"/>
+                                android:visibility="gone" />
                         </LinearLayout>
 
                         <TableLayout
@@ -147,6 +207,7 @@
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1"
                         android:orientation="vertical">
 
                         <TableLayout
@@ -164,7 +225,13 @@
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_weight="3"
                         android:orientation="vertical">
+
+                        <TableLayout
+                            android:id="@+id/test5_tableLayout4_2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
 
                         <LinearLayout
                             android:layout_width="wrap_content"
@@ -175,17 +242,12 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content" />
 
-                            <TableLayout
-                                android:id="@+id/test5_tableLayout4_2"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:visibility="gone"/>
 
                             <TableLayout
                                 android:id="@+id/test5_tableLayout4_3"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:visibility="gone"/>
+                                android:visibility="gone" />
                         </LinearLayout>
 
                         <TableLayout
@@ -198,6 +260,7 @@
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1"
                         android:orientation="vertical">
 
                         <TableLayout
