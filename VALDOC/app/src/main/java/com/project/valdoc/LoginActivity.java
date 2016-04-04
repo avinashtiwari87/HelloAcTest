@@ -11,6 +11,7 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
@@ -154,22 +155,19 @@ public class LoginActivity extends AppCompatActivity implements HttpConnection.H
     private boolean checkInternetConenction() {
         // get Connectivity Manager object to check connection
         ConnectivityManager connec = (ConnectivityManager) getSystemService(getBaseContext().CONNECTIVITY_SERVICE);
-
-        // Check for network connections
-        if (connec.getNetworkInfo(0).getState() == android.net.NetworkInfo.State.CONNECTED ||
-
-                connec.getNetworkInfo(0).getState() == android.net.NetworkInfo.State.CONNECTING ||
-                connec.getNetworkInfo(1).getState() == android.net.NetworkInfo.State.CONNECTING ||
-                connec.getNetworkInfo(1).getState() == android.net.NetworkInfo.State.CONNECTED) {
+       // Removed previous code. Because it is crashing. If device supports only wiFi, no 3G or 2G.
+        //in that case it will give NPE
+        // for method connec.getNetworkInfo(0).getState().
+        final NetworkInfo activeNetwork = connec.getActiveNetworkInfo();
+        if (activeNetwork != null && activeNetwork.isConnected()) {
+            // notify user you are online
             Toast.makeText(this, " Connected ", Toast.LENGTH_LONG).show();
             return true;
-        } else if (
-                connec.getNetworkInfo(0).getState() == android.net.NetworkInfo.State.DISCONNECTED ||
-                        connec.getNetworkInfo(1).getState() == android.net.NetworkInfo.State.DISCONNECTED) {
+        } else {
+            // notify user you are not online
             Toast.makeText(this, " Not Connected ", Toast.LENGTH_LONG).show();
             return false;
         }
-        return false;
     }
 
 
