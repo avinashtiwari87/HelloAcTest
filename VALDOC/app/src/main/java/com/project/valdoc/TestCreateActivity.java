@@ -528,7 +528,7 @@ public class TestCreateActivity extends Activity implements View.OnTouchListener
             clientInstrumentArrayList = mValdocDatabaseHandler.getClientInstrumentInfo();
 
             for (ClientInstrument clientInstrument : clientInstrumentArrayList) {
-                instrumentList.add(clientInstrument.getcInstrumentName());
+                instrumentList.add(clientInstrument.getSerialNo());
                 Log.d("valdoc", "TestCreateActivity : client instrument list" + clientInstrument.getcInstrumentName());
             }
 
@@ -539,7 +539,7 @@ public class TestCreateActivity extends Activity implements View.OnTouchListener
             partnerInstrumentArrayList = mValdocDatabaseHandler.getPartnerInstrumentInfo(userPartnerId);
             Log.d("valdoc", "TestCreateActivity :vendor partnerInstrumentArrayList" + partnerInstrumentArrayList.size());
             for (PartnerInstrument partnerInstrument : partnerInstrumentArrayList) {
-                instrumentList.add(partnerInstrument.getpInstrumentName());
+                instrumentList.add(partnerInstrument.getSerialNo());
                 Log.d("valdoc", "TestCreateActivity :vendor" + partnerInstrument.getpInstrumentName());
             }
         }
@@ -717,6 +717,7 @@ public class TestCreateActivity extends Activity implements View.OnTouchListener
                 if (roomSpinner.getSelectedItemPosition() > 0) {
                     Room room = mRoomArrayList.get(roomSpinner.getSelectedItemPosition() - 1);
                     createApplicableTestRoomList(room.getRoomId());
+                    Log.d("TestCreateActivity", "room.getRoomId()= " + room.getRoomId());
                     spinerRoom = room.getRoomName();
                 }
 

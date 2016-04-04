@@ -65,7 +65,7 @@ public class HttpConnection {
             httpURLConnection.setRequestProperty("Accept", "application/json");
 
                 /* setting http connection time out */
-            httpURLConnection.setConnectTimeout(30000);
+            httpURLConnection.setConnectTimeout(60000);
             Log.d("VALDOC", "avinash getHttpGetConnection 4");
                 /* for Get request */
             httpURLConnection.setRequestMethod("GET");

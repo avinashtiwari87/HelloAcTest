@@ -1261,7 +1261,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
-                    row.addView(addTextView(" Air Flow Rate\n in cfm(AxAv)"));
+                    row.addView(addTextView(" Air Flow Rate\n in cfm(AxAV)"));
                 } else {
                     //row.addView(addTextView("490"));
                     row.addView(addTextViewWithTagIds(i, airFlowRateIds, airFlowRateTxtViewList, "0"));

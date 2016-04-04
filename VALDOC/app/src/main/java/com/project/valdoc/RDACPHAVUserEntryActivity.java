@@ -68,6 +68,8 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
     private String witnessFirst;
     private String witnessSecond;
     private String witnessThird;
+    private TextView testWitnessOrg;
+    private TextView testCondoctorOrg;
     private String userName = "";
     private int newCertificateNo = 0;
     //certificate view id creation
@@ -83,7 +85,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
     private TextView roomName;
     private TextView occupancyState;
     private TextView testRefrance;
-//    private TextView equipmentNameText;
+    //    private TextView equipmentNameText;
 //    private TextView equipmentNoText;
     private TextView roomNo;
     private TextView ahuNo;
@@ -114,7 +116,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
     private String mPartnerName;
     ArrayList<TextView> resultTextViewList;
     private ValdocDatabaseHandler mValdocDatabaseHandler = new ValdocDatabaseHandler(RDACPHAVUserEntryActivity.this);
-    int testDetailsId=0;
+    int testDetailsId = 0;
     private HashMap<Integer, Integer> userEnterdValue;
     private int year;
     private int month;
@@ -130,8 +132,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         pr = ProgressDialog.show(this, "Please Wait", "Loading...");
 
-        sharedpreferences = getSharedPreferences("valdoc", Context.MODE_PRIVATE);
-        testDetailsId = (sharedpreferences.getInt("TESTDETAILSID", 0)+1);
+        testDetailsId = (sharedpreferences.getInt("TESTDETAILSID", 0) + 1);
 
         txtViewList = new ArrayList<TextView>();
         resultTextViewList = new ArrayList<TextView>();
@@ -278,6 +279,16 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
         roomNo.setText(room.getRoomNo().toString());
         ahuNo.setText(ahuNumber);
         testCundoctor.setText(userName);
+        String clientOrg=sharedpreferences.getString("CLIENTORG", "");
+        String prtnerOrg=sharedpreferences.getString("PARTNERORG", "");
+         if (sharedpreferences.getString("USERTYPE", "").equalsIgnoreCase("CLIENT")) {
+            testCondoctorOrg.setText("(" + clientOrg+ ")");
+            testWitnessOrg.setText("(" + clientOrg + ")");
+        } else {
+            testCondoctorOrg.setText("(" + prtnerOrg + ")");
+            testWitnessOrg.setText("(" + clientOrg + ")");
+        }
+
         Log.d("valdoc", "RDAV5UserEnryActivity 1witness=" + witnessFirst);
         StringBuilder witness = new StringBuilder();
         witness.append(witnessFirst.toString());
@@ -301,13 +312,13 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
         testCunductedByTextView = (TextView) findViewById(R.id.testcunducted_by);
         testCunductedByTextView.setVisibility(View.GONE);
 
-        roomNameLable= (TextView) findViewById(R.id.room_name_lable2);
+        roomNameLable = (TextView) findViewById(R.id.room_name_lable2);
         roomNameLable.setVisibility(View.GONE);
-        instrumentNoLable= (TextView) findViewById(R.id.instrument_no_lable);
+        instrumentNoLable = (TextView) findViewById(R.id.instrument_no_lable);
         instrumentNoLable.setVisibility(View.GONE);
-        roomNameTest= (TextView) findViewById(R.id.room_name2);
+        roomNameTest = (TextView) findViewById(R.id.room_name2);
         roomNameTest.setVisibility(View.GONE);
-        instrument_name= (TextView) findViewById(R.id.instrument_name2);
+        instrument_name = (TextView) findViewById(R.id.instrument_name2);
         instrument_name.setVisibility(View.GONE);
 
         dateTextView = (TextView) findViewById(R.id.datetextview);
@@ -332,6 +343,8 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
         infarance = (TextView) findViewById(R.id.infarance);
         testCundoctor = (TextView) findViewById(R.id.testcunducter);
         testWitness = (TextView) findViewById(R.id.testwitness);
+        testCondoctorOrg = (TextView) findViewById(R.id.test_condoctor_org);
+        testWitnessOrg = (TextView) findViewById(R.id.testwitness_org);
         submit = (Button) findViewById(R.id.submit);
         clear = (Button) findViewById(R.id.clear);
         clear.setVisibility(View.INVISIBLE);
@@ -356,7 +369,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
                             Toast.makeText(RDACPHAVUserEntryActivity.this, "Data saved successfully", Toast.LENGTH_LONG).show();
                             Intent intent = new Intent(RDACPHAVUserEntryActivity.this, TestCreateActivity.class);
                             intent.putExtra(TestCreateActivity.ACPHAV, true);
-                                    startActivity(intent);
+                            startActivity(intent);
                             finish();
                         } else {
                             Toast.makeText(RDACPHAVUserEntryActivity.this, "Data not saved", Toast.LENGTH_LONG).show();
@@ -387,7 +400,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
         ArrayList<TestSpesificationValue> spesificationValueArrayList = new ArrayList<TestSpesificationValue>();
         TestSpesificationValue testSpesificationValue = new TestSpesificationValue();
         testSpesificationValue.setTest_specific_id(1);
-        testSpesificationValue.setTest_detail_id(""+testDetailsId);
+        testSpesificationValue.setTest_detail_id("" + testDetailsId);
         testSpesificationValue.setFieldName("TFR");
         testSpesificationValue.setFieldValue("" + totalAirFlowRate);
         spesificationValueArrayList.add(testSpesificationValue);
@@ -447,7 +460,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
 //        TO DO: need to make it dynamic
         testDetails.setTest_detail_id(testDetailsId);
         testDetails.setCustomer(customerName.getText().toString());
-        String date =year+"-"+(month + 1)+"-"+(day)+" ";
+        String date = year + "-" + (month + 1) + "-" + (day) + " ";
         testDetails.setDateOfTest(date);
         testDetails.setRawDataNo(certificateNo.getText().toString());
         testDetails.setPartnerName("" + mPartnerName);

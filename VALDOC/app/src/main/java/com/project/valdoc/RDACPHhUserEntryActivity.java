@@ -78,6 +78,8 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
     private TextView testRefrance;
     private TextView roomNo;
     private TextView ahuNo;
+    private TextView testWitnessOrg;
+    private TextView testCondoctorOrg;
 //    private TextView equipmentNameText;
 //    private TextView equipmentNoText;
     private TextView testCundoctor;
@@ -273,6 +275,13 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
 
 
         testCundoctor.setText(userName);
+        if(sharedpreferences.getString("USERTYPE", "").equalsIgnoreCase("CLIENT")){
+            testCondoctorOrg.setText("("+sharedpreferences.getString("CLIENTORG", "")+")");
+            testWitnessOrg.setText("("+sharedpreferences.getString("CLIENTORG", "")+")");
+        }else{
+            testCondoctorOrg.setText("("+sharedpreferences.getString("PARTNERORG", "")+")");
+            testWitnessOrg.setText("("+sharedpreferences.getString("CLIENTORG", "")+")");
+        }
         Log.d("valdoc", "RDAV5UserEnryActivity 1witness=" + witnessFirst);
         StringBuilder witness = new StringBuilder();
         witness.append(witnessFirst.toString());
@@ -326,6 +335,8 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
         infarance = (TextView) findViewById(R.id.infarance);
         testCundoctor = (TextView) findViewById(R.id.testcunducter);
         testWitness = (TextView) findViewById(R.id.testwitness);
+        testCondoctorOrg = (TextView) findViewById(R.id.test_condoctor_org);
+        testWitnessOrg = (TextView) findViewById(R.id.testwitness_org);
         submit = (Button) findViewById(R.id.submit);
         clear = (Button) findViewById(R.id.clear);
         clear.setVisibility(View.INVISIBLE);

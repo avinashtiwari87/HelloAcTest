@@ -234,8 +234,12 @@ public class LoginActivity extends AppCompatActivity implements HttpConnection.H
                 editor.putString("USERTYPE", loginUserType);
                 editor.putInt("APPUSERID", userId);
                 editor.putInt("PARTNERID", userPartnerId);
+                editor.putString("CLIENTORG", "M/s Kem Well Biopharma Private Limited");
+                if (loginUserType.equalsIgnoreCase("PARTNER")) {
+                    String pName=mValdocDatabaseHandler.getPartnerNameInfo(userPartnerId);
+                    editor.putString("PARTNERORG", pName);
+                }
                 editor.commit();
-
                 Intent intent = new Intent(LoginActivity.this, AfterLoginActivity.class);
                 intent.putExtra("USERNAME", loginUserName);
                 intent.putExtra("USERTYPE", loginUserType);

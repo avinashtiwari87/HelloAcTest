@@ -195,7 +195,7 @@ public class ValdocControler {
                 partners.setServiceIncharge(jsonObject.optString("serviceIncharge").toString());
                 partners.setEmail(jsonObject.optString("email").toString());
                 partners.setCellNo(jsonObject.optString("cellNo").toString());
-                partners.setCreationDate(jsonObject.optString("createdDate").toString());
+                partners.setCreationDate(jsonObject.optString("creationDate").toString());
                 Log.d("valdoc", "parse partner");
                 arrayList.add(partners);
             } catch (Exception e) {
@@ -223,7 +223,7 @@ public class ValdocControler {
                 clientInstrument.setCurrentLocation(jsonObject.optString("currentLocation").toString());
                 clientInstrument.setStatus(jsonObject.optString("status").toString());
                 clientInstrument.setTestId(jsonObject.optInt("testId"));
-                clientInstrument.setCreationDate(jsonObject.optString("createdDate").toString());
+                clientInstrument.setCreationDate(jsonObject.optString("creationDate").toString());
                 Log.d("valdoc", "parse partner");
                 arrayList.add(clientInstrument);
             } catch (Exception e) {
@@ -252,7 +252,7 @@ public class ValdocControler {
                 partnerInstrument.setCurrentLocation(jsonObject.optString("currentLocation").toString());
                 partnerInstrument.setStatus(jsonObject.optString("status").toString());
                 partnerInstrument.setTestId(jsonObject.optInt("testId"));
-                partnerInstrument.setCreationDate(jsonObject.optString("createdDate").toString());
+                partnerInstrument.setCreationDate(jsonObject.optString("creationDate").toString());
                 Log.d("valdoc", "parse partner");
                 arrayList.add(partnerInstrument);
             } catch (Exception e) {
@@ -276,7 +276,7 @@ public class ValdocControler {
                 applicableTestEquipment.setPeriodicity(jsonObject.optString("periodicity").toString());
                 applicableTestEquipment.setLocation(jsonObject.optInt("location"));
                 applicableTestEquipment.setNoOfCycle(jsonObject.optInt("noOfCycle"));
-                applicableTestEquipment.setCreationDate(jsonObject.optString("createdDate").toString());
+                applicableTestEquipment.setCreationDate(jsonObject.optString("creationDate").toString());
                 arrayList.add(applicableTestEquipment);
             } catch (Exception e) {
 
@@ -305,7 +305,7 @@ public class ValdocControler {
                 } else {
                     equipmentFilter.setIsSupplyFilter(0);
                 }
-                equipmentFilter.setCreationDate(jsonObject.optString("createdDate").toString());
+                equipmentFilter.setCreationDate(jsonObject.optString("creationDate").toString());
                 arrayList.add(equipmentFilter);
             } catch (Exception e) {
 
@@ -332,7 +332,7 @@ public class ValdocControler {
                 equipment.setEquipmentName(jsonObject.optString("equipmentName").toString());
                 equipment.setTestReference(jsonObject.optString("testReference").toString());
                 equipment.setEquipmentNo(jsonObject.optString("equipmentNo").toString());
-                equipment.setCreationDate(jsonObject.optString("createdDate").toString());
+                equipment.setCreationDate(jsonObject.optString("creationDate").toString());
                 Log.d("Avinash", "parsing equipment db minvalocity=" + equipment.getMinVelocity() + "equipment.getMaxVelocity()=" + equipment.getMaxVelocity());
 
                 arrayList.add(equipment);
@@ -351,7 +351,7 @@ public class ValdocControler {
             ApplicableTestRoom applicableTestRoom = new ApplicableTestRoom();
             try {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
-                applicableTestRoom.setAplicable_testId(jsonObject.optInt("aplicable_testId"));
+                applicableTestRoom.setAplicable_testId(jsonObject.optInt("aplicableTestId"));
                 applicableTestRoom.setRoomId(jsonObject.optInt("roomId"));
                 applicableTestRoom.setTestName(jsonObject.optString("testName").toString());
 
@@ -359,7 +359,7 @@ public class ValdocControler {
                 applicableTestRoom.setLocation(jsonObject.optInt("location"));
                 applicableTestRoom.setNoOfCycle(jsonObject.optInt("noOfCycle"));
 
-                applicableTestRoom.setCreationDate(jsonObject.optString("createdDate").toString());
+                applicableTestRoom.setCreationDate(jsonObject.optString("creationDate").toString());
                 arrayList.add(applicableTestRoom);
             } catch (Exception e) {
 
@@ -394,7 +394,7 @@ public class ValdocControler {
                 } else {
                     grill.setAdditionalDetail(0);
                 }
-                grill.setCreationDate(jsonObject.optString("createdDate").toString());
+                grill.setCreationDate(jsonObject.optString("creationDate").toString());
                 arrayList.add(grill);
             } catch (Exception e) {
 
@@ -428,7 +428,7 @@ public class ValdocControler {
                     roomFilter.setIsSupplyFilter(0);
                 }
 
-                roomFilter.setCreationDate(jsonObject.optString("createdDate").toString());
+                roomFilter.setCreationDate(jsonObject.optString("creationDate").toString());
                 arrayList.add(roomFilter);
             } catch (Exception e) {
 
@@ -475,7 +475,7 @@ public class ValdocControler {
 
                 room.setReturnAirFilterQTY(jsonObject.optInt("returnAirFilterQTY"));
                 room.setRemarks(jsonObject.optString("remarks").toString());
-                room.setCreationDate(jsonObject.optString("createdDate").toString());
+                room.setCreationDate(jsonObject.optString("creationDate").toString());
                 arrayList.add(room);
             } catch (Exception e) {
 

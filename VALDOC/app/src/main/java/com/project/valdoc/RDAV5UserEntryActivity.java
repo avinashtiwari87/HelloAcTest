@@ -81,6 +81,8 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
     private TextView roomNameText;
     private TextView infarance;
     private TextView testCundoctor;
+    private TextView testWitnessOrg;
+    private TextView testCondoctorOrg;
     private TextView testWitness;
     private TextView dateTextView;
     private TextView customerName;
@@ -246,6 +248,8 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
         equipmentNo = (TextView) findViewById(R.id.room_no);
         infarance = (TextView) findViewById(R.id.infarance);
         testCundoctor = (TextView) findViewById(R.id.testcunducter);
+        testCondoctorOrg = (TextView) findViewById(R.id.test_condoctor_org);
+        testWitnessOrg = (TextView) findViewById(R.id.testwitness_org);
         testWitness = (TextView) findViewById(R.id.testwitness);
         submit = (Button) findViewById(R.id.submit);
         clear = (Button) findViewById(R.id.clear);
@@ -350,6 +354,14 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
         equipmentName.setText(equipment.getEquipmentName().toString());
         equipmentNo.setText(equipment.getEquipmentNo().toString());
         testCundoctor.setText(userName);
+        if(sharedpreferences.getString("USERTYPE", "").equalsIgnoreCase("CLIENT")){
+            testCondoctorOrg.setText("("+sharedpreferences.getString("CLIENTORG", "")+")");
+            testWitnessOrg.setText("("+sharedpreferences.getString("CLIENTORG", "")+")");
+        }else{
+            testCondoctorOrg.setText("("+sharedpreferences.getString("PARTNERORG", "")+")");
+            testWitnessOrg.setText("("+sharedpreferences.getString("CLIENTORG", "")+")");
+        }
+
         Log.d("valdoc", "RDAV5UserEnryActivity 1witness=" + witnessFirst);
         StringBuilder witness = new StringBuilder();
         witness.append(witnessFirst.toString());

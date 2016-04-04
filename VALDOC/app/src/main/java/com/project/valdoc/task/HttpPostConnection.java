@@ -113,7 +113,7 @@ public class HttpPostConnection {
             URL urlConnection = new URL(url);
             conn = (HttpURLConnection) urlConnection.openConnection();
 //            conn.setReadTimeout(10000);
-            conn.setConnectTimeout(30000);
+            conn.setConnectTimeout(60000);
             conn.setRequestMethod("POST");
             conn.setDoInput(true);
             conn.setDoOutput(true);
