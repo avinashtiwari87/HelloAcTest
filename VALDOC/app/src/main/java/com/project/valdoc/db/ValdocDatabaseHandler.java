@@ -186,6 +186,11 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
     public static final String PARTNER_INSTRUMENT_STATUS = "status";
     public static final String PARTNER_INSTRUMENT_TESTID = "testId";
     public static final String PARTNER_INSTRUMENT_CREATIONDATE = "creationDate";
+    //new addition
+    public static final String PARTNER_INSTRUMENT_SAMPLINGFLOWRATE = "SamplingFlowRate";
+    public static final String PARTNER_INSTRUMENT_SAMPLINGTIME = "SamplingTime";
+    public static final String PARTNER_INSTRUMENT_AEROSOLUSED = "AerosolUsed";
+    public static final String PARTNER_INSTRUMENT_AEROSOLGENERATORTYPE = "AerosolGeneratorType";
 
     // partner instrument table create statment
     private static final String CREATE_TABLE_PARTNER_INSTRUMENT = "CREATE TABLE " + PARTNER_INSTRUMENT_TABLE_NAME
@@ -193,7 +198,8 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
             + PARTNER_INSTRUMENT_SERIALNO + " TEXT," + PARTNER_INSTRUMENT_PINSTRUMENTNAME + " TEXT," + PARTNER_INSTRUMENT_MAKE + " TEXT," + PARTNER_INSTRUMENT_MODEL + " TEXT,"
             + PARTNER_INSTRUMENT_LASTCALIBRATED + " NUMERIC," + PARTNER_INSTRUMENT_CALIBRATIONDUEDATE + " NUMERIC,"
             + PARTNER_INSTRUMENT_CURRENTLOCATION + " TEXT," + PARTNER_INSTRUMENT_STATUS + " TEXT," + PARTNER_INSTRUMENT_TESTID
-            + " INTEGER," + PARTNER_INSTRUMENT_CREATIONDATE + " TEXT " + ")";
+            + " INTEGER," + PARTNER_INSTRUMENT_CREATIONDATE + " TEXT, " + PARTNER_INSTRUMENT_SAMPLINGFLOWRATE + " TEXT,"
+            + PARTNER_INSTRUMENT_SAMPLINGTIME + " TEXT," + PARTNER_INSTRUMENT_AEROSOLUSED + " TEXT," + PARTNER_INSTRUMENT_AEROSOLGENERATORTYPE + " TEXT" + ")";
 
 
     //client instrument able details
@@ -210,6 +216,11 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
     public static final String CLIENT_INSTRUMENT_STATUS = "status";
     public static final String CLIENT_INSTRUMENT_TESTID = "testId";
     public static final String CLIENT_INSTRUMENT_CREATIONDATE = "creationDate";
+    //new addition
+    public static final String CLIENT_INSTRUMENT_SAMPLINGFLOWRATE = "SamplingFlowRate";
+    public static final String CLIENT_INSTRUMENT_SAMPLINGTIME = "SamplingTime";
+    public static final String CLIENT_INSTRUMENT_AEROSOLUSED = "AerosolUsed";
+    public static final String CLIENT_INSTRUMENT_AEROSOLGENERATORTYPE = "AerosolGeneratorType";
 
     // partner instrument table create statment
     private static final String CREATE_TABLE_CLIENT_INSTRUMENT = "CREATE TABLE " + CLIENT_INSTRUMENT_TABLE_NAME
@@ -218,7 +229,8 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
             + CLIENT_INSTRUMENT_MODEL + " TEXT," + CLIENT_INSTRUMENT_LASTCALIBRATED + " TEXT,"
             + CLIENT_INSTRUMENT_CALIBRATIONDUEDATE + " TEXT," + CLIENT_INSTRUMENT_CURRENTLOCATION + " TEXT,"
             + CLIENT_INSTRUMENT_STATUS + " TEXT," + CLIENT_INSTRUMENT_TESTID
-            + " INTEGER," + CLIENT_INSTRUMENT_CREATIONDATE + " TEXT " + ")";
+            + " INTEGER," + CLIENT_INSTRUMENT_CREATIONDATE + " TEXT," + CLIENT_INSTRUMENT_SAMPLINGFLOWRATE + " TEXT,"
+            + CLIENT_INSTRUMENT_SAMPLINGTIME + " TEXT," + CLIENT_INSTRUMENT_AEROSOLUSED + " TEXT," + CLIENT_INSTRUMENT_AEROSOLGENERATORTYPE + " TEXT " + ")";
 
 
     //roomfilter able details
@@ -585,7 +597,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 if (getExistingId(tableName, PARTNERS_ID, partners.getId()) > 0) {
                     db.update(tableName, contentValues, PARTNERS_ID + "=" + partners.getId(), null);
                 } else {
-                    Log.d("Avinash","insert applicable partners.getId()="+partners.getId()+" partners.getName()="+partners.getName());
+                    Log.d("Avinash", "insert applicable partners.getId()=" + partners.getId() + " partners.getName()=" + partners.getName());
                     db.insert(tableName, null, contentValues);
                 }
 
@@ -780,7 +792,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 if (getExistingId(tableName, AHU_AHUID, ahu.getAhuId()) > 0) {
                     db.update(tableName, contentValues, AHU_AHUID + "=" + ahu.getAhuId(), null);
                 } else {
-                    Log.d("Avinash","insert applicable ahu.getAhuId()="+ahu.getAhuId() + " partners.getName()="+ahu.getAhuNo());
+                    Log.d("Avinash", "insert applicable ahu.getAhuId()=" + ahu.getAhuId() + " partners.getName()=" + ahu.getAhuNo());
                     db.insert(tableName, null, contentValues);
 
                 }
@@ -808,7 +820,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 if (getExistingId(tableName, APLICABLE_TEST_EQUIPMENT_APLICABLE_TESTID, applicableTestEquipment.getAplicable_testId()) > 0) {
                     db.update(tableName, contentValues, APLICABLE_TEST_EQUIPMENT_APLICABLE_TESTID + "=" + applicableTestEquipment.getAplicable_testId(), null);
                 } else {
-                    Log.d("Avinash","insert applicable applicableTestEquipment.getAplicable_testId()="+applicableTestEquipment.getAplicable_testId() + " partners.getName()="+applicableTestEquipment.getEquipmentId());
+                    Log.d("Avinash", "insert applicable applicableTestEquipment.getAplicable_testId()=" + applicableTestEquipment.getAplicable_testId() + " partners.getName()=" + applicableTestEquipment.getEquipmentId());
                     db.insert(tableName, null, contentValues);
                 }
             }
@@ -821,7 +833,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
     // insert datain ApplicableTestRoom table
     public boolean insertApplicableTestRoom(String tableName, List<ApplicableTestRoom> applicableTestRoomList) {
         SQLiteDatabase db = this.getWritableDatabase();
-        Log.d("Avinash", "insert applicable applicableTestRoom.applicableTestRoomList="+applicableTestRoomList.size());
+        Log.d("Avinash", "insert applicable applicableTestRoom.applicableTestRoomList=" + applicableTestRoomList.size());
         if (applicableTestRoomList.size() != 0) {
             for (ApplicableTestRoom applicableTestRoom : applicableTestRoomList) {
                 ContentValues contentValues = new ContentValues();
@@ -898,7 +910,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 if (getExistingId(tableName, EQUIPMENTFILTER_FILTERID, equipmentFilter.getFilterId()) > 0) {
                     db.update(tableName, contentValues, EQUIPMENTFILTER_FILTERID + "=" + equipmentFilter.getFilterId(), null);
                 } else {
-                    Log.d("Avinash","insert applicable equipmentFilter.getFilterId()="+equipmentFilter.getFilterId() + " applicableTestRoom.getAplicable_testId()="+equipmentFilter.getFilterCode());
+                    Log.d("Avinash", "insert applicable equipmentFilter.getFilterId()=" + equipmentFilter.getFilterId() + " applicableTestRoom.getAplicable_testId()=" + equipmentFilter.getFilterCode());
                     db.insert(tableName, null, contentValues);
 
                 }
@@ -960,6 +972,10 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 contentValues.put(PARTNER_INSTRUMENT_STATUS, partnerInstrument.getStatus());
                 contentValues.put(PARTNER_INSTRUMENT_TESTID, partnerInstrument.getTestId());
                 contentValues.put(PARTNER_INSTRUMENT_CREATIONDATE, partnerInstrument.getCreationDate());
+                contentValues.put(PARTNER_INSTRUMENT_SAMPLINGFLOWRATE,partnerInstrument.getSamplingFlowRate());
+                contentValues.put(PARTNER_INSTRUMENT_SAMPLINGTIME,partnerInstrument.getSamplingTime());
+                contentValues.put(PARTNER_INSTRUMENT_AEROSOLUSED,partnerInstrument.getAerosolUsed());
+                contentValues.put(PARTNER_INSTRUMENT_AEROSOLGENERATORTYPE,partnerInstrument.getAerosolGeneratorType());
                 Log.d("VALDOC", "controler response data  13=inserting=");
 
                 if (getExistingId(tableName, PARTNER_INSTRUMENT_PINSTRUMENTID, partnerInstrument.getpInstrumentId()) > 0) {
@@ -995,6 +1011,10 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 contentValues.put(CLIENT_INSTRUMENT_STATUS, clientInstrument.getStatus());
                 contentValues.put(CLIENT_INSTRUMENT_TESTID, clientInstrument.getTestId());
                 contentValues.put(CLIENT_INSTRUMENT_CREATIONDATE, clientInstrument.getCreationDate());
+                contentValues.put(CLIENT_INSTRUMENT_SAMPLINGFLOWRATE,clientInstrument.getSamplingFlowRate());
+                contentValues.put(CLIENT_INSTRUMENT_SAMPLINGTIME,clientInstrument.getSamplingTime());
+                contentValues.put(CLIENT_INSTRUMENT_AEROSOLUSED,clientInstrument.getAerosolUsed());
+                contentValues.put(CLIENT_INSTRUMENT_AEROSOLGENERATORTYPE,clientInstrument.getAerosolGeneratorType());
 
                 if (getExistingId(tableName, CLIENT_INSTRUMENT_CINSTRUMENTID, clientInstrument.getcInstrumentId()) > 0) {
                     db.update(tableName, contentValues, CLIENT_INSTRUMENT_CINSTRUMENTID + "=" + clientInstrument.getcInstrumentId(), null);
@@ -1262,6 +1282,10 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 clientInstrument.setStatus(cursor.getString(9));
                 clientInstrument.setTestId(cursor.getInt(10));
                 clientInstrument.setCreationDate(cursor.getString(11));
+                clientInstrument.setSamplingFlowRate(cursor.getString(12));
+                clientInstrument.setSamplingTime(cursor.getString(13));
+                clientInstrument.setAerosolUsed(cursor.getString(14));
+                clientInstrument.setAerosolGeneratorType(cursor.getString(15));
                 Log.d("Avinash", "db clientInstrument" + clientInstrument.getSerialNo());
                 clientInstrumentArrayList.add(clientInstrument);
             } while (cursor.moveToNext());
@@ -1292,6 +1316,10 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 partnerInstrument.setStatus(cursor.getString(9));
                 partnerInstrument.setTestId(cursor.getInt(10));
                 partnerInstrument.setCreationDate(cursor.getString(11));
+                partnerInstrument.setSamplingFlowRate(cursor.getString(12));
+                partnerInstrument.setSamplingTime(cursor.getString(13));
+                partnerInstrument.setAerosolUsed(cursor.getString(14));
+                partnerInstrument.setAerosolGeneratorType(cursor.getString(15));
                 Log.d("valdoc", "partnerInstrument" + partnerInstrument.getpInstrumentId());
                 partnerInstrumentArrayList.add(partnerInstrument);
             } while (cursor.moveToNext());
@@ -1775,7 +1803,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 applicableTestRoom.setLocation(cursor.getInt(4));
                 applicableTestRoom.setNoOfCycle(cursor.getInt(5));
                 applicableTestRoom.setCreationDate(cursor.getString(6));
-                Log.d("Avinash","applicableTestRoom="+applicableTestRoom.getTestName());
+                Log.d("Avinash", "applicableTestRoom=" + applicableTestRoom.getTestName());
                 applicableTestRoomArrayList.add(applicableTestRoom);
             } while (cursor.moveToNext());
         } // return contact list return wordList; }

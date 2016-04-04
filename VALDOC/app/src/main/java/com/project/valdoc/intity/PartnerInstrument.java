@@ -20,6 +20,10 @@ public class PartnerInstrument implements Serializable{
     private String status;
     private int testId;
     private String creationDate;
+    private String  SamplingFlowRate;
+    private String  SamplingTime;
+    private String  AerosolUsed;
+    private String  AerosolGeneratorType;
 
     public String getPartner_instrument() {
         return partner_instrument;
@@ -123,5 +127,37 @@ public class PartnerInstrument implements Serializable{
 
     public void setCreationDate(String creationDate) {
         this.creationDate = creationDate;
+    }
+
+    public String getSamplingFlowRate() {
+        return SamplingFlowRate;
+    }
+
+    public void setSamplingFlowRate(String samplingFlowRate) {
+        SamplingFlowRate = samplingFlowRate;
+    }
+
+    public String getSamplingTime() {
+        return SamplingTime;
+    }
+
+    public void setSamplingTime(String samplingTime) {
+        SamplingTime = samplingTime;
+    }
+
+    public String getAerosolUsed() {
+        return AerosolUsed;
+    }
+
+    public void setAerosolUsed(String aerosolUsed) {
+        AerosolUsed = aerosolUsed;
+    }
+
+    public String getAerosolGeneratorType() {
+        return AerosolGeneratorType;
+    }
+
+    public void setAerosolGeneratorType(String aerosolGeneratorType) {
+        AerosolGeneratorType = aerosolGeneratorType;
     }
 }
