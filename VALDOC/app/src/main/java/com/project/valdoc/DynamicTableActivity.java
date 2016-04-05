@@ -727,7 +727,9 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         TableRow row1 = new TableRow(this);
         row1.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
                 TableRow.LayoutParams.MATCH_PARENT));
-        row1.addView(addTextView(" No. of Particles >=0. 5 µm/m³"));
+        TextView tvs = addTextView(" No. of Particles >= 5 µm/m³  ");
+        tvs.setEms(12);
+        row1.addView(tvs);
         test5_tableLayout2_2.addView(row1);
 //        test5_table_layout2_1.addView(row1);
 //        }
@@ -801,7 +803,9 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         TableRow row2 = new TableRow(this);
         row2.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
                 TableRow.LayoutParams.MATCH_PARENT));
-        row2.addView(addTextView(" No. of Particles >= 5 µm/m³  "));
+        TextView tvs1 = addTextView(" No. of Particles >= 5 µm/m³  ");
+        tvs1.setEms(12);
+        row2.addView(tvs1);
         test5_tableLayout4_2.addView(row2);
 
 
@@ -839,22 +843,6 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
 //            row.addView(addStretchedTextView(" Mean Average  "));
             test5_table_layout4.addView(row);
         }
-
-//        for (int sk = 0; sk < 3; sk++) {
-//            TableRow row = new TableRow(this);
-//            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
-//                    TableRow.LayoutParams.WRAP_CONTENT));
-//            if (sk == 0) {
-//                row.addView(addStretchedTextView(" Mean Average "));
-//            }
-//            if (sk == 1) {
-//                row.addView(addStretchedTextView(" Standard Deviation "));
-//            }
-//            if (sk == 2) {
-//                row.addView(addStretchedTextView(" 95% UCL "));
-//            }
-//            test5_table_layout2.addView(row);
-//        }
 
 
         //Fifth section

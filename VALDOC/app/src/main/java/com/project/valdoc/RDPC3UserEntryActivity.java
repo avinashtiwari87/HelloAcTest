@@ -484,7 +484,7 @@ public class RDPC3UserEntryActivity extends AppCompatActivity {
             testDetails.setAerosolUsed("");
             testDetails.setAerosolGeneratorType("");
             testDetails.setSamplingFlowRate("" + samplingFlowRate.getText().toString());
-            testDetails.setSamplingTime(""+samplingTime.getText().toString());
+            testDetails.setSamplingTime("" + samplingTime.getText().toString());
         } else {
             testDetails.setInstrumentUsed(partnerInstrument.getpInstrumentName());
             testDetails.setMake(partnerInstrument.getMake());
@@ -494,8 +494,8 @@ public class RDPC3UserEntryActivity extends AppCompatActivity {
             testDetails.setCalibratedDueOn(partnerInstrument.getCalibrationDueDate());
             testDetails.setAerosolUsed("");
             testDetails.setAerosolGeneratorType("");
-            testDetails.setSamplingFlowRate(""+samplingFlowRate.getText().toString());
-            testDetails.setSamplingTime(""+samplingTime.getText().toString());
+            testDetails.setSamplingFlowRate("" + samplingFlowRate.getText().toString());
+            testDetails.setSamplingTime("" + samplingTime.getText().toString());
         }
 
 
@@ -573,6 +573,7 @@ public class RDPC3UserEntryActivity extends AppCompatActivity {
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
+
                     TextView textView = addTextView(" Location ");
                     ViewGroup.LayoutParams params = textView.getLayoutParams();
                     params.height = getResources().getDimensionPixelSize(R.dimen.text_view_height);
@@ -594,11 +595,17 @@ public class RDPC3UserEntryActivity extends AppCompatActivity {
             test5_table_layout.addView(row);
         }
 
+// adding no of partical text
+//        if(i==1) {
         TableRow row1 = new TableRow(this);
         row1.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
                 TableRow.LayoutParams.MATCH_PARENT));
-        row1.addView(addTextView(" No. of Particles >= 0. 5 µm/m³"));
+        TextView tvs = addTextView(" No. of Particles >= 5 µm/m³  ");
+        tvs.setEms(12);
+        row1.addView(tvs);
         test5_tableLayout2_2.addView(row1);
+//        test5_table_layout2_1.addView(row1);
+//        }
 
 
         //Second section
@@ -607,6 +614,7 @@ public class RDPC3UserEntryActivity extends AppCompatActivity {
             TableRow row = new TableRow(this);
             row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
                     TableRow.LayoutParams.WRAP_CONTENT));
+
             // inner for loop 1
             for (int j = 1; j <= cols; j++) {
                 if (i == 1 && j <= cols) {
@@ -665,10 +673,13 @@ public class RDPC3UserEntryActivity extends AppCompatActivity {
             test5CommonFormulaIds1++;
         }
 
+
         TableRow row2 = new TableRow(this);
         row2.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
                 TableRow.LayoutParams.MATCH_PARENT));
-        row2.addView(addTextView(" No. of Particles >= 5 µm/m³  "));
+        TextView tvs1 = addTextView(" No. of Particles >= 5 µm/m³  ");
+        tvs1.setEms(12);
+        row2.addView(tvs1);
         test5_tableLayout4_2.addView(row2);
 
         //Fourth section
@@ -682,7 +693,6 @@ public class RDPC3UserEntryActivity extends AppCompatActivity {
                 if (i == 1 && j <= cols) {
                     row.addView(addTextView(" R " + j));
                 } else {
-                    // row.addView(addEditTextView(rows + i));
                     row.addView(addInputDataTextView());
                 }
 
@@ -703,7 +713,7 @@ public class RDPC3UserEntryActivity extends AppCompatActivity {
             if (sk == 2) {
                 row.addView(addStretchedTextView(" 95% UCL "));
             }
-//            row.addView(addStretchedTextView("  "));
+//            row.addView(addStretchedTextView(" Mean Average  "));
             test5_table_layout4.addView(row);
         }
 
@@ -721,7 +731,6 @@ public class RDPC3UserEntryActivity extends AppCompatActivity {
                     params.height = getResources().getDimensionPixelSize(R.dimen.text_view_height);
                     textView.setLayoutParams(params);
                     row.addView(textView);
-//                    row.addView(addTextView(" Average "));
                 } else {
                     row.addView(addResultTextView(rows + i));
                 }
@@ -749,156 +758,7 @@ public class RDPC3UserEntryActivity extends AppCompatActivity {
         TextView txtView4 = RDPC3TxtList2.get(1);
         txtView4.setText(stdDev2 + "");
 
-        //dismiss progressbar
-//        if (pr.isShowing())
-//            pr.dismiss();
     }
-
-//    private void BuildTableTest55(int rows, int cols)
-//        {
-//            //first section
-//            // outer for loop
-//            for (int i = 1; i <= rows; i++) {
-//                TableRow row = new TableRow(this);
-//                row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
-//                        TableRow.LayoutParams.WRAP_CONTENT));
-//                // inner for loop
-//                for (int j = 1; j <= 1; j++) {
-//                    if (i == 1 && j == 1) {
-//                        row.addView(addTextView(" Location "));
-//                    } else {
-//                        int position = i - 1;
-//                        row.addView(addTextView(" " + position));
-//                    }
-//
-//                }
-//                test5_table_layout.addView(row);
-//            }
-//            for (int sk = 0; sk < 3; sk++) {
-//                TableRow row = new TableRow(this);
-//                row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
-//                        TableRow.LayoutParams.WRAP_CONTENT));
-//                row.addView(addTextView("    "));
-//                test5_table_layout.addView(row);
-//            }
-//
-//            //Second section
-//            // outer for loop
-//            for (int i = 1; i <= rows; i++) {
-//                TableRow row = new TableRow(this);
-//                row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
-//                        TableRow.LayoutParams.WRAP_CONTENT));
-//                // inner for loop 1
-//                for (int j = 1; j <= cols; j++) {
-//                    if (i == 1 && j <= cols) {
-//                        row.addView(addTextView(" R " + j));
-//                    } else {
-//                        //row.addView(addTextView(" 4434 | 3434 | 1341 "));
-//                        row.addView(addInputDataTextView());
-//                    }
-//                }
-//                test5_table_layout2_1.addView(row);
-//            }
-//            for (int sk = 0; sk < 3; sk++) {
-//                TableRow row = new TableRow(this);
-//                row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
-//                        TableRow.LayoutParams.WRAP_CONTENT));
-//                if (sk == 0) {
-//                    row.addView(addStretchedTextView(" Mean Average "));
-//                }
-//                if (sk == 1) {
-//                    row.addView(addStretchedTextView(" Standard Deviation "));
-//                }
-//                if (sk == 2) {
-//                    row.addView(addStretchedTextView(" 95% UCL "));
-//                }
-//                test5_table_layout2.addView(row);
-//            }
-//
-//            //Third section
-//            // outer for loop
-//            for (int i = 1; i <= rows; i++) {
-//                TableRow row = new TableRow(this);
-//                row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
-//                        TableRow.LayoutParams.WRAP_CONTENT));
-//                // inner for loop
-//                for (int j = 1; j <= 1; j++) {
-//                    if (i == 1 && j == 1) {
-//                        row.addView(addTextView(" Average "));
-//                    } else {
-//                        row.addView(addResultTextView(i));
-//                    }
-//
-//                }
-//                test5_table_layout3.addView(row);
-//            }
-//            //Footer Rows....
-//            for (int sk = 0; sk < 3; sk++) {
-//                TableRow rowFooter = new TableRow(this);
-//                rowFooter.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
-//                        TableRow.LayoutParams.WRAP_CONTENT));
-//                rowFooter.addView(addTextViewWithTagIds(sk, test5CommonFormulaIds1, RDPC3TxtList, "0"));
-//                test5_table_layout3_1.addView(rowFooter);
-//                test5CommonFormulaIds1++;
-//            }
-//
-//
-//            //Fourth section
-//            // outer for loop
-//            for (int i = 1; i <= rows; i++) {
-//                TableRow row = new TableRow(this);
-//                row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
-//                        TableRow.LayoutParams.WRAP_CONTENT));
-//                // inner for loop 1
-//                for (int j = 1; j <= cols; j++) {
-//                    if (i == 1 && j <= cols) {
-//                        row.addView(addTextView(" R " + j));
-//                    } else {
-//                        row.addView(addEditTextView(rows + i));
-//                    }
-//
-//                }
-//                test5_table_layout4_1.addView(row);
-//
-//            }
-//            for (int sk = 0; sk < 3; sk++) {
-//                TableRow row = new TableRow(this);
-//                row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
-//                        TableRow.LayoutParams.WRAP_CONTENT));
-//                row.addView(addStretchedTextView("  "));
-//                test5_table_layout4.addView(row);
-//            }
-//
-//            //Fifth section
-//            // outer for loop
-//            for (int i = 1; i <= rows; i++) {
-//                TableRow row = new TableRow(this);
-//                row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
-//                        TableRow.LayoutParams.WRAP_CONTENT));
-//                // inner for loop
-//                for (int j = 1; j <= 1; j++) {
-//                    if (i == 1 && j == 1) {
-//                        row.addView(addTextView(" Average "));
-//                    } else {
-//                        row.addView(addResultTextView(rows + i));
-//                    }
-//
-//                }
-//                test5_table_layout5.addView(row);
-//            }
-//            //Footer Rows....
-//            for (int sk = 0; sk < 3; sk++) {
-//                TableRow rowFooter = new TableRow(this);
-//                rowFooter.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
-//                        TableRow.LayoutParams.WRAP_CONTENT));
-//                rowFooter.addView(addTextViewWithTagIds(sk, test5CommonFormulaIds2, RDPC3TxtList2, "0"));
-//                test5_table_layout5_1.addView(rowFooter);
-//                test5CommonFormulaIds2++;
-//            }
-//            //dismiss progressbar
-////            if (pr.isShowing())
-////                pr.dismiss();
-//        }
 
 
     private TextView addTextView(String textValue) {
@@ -910,6 +770,7 @@ public class RDPC3UserEntryActivity extends AppCompatActivity {
         //tv.setPadding(5, 5, 5, 5);
         tv.setTextColor(getResources().getColor(R.color.black));
         tv.setTextSize(getResources().getDimension(R.dimen.normal_text_size));
+        tv.setGravity(Gravity.CENTER);
         //tv.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD);
         tv.setSingleLine(false);
         tv.setMaxLines(3);
@@ -995,6 +856,7 @@ public class RDPC3UserEntryActivity extends AppCompatActivity {
         tv.setId(idCountEtv);
         tv.setSingleLine(false);
         tv.setMaxLines(3);
+        tv.setEms(4);
         tv.setEllipsize(TextUtils.TruncateAt.END);
         idCountEtv++;
         txtViewList.add(tv);
