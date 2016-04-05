@@ -187,10 +187,10 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
     public static final String PARTNER_INSTRUMENT_TESTID = "testId";
     public static final String PARTNER_INSTRUMENT_CREATIONDATE = "creationDate";
     //new addition
-    public static final String PARTNER_INSTRUMENT_SAMPLINGFLOWRATE = "SamplingFlowRate";
-    public static final String PARTNER_INSTRUMENT_SAMPLINGTIME = "SamplingTime";
-    public static final String PARTNER_INSTRUMENT_AEROSOLUSED = "AerosolUsed";
-    public static final String PARTNER_INSTRUMENT_AEROSOLGENERATORTYPE = "AerosolGeneratorType";
+    public static final String PARTNER_INSTRUMENT_SAMPLINGFLOWRATE = "samplingFlowRate";
+    public static final String PARTNER_INSTRUMENT_SAMPLINGTIME = "samplingTime";
+    public static final String PARTNER_INSTRUMENT_AEROSOLUSED = "aerosolUsed";
+    public static final String PARTNER_INSTRUMENT_AEROSOLGENERATORTYPE = "aerosolGeneratorType";
 
     // partner instrument table create statment
     private static final String CREATE_TABLE_PARTNER_INSTRUMENT = "CREATE TABLE " + PARTNER_INSTRUMENT_TABLE_NAME
@@ -217,10 +217,10 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
     public static final String CLIENT_INSTRUMENT_TESTID = "testId";
     public static final String CLIENT_INSTRUMENT_CREATIONDATE = "creationDate";
     //new addition
-    public static final String CLIENT_INSTRUMENT_SAMPLINGFLOWRATE = "SamplingFlowRate";
-    public static final String CLIENT_INSTRUMENT_SAMPLINGTIME = "SamplingTime";
-    public static final String CLIENT_INSTRUMENT_AEROSOLUSED = "AerosolUsed";
-    public static final String CLIENT_INSTRUMENT_AEROSOLGENERATORTYPE = "AerosolGeneratorType";
+    public static final String CLIENT_INSTRUMENT_SAMPLINGFLOWRATE = "samplingFlowRate";
+    public static final String CLIENT_INSTRUMENT_SAMPLINGTIME = "samplingTime";
+    public static final String CLIENT_INSTRUMENT_AEROSOLUSED = "aerosolUsed";
+    public static final String CLIENT_INSTRUMENT_AEROSOLGENERATORTYPE = "aerosolGeneratorType";
 
     // partner instrument table create statment
     private static final String CREATE_TABLE_CLIENT_INSTRUMENT = "CREATE TABLE " + CLIENT_INSTRUMENT_TABLE_NAME
@@ -402,6 +402,11 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
     public static final String TEST_DETAILS_TESTERNAME = "testerName";
     public static final String TEST_DETAILS_WITNESSNAME = "witnessName";
     public static final String TEST_DETAILS_PARTNERNAME = "partnerName";
+    //new addition
+    public static final String TEST_DETAILS_SAMPLINGFLOWRATE = "samplingFlowRate";
+    public static final String TEST_DETAILS_SAMPLINGTIME = "samplingTime";
+    public static final String TEST_DETAILS_AEROSOLUSED = "aerosolUsed";
+    public static final String TEST_DETAILS_AEROSOLGENERATORTYPE = "aerosolGeneratorType";
 
     // test details table create statment
     private static final String CREATE_TABLE_TESTDETAILS = "CREATE TABLE " + TEST_DETAILS_TABLE_NAME
@@ -411,8 +416,10 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
             + TEST_DETAILS_MODEL + " TEXT," + TEST_DETAILS_CALIBRATEDON + " TEXT," + TEST_DETAILS_CALIBRATEDDUEON + " TEXT,"
             + TEST_DETAILS_TESTSPECIFICATION + " TEXT," + TEST_DETAILS_TEST_TESTREFERENCE + " TEXT," + TEST_DETAILS_OCCUPENCYSTATE + " TEXT,"
             + TEST_DETAILS_BLOCKNAME + " TEXT," + TEST_DETAILS_TESTAREA + " TEXT," + TEST_DETAILS_AHUNO + " TEXT," + TEST_DETAILS_ROOMNO + " TEXT,"
-            + TEST_DETAILS_ROOMNAME + " TEXT," + TEST_DETAILS_EQUIPMENTNO + " TEXT," + TEST_DETAILS_EQUIPMENTNAME + " TEXT," +
-            TEST_DETAILS_TESTERNAME + " TEXT," + TEST_DETAILS_WITNESSNAME + " TEXT," + TEST_DETAILS_PARTNERNAME + " TEXT" + ")";
+            + TEST_DETAILS_ROOMNAME + " TEXT," + TEST_DETAILS_EQUIPMENTNO + " TEXT," + TEST_DETAILS_EQUIPMENTNAME + " TEXT,"
+            + TEST_DETAILS_TESTERNAME + " TEXT," + TEST_DETAILS_WITNESSNAME + " TEXT," + TEST_DETAILS_PARTNERNAME + " TEXT,"
+            + PARTNER_INSTRUMENT_SAMPLINGFLOWRATE + " TEXT," + PARTNER_INSTRUMENT_SAMPLINGTIME + " TEXT,"
+            + PARTNER_INSTRUMENT_AEROSOLUSED + " TEXT," + PARTNER_INSTRUMENT_AEROSOLGENERATORTYPE + " TEXT" + ")";
 
 
     //test spesification table details
@@ -736,6 +743,11 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
         contentValues.put(TEST_DETAILS_TESTERNAME, testDetails.getTesterName());
         contentValues.put(TEST_DETAILS_WITNESSNAME, testDetails.getWitnessName());
         contentValues.put(TEST_DETAILS_PARTNERNAME, testDetails.getPartnerName());
+        contentValues.put(TEST_DETAILS_SAMPLINGFLOWRATE, testDetails.getSamplingFlowRate());
+        contentValues.put(TEST_DETAILS_SAMPLINGTIME, testDetails.getSamplingTime());
+        contentValues.put(TEST_DETAILS_AEROSOLGENERATORTYPE, testDetails.getAerosolGeneratorType());
+        contentValues.put(TEST_DETAILS_AEROSOLUSED, testDetails.getAerosolUsed());
+
         db.insert(tableName, null, contentValues);
 //            }
         return true;
@@ -972,10 +984,10 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 contentValues.put(PARTNER_INSTRUMENT_STATUS, partnerInstrument.getStatus());
                 contentValues.put(PARTNER_INSTRUMENT_TESTID, partnerInstrument.getTestId());
                 contentValues.put(PARTNER_INSTRUMENT_CREATIONDATE, partnerInstrument.getCreationDate());
-                contentValues.put(PARTNER_INSTRUMENT_SAMPLINGFLOWRATE,partnerInstrument.getSamplingFlowRate());
-                contentValues.put(PARTNER_INSTRUMENT_SAMPLINGTIME,partnerInstrument.getSamplingTime());
-                contentValues.put(PARTNER_INSTRUMENT_AEROSOLUSED,partnerInstrument.getAerosolUsed());
-                contentValues.put(PARTNER_INSTRUMENT_AEROSOLGENERATORTYPE,partnerInstrument.getAerosolGeneratorType());
+                contentValues.put(PARTNER_INSTRUMENT_SAMPLINGFLOWRATE, partnerInstrument.getSamplingFlowRate());
+                contentValues.put(PARTNER_INSTRUMENT_SAMPLINGTIME, partnerInstrument.getSamplingTime());
+                contentValues.put(PARTNER_INSTRUMENT_AEROSOLUSED, partnerInstrument.getAerosolUsed());
+                contentValues.put(PARTNER_INSTRUMENT_AEROSOLGENERATORTYPE, partnerInstrument.getAerosolGeneratorType());
                 Log.d("VALDOC", "controler response data  13=inserting=");
 
                 if (getExistingId(tableName, PARTNER_INSTRUMENT_PINSTRUMENTID, partnerInstrument.getpInstrumentId()) > 0) {
@@ -1011,10 +1023,10 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 contentValues.put(CLIENT_INSTRUMENT_STATUS, clientInstrument.getStatus());
                 contentValues.put(CLIENT_INSTRUMENT_TESTID, clientInstrument.getTestId());
                 contentValues.put(CLIENT_INSTRUMENT_CREATIONDATE, clientInstrument.getCreationDate());
-                contentValues.put(CLIENT_INSTRUMENT_SAMPLINGFLOWRATE,clientInstrument.getSamplingFlowRate());
-                contentValues.put(CLIENT_INSTRUMENT_SAMPLINGTIME,clientInstrument.getSamplingTime());
-                contentValues.put(CLIENT_INSTRUMENT_AEROSOLUSED,clientInstrument.getAerosolUsed());
-                contentValues.put(CLIENT_INSTRUMENT_AEROSOLGENERATORTYPE,clientInstrument.getAerosolGeneratorType());
+                contentValues.put(CLIENT_INSTRUMENT_SAMPLINGFLOWRATE, clientInstrument.getSamplingFlowRate());
+                contentValues.put(CLIENT_INSTRUMENT_SAMPLINGTIME, clientInstrument.getSamplingTime());
+                contentValues.put(CLIENT_INSTRUMENT_AEROSOLUSED, clientInstrument.getAerosolUsed());
+                contentValues.put(CLIENT_INSTRUMENT_AEROSOLGENERATORTYPE, clientInstrument.getAerosolGeneratorType());
 
                 if (getExistingId(tableName, CLIENT_INSTRUMENT_CINSTRUMENTID, clientInstrument.getcInstrumentId()) > 0) {
                     db.update(tableName, contentValues, CLIENT_INSTRUMENT_CINSTRUMENTID + "=" + clientInstrument.getcInstrumentId(), null);
@@ -1480,32 +1492,36 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 try {
                     JSONObject jsonObject = new JSONObject();
                     jsonObject.put(TEST_DETAILS_TEST_DETAIL_ID, cursor.getInt(0));
-                    jsonObject.put(TEST_DETAILS_TESTNAME, cursor.getString(1));
-                    jsonObject.put(TEST_DETAILS_CUSTOMER, cursor.getString(2));
-                    jsonObject.put(TEST_DETAILS_RAWDATANO, cursor.getString(3));
+                    jsonObject.put(TEST_DETAILS_TESTNAME, cursor.getString(1).toString());
+                    jsonObject.put(TEST_DETAILS_CUSTOMER, cursor.getString(2).toString());
+                    jsonObject.put(TEST_DETAILS_RAWDATANO, cursor.getString(3).toString());
 
                     jsonObject.put(TEST_DETAILS_DATEOFTEST, cursor.getInt(4));
-                    jsonObject.put(TEST_DETAILS_INSTRUMENTUSED, cursor.getString(5));
-                    jsonObject.put(TEST_DETAILS_INSTRUMENTNO, cursor.getString(6));
-                    jsonObject.put(TEST_DETAILS_MAKE, cursor.getString(7));
-                    jsonObject.put(TEST_DETAILS_MODEL, cursor.getString(8));
-                    jsonObject.put(TEST_DETAILS_CALIBRATEDON, cursor.getString(9));
-                    jsonObject.put(TEST_DETAILS_CALIBRATEDDUEON, cursor.getString(10));
-                    jsonObject.put(TEST_DETAILS_TESTSPECIFICATION, cursor.getString(11));
-                    jsonObject.put(TEST_DETAILS_TEST_TESTREFERENCE, cursor.getString(12));
-                    jsonObject.put(TEST_DETAILS_OCCUPENCYSTATE, cursor.getString(13));
-                    jsonObject.put(TEST_DETAILS_BLOCKNAME, cursor.getString(14));
-                    jsonObject.put(TEST_DETAILS_TESTAREA, cursor.getString(15));
+                    jsonObject.put(TEST_DETAILS_INSTRUMENTUSED, cursor.getString(5).toString());
+                    jsonObject.put(TEST_DETAILS_INSTRUMENTNO, cursor.getString(6).toString());
+                    jsonObject.put(TEST_DETAILS_MAKE, cursor.getString(7).toString());
+                    jsonObject.put(TEST_DETAILS_MODEL, cursor.getString(8).toString());
+                    jsonObject.put(TEST_DETAILS_CALIBRATEDON, cursor.getString(9).toString());
+                    jsonObject.put(TEST_DETAILS_CALIBRATEDDUEON, cursor.getString(10).toString());
+                    jsonObject.put(TEST_DETAILS_TESTSPECIFICATION, cursor.getString(11).toString());
+                    jsonObject.put(TEST_DETAILS_TEST_TESTREFERENCE, cursor.getString(12).toString());
+                    jsonObject.put(TEST_DETAILS_OCCUPENCYSTATE, cursor.getString(13).toString());
+                    jsonObject.put(TEST_DETAILS_BLOCKNAME, cursor.getString(14).toString());
+                    jsonObject.put(TEST_DETAILS_TESTAREA, cursor.getString(15).toString());
 
-                    jsonObject.put(TEST_DETAILS_AHUNO, cursor.getString(16));
-                    jsonObject.put(TEST_DETAILS_ROOMNO, cursor.getString(17));
-                    jsonObject.put(TEST_DETAILS_ROOMNAME, cursor.getString(18));
-                    jsonObject.put(TEST_DETAILS_EQUIPMENTNO, cursor.getString(19));
-                    jsonObject.put(TEST_DETAILS_EQUIPMENTNAME, cursor.getString(20));
+                    jsonObject.put(TEST_DETAILS_AHUNO, cursor.getString(16).toString());
+                    jsonObject.put(TEST_DETAILS_ROOMNO, cursor.getString(17).toString());
+                    jsonObject.put(TEST_DETAILS_ROOMNAME, cursor.getString(18).toString());
+                    jsonObject.put(TEST_DETAILS_EQUIPMENTNO, cursor.getString(19).toString());
+                    jsonObject.put(TEST_DETAILS_EQUIPMENTNAME, cursor.getString(20).toString());
 
-                    jsonObject.put(TEST_DETAILS_TESTERNAME, cursor.getString(21));
-                    jsonObject.put(TEST_DETAILS_WITNESSNAME, cursor.getString(22));
-                    jsonObject.put(TEST_DETAILS_PARTNERNAME, cursor.getString(23));
+                    jsonObject.put(TEST_DETAILS_TESTERNAME, cursor.getString(21).toString());
+                    jsonObject.put(TEST_DETAILS_WITNESSNAME, cursor.getString(22).toString());
+                    jsonObject.put(TEST_DETAILS_PARTNERNAME, cursor.getString(23).toString());
+                    jsonObject.put(TEST_DETAILS_SAMPLINGFLOWRATE, cursor.getString(24).toString());
+                    jsonObject.put(TEST_DETAILS_SAMPLINGTIME, cursor.getString(25).toString());
+                    jsonObject.put(TEST_DETAILS_AEROSOLGENERATORTYPE, cursor.getString(26).toString());
+                    jsonObject.put(TEST_DETAILS_AEROSOLUSED, cursor.getString(27).toString());
                     Log.d("getCertificateData", "test details=" + jsonObject.toString());
                     testDetailsJsonArray.put(jsonObject);
                 } catch (Exception e) {

@@ -94,7 +94,10 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
     private TextView dateTextView;
     private TextView customerName;
     private TextView certificateNo;
-
+    private TextView aerosolUsed;
+    private TextView aerosolGeneratorType;
+    private TextView aerosolUsedLable;
+    private TextView aerosolGeneratorTypeLable;
     private TextView instrumentNoTextView;
     private TextView testerNameTextView;
     private TextView instrumentUsedTextView;
@@ -279,10 +282,10 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
         roomNo.setText(room.getRoomNo().toString());
         ahuNo.setText(ahuNumber);
         testCundoctor.setText(userName);
-        String clientOrg=sharedpreferences.getString("CLIENTORG", "");
-        String prtnerOrg=sharedpreferences.getString("PARTNERORG", "");
-         if (sharedpreferences.getString("USERTYPE", "").equalsIgnoreCase("CLIENT")) {
-            testCondoctorOrg.setText("(" + clientOrg+ ")");
+        String clientOrg = sharedpreferences.getString("CLIENTORG", "");
+        String prtnerOrg = sharedpreferences.getString("PARTNERORG", "");
+        if (sharedpreferences.getString("USERTYPE", "").equalsIgnoreCase("CLIENT")) {
+            testCondoctorOrg.setText("(" + clientOrg + ")");
             testWitnessOrg.setText("(" + clientOrg + ")");
         } else {
             testCondoctorOrg.setText("(" + prtnerOrg + ")");
@@ -327,6 +330,16 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
         instrumentUsed = (TextView) findViewById(R.id.instrumentused);
         make = (TextView) findViewById(R.id.make);
         model = (TextView) findViewById(R.id.modle);
+        //hiding extra field
+        aerosolUsedLable = (TextView) findViewById(R.id.aerosol_used_lable);
+        aerosolUsedLable.setVisibility(View.GONE);
+        aerosolGeneratorTypeLable = (TextView) findViewById(R.id.aerosol_generator_type_lable);
+        aerosolGeneratorTypeLable.setVisibility(View.GONE);
+        aerosolUsed = (TextView) findViewById(R.id.aerosol_used);
+        aerosolUsed.setVisibility(View.GONE);
+        aerosolGeneratorType = (TextView) findViewById(R.id.aerosol_generator_type);
+        aerosolGeneratorType.setVisibility(View.GONE);
+
         instrumentSerialNo = (TextView) findViewById(R.id.instrumentserialno);
         calibrationOn = (TextView) findViewById(R.id.calibratedon);
         calibrationDueOn = (TextView) findViewById(R.id.calibrationdueon);

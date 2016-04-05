@@ -70,6 +70,10 @@ public class RDPC3UserEntryActivity extends AppCompatActivity {
     private TextView instrumentUsed;
     private TextView make;
     private TextView model;
+    private TextView samplingTimeLable;
+    private TextView samplingFlowRateLable;
+    private TextView samplingTime;
+    private TextView samplingFlowRate;
     private TextView instrumentSerialNo;
     private TextView calibrationOn;
     private TextView calibrationDueOn;
@@ -116,7 +120,7 @@ public class RDPC3UserEntryActivity extends AppCompatActivity {
     private int month;
     private int day;
     static final int DATE_PICKER_ID = 1111;
-    int testDetailsId=0;
+    int testDetailsId = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -125,7 +129,7 @@ public class RDPC3UserEntryActivity extends AppCompatActivity {
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 //        pr = ProgressDialog.show(this, "Please Wait", "Loading...");
         sharedpreferences = getSharedPreferences("valdoc", Context.MODE_PRIVATE);
-        testDetailsId = (sharedpreferences.getInt("TESTDETAILSID", 0)+1);
+        testDetailsId = (sharedpreferences.getInt("TESTDETAILSID", 0) + 1);
         txtViewList = new ArrayList<TextView>();
         resultTextViewList = new ArrayList<TextView>();
         RDPC3TxtList = new ArrayList<TextView>();
@@ -247,6 +251,8 @@ public class RDPC3UserEntryActivity extends AppCompatActivity {
             instrumentSerialNo.setText("" + clientInstrument.getSerialNo());
             calibrationOn.setText(Utilityies.parseDateToddMMyyyy(clientInstrument.getLastCalibrated()));
             calibrationDueOn.setText(Utilityies.parseDateToddMMyyyy(clientInstrument.getCalibrationDueDate()));
+            samplingFlowRate.setText(clientInstrument.getSamplingFlowRate());
+            samplingTime.setText(clientInstrument.getSamplingTime());
         } else {
             instrumentUsed.setText(partnerInstrument.getpInstrumentName());
             make.setText(partnerInstrument.getMake());
@@ -254,6 +260,8 @@ public class RDPC3UserEntryActivity extends AppCompatActivity {
             instrumentSerialNo.setText("" + partnerInstrument.getpInstrumentId());
             calibrationOn.setText(Utilityies.parseDateToddMMyyyy(partnerInstrument.getLastCalibrated()));
             calibrationDueOn.setText(Utilityies.parseDateToddMMyyyy(partnerInstrument.getCalibrationDueDate()));
+            samplingFlowRate.setText(partnerInstrument.getSamplingFlowRate());
+            samplingTime.setText(partnerInstrument.getSamplingTime());
         }
 
         testSpecification.setText("ISO Class 8 " + room.getAcphNLT());
@@ -268,12 +276,12 @@ public class RDPC3UserEntryActivity extends AppCompatActivity {
 //        equipmentNameText.setText(getResources().getString(R.string.room_no));
 //        equipmentNoText.setText(getResources().getString(R.string.ahu_no));
         testCundoctor.setText(userName);
-        if(sharedpreferences.getString("USERTYPE", "").equalsIgnoreCase("CLIENT")){
-            testCondoctorOrg.setText("("+sharedpreferences.getString("CLIENTORG", "")+")");
-            testWitnessOrg.setText("("+sharedpreferences.getString("CLIENTORG", "")+")");
-        }else{
-            testCondoctorOrg.setText("("+sharedpreferences.getString("PARTNERORG", "")+")");
-            testWitnessOrg.setText("("+sharedpreferences.getString("CLIENTORG", "")+")");
+        if (sharedpreferences.getString("USERTYPE", "").equalsIgnoreCase("CLIENT")) {
+            testCondoctorOrg.setText("(" + sharedpreferences.getString("CLIENTORG", "") + ")");
+            testWitnessOrg.setText("(" + sharedpreferences.getString("CLIENTORG", "") + ")");
+        } else {
+            testCondoctorOrg.setText("(" + sharedpreferences.getString("PARTNERORG", "") + ")");
+            testWitnessOrg.setText("(" + sharedpreferences.getString("CLIENTORG", "") + ")");
         }
         Log.d("valdoc", "RDAV5UserEnryActivity 1witness=" + witnessFirst);
         StringBuilder witness = new StringBuilder();
@@ -311,6 +319,14 @@ public class RDPC3UserEntryActivity extends AppCompatActivity {
         instrumentUsed = (TextView) findViewById(R.id.instrumentused);
         make = (TextView) findViewById(R.id.make);
         model = (TextView) findViewById(R.id.modle);
+
+        samplingTimeLable = (TextView) findViewById(R.id.aerosol_used_lable);
+        samplingFlowRateLable = (TextView) findViewById(R.id.aerosol_generator_type_lable);
+        samplingFlowRateLable.setText(getResources().getString(R.string.sampling_flow_rate_lable));
+        samplingTimeLable.setText(getResources().getString(R.string.sampling_time_lable));
+        samplingTime = (TextView) findViewById(R.id.aerosol_used);
+        samplingFlowRate = (TextView) findViewById(R.id.aerosol_generator_type);
+
         instrumentSerialNo = (TextView) findViewById(R.id.instrumentserialno);
         calibrationOn = (TextView) findViewById(R.id.calibratedon);
         calibrationDueOn = (TextView) findViewById(R.id.calibrationdueon);
@@ -385,7 +401,7 @@ public class RDPC3UserEntryActivity extends AppCompatActivity {
         ArrayList<TestSpesificationValue> spesificationValueArrayList = new ArrayList<TestSpesificationValue>();
         TestSpesificationValue testSpesificationValue = new TestSpesificationValue();
         testSpesificationValue.setTest_specific_id(1);
-        testSpesificationValue.setTest_detail_id(""+testDetailsId);
+        testSpesificationValue.setTest_detail_id("" + testDetailsId);
         testSpesificationValue.setFieldName("Mean Average1");
         testSpesificationValue.setFieldValue("" + meanValue1);
         spesificationValueArrayList.add(testSpesificationValue);
@@ -395,21 +411,21 @@ public class RDPC3UserEntryActivity extends AppCompatActivity {
 
         TestSpesificationValue testSpesificationValue1 = new TestSpesificationValue();
         testSpesificationValue1.setTest_specific_id(1);
-        testSpesificationValue1.setTest_detail_id(""+testDetailsId);
+        testSpesificationValue1.setTest_detail_id("" + testDetailsId);
         testSpesificationValue1.setFieldName("Mean Average2");
         testSpesificationValue1.setFieldValue("" + meanValue2);
         spesificationValueArrayList.add(testSpesificationValue1);
 
         TestSpesificationValue testSpesificationValue2 = new TestSpesificationValue();
         testSpesificationValue2.setTest_specific_id(1);
-        testSpesificationValue2.setTest_detail_id(""+testDetailsId);
+        testSpesificationValue2.setTest_detail_id("" + testDetailsId);
         testSpesificationValue2.setFieldName("Standard Deviation1");
         testSpesificationValue2.setFieldValue("" + stdDev1);
         spesificationValueArrayList.add(testSpesificationValue2);
 
         TestSpesificationValue testSpesificationValue3 = new TestSpesificationValue();
         testSpesificationValue3.setTest_specific_id(1);
-        testSpesificationValue3.setTest_detail_id(""+testDetailsId);
+        testSpesificationValue3.setTest_detail_id("" + testDetailsId);
         testSpesificationValue3.setFieldName("Standard Deviation2");
         testSpesificationValue3.setFieldValue("" + stdDev1);
         spesificationValueArrayList.add(testSpesificationValue3);
@@ -465,6 +481,10 @@ public class RDPC3UserEntryActivity extends AppCompatActivity {
             testDetails.setInstrumentNo(clientInstrument.getSerialNo());
             testDetails.setCalibratedOn(clientInstrument.getLastCalibrated());
             testDetails.setCalibratedDueOn(clientInstrument.getCalibrationDueDate());
+            testDetails.setAerosolUsed("");
+            testDetails.setAerosolGeneratorType("");
+            testDetails.setSamplingFlowRate("" + samplingFlowRate.getText().toString());
+            testDetails.setSamplingTime(""+samplingTime.getText().toString());
         } else {
             testDetails.setInstrumentUsed(partnerInstrument.getpInstrumentName());
             testDetails.setMake(partnerInstrument.getMake());
@@ -472,6 +492,10 @@ public class RDPC3UserEntryActivity extends AppCompatActivity {
             testDetails.setInstrumentNo("" + partnerInstrument.getpInstrumentId());
             testDetails.setCalibratedOn(partnerInstrument.getLastCalibrated());
             testDetails.setCalibratedDueOn(partnerInstrument.getCalibrationDueDate());
+            testDetails.setAerosolUsed("");
+            testDetails.setAerosolGeneratorType("");
+            testDetails.setSamplingFlowRate(""+samplingFlowRate.getText().toString());
+            testDetails.setSamplingTime(""+samplingTime.getText().toString());
         }
 
 

@@ -224,10 +224,10 @@ public class ValdocControler {
                 clientInstrument.setStatus(jsonObject.optString("status").toString());
                 clientInstrument.setTestId(jsonObject.optInt("testId"));
                 clientInstrument.setCreationDate(jsonObject.optString("creationDate").toString());
-                clientInstrument.setSamplingFlowRate(jsonObject.optString("SamplingFlowRate").toString());
-                clientInstrument.setSamplingTime(jsonObject.optString("SamplingTime").toString());
-                clientInstrument.setAerosolUsed(jsonObject.optString("AerosolUsed").toString());
-                clientInstrument.setAerosolGeneratorType(jsonObject.optString("AerosolGeneratorType").toString());
+                clientInstrument.setSamplingFlowRate(jsonObject.optString("samplingFlowRate").toString());
+                clientInstrument.setSamplingTime(jsonObject.optString("samplingTime").toString());
+                clientInstrument.setAerosolUsed(jsonObject.optString("aerosolUsed").toString());
+                clientInstrument.setAerosolGeneratorType(jsonObject.optString("aerosolGeneratorType").toString());
                 Log.d("valdoc", "parse partner");
                 arrayList.add(clientInstrument);
             } catch (Exception e) {
@@ -257,10 +257,10 @@ public class ValdocControler {
                 partnerInstrument.setStatus(jsonObject.optString("status").toString());
                 partnerInstrument.setTestId(jsonObject.optInt("testId"));
                 partnerInstrument.setCreationDate(jsonObject.optString("creationDate").toString());
-                partnerInstrument.setSamplingFlowRate(jsonObject.optString("SamplingFlowRate").toString());
-                partnerInstrument.setSamplingTime(jsonObject.optString("SamplingTime").toString());
-                partnerInstrument.setAerosolUsed(jsonObject.optString("AerosolUsed").toString());
-                partnerInstrument.setAerosolGeneratorType(jsonObject.optString("AerosolGeneratorType").toString());
+                partnerInstrument.setSamplingFlowRate(jsonObject.optString("samplingFlowRate").toString());
+                partnerInstrument.setSamplingTime(jsonObject.optString("samplingTime").toString());
+                partnerInstrument.setAerosolUsed(jsonObject.optString("aerosolUsed").toString());
+                partnerInstrument.setAerosolGeneratorType(jsonObject.optString("aerosolGeneratorType").toString());
                 Log.d("valdoc", "parse partner");
                 arrayList.add(partnerInstrument);
             } catch (Exception e) {

@@ -63,6 +63,10 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
     private int applicableTestEquipmentLocation;
 
     //certificate view id creation
+    private TextView aerosolUsed;
+    private TextView aerosolGeneratorType;
+    private TextView aerosolUsedLable;
+    private TextView aerosolGeneratorTypeLable;
     private TextView instrumentUsed;
     private TextView make;
     private TextView model;
@@ -226,6 +230,16 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
         customerName = (TextView) findViewById(R.id.customer_name);
         certificateNo = (TextView) findViewById(R.id.certificate_no);
         instrumentUsed = (TextView) findViewById(R.id.instrumentused);
+        //hiding extra field
+        aerosolUsedLable = (TextView) findViewById(R.id.aerosol_used_lable);
+        aerosolUsedLable.setVisibility(View.GONE);
+        aerosolGeneratorTypeLable = (TextView) findViewById(R.id.aerosol_generator_type_lable);
+        aerosolGeneratorTypeLable.setVisibility(View.GONE);
+        aerosolUsed = (TextView) findViewById(R.id.aerosol_used);
+        aerosolUsed.setVisibility(View.GONE);
+        aerosolGeneratorType = (TextView) findViewById(R.id.aerosol_generator_type);
+        aerosolGeneratorType.setVisibility(View.GONE);
+
         make = (TextView) findViewById(R.id.make);
         model = (TextView) findViewById(R.id.modle);
         instrumentSerialNo = (TextView) findViewById(R.id.instrumentserialno);

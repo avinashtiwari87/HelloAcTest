@@ -140,6 +140,10 @@
             <TextView
                 style="@style/TextAppearance.AppCompat.header_left"
                 android:text="@string/modle" />
+            <TextView
+                android:id="@+id/aerosol_generator_type_lable"
+                style="@style/TextAppearance.AppCompat.header_left"
+                android:text="@string/Aerosol_generator_type_lable" />
         </LinearLayout>
 
         <LinearLayout
@@ -165,7 +169,10 @@
                 style="@style/TextAppearance.AppCompat.header_right"
                 android:text="@string/modle_details" />
 
-
+            <TextView
+                android:id="@+id/aerosol_generator_type"
+                style="@style/TextAppearance.AppCompat.header_left"
+                android:text="" />
         </LinearLayout>
 
         <LinearLayout
@@ -194,6 +201,11 @@
                     style="@style/TextAppearance.AppCompat.header_left"
                     android:text="@string/calibration_due" />
 
+                <TextView
+                    android:id="@+id/aerosol_used_lable"
+                    style="@style/TextAppearance.AppCompat.header_left"
+                    android:text="@string/aerosol_used_lable" />
+
             </LinearLayout>
 
             <LinearLayout
@@ -218,6 +230,12 @@
                     android:id="@+id/calibrationdueon"
                     style="@style/TextAppearance.AppCompat.header_right"
                     android:text="@string/calibration_due_on_date" />
+
+                <TextView
+                    android:id="@+id/aerosol_used"
+                    style="@style/TextAppearance.AppCompat.header_left"
+                    android:text="" />
+
             </LinearLayout>
 
         </LinearLayout>

@@ -31,6 +31,10 @@ public class TestDetails {
     private String testerName;
     private String witnessName;
     private String partnerName;
+    private String  SamplingFlowRate;
+    private String  SamplingTime;
+    private String  AerosolUsed;
+    private String  AerosolGeneratorType;
 
     public String getTest_details() {
         return test_details;
@@ -230,5 +234,37 @@ public class TestDetails {
 
     public void setPartnerName(String partnerName) {
         this.partnerName = partnerName;
+    }
+
+    public String getSamplingFlowRate() {
+        return SamplingFlowRate;
+    }
+
+    public void setSamplingFlowRate(String samplingFlowRate) {
+        SamplingFlowRate = samplingFlowRate;
+    }
+
+    public String getSamplingTime() {
+        return SamplingTime;
+    }
+
+    public void setSamplingTime(String samplingTime) {
+        SamplingTime = samplingTime;
+    }
+
+    public String getAerosolUsed() {
+        return AerosolUsed;
+    }
+
+    public void setAerosolUsed(String aerosolUsed) {
+        AerosolUsed = aerosolUsed;
+    }
+
+    public String getAerosolGeneratorType() {
+        return AerosolGeneratorType;
+    }
+
+    public void setAerosolGeneratorType(String aerosolGeneratorType) {
+        AerosolGeneratorType = aerosolGeneratorType;
     }
 }

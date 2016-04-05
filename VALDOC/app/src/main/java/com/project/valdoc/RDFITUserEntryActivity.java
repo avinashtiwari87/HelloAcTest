@@ -63,6 +63,8 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
     private TextView instrumentUsed;
     private TextView make;
     private TextView model;
+    private TextView aerosolUsed;
+    private TextView aerosolGeneratorType;
     private TextView instrumentSerialNo;
     private TextView calibrationOn;
     private TextView calibrationDueOn;
@@ -74,7 +76,7 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
     private TextView testRefrance;
     private TextView testWitnessOrg;
     private TextView testCondoctorOrg;
-//    private TextView equipmentNameText;
+    //    private TextView equipmentNameText;
 //    private TextView equipmentNoText;
     private TextView roomNo;
     private TextView ahuNo;
@@ -106,7 +108,7 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
     ArrayList<TextView> resultTextViewList;
     private ValdocDatabaseHandler mValdocDatabaseHandler = new ValdocDatabaseHandler(RDFITUserEntryActivity.this);
     SharedPreferences sharedpreferences;
-    int testDetailsId=0;
+    int testDetailsId = 0;
     private int year;
     private int month;
     private int day;
@@ -123,7 +125,7 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
         txtViewList = new ArrayList<TextView>();
 
         sharedpreferences = getSharedPreferences("valdoc", Context.MODE_PRIVATE);
-        testDetailsId = (sharedpreferences.getInt("TESTDETAILSID", 0)+1);
+        testDetailsId = (sharedpreferences.getInt("TESTDETAILSID", 0) + 1);
 
         if (getIntent().hasExtra("rows") && getIntent().hasExtra("cols")) {
             rows = getIntent().getIntExtra("rows", 0);
@@ -171,9 +173,9 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
         }
         if (passFlag == 0) {
             infarance.setText("The HEPA Filter System do not Qualifies for the above leak test.");
-        } else if(passFlag == 1){
+        } else if (passFlag == 1) {
             infarance.setText("The HEPA Filter System Qualifies for the above leak test.");
-        }else{
+        } else {
             infarance.setText("");
         }
     }
@@ -243,6 +245,8 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
             instrumentSerialNo.setText("" + clientInstrument.getSerialNo());
             calibrationOn.setText(Utilityies.parseDateToddMMyyyy(clientInstrument.getLastCalibrated()));
             calibrationDueOn.setText(Utilityies.parseDateToddMMyyyy(clientInstrument.getCalibrationDueDate()));
+            aerosolUsed.setText(clientInstrument.getAerosolUsed());
+            aerosolGeneratorType.setText(clientInstrument.getAerosolGeneratorType());
         } else {
             instrumentUsed.setText(partnerInstrument.getpInstrumentName());
             make.setText(partnerInstrument.getMake());
@@ -250,6 +254,8 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
             instrumentSerialNo.setText("" + partnerInstrument.getpInstrumentId());
             calibrationOn.setText(Utilityies.parseDateToddMMyyyy(partnerInstrument.getLastCalibrated()));
             calibrationDueOn.setText(Utilityies.parseDateToddMMyyyy(partnerInstrument.getCalibrationDueDate()));
+            aerosolUsed.setText(partnerInstrument.getAerosolUsed());
+            aerosolGeneratorType.setText(partnerInstrument.getAerosolGeneratorType());
         }
 
         testSpecification.setText("Maximum Permiceable leakage " + room.getAcphNLT() + "%");
@@ -264,12 +270,12 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
         roomNo.setText(room.getRoomNo().toString());
         ahuNo.setText(ahuNumber);
         testCundoctor.setText(userName);
-        if(sharedpreferences.getString("USERTYPE", "").equalsIgnoreCase("CLIENT")){
-            testCondoctorOrg.setText("("+sharedpreferences.getString("CLIENTORG", "")+")");
-            testWitnessOrg.setText("("+sharedpreferences.getString("CLIENTORG", "")+")");
-        }else{
-            testCondoctorOrg.setText("("+sharedpreferences.getString("PARTNERORG", "")+")");
-            testWitnessOrg.setText("("+sharedpreferences.getString("CLIENTORG", "")+")");
+        if (sharedpreferences.getString("USERTYPE", "").equalsIgnoreCase("CLIENT")) {
+            testCondoctorOrg.setText("(" + sharedpreferences.getString("CLIENTORG", "") + ")");
+            testWitnessOrg.setText("(" + sharedpreferences.getString("CLIENTORG", "") + ")");
+        } else {
+            testCondoctorOrg.setText("(" + sharedpreferences.getString("PARTNERORG", "") + ")");
+            testWitnessOrg.setText("(" + sharedpreferences.getString("CLIENTORG", "") + ")");
         }
         Log.d("valdoc", "RDAV5UserEnryActivity 1witness=" + witnessFirst);
         StringBuilder witness = new StringBuilder();
@@ -310,6 +316,8 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
         instrumentUsed = (TextView) findViewById(R.id.instrumentused);
         make = (TextView) findViewById(R.id.make);
         model = (TextView) findViewById(R.id.modle);
+        aerosolUsed = (TextView) findViewById(R.id.aerosol_used);
+        aerosolGeneratorType = (TextView) findViewById(R.id.aerosol_generator_type);
         instrumentSerialNo = (TextView) findViewById(R.id.instrumentserialno);
         calibrationOn = (TextView) findViewById(R.id.calibratedon);
         calibrationDueOn = (TextView) findViewById(R.id.calibrationdueon);
@@ -380,8 +388,8 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
         ArrayList<TestReading> testReadingArrayList = new ArrayList<TestReading>();
         int index = 0;
         int hasMapKey = 200;
-        int hasStreamBefore=800;
-        int hashstreamAfter=900;
+        int hasStreamBefore = 800;
+        int hashstreamAfter = 900;
         int passHasMapKey = 300;
         for (RoomFilter roomFilter : filterArrayList) {
 
@@ -411,25 +419,34 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
 //        TO DO: need to make it dynamic
         testDetails.setTest_detail_id(testDetailsId);
         testDetails.setCustomer(customerName.getText().toString());
-        String date = year+"-"+(month + 1)+"-"+day+" ";
+        String date = year + "-" + (month + 1) + "-" + day + " ";
         testDetails.setDateOfTest(date);
         testDetails.setRawDataNo(certificateNo.getText().toString());
         testDetails.setPartnerName("" + mPartnerName);
         testDetails.setTestName(TestCreateActivity.FIT);
         if (loginUserType.equals("CLIENT")) {
             testDetails.setInstrumentUsed(clientInstrument.getcInstrumentName());
-            testDetails.setMake(clientInstrument.getMake());
-            testDetails.setModel(clientInstrument.getModel());
-            testDetails.setInstrumentNo(clientInstrument.getSerialNo());
-            testDetails.setCalibratedOn(clientInstrument.getLastCalibrated());
-            testDetails.setCalibratedDueOn(clientInstrument.getCalibrationDueDate());
+            testDetails.setMake("" + clientInstrument.getMake());
+            testDetails.setModel("" + clientInstrument.getModel());
+            testDetails.setInstrumentNo("" + clientInstrument.getSerialNo());
+            testDetails.setCalibratedOn("" + clientInstrument.getLastCalibrated());
+            testDetails.setCalibratedDueOn("" + clientInstrument.getCalibrationDueDate());
+            testDetails.setAerosolUsed("" + aerosolUsed.getText());
+            testDetails.setAerosolGeneratorType("" + aerosolGeneratorType.getText());
+            testDetails.setSamplingFlowRate("");
+            testDetails.setSamplingTime("");
+
         } else {
-            testDetails.setInstrumentUsed(partnerInstrument.getpInstrumentName());
-            testDetails.setMake(partnerInstrument.getMake());
-            testDetails.setModel(partnerInstrument.getModel());
+            testDetails.setInstrumentUsed(""+partnerInstrument.getpInstrumentName());
+            testDetails.setMake("" + partnerInstrument.getMake());
+            testDetails.setModel("" + partnerInstrument.getModel());
             testDetails.setInstrumentNo("" + partnerInstrument.getpInstrumentId());
-            testDetails.setCalibratedOn(partnerInstrument.getLastCalibrated());
-            testDetails.setCalibratedDueOn(partnerInstrument.getCalibrationDueDate());
+            testDetails.setCalibratedOn("" + partnerInstrument.getLastCalibrated());
+            testDetails.setCalibratedDueOn("" + partnerInstrument.getCalibrationDueDate());
+            testDetails.setAerosolUsed("" + aerosolUsed.getText());
+            testDetails.setAerosolGeneratorType("" + aerosolGeneratorType.getText());
+            testDetails.setSamplingFlowRate("");
+            testDetails.setSamplingTime("");
         }
 
 
@@ -724,9 +741,9 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
     }
 
 
-
     //Fit After stream
     int idCountEtvAfter = 900;
+
     private TextView addInputDataTextViewAfterStream() {
         TextView tv = new TextView(this);
         tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,

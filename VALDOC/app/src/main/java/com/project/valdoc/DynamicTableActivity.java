@@ -620,12 +620,12 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                     row.addView(tv);
                 }
                 if (i == 2 && j == 1) {
-                    TextView tv = addTextView(" Initial Reading 1");
+                    TextView tv = addTextView(" Initial Reading");
                     tv.setEms(10);
                     row.addView(tv);
                 }
                 if (i == 3 && j == 1) {
-                    TextView tv = addTextView(" Worst case 1");
+                    TextView tv = addTextView(" Worst case");
                     tv.setEms(10);
                     row.addView(tv);
                 }
@@ -650,7 +650,6 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 } else if (i > 1 && i < 4) {
                     row.addView(addEditTextView(i));
                 }
-
             }
             test6A_table_layout2.addView(row);
         }
