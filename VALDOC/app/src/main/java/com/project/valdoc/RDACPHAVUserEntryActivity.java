@@ -799,6 +799,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
         tv.setId(idCountEtv);
         tv.setSingleLine(false);
         tv.setMaxLines(3);
+        tv.setEms(4);
         tv.setEllipsize(TextUtils.TruncateAt.END);
         idCountEtv++;
         txtViewList.add(tv);

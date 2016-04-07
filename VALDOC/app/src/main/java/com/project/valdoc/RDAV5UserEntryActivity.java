@@ -627,6 +627,7 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
         tv.setGravity(Gravity.CENTER);
         tv.setSingleLine(false);
         tv.setMaxLines(3);
+        tv.setEms(4);
         tv.setEllipsize(TextUtils.TruncateAt.END);
         idCountEtv++;
         txtViewList.add(tv);
