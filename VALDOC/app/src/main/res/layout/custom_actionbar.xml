@@ -21,7 +21,7 @@
         android:layout_centerVertical="true"
         android:layout_marginRight="5dp"
         android:maxLines="3"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:textSize="@dimen/header_text_size"
         android:text="Hi Abhishek"
         android:typeface="serif"
