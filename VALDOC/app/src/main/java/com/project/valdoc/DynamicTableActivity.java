@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -34,6 +35,7 @@ import com.project.valdoc.intity.Equipment;
 import com.project.valdoc.intity.PartnerInstrument;
 import com.project.valdoc.intity.Room;
 import com.project.valdoc.intity.RoomFilter;
+import com.project.valdoc.utility.Utilityies;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -182,6 +184,11 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             } else {
                 roomVolumeTxtList.get((int) (roomVolumeTxtList.size() / 2)).setText("8500");
             }
+
+        //Custom Action Bar
+        ActionBar mActionBar = getSupportActionBar();
+        if (mActionBar != null)
+            Utilityies.setCustomActionBar(DynamicTableActivity.this, mActionBar, userName);
     }
 
     private void getExtraFromTestCreateActivity(Bundle savedInstanceState) {

@@ -6,6 +6,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -183,6 +184,12 @@ public class RDPC3UserEntryActivity extends AppCompatActivity {
 //        txtView3.setText(stdDev1 + "");
 //        TextView txtView4 = RDPC3TxtList2.get(1);
 //        txtView4.setText(stdDev2 + "");
+
+
+        //Custom Action Bar
+        ActionBar mActionBar = getSupportActionBar();
+        if (mActionBar != null)
+            Utilityies.setCustomActionBar(RDPC3UserEntryActivity.this, mActionBar, userName);
     }
 
     private void datePicker() {

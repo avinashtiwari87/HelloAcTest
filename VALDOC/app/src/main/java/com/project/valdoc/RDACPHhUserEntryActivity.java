@@ -6,6 +6,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -186,6 +187,10 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
             }
             airChangeTxt.setText(airChangeValue + "");
         }
+        //Custom Action Bar
+        ActionBar mActionBar = getSupportActionBar();
+        if (mActionBar != null)
+            Utilityies.setCustomActionBar(RDACPHhUserEntryActivity.this, mActionBar, userName);
 
     }
 

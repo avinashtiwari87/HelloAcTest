@@ -1,5 +1,13 @@
 package com.project.valdoc.utility;
 
+import android.content.Context;
+import android.support.v7.app.ActionBar;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.TextView;
+
+import com.project.valdoc.R;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -29,5 +37,19 @@ public class Utilityies {
             }
         }
         return str;
+    }
+
+    public static void setCustomActionBar(Context ctx, ActionBar mActionBar, String userName){
+        mActionBar.setDisplayShowHomeEnabled(false);
+        mActionBar.setDisplayShowTitleEnabled(false);
+        LayoutInflater mInflater = LayoutInflater.from(ctx);
+
+        View mCustomView = mInflater.inflate(R.layout.custom_actionbar, null);
+        TextView mUserName = (TextView) mCustomView.findViewById(R.id.user_name_tv);
+        mUserName.setText(userName);
+
+        mActionBar.setCustomView(mCustomView);
+        mActionBar.setDisplayShowCustomEnabled(true);
+
     }
 }

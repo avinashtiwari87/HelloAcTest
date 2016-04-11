@@ -6,6 +6,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.InputType;
@@ -184,6 +185,10 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
 
             }
         }
+        //Custom Action Bar
+        ActionBar mActionBar = getSupportActionBar();
+        if (mActionBar != null)
+            Utilityies.setCustomActionBar(RDAV5UserEntryActivity.this, mActionBar, userName);
 
     }
 

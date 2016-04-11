@@ -39,10 +39,8 @@
         <activity
             android:name=".TestCreateActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/test_create_activity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait"
-            android:theme="@style/FullscreenTheme" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".HomeActivity"
             android:screenOrientation="portrait"

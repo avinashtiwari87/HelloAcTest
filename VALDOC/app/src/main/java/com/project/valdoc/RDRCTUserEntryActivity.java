@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -140,6 +141,11 @@ public class RDRCTUserEntryActivity extends AppCompatActivity {
 //        if ("RD_PC_3".equalsIgnoreCase(testType)) {
 //            BuildTableTest5(rows, cols);
 //        }
+
+        //Custom Action Bar
+        ActionBar mActionBar = getSupportActionBar();
+        if (mActionBar != null)
+            Utilityies.setCustomActionBar(RDRCTUserEntryActivity.this, mActionBar, userName);
     }
 
 

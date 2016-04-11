@@ -1,5 +1,6 @@
 package com.project.valdoc;
 
+import android.support.v7.app.ActionBar;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -11,12 +12,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.project.valdoc.controler.ValdocControler;
 import com.project.valdoc.db.ValdocDatabaseHandler;
 import com.project.valdoc.task.HttpConnection;
 import com.project.valdoc.task.HttpPostConnection;
+import com.project.valdoc.utility.Utilityies;
 
 import org.json.JSONObject;
 
@@ -118,6 +121,14 @@ public class AfterLoginActivity extends AppCompatActivity implements HttpConnect
                 }
             });
         }
+
+        //Custom Action Bar
+        ActionBar mActionBar = getSupportActionBar();
+        if (mActionBar != null)
+            Utilityies.setCustomActionBar(AfterLoginActivity.this, mActionBar, userName);
+/*        ImageView imgView = (ImageView)findViewById(R.id.imageView1);
+        imgView.requestLayout();
+        imgView.getLayoutParams().width = 60;*/
 
     }
 
