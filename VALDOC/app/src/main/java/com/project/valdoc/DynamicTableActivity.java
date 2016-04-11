@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -62,7 +63,8 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
     TextView finalReadingTv;
     EditText finalReadingValueTv;
 
-    Button verify_btn, clear, cancel, addRow_Btn, deleteRow_Btn;
+    ImageView verify_btn, clear, cancel;
+    Button addRow_Btn, deleteRow_Btn;
     int rows, cols;
     String testType;
     ProgressDialog pr;
@@ -324,7 +326,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         if (TestCreateActivity.RCT.equalsIgnoreCase(testType)) {
 //            if (grillAndSizeFromGrill != null && grillAndSizeFromGrill.size() > 0)
 //                BuildTableTest6(grillAndSizeFromGrill.size() + 1, cols);
-            BuildTableTest6( 3, 1);
+            BuildTableTest6(3, 1);
 //            else
 //                aleartDialog("There is no gril");
         }
@@ -527,39 +529,49 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 startActivity(intent);
             }
             if (TestCreateActivity.RCT.equalsIgnoreCase(testType)) {
-//                Toast.makeText(DynamicTableActivity.this, "Under development", Toast.LENGTH_LONG).show();
-                intent = new Intent(DynamicTableActivity.this, RDRCTUserEntryActivity.class);
-                // put bundel data
-                intent.putExtra("USERTYPE", loginUserType);
-                intent.putExtra("USERNAME", userName);
-                intent.putExtra("PRTNERNAME", mPartnerName);
-                intent.putExtra("WITNESSFIRST", witnessFirst);
-                intent.putExtra("WITNESSSECOND", witnessSecond);
-                intent.putExtra("WITNESSTHIRD", witnessThird);
-                intent.putExtra("testType", testType);
-                //get area based on room area id
-                intent.putExtra("AREANAME", areaName);
 
-                if (loginUserType.equals("CLIENT")) {
-                    intent.putExtra("ClientInstrument", clientInstrument);
+                String finalvalue = finalReadingValueTv.getText().toString();
+                Log.d("Avinash","finalvalue="+finalvalue);
+                if (!"".equalsIgnoreCase(finalvalue)&&null != finalvalue && !finalvalue.isEmpty() && null != inputDataHashMap && null != inputDataHashMap.get(200)) {
+                    Log.d("Avinash","finalvalue1="+finalvalue);
+                    if (Double.parseDouble(finalvalue) > inputDataHashMap.get(200)) {
+//                            finalReadingValueTv.setText("");
+                        aleartDialog("Final reading should be less than or equal to initial value");
+                    }
                 } else {
-                    intent.putExtra("PartnerInstrument", partnerInstrument);
-                }
-                intent.putExtra("Room", room);
-                intent.putExtra("AhuNumber", ahuNumber);
-                intent.putExtra("LOCATION", applicableTestRoomLocation);
-                intent.putExtra("NOOFCYCLE", noOfCycle);
-                intent.putExtra("InitialReading", "" + inputDataHashMap.get(200));
-                intent.putExtra("WorstCaseReading", "" + inputDataHashMap.get(201));
-                intent.putExtra("FinalReading", "" + finalReadingValueTv.getText().toString());
-                intent.putExtra("RecoveryTime", rowsCount);
-                intent.putExtra("InputData", inputDataHashMap);
-                intent.putExtra("VALUE", testReadingEditTextList);
+//                Toast.makeText(DynamicTableActivity.this, "Under development", Toast.LENGTH_LONG).show();
+                    intent = new Intent(DynamicTableActivity.this, RDRCTUserEntryActivity.class);
+                    // put bundel data
+                    intent.putExtra("USERTYPE", loginUserType);
+                    intent.putExtra("USERNAME", userName);
+                    intent.putExtra("PRTNERNAME", mPartnerName);
+                    intent.putExtra("WITNESSFIRST", witnessFirst);
+                    intent.putExtra("WITNESSSECOND", witnessSecond);
+                    intent.putExtra("WITNESSTHIRD", witnessThird);
+                    intent.putExtra("testType", testType);
+                    //get area based on room area id
+                    intent.putExtra("AREANAME", areaName);
+
+                    if (loginUserType.equals("CLIENT")) {
+                        intent.putExtra("ClientInstrument", clientInstrument);
+                    } else {
+                        intent.putExtra("PartnerInstrument", partnerInstrument);
+                    }
+                    intent.putExtra("Room", room);
+                    intent.putExtra("AhuNumber", ahuNumber);
+                    intent.putExtra("LOCATION", applicableTestRoomLocation);
+                    intent.putExtra("NOOFCYCLE", noOfCycle);
+                    intent.putExtra("InitialReading", "" + inputDataHashMap.get(200));
+                    intent.putExtra("WorstCaseReading", "" + inputDataHashMap.get(201));
+                    intent.putExtra("FinalReading", "" + finalReadingValueTv.getText().toString());
+                    intent.putExtra("RecoveryTime", rowsCount);
+                    intent.putExtra("InputData", inputDataHashMap);
+                    intent.putExtra("VALUE", testReadingEditTextList);
 //                intent.putExtra("rows", grillAndSizeFromGrill.size() + 1);
 //                intent.putExtra("cols", applicableTestRoomLocation);
 
-                startActivity(intent);
-
+                    startActivity(intent);
+                }
             }
         }
 
@@ -584,6 +596,9 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                         resultDataHashMap.put(txtViewList.get(i).getId(), 0l);
                     }
                 }
+            }
+            if (TestCreateActivity.RCT.equalsIgnoreCase(testType)) {
+                finalReadingValueTv.setText("");
             }
             //Done clicked...hahaa..
             isClearClicked = false;
@@ -1864,6 +1879,15 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                     }
                 }
             }
+//            if (TestCreateActivity.RCT.equalsIgnoreCase(testType)) {
+//                String finalvalue = finalReadingValueTv.getText().toString();
+//                if (finalvalue.length() > 0 && null != inputDataHashMap && null != inputDataHashMap.get(200)) {
+//                    if (Double.parseDouble(finalvalue) > inputDataHashMap.get(200)) {
+////                        finalReadingValueTv.setText("");
+//                        Toast.makeText(DynamicTableActivity.this, "Final reading should be less than or equal to initial value", Toast.LENGTH_LONG).show();
+//                    }
+//                }
+//            }
 
         }
     }
@@ -2037,15 +2061,15 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
     }
 
     private void initRes() {
-        clear = (Button) findViewById(R.id.clear);
+        clear = (ImageView) findViewById(R.id.clear);
         clear.setOnClickListener(this);
-        verify_btn = (Button) findViewById(R.id.verify_btn);
+        verify_btn = (ImageView) findViewById(R.id.verify_btn);
         verify_btn.setOnClickListener(this);
         addRow_Btn = (Button) findViewById(R.id.add_row_btn);
         addRow_Btn.setOnClickListener(this);
         deleteRow_Btn = (Button) findViewById(R.id.delete_row_btn);
         deleteRow_Btn.setOnClickListener(this);
-        cancel = (Button) findViewById(R.id.cancel);
+        cancel = (ImageView) findViewById(R.id.cancel);
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -2201,6 +2225,8 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         test6A_table_layout4 = (TableLayout) findViewById(R.id.test6A_tableLayout4);
         finalReadingTv = (TextView) findViewById(R.id.test6_final_reading_tv);
         finalReadingValueTv = (EditText) findViewById(R.id.test6_final_reading_value_tv);
+        finalReadingValueTv.addTextChangedListener((new TextValidator(
+                DynamicTableActivity.this, 0)));
         if (TestCreateActivity.RCT.equalsIgnoreCase(testType)) {
             instrumentNo = (TextView) findViewById(R.id.instrument_no6);
             testerName = (TextView) findViewById(R.id.tester_name_test6);

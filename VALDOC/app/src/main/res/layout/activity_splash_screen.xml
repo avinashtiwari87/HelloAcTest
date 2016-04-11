@@ -11,4 +11,12 @@
     android:drawingCacheQuality="auto"
     android:contentDescription="@string/app_name"
     android:src="@drawable/splash"/>
+
+
+    <ImageView
+        android:layout_width="400dp"
+        android:layout_height="500dp"
+        android:layout_centerInParent="true"
+        android:src="@drawable/logo"/>
+
 </RelativeLayout>

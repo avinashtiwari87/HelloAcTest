@@ -18,6 +18,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -50,7 +52,7 @@ public class TestCreateActivity extends Activity implements View.OnTouchListener
     private ArrayList<ApplicableTestRoom> mApplicableTestRoomArrayList = null;
     private ArrayList<ApplicableTestEquipment> mApplicableTestEquipmentArrayList = null;
 
-    private Button submit;
+    private ImageView submit;
     private TextView user_name;
     private EditText witnessFirst;
     private EditText witnessSecond;
@@ -155,7 +157,7 @@ public class TestCreateActivity extends Activity implements View.OnTouchListener
     }
 
     private void initButton() {
-        submit = (Button) findViewById(R.id.submit);
+        submit = (ImageView) findViewById(R.id.submit);
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -188,6 +190,8 @@ public class TestCreateActivity extends Activity implements View.OnTouchListener
                         rdPc3();
                     } else if (RCT.equals(spinerTestType = testSpinner.getSelectedItem().toString())) {
                         rdRct();
+                    }else{
+                        Toast.makeText(TestCreateActivity.this, "Please select the correct test to be performed", Toast.LENGTH_SHORT).show();
                     }
                 } else {
                     Toast.makeText(TestCreateActivity.this, "Please select the test to be performed", Toast.LENGTH_SHORT).show();
@@ -530,6 +534,7 @@ public class TestCreateActivity extends Activity implements View.OnTouchListener
             for (ClientInstrument clientInstrument : clientInstrumentArrayList) {
                 instrumentList.add(clientInstrument.getSerialNo());
                 Log.d("valdoc", "TestCreateActivity : client instrument list" + clientInstrument.getcInstrumentName());
+                Log.d("valdoc", "TestCreateActivity : client instrument list" + clientInstrument.getSamplingFlowRate());
             }
 
         } else {

@@ -15,6 +15,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -103,9 +104,9 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
     private TextView instrument_name;
 
     ArrayList<TextView> txtViewList;
-    private Button submit;
-    private Button clear;
-    private Button cancel;
+    private ImageView submit;
+    private ImageView clear;
+    private ImageView cancel;
     private String mPartnerName;
     private double totalAirFlowRate = 0;
     private double airChangeValue;
@@ -352,10 +353,10 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
         testWitness = (TextView) findViewById(R.id.testwitness);
         testCondoctorOrg = (TextView) findViewById(R.id.test_condoctor_org);
         testWitnessOrg = (TextView) findViewById(R.id.testwitness_org);
-        submit = (Button) findViewById(R.id.submit);
-        clear = (Button) findViewById(R.id.clear);
+        submit = (ImageView) findViewById(R.id.submit);
+        clear = (ImageView) findViewById(R.id.clear);
         clear.setVisibility(View.INVISIBLE);
-        cancel = (Button) findViewById(R.id.cancel);
+        cancel = (ImageView) findViewById(R.id.cancel);
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

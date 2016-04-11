@@ -14,6 +14,8 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -148,7 +150,7 @@ public class ServiceReportActivity extends AppCompatActivity implements View.OnC
     private EditText witnessContact;//witness_contact
     private EditText witnessEmail;//witness_email
     private String mPartnerName;
-    private Button submit;
+    private ImageView submit;
 
     //    date picker
     private int year;
@@ -367,7 +369,7 @@ public class ServiceReportActivity extends AppCompatActivity implements View.OnC
         witnessDesignation = (EditText) findViewById(R.id.witness_designation);
         witnessContact = (EditText) findViewById(R.id.witness_contact);
         witnessEmail = (EditText) findViewById(R.id.witness_email);
-        submit = (Button) findViewById(R.id.submit);
+        submit = (ImageView) findViewById(R.id.submit);
         submit.setOnClickListener(this);
         date.setOnClickListener(new View.OnClickListener() {
             @Override

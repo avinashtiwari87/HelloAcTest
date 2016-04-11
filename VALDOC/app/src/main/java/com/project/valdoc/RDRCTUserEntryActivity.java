@@ -13,6 +13,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -93,9 +94,9 @@ public class RDRCTUserEntryActivity extends AppCompatActivity {
     private TextView recoveryTime;
 
     ArrayList<TextView> txtViewList;
-    private Button submit;
-    private Button clear;
-    private Button cancel;
+    private ImageView submit;
+    private ImageView clear;
+    private ImageView cancel;
     ArrayList<TextView> resultTextViewList;
     private ValdocDatabaseHandler mValdocDatabaseHandler = new ValdocDatabaseHandler(RDRCTUserEntryActivity.this);
     SharedPreferences sharedpreferences;
@@ -321,10 +322,10 @@ public class RDRCTUserEntryActivity extends AppCompatActivity {
         testWitness = (TextView) findViewById(R.id.testwitness);
         testCondoctorOrg = (TextView) findViewById(R.id.test_condoctor_org);
         testWitnessOrg = (TextView) findViewById(R.id.testwitness_org);
-        submit = (Button) findViewById(R.id.submit);
-        clear = (Button) findViewById(R.id.clear);
+        submit = (ImageView) findViewById(R.id.submit);
+        clear = (ImageView) findViewById(R.id.clear);
         clear.setVisibility(View.INVISIBLE);
-        cancel = (Button) findViewById(R.id.cancel);
+        cancel = (ImageView) findViewById(R.id.cancel);
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

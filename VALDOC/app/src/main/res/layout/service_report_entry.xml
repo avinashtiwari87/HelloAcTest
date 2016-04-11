@@ -1771,15 +1771,15 @@
             style="@style/TextAppearance.AppCompat.header_left"
             android:text="@string/notes" />
 
-        <Button
+        <ImageView
             android:id="@+id/submit"
-            style="@style/Base.TextAppearance.AppCompat.Button.footerButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginBottom="20dp"
             android:layout_marginTop="20dp"
-            android:text="@string/test_selection_submit" />
+            android:src="@drawable/submit_btn" />
+        <!--style="@style/Base.TextAppearance.AppCompat.Button.footerButton"-->
 
     </LinearLayout>
 

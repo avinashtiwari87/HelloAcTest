@@ -15,33 +15,36 @@
         android:layout_height="match_parent"
         android:layout_weight="1" />
 
-    <Button
+    <ImageView
         android:id="@+id/verify_btn"
-        style="@style/Base.TextAppearance.AppCompat.Button.footerButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_weight="2"
-        android:text="Verify" />
-
+        android:src="@drawable/verify_btn" />
+    <!--style="@style/Base.TextAppearance.AppCompat.Button.footerButton"-->
     <View
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1" />
 
-    <Button
+    <ImageView
         android:id="@+id/clear"
-        style="@style/Base.TextAppearance.AppCompat.Button.footerButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_weight="2"
-        android:text="@string/test_selection_clear" />
+        android:src="@drawable/clear_btn" />
 
     <View
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1" />
 
-    <Button
+    <ImageView
         android:id="@+id/cancel"
-        style="@style/Base.TextAppearance.AppCompat.Button.footerButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_weight="2"
-        android:text="@string/test_selection_exit" />
+        android:src="@drawable/cancel_btn" />
 
     <View
         android:layout_width="0dp"
