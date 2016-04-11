@@ -2,6 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/login_bg"
     android:gravity="center_horizontal"
     android:orientation="vertical"
     android:paddingBottom="@dimen/activity_vertical_margin"
@@ -28,26 +29,50 @@
             android:id="@+id/email_login_form"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
             android:orientation="vertical">
 
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+            <RelativeLayout
+                android:layout_width="500dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/input_username" />
+
+                <!--<android.support.design.widget.TextInputLayout-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content">-->
 
                 <AutoCompleteTextView
                     android:id="@+id/email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="65dp"
                     android:hint="@string/prompt_email"
                     android:inputType="textEmailAddress"
+                    android:layout_centerVertical="true"
                     android:maxLines="1"
                     android:singleLine="true" />
+            </RelativeLayout>
+            <!--</android.support.design.widget.TextInputLayout>-->
+            <RelativeLayout
+                android:layout_width="500dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="15dp">
 
-            </android.support.design.widget.TextInputLayout>
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/input_pwd" />
 
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                <!--<android.support.design.widget.TextInputLayout-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content">-->
+
 
                 <EditText
                     android:id="@+id/password"
@@ -56,34 +81,50 @@
                     android:hint="@string/prompt_password"
                     android:imeActionId="@+id/login"
                     android:imeActionLabel="@string/action_sign_in_short"
+                    android:layout_marginLeft="65dp"
                     android:imeOptions="actionUnspecified"
                     android:inputType="textPassword"
+                    android:layout_centerVertical="true"
                     android:maxLines="1"
                     android:singleLine="true" />
+            </RelativeLayout>
+            <!--</android.support.design.widget.TextInputLayout>-->
 
-            </android.support.design.widget.TextInputLayout>
-
-            <Button
+            <ImageView
                 android:id="@+id/email_sign_in_button"
-                style="?android:textAppearanceSmall"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="@string/action_sign_in"
+                android:layout_width="500dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="15dp"
+                android:src="@drawable/login_btn"
                 android:textStyle="bold" />
 
-            <Button
+            <ImageView
+                android:layout_width="500dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center"
+                android:src="@drawable/line_separator_white" />
+
+            <!--<Button-->
+            <!--android:id="@+id/sync_btn"-->
+            <!--android:layout_marginTop="50dp"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="Sync"-->
+            <!--android:textColor="@color/white"-->
+            <!--android:textStyle="bold"-->
+            <!--android:textSize="25sp"-->
+            <!--android:padding="30dp"-->
+            <!--android:background="@drawable/title_right_on"-->
+            <!--android:layout_gravity="center_horizontal" />-->
+
+            <ImageView
                 android:id="@+id/sync_btn"
-                android:layout_marginTop="50dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Sync"
-                android:textColor="@color/white"
-                android:textStyle="bold"
-                android:textSize="25sp"
-                android:padding="30dp"
-                android:background="@drawable/title_right_on"
-                android:layout_gravity="center_horizontal" />
+                android:layout_width="500dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/sync_btn" />
 
         </LinearLayout>
     </ScrollView>

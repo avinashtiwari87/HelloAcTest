@@ -17,6 +17,7 @@ import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -31,6 +32,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,6 +43,7 @@ import com.project.valdoc.intity.User;
 import com.project.valdoc.task.HttpConnection;
 import com.project.valdoc.task.HttpPostConnection;
 import com.project.valdoc.task.UserLoginTask;
+import com.project.valdoc.utility.Utilityies;
 
 import java.io.File;
 import java.net.HttpURLConnection;
@@ -109,7 +112,7 @@ public class LoginActivity extends AppCompatActivity implements HttpConnection.H
             }
         });
 
-        Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
+        ImageView mEmailSignInButton = (ImageView) findViewById(R.id.email_sign_in_button);
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -134,6 +137,11 @@ public class LoginActivity extends AppCompatActivity implements HttpConnection.H
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
+
+        //Custom Action Bar
+        ActionBar mActionBar = getSupportActionBar();
+        if (mActionBar != null)
+            Utilityies.setCustomActionBar(LoginActivity.this, mActionBar, "");
 
         // Sending side
 //        byte[] data = text.getBytes("UTF-8");

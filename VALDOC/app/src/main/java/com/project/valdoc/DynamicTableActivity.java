@@ -66,7 +66,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
     EditText finalReadingValueTv;
 
     ImageView verify_btn, clear, cancel;
-    Button addRow_Btn, deleteRow_Btn;
+    ImageView addRow_Btn, deleteRow_Btn;
     int rows, cols;
     String testType;
     ProgressDialog pr;
@@ -2072,9 +2072,9 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         clear.setOnClickListener(this);
         verify_btn = (ImageView) findViewById(R.id.verify_btn);
         verify_btn.setOnClickListener(this);
-        addRow_Btn = (Button) findViewById(R.id.add_row_btn);
+        addRow_Btn = (ImageView) findViewById(R.id.add_row_btn);
         addRow_Btn.setOnClickListener(this);
-        deleteRow_Btn = (Button) findViewById(R.id.delete_row_btn);
+        deleteRow_Btn = (ImageView) findViewById(R.id.delete_row_btn);
         deleteRow_Btn.setOnClickListener(this);
         cancel = (ImageView) findViewById(R.id.cancel);
         cancel.setOnClickListener(new View.OnClickListener() {
