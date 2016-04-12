@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,6 +24,7 @@ import android.widget.Toast;
 import com.project.valdoc.db.ValdocDatabaseHandler;
 import com.project.valdoc.intity.ServiceReport;
 import com.project.valdoc.intity.ServiceReportDetail;
+import com.project.valdoc.utility.Utilityies;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -163,25 +165,23 @@ public class ServiceReportActivity extends AppCompatActivity implements View.OnC
         super.onCreate(savedInstanceState);
         setContentView(R.layout.service_report_entry);
         sharedpreferences = getSharedPreferences("valdoc", Context.MODE_PRIVATE);
-        getSupportActionBar().hide();
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-        setContentView(R.layout.service_report_entry);
         // ui value initialization and assignment
         initTextView();
         textViewValueAssignment();
         datePicker();
         mPartnerName = getPartnerName();
+
+        //Custom Action Bar
+        ActionBar mActionBar = getSupportActionBar();
+        if (mActionBar != null)
+            Utilityies.setCustomActionBar(ServiceReportActivity.this, mActionBar,
+                    getResources().getString(R.string.test_entry_header));
     }
 
 
     public void areaPopupList(final TextView date) {
         PopupMenu popup = new PopupMenu(ServiceReportActivity.this, date);
-        //Inflating the Popup using xml file
-//        arrayList.add("a1");
-//        arrayList.add("a2");
-//        arrayList.add("a3");
-//        arrayList.add("a4");
-//        popup.getMenuInflater().inflate(R.menu.popup_menu, popup.getMenu());
         List<String> list = mValdocDatabaseHandler.getAreaName();
         for (String s : list) {
             popup.getMenu().add(s.toString());
@@ -189,7 +189,6 @@ public class ServiceReportActivity extends AppCompatActivity implements View.OnC
         //registering popup with OnMenuItemClickListener
         popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             public boolean onMenuItemClick(MenuItem item) {
-//                Toast.makeText(MainActivity.this,"You Clicked : " + item.getTitle(),Toast.LENGTH_SHORT).show();
                 date.setText("" + item.getTitle());
                 return true;
             }
@@ -211,7 +210,6 @@ public class ServiceReportActivity extends AppCompatActivity implements View.OnC
         //registering popup with OnMenuItemClickListener
         popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             public boolean onMenuItemClick(MenuItem item) {
-//                Toast.makeText(MainActivity.this,"You Clicked : " + item.getTitle(),Toast.LENGTH_SHORT).show();
                 date.setText("" + item.getTitle());
                 return true;
             }

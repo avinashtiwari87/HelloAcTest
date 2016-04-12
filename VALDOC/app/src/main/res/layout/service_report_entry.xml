@@ -9,19 +9,6 @@
         android:orientation="vertical">
 
         <LinearLayout
-            android:id="@+id/test_entry_header"
-            style="@style/TextAppearance.AppCompat.header_top"
-            android:background="@color/black_overlay"
-            android:paddingBottom="10dp"
-            android:paddingTop="10dp">
-
-            <TextView
-                style="@style/TextAppearance.AppCompat.header_text"
-                android:text="@string/test_entry_header" />
-        </LinearLayout>
-
-
-        <LinearLayout
             android:id="@+id/test_entry_detail"
             style="@style/TextAppearance.AppCompat.header_top"
             android:background="@drawable/border1"

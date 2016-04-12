@@ -47,14 +47,11 @@ public class AfterLoginActivity extends AppCompatActivity implements HttpConnect
         sharedpreferences = getSharedPreferences("valdoc", Context.MODE_PRIVATE);
         mValdocControler = new ValdocControler();
         mValdocDatabaseHandler = new ValdocDatabaseHandler(AfterLoginActivity.this);
-//        getActionBar().setTitle("Test Data Entry");
-//        getSupportActionBar().setTitle("Test Data Entry");  // provide compatibility to all the versions
+        userName = sharedpreferences.getString("USERNAME", "");
         Bundle extras = getIntent().getExtras();
         if (extras == null) {
-            userName = null;
             loginUserType = null;
         } else {
-            userName = sharedpreferences.getString("USERNAME", "");
             loginUserType = extras.getString("USERTYPE");
             appUserId = extras.getInt("APPUSERID");
         }
