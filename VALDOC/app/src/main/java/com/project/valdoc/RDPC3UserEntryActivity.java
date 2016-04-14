@@ -835,7 +835,7 @@ public class RDPC3UserEntryActivity extends AppCompatActivity {
         tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
                 TableRow.LayoutParams.WRAP_CONTENT));
         tv.setBackgroundResource(R.drawable.border);
-        tv.setPadding(5, 5, 5, 5);
+        tv.setPadding(5, 6, 5, 9);
         tv.setTextColor(getResources().getColor(R.color.black));
         tv.setTextSize(getResources().getDimension(R.dimen.normal_text_size));
         //tv.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD);
