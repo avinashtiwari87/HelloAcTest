@@ -177,6 +177,7 @@
     <string name="temprature">Temperature &amp; RH Test</string>
     <string name="light">Light Level Test</string>
     <string name="sound">Sound Level Test</string>
+    <string name="forget_password">Forgot Password</string>
 </resources>
 
 

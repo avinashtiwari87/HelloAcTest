@@ -7,7 +7,6 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.app.voldoc.AfterLoginActivity"
     android:orientation="vertical">
 
     <TextView
@@ -22,29 +21,32 @@
 
     <ImageView
         android:id="@+id/sync_btn"
-        android:layout_marginTop="50dp"
-        android:layout_width="500dp"
-        android:layout_height="100dp"
+        android:layout_marginTop="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:src="@drawable/sync_btn"/>
+
     <ImageView
-        android:layout_width="500dp"
-        android:layout_height="100dp"
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:src="@drawable/line_separator"/>
+        android:src="@drawable/sync_btn"/>
 
     <ImageView
         android:id="@+id/service_report_btn"
-        android:layout_width="500dp"
-        android:layout_height="100dp"
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:src="@drawable/service_reportt_btn"/>
 
     <ImageView
         android:id="@+id/test_certificate_btn"
-        android:layout_width="500dp"
-        android:layout_height="100dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:src="@drawable/perform_test_btn"/>
 
