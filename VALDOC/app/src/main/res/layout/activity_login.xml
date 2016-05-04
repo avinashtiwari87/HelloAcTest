@@ -33,8 +33,8 @@
             android:orientation="vertical">
             <ImageView
                 android:id="@+id/sync_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="500dp"
+                android:layout_height="100dp"
                 android:layout_gravity="center"
                 android:layout_marginBottom="20dp"
                 android:src="@drawable/sync_btn" />
@@ -98,8 +98,8 @@
 
             <ImageView
                 android:id="@+id/email_sign_in_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="500dp"
+                android:layout_height="100dp"
                 android:layout_gravity="center"
                 android:src="@drawable/login_btn"
                 android:textStyle="bold" />
