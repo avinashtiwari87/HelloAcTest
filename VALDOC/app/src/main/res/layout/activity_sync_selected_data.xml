@@ -11,6 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:textColor="@color/black"
+        android:textStyle="bold"
         android:text="Table: Airchanges/hr test (ACPH_AV)"
         android:textSize="@dimen/header_text_size"
         android:layout_alignParentTop="true"
@@ -39,8 +40,7 @@
         <TableLayout
             android:id="@+id/syncData_tableLayout1"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"></TableLayout>
+            android:layout_height="wrap_content"></TableLayout>
 
         <TableLayout
             android:id="@+id/syncData_tableLayout2"
@@ -56,13 +56,11 @@
         <TableLayout
             android:id="@+id/syncData_tableLayout4"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="5dp"></TableLayout>
+            android:layout_height="wrap_content"></TableLayout>
         <TableLayout
             android:id="@+id/syncData_tableLayout5"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"></TableLayout>
+            android:layout_height="wrap_content"></TableLayout>
 
         <TableLayout
             android:id="@+id/syncData_tableLayout6"
@@ -78,13 +76,11 @@
         <TableLayout
             android:id="@+id/syncData_tableLayout8"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="5dp"></TableLayout>
+            android:layout_height="wrap_content"></TableLayout>
         <TableLayout
             android:id="@+id/syncData_tableLayout9"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"></TableLayout>
+            android:layout_height="wrap_content"></TableLayout>
 
         <TableLayout
             android:id="@+id/syncData_tableLayout10"

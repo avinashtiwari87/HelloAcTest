@@ -12,14 +12,20 @@ import android.widget.TextView;
 public class SyncSelectedDataActivity extends AppCompatActivity {
     TableLayout table_layout1, table_layout2, table_layout3, table_layout4, table_layout5,
             table_layout6, table_layout7, table_layout8, table_layout9, table_layout10;
+    int rows =5, colos =5;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sync_selected_data);
+        if(getIntent().hasExtra("rows")){
+           rows = getIntent().getIntExtra("rows",6);
+            colos = getIntent().getIntExtra("cols",6);
+        }
+
 
         initRes();
-        BuildSyncDataTable(10,10);
+        BuildSyncDataTable(rows,colos);
     }
 
 
@@ -39,7 +45,7 @@ public class SyncSelectedDataActivity extends AppCompatActivity {
                 if (i == 1 && j == 1) {
                     row.addView(addTextView("SI # "));
                 } else {
-                    row.addView(addTextView(1+i+""));
+                    row.addView(addTextView(i-1+""));
                 }
 
             }
@@ -74,7 +80,7 @@ public class SyncSelectedDataActivity extends AppCompatActivity {
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
-                    row.addView(addTextView("RD NO "));
+                    row.addView(addTextView("    RD NO     "));
                 } else {
                     row.addView(addTextView(""));
                 }
@@ -93,7 +99,7 @@ public class SyncSelectedDataActivity extends AppCompatActivity {
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
-                    row.addView(addTextView("Date "));
+                    row.addView(addTextView("   Date       "));
                 } else {
                     row.addView(addTextView(""));
                 }
@@ -112,7 +118,7 @@ public class SyncSelectedDataActivity extends AppCompatActivity {
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
-                    row.addView(addTextView("Area Name "));
+                    row.addView(addTextView("   Area Name    "));
                 } else {
                     row.addView(addTextView(""));
                 }
@@ -131,7 +137,7 @@ public class SyncSelectedDataActivity extends AppCompatActivity {
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
-                    row.addView(addTextView("AHU No "));
+                    row.addView(addTextView("   AHU No   "));
                 } else {
                     row.addView(addTextView(1+i+""));
                 }
@@ -150,7 +156,7 @@ public class SyncSelectedDataActivity extends AppCompatActivity {
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
-                    row.addView(addTextView("Room Name "));
+                    row.addView(addTextView("   Room Name    "));
                 } else {
                     row.addView(addTextView(""));
                 }
@@ -169,7 +175,7 @@ public class SyncSelectedDataActivity extends AppCompatActivity {
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
-                    row.addView(addTextView("Room No "));
+                    row.addView(addTextView("   Room No   "));
                 } else {
                     row.addView(addTextView(""));
                 }
@@ -188,7 +194,7 @@ public class SyncSelectedDataActivity extends AppCompatActivity {
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
-                    row.addView(addTextView("Results "));
+                    row.addView(addTextView("  Results  "));
                 } else {
                     row.addView(addTextView(""));
                 }
@@ -207,7 +213,7 @@ public class SyncSelectedDataActivity extends AppCompatActivity {
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
-                    row.addView(addTextView("Action "));
+                    row.addView(addTextView("  Action   "));
                 } else {
                     row.addView(addTextView(""));
                 }
@@ -240,11 +246,8 @@ public class SyncSelectedDataActivity extends AppCompatActivity {
                 TableRow.LayoutParams.WRAP_CONTENT));
         tv.setBackgroundResource(R.drawable.border1);
         tv.setGravity(Gravity.CENTER);
-        //tv.setPadding(5, 5, 5, 5);
         tv.setTextColor(getResources().getColor(R.color.black));
-        tv.setTextSize(getResources().getDimension(R.dimen.normal_text_size));
-        tv.setGravity(Gravity.CENTER);
-        //tv.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD);
+        //tv.setTextSize(getResources().getDimension(R.dimen.normal_text_size1));
         tv.setSingleLine(false);
         tv.setMaxLines(3);
         tv.setEllipsize(TextUtils.TruncateAt.END);
@@ -253,10 +256,13 @@ public class SyncSelectedDataActivity extends AppCompatActivity {
     }
 
     private CheckBox  addCheckBox(int row){
-        CheckBox checkBox = new CheckBox(this);
-        checkBox.setId(row);
-        checkBox.setTag(row+1);
+        CheckBox cb = new CheckBox(this);
+        cb.setHeight(58);
+        cb.setBackgroundResource(R.drawable.border1);
+        cb.setId(row);
+        cb.setTag(row+1);
 
-        return  checkBox;
+
+        return  cb;
     }
 }
