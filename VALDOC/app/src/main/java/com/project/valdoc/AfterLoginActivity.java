@@ -117,6 +117,16 @@ public class AfterLoginActivity extends AppCompatActivity implements HttpConnect
                     }
                 }
             });
+
+            findViewById(R.id.sync_data_table_btn).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Toast.makeText(AfterLoginActivity.this, "Clicked", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(AfterLoginActivity.this, SyncSelectedDataActivity.class);
+                    startActivity(intent);
+                }
+            });
+
         }
 
         //Custom Action Bar

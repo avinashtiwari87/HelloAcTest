@@ -40,7 +40,7 @@
             android:name=".TestCreateActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".HomeActivity"
             android:screenOrientation="portrait"
@@ -75,6 +75,7 @@
         <activity
             android:name=".ServiceReportActivity"
             android:screenOrientation="landscape" />
+        <activity android:name=".SyncSelectedDataActivity"></activity>
     </application>
 
 </manifest>

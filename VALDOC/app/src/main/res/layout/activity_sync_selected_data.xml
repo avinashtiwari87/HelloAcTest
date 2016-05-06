@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.project.valdoc.SyncSelectedDataActivity">
+
+    <TextView
+        android:id="@+id/header_sunc_data"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/black"
+        android:text="Table: Airchanges/hr test (ACPH_AV)"
+        android:textSize="@dimen/header_text_size"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <ScrollView
+        android:layout_below="@+id/header_sunc_data"
+        android:layout_above="@+id/button2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+    <HorizontalScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
+        <TableLayout
+            android:id="@+id/syncData_tableLayout1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"></TableLayout>
+
+        <TableLayout
+            android:id="@+id/syncData_tableLayout2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/tableLayout1"></TableLayout>
+
+        <TableLayout
+            android:id="@+id/syncData_tableLayout3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"></TableLayout>
+
+        <TableLayout
+            android:id="@+id/syncData_tableLayout4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"></TableLayout>
+        <TableLayout
+            android:id="@+id/syncData_tableLayout5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"></TableLayout>
+
+        <TableLayout
+            android:id="@+id/syncData_tableLayout6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/tableLayout1"></TableLayout>
+
+        <TableLayout
+            android:id="@+id/syncData_tableLayout7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"></TableLayout>
+
+        <TableLayout
+            android:id="@+id/syncData_tableLayout8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"></TableLayout>
+        <TableLayout
+            android:id="@+id/syncData_tableLayout9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"></TableLayout>
+
+        <TableLayout
+            android:id="@+id/syncData_tableLayout10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/tableLayout1"></TableLayout>
+
+        </LinearLayout>
+    </HorizontalScrollView>
+    </LinearLayout>
+    </ScrollView>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="SYNC SELECTED RECORD"
+        android:id="@+id/button2"
+        android:textStyle="bold"
+        android:padding="5dp"
+        android:textColor="@color/white"
+        android:background="@drawable/btn_gree"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
+
+
+</RelativeLayout>
