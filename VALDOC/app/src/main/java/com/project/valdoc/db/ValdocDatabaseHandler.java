@@ -210,12 +210,12 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
     public static final String CLIENT_INSTRUMENT_CINSTRUMENTNAME = "cInstrumentName";
     public static final String CLIENT_INSTRUMENT_MAKE = "make";
     public static final String CLIENT_INSTRUMENT_MODEL = "model";
-    public static final String CLIENT_INSTRUMENT_LASTCALIBRATED = "lastCalibrated";
+    public static final String CLIENT_INSTRUMENT_LASTCALIBRATED = "lastCalibrationDate";
     public static final String CLIENT_INSTRUMENT_CALIBRATIONDUEDATE = "calibrationDueDate";
     public static final String CLIENT_INSTRUMENT_CURRENTLOCATION = "currentLocation";
     public static final String CLIENT_INSTRUMENT_STATUS = "status";
     public static final String CLIENT_INSTRUMENT_TESTID = "testId";
-    public static final String CLIENT_INSTRUMENT_CREATIONDATE = "creationDate";
+    public static final String CLIENT_INSTRUMENT_CREATIONDATE = "lastUpdatedDate";
     //new addition
     public static final String CLIENT_INSTRUMENT_SAMPLINGFLOWRATE = "samplingFlowRate";
     public static final String CLIENT_INSTRUMENT_SAMPLINGTIME = "samplingTime";

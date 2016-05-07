@@ -31,10 +31,10 @@ public class TestDetails {
     private String testerName;
     private String witnessName;
     private String partnerName;
-    private String  SamplingFlowRate;
-    private String  SamplingTime;
-    private String  AerosolUsed;
-    private String  AerosolGeneratorType;
+    private String SamplingFlowRate;
+    private String SamplingTime;
+    private String AerosolUsed;
+    private String AerosolGeneratorType;
 
     public String getTest_details() {
         return test_details;
