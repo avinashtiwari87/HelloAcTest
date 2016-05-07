@@ -28,6 +28,7 @@
         android:src="@drawable/sync_btn"/>
 
     <ImageView
+        android:id="@+id/sync_data_table_btn"
         android:layout_marginTop="10dp"
         android:layout_width="500dp"
         android:layout_height="100dp"
