@@ -371,7 +371,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
 
     // test reading table create statment
     private static final String CREATE_TABLE_TESTREADING = "CREATE TABLE " + TESTREADING_TABLE_NAME
-            + "(" + TESTREADING_TESTREADINGID + " INTEGER," + TESTREADING_TEST_DETAIL_ID + " INTEGER,"
+            + "(" + TESTREADING_TESTREADINGID + " INTEGER PRIMARY KEY AUTOINCREMENT DEFAULT 1," + TESTREADING_TEST_DETAIL_ID + " INTEGER,"
             + TESTREADING_ENTITYNAME + " TEXT, " + TESTREADING_VALUE + " TEXT " + ")";
 
 
@@ -410,7 +410,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
 
     // test details table create statment
     private static final String CREATE_TABLE_TESTDETAILS = "CREATE TABLE " + TEST_DETAILS_TABLE_NAME
-            + "(" + TEST_DETAILS_TEST_DETAIL_ID + " INTEGER," + TEST_DETAILS_TESTNAME + " TEXT,"
+            + "(" + TEST_DETAILS_TEST_DETAIL_ID + " INTEGER PRIMARY KEY," + TEST_DETAILS_TESTNAME + " TEXT,"
             + TEST_DETAILS_CUSTOMER + " TEXT, " + TEST_DETAILS_RAWDATANO + " TEXT," + TEST_DETAILS_DATEOFTEST + " TEXT,"
             + TEST_DETAILS_INSTRUMENTUSED + " TEXT," + TEST_DETAILS_INSTRUMENTNO + " TEXT," + TEST_DETAILS_MAKE + " TEXT,"
             + TEST_DETAILS_MODEL + " TEXT," + TEST_DETAILS_CALIBRATEDON + " TEXT," + TEST_DETAILS_CALIBRATEDDUEON + " TEXT,"
@@ -431,7 +431,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
 
     // test specification table create statment
     private static final String CREATE_TABLE_TESTSPECIFICATIONVALUE = "CREATE TABLE " + TESTSPECIFICATIONVALUE_TABLE_NAME
-            + "(" + TESTSPECIFICATIONVALUE_TEST_SPECIFIC_ID + " INTEGER," + TESTSPECIFICATIONVALUE_TEST_DETAIL_ID + " INTEGER,"
+            + "(" + TESTSPECIFICATIONVALUE_TEST_SPECIFIC_ID + " INTEGER PRIMARY KEY AUTOINCREMENT DEFAULT 1," + TESTSPECIFICATIONVALUE_TEST_DETAIL_ID + " INTEGER,"
             + TESTSPECIFICATIONVALUE_FIELDNAME + " TEXT, " + TESTSPECIFICATIONVALUE_FIELDVALUE + " TEXT " + ")";
 
     //service report table creation
@@ -693,7 +693,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
         if (readingArrayList.size() != 0) {
             for (TestReading testReading : readingArrayList) {
                 ContentValues contentValues = new ContentValues();
-                contentValues.put(TESTREADING_TESTREADINGID, testReading.getTestReadingID());
+//                contentValues.put(TESTREADING_TESTREADINGID, testReading.getTestReadingID());
                 contentValues.put(TESTREADING_TEST_DETAIL_ID, testReading.getTest_detail_id());
                 contentValues.put(TESTREADING_ENTITYNAME, testReading.getEntityName());
                 contentValues.put(TESTREADING_VALUE, testReading.getValue());
@@ -762,7 +762,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
         if (testSpesificationValueList.size() != 0) {
             for (TestSpesificationValue testSpesificationValue : testSpesificationValueList) {
                 ContentValues contentValues = new ContentValues();
-                contentValues.put(TESTSPECIFICATIONVALUE_TEST_SPECIFIC_ID, testSpesificationValue.getTest_specific_id());
+//                contentValues.put(TESTSPECIFICATIONVALUE_TEST_SPECIFIC_ID, testSpesificationValue.getTest_specific_id());
                 contentValues.put(TESTSPECIFICATIONVALUE_TEST_DETAIL_ID, testSpesificationValue.getTest_detail_id());
                 contentValues.put(TESTSPECIFICATIONVALUE_FIELDNAME, testSpesificationValue.getFieldName());
                 contentValues.put(TESTSPECIFICATIONVALUE_FIELDVALUE, testSpesificationValue.getFieldValue());
