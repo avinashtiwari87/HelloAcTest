@@ -1,13 +1,17 @@
 package com.project.valdoc;
 
+import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Gravity;
+import android.view.View;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class SyncSelectedDataActivity extends AppCompatActivity {
     TableLayout table_layout1, table_layout2, table_layout3, table_layout4, table_layout5,
@@ -215,7 +219,7 @@ public class SyncSelectedDataActivity extends AppCompatActivity {
                 if (i == 1 && j == 1) {
                     row.addView(addTextView("  Action   "));
                 } else {
-                    row.addView(addTextView(""));
+                    row.addView(addActionTextView("View", i));
                 }
 
             }
@@ -254,15 +258,64 @@ public class SyncSelectedDataActivity extends AppCompatActivity {
         tv.setText(textValue);
         return tv;
     }
-
+    private TextView addActionTextView(String view, int rowId) {
+        TextView tv = new TextView(this);
+        tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+                TableRow.LayoutParams.WRAP_CONTENT));
+        tv.setBackgroundResource(R.drawable.border1);
+        tv.setGravity(Gravity.CENTER);
+        tv.setTextColor(getResources().getColor(R.color.black));
+        tv.setSingleLine(false);
+        tv.setMaxLines(3);
+        tv.setEllipsize(TextUtils.TruncateAt.END);
+        tv.setOnClickListener(new ViewActionValidator(SyncSelectedDataActivity.this,rowId));
+        tv.setText(view);
+        return tv;
+    }
     private CheckBox  addCheckBox(int row){
         CheckBox cb = new CheckBox(this);
         cb.setHeight(58);
         cb.setBackgroundResource(R.drawable.border1);
+        cb.setGravity(Gravity.CENTER);
         cb.setId(row);
         cb.setTag(row+1);
-
-
+        cb.setOnCheckedChangeListener(new CheckedValidator(SyncSelectedDataActivity.this,row));
         return  cb;
+    }
+
+    private class CheckedValidator implements CompoundButton.OnCheckedChangeListener {
+        int checkBpxId;
+        Context mContext;
+
+        public CheckedValidator(Context context, int row) {
+            this.checkBpxId = row;
+            this.mContext = context;
+        }
+
+        @Override
+        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            if (isChecked)
+                Toast.makeText(mContext, "CheckBox : "+checkBpxId+" Checked", Toast.LENGTH_SHORT).show();
+            else
+                Toast.makeText(mContext, "CheckBox : "+checkBpxId+" Unchecked", Toast.LENGTH_SHORT).show();
+
+        }
+    }
+
+    private class ViewActionValidator implements View.OnClickListener {
+        int viewTextId;
+        Context mContext;
+
+        public ViewActionValidator(Context context, int rowId) {
+            this.mContext = context;
+            this.viewTextId = rowId;
+
+        }
+
+        @Override
+        public void onClick(View v) {
+            Toast.makeText(mContext, "View Row : "+viewTextId+" Test", Toast.LENGTH_SHORT).show();
+
+        }
     }
 }
