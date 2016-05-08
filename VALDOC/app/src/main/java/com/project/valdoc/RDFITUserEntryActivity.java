@@ -401,7 +401,7 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
         for (RoomFilter roomFilter : filterArrayList) {
 
             TestReading testReading = new TestReading();
-            testReading.setTestReadingID(index);
+//            testReading.setTestReadingID(index);
 //        TO DO test details id is id of test details table
             testReading.setTest_detail_id(testDetailsId);
             testReading.setEntityName(roomFilter.getFilterCode());

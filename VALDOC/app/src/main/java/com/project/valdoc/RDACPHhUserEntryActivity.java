@@ -412,22 +412,22 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
     private ArrayList<TestSpesificationValue> testSpesificationValue() {
         ArrayList<TestSpesificationValue> spesificationValueArrayList = new ArrayList<TestSpesificationValue>();
         TestSpesificationValue testSpesificationValue = new TestSpesificationValue();
-        testSpesificationValue.setTest_specific_id(1);
+//        testSpesificationValue.setTest_specific_id(1);
         testSpesificationValue.setTest_detail_id("" + testDetailsId);
         testSpesificationValue.setFieldName("TFR");
         testSpesificationValue.setFieldValue("" + totalAirFlowRate);
         spesificationValueArrayList.add(testSpesificationValue);
 
         TestSpesificationValue testSpesificationValue1 = new TestSpesificationValue();
-        testSpesificationValue1.setTest_specific_id(1);
-        testSpesificationValue1.setTest_detail_id("1");
+//        testSpesificationValue1.setTest_specific_id(1);
+        testSpesificationValue1.setTest_detail_id(""+testDetailsId);
         testSpesificationValue1.setFieldName("RV");
         testSpesificationValue1.setFieldValue("" + room.getVolume());
         spesificationValueArrayList.add(testSpesificationValue1);
 
         TestSpesificationValue testSpesificationValue2 = new TestSpesificationValue();
-        testSpesificationValue2.setTest_specific_id(1);
-        testSpesificationValue2.setTest_detail_id("1");
+//        testSpesificationValue2.setTest_specific_id(1);
+        testSpesificationValue2.setTest_detail_id(""+testDetailsId);
         testSpesificationValue2.setFieldName("((TFR/RV)x60))");
         testSpesificationValue2.setFieldValue("" + airChangeValue);
         spesificationValueArrayList.add(testSpesificationValue2);
@@ -442,7 +442,7 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
         int hasMapKey = 200;
         for (HashMap<String, String> grill : grillAndSizeFromGrill) {
             TestReading testReading = new TestReading();
-            testReading.setTestReadingID(index);
+//            testReading.setTestReadingID(index);
 //        TO DO test details id is id of test details table
             testReading.setTest_detail_id(testDetailsId);
             testReading.setEntityName(grill.get(ValdocDatabaseHandler.GRILL_GRILLCODE).toString());

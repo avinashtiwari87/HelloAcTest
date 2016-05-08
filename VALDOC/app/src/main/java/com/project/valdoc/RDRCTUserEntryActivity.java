@@ -383,7 +383,7 @@ public class RDRCTUserEntryActivity extends AppCompatActivity {
     private ArrayList<TestSpesificationValue> testSpesificationValue() {
         ArrayList<TestSpesificationValue> spesificationValueArrayList = new ArrayList<TestSpesificationValue>();
         TestSpesificationValue testSpesificationValue = new TestSpesificationValue();
-        testSpesificationValue.setTest_specific_id(1);
+//        testSpesificationValue.setTest_specific_id(1);
         testSpesificationValue.setTest_detail_id(""+testDetailsId);
         testSpesificationValue.setFieldName("Initial Reading");
         testSpesificationValue.setFieldValue("" + initialReading.getText().toString());
@@ -391,21 +391,21 @@ public class RDRCTUserEntryActivity extends AppCompatActivity {
 
 
         TestSpesificationValue testSpesificationValue1 = new TestSpesificationValue();
-        testSpesificationValue1.setTest_specific_id(1);
+//        testSpesificationValue1.setTest_specific_id(1);
         testSpesificationValue1.setTest_detail_id(""+testDetailsId);
         testSpesificationValue1.setFieldName("Worst Case Reading");
         testSpesificationValue1.setFieldValue("" + worstCase.getText().toString());
         spesificationValueArrayList.add(testSpesificationValue1);
 
         TestSpesificationValue testSpesificationValue2 = new TestSpesificationValue();
-        testSpesificationValue2.setTest_specific_id(1);
+//        testSpesificationValue2.setTest_specific_id(1);
         testSpesificationValue2.setTest_detail_id(""+testDetailsId);
         testSpesificationValue2.setFieldName("Final Reading");
         testSpesificationValue2.setFieldValue("" + finalReading.getText().toString());
         spesificationValueArrayList.add(testSpesificationValue2);
 
         TestSpesificationValue testSpesificationValue3 = new TestSpesificationValue();
-        testSpesificationValue3.setTest_specific_id(1);
+//        testSpesificationValue3.setTest_specific_id(1);
         testSpesificationValue3.setTest_detail_id(""+testDetailsId);
         testSpesificationValue3.setFieldName("Recovery Time");
         testSpesificationValue3.setFieldValue("" + recoveryTime.getText().toString());
@@ -417,7 +417,7 @@ public class RDRCTUserEntryActivity extends AppCompatActivity {
         ArrayList<TestReading> testReadingArrayList = new ArrayList<TestReading>();
 //        for (int i = 0; i < mValueList.size(); i++) {
         TestReading testReading = new TestReading();
-        testReading.setTestReadingID(1);
+//        testReading.setTestReadingID(1);
 //        TO DO test details id is id of test details table
         testReading.setTest_detail_id(testDetailsId);
         testReading.setEntityName("RecoveryTest");

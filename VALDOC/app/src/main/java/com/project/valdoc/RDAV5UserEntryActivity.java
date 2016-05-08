@@ -395,7 +395,7 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
     private ArrayList<TestReading> testReading() {
         ArrayList<TestReading> readingArrayList = new ArrayList<TestReading>();
         TestReading testReading = new TestReading();
-        testReading.setTestReadingID(1);
+//        testReading.setTestReadingID(1);
 //        TO DO test details id is id of test details table
         testReading.setTest_detail_id(testDetailsId);
 
