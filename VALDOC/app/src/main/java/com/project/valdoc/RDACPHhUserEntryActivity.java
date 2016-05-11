@@ -45,7 +45,7 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
             test3_table_layout5;
 
     int rows, cols;
-    String testType;
+    String mTestType;
     ProgressDialog pr;
     ArrayList<TextView> roomVolumeTxtList;
     ArrayList<TextView> totalAirFlowRateTxtList;
@@ -139,8 +139,8 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
         if (getIntent().hasExtra("rows") && getIntent().hasExtra("cols")) {
             rows = getIntent().getIntExtra("rows", 0);
             cols = getIntent().getIntExtra("cols", 0);
-            testType = getIntent().getStringExtra("testType");
-            Log.d(TAG, " TestType : " + testType);
+            mTestType = getIntent().getStringExtra("testType");
+            Log.d(TAG, " TestType : " + mTestType);
         }
         //dynamic data population
         getExtraFromTestCreateActivity(savedInstanceState);
@@ -150,7 +150,7 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
         initRes();
         datePicker();
 
-        if (TestCreateActivity.ACPHH.equalsIgnoreCase(testType)) {
+        if (TestCreateActivity.ACPHH.equalsIgnoreCase(mTestType)) {
             BuildTableTest3(rows, cols);
         }
 
@@ -480,7 +480,6 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
             testDetails.setCalibratedDueOn(partnerInstrument.getCalibrationDueDate());
         }
 
-
         testDetails.setTestSpecification(testSpecification.getText().toString());
         testDetails.setBlockName(plantName.getText().toString());
         testDetails.setTestArea(areaOfTest.getText().toString());
@@ -490,7 +489,7 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
         testDetails.setTestReference(testRefrance.getText().toString());
         testDetails.setAhuNo(ahuNo.getText().toString());
         testDetails.setTesterName(testCundoctor.getText().toString());
-
+        testDetails.setTestCode(mTestType);
         StringBuilder witness = new StringBuilder();
         witness.append(witnessFirst.toString());
         if (null != witnessSecond && witnessSecond.length() > 0)
@@ -566,7 +565,6 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
                     }
 //                    row.addView(addTextView(" Filter No " + i));
                 }
-
             }
             test3_table_layout.addView(row);
         }

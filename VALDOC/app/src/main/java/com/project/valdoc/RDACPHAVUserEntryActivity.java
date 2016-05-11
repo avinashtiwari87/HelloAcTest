@@ -46,7 +46,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
             test2_table_layout5, test2_table_layout6, test2_table_layout7, test2_table_layout8;
 
     int rows, cols;
-    String testType;
+    String mTestType;
     ProgressDialog pr;
     LinearLayout test_table_1_footer, test_table_1_header_l, test_table_1_header_2;
     //Test 2 Ids variable
@@ -150,8 +150,8 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
         if (getIntent().hasExtra("rows") && getIntent().hasExtra("cols")) {
             rows = getIntent().getIntExtra("rows", 0);
             cols = getIntent().getIntExtra("cols", 0);
-            testType = getIntent().getStringExtra("testType");
-            Log.d(TAG, " TestType : " + testType);
+            mTestType = getIntent().getStringExtra("testType");
+            Log.d(TAG, " TestType : " + mTestType);
         }
         //dynamic data population
         getExtraFromTestCreateActivity(savedInstanceState);
@@ -160,7 +160,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
         textViewValueAssignment();
         initRes();
         datePicker();
-        if (TestCreateActivity.ACPHAV.equalsIgnoreCase(testType)) {
+        if (TestCreateActivity.ACPHAV.equalsIgnoreCase(mTestType)) {
             BuildTableTest2(rows, cols);
         }
 
@@ -509,6 +509,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
         testDetails.setTestReference(testRefrance.getText().toString());
         testDetails.setAhuNo(ahuNo.getText().toString());
         testDetails.setTesterName(testCundoctor.getText().toString());
+        testDetails.setTestCode(mTestType);
 
         StringBuilder witness = new StringBuilder();
         witness.append(witnessFirst.toString());

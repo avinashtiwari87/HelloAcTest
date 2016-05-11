@@ -47,7 +47,7 @@ public class RDPC3UserEntryActivity extends AppCompatActivity {
             test5_table_layout3, test5_tableLayout2_2, test5_table_layout4, test5_tableLayout4_2, test5_table_layout4_1,
             test5_table_layout5, test5_table_layout5_1, test5_table_layout3_1;
     int rows, cols;
-    String testType;
+    String mTestType;
     //    ProgressDialog pr;
     //Test 5 Variable
     int test5CommonFormulaIds1 = 500, test5CommonFormulaIds2 = 600;
@@ -140,8 +140,8 @@ public class RDPC3UserEntryActivity extends AppCompatActivity {
         if (getIntent().hasExtra("rows") && getIntent().hasExtra("cols")) {
             rows = getIntent().getIntExtra("rows", 0);
             cols = getIntent().getIntExtra("cols", 0);
-            testType = getIntent().getStringExtra("testType");
-            Log.d(TAG, " TestType : " + testType);
+            mTestType = getIntent().getStringExtra("testType");
+            Log.d(TAG, " TestType : " + mTestType);
         }
 //dynamic data population
         getExtraFromTestCreateActivity(savedInstanceState);
@@ -150,7 +150,7 @@ public class RDPC3UserEntryActivity extends AppCompatActivity {
         textViewValueAssignment();
         initRes();
         datePicker();
-        if (TestCreateActivity.PCT.equalsIgnoreCase(testType)) {
+        if (TestCreateActivity.PCT.equalsIgnoreCase(mTestType)) {
             BuildTableTest5(rows, cols);
 //            BuildTableTest55(rows, cols);
         }
@@ -517,6 +517,8 @@ public class RDPC3UserEntryActivity extends AppCompatActivity {
         testDetails.setAhuNo(ahuNo.getText().toString());
         testDetails.setTesterName(testCundoctor.getText().toString());
         testDetails.setPartnerName("" + mPartnerName);
+        testDetails.setTestCode(mTestType);
+
         StringBuilder witness = new StringBuilder();
         witness.append(witnessFirst.toString());
         if (null != witnessSecond && witnessSecond.length() > 0)

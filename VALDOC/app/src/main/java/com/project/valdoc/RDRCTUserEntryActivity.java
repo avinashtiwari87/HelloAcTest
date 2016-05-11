@@ -36,7 +36,7 @@ import java.util.HashMap;
 public class RDRCTUserEntryActivity extends AppCompatActivity {
     TextView headerText;
     int rows, cols;
-    String testType;
+    String mTestType;
     private static final String TAG = "RDRCT";
     // bundel data specification
     private String loginUserType = "";
@@ -127,8 +127,8 @@ public class RDRCTUserEntryActivity extends AppCompatActivity {
         if (getIntent().hasExtra("rows") && getIntent().hasExtra("cols")) {
             rows = getIntent().getIntExtra("rows", 0);
             cols = getIntent().getIntExtra("cols", 0);
-            testType = getIntent().getStringExtra("testType");
-            Log.d(TAG, " TestType : " + testType);
+            mTestType = getIntent().getStringExtra("testType");
+            Log.d(TAG, " TestType : " + mTestType);
         }
 
         //dynamic data population
@@ -379,7 +379,6 @@ public class RDRCTUserEntryActivity extends AppCompatActivity {
         });
     }
 
-
     private ArrayList<TestSpesificationValue> testSpesificationValue() {
         ArrayList<TestSpesificationValue> spesificationValueArrayList = new ArrayList<TestSpesificationValue>();
         TestSpesificationValue testSpesificationValue = new TestSpesificationValue();
@@ -388,7 +387,6 @@ public class RDRCTUserEntryActivity extends AppCompatActivity {
         testSpesificationValue.setFieldName("Initial Reading");
         testSpesificationValue.setFieldValue("" + initialReading.getText().toString());
         spesificationValueArrayList.add(testSpesificationValue);
-
 
         TestSpesificationValue testSpesificationValue1 = new TestSpesificationValue();
 //        testSpesificationValue1.setTest_specific_id(1);
@@ -439,7 +437,6 @@ public class RDRCTUserEntryActivity extends AppCompatActivity {
         return testReadingArrayList;
     }
 
-
     private TestDetails testDetailsDataCreation() {
         TestDetails testDetails = new TestDetails();
 //        TO DO: need to make it dynamic
@@ -484,6 +481,7 @@ public class RDRCTUserEntryActivity extends AppCompatActivity {
         testDetails.setAhuNo(ahuNo.getText().toString());
         testDetails.setTesterName(testCundoctor.getText().toString());
         testDetails.setPartnerName("" + mPartnerName);
+        testDetails.setTestCode(mTestType);
         StringBuilder witness = new StringBuilder();
         witness.append(witnessFirst.toString());
         if (null != witnessSecond && witnessSecond.length() > 0)

@@ -35,6 +35,7 @@ public class TestDetails {
     private String SamplingTime;
     private String AerosolUsed;
     private String AerosolGeneratorType;
+    private String testCode;
 
     public String getTest_details() {
         return test_details;
@@ -266,5 +267,13 @@ public class TestDetails {
 
     public void setAerosolGeneratorType(String aerosolGeneratorType) {
         AerosolGeneratorType = aerosolGeneratorType;
+    }
+
+    public String getTestCode() {
+        return testCode;
+    }
+
+    public void setTestCode(String testCode) {
+        this.testCode = testCode;
     }
 }

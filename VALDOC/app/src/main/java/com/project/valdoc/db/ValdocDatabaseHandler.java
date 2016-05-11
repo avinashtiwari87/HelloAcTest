@@ -5,7 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 
 import com.project.valdoc.intity.Ahu;
@@ -32,7 +31,6 @@ import com.project.valdoc.intity.User;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -407,6 +405,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
     public static final String TEST_DETAILS_SAMPLINGTIME = "samplingTime";
     public static final String TEST_DETAILS_AEROSOLUSED = "aerosolUsed";
     public static final String TEST_DETAILS_AEROSOLGENERATORTYPE = "aerosolGeneratorType";
+    public static final String TEST_DETAILS_TESTCODE = "testCode";
 
     // test details table create statment
     private static final String CREATE_TABLE_TESTDETAILS = "CREATE TABLE " + TEST_DETAILS_TABLE_NAME
@@ -419,7 +418,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
             + TEST_DETAILS_ROOMNAME + " TEXT," + TEST_DETAILS_EQUIPMENTNO + " TEXT," + TEST_DETAILS_EQUIPMENTNAME + " TEXT,"
             + TEST_DETAILS_TESTERNAME + " TEXT," + TEST_DETAILS_WITNESSNAME + " TEXT," + TEST_DETAILS_PARTNERNAME + " TEXT,"
             + PARTNER_INSTRUMENT_SAMPLINGFLOWRATE + " TEXT," + PARTNER_INSTRUMENT_SAMPLINGTIME + " TEXT,"
-            + PARTNER_INSTRUMENT_AEROSOLUSED + " TEXT," + PARTNER_INSTRUMENT_AEROSOLGENERATORTYPE + " TEXT" + ")";
+            + PARTNER_INSTRUMENT_AEROSOLUSED + " TEXT," + PARTNER_INSTRUMENT_AEROSOLGENERATORTYPE + " TEXT," + TEST_DETAILS_TESTCODE + " TEXT" + ")";
 
 
     //test spesification table details
@@ -747,6 +746,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
         contentValues.put(TEST_DETAILS_SAMPLINGTIME, testDetails.getSamplingTime());
         contentValues.put(TEST_DETAILS_AEROSOLGENERATORTYPE, testDetails.getAerosolGeneratorType());
         contentValues.put(TEST_DETAILS_AEROSOLUSED, testDetails.getAerosolUsed());
+        contentValues.put(TEST_DETAILS_TESTCODE, testDetails.getTestCode());
 
         db.insert(tableName, null, contentValues);
 //            }
@@ -1522,6 +1522,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                     jsonObject.put(TEST_DETAILS_SAMPLINGTIME, cursor.getString(25).toString());
                     jsonObject.put(TEST_DETAILS_AEROSOLGENERATORTYPE, cursor.getString(26).toString());
                     jsonObject.put(TEST_DETAILS_AEROSOLUSED, cursor.getString(27).toString());
+                    jsonObject.put(TEST_DETAILS_TESTCODE, cursor.getString(28).toString());
                     Log.d("getCertificateData", "test details=" + jsonObject.toString());
                     testDetailsJsonArray.put(jsonObject);
                 } catch (Exception e) {

@@ -26,12 +26,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity1"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/title_activity_main"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
             android:name=".LoginActivity"
             android:label="@string/title_activity_login"
             android:noHistory="true"

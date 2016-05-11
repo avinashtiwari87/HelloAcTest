@@ -46,7 +46,7 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
     private static final String TAG = "RDAV5UserEntryActivity";
     TableLayout table_layout, table_layout2, table_layout3, table_layout4;
     int rows, cols;
-    String testType;
+    String mTestType;
     ProgressDialog pr;
     LinearLayout test_table_1_footer, test_table_1_header_l, test_table_1_header_2;
 
@@ -135,8 +135,8 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
         if (getIntent().hasExtra("rows") && getIntent().hasExtra("cols")) {
             rows = getIntent().getIntExtra("rows", 0);
             cols = getIntent().getIntExtra("cols", 0);
-            testType = getIntent().getStringExtra("testType");
-            Log.d(TAG, " TestType : " + testType);
+            mTestType = getIntent().getStringExtra("testType");
+            Log.d(TAG, " TestType : " + mTestType);
         }
         getExtraFromTestCreateActivity(savedInstanceState);
         //text view initialization
@@ -144,7 +144,7 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
         textViewValueAssignment();
         initRes();
         datePicker();
-        if (TestCreateActivity.AV.equalsIgnoreCase(testType)) {
+        if (TestCreateActivity.AV.equalsIgnoreCase(mTestType)) {
             BuildTable(rows, cols);
         }
 
@@ -464,6 +464,7 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
         testDetails.setEquipmentNo("" + equipment.getEquipmentNo());
         testDetails.setTesterName("" + testCundoctor.getText());
         testDetails.setWitnessName("" + testWitness.getText());
+        testDetails.setTestCode(mTestType);
         testDetails.setAhuNo("");
         return testDetails;
     }

@@ -45,7 +45,7 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
             test4_table_layout5, test4_table_layout6, test4_table_layout7, test4_table_layout8;
 
     int rows, cols;
-    String testType;
+    String mTestType;
     ProgressDialog pr;
 
     // bundel data specification
@@ -132,8 +132,8 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
         if (getIntent().hasExtra("rows") && getIntent().hasExtra("cols")) {
             rows = getIntent().getIntExtra("rows", 0);
             cols = getIntent().getIntExtra("cols", 0);
-            testType = getIntent().getStringExtra("testType");
-            Log.d(TAG, " TestType : " + testType);
+            mTestType = getIntent().getStringExtra("testType");
+            Log.d(TAG, " TestType : " + mTestType);
         }
 
         //dynamic data population
@@ -143,7 +143,7 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
         textViewValueAssignment();
         initRes();
         datePicker();
-        if (TestCreateActivity.FIT.equalsIgnoreCase(testType)) {
+        if (TestCreateActivity.FIT.equalsIgnoreCase(mTestType)) {
             BuildTableTest4(rows, cols);
         }
 
@@ -376,7 +376,6 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
                 } else {
                     Toast.makeText(RDFITUserEntryActivity.this, "Data not saved", Toast.LENGTH_LONG).show();
                 }
-
 ////                mValdocDatabaseHandler.insertTestSpesificationValue(ValdocDatabaseHandler.TESTSPECIFICATIONVALUE_TABLE_NAME, testSpesificationValueDataCreation());
             }
         });
@@ -456,7 +455,6 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
             testDetails.setSamplingTime("");
         }
 
-
         testDetails.setTestSpecification(testSpecification.getText().toString());
         testDetails.setBlockName(plantName.getText().toString());
         testDetails.setTestArea(areaOfTest.getText().toString());
@@ -466,7 +464,7 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
         testDetails.setTestReference(testRefrance.getText().toString());
         testDetails.setAhuNo(ahuNo.getText().toString());
         testDetails.setTesterName(testCundoctor.getText().toString());
-
+        testDetails.setTestCode(mTestType);
         StringBuilder witness = new StringBuilder();
         witness.append(witnessFirst.toString());
         if (null != witnessSecond && witnessSecond.length() > 0)
