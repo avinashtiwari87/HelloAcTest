@@ -19,6 +19,8 @@
 
     <ScrollView
         android:layout_below="@+id/header_sunc_data"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
         android:layout_above="@+id/button2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -35,7 +37,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
         android:orientation="horizontal">
         <TableLayout
             android:id="@+id/syncData_tableLayout1"
@@ -46,6 +47,7 @@
             android:id="@+id/syncData_tableLayout2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
             android:layout_alignLeft="@+id/tableLayout1"></TableLayout>
 
         <TableLayout
@@ -100,6 +102,7 @@
         android:id="@+id/button2"
         android:textStyle="bold"
         android:padding="5dp"
+        android:layout_marginBottom="10dp"
         android:textColor="@color/white"
         android:background="@drawable/btn_gree"
         android:layout_alignParentBottom="true"
