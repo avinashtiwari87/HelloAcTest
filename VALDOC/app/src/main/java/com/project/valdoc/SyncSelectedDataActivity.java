@@ -250,6 +250,8 @@ public class SyncSelectedDataActivity extends AppCompatActivity {
                 TableRow.LayoutParams.WRAP_CONTENT));
         tv.setBackgroundResource(R.drawable.border1);
         tv.setGravity(Gravity.CENTER);
+        //tv.setPadding(5,5,5,5);
+        tv.setHeight(70);
         tv.setTextColor(getResources().getColor(R.color.black));
         //tv.setTextSize(getResources().getDimension(R.dimen.normal_text_size1));
         tv.setSingleLine(false);
@@ -266,6 +268,7 @@ public class SyncSelectedDataActivity extends AppCompatActivity {
         tv.setGravity(Gravity.CENTER);
         tv.setTextColor(getResources().getColor(R.color.black));
         tv.setSingleLine(false);
+        tv.setHeight(70);
         tv.setMaxLines(3);
         tv.setEllipsize(TextUtils.TruncateAt.END);
         tv.setOnClickListener(new ViewActionValidator(SyncSelectedDataActivity.this,rowId));
@@ -274,8 +277,10 @@ public class SyncSelectedDataActivity extends AppCompatActivity {
     }
     private CheckBox  addCheckBox(int row){
         CheckBox cb = new CheckBox(this);
-        cb.setHeight(58);
+        cb.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+                TableRow.LayoutParams.WRAP_CONTENT));
         cb.setBackgroundResource(R.drawable.border1);
+        cb.setHeight(70);
         cb.setGravity(Gravity.CENTER);
         cb.setId(row);
         cb.setTag(row+1);
