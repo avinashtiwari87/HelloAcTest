@@ -1,6 +1,8 @@
 package com.project.valdoc;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -13,15 +15,23 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.project.valdoc.utility.Utilityies;
+
 public class SyncSelectedDataActivity extends AppCompatActivity {
     TableLayout table_layout1, table_layout2, table_layout3, table_layout4, table_layout5,
             table_layout6, table_layout7, table_layout8, table_layout9, table_layout10;
     int rows =5, colos =5;
+    private String userName = "";
+    SharedPreferences sharedpreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sync_selected_data);
+
+        sharedpreferences = getSharedPreferences("valdoc", Context.MODE_PRIVATE);
+        userName = sharedpreferences.getString("USERNAME", "");
+
         if(getIntent().hasExtra("rows")){
            rows = getIntent().getIntExtra("rows",6);
             colos = getIntent().getIntExtra("cols",6);
@@ -30,6 +40,11 @@ public class SyncSelectedDataActivity extends AppCompatActivity {
 
         initRes();
         BuildSyncDataTable(rows,colos);
+
+        //Custom Action Bar
+        ActionBar mActionBar = getSupportActionBar();
+        if (mActionBar != null)
+            Utilityies.setCustomActionBar(SyncSelectedDataActivity.this, mActionBar, userName);
     }
 
 
@@ -250,6 +265,8 @@ public class SyncSelectedDataActivity extends AppCompatActivity {
                 TableRow.LayoutParams.WRAP_CONTENT));
         tv.setBackgroundResource(R.drawable.border1);
         tv.setGravity(Gravity.CENTER);
+        //tv.setPadding(5,5,5,5);
+        tv.setHeight(70);
         tv.setTextColor(getResources().getColor(R.color.black));
         //tv.setTextSize(getResources().getDimension(R.dimen.normal_text_size1));
         tv.setSingleLine(false);
@@ -266,6 +283,7 @@ public class SyncSelectedDataActivity extends AppCompatActivity {
         tv.setGravity(Gravity.CENTER);
         tv.setTextColor(getResources().getColor(R.color.black));
         tv.setSingleLine(false);
+        tv.setHeight(70);
         tv.setMaxLines(3);
         tv.setEllipsize(TextUtils.TruncateAt.END);
         tv.setOnClickListener(new ViewActionValidator(SyncSelectedDataActivity.this,rowId));
@@ -274,8 +292,10 @@ public class SyncSelectedDataActivity extends AppCompatActivity {
     }
     private CheckBox  addCheckBox(int row){
         CheckBox cb = new CheckBox(this);
-        cb.setHeight(58);
+        cb.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+                TableRow.LayoutParams.WRAP_CONTENT));
         cb.setBackgroundResource(R.drawable.border1);
+        cb.setHeight(70);
         cb.setGravity(Gravity.CENTER);
         cb.setId(row);
         cb.setTag(row+1);
