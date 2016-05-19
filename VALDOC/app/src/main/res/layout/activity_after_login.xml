@@ -33,7 +33,7 @@
         android:layout_width="500dp"
         android:layout_height="100dp"
         android:layout_gravity="center"
-        android:src="@drawable/sync_btn"/>
+        android:src="@drawable/synced_test_data"/>
 
     <ImageView
         android:id="@+id/service_report_btn"

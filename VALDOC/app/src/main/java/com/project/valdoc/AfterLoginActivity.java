@@ -122,9 +122,7 @@ public class AfterLoginActivity extends AppCompatActivity implements HttpConnect
                 @Override
                 public void onClick(View view) {
                     Toast.makeText(AfterLoginActivity.this, "Clicked", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(AfterLoginActivity.this, SyncSelectedDataActivity.class);
-                    intent.putExtra("rows",11);
-                    intent.putExtra("cols",11);
+                    Intent intent = new Intent(AfterLoginActivity.this, ShowSelectedTestActivity.class);
                     startActivity(intent);
                 }
             });
