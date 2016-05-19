@@ -8,16 +8,20 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import com.project.valdoc.intity.Ahu;
+import com.project.valdoc.intity.AppUser;
 import com.project.valdoc.intity.ApplicableTestEquipment;
 import com.project.valdoc.intity.ApplicableTestRoom;
 import com.project.valdoc.intity.Area;
 import com.project.valdoc.intity.ClientInstrument;
+import com.project.valdoc.intity.ClientInstrumentTest;
 import com.project.valdoc.intity.Equipment;
 import com.project.valdoc.intity.EquipmentFilter;
 import com.project.valdoc.intity.Grill;
 import com.project.valdoc.intity.PartnerInstrument;
+import com.project.valdoc.intity.PartnerInstrumentTest;
 import com.project.valdoc.intity.PartnerUser;
 import com.project.valdoc.intity.Partners;
+import com.project.valdoc.intity.Plant;
 import com.project.valdoc.intity.Room;
 import com.project.valdoc.intity.RoomFilter;
 import com.project.valdoc.intity.ServiceReport;
@@ -26,7 +30,6 @@ import com.project.valdoc.intity.TestDetails;
 import com.project.valdoc.intity.TestMaster;
 import com.project.valdoc.intity.TestReading;
 import com.project.valdoc.intity.TestSpesificationValue;
-import com.project.valdoc.intity.User;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -42,7 +45,7 @@ import java.util.List;
 public class ValdocDatabaseHandler extends SQLiteOpenHelper {
 
     // Database name
-    public static final String DATABASE_NAME = "VolDoc.db";
+    public static final String DATABASE_NAME = "valdoc.db";
     // Database Version
     private static final int DATABASE_VERSION = 1;
     //ahu table details
@@ -98,16 +101,27 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
     public static final String APLICABLE_TEST_ROOM_APLICABLE_TESTID = "aplicable_testId";
     public static final String APLICABLE_TEST_ROOM_ROOMID = "roomId";
     public static final String APLICABLE_TEST_ROOM_TESTNAME = "testName";
+
+    public static final String APLICABLE_TEST_ROOM_TESTCODE = "testCode";
+    public static final String APLICABLE_TEST_ROOM_TESTFORMAT = "testFormat";
+    public static final String APLICABLE_TEST_ROOM_TESTSPECIFICATION = "testSpecification";
+    public static final String APLICABLE_TEST_ROOM_OCCUPENCYSTATE = "occupencyState";
+    public static final String APLICABLE_TEST_ROOM_TESTREFERENCE = "testReference";
+    public static final String APLICABLE_TEST_ROOM_TESTPROP = "testProp";
+
     public static final String APLICABLE_TEST_ROOM_PERIODICITY = "periodicity";
     public static final String APLICABLE_TEST_ROOM_LOCATION = "location";
     public static final String APLICABLE_TEST_ROOM_NOOFCYCLE = "noOfCycle";
-    public static final String APLICABLE_TEST_ROOM_CREATIONDATE = "creationDate";
+
+    public static final String APLICABLE_TEST_ROOM_LASTUPDATEDDATE = "lastUpdatedDate";
     // aplicable_test_equipment table create statment
     private static final String CREATE_TABLE_APLICABLE_TEST_ROOM = "CREATE TABLE " + APLICABLE_TEST_ROOM_TABLE_NAME
             + "(" + APLICABLE_TEST_ROOM_APLICABLE_TESTID + " INTEGER," + APLICABLE_TEST_ROOM_ROOMID + " INTEGER,"
-            + APLICABLE_TEST_ROOM_TESTNAME + " TEXT," + APLICABLE_TEST_ROOM_PERIODICITY + " TEXT,"
+            + APLICABLE_TEST_ROOM_TESTNAME + " TEXT," + APLICABLE_TEST_ROOM_TESTCODE + " TEXT," + APLICABLE_TEST_ROOM_TESTFORMAT
+            + " TEXT," + APLICABLE_TEST_ROOM_TESTSPECIFICATION + " TEXT," + APLICABLE_TEST_ROOM_OCCUPENCYSTATE + " TEXT,"
+            + APLICABLE_TEST_ROOM_TESTREFERENCE + " TEXT," + APLICABLE_TEST_ROOM_TESTPROP + " TEXT," + APLICABLE_TEST_ROOM_PERIODICITY + " TEXT,"
             + APLICABLE_TEST_ROOM_LOCATION + " INTEGER," + APLICABLE_TEST_ROOM_NOOFCYCLE + " INTEGER,"
-            + APLICABLE_TEST_ROOM_CREATIONDATE + " TEXT " + ")";
+            + APLICABLE_TEST_ROOM_LASTUPDATEDDATE + " TEXT " + ")";
 
     //equipment able details
     public static final String EQUIPMENT_TABLE_NAME = "equipment";
@@ -121,13 +135,15 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
     public static final String EQUIPMENT_TESTREFERENCE = "testReference";
     public static final String EQUIPMENT_FILTERQUANTITY = "filterQuantity";
     public static final String EQUIPMENT_EQUIPMENTLOAD = "equipmentLoad";
+    public static final String EQUIPMENT_ISOCLAUSE = "isoClause";
     public static final String EQUIPMENT_CREATIONDATE = "creationDate";
+
     // equipment table create statment
     private static final String CREATE_TABLE_EQUIPMENT = "CREATE TABLE " + EQUIPMENT_TABLE_NAME
             + "(" + EQUIPMENT_EQUIPMENTID + " INTEGER," + EQUIPMENT_ROOMID + " INTEGER,"
             + EQUIPMENT_OCCUPANCYSTATE + " TEXT," + EQUIPMENT_EQUIPMENTNO + " TEXT," + EQUIPMENT_EQUIPMENTNAME + " TEXT,"
             + EQUIPMENT_MINVELOCITY + " REAL," + EQUIPMENT_MAXVELOCITY + " REAL," + EQUIPMENT_TESTREFERENCE + " TEXT," + EQUIPMENT_FILTERQUANTITY + " INTEGER," + EQUIPMENT_EQUIPMENTLOAD + " REAL,"
-            + EQUIPMENT_CREATIONDATE + " TEXT " + ")";
+            + EQUIPMENT_ISOCLAUSE + " TEXT," + EQUIPMENT_CREATIONDATE + " TEXT " + ")";
 
 
     //equipment filter able details
@@ -156,19 +172,18 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
     public static final String GRILL_ROOMID = "roomId";
     public static final String GRILL_LENGTH = "length";
     public static final String GRILL_WIDTH = "widh";
-    public static final String GRILL_GRILLAREA = "grillArea";
+    public static final String GRILL_GRILLAREA = "area";
     public static final String GRILL_EFFECTIVEAREA = "effectiveArea";
     public static final String GRILL_ISSUPPLYGRILL = "isSupplyGrill";
-    public static final String GRILL_ADDITIONALDETAIL = "additionalDetail";
-    public static final String GRILL_CREATIONDATE = "creationDate";
+    //    public static final String GRILL_ADDITIONALDETAIL = "additionalDetail";
+    public static final String GRILL_LASTUPDATEDDATE = "lastUpdatedDate";
 
     // gril table create statment
     private static final String CREATE_TABLE_GRIL = "CREATE TABLE " + GRILL_TABLE_NAME
             + "(" + GRILL_GRILLID + " INTEGER," + GRILL_ROOMID + " INTEGER,"
             + GRILL_GRILLCODE + " TEXT," + GRILL_LENGTH + " REAL," + GRILL_WIDTH + " REAL," + GRILL_GRILLAREA + " REAL,"
-            + GRILL_EFFECTIVEAREA + " REAL," + GRILL_ISSUPPLYGRILL + " INTEGER," + GRILL_ADDITIONALDETAIL + " INTEGER,"
-            + GRILL_CREATIONDATE + " TEXT " + ")";
-
+            + GRILL_EFFECTIVEAREA + " REAL," + GRILL_ISSUPPLYGRILL + " INTEGER," + GRILL_LASTUPDATEDDATE + " TEXT " + ")";
+//    + GRILL_ADDITIONALDETAIL + " INTEGER,"
 
     //partner instrument able details
     public static final String PARTNER_INSTRUMENT_TABLE_NAME = "partner_instrument";
@@ -180,27 +195,50 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
     public static final String PARTNER_INSTRUMENT_MODEL = "model";
     public static final String PARTNER_INSTRUMENT_LASTCALIBRATED = "lastCalibrated";
     public static final String PARTNER_INSTRUMENT_CALIBRATIONDUEDATE = "calibrationDueDate";
-    public static final String PARTNER_INSTRUMENT_CURRENTLOCATION = "currentLocation";
+    //    public static final String PARTNER_INSTRUMENT_CURRENTLOCATION = "currentLocation";
     public static final String PARTNER_INSTRUMENT_STATUS = "status";
-    public static final String PARTNER_INSTRUMENT_TESTID = "testId";
-    public static final String PARTNER_INSTRUMENT_CREATIONDATE = "creationDate";
+    //    public static final String PARTNER_INSTRUMENT_TESTID = "testId";
+    public static final String PARTNER_INSTRUMENT_CERTFILENAME = "certFileName";
+    public static final String PARTNER_INSTRUMENT_REMARKS = "remarks";
+    public static final String PARTNER_INSTRUMENT_LASTUPDATEDDATE = "lastUpdatedDate";
     //new addition
-    public static final String PARTNER_INSTRUMENT_SAMPLINGFLOWRATE = "samplingFlowRate";
-    public static final String PARTNER_INSTRUMENT_SAMPLINGTIME = "samplingTime";
-    public static final String PARTNER_INSTRUMENT_AEROSOLUSED = "aerosolUsed";
-    public static final String PARTNER_INSTRUMENT_AEROSOLGENERATORTYPE = "aerosolGeneratorType";
+//    public static final String PARTNER_INSTRUMENT_SAMPLINGFLOWRATE = "samplingFlowRate";
+//    public static final String PARTNER_INSTRUMENT_SAMPLINGTIME = "samplingTime";
+//    public static final String PARTNER_INSTRUMENT_AEROSOLUSED = "aerosolUsed";
+//    public static final String PARTNER_INSTRUMENT_AEROSOLGENERATORTYPE = "aerosolGeneratorType";
 
     // partner instrument table create statment
     private static final String CREATE_TABLE_PARTNER_INSTRUMENT = "CREATE TABLE " + PARTNER_INSTRUMENT_TABLE_NAME
             + "(" + PARTNER_INSTRUMENT_PINSTRUMENTID + " INTEGER," + PARTNER_INSTRUMENT_PARTNERID + " INTEGER,"
             + PARTNER_INSTRUMENT_SERIALNO + " TEXT," + PARTNER_INSTRUMENT_PINSTRUMENTNAME + " TEXT," + PARTNER_INSTRUMENT_MAKE + " TEXT," + PARTNER_INSTRUMENT_MODEL + " TEXT,"
             + PARTNER_INSTRUMENT_LASTCALIBRATED + " NUMERIC," + PARTNER_INSTRUMENT_CALIBRATIONDUEDATE + " NUMERIC,"
-            + PARTNER_INSTRUMENT_CURRENTLOCATION + " TEXT," + PARTNER_INSTRUMENT_STATUS + " TEXT," + PARTNER_INSTRUMENT_TESTID
-            + " INTEGER," + PARTNER_INSTRUMENT_CREATIONDATE + " TEXT, " + PARTNER_INSTRUMENT_SAMPLINGFLOWRATE + " TEXT,"
-            + PARTNER_INSTRUMENT_SAMPLINGTIME + " TEXT," + PARTNER_INSTRUMENT_AEROSOLUSED + " TEXT," + PARTNER_INSTRUMENT_AEROSOLGENERATORTYPE + " TEXT" + ")";
+            + PARTNER_INSTRUMENT_STATUS + " TEXT," + PARTNER_INSTRUMENT_CERTFILENAME + " TEXT," + PARTNER_INSTRUMENT_REMARKS
+            + " TEXT," + PARTNER_INSTRUMENT_LASTUPDATEDDATE + " TEXT" + ")";
+//            + PARTNER_INSTRUMENT_SAMPLINGFLOWRATE + " TEXT," + PARTNER_INSTRUMENT_SAMPLINGTIME + " TEXT,"
+//            + PARTNER_INSTRUMENT_AEROSOLUSED + " TEXT," + PARTNER_INSTRUMENT_AEROSOLGENERATORTYPE + " TEXT" + ")";
 
+    // plant table details
+    public static final String PLANT_TABLE_NAME = "plant";
+    public static final String PLANT_PLANTID = "plantId";
+    public static final String PLANT_PLANTNAME = "plantName";
+    public static final String PLANT_ADDRESS = "address";
+    public static final String PLANT_ADDITIONALDETAILS = "additionalDetails";
+    public static final String PLANT_DIRECTORNAME = "directorName";
+    public static final String PLANT_DIRECTORCONTACTNO = "directorContactNo";
+    public static final String PLANT_DIRECTOREMAILID = "directorEmailId";
+    public static final String PLANT_CONTACTPERSONNAME = "contactPersonName";
+    public static final String PLANT_CONTACTPERSONNO = "contactPersonNo";
+    //
+    // plant  table create statment
+    private static final String CREATE_TABLE_PLANT = "CREATE TABLE " + PLANT_TABLE_NAME
+            + "(" + PLANT_PLANTID + " INTEGER," + PLANT_PLANTNAME + " TEXT,"
+            + PLANT_ADDRESS + " TEXT," + PLANT_ADDITIONALDETAILS + " INTEGER," + PLANT_DIRECTORNAME + " TEXT,"
+            + PLANT_DIRECTORCONTACTNO + " TEXT,"
+            + PLANT_DIRECTOREMAILID + " TEXT," + PLANT_CONTACTPERSONNAME + " TEXT," + PLANT_CONTACTPERSONNO + " TEXT" + ")";
+//            + PARTNER_REG_EMAIL + " TEXT," + PARTNER_REG_CELL_NO + " TEXT," + PARTNER_SERVICE_INCHARGE + " TEXT,"
+//            + PARTNER_EMAIL + " TEXT," + PARTNER_CELL_NO + " TEXT," + PARTNER_CREATION_DATE + " TEXT" + ")";
 
-    //client instrument able details
+    //client instrument table details
     public static final String CLIENT_INSTRUMENT_TABLE_NAME = "client_instrument";
     public static final String CLIENT_INSTRUMENT_CINSTRUMENTID = "cInstrumentId";
     public static final String CLIENT_INSTRUMENT_INSTRUMENTID = "instrumentId";
@@ -210,25 +248,52 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
     public static final String CLIENT_INSTRUMENT_MODEL = "model";
     public static final String CLIENT_INSTRUMENT_LASTCALIBRATED = "lastCalibrationDate";
     public static final String CLIENT_INSTRUMENT_CALIBRATIONDUEDATE = "calibrationDueDate";
-    public static final String CLIENT_INSTRUMENT_CURRENTLOCATION = "currentLocation";
+    //    public static final String CLIENT_INSTRUMENT_CURRENTLOCATION = "currentLocation";
     public static final String CLIENT_INSTRUMENT_STATUS = "status";
-    public static final String CLIENT_INSTRUMENT_TESTID = "testId";
-    public static final String CLIENT_INSTRUMENT_CREATIONDATE = "lastUpdatedDate";
+    //    public static final String CLIENT_INSTRUMENT_TESTID = "testId";
+    public static final String CLIENT_INSTRUMENT_CERTFILENAME = "certFileName";
+    public static final String CLIENT_INSTRUMENT_REMARKS = "remarks";
+    public static final String CLIENT_INSTRUMENT_LASTUPDATEDDATE = "lastUpdatedDate";
     //new addition
-    public static final String CLIENT_INSTRUMENT_SAMPLINGFLOWRATE = "samplingFlowRate";
-    public static final String CLIENT_INSTRUMENT_SAMPLINGTIME = "samplingTime";
-    public static final String CLIENT_INSTRUMENT_AEROSOLUSED = "aerosolUsed";
-    public static final String CLIENT_INSTRUMENT_AEROSOLGENERATORTYPE = "aerosolGeneratorType";
+//    public static final String CLIENT_INSTRUMENT_SAMPLINGFLOWRATE = "samplingFlowRate";
+//    public static final String CLIENT_INSTRUMENT_SAMPLINGTIME = "samplingTime";
+//    public static final String CLIENT_INSTRUMENT_AEROSOLUSED = "aerosolUsed";
+//    public static final String CLIENT_INSTRUMENT_AEROSOLGENERATORTYPE = "aerosolGeneratorType";
+
 
     // partner instrument table create statment
     private static final String CREATE_TABLE_CLIENT_INSTRUMENT = "CREATE TABLE " + CLIENT_INSTRUMENT_TABLE_NAME
             + "(" + CLIENT_INSTRUMENT_CINSTRUMENTID + " INTEGER," + CLIENT_INSTRUMENT_INSTRUMENTID + " TEXT,"
             + CLIENT_INSTRUMENT_SERIALNO + " TEXT," + CLIENT_INSTRUMENT_CINSTRUMENTNAME + " TEXT, " + CLIENT_INSTRUMENT_MAKE + " TEXT,"
             + CLIENT_INSTRUMENT_MODEL + " TEXT," + CLIENT_INSTRUMENT_LASTCALIBRATED + " TEXT,"
-            + CLIENT_INSTRUMENT_CALIBRATIONDUEDATE + " TEXT," + CLIENT_INSTRUMENT_CURRENTLOCATION + " TEXT,"
-            + CLIENT_INSTRUMENT_STATUS + " TEXT," + CLIENT_INSTRUMENT_TESTID
-            + " INTEGER," + CLIENT_INSTRUMENT_CREATIONDATE + " TEXT," + CLIENT_INSTRUMENT_SAMPLINGFLOWRATE + " TEXT,"
-            + CLIENT_INSTRUMENT_SAMPLINGTIME + " TEXT," + CLIENT_INSTRUMENT_AEROSOLUSED + " TEXT," + CLIENT_INSTRUMENT_AEROSOLGENERATORTYPE + " TEXT " + ")";
+            + CLIENT_INSTRUMENT_CALIBRATIONDUEDATE + " TEXT," + CLIENT_INSTRUMENT_STATUS + " TEXT," + CLIENT_INSTRUMENT_LASTUPDATEDDATE + " TEXT" + ")";
+//            + CLIENT_INSTRUMENT_CURRENTLOCATION + " TEXT,"+ CLIENT_INSTRUMENT_TESTID
+//            + " INTEGER," + CLIENT_INSTRUMENT_SAMPLINGFLOWRATE + " TEXT,"
+//            + CLIENT_INSTRUMENT_SAMPLINGTIME + " TEXT," + CLIENT_INSTRUMENT_AEROSOLUSED + " TEXT," + CLIENT_INSTRUMENT_AEROSOLGENERATORTYPE + " TEXT " + ")";
+
+//Client instrument test table creation
+
+    public static final String CLIENT_INSTRUMENT_TEST_TABLE_NAME = "client_instrument_test";
+    public static final String CLIENT_INSTRUMENT_TEST_CLIENT_INSTRUMENT_TEST_ID = "client_instrument_test_id";
+    public static final String CLIENT_INSTRUMENT_TEST_CLIENT_INSTRUMENT_ID = "client_instrument_id";
+    public static final String CLIENT_INSTRUMENT_TEST_CLIENT_INSTRUMENT_TEST_CODE = "client_instrument_test_code";
+    public static final String CLIENT_INSTRUMENT_TEST_CLIENT_INSTRUMENT_TEST_NAME = "client_instrument_test_name";
+
+    private static final String CREATE_TABLE_CLIENT_INSTRUMENT_TEST = "CREATE TABLE " + CLIENT_INSTRUMENT_TEST_TABLE_NAME
+            + "(" + CLIENT_INSTRUMENT_TEST_CLIENT_INSTRUMENT_TEST_ID + " INTEGER," + CLIENT_INSTRUMENT_TEST_CLIENT_INSTRUMENT_ID + " INTEGER,"
+            + CLIENT_INSTRUMENT_TEST_CLIENT_INSTRUMENT_TEST_CODE + " TEXT," + CLIENT_INSTRUMENT_TEST_CLIENT_INSTRUMENT_TEST_NAME + " TEXT" + ")";
+
+    //Partner instrument test table creation
+
+    public static final String PARTNER_INSTRUMENT_TEST_TABLE_NAME = "partner_instrument_test";
+    public static final String PARTNER_INSTRUMENT_TEST_ID = "partner_instrument_test_id";
+    public static final String PARTNER_INSTRUMENT_ID = "partner_instrument_id";
+    public static final String PARTNER_INSTRUMENT_TEST_CODE = "partner_instrument_test_code";
+    public static final String PARTNER_INSTRUMENT_TEST_NAME = "partner_instrument_test_name";
+
+    private static final String CREATE_TABLE_PARTNER_INSTRUMENT_TEST = "CREATE TABLE " + PARTNER_INSTRUMENT_TEST_TABLE_NAME
+            + "(" + PARTNER_INSTRUMENT_TEST_ID + " INTEGER," + PARTNER_INSTRUMENT_ID + " INTEGER,"
+            + PARTNER_INSTRUMENT_TEST_CODE + " TEXT," + PARTNER_INSTRUMENT_TEST_NAME + " TEXT" + ")";
 
 
     //roomfilter able details
@@ -242,19 +307,20 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
     public static final String ROOMFILTER_SPECIFICATION = "specification";
     public static final String ROOMFILTER_WIDTH = "width";
     public static final String ROOMFILTER_LENGTH = "length";
-    public static final String ROOMFILTER_GRILLAREA = "grillArea";
-    public static final String ROOMFILTER_EFFECTIVEGRILLAREA = "effectiveGrillArea";
+    //    public static final String ROOMFILTER_GRILLAREA = "grillArea";
+//    public static final String ROOMFILTER_EFFECTIVEGRILLAREA = "effectiveGrillArea";
     public static final String ROOMFILTER_ISSUPPLYFILTER = "isSupplyFilter";
-    public static final String ROOMFILTER_CREATIONDATE = "creationDate";
+    public static final String ROOMFILTER_LASTUPDATEDDATE = "lastUpdatedDate";
 
     // roomfilter table create statment
     private static final String CREATE_TABLE_ROOMFILTER = "CREATE TABLE " + ROOMFILTER_TABLE_NAME
             + "(" + ROOMFILTER_FILTERID + " INTEGER," + ROOMFILTER_FILTERTYPE + " TEXT,"
             + ROOMFILTER_EFFICIENCY + " REAL," + ROOMFILTER_FILTERCODE + " TEXT," + ROOMFILTER_PARTICLESIZE + " TEXT,"
             + ROOMFILTER_ROOMID + " INTEGER," + ROOMFILTER_SPECIFICATION + " REAL,"
-            + ROOMFILTER_WIDTH + " REAL," + ROOMFILTER_LENGTH + " REAL," + ROOMFILTER_GRILLAREA + " REAL,"
-            + ROOMFILTER_EFFECTIVEGRILLAREA + " REAL," + ROOMFILTER_ISSUPPLYFILTER + " INTEGER,"
-            + ROOMFILTER_CREATIONDATE + " TEXT " + ")";
+            + ROOMFILTER_WIDTH + " REAL," + ROOMFILTER_LENGTH + " REAL," + ROOMFILTER_ISSUPPLYFILTER + " INTEGER,"
+            + ROOMFILTER_LASTUPDATEDDATE + " TEXT " + ")";
+//    + ROOMFILTER_GRILLAREA + " REAL,"
+//            + ROOMFILTER_EFFECTIVEGRILLAREA + " REAL,"
 
 
     //room table details
@@ -269,58 +335,61 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
     public static final String ROOM_LENGTH = "length";
     public static final String ROOM_AREA = "area";
     public static final String ROOM_VOLUME = "volume";
-    public static final String ROOM_ACPHNLT = "acphNLT";
+    public static final String ROOM_ACPH = "acph";
     public static final String ROOM_TESTREF = "testRef";
     public static final String ROOM_ISOCLAUSE = "isoClause";
     public static final String ROOM_OCCUPANCYSTATE = "occupancyState";
-    public static final String ROOM_ROOMSUPPLYAIRFLOWCFM = "roomSupplyAirflowCFM";
+    public static final String ROOM_SUPPLYAIRFLOW = "supplyAirflow";
     public static final String ROOM_AHUFLOWCFM = "ahuFlowCFM";
-    public static final String ROOM_ROOMPRESSUREPA = "roomPressurePA";
+    public static final String ROOM_ROOMPRESSUREPA = "roomPressure";
     public static final String ROOM_FRESHAIRCFM = "freshAirCFM";
     public static final String ROOM_BLEEDAIRCFM = "bleedAirCFM";
-    public static final String ROOM_EXHAUSTAIRCFM = "exhaustAirCFM";
+    public static final String ROOM_EXHAUSTAIRFLOW = "exhaustAirFlow";
     public static final String ROOM_TEMPERATURE = "temperature";
     public static final String ROOM_RH = "rh";
-    public static final String ROOM_RETURNAIRCFM = "returnAirCFM";
-    public static final String ROOM_SUPPLYAIRGRILLQTY = "supplyAirGrillQTY";
-    public static final String ROOM_RETURNAIRGRILLQTY = "returnAirGrillQTY";
-    public static final String ROOM_SUPPLYAIRFILTERQTY = "supplyAirFilterQTY";
-    public static final String ROOM_RETURNAIRFILTERQTY = "returnAirFilterQTY";
+    public static final String ROOM_RETURNAIRFLOW = "returnAirFlow";
+    //    public static final String ROOM_SUPPLYAIRGRILLQTY = "supplyAirGrillQTY";
+//    public static final String ROOM_RETURNAIRGRILLQTY = "returnAirGrillQTY";
+//    public static final String ROOM_SUPPLYAIRFILTERQTY = "supplyAirFilterQTY";
+//    public static final String ROOM_RETURNAIRFILTERQTY = "returnAirFilterQTY";
     public static final String ROOM_REMARKS = "remarks";
-    public static final String ROOM_CREATIONDATE = "creationDate";
+    public static final String ROOM_LASTUPDATEDDATE = "lastUpdatedDate";
 
     // room table create statment
     private static final String CREATE_TABLE_ROOM = "CREATE TABLE " + ROOM_TABLE_NAME
             + "(" + ROOM_ROOMID + " INTEGER," + ROOM_AHUID + " INTEGER," + ROOM_AREAID + " INTEGER,"
             + ROOM_ROOMNAME + " TEXT," + ROOM_ROOMNO + " TEXT," + ROOM_WIDTH + " REAL,"
             + ROOM_HEIGHT + " REAL," + ROOM_LENGTH + " REAL," + ROOM_AREA + " REAL," + ROOM_VOLUME + " REAL,"
-            + ROOM_ACPHNLT + " INTEGER," + ROOM_TESTREF + " TEXT," + ROOM_ISOCLAUSE + " TEXT," + ROOM_OCCUPANCYSTATE + " TEXT,"
-            + ROOM_ROOMSUPPLYAIRFLOWCFM + " REAL," + ROOM_AHUFLOWCFM + " REAL," + ROOM_ROOMPRESSUREPA + " REAL,"
-            + ROOM_FRESHAIRCFM + " REAL," + ROOM_BLEEDAIRCFM + " REAL," + ROOM_EXHAUSTAIRCFM + " REAL," + ROOM_TEMPERATURE + " REAL,"
-            + ROOM_RH + " REAL," + ROOM_RETURNAIRCFM + " REAL," + ROOM_SUPPLYAIRGRILLQTY + " INTEGER," + ROOM_RETURNAIRGRILLQTY
-            + " INTEGER," + ROOM_SUPPLYAIRFILTERQTY + " INTEGER," + ROOM_RETURNAIRFILTERQTY + " INTEGER," + ROOM_REMARKS + " TEXT,"
-            + ROOM_CREATIONDATE + " TEXT " + ")";
+            + ROOM_ACPH + " INTEGER," + ROOM_TESTREF + " TEXT," + ROOM_ISOCLAUSE + " TEXT," + ROOM_OCCUPANCYSTATE + " TEXT,"
+            + ROOM_SUPPLYAIRFLOW + " REAL," + ROOM_AHUFLOWCFM + " REAL," + ROOM_ROOMPRESSUREPA + " REAL,"
+            + ROOM_FRESHAIRCFM + " REAL," + ROOM_BLEEDAIRCFM + " REAL," + ROOM_EXHAUSTAIRFLOW + " REAL," + ROOM_TEMPERATURE + " REAL,"
+            + ROOM_RH + " REAL," + ROOM_RETURNAIRFLOW + " REAL," + ROOM_REMARKS + " TEXT,"
+            + ROOM_LASTUPDATEDDATE + " TEXT " + ")";
+//    + ROOM_SUPPLYAIRGRILLQTY + " INTEGER," + ROOM_RETURNAIRGRILLQTY
+//            + " INTEGER," + ROOM_SUPPLYAIRFILTERQTY + " INTEGER," + ROOM_RETURNAIRFILTERQTY + " INTEGER,"
 
     //user table details
-    public static final String USER_TABLE_NAME = "user";
-    public static final String USER_ID = "id";
+    public static final String USER_TABLE_NAME = "app_user";
+    public static final String USER_ID = "app_user_id";
     public static final String USER_NAME = "name";
-    public static final String USER_TYPE = "type";
+    public static final String USER_TYPE = "user_type";
     public static final String USER_EMAIL = "email";
     public static final String USER_CONTACT = "contact";
     public static final String USER_DEPARTMENT = "department";
-    public static final String USER_ACTIVE = "active";
-    public static final String USER_DELETED = "deleted";
+    public static final String USER_ACTIVE = "is_active";
+    public static final String USER_DELETED = "is_deleted";
     public static final String USER_PASSWORD = "password";
-    public static final String USER_PARTNERID = "partnerId";
-    public static final String USER_CREATIONDATE = "creationDate";
+    public static final String USER_PARTNERID = "partner_id";
+    public static final String USER_ROLE_TYPE = "role_type";
+    public static final String USER_PERMISSIONS = "permissions";
+    public static final String USER_LAST_UPDATED = "last_updated";
 
     // user table create statment
     private static final String CREATE_TABLE_USER = "CREATE TABLE " + USER_TABLE_NAME
             + "(" + USER_ID + " INTEGER," + USER_NAME + " TEXT,"
             + USER_TYPE + " REAL," + USER_EMAIL + " TEXT," + USER_CONTACT + " TEXT," + USER_DEPARTMENT + " TEXT,"
             + USER_ACTIVE + " NUMERIC," + USER_DELETED + " NUMERIC," + USER_PASSWORD + " TEXT, " + USER_PARTNERID + " INTEGER,"
-            + USER_CREATIONDATE + " TEXT " + ")";
+            + USER_ROLE_TYPE + " TEXT," + USER_PERMISSIONS + " TEXT," + USER_LAST_UPDATED + " TEXT " + ")";
 
     //partner user table details
     public static final String PARTNERUSER_TABLE_NAME = "partneruser";
@@ -353,7 +422,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
     public static final String AREA_PLANTID = "plantId";
     public static final String AREA_AREANAME = "areaName";
     public static final String AREA_ADDITIONALDETAILS = "additionalDetails";
-    public static final String AREA_CREATIONDATE = "creationDate";
+    public static final String AREA_CREATIONDATE = "lastUpdatedDate";
 
     // Area table create statment
     private static final String CREATE_TABLE_AREA = "CREATE TABLE " + AREA_TABLE_NAME
@@ -417,8 +486,8 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
             + TEST_DETAILS_BLOCKNAME + " TEXT," + TEST_DETAILS_TESTAREA + " TEXT," + TEST_DETAILS_AHUNO + " TEXT," + TEST_DETAILS_ROOMNO + " TEXT,"
             + TEST_DETAILS_ROOMNAME + " TEXT," + TEST_DETAILS_EQUIPMENTNO + " TEXT," + TEST_DETAILS_EQUIPMENTNAME + " TEXT,"
             + TEST_DETAILS_TESTERNAME + " TEXT," + TEST_DETAILS_WITNESSNAME + " TEXT," + TEST_DETAILS_PARTNERNAME + " TEXT,"
-            + PARTNER_INSTRUMENT_SAMPLINGFLOWRATE + " TEXT," + PARTNER_INSTRUMENT_SAMPLINGTIME + " TEXT,"
-            + PARTNER_INSTRUMENT_AEROSOLUSED + " TEXT," + PARTNER_INSTRUMENT_AEROSOLGENERATORTYPE + " TEXT," + TEST_DETAILS_TESTCODE + " TEXT" + ")";
+            + TEST_DETAILS_SAMPLINGFLOWRATE + " TEXT," + TEST_DETAILS_SAMPLINGTIME + " TEXT," + TEST_DETAILS_AEROSOLUSED
+            + " TEXT," + TEST_DETAILS_AEROSOLGENERATORTYPE + " TEXT," + TEST_DETAILS_TESTCODE + " TEXT" + ")";
 
 
     //test spesification table details
@@ -483,7 +552,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
 
     //partners table creation
     public static final String PARTNERS_TABLE_NAME = "partners";
-    public static final String PARTNERS_ID = "id";
+    public static final String PARTNERS_ID = "partner_id";
     public static final String PARTNERS_NAME = "name";
     public static final String PARTNERS_PARTNERCODE = "partnerCode";
     public static final String PARTNERS_STATUS = "status";
@@ -531,7 +600,10 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_ROOM);
         db.execSQL(CREATE_TABLE_USER);
         db.execSQL(CREATE_TABLE_PARTNERUSER);
+        db.execSQL(CREATE_TABLE_PLANT);
         db.execSQL(CREATE_TABLE_CLIENT_INSTRUMENT);
+        db.execSQL(CREATE_TABLE_CLIENT_INSTRUMENT_TEST);
+        db.execSQL(CREATE_TABLE_PARTNER_INSTRUMENT_TEST);
         db.execSQL(CREATE_TABLE_TESTMASTER);
         db.execSQL(CREATE_TABLE_AREA);
         db.execSQL(CREATE_TABLE_TESTREADING);
@@ -583,7 +655,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
         if (partnersArrayList.size() != 0) {
             for (Partners partners : partnersArrayList) {
                 ContentValues contentValues = new ContentValues();
-                contentValues.put(PARTNERS_ID, partners.getId());
+                contentValues.put(PARTNERS_ID, partners.getPartnerId());
                 contentValues.put(PARTNERS_NAME, partners.getName());
                 contentValues.put(PARTNERS_PARTNERCODE, partners.getPartnerCode());
                 contentValues.put(PARTNERS_STATUS, partners.getStatus());
@@ -600,10 +672,10 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 contentValues.put(PARTNERS_CELLNO, partners.getCellNo());
                 contentValues.put(PARTNERS_CREATIONDATE, partners.getCreationDate());
 
-                if (getExistingId(tableName, PARTNERS_ID, partners.getId()) > 0) {
-                    db.update(tableName, contentValues, PARTNERS_ID + "=" + partners.getId(), null);
+                if (getExistingId(tableName, PARTNERS_ID, partners.getPartnerId()) > 0) {
+                    db.update(tableName, contentValues, PARTNERS_ID + "=" + partners.getPartnerId(), null);
                 } else {
-                    Log.d("Avinash", "insert applicable partners.getId()=" + partners.getId() + " partners.getName()=" + partners.getName());
+//                    Log.d("Avinash", "insert applicable partners.getId()=" + partners.getPartnerId() + " partners.getName()=" + partners.getName());
                     db.insert(tableName, null, contentValues);
                 }
 
@@ -852,15 +924,21 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 contentValues.put(APLICABLE_TEST_ROOM_APLICABLE_TESTID, applicableTestRoom.getAplicable_testId());
                 contentValues.put(APLICABLE_TEST_ROOM_ROOMID, applicableTestRoom.getRoomId());
                 contentValues.put(APLICABLE_TEST_ROOM_TESTNAME, applicableTestRoom.getTestName());
+                contentValues.put(APLICABLE_TEST_ROOM_TESTCODE, applicableTestRoom.getTestCode());
+                contentValues.put(APLICABLE_TEST_ROOM_TESTFORMAT, applicableTestRoom.getTestFormat());
+                contentValues.put(APLICABLE_TEST_ROOM_TESTSPECIFICATION, applicableTestRoom.getTestSpecification());
+                contentValues.put(APLICABLE_TEST_ROOM_OCCUPENCYSTATE, applicableTestRoom.getOccupencyState());
+                contentValues.put(APLICABLE_TEST_ROOM_TESTREFERENCE, applicableTestRoom.getTestReference());
+                contentValues.put(APLICABLE_TEST_ROOM_TESTPROP, applicableTestRoom.getTestProp());
                 contentValues.put(APLICABLE_TEST_ROOM_PERIODICITY, applicableTestRoom.getPeriodicity());
                 contentValues.put(APLICABLE_TEST_ROOM_LOCATION, applicableTestRoom.getLocation());
                 contentValues.put(APLICABLE_TEST_ROOM_NOOFCYCLE, applicableTestRoom.getNoOfCycle());
-                contentValues.put(APLICABLE_TEST_ROOM_CREATIONDATE, applicableTestRoom.getCreationDate());
+                contentValues.put(APLICABLE_TEST_ROOM_LASTUPDATEDDATE, applicableTestRoom.getLastUpdatedDate());
 
                 if (getExistingId(tableName, APLICABLE_TEST_ROOM_APLICABLE_TESTID, applicableTestRoom.getAplicable_testId()) > 0) {
                     db.update(tableName, contentValues, APLICABLE_TEST_ROOM_APLICABLE_TESTID + "=" + applicableTestRoom.getAplicable_testId(), null);
                 } else {
-                    Log.d("Avinash", "insert applicable applicableTestRoom.getAplicable_testId()=" + applicableTestRoom.getAplicable_testId() + " applicableTestRoom.getRoomId()=" + applicableTestRoom.getRoomId());
+//                    Log.d("Avinash", "insert applicable applicableTestRoom.getAplicable_testId()=" + applicableTestRoom.getAplicable_testId() + " applicableTestRoom.getRoomId()=" + applicableTestRoom.getRoomId());
                     db.insert(tableName, null, contentValues);
 
                 }
@@ -888,6 +966,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 contentValues.put(EQUIPMENT_TESTREFERENCE, equipment.getTestReference());
                 contentValues.put(EQUIPMENT_FILTERQUANTITY, equipment.getFilterQuantity());
                 contentValues.put(EQUIPMENT_EQUIPMENTLOAD, equipment.getEquipmentLoad());
+                contentValues.put(EQUIPMENT_ISOCLAUSE, equipment.getIsoClause());
                 contentValues.put(EQUIPMENT_CREATIONDATE, equipment.getCreationDate());
                 Log.d("Avinash", "isert db minvalocity=" + equipment.getMinVelocity() + "equipment.getMaxVelocity()=" + equipment.getMaxVelocity());
                 if (getExistingId(tableName, EQUIPMENT_EQUIPMENTID, equipment.getEquipmentId()) > 0) {
@@ -922,7 +1001,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 if (getExistingId(tableName, EQUIPMENTFILTER_FILTERID, equipmentFilter.getFilterId()) > 0) {
                     db.update(tableName, contentValues, EQUIPMENTFILTER_FILTERID + "=" + equipmentFilter.getFilterId(), null);
                 } else {
-                    Log.d("Avinash", "insert applicable equipmentFilter.getFilterId()=" + equipmentFilter.getFilterId() + " applicableTestRoom.getAplicable_testId()=" + equipmentFilter.getFilterCode());
+//                    Log.d("Avinash", "insert applicable equipmentFilter.getFilterId()=" + equipmentFilter.getFilterId() + " applicableTestRoom.getAplicable_testId()=" + equipmentFilter.getFilterCode());
                     db.insert(tableName, null, contentValues);
 
                 }
@@ -948,22 +1027,21 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 contentValues.put(GRILL_GRILLAREA, grill.getGrillArea());
                 contentValues.put(GRILL_EFFECTIVEAREA, grill.getEffectiveArea());
                 contentValues.put(GRILL_ISSUPPLYGRILL, grill.getIsSupplyGrill());
-                contentValues.put(GRILL_ADDITIONALDETAIL, grill.getAdditionalDetail());
+                contentValues.put(GRILL_LASTUPDATEDDATE, grill.getLastUpdatedDate());
+//                contentValues.put(GRILL_ADDITIONALDETAIL, grill.getAdditionalDetail());
 
                 if (getExistingId(tableName, GRILL_GRILLID, grill.getGrillId()) > 0) {
                     db.update(tableName, contentValues, GRILL_GRILLID + "=" + grill.getGrillId(), null);
                 } else {
-                    Log.d("Avinash", "insert applicable grill.getGrillId()=" + grill.getGrillId() + " grill.getGrillCode()=" + grill.getGrillCode());
+//                    Log.d("Avinash", "insert applicable grill.getGrillId()=" + grill.getGrillId() + " grill.getGrillCode()=" + grill.getGrillCode());
                     db.insert(tableName, null, contentValues);
                 }
-
             }
             return true;
         } else {
             return false;
         }
     }
-
 
     // insert datain PartnerInstrument table
     public boolean insertPartnerInstrument(String tableName, List<PartnerInstrument> partnerInstrumentList) {
@@ -978,16 +1056,20 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 contentValues.put(PARTNER_INSTRUMENT_PINSTRUMENTNAME, partnerInstrument.getpInstrumentName());
                 contentValues.put(PARTNER_INSTRUMENT_MAKE, partnerInstrument.getMake());
                 contentValues.put(PARTNER_INSTRUMENT_MODEL, partnerInstrument.getModel());
-                contentValues.put(PARTNER_INSTRUMENT_LASTCALIBRATED, partnerInstrument.getLastCalibrated());
+                contentValues.put(PARTNER_INSTRUMENT_LASTCALIBRATED, partnerInstrument.getLastCalibrationDate());
                 contentValues.put(PARTNER_INSTRUMENT_CALIBRATIONDUEDATE, partnerInstrument.getCalibrationDueDate());
-                contentValues.put(PARTNER_INSTRUMENT_CURRENTLOCATION, partnerInstrument.getCurrentLocation());
                 contentValues.put(PARTNER_INSTRUMENT_STATUS, partnerInstrument.getStatus());
-                contentValues.put(PARTNER_INSTRUMENT_TESTID, partnerInstrument.getTestId());
-                contentValues.put(PARTNER_INSTRUMENT_CREATIONDATE, partnerInstrument.getCreationDate());
-                contentValues.put(PARTNER_INSTRUMENT_SAMPLINGFLOWRATE, partnerInstrument.getSamplingFlowRate());
-                contentValues.put(PARTNER_INSTRUMENT_SAMPLINGTIME, partnerInstrument.getSamplingTime());
-                contentValues.put(PARTNER_INSTRUMENT_AEROSOLUSED, partnerInstrument.getAerosolUsed());
-                contentValues.put(PARTNER_INSTRUMENT_AEROSOLGENERATORTYPE, partnerInstrument.getAerosolGeneratorType());
+                contentValues.put(PARTNER_INSTRUMENT_CERTFILENAME, partnerInstrument.getCertFileName());
+                contentValues.put(PARTNER_INSTRUMENT_REMARKS, partnerInstrument.getRemarks());
+                contentValues.put(PARTNER_INSTRUMENT_LASTUPDATEDDATE, partnerInstrument.getLastUpdatedDate());
+//                contentValues.put(PARTNER_INSTRUMENT_CURRENTLOCATION, partnerInstrument.getCurrentLocation());
+
+//                contentValues.put(PARTNER_INSTRUMENT_TESTID, partnerInstrument.getTestId());
+//
+//                contentValues.put(PARTNER_INSTRUMENT_SAMPLINGFLOWRATE, partnerInstrument.getSamplingFlowRate());
+//                contentValues.put(PARTNER_INSTRUMENT_SAMPLINGTIME, partnerInstrument.getSamplingTime());
+//                contentValues.put(PARTNER_INSTRUMENT_AEROSOLUSED, partnerInstrument.getAerosolUsed());
+//                contentValues.put(PARTNER_INSTRUMENT_AEROSOLGENERATORTYPE, partnerInstrument.getAerosolGeneratorType());
                 Log.d("VALDOC", "controler response data  13=inserting=");
 
                 if (getExistingId(tableName, PARTNER_INSTRUMENT_PINSTRUMENTID, partnerInstrument.getpInstrumentId()) > 0) {
@@ -1019,21 +1101,98 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 contentValues.put(CLIENT_INSTRUMENT_MODEL, clientInstrument.getModel());
                 contentValues.put(CLIENT_INSTRUMENT_LASTCALIBRATED, clientInstrument.getLastCalibrated());
                 contentValues.put(CLIENT_INSTRUMENT_CALIBRATIONDUEDATE, clientInstrument.getCalibrationDueDate());
-                contentValues.put(CLIENT_INSTRUMENT_CURRENTLOCATION, clientInstrument.getCurrentLocation());
+//                contentValues.put(CLIENT_INSTRUMENT_CURRENTLOCATION, clientInstrument.getCurrentLocation());
                 contentValues.put(CLIENT_INSTRUMENT_STATUS, clientInstrument.getStatus());
-                contentValues.put(CLIENT_INSTRUMENT_TESTID, clientInstrument.getTestId());
-                contentValues.put(CLIENT_INSTRUMENT_CREATIONDATE, clientInstrument.getCreationDate());
-                contentValues.put(CLIENT_INSTRUMENT_SAMPLINGFLOWRATE, clientInstrument.getSamplingFlowRate());
-                contentValues.put(CLIENT_INSTRUMENT_SAMPLINGTIME, clientInstrument.getSamplingTime());
-                contentValues.put(CLIENT_INSTRUMENT_AEROSOLUSED, clientInstrument.getAerosolUsed());
-                contentValues.put(CLIENT_INSTRUMENT_AEROSOLGENERATORTYPE, clientInstrument.getAerosolGeneratorType());
+//                contentValues.put(CLIENT_INSTRUMENT_TESTID, clientInstrument.getTestId());
+                contentValues.put(CLIENT_INSTRUMENT_LASTUPDATEDDATE, clientInstrument.getLastUpdatedDate());
+//                contentValues.put(CLIENT_INSTRUMENT_SAMPLINGFLOWRATE, clientInstrument.getSamplingFlowRate());
+//                contentValues.put(CLIENT_INSTRUMENT_SAMPLINGTIME, clientInstrument.getSamplingTime());
+//                contentValues.put(CLIENT_INSTRUMENT_AEROSOLUSED, clientInstrument.getAerosolUsed());
+//                contentValues.put(CLIENT_INSTRUMENT_AEROSOLGENERATORTYPE, clientInstrument.getAerosolGeneratorType());
 
                 if (getExistingId(tableName, CLIENT_INSTRUMENT_CINSTRUMENTID, clientInstrument.getcInstrumentId()) > 0) {
                     db.update(tableName, contentValues, CLIENT_INSTRUMENT_CINSTRUMENTID + "=" + clientInstrument.getcInstrumentId(), null);
                 } else {
-                    Log.d("Avinash", "insert applicable clientInstrument.getcInstrumentId()=" + clientInstrument.getcInstrumentId() + " clientInstrument.getcInstrumentId()=" + clientInstrument.getcInstrumentId());
+//                    Log.d("Avinash", "insert applicable clientInstrument.getcInstrumentId()=" + clientInstrument.getcInstrumentId() + " clientInstrument.getcInstrumentId()=" + clientInstrument.getcInstrumentId());
                     db.insert(tableName, null, contentValues);
 
+                }
+            }
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    // insert datain ClientInstrumentTest table
+    public boolean insertClientInstrumentTest(String tableName, List<ClientInstrumentTest> clientInstrumentTestList) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        if (clientInstrumentTestList.size() != 0) {
+            for (ClientInstrumentTest clientInstrumentTest : clientInstrumentTestList) {
+                ContentValues contentValues = new ContentValues();
+                contentValues.put(CLIENT_INSTRUMENT_TEST_CLIENT_INSTRUMENT_TEST_ID, clientInstrumentTest.getClientInstrumentTestId());
+                contentValues.put(CLIENT_INSTRUMENT_TEST_CLIENT_INSTRUMENT_ID, clientInstrumentTest.getClientInstrumentId());
+                contentValues.put(CLIENT_INSTRUMENT_TEST_CLIENT_INSTRUMENT_TEST_CODE, clientInstrumentTest.getClientInstrumentTestCode());
+                contentValues.put(CLIENT_INSTRUMENT_TEST_CLIENT_INSTRUMENT_TEST_NAME, clientInstrumentTest.getClientInstrumentTestName());
+
+                if (getExistingId(tableName, CLIENT_INSTRUMENT_TEST_CLIENT_INSTRUMENT_TEST_ID, clientInstrumentTest.getClientInstrumentTestId()) > 0) {
+                    db.update(tableName, contentValues, CLIENT_INSTRUMENT_TEST_CLIENT_INSTRUMENT_TEST_ID + "=" + clientInstrumentTest.getClientInstrumentTestId(), null);
+                } else {
+//                    Log.d("Avinash", "insert applicable clientInstrument.getcInstrumentId()=" + clientInstrument.getcInstrumentId() + " clientInstrument.getcInstrumentId()=" + clientInstrument.getcInstrumentId());
+                    db.insert(tableName, null, contentValues);
+                }
+            }
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    // insert datain plant table
+    public boolean insertPlant(String tableName, List<Plant> plantList) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        if (plantList.size() != 0) {
+            for (Plant plant : plantList) {
+                ContentValues contentValues = new ContentValues();
+                contentValues.put(PLANT_PLANTID, plant.getPlantId());
+                contentValues.put(PLANT_PLANTNAME, plant.getPlantName());
+                contentValues.put(PLANT_ADDRESS, plant.getAddress());
+                contentValues.put(PLANT_ADDITIONALDETAILS, plant.getAdditionalDetails());
+                contentValues.put(PLANT_DIRECTORNAME, plant.getDirectorName());
+                contentValues.put(PLANT_DIRECTORCONTACTNO, plant.getDirectorContactNo());
+                contentValues.put(PLANT_DIRECTOREMAILID, plant.getDirectorEmailId());
+                contentValues.put(PLANT_CONTACTPERSONNAME, plant.getContactPersonName());
+                contentValues.put(PLANT_CONTACTPERSONNO, plant.getContactPersonNo());
+
+                if (getExistingId(tableName, PLANT_PLANTID, plant.getPlantId()) > 0) {
+                    db.update(tableName, contentValues, PLANT_PLANTID + "=" + plant.getPlantId(), null);
+                } else {
+//                    Log.d("Avinash", "insert applicable plant.getcInstrumentId()=" + plant.getcInstrumentId() + " plant.getcInstrumentId()=" + clientInstrument.getcInstrumentId());
+                    db.insert(tableName, null, contentValues);
+                }
+            }
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    // insert datain PartnerInstrumentTest table
+    public boolean insertPartnerInstrumentTest(String tableName, List<PartnerInstrumentTest> partnerInstrumentTestList) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        if (partnerInstrumentTestList.size() != 0) {
+            for (PartnerInstrumentTest partnerInstrumentTest : partnerInstrumentTestList) {
+                ContentValues contentValues = new ContentValues();
+                contentValues.put(PARTNER_INSTRUMENT_TEST_ID, partnerInstrumentTest.getPartnerInstrumentTestId());
+                contentValues.put(PARTNER_INSTRUMENT_ID, partnerInstrumentTest.getPartnerInstrumentId());
+                contentValues.put(PARTNER_INSTRUMENT_TEST_CODE, partnerInstrumentTest.getPartnerInstrumentTestCode());
+                contentValues.put(PARTNER_INSTRUMENT_TEST_NAME, partnerInstrumentTest.getPartnerInstrumentTestName());
+
+                if (getExistingId(tableName, PARTNER_INSTRUMENT_TEST_ID, partnerInstrumentTest.getPartnerInstrumentTestId()) > 0) {
+                    db.update(tableName, contentValues, PARTNER_INSTRUMENT_TEST_ID + "=" + partnerInstrumentTest.getPartnerInstrumentTestId(), null);
+                } else {
+//                    Log.d("Avinash", "insert applicable clientInstrument.getcInstrumentId()=" + clientInstrument.getcInstrumentId() + " clientInstrument.getcInstrumentId()=" + clientInstrument.getcInstrumentId());
+                    db.insert(tableName, null, contentValues);
                 }
             }
             return true;
@@ -1058,30 +1217,30 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 contentValues.put(ROOM_LENGTH, room.getLength());
                 contentValues.put(ROOM_AREA, room.getArea());
                 contentValues.put(ROOM_VOLUME, room.getVolume());
-                contentValues.put(ROOM_ACPHNLT, room.getAcphNLT());
+                contentValues.put(ROOM_ACPH, room.getAcph());
                 contentValues.put(ROOM_TESTREF, room.getTestRef());
                 contentValues.put(ROOM_ISOCLAUSE, room.getIsoClause());
                 contentValues.put(ROOM_OCCUPANCYSTATE, room.getOccupancyState());
-                contentValues.put(ROOM_ROOMSUPPLYAIRFLOWCFM, room.getRoomSupplyAirflowCFM());
+                contentValues.put(ROOM_SUPPLYAIRFLOW, room.getSupplyAirflow());
                 contentValues.put(ROOM_AHUFLOWCFM, room.getAhuFlowCFM());
-                contentValues.put(ROOM_ROOMPRESSUREPA, room.getRoomPressurePA());
+                contentValues.put(ROOM_ROOMPRESSUREPA, room.getRoomPressure());
                 contentValues.put(ROOM_FRESHAIRCFM, room.getFreshAirCFM());
                 contentValues.put(ROOM_BLEEDAIRCFM, room.getBleedAirCFM());
-                contentValues.put(ROOM_EXHAUSTAIRCFM, room.getExhaustAirCFM());
+                contentValues.put(ROOM_EXHAUSTAIRFLOW, room.getExhaustAirFlow());
                 contentValues.put(ROOM_TEMPERATURE, room.getTemperature());
                 contentValues.put(ROOM_RH, room.getRh());
-                contentValues.put(ROOM_RETURNAIRCFM, room.getReturnAirCFM());
-                contentValues.put(ROOM_SUPPLYAIRGRILLQTY, room.getSupplyAirGrillQTY());
-                contentValues.put(ROOM_RETURNAIRGRILLQTY, room.getReturnAirGrillQTY());
-                contentValues.put(ROOM_SUPPLYAIRFILTERQTY, room.getSupplyAirFilterQTY());
-                contentValues.put(ROOM_RETURNAIRFILTERQTY, room.getReturnAirFilterQTY());
+                contentValues.put(ROOM_RETURNAIRFLOW, room.getReturnAirFlow());
+//                contentValues.put(ROOM_SUPPLYAIRGRILLQTY, room.getSupplyAirGrillQTY());
+//                contentValues.put(ROOM_RETURNAIRGRILLQTY, room.getReturnAirGrillQTY());
+//                contentValues.put(ROOM_SUPPLYAIRFILTERQTY, room.getSupplyAirFilterQTY());
+//                contentValues.put(ROOM_RETURNAIRFILTERQTY, room.getReturnAirFilterQTY());
                 contentValues.put(ROOM_REMARKS, room.getRemarks());
-                contentValues.put(ROOM_CREATIONDATE, room.getCreationDate());
+                contentValues.put(ROOM_LASTUPDATEDDATE, room.getLastUpdatedDate());
 
                 if (getExistingId(tableName, ROOM_ROOMID, room.getRoomId()) > 0) {
                     db.update(tableName, contentValues, ROOM_ROOMID + "=" + room.getRoomId(), null);
                 } else {
-                    Log.d("Avinash", "insert applicable room.getRoomId()=" + room.getRoomId() + " room.getAreaId()=" + room.getAreaId());
+//                    Log.d("Avinash", "insert applicable room.getRoomId()=" + room.getRoomId() + " room.getAreaId()=" + room.getAreaId());
                     db.insert(tableName, null, contentValues);
 
                 }
@@ -1108,14 +1267,14 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 contentValues.put(ROOMFILTER_SPECIFICATION, roomFilter.getSpecification());
                 contentValues.put(ROOMFILTER_WIDTH, roomFilter.getWidth());
                 contentValues.put(ROOMFILTER_LENGTH, roomFilter.getLength());
-                contentValues.put(ROOMFILTER_EFFECTIVEGRILLAREA, roomFilter.getEffectiveGrillArea());
+//                contentValues.put(ROOMFILTER_EFFECTIVEGRILLAREA, roomFilter.getEffectiveGrillArea());
                 contentValues.put(ROOMFILTER_ISSUPPLYFILTER, roomFilter.getIsSupplyFilter());
-                contentValues.put(ROOMFILTER_CREATIONDATE, roomFilter.getCreationDate());
+                contentValues.put(ROOMFILTER_LASTUPDATEDDATE, roomFilter.getLastUpdatedDate());
 
                 if (getExistingId(tableName, ROOMFILTER_FILTERID, roomFilter.getFilterId()) > 0) {
                     db.update(tableName, contentValues, ROOMFILTER_FILTERID + "=" + roomFilter.getFilterId(), null);
                 } else {
-                    Log.d("Avinash", "insert applicable roomFilter.getFilterId()=" + roomFilter.getFilterId() + " roomFilter.getFilterId()=" + roomFilter.getFilterId());
+//                    Log.d("Avinash", "insert applicable roomFilter.getFilterId()=" + roomFilter.getFilterId() + " roomFilter.getFilterId()=" + roomFilter.getFilterId());
                     db.insert(tableName, null, contentValues);
 
                 }
@@ -1127,29 +1286,30 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
     }
 
     // insert data in user table
-    public boolean insertUser(String tableName, List<User> userList) {
+    public boolean insertUser(String tableName, List<AppUser> userList) {
         SQLiteDatabase db = this.getWritableDatabase();
         if (userList.size() != 0) {
-            for (User user : userList) {
-                Log.d("valdoc", "insert user Login method :" + user.getName() + "\n" + user.getId());
+            for (AppUser user : userList) {
+//                Log.d("valdoc", "insert user Login method :" + user.getName() + "\n" + user.getId());
                 ContentValues contentValues = new ContentValues();
-                contentValues.put(USER_ID, user.getId());
+                contentValues.put(USER_ID, user.getApp_user_id());
                 contentValues.put(USER_NAME, user.getName());
-                contentValues.put(USER_TYPE, user.getType());
+                contentValues.put(USER_TYPE, user.getUserType());
                 contentValues.put(USER_EMAIL, user.getEmail());
                 contentValues.put(USER_CONTACT, user.getContact());
                 contentValues.put(USER_DEPARTMENT, user.getDepartment());
-                contentValues.put(USER_ACTIVE, user.getActive());
-                contentValues.put(USER_DELETED, user.getDeleted());
+                contentValues.put(USER_ACTIVE, user.getIsActive());
+                contentValues.put(USER_DELETED, user.getIsDeleted());
                 contentValues.put(USER_PASSWORD, user.getPassword());
                 contentValues.put(USER_PARTNERID, user.getPartnerId());
-                contentValues.put(USER_CREATIONDATE, user.getCreationDate());
+                contentValues.put(USER_ROLE_TYPE, user.getRoleType());
+                contentValues.put(USER_PERMISSIONS, user.getPermissions());
+                contentValues.put(USER_LAST_UPDATED, user.getLastUpdated());
 
-                if (getExistingId(tableName, USER_ID, user.getId()) > 0) {
-                    db.update(tableName, contentValues, USER_ID + "=" + user.getId(), null);
+                if (getExistingId(tableName, USER_ID, user.getApp_user_id()) > 0) {
+                    db.update(tableName, contentValues, USER_ID + "=" + user.getApp_user_id(), null);
                 } else {
-                    Log.d("Avinash", "insert applicable user.getId()=" + user.getId() + " user.getName()=" + user.getName());
-
+//                    Log.d("Avinash", "insert applicable user.getId()=" + user.getApp_user_id() + " user.getName()=" + user.getName());
                     db.insert(tableName, null, contentValues);
 
                 }
@@ -1222,13 +1382,12 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 contentValues.put(AREA_AREAID, area.getAreaId());
                 contentValues.put(AREA_PLANTID, area.getPlantId());
                 contentValues.put(AREA_AREANAME, area.getAreaName());
-                contentValues.put(AREA_CREATIONDATE, area.getCreationDate());
-                contentValues.put(AREA_CREATIONDATE, area.getCreationDate());
+                contentValues.put(AREA_CREATIONDATE, area.getlastUpdatedDate());
 
                 if (getExistingId(tableName, AREA_AREAID, area.getAreaId()) > 0) {
                     db.update(tableName, contentValues, AREA_AREAID + "=" + area.getAreaId(), null);
                 } else {
-                    Log.d("Avinash", "insert area.getAreaId()=" + area.getAreaId() + " area.getPlantId()=" + area.getPlantId());
+//                    Log.d("Avinash", "insert area.getAreaId()=" + area.getAreaId() + " area.getPlantId()=" + area.getPlantId());
 
                     db.insert(tableName, null, contentValues);
 
@@ -1243,27 +1402,29 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
 
 
     // select data from user table
-    public ArrayList<User> getUserInfo() {
-        ArrayList<User> userArrayList;
-        userArrayList = new ArrayList<User>();
+    public ArrayList<AppUser> getUserInfo() {
+        ArrayList<AppUser> userArrayList;
+        userArrayList = new ArrayList<AppUser>();
         String selectQuery = "SELECT * FROM " + USER_TABLE_NAME;
         SQLiteDatabase database = this.getWritableDatabase();
         Cursor cursor = database.rawQuery(selectQuery, null);
         Log.d("valdoc", "Login method :");
         if (cursor.moveToFirst()) {
             do {
-                User user = new User();
-                user.setId(Integer.parseInt(cursor.getString(0)));
+                AppUser user = new AppUser();
+                user.setApp_user_id(Integer.parseInt(cursor.getString(0)));
                 user.setName(cursor.getString(1));
-                user.setType(cursor.getString(2));
+                user.setUserType(cursor.getString(2));
                 user.setEmail(cursor.getString(3));
                 user.setContact(cursor.getString(4));
                 user.setDepartment(cursor.getString(5));
-                user.setActive(Integer.parseInt(cursor.getString(6)));
-                user.setDeleted(Integer.parseInt(cursor.getString(7)));
+                user.setIsActive(Integer.parseInt(cursor.getString(6)));
+                user.setIsDeleted(Integer.parseInt(cursor.getString(7)));
                 user.setPassword(cursor.getString(8));
                 user.setPartnerId(cursor.getInt(9));
-                user.setCreationDate(cursor.getString(10));
+                user.setRoleType(cursor.getString(10));
+                user.setPermissions(cursor.getString(11));
+                user.setLastUpdated(cursor.getString(12));
                 Log.d("valdoc", "Login method :" + user.getName() + "\n" + user.getPassword());
                 userArrayList.add(user);
             } while (cursor.moveToNext());
@@ -1290,14 +1451,14 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 clientInstrument.setModel(cursor.getString(5));
                 clientInstrument.setLastCalibrated(cursor.getString(6));
                 clientInstrument.setCalibrationDueDate(cursor.getString(7));
-                clientInstrument.setCurrentLocation(cursor.getString(8));
+//                clientInstrument.setCurrentLocation(cursor.getString(8));
                 clientInstrument.setStatus(cursor.getString(9));
-                clientInstrument.setTestId(cursor.getInt(10));
-                clientInstrument.setCreationDate(cursor.getString(11));
-                clientInstrument.setSamplingFlowRate(cursor.getString(12));
-                clientInstrument.setSamplingTime(cursor.getString(13));
-                clientInstrument.setAerosolUsed(cursor.getString(14));
-                clientInstrument.setAerosolGeneratorType(cursor.getString(15));
+//                clientInstrument.setTestId(cursor.getInt(10));
+                clientInstrument.setLastUpdatedDate(cursor.getString(11));
+//                clientInstrument.setSamplingFlowRate(cursor.getString(12));
+//                clientInstrument.setSamplingTime(cursor.getString(13));
+//                clientInstrument.setAerosolUsed(cursor.getString(14));
+//                clientInstrument.setAerosolGeneratorType(cursor.getString(15));
                 Log.d("Avinash", "db clientInstrument" + clientInstrument.getSerialNo());
                 clientInstrumentArrayList.add(clientInstrument);
             } while (cursor.moveToNext());
@@ -1322,16 +1483,19 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 partnerInstrument.setpInstrumentName(cursor.getString(3));
                 partnerInstrument.setMake(cursor.getString(4));
                 partnerInstrument.setModel(cursor.getString(5));
-                partnerInstrument.setLastCalibrated(cursor.getString(6));
+                partnerInstrument.setLastUpdatedDate(cursor.getString(6));
                 partnerInstrument.setCalibrationDueDate(cursor.getString(7));
-                partnerInstrument.setCurrentLocation(cursor.getString(8));
-                partnerInstrument.setStatus(cursor.getString(9));
-                partnerInstrument.setTestId(cursor.getInt(10));
-                partnerInstrument.setCreationDate(cursor.getString(11));
-                partnerInstrument.setSamplingFlowRate(cursor.getString(12));
-                partnerInstrument.setSamplingTime(cursor.getString(13));
-                partnerInstrument.setAerosolUsed(cursor.getString(14));
-                partnerInstrument.setAerosolGeneratorType(cursor.getString(15));
+//                partnerInstrument.setCurrentLocation(cursor.getString(8));
+                partnerInstrument.setStatus(cursor.getString(8));
+                partnerInstrument.setCertFileName(cursor.getString(9));
+                partnerInstrument.setRemarks(cursor.getString(10));
+                partnerInstrument.setLastUpdatedDate(cursor.getString(11));
+//                partnerInstrument.setTestId(cursor.getInt(10));
+
+//                partnerInstrument.setSamplingFlowRate(cursor.getString(12));
+//                partnerInstrument.setSamplingTime(cursor.getString(13));
+//                partnerInstrument.setAerosolUsed(cursor.getString(14));
+//                partnerInstrument.setAerosolGeneratorType(cursor.getString(15));
                 Log.d("valdoc", "partnerInstrument" + partnerInstrument.getpInstrumentId());
                 partnerInstrumentArrayList.add(partnerInstrument);
             } while (cursor.moveToNext());
@@ -1429,7 +1593,8 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 equipment.setTestReference(cursor.getString(7));
                 equipment.setFilterQuantity(cursor.getInt(8));
                 equipment.setEquipmentLoad(cursor.getInt(9));
-                equipment.setCreationDate(cursor.getString(10));
+                equipment.setIsoClause(cursor.getString(10));
+                equipment.setCreationDate(cursor.getString(11));
                 Log.d("Avinash", "get equipment db minvalocity=" + cursor.getDouble(5) + "equipment.getMaxVelocity()=" + cursor.getDouble(6));
 
                 equipmentArrayList.add(equipment);
@@ -1679,7 +1844,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
 
     // select data from room filter table
     public ArrayList<RoomFilter> getFromRoomFilter(int roomId) {
-        Log.d("valdoc", "ValdocDatabaseHelper :getFromRoomFilter:=" + roomId);
+//        Log.d("valdoc", "ValdocDatabaseHelper :getFromRoomFilter:=" + roomId);
         ArrayList<RoomFilter> filterArrayList;
         filterArrayList = new ArrayList<RoomFilter>();
         String selectQuery = " SELECT * FROM " + ROOMFILTER_TABLE_NAME +
@@ -1698,10 +1863,10 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 roomFilter.setSpecification(cursor.getDouble(6));
                 roomFilter.setWidth(cursor.getDouble(7));
                 roomFilter.setLength(cursor.getDouble(8));
-                roomFilter.setGrillArea(cursor.getDouble(9));
-                roomFilter.setEffectiveGrillArea(cursor.getInt(10));
-                roomFilter.setIsSupplyFilter(cursor.getInt(11));
-                roomFilter.setCreationDate(cursor.getString(12));
+//                roomFilter.setGrillArea(cursor.getDouble(9));
+//                roomFilter.setEffectiveGrillArea(cursor.getInt(10));
+                roomFilter.setIsSupplyFilter(cursor.getInt(9));
+                roomFilter.setLastUpdatedDate(cursor.getString(10));
                 filterArrayList.add(roomFilter);
             } while (cursor.moveToNext());
         } // return contact list return wordList; }
@@ -1720,11 +1885,11 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
                 HashMap<String, String> hashMap = new HashMap<String, String>();
-                Log.d("valdoc", "ValdocDatabaseHelper :filter code equipment1:=" + cursor.getColumnIndex(GRILL_GRILLCODE));
-                Log.d("valdoc", "ValdocDatabaseHelper :GRILL_GRILLCODE:=" + cursor.getString(cursor.getColumnIndex(GRILL_GRILLCODE)).toString() + "\n hashMap.get(GRILL_EFFECTIVEAREA) =" + cursor.getDouble(cursor.getColumnIndex(GRILL_EFFECTIVEAREA)));
+//                Log.d("valdoc", "ValdocDatabaseHelper :filter code equipment1:=" + cursor.getColumnIndex(GRILL_GRILLCODE));
+//                Log.d("valdoc", "ValdocDatabaseHelper :GRILL_GRILLCODE:=" + cursor.getString(cursor.getColumnIndex(GRILL_GRILLCODE)).toString() + "\n hashMap.get(GRILL_EFFECTIVEAREA) =" + cursor.getDouble(cursor.getColumnIndex(GRILL_EFFECTIVEAREA)));
                 hashMap.put(GRILL_GRILLCODE, cursor.getString(cursor.getColumnIndex(GRILL_GRILLCODE)).toString());
                 hashMap.put(GRILL_EFFECTIVEAREA, "" + cursor.getDouble(cursor.getColumnIndex(GRILL_EFFECTIVEAREA)));
-                Log.d("valdoc", "ValdocDatabaseHelper :equipment1:=" + hashMap.get(GRILL_GRILLCODE) + "\n hashMap.get(GRILL_EFFECTIVEAREA) =" + hashMap.get(GRILL_EFFECTIVEAREA));
+//                Log.d("valdoc", "ValdocDatabaseHelper :equipment1:=" + hashMap.get(GRILL_GRILLCODE) + "\n hashMap.get(GRILL_EFFECTIVEAREA) =" + hashMap.get(GRILL_EFFECTIVEAREA));
                 grillList.add(hashMap);
             } while (cursor.moveToNext());
         } // return contact list return wordList; }
@@ -1765,8 +1930,8 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
             do {
                 Room room = new Room();
                 room.setRoomId(cursor.getInt(0));
-                room.setAreaId(cursor.getInt(1));
-                room.setAhuId(cursor.getInt(2));
+                room.setAhuId(cursor.getInt(1));
+                room.setAreaId(cursor.getInt(2));
                 room.setRoomName(cursor.getString(3));
                 room.setRoomNo(cursor.getString(4));
                 room.setWidth(cursor.getDouble(5));
@@ -1775,27 +1940,27 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 room.setArea(cursor.getDouble(8));
                 room.setVolume(cursor.getDouble(9));
 
-                room.setAcphNLT(cursor.getInt(10));
+                room.setAcph(cursor.getInt(10));
                 room.setTestRef(cursor.getString(11));
                 room.setIsoClause(cursor.getString(12));
                 room.setOccupancyState(cursor.getString(13));
-                room.setRoomSupplyAirflowCFM(cursor.getDouble(14));
+                room.setSupplyAirflow(cursor.getDouble(14));
                 room.setAhuFlowCFM(cursor.getDouble(15));
 
-                room.setRoomPressurePA(cursor.getDouble(16));
+                room.setRoomPressure(cursor.getDouble(16));
                 room.setFreshAirCFM(cursor.getDouble(17));
                 room.setBleedAirCFM(cursor.getDouble(18));
-                room.setExhaustAirCFM(cursor.getDouble(19));
+                room.setExhaustAirFlow(cursor.getDouble(19));
                 room.setTemperature(cursor.getDouble(20));
                 room.setRh(cursor.getDouble(21));
 
-                room.setReturnAirCFM(cursor.getDouble(22));
-                room.setSupplyAirGrillQTY(cursor.getInt(23));
-                room.setReturnAirGrillQTY(cursor.getInt(24));
-                room.setSupplyAirFilterQTY(cursor.getInt(25));
-                room.setReturnAirFilterQTY(cursor.getInt(26));
-                room.setRemarks(cursor.getString(27));
-                room.setCreationDate(cursor.getString(28));
+                room.setReturnAirFlow(cursor.getDouble(22));
+//                room.setSupplyAirGrillQTY(cursor.getInt(23));
+//                room.setReturnAirGrillQTY(cursor.getInt(24));
+//                room.setSupplyAirFilterQTY(cursor.getInt(25));
+//                room.setReturnAirFilterQTY(cursor.getInt(26));
+                room.setRemarks(cursor.getString(23));
+                room.setLastUpdatedDate(cursor.getString(24));
                 roomArrayList.add(room);
             } while (cursor.moveToNext());
         } // return contact list return wordList; }
@@ -1816,10 +1981,17 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 applicableTestRoom.setAplicable_testId(cursor.getInt(0));
                 applicableTestRoom.setRoomId(cursor.getInt(1));
                 applicableTestRoom.setTestName(cursor.getString(2));
-                applicableTestRoom.setPeriodicity(cursor.getString(3));
-                applicableTestRoom.setLocation(cursor.getInt(4));
-                applicableTestRoom.setNoOfCycle(cursor.getInt(5));
-                applicableTestRoom.setCreationDate(cursor.getString(6));
+                applicableTestRoom.setTestCode(cursor.getString(3));
+                applicableTestRoom.setTestFormat(cursor.getString(4));
+                applicableTestRoom.setTestSpecification(cursor.getString(5));
+                applicableTestRoom.setOccupencyState(cursor.getString(6));
+                applicableTestRoom.setTestReference(cursor.getString(7));
+                applicableTestRoom.setTestProp(cursor.getString(8));
+
+                applicableTestRoom.setPeriodicity(cursor.getString(9));
+                applicableTestRoom.setLocation(cursor.getInt(10));
+                applicableTestRoom.setNoOfCycle(cursor.getInt(11));
+                applicableTestRoom.setLastUpdatedDate(cursor.getString(12));
                 Log.d("Avinash", "applicableTestRoom=" + applicableTestRoom.getTestName());
                 applicableTestRoomArrayList.add(applicableTestRoom);
             } while (cursor.moveToNext());

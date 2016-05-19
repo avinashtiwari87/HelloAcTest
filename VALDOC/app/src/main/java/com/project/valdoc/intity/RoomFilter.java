@@ -18,10 +18,10 @@ public class RoomFilter implements Serializable{
     private double specification;
     private double width;
     private double length;
-    private double  grillArea;
-    private double effectiveGrillArea;
+//    private double  grillArea;
+//    private double effectiveGrillArea;
     private int isSupplyFilter;
-    private String creationDate;
+    private String lastUpdatedDate;
 
     public String getRoomfilter() {
         return roomfilter;
@@ -103,21 +103,21 @@ public class RoomFilter implements Serializable{
         this.length = length;
     }
 
-    public double getGrillArea() {
-        return grillArea;
-    }
-
-    public void setGrillArea(double grillArea) {
-        this.grillArea = grillArea;
-    }
-
-    public double getEffectiveGrillArea() {
-        return effectiveGrillArea;
-    }
-
-    public void setEffectiveGrillArea(double effectiveGrillArea) {
-        this.effectiveGrillArea = effectiveGrillArea;
-    }
+//    public double getGrillArea() {
+//        return grillArea;
+//    }
+//
+//    public void setGrillArea(double grillArea) {
+//        this.grillArea = grillArea;
+//    }
+//
+//    public double getEffectiveGrillArea() {
+//        return effectiveGrillArea;
+//    }
+//
+//    public void setEffectiveGrillArea(double effectiveGrillArea) {
+//        this.effectiveGrillArea = effectiveGrillArea;
+//    }
 
     public int getIsSupplyFilter() {
         return isSupplyFilter;
@@ -127,11 +127,11 @@ public class RoomFilter implements Serializable{
         this.isSupplyFilter = isSupplyFilter;
     }
 
-    public String getCreationDate() {
-        return creationDate;
+    public String getLastUpdatedDate() {
+        return lastUpdatedDate;
     }
 
-    public void setCreationDate(String creationDate) {
-        this.creationDate = creationDate;
+    public void setLastUpdatedDate(String lastUpdatedDate) {
+        this.lastUpdatedDate = lastUpdatedDate;
     }
 }

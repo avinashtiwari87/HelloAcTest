@@ -7,10 +7,12 @@ import android.util.Log;
 
 import com.project.valdoc.db.ValdocDatabaseHandler;
 import com.project.valdoc.intity.Ahu;
+import com.project.valdoc.intity.AppUser;
 import com.project.valdoc.intity.ApplicableTestEquipment;
 import com.project.valdoc.intity.ApplicableTestRoom;
 import com.project.valdoc.intity.Area;
 import com.project.valdoc.intity.ClientInstrument;
+import com.project.valdoc.intity.ClientInstrumentTest;
 import com.project.valdoc.intity.Equipment;
 import com.project.valdoc.intity.EquipmentFilter;
 import com.project.valdoc.intity.Grill;
@@ -18,7 +20,6 @@ import com.project.valdoc.intity.PartnerInstrument;
 import com.project.valdoc.intity.Partners;
 import com.project.valdoc.intity.Room;
 import com.project.valdoc.intity.RoomFilter;
-import com.project.valdoc.intity.User;
 import com.project.valdoc.task.HttpConnection;
 import com.project.valdoc.task.HttpConnectionTask;
 
@@ -155,6 +156,10 @@ public class ValdocControler {
             ArrayList clientInstrumentsList = clientInstrumentsData(jsonRootObject.optJSONArray("clientInstruments"));
             arrayListHashMap.put(ValdocDatabaseHandler.CLIENT_INSTRUMENT_TABLE_NAME, clientInstrumentsList);
 
+            //client instrument Test data parsing
+            ArrayList clientInstrumentsTestList = clientInstrumentsTestData(jsonRootObject.optJSONArray("insertClientInstrumentTest"));
+            arrayListHashMap.put(ValdocDatabaseHandler.CLIENT_INSTRUMENT_TEST_TABLE_NAME, clientInstrumentsList);
+
             //partner instrument data parsing
             ArrayList partnerInstrumentsList = partnerInstrumentsData(jsonRootObject.optJSONArray("partnerInstruments"));
             arrayListHashMap.put(ValdocDatabaseHandler.PARTNER_INSTRUMENT_TABLE_NAME, partnerInstrumentsList);
@@ -181,7 +186,7 @@ public class ValdocControler {
             Partners partners = new Partners();
             try {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
-                partners.setId(jsonObject.optInt("id"));
+                partners.setPartnerId(jsonObject.optInt("partner_id"));
                 partners.setName(jsonObject.optString("name"));
                 partners.setPartnerCode(jsonObject.optString("partnerCode").toString());
                 partners.setStatus(jsonObject.optString("status").toString());
@@ -220,16 +225,35 @@ public class ValdocControler {
                 clientInstrument.setModel(jsonObject.optString("model").toString());
                 clientInstrument.setLastCalibrated(jsonObject.optString("lastCalibrationDate").toString());
                 clientInstrument.setCalibrationDueDate(jsonObject.optString("calibrationDueDate").toString());
-                clientInstrument.setCurrentLocation(jsonObject.optString("currentLocation").toString());
+//                clientInstrument.setCurrentLocation(jsonObject.optString("currentLocation").toString());
                 clientInstrument.setStatus(jsonObject.optString("status").toString());
-                clientInstrument.setTestId(jsonObject.optInt("testId"));
-                clientInstrument.setCreationDate(jsonObject.optString("creationDate").toString());
-                clientInstrument.setSamplingFlowRate(jsonObject.optString("samplingFlowRate").toString());
-                clientInstrument.setSamplingTime(jsonObject.optString("samplingTime").toString());
-                clientInstrument.setAerosolUsed(jsonObject.optString("aerosolUsed").toString());
-                clientInstrument.setAerosolGeneratorType(jsonObject.optString("aerosolGeneratorType").toString());
+//                clientInstrument.setTestId(jsonObject.optInt("testId"));
+                clientInstrument.setLastUpdatedDate(jsonObject.optString("lastUpdatedDate").toString());
+//                clientInstrument.setSamplingFlowRate(jsonObject.optString("samplingFlowRate").toString());
+//                clientInstrument.setSamplingTime(jsonObject.optString("samplingTime").toString());
+//                clientInstrument.setAerosolUsed(jsonObject.optString("aerosolUsed").toString());
+//                clientInstrument.setAerosolGeneratorType(jsonObject.optString("aerosolGeneratorType").toString());
                 Log.d("valdoc", "parse partner");
                 arrayList.add(clientInstrument);
+            } catch (Exception e) {
+
+            }
+        }
+        return arrayList;
+    }
+
+    private ArrayList clientInstrumentsTestData(JSONArray jsonArray) {
+        ArrayList arrayList = new ArrayList();
+        //Iterate the jsonArray and print the info of JSONObjects
+        for (int i = 0; i < jsonArray.length(); i++) {
+            ClientInstrumentTest clientInstrumentTest = new ClientInstrumentTest();
+            try {
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                clientInstrumentTest.setClientInstrumentTestId(jsonObject.optInt("clientInstrumentTestId"));
+                clientInstrumentTest.setClientInstrumentId(jsonObject.optInt("clientInstrumentId"));
+                clientInstrumentTest.setClientInstrumentTestCode(jsonObject.optString("clientInstrumentTestCode","").toString());
+                clientInstrumentTest.setClientInstrumentTestName(jsonObject.optString("clientInstrumentTestName").toString());
+                arrayList.add(clientInstrumentTest);
             } catch (Exception e) {
 
             }
@@ -251,16 +275,18 @@ public class ValdocControler {
                 partnerInstrument.setpInstrumentName(jsonObject.optString("pInstrumentName").toString());
                 partnerInstrument.setMake(jsonObject.optString("make").toString());
                 partnerInstrument.setModel(jsonObject.optString("model").toString());
-                partnerInstrument.setLastCalibrated(jsonObject.optString("lastCalibrationDate").toString());
+                partnerInstrument.setLastCalibrationDate(jsonObject.optString("lastCalibrationDate").toString());
                 partnerInstrument.setCalibrationDueDate(jsonObject.optString("calibrationDueDate").toString());
-                partnerInstrument.setCurrentLocation(jsonObject.optString("currentLocation").toString());
+//                partnerInstrument.setCurrentLocation(jsonObject.optString("currentLocation").toString());
                 partnerInstrument.setStatus(jsonObject.optString("status").toString());
-                partnerInstrument.setTestId(jsonObject.optInt("testId"));
-                partnerInstrument.setCreationDate(jsonObject.optString("creationDate").toString());
-                partnerInstrument.setSamplingFlowRate(jsonObject.optString("samplingFlowRate").toString());
-                partnerInstrument.setSamplingTime(jsonObject.optString("samplingTime").toString());
-                partnerInstrument.setAerosolUsed(jsonObject.optString("aerosolUsed").toString());
-                partnerInstrument.setAerosolGeneratorType(jsonObject.optString("aerosolGeneratorType").toString());
+                partnerInstrument.setCertFileName(jsonObject.optString("certFileName"));
+                partnerInstrument.setRemarks(jsonObject.optString("remarks"));
+//                partnerInstrument.setTestId(jsonObject.optInt("testId"));
+                partnerInstrument.setLastUpdatedDate(jsonObject.optString("lastUpdatedDate").toString());
+//                partnerInstrument.setSamplingFlowRate(jsonObject.optString("samplingFlowRate").toString());
+//                partnerInstrument.setSamplingTime(jsonObject.optString("samplingTime").toString());
+//                partnerInstrument.setAerosolUsed(jsonObject.optString("aerosolUsed").toString());
+//                partnerInstrument.setAerosolGeneratorType(jsonObject.optString("aerosolGeneratorType").toString());
                 Log.d("valdoc", "parse partner");
                 arrayList.add(partnerInstrument);
             } catch (Exception e) {
@@ -340,8 +366,9 @@ public class ValdocControler {
                 equipment.setEquipmentName(jsonObject.optString("equipmentName").toString());
                 equipment.setTestReference(jsonObject.optString("testReference").toString());
                 equipment.setEquipmentNo(jsonObject.optString("equipmentNo").toString());
+                equipment.setIsoClause(jsonObject.optString("isoClause").toString());
                 equipment.setCreationDate(jsonObject.optString("creationDate").toString());
-                Log.d("Avinash", "parsing equipment db minvalocity=" + equipment.getMinVelocity() + "equipment.getMaxVelocity()=" + equipment.getMaxVelocity());
+//                Log.d("Avinash", "parsing equipment db minvalocity=" + equipment.getMinVelocity() + "equipment.getMaxVelocity()=" + equipment.getMaxVelocity());
 
                 arrayList.add(equipment);
             } catch (Exception e) {
@@ -363,11 +390,18 @@ public class ValdocControler {
                 applicableTestRoom.setRoomId(jsonObject.optInt("roomId"));
                 applicableTestRoom.setTestName(jsonObject.optString("testName").toString());
 
+                applicableTestRoom.setTestCode(jsonObject.optString("testCode").toString());
+                applicableTestRoom.setTestFormat(jsonObject.optString("testFormat"));
+                applicableTestRoom.setTestSpecification(jsonObject.optString("testSpecification"));
+                applicableTestRoom.setOccupencyState(jsonObject.optString("occupencyState").toString());
+                applicableTestRoom.setTestReference(jsonObject.optString("testReference"));
+                applicableTestRoom.setTestProp(jsonObject.optString("testProp"));
+
                 applicableTestRoom.setPeriodicity(jsonObject.optString("periodicity").toString());
                 applicableTestRoom.setLocation(jsonObject.optInt("location"));
                 applicableTestRoom.setNoOfCycle(jsonObject.optInt("noOfCycle"));
 
-                applicableTestRoom.setCreationDate(jsonObject.optString("creationDate").toString());
+                applicableTestRoom.setLastUpdatedDate(jsonObject.optString("lastUpdatedDate").toString());
                 arrayList.add(applicableTestRoom);
             } catch (Exception e) {
 
@@ -389,7 +423,7 @@ public class ValdocControler {
                 grill.setRoomId(jsonObject.optInt("roomId"));
                 grill.setWidh(jsonObject.optDouble("width"));
                 grill.setLength(jsonObject.optDouble("length"));
-                grill.setGrillArea(jsonObject.optDouble("grillArea"));
+                grill.setGrillArea(jsonObject.optDouble("area"));
                 grill.setEffectiveArea(jsonObject.optDouble("effectiveArea"));
 
                 if (jsonObject.optBoolean("supplyGrill")) {
@@ -397,12 +431,12 @@ public class ValdocControler {
                 } else {
                     grill.setIsSupplyGrill(0);
                 }
-                if (jsonObject.optBoolean("additionalDetail")) {
-                    grill.setAdditionalDetail(1);
-                } else {
-                    grill.setAdditionalDetail(0);
-                }
-                grill.setCreationDate(jsonObject.optString("creationDate").toString());
+//                if (jsonObject.optBoolean("additionalDetail")) {
+//                    grill.setAdditionalDetail(1);
+//                } else {
+//                    grill.setAdditionalDetail(0);
+//                }
+                grill.setLastUpdatedDate(jsonObject.optString("lastUpdatedDate").toString());
                 arrayList.add(grill);
             } catch (Exception e) {
 
@@ -428,15 +462,15 @@ public class ValdocControler {
                 roomFilter.setSpecification(jsonObject.optDouble("specification"));
                 roomFilter.setWidth(jsonObject.optDouble("width"));
                 roomFilter.setLength(jsonObject.optDouble("length"));
-                roomFilter.setGrillArea(jsonObject.optDouble("grillArea"));
-                roomFilter.setEffectiveGrillArea(jsonObject.optDouble("effectiveGrillArea"));
-                if (jsonObject.optBoolean("supplyFilter")) {
+//                roomFilter.setGrillArea(jsonObject.optDouble("grillArea"));
+//                roomFilter.setEffectiveGrillArea(jsonObject.optDouble("effectiveGrillArea"));
+                if (jsonObject.optBoolean("isSupplyFilter")) {
                     roomFilter.setIsSupplyFilter(1);
                 } else {
                     roomFilter.setIsSupplyFilter(0);
                 }
 
-                roomFilter.setCreationDate(jsonObject.optString("creationDate").toString());
+                roomFilter.setLastUpdatedDate(jsonObject.optString("lastUpdatedDate").toString());
                 arrayList.add(roomFilter);
             } catch (Exception e) {
 
@@ -463,27 +497,27 @@ public class ValdocControler {
                 room.setLength(jsonObject.optDouble("length"));
                 room.setArea(jsonObject.optDouble("area"));
                 room.setVolume(jsonObject.optDouble("volume"));
-                room.setAcphNLT(jsonObject.optInt("acphNLT"));
+                room.setAcph(jsonObject.optInt("acph"));
                 room.setTestRef(jsonObject.optString("testRef"));
                 room.setIsoClause(jsonObject.optString("isoClause").toString());
                 room.setOccupancyState(jsonObject.optString("occupancyState").toString());
-                room.setRoomSupplyAirflowCFM(jsonObject.optDouble("roomSupplyAirflowCFM"));
+                room.setSupplyAirflow(jsonObject.optDouble("supplyAirflow"));
                 room.setAhuFlowCFM(jsonObject.optDouble("ahuFlowCFM"));
-                room.setRoomPressurePA(jsonObject.optDouble("roomPressurePA"));
+                room.setRoomPressure(jsonObject.optDouble("roomPressure"));
 
                 room.setFreshAirCFM(jsonObject.optDouble("freshAirCFM"));
                 room.setBleedAirCFM(jsonObject.optDouble("bleedAirCFM"));
-                room.setExhaustAirCFM(jsonObject.optDouble("exhaustAirCFM"));
+                room.setExhaustAirFlow(jsonObject.optDouble("exhaustAirFlow"));
                 room.setTemperature(jsonObject.optDouble("temperature"));
                 room.setRh(jsonObject.optDouble("rh"));
-                room.setReturnAirCFM(jsonObject.optDouble("returnAirCFM"));
-                room.setSupplyAirGrillQTY(jsonObject.optInt("supplyAirGrillQTY"));
-                room.setReturnAirGrillQTY(jsonObject.optInt("returnAirGrillQTY"));
-                room.setSupplyAirFilterQTY(jsonObject.optInt("supplyAirFilterQTY"));
-
-                room.setReturnAirFilterQTY(jsonObject.optInt("returnAirFilterQTY"));
+                room.setReturnAirFlow(jsonObject.optDouble("returnAirFlow"));
+//                room.setSupplyAirGrillQTY(jsonObject.optInt("supplyAirGrillQTY"));
+//                room.setReturnAirGrillQTY(jsonObject.optInt("returnAirGrillQTY"));
+//                room.setSupplyAirFilterQTY(jsonObject.optInt("supplyAirFilterQTY"));
+//
+//                room.setReturnAirFilterQTY(jsonObject.optInt("returnAirFilterQTY"));
                 room.setRemarks(jsonObject.optString("remarks").toString());
-                room.setCreationDate(jsonObject.optString("creationDate").toString());
+                room.setLastUpdatedDate(jsonObject.optString("lastUpdatedDate").toString());
                 arrayList.add(room);
             } catch (Exception e) {
 
@@ -503,7 +537,7 @@ public class ValdocControler {
                 area.setPlantId(jsonObject.optInt("plantId"));
                 area.setAreaName(jsonObject.optString("areaName").toString());
                 area.setAdditionalDetails(jsonObject.optString("additionalDetails").toString());
-                area.setCreationDate(jsonObject.optString("createdDate").toString());
+                area.setlastUpdatedDate(jsonObject.optString("lastUpdatedDate").toString());
                 arrayList.add(area);
             } catch (Exception e) {
 
@@ -551,26 +585,27 @@ public class ValdocControler {
         ArrayList arrayList = new ArrayList();
         //Iterate the jsonArray and print the info of JSONObjects
         for (int i = 0; i < jsonArray.length(); i++) {
-            User user = new User();
+            AppUser user = new AppUser();
             try {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
 
-                user.setId(jsonObject.optInt("id"));
+                user.setApp_user_id(jsonObject.optInt("appUserId"));
                 user.setName(jsonObject.optString("name").toString());
                 user.setPartnerId(jsonObject.optInt("partnerId"));
                 if (jsonObject.optString("userType").equalsIgnoreCase("PARTNER")) {
-                    user.setType("PARTNER");
+                    user.setUserType("PARTNER");
                 } else {
-                    user.setType("CLIENT");
+                    user.setUserType("CLIENT");
                 }
                 user.setEmail(jsonObject.optString("email").toString());
                 user.setContact(jsonObject.optString("contact").toString());
                 user.setDepartment(jsonObject.optString("department").toString());
-                user.setActive(jsonObject.optInt("active"));
-                user.setDeleted(jsonObject.optInt("deleted"));
-
+                user.setIsActive(jsonObject.optInt("isActive"));
+                user.setIsDeleted(jsonObject.optInt("isDeleted"));
                 user.setPassword(passwordDecryption(jsonObject.optString("password").toString()));
-                user.setCreationDate(jsonObject.optString("lastUpdated").toString());
+                user.setRoleType(jsonObject.optString("roleType").toString());
+                user.setPermissions(jsonObject.optString("permissions").toString());
+                user.setLastUpdated(jsonObject.optString("lastUpdated").toString());
                 arrayList.add(user);
             } catch (Exception e) {
 

@@ -18,6 +18,7 @@ public class Equipment implements Serializable{
     private String testReference;
     private int filterQuantity;
     private double equipmentLoad;
+    private String isoClause;
     private String creationDate;
 
     public String getEquipment() {
@@ -106,6 +107,14 @@ public class Equipment implements Serializable{
 
     public void setEquipmentLoad(double equipmentLoad) {
         this.equipmentLoad = equipmentLoad;
+    }
+
+    public String getIsoClause() {
+        return isoClause;
+    }
+
+    public void setIsoClause(String isoClause) {
+        this.isoClause = isoClause;
     }
 
     public String getCreationDate() {

@@ -14,16 +14,18 @@ public class PartnerInstrument implements Serializable{
     private String pInstrumentName;
     private String make;
     private String model;
-    private String lastCalibrated;
+    private String lastCalibrationDate;
     private String calibrationDueDate;
-    private String currentLocation;
+//    private String currentLocation;
     private String status;
-    private int testId;
-    private String creationDate;
-    private String  SamplingFlowRate;
-    private String  SamplingTime;
-    private String  AerosolUsed;
-    private String  AerosolGeneratorType;
+    private String certFileName;
+    private String remarks;
+//    private int testId;
+    private String lastUpdatedDate;
+//    private String  SamplingFlowRate;
+//    private String  SamplingTime;
+//    private String  AerosolUsed;
+//    private String  AerosolGeneratorType;
 
     public String getPartner_instrument() {
         return partner_instrument;
@@ -81,12 +83,12 @@ public class PartnerInstrument implements Serializable{
         this.model = model;
     }
 
-    public String getLastCalibrated() {
-        return lastCalibrated;
+    public String getLastCalibrationDate() {
+        return lastCalibrationDate;
     }
 
-    public void setLastCalibrated(String lastCalibrated) {
-        this.lastCalibrated = lastCalibrated;
+    public void setLastCalibrationDate(String lastCalibrationDate) {
+        this.lastCalibrationDate = lastCalibrationDate;
     }
 
     public String getCalibrationDueDate() {
@@ -97,14 +99,6 @@ public class PartnerInstrument implements Serializable{
         this.calibrationDueDate = calibrationDueDate;
     }
 
-    public String getCurrentLocation() {
-        return currentLocation;
-    }
-
-    public void setCurrentLocation(String currentLocation) {
-        this.currentLocation = currentLocation;
-    }
-
     public String getStatus() {
         return status;
     }
@@ -113,51 +107,27 @@ public class PartnerInstrument implements Serializable{
         this.status = status;
     }
 
-    public int getTestId() {
-        return testId;
+    public String getCertFileName() {
+        return certFileName;
     }
 
-    public void setTestId(int testId) {
-        this.testId = testId;
+    public void setCertFileName(String certFileName) {
+        this.certFileName = certFileName;
     }
 
-    public String getCreationDate() {
-        return creationDate;
+    public String getRemarks() {
+        return remarks;
     }
 
-    public void setCreationDate(String creationDate) {
-        this.creationDate = creationDate;
+    public void setRemarks(String remarks) {
+        this.remarks = remarks;
     }
 
-    public String getSamplingFlowRate() {
-        return SamplingFlowRate;
+    public String getLastUpdatedDate() {
+        return lastUpdatedDate;
     }
 
-    public void setSamplingFlowRate(String samplingFlowRate) {
-        SamplingFlowRate = samplingFlowRate;
-    }
-
-    public String getSamplingTime() {
-        return SamplingTime;
-    }
-
-    public void setSamplingTime(String samplingTime) {
-        SamplingTime = samplingTime;
-    }
-
-    public String getAerosolUsed() {
-        return AerosolUsed;
-    }
-
-    public void setAerosolUsed(String aerosolUsed) {
-        AerosolUsed = aerosolUsed;
-    }
-
-    public String getAerosolGeneratorType() {
-        return AerosolGeneratorType;
-    }
-
-    public void setAerosolGeneratorType(String aerosolGeneratorType) {
-        AerosolGeneratorType = aerosolGeneratorType;
+    public void setLastUpdatedDate(String lastUpdatedDate) {
+        this.lastUpdatedDate = lastUpdatedDate;
     }
 }

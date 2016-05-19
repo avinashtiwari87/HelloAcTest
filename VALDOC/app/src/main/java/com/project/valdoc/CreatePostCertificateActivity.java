@@ -4,12 +4,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -36,7 +34,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class TestCreateActivity extends AppCompatActivity implements View.OnTouchListener {
+public class CreatePostCertificateActivity extends AppCompatActivity implements View.OnTouchListener{
     private static final String TAG = "TestCreateActivity";
     private Spinner instrumentSpiner, equipmentOrAhuSpinner, equipmentSpinner, ahuSpinner, roomSpinner, testSpinner;
     private List<String> instrumentList, equipmentOrAhuTestList, ahuTestList, equipmentTestList, roomTestList, applicableTestRoomList, applicableTestEquipmentList;
@@ -59,7 +57,7 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
     private String loginUserPartnerId = "";
     private int userPartnerId;
     private int appUserId;
-    private ValdocDatabaseHandler mValdocDatabaseHandler = new ValdocDatabaseHandler(TestCreateActivity.this);
+    private ValdocDatabaseHandler mValdocDatabaseHandler = new ValdocDatabaseHandler(CreatePostCertificateActivity.this);
 
     //test name and details
     public static final String AV="AV";
@@ -68,7 +66,6 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
     public static final String FIT="FIT";
     public static final String PCT="PCT";
     public static final String RCT="RCT";
-
 
     //old
 //    public static final String AV = "RD_AV_5";
@@ -98,43 +95,10 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_test);
-        sharedpreferences = getSharedPreferences("valdoc", Context.MODE_PRIVATE);
+        setContentView(R.layout.activity_create_post_certificate);
 
         //Resource Initialization
         spinerInitialization();
-
-        //get user name from login screen
-        Bundle extras = getIntent().getExtras();
-        if (extras == null) {
-            userName = null;
-            loginUserType = null;
-        }
-
-        //Screen Navigation after submit button hit from Certificate screen
-        else if (getIntent().hasExtra(AV) || getIntent().hasExtra(ACPHAV) || getIntent().hasExtra(ACPHH)
-                || getIntent().hasExtra(FIT) || getIntent().hasExtra(PCT) || getIntent().hasExtra(RCT)) {
-
-            //Setting User Information
-            userName = sharedpreferences.getString("USERNAME", "");
-            loginUserType = sharedpreferences.getString("USERTYPE", "");
-            appUserId = sharedpreferences.getInt("APPUSERID", 0);
-            userPartnerId = sharedpreferences.getInt("PARTNERID", 0);
-            //Setting Witness Data
-            witnessFirst.setText(sharedpreferences.getString("witness1", ""));
-            witnessSecond.setText(sharedpreferences.getString("witness2", ""));
-            witnessThird.setText(sharedpreferences.getString("witness3", ""));
-        } else {
-            userName = extras.getString("USERNAME");
-            loginUserType = extras.getString("USERTYPE");
-            appUserId = extras.getInt("APPUSERID");
-            userPartnerId = extras.getInt("PARTNERID");
-        }
-
-        mPartnerName = getPartnerName();
-        //table creation
-        // insertDataInTable();
-        // Spinner Initialization
         //instrument spinner creation
         getInstrumentList(loginUserType);
         listItemCreation();
@@ -144,17 +108,7 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
         //Custom Action Bar
         ActionBar mActionBar = getSupportActionBar();
         if (mActionBar != null)
-            Utilityies.setCustomActionBar(TestCreateActivity.this, mActionBar, userName);
-    }
-
-    private String getPartnerName() {
-        String partnerName = "";
-        int partnerId = sharedpreferences.getInt("PARTNERID", 0);
-        Log.d("Avinash", "partnerId=" + partnerId);
-        if (partnerId != 0)
-            partnerName = mValdocDatabaseHandler.getPartnerNameInfo(partnerId);
-        Log.d("Avinash", "partnerName=" + partnerName);
-        return partnerName;
+            Utilityies.setCustomActionBar(CreatePostCertificateActivity.this, mActionBar, userName);
     }
 
     private void initButton() {
@@ -179,250 +133,28 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
                     editor.putString("witness3", witnessThird.getText().toString());
                     editor.commit();
                     if (AV.equals(spinerTestType = testSpinner.getSelectedItem().toString())) {
-                        rdAv5Test();
+//                        rdAv5Test();
                     } else if (ACPHAV.equals(spinerTestType = testSpinner.getSelectedItem().toString())) {
-                        rdAcphAv();
+//                        rdAcphAv();
                     } else if (ACPHH.equals(spinerTestType = testSpinner.getSelectedItem().toString())) {
-                        rdAcphH();
+//                        rdAcphH();
                     } else if (FIT.equals(spinerTestType = testSpinner.getSelectedItem().toString())) {
-                        rdFit();
+//                        rdFit();
                     } else if (PCT.equals(spinerTestType = testSpinner.getSelectedItem().toString())) {
 //                        Toast.makeText(TestCreateActivity.this,"Under development",Toast.LENGTH_LONG).show();
-                        rdPc3();
+//                        rdPc3();
                     } else if (RCT.equals(spinerTestType = testSpinner.getSelectedItem().toString())) {
-                        rdRct();
+//                        rdRct();
                     }else{
-                        Toast.makeText(TestCreateActivity.this, "Please select the correct test to be performed", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(CreatePostCertificateActivity.this, "Please select the correct test to be performed", Toast.LENGTH_SHORT).show();
                     }
                 } else {
-                    Toast.makeText(TestCreateActivity.this, "Please select the test to be performed", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CreatePostCertificateActivity.this, "Please select the test to be performed", Toast.LENGTH_SHORT).show();
                 }
             }
         });
     }
 
-
-    private void rdAcphAv() {
-        Intent intent = new Intent(TestCreateActivity.this, DynamicTableActivity.class);
-        intent.putExtra("USERTYPE", loginUserType);
-        intent.putExtra("USERNAME", userName);
-        intent.putExtra("testType", ACPHAV);
-        Log.d("valdoc", "TestCreateActivity loginUserType=" + loginUserType);
-        Log.d("valdoc", "TestCreateActivity userName=" + userName);
-
-        Log.d("valdoc", "TestCreateActivity witness=" + witnessFirst.getText());
-        intent.putExtra("WITNESSFIRST", witnessFirst.getText().toString());
-        intent.putExtra("WITNESSSECOND", witnessSecond.getText().toString());
-        intent.putExtra("WITNESSTHIRD", witnessThird.getText().toString());
-        intent.putExtra("PRTNERNAME", mPartnerName);
-
-        if (loginUserType.equals("CLIENT")) {
-            intent.putExtra("ClientInstrument", clientInstrumentArrayList.get(instrumentSpiner.getSelectedItemPosition() - 1));
-        } else {
-            intent.putExtra("PartnerInstrument", partnerInstrumentArrayList.get(instrumentSpiner.getSelectedItemPosition() - 1));
-        }
-
-        //get room name,roomNo,and area id
-        Log.d("valdoc", "TestCreateActivity :equipment:=" + roomSpinner.getSelectedItemPosition());
-        Room room = mRoomArrayList.get(roomSpinner.getSelectedItemPosition() - 1);
-        intent.putExtra("Room", room);
-        intent.putExtra("AhuNumber", ahuSpinner.getSelectedItem().toString());
-        //get area based on room area id
-        String areaName = mValdocDatabaseHandler.getAreaByRoomAreaId("" + room.getAreaId());
-        Log.d("valdoc", "TestCreateActivity areaName=" + areaName);
-        intent.putExtra("AREANAME", areaName);
-
-        ApplicableTestRoom applicableTestRoom = mApplicableTestRoomArrayList.get(testSpinner.getSelectedItemPosition() - 1);
-        intent.putExtra("LOCATION", applicableTestRoom.getLocation());
-
-        //get filter list from equipment filter
-        Log.d("valdoc", "TestCreateActivity :equipment id equipment1:=" + room.getRoomId());
-        ArrayList<HashMap<String, String>> grillAndSizeFromGrill = mValdocDatabaseHandler.getGrillAndSizeFromGrill(room.getRoomId());
-        intent.putExtra("GRILLIST", grillAndSizeFromGrill);
-        Log.d("valdoc", "TestCreateActivity :grill size:=" + grillAndSizeFromGrill.size());
-        startActivity(intent);
-    }
-
-    private void rdAcphH() {
-        Intent intent = new Intent(TestCreateActivity.this, DynamicTableActivity.class);
-        intent.putExtra("USERTYPE", loginUserType);
-        intent.putExtra("USERNAME", userName);
-        intent.putExtra("testType", ACPHH);
-        Log.d("valdoc", "TestCreateActivity witness=" + witnessFirst.getText());
-        intent.putExtra("WITNESSFIRST", witnessFirst.getText().toString());
-        intent.putExtra("WITNESSSECOND", witnessSecond.getText().toString());
-        intent.putExtra("WITNESSTHIRD", witnessThird.getText().toString());
-        intent.putExtra("PRTNERNAME", mPartnerName);
-
-        if (loginUserType.equals("CLIENT")) {
-            intent.putExtra("ClientInstrument", clientInstrumentArrayList.get(instrumentSpiner.getSelectedItemPosition() - 1));
-        } else {
-            intent.putExtra("PartnerInstrument", partnerInstrumentArrayList.get(instrumentSpiner.getSelectedItemPosition() - 1));
-        }
-
-        //get room name,roomNo,and area id
-        Log.d("valdoc", "TestCreateActivity :equipment:=" + roomSpinner.getSelectedItemPosition());
-        Room room = mRoomArrayList.get(roomSpinner.getSelectedItemPosition() - 1);
-        intent.putExtra("Room", room);
-        intent.putExtra("AhuNumber", ahuSpinner.getSelectedItem().toString());
-        //get area based on room area id
-        String areaName = mValdocDatabaseHandler.getAreaByRoomAreaId("" + room.getAreaId());
-        Log.d("valdoc", "TestCreateActivity areaName=" + areaName);
-        intent.putExtra("AREANAME", areaName);
-
-//            ApplicableTestRoom applicableTestRoom = mApplicableTestRoomArrayList.get(testSpinner.getSelectedItemPosition() - 1);
-//            intent.putExtra("LOCATION", applicableTestRoom.getLocation());
-
-        //get filter list from equipment filter
-        Log.d("valdoc", "TestCreateActivity :equipment id equipment1:=" + room.getRoomId());
-        ArrayList<HashMap<String, String>> grillAndSizeFromGrill = mValdocDatabaseHandler.getGrillAndSizeFromGrill(room.getRoomId());
-        intent.putExtra("GRILLIST", grillAndSizeFromGrill);
-        Log.d("valdoc", "TestCreateActivity :grill size:=" + grillAndSizeFromGrill.size());
-        startActivity(intent);
-    }
-
-    private void rdFit() {
-        Intent intent = new Intent(TestCreateActivity.this, DynamicTableActivity.class);
-        intent.putExtra("USERTYPE", loginUserType);
-        intent.putExtra("USERNAME", userName);
-        intent.putExtra("testType", FIT);
-        Log.d("valdoc", "TestCreateActivity witness=" + witnessFirst.getText());
-        intent.putExtra("WITNESSFIRST", witnessFirst.getText().toString());
-        intent.putExtra("WITNESSSECOND", witnessSecond.getText().toString());
-        intent.putExtra("WITNESSTHIRD", witnessThird.getText().toString());
-        intent.putExtra("PRTNERNAME", mPartnerName);
-
-        if (loginUserType.equals("CLIENT")) {
-            intent.putExtra("ClientInstrument", clientInstrumentArrayList.get(instrumentSpiner.getSelectedItemPosition() - 1));
-        } else {
-            intent.putExtra("PartnerInstrument", partnerInstrumentArrayList.get(instrumentSpiner.getSelectedItemPosition() - 1));
-        }
-
-        //get room name,roomNo,and area id
-        Log.d("valdoc", "TestCreateActivity :equipment:=" + roomSpinner.getSelectedItemPosition());
-        Room room = mRoomArrayList.get(roomSpinner.getSelectedItemPosition() - 1);
-        intent.putExtra("Room", room);
-
-        //take test specification from room filter
-        ArrayList<RoomFilter> filterArrayList = mValdocDatabaseHandler.getFromRoomFilter(room.getRoomId());
-        Log.d("valdoc", "TestCreateActivity filterArrayList=" + filterArrayList.size());
-        intent.putExtra("RoomFilterList", filterArrayList);
-        //TO Do testspesification will be shown from room filter spesification
-        intent.putExtra("AhuNumber", ahuSpinner.getSelectedItem().toString());
-        //get area based on room area id
-        String areaName = mValdocDatabaseHandler.getAreaByRoomAreaId("" + room.getAreaId());
-        Log.d("valdoc", "TestCreateActivity areaName=" + areaName);
-        intent.putExtra("AREANAME", areaName);
-        // location will be the size off rommfilter list
-        startActivity(intent);
-    }
-
-    private void rdPc3() {
-        Intent intent = new Intent(TestCreateActivity.this, DynamicTableActivity.class);
-        intent.putExtra("USERTYPE", loginUserType);
-        intent.putExtra("USERNAME", userName);
-        intent.putExtra("testType", PCT);
-        Log.d("valdoc", "TestCreateActivity witness=" + witnessFirst.getText());
-        intent.putExtra("WITNESSFIRST", witnessFirst.getText().toString());
-        intent.putExtra("WITNESSSECOND", witnessSecond.getText().toString());
-        intent.putExtra("WITNESSTHIRD", witnessThird.getText().toString());
-        intent.putExtra("PRTNERNAME", mPartnerName);
-
-        if (loginUserType.equals("CLIENT")) {
-            intent.putExtra("ClientInstrument", clientInstrumentArrayList.get(instrumentSpiner.getSelectedItemPosition() - 1));
-        } else {
-            intent.putExtra("PartnerInstrument", partnerInstrumentArrayList.get(instrumentSpiner.getSelectedItemPosition() - 1));
-        }
-
-        //get room name,roomNo,and area id
-        Log.d("valdoc", "TestCreateActivity :equipment:=" + roomSpinner.getSelectedItemPosition());
-        Room room = mRoomArrayList.get(roomSpinner.getSelectedItemPosition() - 1);
-        intent.putExtra("Room", room);
-        intent.putExtra("AhuNumber", ahuSpinner.getSelectedItem().toString());
-
-        ApplicableTestRoom applicableTestRoom = mApplicableTestRoomArrayList.get(testSpinner.getSelectedItemPosition() - 1);
-        intent.putExtra("LOCATION", applicableTestRoom.getLocation());
-        intent.putExtra("NOOFCYCLE", applicableTestRoom.getNoOfCycle());
-
-        //get area based on room area id
-        String areaName = mValdocDatabaseHandler.getAreaByRoomAreaId("" + room.getAreaId());
-        Log.d("valdoc", "TestCreateActivity areaName=" + areaName);
-        intent.putExtra("AREANAME", areaName);
-        // location will be the size off rommfilter list
-        startActivity(intent);
-    }
-
-    private void rdRct() {
-        Intent intent = new Intent(TestCreateActivity.this, DynamicTableActivity.class);
-        intent.putExtra("USERTYPE", loginUserType);
-        intent.putExtra("USERNAME", userName);
-        intent.putExtra("testType", RCT);
-        Log.d("valdoc", "TestCreateActivity witness=" + witnessFirst.getText());
-        intent.putExtra("WITNESSFIRST", witnessFirst.getText().toString());
-        intent.putExtra("WITNESSSECOND", witnessSecond.getText().toString());
-        intent.putExtra("WITNESSTHIRD", witnessThird.getText().toString());
-        intent.putExtra("PRTNERNAME", mPartnerName);
-        Log.d("Avinash", "bundle mPartnerName=" + mPartnerName);
-        if (loginUserType.equals("CLIENT")) {
-            intent.putExtra("ClientInstrument", clientInstrumentArrayList.get(instrumentSpiner.getSelectedItemPosition() - 1));
-        } else {
-            intent.putExtra("PartnerInstrument", partnerInstrumentArrayList.get(instrumentSpiner.getSelectedItemPosition() - 1));
-        }
-
-        //get room name,roomNo,and area id
-        Log.d("valdoc", "TestCreateActivity :equipment:=" + roomSpinner.getSelectedItemPosition());
-        Room room = mRoomArrayList.get(roomSpinner.getSelectedItemPosition() - 1);
-        intent.putExtra("Room", room);
-        intent.putExtra("AhuNumber", ahuSpinner.getSelectedItem().toString());
-
-        ApplicableTestRoom applicableTestRoom = mApplicableTestRoomArrayList.get(testSpinner.getSelectedItemPosition() - 1);
-        intent.putExtra("LOCATION", applicableTestRoom.getLocation());
-        intent.putExtra("NOOFCYCLE", applicableTestRoom.getNoOfCycle());
-
-        //get area based on room area id
-        String areaName = mValdocDatabaseHandler.getAreaByRoomAreaId("" + room.getAreaId());
-        Log.d("valdoc", "TestCreateActivity areaName=" + areaName);
-        intent.putExtra("AREANAME", areaName);
-        // location will be the size off rommfilter list
-        startActivity(intent);
-    }
-
-    private void rdAv5Test() {
-        Intent intent = new Intent(TestCreateActivity.this, DynamicTableActivity.class);
-        intent.putExtra("USERTYPE", loginUserType);
-        intent.putExtra("USERNAME", userName);
-        intent.putExtra("testType", AV);
-        intent.putExtra("PRTNERNAME", mPartnerName);
-        if (loginUserType.equals("CLIENT")) {
-            intent.putExtra("ClientInstrument", clientInstrumentArrayList.get(instrumentSpiner.getSelectedItemPosition() - 1));
-        } else {
-            intent.putExtra("PartnerInstrument", partnerInstrumentArrayList.get(instrumentSpiner.getSelectedItemPosition() - 1));
-        }
-
-        //get room name,roomNo,and area id
-        Log.d("valdoc", "TestCreateActivity :equipment:=" + equipmentSpinner.getSelectedItemPosition());
-        Equipment equipment = mEquipmentArrayList.get(equipmentSpinner.getSelectedItemPosition() - 1);
-        String[] roomDetails = mValdocDatabaseHandler.getRoomByEquipment(equipment.getRoomId());
-        intent.putExtra("RoomDetails", roomDetails);
-        intent.putExtra("Equipment", equipment);
-        //get filter list from equipment filter
-        Log.d("valdoc", "TestCreateActivity :equipment id name equipment1:=" + equipment.getEquipmentName());
-        Log.d("valdoc", "TestCreateActivity :equipment id equipment1:=" + equipment.getTestReference());
-        String[] filterList = mValdocDatabaseHandler.getFilterFromEquipmentFilter(equipment.getEquipmentId());
-        intent.putExtra("FILTERLIST", filterList);
-        Log.d("valdoc", "TestCreateActivity :equipment1:=" + filterList.length);
-        //get area based on room area id
-        String areaName = mValdocDatabaseHandler.getAreaByRoomAreaId(roomDetails[2]);
-        Log.d("valdoc", "TestCreateActivity areaName=" + areaName);
-        intent.putExtra("AREANAME", areaName);
-        Log.d("valdoc", "TestCreateActivity witness=" + witnessFirst.getText());
-        intent.putExtra("WITNESSFIRST", witnessFirst.getText().toString());
-        intent.putExtra("WITNESSSECOND", witnessSecond.getText().toString());
-        intent.putExtra("WITNESSTHIRD", witnessThird.getText().toString());
-        ApplicableTestEquipment applicableTestEquipment = mApplicableTestEquipmentArrayList.get(testSpinner.getSelectedItemPosition() - 1);
-        intent.putExtra("LOCATION", applicableTestEquipment.getLocation());
-        startActivity(intent);
-    }
 
     //spiner data validation
     private boolean validationSpiner() {
@@ -838,8 +570,13 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
 
     @Override
     public void onBackPressed() {
-        Intent afterLoginIntent = new Intent(TestCreateActivity.this, AfterLoginActivity.class);
-        startActivity(afterLoginIntent);
-        TestCreateActivity.this.finish();
+//        Intent afterLoginIntent = new Intent(TestCreateActivity.this, AfterLoginActivity.class);
+//        startActivity(afterLoginIntent);
+//        TestCreateActivity.this.finish();
     }
+
+//    @Override
+//    public boolean onTouch(View v, MotionEvent event) {
+//        return false;
+//    }
 }

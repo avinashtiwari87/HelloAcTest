@@ -69,7 +69,8 @@
         <activity
             android:name=".ServiceReportActivity"
             android:screenOrientation="landscape" />
-        <activity android:name=".SyncSelectedDataActivity"></activity>
+        <activity android:name=".SyncSelectedDataActivity" />
+        <activity android:name=".CreatePostCertificateActivity"></activity>
     </application>
 
 </manifest>

@@ -18,25 +18,25 @@ public class Room implements Serializable{
     private double length;
     private double area;
     private double volume;
-    private int acphNLT;
+    private int acph;
     private String testRef;
     private String isoClause;
     private String occupancyState;
-    private double roomSupplyAirflowCFM;
+    private double supplyAirflow;
     private double ahuFlowCFM;
-    private double roomPressurePA;
+    private double roomPressure;
     private double freshAirCFM;
     private double bleedAirCFM;
-    private double exhaustAirCFM;
+    private double exhaustAirFlow;
     private double temperature;
     private double rh;
-    private double returnAirCFM;
-    private int supplyAirGrillQTY;
-    private int returnAirGrillQTY;
-    private int supplyAirFilterQTY;
-    private int returnAirFilterQTY;
+    private double returnAirFlow;
+//    private int supplyAirGrillQTY;
+//    private int returnAirGrillQTY;
+//    private int supplyAirFilterQTY;
+//    private int returnAirFilterQTY;
     private String remarks;
-    private String creationDate;
+    private String lastUpdatedDate;
 
     public String getRoom() {
         return room;
@@ -126,12 +126,12 @@ public class Room implements Serializable{
         this.volume = volume;
     }
 
-    public int getAcphNLT() {
-        return acphNLT;
+    public int getAcph() {
+        return acph;
     }
 
-    public void setAcphNLT(int acphNLT) {
-        this.acphNLT = acphNLT;
+    public void setAcph(int acph) {
+        this.acph = acph;
     }
 
     public String getTestRef() {
@@ -158,12 +158,12 @@ public class Room implements Serializable{
         this.occupancyState = occupancyState;
     }
 
-    public double getRoomSupplyAirflowCFM() {
-        return roomSupplyAirflowCFM;
+    public double getSupplyAirflow() {
+        return supplyAirflow;
     }
 
-    public void setRoomSupplyAirflowCFM(double roomSupplyAirflowCFM) {
-        this.roomSupplyAirflowCFM = roomSupplyAirflowCFM;
+    public void setSupplyAirflow(double supplyAirflow) {
+        this.supplyAirflow = supplyAirflow;
     }
 
     public double getAhuFlowCFM() {
@@ -174,12 +174,12 @@ public class Room implements Serializable{
         this.ahuFlowCFM = ahuFlowCFM;
     }
 
-    public double getRoomPressurePA() {
-        return roomPressurePA;
+    public double getRoomPressure() {
+        return roomPressure;
     }
 
-    public void setRoomPressurePA(double roomPressurePA) {
-        this.roomPressurePA = roomPressurePA;
+    public void setRoomPressure(double roomPressure) {
+        this.roomPressure = roomPressure;
     }
 
     public double getFreshAirCFM() {
@@ -198,12 +198,12 @@ public class Room implements Serializable{
         this.bleedAirCFM = bleedAirCFM;
     }
 
-    public double getExhaustAirCFM() {
-        return exhaustAirCFM;
+    public double getExhaustAirFlow() {
+        return exhaustAirFlow;
     }
 
-    public void setExhaustAirCFM(double exhaustAirCFM) {
-        this.exhaustAirCFM = exhaustAirCFM;
+    public void setExhaustAirFlow(double exhaustAirFlow) {
+        this.exhaustAirFlow = exhaustAirFlow;
     }
 
     public double getTemperature() {
@@ -222,44 +222,12 @@ public class Room implements Serializable{
         this.rh = rh;
     }
 
-    public double getReturnAirCFM() {
-        return returnAirCFM;
+    public double getReturnAirFlow() {
+        return returnAirFlow;
     }
 
-    public void setReturnAirCFM(double returnAirCFM) {
-        this.returnAirCFM = returnAirCFM;
-    }
-
-    public int getSupplyAirGrillQTY() {
-        return supplyAirGrillQTY;
-    }
-
-    public void setSupplyAirGrillQTY(int supplyAirGrillQTY) {
-        this.supplyAirGrillQTY = supplyAirGrillQTY;
-    }
-
-    public int getReturnAirGrillQTY() {
-        return returnAirGrillQTY;
-    }
-
-    public void setReturnAirGrillQTY(int returnAirGrillQTY) {
-        this.returnAirGrillQTY = returnAirGrillQTY;
-    }
-
-    public int getSupplyAirFilterQTY() {
-        return supplyAirFilterQTY;
-    }
-
-    public void setSupplyAirFilterQTY(int supplyAirFilterQTY) {
-        this.supplyAirFilterQTY = supplyAirFilterQTY;
-    }
-
-    public int getReturnAirFilterQTY() {
-        return returnAirFilterQTY;
-    }
-
-    public void setReturnAirFilterQTY(int returnAirFilterQTY) {
-        this.returnAirFilterQTY = returnAirFilterQTY;
+    public void setReturnAirFlow(double returnAirFlow) {
+        this.returnAirFlow = returnAirFlow;
     }
 
     public String getRemarks() {
@@ -270,11 +238,11 @@ public class Room implements Serializable{
         this.remarks = remarks;
     }
 
-    public String getCreationDate() {
-        return creationDate;
+    public String getLastUpdatedDate() {
+        return lastUpdatedDate;
     }
 
-    public void setCreationDate(String creationDate) {
-        this.creationDate = creationDate;
+    public void setLastUpdatedDate(String lastUpdatedDate) {
+        this.lastUpdatedDate = lastUpdatedDate;
     }
 }

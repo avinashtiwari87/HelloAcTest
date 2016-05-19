@@ -8,7 +8,7 @@ public class Area {
     private int plantId;
     private String areaName;
     private String additionalDetails;
-    private String creationDate;
+    private String lastUpdatedDate;
 
 
     public int getAreaId() {
@@ -43,11 +43,11 @@ public class Area {
         this.additionalDetails = additionalDetails;
     }
 
-    public String getCreationDate() {
-        return creationDate;
+    public String getlastUpdatedDate() {
+        return lastUpdatedDate;
     }
 
-    public void setCreationDate(String creationDate) {
-        this.creationDate = creationDate;
+    public void setlastUpdatedDate(String lastUpdatedDate) {
+        this.lastUpdatedDate = lastUpdatedDate;
     }
 }

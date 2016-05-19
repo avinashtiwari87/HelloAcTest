@@ -5,7 +5,7 @@ package com.project.valdoc.intity;
  */
 public class Partners {
     private String partners;
-    private int id;
+    private int partnerId;
     private String name;
     private String partnerCode;
     private String status;
@@ -29,12 +29,12 @@ public class Partners {
         this.partners = partners;
     }
 
-    public int getId() {
-        return id;
+    public int getPartnerId() {
+        return partnerId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setPartnerId(int partnerId) {
+        this.partnerId = partnerId;
     }
 
     public String getName() {

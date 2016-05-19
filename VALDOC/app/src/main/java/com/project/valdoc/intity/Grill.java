@@ -16,7 +16,7 @@ public class Grill {
     private double effectiveArea;
     private int isSupplyGrill;
     private int additionalDetail;
-    private String creationDate;
+    private String lastUpdatedDate;
 
     public String getGrill() {
         return grill;
@@ -98,11 +98,11 @@ public class Grill {
         this.additionalDetail = additionalDetail;
     }
 
-    public String getCreationDate() {
-        return creationDate;
+    public String getLastUpdatedDate() {
+        return lastUpdatedDate;
     }
 
-    public void setCreationDate(String creationDate) {
-        this.creationDate = creationDate;
+    public void setLastUpdatedDate(String lastUpdatedDate) {
+        this.lastUpdatedDate = lastUpdatedDate;
     }
 }

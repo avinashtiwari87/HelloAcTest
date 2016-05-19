@@ -15,14 +15,14 @@ public class ClientInstrument implements Serializable{
     private String model;
     private String lastCalibrated;
     private String calibrationDueDate;
-    private String currentLocation;
+//    private String currentLocation;
     private String status;
-    private int testId;
-    private String creationDate;
-    private String  SamplingFlowRate;
-    private String  SamplingTime;
-    private String  AerosolUsed;
-    private String  AerosolGeneratorType;
+//    private int testId;
+    private String lastUpdatedDate;
+//    private String  SamplingFlowRate;
+//    private String  SamplingTime;
+//    private String  AerosolUsed;
+//    private String  AerosolGeneratorType;
 
     public String getClient_instrument() {
         return client_instrument;
@@ -96,14 +96,6 @@ public class ClientInstrument implements Serializable{
         this.calibrationDueDate = calibrationDueDate;
     }
 
-    public String getCurrentLocation() {
-        return currentLocation;
-    }
-
-    public void setCurrentLocation(String currentLocation) {
-        this.currentLocation = currentLocation;
-    }
-
     public String getStatus() {
         return status;
     }
@@ -112,51 +104,11 @@ public class ClientInstrument implements Serializable{
         this.status = status;
     }
 
-    public int getTestId() {
-        return testId;
+    public String getLastUpdatedDate() {
+        return lastUpdatedDate;
     }
 
-    public void setTestId(int testId) {
-        this.testId = testId;
-    }
-
-    public String getCreationDate() {
-        return creationDate;
-    }
-
-    public void setCreationDate(String creationDate) {
-        this.creationDate = creationDate;
-    }
-
-    public String getSamplingFlowRate() {
-        return SamplingFlowRate;
-    }
-
-    public void setSamplingFlowRate(String samplingFlowRate) {
-        SamplingFlowRate = samplingFlowRate;
-    }
-
-    public String getSamplingTime() {
-        return SamplingTime;
-    }
-
-    public void setSamplingTime(String samplingTime) {
-        SamplingTime = samplingTime;
-    }
-
-    public String getAerosolUsed() {
-        return AerosolUsed;
-    }
-
-    public void setAerosolUsed(String aerosolUsed) {
-        AerosolUsed = aerosolUsed;
-    }
-
-    public String getAerosolGeneratorType() {
-        return AerosolGeneratorType;
-    }
-
-    public void setAerosolGeneratorType(String aerosolGeneratorType) {
-        AerosolGeneratorType = aerosolGeneratorType;
+    public void setLastUpdatedDate(String lastUpdatedDate) {
+        this.lastUpdatedDate = lastUpdatedDate;
     }
 }

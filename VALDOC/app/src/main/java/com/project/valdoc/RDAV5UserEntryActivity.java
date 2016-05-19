@@ -361,7 +361,7 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
             make.setText(partnerInstrument.getMake());
             model.setText(partnerInstrument.getModel());
             instrumentSerialNo.setText("" + partnerInstrument.getpInstrumentId());
-            calibrationOn.setText(Utilityies.parseDateToddMMyyyy(partnerInstrument.getLastCalibrated()));
+            calibrationOn.setText(Utilityies.parseDateToddMMyyyy(partnerInstrument.getLastCalibrationDate()));
             calibrationDueOn.setText(Utilityies.parseDateToddMMyyyy(partnerInstrument.getCalibrationDueDate()));
         }
 
@@ -448,7 +448,7 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
             testDetails.setMake("" + make.getText());
             testDetails.setModel("" + model.getText());
             testDetails.setInstrumentNo("" + partnerInstrument.getpInstrumentId());
-            testDetails.setCalibratedOn("" + partnerInstrument.getLastCalibrated());
+            testDetails.setCalibratedOn("" + partnerInstrument.getLastCalibrationDate());
             testDetails.setCalibratedDueOn("" + partnerInstrument.getCalibrationDueDate());
         }
 

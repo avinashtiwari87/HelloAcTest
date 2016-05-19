@@ -207,7 +207,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
         if (airChangeTxtList != null && airChangeTxtList.size() > 0) {
             TextView airChangeTxt = airChangeTxtList.get(airChangeTxtList.size() / 2);
             airChangeValue = getIntent().getIntExtra("AirChangeValue", 0);
-            if (airChangeValue > room.getAcphNLT()) {
+            if (airChangeValue > room.getAcph()) {
                 infarance.setText("The above Airflow Volume Test and Derived No.of Air chanages per hour meets the specificed requirement");
             } else {
                 infarance.setText("The above Airflow Volume Test and Derived No.of Air chanages per hour do not meets the specificed requirement");
@@ -272,11 +272,11 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
             make.setText(partnerInstrument.getMake());
             model.setText(partnerInstrument.getModel());
             instrumentSerialNo.setText("" + partnerInstrument.getpInstrumentId());
-            calibrationOn.setText(Utilityies.parseDateToddMMyyyy(partnerInstrument.getLastCalibrated()));
+            calibrationOn.setText(Utilityies.parseDateToddMMyyyy(partnerInstrument.getLastCalibrationDate()));
             calibrationDueOn.setText(Utilityies.parseDateToddMMyyyy(partnerInstrument.getCalibrationDueDate()));
         }
 
-        testSpecification.setText("Specified Air Change/hr NLT " + room.getAcphNLT());
+        testSpecification.setText("Specified Air Change/hr NLT " + room.getAcph());
 //                plantName
         areaOfTest.setText(areaName);
         roomName.setText(room.getRoomName());
@@ -496,7 +496,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
             testDetails.setMake(partnerInstrument.getMake());
             testDetails.setModel(partnerInstrument.getModel());
             testDetails.setInstrumentNo("" + partnerInstrument.getpInstrumentId());
-            testDetails.setCalibratedOn(partnerInstrument.getLastCalibrated());
+            testDetails.setCalibratedOn(partnerInstrument.getLastCalibrationDate());
             testDetails.setCalibratedDueOn(partnerInstrument.getCalibrationDueDate());
         }
 

@@ -226,17 +226,17 @@ public class RDRCTUserEntryActivity extends AppCompatActivity {
             instrumentSerialNo.setText("" + clientInstrument.getSerialNo());
             calibrationOn.setText(Utilityies.parseDateToddMMyyyy(clientInstrument.getLastCalibrated()));
             calibrationDueOn.setText(Utilityies.parseDateToddMMyyyy(clientInstrument.getCalibrationDueDate()));
-            samplingFlowRate.setText(clientInstrument.getSamplingFlowRate());
-            samplingTime.setText(clientInstrument.getSamplingTime());
+//            samplingFlowRate.setText(clientInstrument.getSamplingFlowRate());
+//            samplingTime.setText(clientInstrument.getSamplingTime());
         } else {
             instrumentUsed.setText(partnerInstrument.getpInstrumentName());
             make.setText(partnerInstrument.getMake());
             model.setText(partnerInstrument.getModel());
             instrumentSerialNo.setText("" + partnerInstrument.getpInstrumentId());
-            calibrationOn.setText(Utilityies.parseDateToddMMyyyy(partnerInstrument.getLastCalibrated()));
+            calibrationOn.setText(Utilityies.parseDateToddMMyyyy(partnerInstrument.getLastCalibrationDate()));
             calibrationDueOn.setText(Utilityies.parseDateToddMMyyyy(partnerInstrument.getCalibrationDueDate()));
-            samplingFlowRate.setText(partnerInstrument.getSamplingFlowRate());
-            samplingTime.setText(partnerInstrument.getSamplingTime());
+//            samplingFlowRate.setText(partnerInstrument.getSamplingFlowRate());
+//            samplingTime.setText(partnerInstrument.getSamplingTime());
         }
 
         initialReading.setText("" + mInitialReading);
@@ -247,7 +247,7 @@ public class RDRCTUserEntryActivity extends AppCompatActivity {
             recoveryTime.setText("" + count);
         }
 
-        testSpecification.setText("" + room.getAcphNLT());
+        testSpecification.setText("" + room.getAcph());
 //                plantName
         areaOfTest.setText(areaName);
         roomName.setText(room.getRoomName());
@@ -462,7 +462,7 @@ public class RDRCTUserEntryActivity extends AppCompatActivity {
             testDetails.setMake(partnerInstrument.getMake());
             testDetails.setModel(partnerInstrument.getModel());
             testDetails.setInstrumentNo("" + partnerInstrument.getpInstrumentId());
-            testDetails.setCalibratedOn("" + partnerInstrument.getLastCalibrated());
+            testDetails.setCalibratedOn("" + partnerInstrument.getLastCalibrationDate());
             testDetails.setCalibratedDueOn("" + partnerInstrument.getCalibrationDueDate());
             testDetails.setAerosolUsed("");
             testDetails.setAerosolGeneratorType("");

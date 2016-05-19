@@ -252,20 +252,20 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
             instrumentSerialNo.setText("" + clientInstrument.getSerialNo());
             calibrationOn.setText(Utilityies.parseDateToddMMyyyy(clientInstrument.getLastCalibrated()));
             calibrationDueOn.setText(Utilityies.parseDateToddMMyyyy(clientInstrument.getCalibrationDueDate()));
-            aerosolUsed.setText(clientInstrument.getAerosolUsed());
-            aerosolGeneratorType.setText(clientInstrument.getAerosolGeneratorType());
+//            aerosolUsed.setText(clientInstrument.getAerosolUsed());
+//            aerosolGeneratorType.setText(clientInstrument.getAerosolGeneratorType());
         } else {
             instrumentUsed.setText(partnerInstrument.getpInstrumentName());
             make.setText(partnerInstrument.getMake());
             model.setText(partnerInstrument.getModel());
             instrumentSerialNo.setText("" + partnerInstrument.getpInstrumentId());
-            calibrationOn.setText(Utilityies.parseDateToddMMyyyy(partnerInstrument.getLastCalibrated()));
+            calibrationOn.setText(Utilityies.parseDateToddMMyyyy(partnerInstrument.getLastCalibrationDate()));
             calibrationDueOn.setText(Utilityies.parseDateToddMMyyyy(partnerInstrument.getCalibrationDueDate()));
-            aerosolUsed.setText(partnerInstrument.getAerosolUsed());
-            aerosolGeneratorType.setText(partnerInstrument.getAerosolGeneratorType());
+//            aerosolUsed.setText(partnerInstrument.getAerosolUsed());
+//            aerosolGeneratorType.setText(partnerInstrument.getAerosolGeneratorType());
         }
 
-        testSpecification.setText("Maximum Permiceable leakage " + room.getAcphNLT() + "%");
+        testSpecification.setText("Maximum Permiceable leakage " + room.getAcph() + "%");
 //                plantName
         areaOfTest.setText(areaName);
         roomName.setText(room.getRoomName());
@@ -447,7 +447,7 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
             testDetails.setMake("" + partnerInstrument.getMake());
             testDetails.setModel("" + partnerInstrument.getModel());
             testDetails.setInstrumentNo("" + partnerInstrument.getpInstrumentId());
-            testDetails.setCalibratedOn("" + partnerInstrument.getLastCalibrated());
+            testDetails.setCalibratedOn("" + partnerInstrument.getLastCalibrationDate());
             testDetails.setCalibratedDueOn("" + partnerInstrument.getCalibrationDueDate());
             testDetails.setAerosolUsed("" + aerosolUsed.getText());
             testDetails.setAerosolGeneratorType("" + aerosolGeneratorType.getText());

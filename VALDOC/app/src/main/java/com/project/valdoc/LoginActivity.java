@@ -30,8 +30,8 @@ import android.widget.Toast;
 
 import com.project.valdoc.controler.ValdocControler;
 import com.project.valdoc.db.ValdocDatabaseHandler;
+import com.project.valdoc.intity.AppUser;
 import com.project.valdoc.intity.PartnerUser;
-import com.project.valdoc.intity.User;
 import com.project.valdoc.task.HttpConnection;
 import com.project.valdoc.task.HttpPostConnection;
 import com.project.valdoc.task.UserLoginTask;
@@ -307,14 +307,14 @@ public class LoginActivity extends AppCompatActivity implements HttpConnection.H
         boolean login = false;
         loginUserName = "";
         loginUserType = "";
-        for (User user : mValdocDatabaseHandler.getUserInfo()) {
+        for (AppUser user : mValdocDatabaseHandler.getUserInfo()) {
             Log.d("valdoc", "Login method :" + user.getEmail() + "\n" + user.getPassword());
             if (user.getEmail().equals(name) && user.getPassword().equals(password)) {
                 Log.d("valdoc", "Login method inside if :" + user.getName() + "\n" + user.getPassword());
                 login = true;
                 loginUserName = user.getName();
-                loginUserType = user.getType();
-                userId = user.getId();
+                loginUserType = user.getUserType();
+                userId = user.getApp_user_id();
                 userPartnerId = user.getPartnerId();
                 break;
             }
@@ -328,23 +328,23 @@ public class LoginActivity extends AppCompatActivity implements HttpConnection.H
 //        if (tableExist(ValdocDatabaseHandler.USER_TABLE_NAME,valdocDatabaseHandler)==0) {
 //
 //        }
-        for (User user : mValdocDatabaseHandler.getUserInfo())
-            Log.d("valdoc", "Login :" + "user details" + user.getId() + "\n" + user.getName() + "\n" + user.getPassword() + "\n" + user.getType());
+        for (AppUser user : mValdocDatabaseHandler.getUserInfo())
+            Log.d("valdoc", "Login :" + "user details" + user.getApp_user_id() + "\n" + user.getName() + "\n" + user.getPassword() + "\n" + user.getUserType());
     }
 
-    private List<User> createUserData() {
-        ArrayList<User> userArrayList = new ArrayList<User>();
-        User user = new User();
-        user.setId(1);
+    private List<AppUser> createUserData() {
+        ArrayList<AppUser> userArrayList = new ArrayList<AppUser>();
+        AppUser user = new AppUser();
+        user.setApp_user_id(1);
         user.setName("Avinash");
-        user.setType("CLIENT");
+        user.setUserType("CLIENT");
         user.setPassword("avi123");
         userArrayList.add(user);
         // 2nd user
-        User user1 = new User();
-        user1.setId(2);
+        AppUser user1 = new AppUser();
+        user1.setApp_user_id(2);
         user1.setName("rajeev");
-        user1.setType("VANDER");
+        user1.setUserType("VANDER");
         user1.setPassword("raj123");
         userArrayList.add(user1);
         return userArrayList;
