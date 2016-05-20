@@ -7,14 +7,24 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.project.valdoc.utility.Utilityies;
 
-public class ShowSelectedTestActivity extends AppCompatActivity {
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+public class ShowSelectedTestActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     private String userName = "";
     SharedPreferences sharedpreferences;
+    Spinner selectTestSpinner;
+    ListView listview;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,17 +35,55 @@ public class ShowSelectedTestActivity extends AppCompatActivity {
         userName = sharedpreferences.getString("USERNAME", "");
 
 
-      findViewById(R.id.go_button).setOnClickListener(new View.OnClickListener() {
-          @Override
-          public void onClick(View view) {
-              Toast.makeText(ShowSelectedTestActivity.this, "Clicked", Toast.LENGTH_SHORT).show();
-              Intent intent = new Intent(ShowSelectedTestActivity.this, SyncSelectedDataActivity.class);
-              intent.putExtra("rows",11);
-              intent.putExtra("cols",11);
-              startActivity(intent);
-          }
-      });
+        findViewById(R.id.go_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(ShowSelectedTestActivity.this, "Clicked", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(ShowSelectedTestActivity.this, SyncSelectedDataActivity.class);
+                intent.putExtra("rows", 11);
+                intent.putExtra("cols", 11);
+                startActivity(intent);
+            }
+        });
 
+        // Spinner element
+        selectTestSpinner = (Spinner) findViewById(R.id.spinner_select_test);
+        // Spinner click listener
+        selectTestSpinner.setOnItemSelectedListener(this);;
+
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.select_test_option, android.R.layout.simple_spinner_item);
+        // Specify the layout to use when the list of choices appears
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Apply the adapter to the spinner
+        selectTestSpinner.setAdapter(adapter);
+
+        //Temporary List View
+        listview = listview = (ListView) findViewById(R.id.listView);
+        String[] roomsValues = new String[] {"Airchanges/hr Test (ACPH_AV)",
+                "Airchanges/hr Test (ACPH_H)", "Filter Integrity Test (FIT)",
+                "Particle Count Test (PCT)", "Recovery Test (RCT)"};
+
+        final ArrayList<String> list = new ArrayList<String>();
+        for (int i = 0; i < roomsValues.length; ++i) {
+            list.add(roomsValues[i]);
+        }
+        final StableArrayAdapter listViewAdapter = new StableArrayAdapter(this,
+                android.R.layout.simple_list_item_1, list);
+        listview.setAdapter(listViewAdapter);
+
+        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, final View view,
+                                    int position, long id) {
+                final String item = (String) parent.getItemAtPosition(position);
+                Toast.makeText(ShowSelectedTestActivity.this, item, Toast.LENGTH_SHORT).show();
+
+            }
+
+        });
 
 
 
@@ -48,6 +96,41 @@ public class ShowSelectedTestActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        // An item was selected. You can retrieve the selected item using
+        String selection = parent.getItemAtPosition(position).toString();
+        Toast.makeText(ShowSelectedTestActivity.this, selection, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
+    }
 
 
+    private class StableArrayAdapter extends ArrayAdapter<String> {
+
+        HashMap<String, Integer> mIdMap = new HashMap<String, Integer>();
+
+        public StableArrayAdapter(Context context, int textViewResourceId,
+                                  List<String> objects) {
+            super(context, textViewResourceId, objects);
+            for (int i = 0; i < objects.size(); ++i) {
+                mIdMap.put(objects.get(i), i);
+            }
+        }
+
+        @Override
+        public long getItemId(int position) {
+            String item = getItem(position);
+            return mIdMap.get(item);
+        }
+
+        @Override
+        public boolean hasStableIds() {
+            return true;
+        }
+
+    }
 }
