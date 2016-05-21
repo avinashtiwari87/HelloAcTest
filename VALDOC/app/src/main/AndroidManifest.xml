@@ -35,10 +35,10 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".HomeActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
+        <!--<activity-->
+            <!--android:name=".HomeActivity"-->
+            <!--android:screenOrientation="portrait"-->
+            <!--android:theme="@style/AppTheme.NoActionBar" />-->
         <activity
             android:name=".SplashActivity"
             android:screenOrientation="portrait" />
