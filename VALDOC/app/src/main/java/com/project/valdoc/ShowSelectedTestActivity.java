@@ -1,5 +1,6 @@
 package com.project.valdoc;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -25,7 +26,9 @@ public class ShowSelectedTestActivity extends AppCompatActivity implements Adapt
     SharedPreferences sharedpreferences;
     Spinner selectTestSpinner;
     ListView listview;
-
+    String[] roomsValues, AHUValues, equipmentValues;
+    ArrayList<String> list = null;
+    StableArrayAdapter listViewAdapter = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,8 +52,7 @@ public class ShowSelectedTestActivity extends AppCompatActivity implements Adapt
         // Spinner element
         selectTestSpinner = (Spinner) findViewById(R.id.spinner_select_test);
         // Spinner click listener
-        selectTestSpinner.setOnItemSelectedListener(this);;
-
+        selectTestSpinner.setOnItemSelectedListener(this);
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.select_test_option, android.R.layout.simple_spinner_item);
@@ -61,16 +63,22 @@ public class ShowSelectedTestActivity extends AppCompatActivity implements Adapt
 
         //Temporary List View
         listview = listview = (ListView) findViewById(R.id.listView);
-        String[] roomsValues = new String[] {"Airchanges/hr Test (ACPH_AV)",
+        roomsValues = new String[] {"Airchanges/hr Test (ACPH_AV)",
                 "Airchanges/hr Test (ACPH_H)", "Filter Integrity Test (FIT)",
                 "Particle Count Test (PCT)", "Recovery Test (RCT)"};
 
-        final ArrayList<String> list = new ArrayList<String>();
+        AHUValues = new String[] {"Airflow Test (ARD_AF_AHU)" ,
+                "Filter Integrity Test (ARD_FIT_AHU)"};
+
+        equipmentValues = new String[] {"Airvelocity Test (ERD_AV)",
+                "Filter Integrity Test (ERD_FIT)", "Particle Count Test (ERD_PCT)",
+                "Recovery Test (ERD_RCT)"};
+
+        list = new ArrayList<String>();
         for (int i = 0; i < roomsValues.length; ++i) {
             list.add(roomsValues[i]);
         }
-        final StableArrayAdapter listViewAdapter = new StableArrayAdapter(this,
-                android.R.layout.simple_list_item_1, list);
+        listViewAdapter = new StableArrayAdapter(this,android.R.layout.simple_list_item_1, list);
         listview.setAdapter(listViewAdapter);
 
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -101,6 +109,13 @@ public class ShowSelectedTestActivity extends AppCompatActivity implements Adapt
         // An item was selected. You can retrieve the selected item using
         String selection = parent.getItemAtPosition(position).toString();
         Toast.makeText(ShowSelectedTestActivity.this, selection, Toast.LENGTH_SHORT).show();
+        if("AHU".equals(selection)){
+            updateListViewOnTestSelection(AHUValues);
+        }else if("Equipment".equals(selection)){
+            updateListViewOnTestSelection(equipmentValues);
+        }else if("Rooms".equals(selection)){
+            updateListViewOnTestSelection(roomsValues);
+        }
     }
 
     @Override
@@ -131,6 +146,21 @@ public class ShowSelectedTestActivity extends AppCompatActivity implements Adapt
         public boolean hasStableIds() {
             return true;
         }
+
+    }
+
+    private void updateListViewOnTestSelection(String[] values){
+        ProgressDialog progress = null;
+        progress = ProgressDialog.show(ShowSelectedTestActivity.this, null, "Loading...");
+        listViewAdapter.clear();
+        list = new ArrayList<String>();
+        for (int i = 0; i < values.length; ++i) {
+            list.add(roomsValues[i]);
+        }
+        listViewAdapter = new StableArrayAdapter(this,android.R.layout.simple_list_item_1, list);
+        listview.setAdapter(listViewAdapter);
+        listview.deferNotifyDataSetChanged();
+        progress.dismiss();
 
     }
 }
