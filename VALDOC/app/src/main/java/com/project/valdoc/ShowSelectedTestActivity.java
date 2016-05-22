@@ -78,7 +78,8 @@ public class ShowSelectedTestActivity extends AppCompatActivity implements Adapt
         for (int i = 0; i < roomsValues.length; ++i) {
             list.add(roomsValues[i]);
         }
-        listViewAdapter = new StableArrayAdapter(this,android.R.layout.simple_list_item_1, list);
+        listViewAdapter = new StableArrayAdapter(this,android.R.layout.simple_list_item_single_choice, list);
+        listview.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
         listview.setAdapter(listViewAdapter);
 
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -157,7 +158,8 @@ public class ShowSelectedTestActivity extends AppCompatActivity implements Adapt
         for (int i = 0; i < values.length; ++i) {
             list.add(roomsValues[i]);
         }
-        listViewAdapter = new StableArrayAdapter(this,android.R.layout.simple_list_item_1, list);
+        listViewAdapter = new StableArrayAdapter(this,android.R.layout.simple_list_item_single_choice, list);
+        listview.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
         listview.setAdapter(listViewAdapter);
         listview.deferNotifyDataSetChanged();
         progress.dismiss();
