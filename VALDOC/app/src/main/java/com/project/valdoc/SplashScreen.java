@@ -47,7 +47,11 @@ public class SplashScreen extends Activity {
                 if (sharedpreferences.getBoolean("login", false) == false) {
                     Intent intent = new Intent(SplashScreen.this, LoginActivity.class);
                     startActivity(intent);
-                } else {
+                } else if(sharedpreferences.getBoolean("ServerSetting", false) == false){
+                    Intent intent = new Intent(SplashScreen.this, ServerSettingActivity.class);
+                    startActivity(intent);
+                    finish();
+                }else {
                     Intent intent = new Intent(SplashScreen.this, AfterLoginActivity.class);
                     intent.putExtra("USERNAME", sharedpreferences.getString("USERNAME", ""));
                     intent.putExtra("USERTYPE", sharedpreferences.getString("USERTYPE", ""));

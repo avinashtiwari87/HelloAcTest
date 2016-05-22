@@ -35,10 +35,10 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
-        <!--<activity-->
-            <!--android:name=".HomeActivity"-->
-            <!--android:screenOrientation="portrait"-->
-            <!--android:theme="@style/AppTheme.NoActionBar" />-->
+        <!-- <activity -->
+        <!-- android:name=".HomeActivity" -->
+        <!-- android:screenOrientation="portrait" -->
+        <!-- android:theme="@style/AppTheme.NoActionBar" /> -->
         <activity
             android:name=".SplashActivity"
             android:screenOrientation="portrait" />
@@ -70,8 +70,9 @@
             android:name=".ServiceReportActivity"
             android:screenOrientation="landscape" />
         <activity android:name=".SyncSelectedDataActivity" />
-        <activity android:name=".CreatePostCertificateActivity"/>
-        <activity android:name=".ShowSelectedTestActivity"/>
+        <activity android:name=".CreatePostCertificateActivity" />
+        <activity android:name=".ShowSelectedTestActivity" />
+        <activity android:name=".ServerSettingActivity"></activity>
     </application>
 
 </manifest>
