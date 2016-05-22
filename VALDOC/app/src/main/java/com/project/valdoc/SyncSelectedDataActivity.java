@@ -47,10 +47,6 @@ public class SyncSelectedDataActivity extends AppCompatActivity {
             Utilityies.setCustomActionBar(SyncSelectedDataActivity.this, mActionBar, userName);
     }
 
-
-
-
-
     private void BuildSyncDataTable(int rows, int cols) {
         //first section
         // outer for loop
