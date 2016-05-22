@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/light_gray"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.project.valdoc.ServerSettingActivity">
+
+    <TextView
+        android:id="@+id/server_setting_details_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dip"
+        android:text="@string/server_setting_text"
+        android:textColor="@color/black"
+        android:textSize="11dip" />
+
+
+    <TextView
+        android:id="@+id/service_url_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/server_setting_details_text"
+        android:layout_marginTop="15dip"
+        android:text="Service Url:"
+        android:textColor="@color/black"
+        android:textSize="13dip" />
+
+    <EditText
+        android:id="@+id/service_url_edt_text"
+        style="@style/EditStyleText5"
+        android:layout_width="fill_parent"
+        android:layout_height="40dip"
+        android:layout_alignLeft="@+id/service_url_text"
+        android:layout_below="@+id/service_url_text"
+        android:layout_marginRight="20dip" />
+
+    <TextView
+        android:id="@+id/service_save_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dip"
+        android:padding="20dp"
+        android:gravity="center"
+        android:text=" Save "
+        android:textSize="@dimen/header_text_size"
+        android:background="@drawable/title_right_on"
+        android:textColor="@color/white"
+        android:textStyle="bold" />
+
+</RelativeLayout>
