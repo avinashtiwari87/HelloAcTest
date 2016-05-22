@@ -97,4 +97,16 @@
         <item name="android:paddingTop">3dp</item>
     </style>
 
+    <style name="EditStyleText5">
+        <item name="android:layout_width">130dip</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:layout_marginLeft">1dip</item>
+        <item name="android:layout_marginRight">5dip</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:background">@drawable/textfield_default</item>
+        <item name="android:textColor">@drawable/button_color_black</item>
+    </style>
+
 </resources>
