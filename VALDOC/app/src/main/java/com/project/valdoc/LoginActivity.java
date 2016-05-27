@@ -112,7 +112,7 @@ public class LoginActivity extends AppCompatActivity implements HttpConnection.H
         findViewById(R.id.sync_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (checkInternetConenction()) {
+                if (Utilityies.checkInternetConnection(LoginActivity.this)) {
                     mValdocControler.getHttpConectionforSync(LoginActivity.this, "GET");
                     mValdocControler.httpPostSyncData(LoginActivity.this, "POST");
                 } else {
@@ -129,25 +129,6 @@ public class LoginActivity extends AppCompatActivity implements HttpConnection.H
         ActionBar mActionBar = getSupportActionBar();
         if (mActionBar != null)
             Utilityies.setCustomActionBar(LoginActivity.this, mActionBar, "Sign in");
-    }
-
-
-    private boolean checkInternetConenction() {
-        // get Connectivity Manager object to check connection
-        ConnectivityManager connec = (ConnectivityManager) getSystemService(getBaseContext().CONNECTIVITY_SERVICE);
-       // Removed previous code. Because it is crashing. If device supports only wiFi, no 3G or 2G.
-        //in that case it will give NPE
-        // for method connec.getNetworkInfo(0).getState().
-        final NetworkInfo activeNetwork = connec.getActiveNetworkInfo();
-        if (activeNetwork != null && activeNetwork.isConnected()) {
-            // notify user you are online
-            Toast.makeText(this, " Connected ", Toast.LENGTH_LONG).show();
-            return true;
-        } else {
-            // notify user you are not online
-            Toast.makeText(this, " Not Connected ", Toast.LENGTH_LONG).show();
-            return false;
-        }
     }
 
 
