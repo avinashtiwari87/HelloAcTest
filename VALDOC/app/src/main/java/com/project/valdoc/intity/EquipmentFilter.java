@@ -10,12 +10,17 @@ public class EquipmentFilter {
     private int filterId;
     private String filterCode;
     private int equipmentId;
+
+    private String filterType;
+    private double efficiency;
+    private double particleSize;
+    private double specificationLeak;
+
     private double width;
     private double length;
     private double grillArea;
-    private double effectiveGrillArea;
-    private int isSupplyFilter;
-    private String creationDate;
+
+    private String lastUpdatedDate;
 
     public String getEquipmentfilter() {
         return equipmentfilter;
@@ -49,6 +54,38 @@ public class EquipmentFilter {
         this.equipmentId = equipmentId;
     }
 
+    public String getFilterType() {
+        return filterType;
+    }
+
+    public void setFilterType(String filterType) {
+        this.filterType = filterType;
+    }
+
+    public double getEfficiency() {
+        return efficiency;
+    }
+
+    public void setEfficiency(double efficiency) {
+        this.efficiency = efficiency;
+    }
+
+    public double getParticleSize() {
+        return particleSize;
+    }
+
+    public void setParticleSize(double particleSize) {
+        this.particleSize = particleSize;
+    }
+
+    public double getSpecificationLeak() {
+        return specificationLeak;
+    }
+
+    public void setSpecificationLeak(double specificationLeak) {
+        this.specificationLeak = specificationLeak;
+    }
+
     public double getWidth() {
         return width;
     }
@@ -73,27 +110,11 @@ public class EquipmentFilter {
         this.grillArea = grillArea;
     }
 
-    public double getEffectiveGrillArea() {
-        return effectiveGrillArea;
+    public String getLastUpdatedDate() {
+        return lastUpdatedDate;
     }
 
-    public void setEffectiveGrillArea(double effectiveGrillArea) {
-        this.effectiveGrillArea = effectiveGrillArea;
-    }
-
-    public int getIsSupplyFilter() {
-        return isSupplyFilter;
-    }
-
-    public void setIsSupplyFilter(int isSupplyFilter) {
-        this.isSupplyFilter = isSupplyFilter;
-    }
-
-    public String getCreationDate() {
-        return creationDate;
-    }
-
-    public void setCreationDate(String creationDate) {
-        this.creationDate = creationDate;
+    public void setLastUpdatedDate(String lastUpdatedDate) {
+        this.lastUpdatedDate = lastUpdatedDate;
     }
 }

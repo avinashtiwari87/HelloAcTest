@@ -136,7 +136,7 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
         // insertDataInTable();
         // Spinner Initialization
         //instrument spinner creation
-        getInstrumentList(loginUserType);
+//        getInstrumentList(loginUserType);
         listItemCreation();
         spinnerCreation();
         initButton();

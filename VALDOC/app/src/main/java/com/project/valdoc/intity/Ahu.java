@@ -18,16 +18,17 @@ public class Ahu {
     private double bleedFilterEfficiency;
     private double bleedAirCFM;
     private int bleedFilterQty;
-    private String bleedFilterSize;
+    private double bleedFilterLeak;
     private String freshFilterType;
     private double freshAirCFM;
     private int freshFilterQty;
-    private String freshFilterSize;
-    private int ahuHEPAFilterQty;
-    private double hepaFilterEfficiency;
-    private String hepaParticleSize;
-    private double hepaFilterSpecification;
-    private String creationDate;
+    private String freshFilterEfficiency;
+    private int finalFilterAirFlow;
+    private int finalFilterQty;
+    private String finalFilterType;
+    private String finalFilterEfficiency;
+    private String finalFilterLeak;
+    private String lastUpdatedDate;
 
     public String getAhu() {
         return ahu;
@@ -117,12 +118,12 @@ public class Ahu {
         this.bleedFilterQty = bleedFilterQty;
     }
 
-    public String getBleedFilterSize() {
-        return bleedFilterSize;
+    public double getBleedFilterLeak() {
+        return bleedFilterLeak;
     }
 
-    public void setBleedFilterSize(String bleedFilterSize) {
-        this.bleedFilterSize = bleedFilterSize;
+    public void setBleedFilterLeak(double bleedFilterLeak) {
+        this.bleedFilterLeak = bleedFilterLeak;
     }
 
     public String getFreshFilterType() {
@@ -149,51 +150,59 @@ public class Ahu {
         this.freshFilterQty = freshFilterQty;
     }
 
-    public String getFreshFilterSize() {
-        return freshFilterSize;
+    public String getFreshFilterEfficiency() {
+        return freshFilterEfficiency;
     }
 
-    public void setFreshFilterSize(String freshFilterSize) {
-        this.freshFilterSize = freshFilterSize;
+    public void setFreshFilterEfficiency(String freshFilterEfficiency) {
+        this.freshFilterEfficiency = freshFilterEfficiency;
     }
 
-    public int getAhuHEPAFilterQty() {
-        return ahuHEPAFilterQty;
+    public int getFinalFilterAirFlow() {
+        return finalFilterAirFlow;
     }
 
-    public void setAhuHEPAFilterQty(int ahuHEPAFilterQty) {
-        this.ahuHEPAFilterQty = ahuHEPAFilterQty;
+    public void setFinalFilterAirFlow(int finalFilterAirFlow) {
+        this.finalFilterAirFlow = finalFilterAirFlow;
     }
 
-    public double getHepaFilterEfficiency() {
-        return hepaFilterEfficiency;
+    public int getFinalFilterQty() {
+        return finalFilterQty;
     }
 
-    public void setHepaFilterEfficiency(double hepaFilterEfficiency) {
-        this.hepaFilterEfficiency = hepaFilterEfficiency;
+    public void setFinalFilterQty(int finalFilterQty) {
+        this.finalFilterQty = finalFilterQty;
     }
 
-    public String getHepaParticleSize() {
-        return hepaParticleSize;
+    public String getFinalFilterType() {
+        return finalFilterType;
     }
 
-    public void setHepaParticleSize(String hepaParticleSize) {
-        this.hepaParticleSize = hepaParticleSize;
+    public void setFinalFilterType(String finalFilterType) {
+        this.finalFilterType = finalFilterType;
     }
 
-    public double getHepaFilterSpecification() {
-        return hepaFilterSpecification;
+    public String getFinalFilterEfficiency() {
+        return finalFilterEfficiency;
     }
 
-    public void setHepaFilterSpecification(double hepaFilterSpecification) {
-        this.hepaFilterSpecification = hepaFilterSpecification;
+    public void setFinalFilterEfficiency(String finalFilterEfficiency) {
+        this.finalFilterEfficiency = finalFilterEfficiency;
     }
 
-    public String getCreationDate() {
-        return creationDate;
+    public String getFinalFilterLeak() {
+        return finalFilterLeak;
     }
 
-    public void setCreationDate(String creationDate) {
-        this.creationDate = creationDate;
+    public void setFinalFilterLeak(String finalFilterLeak) {
+        this.finalFilterLeak = finalFilterLeak;
+    }
+
+    public String getLastUpdatedDate() {
+        return lastUpdatedDate;
+    }
+
+    public void setLastUpdatedDate(String lastUpdatedDate) {
+        this.lastUpdatedDate = lastUpdatedDate;
     }
 }

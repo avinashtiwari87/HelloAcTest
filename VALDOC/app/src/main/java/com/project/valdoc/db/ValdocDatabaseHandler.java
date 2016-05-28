@@ -8,7 +8,9 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import com.project.valdoc.intity.Ahu;
+import com.project.valdoc.intity.AhuFilter;
 import com.project.valdoc.intity.AppUser;
+import com.project.valdoc.intity.ApplicableTestAhu;
 import com.project.valdoc.intity.ApplicableTestEquipment;
 import com.project.valdoc.intity.ApplicableTestRoom;
 import com.project.valdoc.intity.Area;
@@ -16,6 +18,7 @@ import com.project.valdoc.intity.ClientInstrument;
 import com.project.valdoc.intity.ClientInstrumentTest;
 import com.project.valdoc.intity.Equipment;
 import com.project.valdoc.intity.EquipmentFilter;
+import com.project.valdoc.intity.EquipmentGrill;
 import com.project.valdoc.intity.Grill;
 import com.project.valdoc.intity.PartnerInstrument;
 import com.project.valdoc.intity.PartnerInstrumentTest;
@@ -60,39 +63,97 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
     public static final String AHU_BLEEDFILTEREFFICIENCY = "bleedFilterEfficiency";
     public static final String AHU_BLEEDAIRCFM = "bleedAirCFM";
     public static final String AHU_BLEEDFILTERQTY = "bleedFilterQty";
-    public static final String AHU_BLEEDFILTERSIZE = "bleedFilterSize";
+    public static final String AHU_BLEEDFILTERLEAK = "bleedFilterLeak";
     public static final String AHU_FRESHFILTERTYPE = "freshFilterType";
     public static final String AHU_FRESHAIRCFM = "freshAirCFM";
     public static final String AHU_FRESHFILTERQTY = "freshFilterQty";
-    public static final String AHU_FRESHFILTERSIZE = "freshFilterSize";
-    public static final String AHU_AHUHEPAFILTERQTY = "ahuHEPAFilterQty";
-    public static final String AHU_HEPAFILTEREFFICIENCY = "hepaFilterEfficiency";
-    public static final String AHU_HEPAPARTICLESIZE = "hepaParticleSize";
-    public static final String AHU_HEPAFILTERSPECIFICATION = "hepaFilterSpecification";
-    public static final String AHU_CREATIONDATE = "creationDate";
+    public static final String AHU_FRESHFILTEREFFICIENCY = "freshFilterEfficiency";
+    public static final String AHU_FINALFILTERAIRFLOW = "finalFilterAirFlow";
+    public static final String AHU_FINALFILTERQTY = "finalFilterQty";
+    public static final String AHU_FINALFILTERTYPE = "finalFilterType";
+    public static final String AHU_FINALFILTEREFFICIENCY = "finalFilterEfficiency";
+    public static final String AHU_FINALFILTERLEAK = "finalFilterLeak";
+    public static final String AHU_LASTUPDATEDDATE = "lastUpdatedDate";
+
     // ahu table create statment
     private static final String CREATE_TABLE_AHU = "CREATE TABLE " + AHU_TABLE_NAME
             + "(" + AHU_AHUID + " INTEGER," + AHU_AHUNO + " TEXT," + AHU_AHUTYPE + " TEXT,"
             + AHU_CAPACITY + " REAL," + AHU_RETURNAIRCFM + " REAL," + AHU_EXHAUSTAIRCFM + " REAL," + AHU_BLEEDFILTERTYPE + " TEXT,"
             + AHU_BLEEDFILTEREFFICIENCY + " REAL," + AHU_BLEEDAIRCFM + " REAL," + AHU_BLEEDFILTERQTY + " INTEGER,"
-            + AHU_BLEEDFILTERSIZE + " TEXT," + AHU_FRESHFILTERTYPE + " TEXT," + AHU_FRESHAIRCFM + " REAL," + AHU_FRESHFILTERQTY
-            + " INTEGER," + AHU_FRESHFILTERSIZE + " TEXT," + AHU_AHUHEPAFILTERQTY + " INTEGER," + AHU_HEPAFILTEREFFICIENCY
-            + " REAL," + AHU_HEPAPARTICLESIZE + " TEXT," + AHU_HEPAFILTERSPECIFICATION + " REAL,"
-            + AHU_CREATIONDATE + " TEXT " + ")";
+            + AHU_BLEEDFILTERLEAK + " REAL," + AHU_FRESHFILTERTYPE + " TEXT," + AHU_FRESHAIRCFM + " REAL," + AHU_FRESHFILTERQTY
+            + " INTEGER," + AHU_FRESHFILTEREFFICIENCY + " TEXT," + AHU_FINALFILTERAIRFLOW + " INTEGER," + AHU_FINALFILTERQTY
+            + " INTEGER," + AHU_FINALFILTERTYPE + " TEXT," + AHU_FINALFILTEREFFICIENCY + " TEXT,"
+            + AHU_FINALFILTERLEAK + " TEXT," + AHU_LASTUPDATEDDATE + " TEXT" + ")";
 
-    //Applicable test equipment able details
+    //Applicable test ahu table details
+    public static final String APLICABLE_TEST_AHU_TABLE_NAME = "aplicable_test_ahu";
+    public static final String APLICABLE_TEST_AHU_APLICABLE_TESTID = "aplicable_testId";
+    public static final String APLICABLE_TEST_AHU_AHUID = "ahuId";
+    public static final String APLICABLE_TEST_AHU_TESTNAME = "testName";
+    public static final String APLICABLE_TEST_AHU_TESTCODE = "testCode";
+    public static final String APLICABLE_TEST_AHU_TESTFORMAT = "testFormat";
+    public static final String APLICABLE_TEST_AHU_TESTITEM = "testItem";
+    public static final String APLICABLE_TEST_AHU_TESTSPECIFICATION = "testSpecification";
+    public static final String APLICABLE_TEST_AHU_OCCUPENCYSTATE = "occupencyState";
+    public static final String APLICABLE_TEST_AHU_TESTREFERENCE = "testReference";
+    public static final String APLICABLE_TEST_AHU_TESTPROP = "testProp";
+    public static final String APLICABLE_TEST_AHU_PERIODICITY = "periodicity";
+    public static final String APLICABLE_TEST_AHU_LOCATION = "location";
+    public static final String APLICABLE_TEST_AHU_NOOFCYCLE = "noOfCycle";
+    public static final String APLICABLE_TEST_AHU_LASTUPDATEDDATE = "lastUpdatedDate";
+
+    // applicable test ahu table create statment
+    private static final String CREATE_TABLE_APLICABLE_TEST_AHU = "CREATE TABLE " + APLICABLE_TEST_AHU_TABLE_NAME
+            + "(" + APLICABLE_TEST_AHU_APLICABLE_TESTID + " INTEGER," + APLICABLE_TEST_AHU_AHUID + " INTEGER," + APLICABLE_TEST_AHU_TESTNAME + " TEXT,"
+            + APLICABLE_TEST_AHU_TESTCODE + " TEXT," + APLICABLE_TEST_AHU_TESTFORMAT + " TEXT," + APLICABLE_TEST_AHU_TESTITEM + " TEXT," + APLICABLE_TEST_AHU_TESTSPECIFICATION + " TEXT,"
+            + APLICABLE_TEST_AHU_OCCUPENCYSTATE + " TEXT," + APLICABLE_TEST_AHU_TESTREFERENCE + " TEXT," + APLICABLE_TEST_AHU_TESTPROP + " TEXT,"
+            + APLICABLE_TEST_AHU_PERIODICITY + " TEXT," + APLICABLE_TEST_AHU_LOCATION + " TEXT," + APLICABLE_TEST_AHU_NOOFCYCLE
+            + " INTEGER," + APLICABLE_TEST_AHU_LASTUPDATEDDATE + " TEXT" + ")";
+
+    //ahu filter table details
+    public static final String AHU_FILTER_TABLE_NAME = "ahufilter";
+    public static final String AHU_FILTER_FILTERID = "filterId";
+    public static final String AHU_FILTER_AHUID = "ahuId";
+    public static final String AHU_FILTER_FILTERCATEGORY = "filterCategory";
+    public static final String AHU_FILTER_FILTERCODE = "filterCode";
+    public static final String AHU_FILTER_WIDTH = "width";
+    public static final String AHU_FILTER_LENGTH = "length";
+    public static final String AHU_FILTER_DEPTHAREA = "depthArea";
+    public static final String AHU_FILTER_AREA = "area";
+    public static final String AHU_FILTER_EFFECTIVEAREA = "effectiveArea";
+
+
+    // ahu filter table create statment
+    private static final String CREATE_TABLE_AHU_FILTER = "CREATE TABLE " + AHU_FILTER_TABLE_NAME
+            + "(" + AHU_FILTER_FILTERID + " INTEGER," + AHU_FILTER_AHUID + " INTEGER," + AHU_FILTER_FILTERCATEGORY + " TEXT,"
+            + AHU_FILTER_FILTERCODE + " TEXT," + AHU_FILTER_WIDTH + " REAL," + AHU_FILTER_LENGTH + " REAL," + AHU_FILTER_DEPTHAREA + " REAL,"
+            + AHU_FILTER_AREA + " REAL," + AHU_FILTER_EFFECTIVEAREA + " REAL" + ")";
+
+
+    //Applicable test equipment table details
     public static final String APLICABLE_TEST_EQUIPMENT_TABLE_NAME = "aplicable_test_equipment";
     public static final String APLICABLE_TEST_EQUIPMENT_APLICABLE_TESTID = "aplicable_testId";
     public static final String APLICABLE_TEST_EQUIPMENT_EQUIPMENTID = "equipmentId";
     public static final String APLICABLE_TEST_EQUIPMENT_TESTNAME = "testName";
+
+    public static final String APLICABLE_TEST_EQUIPMENT_TESTCODE = "testCode";
+    public static final String APLICABLE_TEST_EQUIPMENT_TESTFORMAT = "testFormat";
+    public static final String APLICABLE_TEST_EQUIPMENT_TESTSPECIFICATION = "testSpecification";
+    public static final String APLICABLE_TEST_EQUIPMENT_OCCUPENCYSTATE = "occupencyState";
+    public static final String APLICABLE_TEST_EQUIPMENT_TESTREFERENCE = "testReference";
+    public static final String APLICABLE_TEST_EQUIPMENT_TESTPROP = "testProp";
+
     public static final String APLICABLE_TEST_EQUIPMENT_PERIODICITY = "periodicity";
     public static final String APLICABLE_TEST_EQUIPMENT_LOCATION = "location";
     public static final String APLICABLE_TEST_EQUIPMENT_NOOFCYCLE = "noOfCycle";
-    public static final String APLICABLE_TEST_EQUIPMENT_CREATIONDATE = "creationDate";
+    public static final String APLICABLE_TEST_EQUIPMENT_CREATIONDATE = "lastUpdatedDate";
+
     // aplicable_test_equipment table create statment
     private static final String CREATE_TABLE_APLICABLE_TEST_EQUIPMENT = "CREATE TABLE " + APLICABLE_TEST_EQUIPMENT_TABLE_NAME
             + "(" + APLICABLE_TEST_EQUIPMENT_APLICABLE_TESTID + " INTEGER," + APLICABLE_TEST_EQUIPMENT_EQUIPMENTID + " INTEGER,"
-            + APLICABLE_TEST_EQUIPMENT_TESTNAME + " TEXT," + APLICABLE_TEST_EQUIPMENT_PERIODICITY + " TEXT,"
+            + APLICABLE_TEST_EQUIPMENT_TESTNAME + " TEXT," + APLICABLE_TEST_EQUIPMENT_TESTCODE + " TEXT," + APLICABLE_TEST_EQUIPMENT_TESTFORMAT + " TEXT,"
+            + APLICABLE_TEST_EQUIPMENT_TESTSPECIFICATION + " TEXT," + APLICABLE_TEST_EQUIPMENT_OCCUPENCYSTATE + " TEXT," + APLICABLE_TEST_EQUIPMENT_TESTREFERENCE + " TEXT,"
+            + APLICABLE_TEST_EQUIPMENT_TESTPROP + " TEXT," + APLICABLE_TEST_EQUIPMENT_PERIODICITY + " TEXT,"
             + APLICABLE_TEST_EQUIPMENT_LOCATION + " INTEGER," + APLICABLE_TEST_EQUIPMENT_NOOFCYCLE + " INTEGER,"
             + APLICABLE_TEST_EQUIPMENT_CREATIONDATE + " TEXT " + ")";
 
@@ -151,19 +212,41 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
     public static final String EQUIPMENTFILTER_FILTERID = "filterId";
     public static final String EQUIPMENTFILTER_FILTERCODE = "filterCode";
     public static final String EQUIPMENTFILTER_EQUIPMENTID = "equipmentId";
+
+    public static final String EQUIPMENTFILTER_FILTERTYPE = "filterType";
+    public static final String EQUIPMENTFILTER_EFFICIENCY = "efficiency";
+    public static final String EQUIPMENTFILTER_PARTICLESIZE = "particleSize";
+    public static final String EQUIPMENTFILTER_SPECIFICATIONLEAK = "specificationLeak";
+
     public static final String EQUIPMENTFILTER_WIDTH = "width";
     public static final String EQUIPMENTFILTER_LENGTH = "length";
     public static final String EQUIPMENTFILTER_GRILLAREA = "grillArea";
-    public static final String EQUIPMENTFILTER_EFFECTIVEGRILLAREA = "effectiveGrillArea";
-    public static final String EQUIPMENTFILTER_ISSUPPLYFILTER = "isSupplyFilter";
-    public static final String EQUIPMENTFILTER_CREATIONDATE = "creationDate";
+    public static final String EQUIPMENTFILTER_LASTUPDATEDDATE = "lastUpdatedDate";
 
     // equipment filer table create statment
     private static final String CREATE_TABLE_EQUIPMENTFILTER = "CREATE TABLE " + EQUIPMENTFILTER_TABLE_NAME
-            + "(" + EQUIPMENTFILTER_FILTERID + " INTEGER," + EQUIPMENTFILTER_FILTERCODE + " TEXT,"
-            + EQUIPMENTFILTER_WIDTH + " REAL," + EQUIPMENTFILTER_LENGTH + " REAL," + EQUIPMENTFILTER_GRILLAREA + " REAL,"
-            + EQUIPMENTFILTER_EQUIPMENTID + " INTEGER," + EQUIPMENTFILTER_EFFECTIVEGRILLAREA + " REAL,"
-            + EQUIPMENTFILTER_ISSUPPLYFILTER + " INTEGER," + EQUIPMENTFILTER_CREATIONDATE + " TEXT " + ")";
+            + "(" + EQUIPMENTFILTER_FILTERID + " INTEGER," + EQUIPMENTFILTER_FILTERCODE + " TEXT," + EQUIPMENTFILTER_EQUIPMENTID + " INTEGER,"
+            + EQUIPMENTFILTER_FILTERTYPE + " TEXT," + EQUIPMENTFILTER_EFFICIENCY + " REAL," + EQUIPMENTFILTER_PARTICLESIZE + " REAL,"
+            + EQUIPMENTFILTER_SPECIFICATIONLEAK + " REAL," + EQUIPMENTFILTER_WIDTH + " REAL," + EQUIPMENTFILTER_LENGTH + " REAL,"
+            + EQUIPMENTFILTER_GRILLAREA + " REAL," + EQUIPMENTFILTER_LASTUPDATEDDATE + " TEXT " + ")";
+
+    //equipment grill table details
+    public static final String EQUIPMENTGRILL_TABLE_NAME = "equipmentgrill";
+    public static final String EQUIPMENTGRILL_GRILLID = "grillId";
+    public static final String EQUIPMENTGRILL_GRILLCODE = "grillCode";
+    public static final String EQUIPMENTGRILL_EQUIPMENTID = "equipmentId";
+    public static final String EQUIPMENTGRILL_LENGTH = "length";
+    public static final String EQUIPMENTGRILL_WIDTH = "width";
+    public static final String EQUIPMENTGRILL_AREA = "area";
+    public static final String EQUIPMENTGRILL_EFFECTIVEAREA = "effectiveArea";
+    public static final String EQUIPMENTGRILL_REMARKS = "remarks";
+    public static final String EQUIPMENTGRILL_LASTUPDATEDDATE = "lastUpdatedDate";
+
+    // equipment grill table create statment
+    private static final String CREATE_TABLE_EQUIPMENTGRILL = "CREATE TABLE " + EQUIPMENTGRILL_TABLE_NAME
+            + "(" + EQUIPMENTGRILL_GRILLID + " INTEGER," + EQUIPMENTGRILL_GRILLCODE + " TEXT," + EQUIPMENTGRILL_EQUIPMENTID + " INTEGER,"
+            + EQUIPMENTGRILL_LENGTH + " REAL," + EQUIPMENTGRILL_WIDTH + " REAL," + EQUIPMENTGRILL_AREA + " REAL,"
+            + EQUIPMENTGRILL_EFFECTIVEAREA + " REAL," + EQUIPMENTGRILL_REMARKS + " TEXT," + EQUIPMENTGRILL_LASTUPDATEDDATE + " TEXT " + ")";
 
     //gril able details
     public static final String GRILL_TABLE_NAME = "grill";
@@ -612,6 +695,9 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_SERVICE_REPORT);
         db.execSQL(CREATE_TABLE_SERVICE_REPORT_DETAIL);
         db.execSQL(CREATE_TABLE_PARTNERS);
+        db.execSQL(CREATE_TABLE_APLICABLE_TEST_AHU);
+        db.execSQL(CREATE_TABLE_AHU_FILTER);
+        db.execSQL(CREATE_TABLE_EQUIPMENTGRILL);
         Log.d("valdoc", "table created success fully");
     }
 
@@ -646,6 +732,104 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
             Log.d("Avinash", "db update exception=" + e.getMessage());
         }
         return count;
+    }
+
+
+
+    //insert daa in equipment grill filter table
+    public boolean insertEquipmentGrill(String tableName, ArrayList<EquipmentGrill> equipmentGrillArrayList) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        if (equipmentGrillArrayList.size() != 0) {
+            for (EquipmentGrill equipmentGrill : equipmentGrillArrayList) {
+                ContentValues contentValues = new ContentValues();
+                contentValues.put(EQUIPMENTGRILL_GRILLID, equipmentGrill.getGrillId());
+                contentValues.put(EQUIPMENTGRILL_GRILLCODE, equipmentGrill.getGrillCode());
+                contentValues.put(EQUIPMENTGRILL_EQUIPMENTID, equipmentGrill.getEquipmentId());
+                contentValues.put(EQUIPMENTGRILL_LENGTH, equipmentGrill.getLength());
+                contentValues.put(EQUIPMENTGRILL_WIDTH, equipmentGrill.getWidth());
+                contentValues.put(EQUIPMENTGRILL_AREA, equipmentGrill.getArea());
+                contentValues.put(EQUIPMENTGRILL_EFFECTIVEAREA, equipmentGrill.getEffectiveArea());
+                contentValues.put(EQUIPMENTGRILL_REMARKS, equipmentGrill.getRemarks());
+                contentValues.put(EQUIPMENTGRILL_LASTUPDATEDDATE, equipmentGrill.getLastUpdatedDate());
+
+                if (getExistingId(tableName, AHU_FILTER_FILTERID, equipmentGrill.getGrillId()) > 0) {
+                    db.update(tableName, contentValues, AHU_FILTER_FILTERID + "=" + equipmentGrill.getGrillId(), null);
+                } else {
+//                    Log.d("Avinash", "insert applicable partners.getId()=" + partners.getPartnerId() + " partners.getName()=" + partners.getName());
+                    db.insert(tableName, null, contentValues);
+                }
+            }
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    //insert daa in ahu filter table
+    public boolean insertAhuFilter(String tableName, ArrayList<AhuFilter> ahuFilterArrayList) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        if (ahuFilterArrayList.size() != 0) {
+            for (AhuFilter ahuFilter : ahuFilterArrayList) {
+                ContentValues contentValues = new ContentValues();
+                contentValues.put(AHU_FILTER_FILTERID, ahuFilter.getFilterId());
+                contentValues.put(AHU_FILTER_AHUID, ahuFilter.getAhuId());
+                contentValues.put(AHU_FILTER_FILTERCATEGORY, ahuFilter.getFilterCategory());
+                contentValues.put(AHU_FILTER_FILTERCODE, ahuFilter.getFilterCode());
+                contentValues.put(AHU_FILTER_WIDTH, ahuFilter.getWidth());
+                contentValues.put(AHU_FILTER_LENGTH, ahuFilter.getLength());
+                contentValues.put(AHU_FILTER_DEPTHAREA, ahuFilter.getDepthArea());
+                contentValues.put(AHU_FILTER_AREA, ahuFilter.getArea());
+                contentValues.put(AHU_FILTER_EFFECTIVEAREA, ahuFilter.getEffectiveArea());
+
+                if (getExistingId(tableName, AHU_FILTER_FILTERID, ahuFilter.getFilterId()) > 0) {
+                    db.update(tableName, contentValues, AHU_FILTER_FILTERID + "=" + ahuFilter.getFilterId(), null);
+                } else {
+//                    Log.d("Avinash", "insert applicable partners.getId()=" + partners.getPartnerId() + " partners.getName()=" + partners.getName());
+                    db.insert(tableName, null, contentValues);
+                }
+
+            }
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
+    //insert daa in applicable test ahu table
+    public boolean insertApplicableTestAhu(String tableName, ArrayList<ApplicableTestAhu> applicableTestAhuArrayList) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        if (applicableTestAhuArrayList.size() != 0) {
+            for (ApplicableTestAhu applicableTestAhu : applicableTestAhuArrayList) {
+                ContentValues contentValues = new ContentValues();
+                contentValues.put(APLICABLE_TEST_AHU_APLICABLE_TESTID, applicableTestAhu.getAplicable_testId());
+                contentValues.put(APLICABLE_TEST_AHU_AHUID, applicableTestAhu.getAhuId());
+                contentValues.put(APLICABLE_TEST_AHU_TESTNAME, applicableTestAhu.getTestName());
+                contentValues.put(APLICABLE_TEST_AHU_TESTCODE, applicableTestAhu.getTestCode());
+                contentValues.put(APLICABLE_TEST_AHU_TESTFORMAT, applicableTestAhu.getTestFormat());
+                contentValues.put(APLICABLE_TEST_AHU_TESTITEM, applicableTestAhu.getTestItem());
+                contentValues.put(APLICABLE_TEST_AHU_TESTSPECIFICATION, applicableTestAhu.getTestSpecification());
+
+                contentValues.put(APLICABLE_TEST_AHU_OCCUPENCYSTATE, applicableTestAhu.getOccupencyState());
+                contentValues.put(APLICABLE_TEST_AHU_TESTREFERENCE, applicableTestAhu.getTestReference());
+                contentValues.put(APLICABLE_TEST_AHU_TESTPROP, applicableTestAhu.getTestProp());
+                contentValues.put(APLICABLE_TEST_AHU_PERIODICITY, applicableTestAhu.getPeriodicity());
+                contentValues.put(APLICABLE_TEST_AHU_LOCATION, applicableTestAhu.getLocation());
+                contentValues.put(APLICABLE_TEST_AHU_NOOFCYCLE, applicableTestAhu.getNoOfCycle());
+                contentValues.put(APLICABLE_TEST_AHU_LASTUPDATEDDATE, applicableTestAhu.getLastUpdatedDate());
+
+                if (getExistingId(tableName, APLICABLE_TEST_AHU_APLICABLE_TESTID, applicableTestAhu.getAplicable_testId()) > 0) {
+                    db.update(tableName, contentValues, APLICABLE_TEST_AHU_APLICABLE_TESTID + "=" + applicableTestAhu.getAplicable_testId(), null);
+                } else {
+//                    Log.d("Avinash", "insert applicable partners.getId()=" + partners.getPartnerId() + " partners.getName()=" + partners.getName());
+                    db.insert(tableName, null, contentValues);
+                }
+
+            }
+            return true;
+        } else {
+            return false;
+        }
     }
 
 
@@ -862,21 +1046,21 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 contentValues.put(AHU_BLEEDFILTEREFFICIENCY, ahu.getBleedFilterEfficiency());
                 contentValues.put(AHU_BLEEDAIRCFM, ahu.getBleedAirCFM());
                 contentValues.put(AHU_BLEEDFILTERQTY, ahu.getBleedFilterQty());
-                contentValues.put(AHU_BLEEDFILTERSIZE, ahu.getBleedFilterSize());
+                contentValues.put(AHU_BLEEDFILTERLEAK, ahu.getBleedFilterLeak());
                 contentValues.put(AHU_FRESHFILTERTYPE, ahu.getFreshFilterType());
                 contentValues.put(AHU_FRESHAIRCFM, ahu.getFreshAirCFM());
                 contentValues.put(AHU_FRESHFILTERQTY, ahu.getFreshFilterQty());
-                contentValues.put(AHU_FRESHFILTERSIZE, ahu.getFreshFilterSize());
-                contentValues.put(AHU_AHUHEPAFILTERQTY, ahu.getAhuHEPAFilterQty());
-                contentValues.put(AHU_HEPAFILTEREFFICIENCY, ahu.getHepaFilterEfficiency());
-                contentValues.put(AHU_HEPAPARTICLESIZE, ahu.getHepaParticleSize());
-                contentValues.put(AHU_HEPAFILTERSPECIFICATION, ahu.getHepaFilterSpecification());
-                contentValues.put(AHU_CREATIONDATE, ahu.getCreationDate());
-
+                contentValues.put(AHU_FRESHFILTEREFFICIENCY, ahu.getFreshFilterEfficiency());
+                contentValues.put(AHU_FINALFILTERAIRFLOW, ahu.getFinalFilterAirFlow());
+                contentValues.put(AHU_FINALFILTERQTY, ahu.getFinalFilterQty());
+                contentValues.put(AHU_FINALFILTERTYPE, ahu.getFinalFilterType());
+                contentValues.put(AHU_FINALFILTEREFFICIENCY, ahu.getFinalFilterEfficiency());
+                contentValues.put(AHU_FINALFILTERLEAK, ahu.getFinalFilterLeak());
+                contentValues.put(AHU_LASTUPDATEDDATE, ahu.getLastUpdatedDate());
                 if (getExistingId(tableName, AHU_AHUID, ahu.getAhuId()) > 0) {
                     db.update(tableName, contentValues, AHU_AHUID + "=" + ahu.getAhuId(), null);
                 } else {
-                    Log.d("Avinash", "insert applicable ahu.getAhuId()=" + ahu.getAhuId() + " partners.getName()=" + ahu.getAhuNo());
+//                    Log.d("Avinash", "insert applicable ahu.getAhuId()=" + ahu.getAhuId() + " partners.getName()=" + ahu.getAhuNo());
                     db.insert(tableName, null, contentValues);
 
                 }
@@ -896,10 +1080,17 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 contentValues.put(APLICABLE_TEST_EQUIPMENT_APLICABLE_TESTID, applicableTestEquipment.getAplicable_testId());
                 contentValues.put(APLICABLE_TEST_EQUIPMENT_EQUIPMENTID, applicableTestEquipment.getEquipmentId());
                 contentValues.put(APLICABLE_TEST_EQUIPMENT_TESTNAME, applicableTestEquipment.getTestName());
+                contentValues.put(APLICABLE_TEST_EQUIPMENT_TESTCODE, applicableTestEquipment.getTestCode());
+                contentValues.put(APLICABLE_TEST_EQUIPMENT_TESTFORMAT, applicableTestEquipment.getTestFormat());
+                contentValues.put(APLICABLE_TEST_EQUIPMENT_TESTSPECIFICATION, applicableTestEquipment.getTestSpecification());
+                contentValues.put(APLICABLE_TEST_EQUIPMENT_OCCUPENCYSTATE, applicableTestEquipment.getOccupencyState());
+                contentValues.put(APLICABLE_TEST_EQUIPMENT_TESTREFERENCE, applicableTestEquipment.getTestReference());
+                contentValues.put(APLICABLE_TEST_EQUIPMENT_TESTPROP, applicableTestEquipment.getTestProp());
+
                 contentValues.put(APLICABLE_TEST_EQUIPMENT_PERIODICITY, applicableTestEquipment.getPeriodicity());
                 contentValues.put(APLICABLE_TEST_EQUIPMENT_LOCATION, applicableTestEquipment.getLocation());
                 contentValues.put(APLICABLE_TEST_EQUIPMENT_NOOFCYCLE, applicableTestEquipment.getNoOfCycle());
-                contentValues.put(APLICABLE_TEST_EQUIPMENT_CREATIONDATE, applicableTestEquipment.getCreationDate());
+                contentValues.put(APLICABLE_TEST_EQUIPMENT_CREATIONDATE, applicableTestEquipment.getLastUpdatedDate());
 
                 if (getExistingId(tableName, APLICABLE_TEST_EQUIPMENT_APLICABLE_TESTID, applicableTestEquipment.getAplicable_testId()) > 0) {
                     db.update(tableName, contentValues, APLICABLE_TEST_EQUIPMENT_APLICABLE_TESTID + "=" + applicableTestEquipment.getAplicable_testId(), null);
@@ -994,9 +1185,11 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 contentValues.put(EQUIPMENTFILTER_WIDTH, equipmentFilter.getWidth());
                 contentValues.put(EQUIPMENTFILTER_LENGTH, equipmentFilter.getLength());
                 contentValues.put(EQUIPMENTFILTER_GRILLAREA, equipmentFilter.getGrillArea());
-                contentValues.put(EQUIPMENTFILTER_EFFECTIVEGRILLAREA, equipmentFilter.getEffectiveGrillArea());
-                contentValues.put(EQUIPMENTFILTER_ISSUPPLYFILTER, equipmentFilter.getIsSupplyFilter());
-                contentValues.put(EQUIPMENTFILTER_CREATIONDATE, equipmentFilter.getCreationDate());
+                contentValues.put(EQUIPMENTFILTER_FILTERTYPE, equipmentFilter.getFilterType());
+                contentValues.put(EQUIPMENTFILTER_EFFICIENCY, equipmentFilter.getEfficiency());
+                contentValues.put(EQUIPMENTFILTER_PARTICLESIZE, equipmentFilter.getParticleSize());
+                contentValues.put(EQUIPMENTFILTER_SPECIFICATIONLEAK,equipmentFilter.getSpecificationLeak());
+                contentValues.put(EQUIPMENTFILTER_LASTUPDATEDDATE,equipmentFilter.getLastUpdatedDate());
 
                 if (getExistingId(tableName, EQUIPMENTFILTER_FILTERID, equipmentFilter.getFilterId()) > 0) {
                     db.update(tableName, contentValues, EQUIPMENTFILTER_FILTERID + "=" + equipmentFilter.getFilterId(), null);
@@ -1539,16 +1732,17 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 ahu.setBleedFilterEfficiency(cursor.getDouble(7));
                 ahu.setBleedAirCFM(cursor.getDouble(8));
                 ahu.setBleedFilterQty(cursor.getInt(9));
-                ahu.setBleedFilterSize(cursor.getString(10));
+                ahu.setBleedFilterLeak(cursor.getInt(10));
                 ahu.setFreshFilterType(cursor.getString(11));
                 ahu.setFreshAirCFM(cursor.getDouble(12));
                 ahu.setFreshFilterQty(cursor.getInt(13));
-                ahu.setFreshFilterSize(cursor.getString(14));
-                ahu.setAhuHEPAFilterQty(cursor.getInt(15));
-                ahu.setHepaFilterEfficiency(cursor.getDouble(16));
-                ahu.setHepaParticleSize(cursor.getString(17));
-                ahu.setHepaFilterSpecification(cursor.getDouble(18));
-                ahu.setCreationDate(cursor.getString(19));
+                ahu.setFreshFilterEfficiency(cursor.getString(14));
+                ahu.setFinalFilterAirFlow(cursor.getInt(15));
+                ahu.setFinalFilterQty(cursor.getInt(16));
+                ahu.setFinalFilterType(cursor.getString(17));
+                ahu.setFinalFilterEfficiency(cursor.getString(18));
+                ahu.setFinalFilterLeak(cursor.getString(19));
+                ahu.setLastUpdatedDate(cursor.getString(19));
                 Log.d("valdoc", "TestCreateActivity : ahu1");
                 ahuArrayList.add(ahu);
             } while (cursor.moveToNext());
@@ -1908,9 +2102,9 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
         int i = 0;
         if (cursor.moveToFirst()) {
             do {
-                Log.d("valdoc", "ValdocDatabaseHelper :filter code equipment1:=" + cursor.getColumnIndex(EQUIPMENTFILTER_FILTERCODE));
+//                Log.d("valdoc", "ValdocDatabaseHelper :filter code equipment1:=" + cursor.getColumnIndex(EQUIPMENTFILTER_FILTERCODE));
                 strings[i] = cursor.getString(cursor.getColumnIndex(EQUIPMENTFILTER_FILTERCODE));
-                Log.d("valdoc", "ValdocDatabaseHelper :equipment1:=" + strings[i] + "i=" + i);
+//                Log.d("valdoc", "ValdocDatabaseHelper :equipment1:=" + strings[i] + "i=" + i);
                 i++;
             } while (cursor.moveToNext());
         } // return contact list return wordList; }
@@ -2013,10 +2207,16 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 applicableTestEquipment.setAplicable_testId(cursor.getInt(0));
                 applicableTestEquipment.setEquipmentId(cursor.getInt(1));
                 applicableTestEquipment.setTestName(cursor.getString(2));
-                applicableTestEquipment.setPeriodicity(cursor.getString(3));
-                applicableTestEquipment.setLocation(cursor.getInt(4));
-                applicableTestEquipment.setNoOfCycle(cursor.getInt(5));
-                applicableTestEquipment.setCreationDate(cursor.getString(6));
+                applicableTestEquipment.setTestCode(cursor.getString(3));
+                applicableTestEquipment.setTestFormat(cursor.getString(4));
+                applicableTestEquipment.setTestSpecification(cursor.getString(5));
+                applicableTestEquipment.setOccupencyState(cursor.getString(6));
+                applicableTestEquipment.setTestReference(cursor.getString(7));
+                applicableTestEquipment.setTestProp(cursor.getString(8));
+                applicableTestEquipment.setPeriodicity(cursor.getString(9));
+                applicableTestEquipment.setLocation(cursor.getInt(10));
+                applicableTestEquipment.setNoOfCycle(cursor.getInt(11));
+                applicableTestEquipment.setLastUpdatedDate(cursor.getString(12));
                 applicableTestEquipmentArrayList.add(applicableTestEquipment);
             } while (cursor.moveToNext());
         } // return contact list return wordList; }

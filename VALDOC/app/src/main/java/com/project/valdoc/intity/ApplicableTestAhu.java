@@ -1,33 +1,32 @@
 package com.project.valdoc.intity;
 
-import java.sql.Date;
-
 /**
- * Created by Avinash on 2/13/2016.
+ * Created by Avinash on 5/26/2016.
  */
-public class ApplicableTestEquipment {
-    private String aplicable_test_equipment;
+public class ApplicableTestAhu {
+
+    private String aplicable_test_ahu;
     private int aplicable_testId;
-    private int equipmentId;
+    private int ahuId;
     private String testName;
     private String testCode;
     private String testFormat;
+    private String testItem;
     private String testSpecification;
     private String occupencyState;
     private String testReference;
     private String testProp;
     private String periodicity;
-    private int location;
+    private String location;
     private int noOfCycle;
     private String lastUpdatedDate;
 
-
-    public String getAplicable_test_equipment() {
-        return aplicable_test_equipment;
+    public String getAplicable_test_ahu() {
+        return aplicable_test_ahu;
     }
 
-    public void setAplicable_test_equipment(String aplicable_test_equipment) {
-        this.aplicable_test_equipment = aplicable_test_equipment;
+    public void setAplicable_test_ahu(String aplicable_test_ahu) {
+        this.aplicable_test_ahu = aplicable_test_ahu;
     }
 
     public int getAplicable_testId() {
@@ -38,12 +37,12 @@ public class ApplicableTestEquipment {
         this.aplicable_testId = aplicable_testId;
     }
 
-    public int getEquipmentId() {
-        return equipmentId;
+    public int getAhuId() {
+        return ahuId;
     }
 
-    public void setEquipmentId(int equipmentId) {
-        this.equipmentId = equipmentId;
+    public void setAhuId(int ahuId) {
+        this.ahuId = ahuId;
     }
 
     public String getTestName() {
@@ -68,6 +67,14 @@ public class ApplicableTestEquipment {
 
     public void setTestFormat(String testFormat) {
         this.testFormat = testFormat;
+    }
+
+    public String getTestItem() {
+        return testItem;
+    }
+
+    public void setTestItem(String testItem) {
+        this.testItem = testItem;
     }
 
     public String getTestSpecification() {
@@ -110,11 +117,11 @@ public class ApplicableTestEquipment {
         this.periodicity = periodicity;
     }
 
-    public int getLocation() {
+    public String getLocation() {
         return location;
     }
 
-    public void setLocation(int location) {
+    public void setLocation(String location) {
         this.location = location;
     }
 
