@@ -1,10 +1,13 @@
 package com.project.valdoc.utility;
 
 import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.v7.app.ActionBar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.project.valdoc.R;
 
@@ -51,5 +54,23 @@ public class Utilityies {
         mActionBar.setCustomView(mCustomView);
         mActionBar.setDisplayShowCustomEnabled(true);
 
+    }
+
+    public static boolean checkInternetConnection(Context context) {
+        // get Connectivity Manager object to check connection
+        ConnectivityManager connec = (ConnectivityManager)context.getSystemService(context.CONNECTIVITY_SERVICE);
+        // Removed previous code. Because it is crashing. If device supports only wiFi, no 3G or 2G.
+        //in that case it will give NPE
+        // for method connec.getNetworkInfo(0).getState().
+        final NetworkInfo activeNetwork = connec.getActiveNetworkInfo();
+        if (activeNetwork != null && activeNetwork.isConnected()) {
+            // notify user you are online
+            Toast.makeText(context, " Connected ", Toast.LENGTH_LONG).show();
+            return true;
+        } else {
+            // notify user you are not online
+            Toast.makeText(context, " Not Connected ", Toast.LENGTH_LONG).show();
+            return false;
+        }
     }
 }
