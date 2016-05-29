@@ -40,18 +40,6 @@
         android:orientation="vertical">
 
         <RelativeLayout
-            android:id="@+id/instrumentlayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <Spinner
-                android:id="@+id/instrumentspiner"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp" />
-        </RelativeLayout>
-
-        <RelativeLayout
             android:id="@+id/witnesslayout1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -131,28 +119,40 @@
 
 
         <RelativeLayout
-            android:id="@+id/equipmentahulayout"
+            android:id="@+id/equipment_ahu_roomlayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <Spinner
-                android:id="@+id/equipmentahuspinner"
+                android:id="@+id/equipment_ahu_room_spinner"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp" />
         </RelativeLayout>
 
         <RelativeLayout
-            android:id="@+id/equipmentlayout"
+            android:id="@+id/select_test_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <Spinner
-                android:id="@+id/equipmentspinner"
+                android:id="@+id/select_test_spinner"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:visibility="gone" />
+                android:visibility="visible" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/instrumentlayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Spinner
+                android:id="@+id/instrumentspiner"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -165,7 +165,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:visibility="gone" />
+                android:visibility="visible" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -178,16 +178,16 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:visibility="gone" />
+                android:visibility="visible" />
         </RelativeLayout>
 
         <RelativeLayout
-            android:id="@+id/testlayout"
+            android:id="@+id/room_no_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <Spinner
-                android:id="@+id/testspinner"
+                android:id="@+id/room_no_spinner"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp" />

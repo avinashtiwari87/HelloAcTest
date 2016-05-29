@@ -38,7 +38,7 @@ import java.util.List;
 
 public class TestCreateActivity extends AppCompatActivity implements View.OnTouchListener {
     private static final String TAG = "TestCreateActivity";
-    private Spinner instrumentSpiner, equipmentOrAhuSpinner, equipmentSpinner, ahuSpinner, roomSpinner, testSpinner;
+    private Spinner instrumentSpiner, equipmentAhuOrRoomSpinner, equipmentSpinner, ahuSpinner, roomSpinner, testSpinner;
     private List<String> instrumentList, equipmentOrAhuTestList, ahuTestList, equipmentTestList, roomTestList, applicableTestRoomList, applicableTestEquipmentList;
     private ArrayAdapter<String> instrumentAdapter, equipmentOrAhuAdapter, equipmentadApter, ahuAdapter, roomAdapter, applicableTestRoomAdapter, applicableTestequipmentAdapter;
     private ArrayList<ClientInstrument> clientInstrumentArrayList = null;
@@ -427,10 +427,10 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
     //spiner data validation
     private boolean validationSpiner() {
         if (instrumentSpiner.getSelectedItemPosition() > 0) {
-            if (equipmentOrAhuSpinner.getSelectedItem().toString().equals("AHU")) {
+            if (equipmentAhuOrRoomSpinner.getSelectedItem().toString().equals("AHU")) {
                 if (ahuSpinner.getSelectedItemPosition() > 0 && roomSpinner.getSelectedItemPosition() > 0 && testSpinner.getSelectedItemPosition() > 0 && witnessFirst.getText().length() > 0)
                     return true;
-            } else if (equipmentOrAhuSpinner.getSelectedItem().toString().equals("EQUIPMENT")) {
+            } else if (equipmentAhuOrRoomSpinner.getSelectedItem().toString().equals("EQUIPMENT")) {
                 if (equipmentSpinner.getSelectedItemPosition() > 0 && testSpinner.getSelectedItemPosition() > 0 && witnessFirst.getText().length() > 0)
                     return true;
             } else {
@@ -449,8 +449,8 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
         instrumentSpiner = (Spinner) findViewById(R.id.instrumentspiner);
         instrumentSpiner.setOnTouchListener(this);
 
-        equipmentOrAhuSpinner = (Spinner) findViewById(R.id.equipmentahuspinner);
-        equipmentOrAhuSpinner.setOnTouchListener(this);
+        equipmentAhuOrRoomSpinner = (Spinner) findViewById(R.id.equipmentahuspinner);
+        equipmentAhuOrRoomSpinner.setOnTouchListener(this);
 
         equipmentSpinner = (Spinner) findViewById(R.id.equipmentspinner);
         equipmentSpinner.setOnTouchListener(this);
@@ -532,15 +532,15 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
 
     public void spinnerCreation() {
 
-        instrumentAdapter = new ArrayAdapter<String>(this, R.layout.spiner_text, instrumentList);
+//        instrumentAdapter = new ArrayAdapter<String>(this, R.layout.spiner_text, instrumentList);
         equipmentOrAhuAdapter = new ArrayAdapter<String>(this, R.layout.spiner_text, equipmentOrAhuTestList);
         equipmentadApter = new ArrayAdapter<String>(this, R.layout.spiner_text, equipmentTestList);
         roomAdapter = new ArrayAdapter<String>(this, R.layout.spiner_text, roomTestList);
         applicableTestRoomAdapter = new ArrayAdapter<String>(this, R.layout.spiner_text, applicableTestRoomList);
         applicableTestequipmentAdapter = new ArrayAdapter<String>(this, R.layout.spiner_text, applicableTestEquipmentList);
 
-        instrumentSpiner.setAdapter(instrumentAdapter);
-        equipmentOrAhuSpinner.setAdapter(equipmentOrAhuAdapter);
+//        instrumentSpiner.setAdapter(instrumentAdapter);
+        equipmentAhuOrRoomSpinner.setAdapter(equipmentOrAhuAdapter);
         equipmentSpinner.setAdapter(equipmentadApter);
         ahuSpinner.setAdapter(ahuAdapter);
         roomSpinner.setAdapter(roomAdapter);
@@ -570,7 +570,7 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
             }
         });
 
-        equipmentOrAhuSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        equipmentAhuOrRoomSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
             public void onItemSelected(AdapterView<?> parent, View arg1,
                                        int pos, long arg3) {
@@ -588,9 +588,9 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
 
                 ahuSpinner.setVisibility(View.GONE);
                 equipmentSpinner.setVisibility(View.GONE);
-                equipmentOrAhuSpinnerPos = equipmentOrAhuSpinner.getSelectedItemPosition();
+                equipmentOrAhuSpinnerPos = equipmentAhuOrRoomSpinner.getSelectedItemPosition();
                 // TODO Auto-generated method stub
-                if (equipmentOrAhuSpinner.getSelectedItem().toString().equals("AHU")) {
+                if (equipmentAhuOrRoomSpinner.getSelectedItem().toString().equals("AHU")) {
 //                    createAhuList();
                     ahuSpinner.setVisibility(View.VISIBLE);
                     equipmentSpinner.setVisibility(View.GONE);
@@ -601,7 +601,7 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
                     testSpinner.setSelection(0);
                     spinerAhuOrEquipment = "AHU";
                     Log.d("TestCreateActivity", "spiner :");
-                } else if (equipmentOrAhuSpinner.getSelectedItem().toString().equals("EQUIPMENT")) {
+                } else if (equipmentAhuOrRoomSpinner.getSelectedItem().toString().equals("EQUIPMENT")) {
                     ahuSpinner.setVisibility(View.GONE);
                     equipmentSpinner.setVisibility(View.VISIBLE);
                     roomSpinner.setVisibility(View.GONE);

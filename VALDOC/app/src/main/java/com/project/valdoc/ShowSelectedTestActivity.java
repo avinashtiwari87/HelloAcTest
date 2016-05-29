@@ -104,7 +104,6 @@ public class ShowSelectedTestActivity extends AppCompatActivity implements Adapt
 
     }
 
-
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         // An item was selected. You can retrieve the selected item using

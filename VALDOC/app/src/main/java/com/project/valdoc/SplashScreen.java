@@ -525,60 +525,60 @@ public class SplashScreen extends Activity {
         applicableTestEquipment.setPeriodicity("priodicity");
         applicableTestEquipment.setLocation(4);
         applicableTestEquipment.setNoOfCycle(5);
-        applicableTestEquipment.setCreationDate("2-feb-2016");
+        applicableTestEquipment.setLastUpdatedDate("2-feb-2016");
         applicableTestEquipmentArrayList.add(applicableTestEquipment);
 
         return applicableTestEquipmentArrayList;
     }
 
     //create ahu data
-    private List<Ahu> createAhuData() {
-        ArrayList<Ahu> ahuArrayList = new ArrayList<Ahu>();
-        Ahu ahu = new Ahu();
-        ahu.setAhuId(1);
-        ahu.setAhuType("ahutype");
-        ahu.setCapacity(100);
-        ahu.setReturnAirCFM(101);
-        ahu.setExhaustAirCFM(102);
-        ahu.setBleedFilterType("bleedfiltertype");
-        ahu.setBleedFilterEfficiency(103);
-        ahu.setBleedAirCFM(104);
-        ahu.setBleedFilterQty(2);
-        ahu.setBleedFilterSize("20ft");
-        ahu.setFreshFilterType("freshfiltertype");
-        ahu.setFreshAirCFM(105);
-        ahu.setFreshFilterQty(2);
-        ahu.setFreshFilterSize("22ft");
-        ahu.setAhuHEPAFilterQty(2);
-        ahu.setHepaFilterEfficiency(106);
-        ahu.setHepaParticleSize("23ft");
-        ahu.setHepaFilterEfficiency(107);
-        ahu.setCreationDate("2-feb-2016");
-        ahuArrayList.add(ahu);
-        // 2nd ahu
-        Ahu ahu1 = new Ahu();
-        ahu1.setAhuId(2);
-        ahu1.setAhuType("ahutype1");
-        ahu1.setCapacity(1001);
-        ahu1.setReturnAirCFM(1011);
-        ahu1.setExhaustAirCFM(1021);
-        ahu1.setBleedFilterType("bleedfiltertype1");
-        ahu1.setBleedFilterEfficiency(1031);
-        ahu1.setBleedAirCFM(1041);
-        ahu1.setBleedFilterQty(21);
-        ahu1.setBleedFilterSize("201ft");
-        ahu1.setFreshFilterType("freshfiltertype1");
-        ahu1.setFreshAirCFM(1051);
-        ahu1.setFreshFilterQty(21);
-        ahu1.setFreshFilterSize("221ft");
-        ahu1.setAhuHEPAFilterQty(21);
-        ahu1.setHepaFilterEfficiency(1061);
-        ahu1.setHepaParticleSize("231ft");
-        ahu1.setHepaFilterEfficiency(1071);
-        ahuArrayList.add(ahu1);
-        return ahuArrayList;
-
-    }
+//    private List<Ahu> createAhuData() {
+//        ArrayList<Ahu> ahuArrayList = new ArrayList<Ahu>();
+//        Ahu ahu = new Ahu();
+//        ahu.setAhuId(1);
+//        ahu.setAhuType("ahutype");
+//        ahu.setCapacity(100);
+//        ahu.setReturnAirCFM(101);
+//        ahu.setExhaustAirCFM(102);
+//        ahu.setBleedFilterType("bleedfiltertype");
+//        ahu.setBleedFilterEfficiency(103);
+//        ahu.setBleedAirCFM(104);
+//        ahu.setBleedFilterQty(2);
+//        ahu.setBleedFilterSize("20ft");
+//        ahu.setFreshFilterType("freshfiltertype");
+//        ahu.setFreshAirCFM(105);
+//        ahu.setFreshFilterQty(2);
+//        ahu.setFreshFilterSize("22ft");
+//        ahu.setAhuHEPAFilterQty(2);
+//        ahu.setHepaFilterEfficiency(106);
+//        ahu.setHepaParticleSize("23ft");
+//        ahu.setHepaFilterEfficiency(107);
+//        ahu.setCreationDate("2-feb-2016");
+//        ahuArrayList.add(ahu);
+//        // 2nd ahu
+//        Ahu ahu1 = new Ahu();
+//        ahu1.setAhuId(2);
+//        ahu1.setAhuType("ahutype1");
+//        ahu1.setCapacity(1001);
+//        ahu1.setReturnAirCFM(1011);
+//        ahu1.setExhaustAirCFM(1021);
+//        ahu1.setBleedFilterType("bleedfiltertype1");
+//        ahu1.setBleedFilterEfficiency(1031);
+//        ahu1.setBleedAirCFM(1041);
+//        ahu1.setBleedFilterQty(21);
+//        ahu1.setBleedFilterSize("201ft");
+//        ahu1.setFreshFilterType("freshfiltertype1");
+//        ahu1.setFreshAirCFM(1051);
+//        ahu1.setFreshFilterQty(21);
+//        ahu1.setFreshFilterSize("221ft");
+//        ahu1.setAhuHEPAFilterQty(21);
+//        ahu1.setHepaFilterEfficiency(1061);
+//        ahu1.setHepaParticleSize("231ft");
+//        ahu1.setHepaFilterEfficiency(1071);
+//        ahuArrayList.add(ahu1);
+//        return ahuArrayList;
+//
+//    }
 
     @Override
     protected void onStop() {

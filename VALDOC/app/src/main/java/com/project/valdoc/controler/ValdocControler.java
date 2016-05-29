@@ -310,7 +310,7 @@ public class ValdocControler {
                 applicableTestEquipment.setPeriodicity(jsonObject.optString("periodicity").toString());
                 applicableTestEquipment.setLocation(jsonObject.optInt("location"));
                 applicableTestEquipment.setNoOfCycle(jsonObject.optInt("noOfCycle"));
-                applicableTestEquipment.setCreationDate(jsonObject.optString("creationDate").toString());
+                applicableTestEquipment.setLastUpdatedDate(jsonObject.optString("creationDate").toString());
                 arrayList.add(applicableTestEquipment);
             } catch (Exception e) {
 
@@ -333,13 +333,13 @@ public class ValdocControler {
                 equipmentFilter.setWidth(jsonObject.optDouble("width"));
                 equipmentFilter.setLength(jsonObject.optDouble("length"));
                 equipmentFilter.setGrillArea(jsonObject.optDouble("grillArea"));
-                equipmentFilter.setEffectiveGrillArea(jsonObject.optDouble("effectiveGrillArea"));
-                if (jsonObject.optBoolean("supplyFilter")) {
-                    equipmentFilter.setIsSupplyFilter(1);
-                } else {
-                    equipmentFilter.setIsSupplyFilter(0);
-                }
-                equipmentFilter.setCreationDate(jsonObject.optString("creationDate").toString());
+//                equipmentFilter.setEffectiveGrillArea(jsonObject.optDouble("effectiveGrillArea"));
+//                if (jsonObject.optBoolean("supplyFilter")) {
+//                    equipmentFilter.setIsSupplyFilter(1);
+//                } else {
+//                    equipmentFilter.setIsSupplyFilter(0);
+//                }
+                equipmentFilter.setLastUpdatedDate(jsonObject.optString("creationDate").toString());
                 arrayList.add(equipmentFilter);
             } catch (Exception e) {
 
@@ -563,16 +563,16 @@ public class ValdocControler {
                 ahu.setBleedFilterEfficiency(jsonObject.optDouble("bleedFilterEfficiency"));
                 ahu.setBleedAirCFM(jsonObject.optDouble("bleedAirCFM"));
                 ahu.setBleedFilterQty(jsonObject.optInt("bleedFilterQty"));
-                ahu.setBleedFilterSize(jsonObject.optString("bleedFilterSize").toString());
+//                ahu.setBleedFilterSize(jsonObject.optString("bleedFilterSize").toString());
                 ahu.setFreshFilterType(jsonObject.optString("freshFilterType").toString());
                 ahu.setFreshAirCFM(jsonObject.optDouble("freshAirCFM"));
                 ahu.setFreshFilterQty(jsonObject.optInt("freshFilterQty"));
-                ahu.setFreshFilterSize(jsonObject.optString("freshFilterSize").toString());
-                ahu.setAhuHEPAFilterQty(jsonObject.optInt("ahuHEPAFilterQty"));
-                ahu.setHepaFilterEfficiency(jsonObject.optDouble("hepaFilterEfficiency"));
-                ahu.setHepaParticleSize(jsonObject.optString("hepaParticleSize").toString());
-                ahu.setHepaFilterEfficiency(jsonObject.optDouble("hepaFilterSpecification"));
-                ahu.setCreationDate(jsonObject.optString("creationDate").toString());
+//                ahu.setFreshFilterSize(jsonObject.optString("freshFilterSize").toString());
+//                ahu.setAhuHEPAFilterQty(jsonObject.optInt("ahuHEPAFilterQty"));
+//                ahu.setHepaFilterEfficiency(jsonObject.optDouble("hepaFilterEfficiency"));
+//                ahu.setHepaParticleSize(jsonObject.optString("hepaParticleSize").toString());
+//                ahu.setHepaFilterEfficiency(jsonObject.optDouble("hepaFilterSpecification"));
+//                ahu.setCreationDate(jsonObject.optString("creationDate").toString());
                 arrayList.add(ahu);
             } catch (Exception e) {
 
