@@ -165,7 +165,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:visibility="visible" />
+                android:visibility="gone" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -178,7 +178,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:visibility="visible" />
+                android:visibility="gone" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -190,6 +190,7 @@
                 android:id="@+id/room_no_spinner"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 android:layout_marginTop="10dp" />
         </RelativeLayout>
 
