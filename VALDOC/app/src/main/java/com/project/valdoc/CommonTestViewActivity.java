@@ -17,6 +17,7 @@ import android.widget.EditText;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.project.valdoc.db.ValdocDatabaseHandler;
 import com.project.valdoc.intity.RoomFilter;
@@ -54,7 +55,7 @@ public class CommonTestViewActivity extends AppCompatActivity {
     private String userName = "";
     String testType;
     SharedPreferences sharedpreferences;
-    private int rows;
+    private int rows,cols;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,10 +77,26 @@ public class CommonTestViewActivity extends AppCompatActivity {
             Utilityies.setCustomActionBar(CommonTestViewActivity.this, mActionBar, userName);
 
         testType = getIntent().getStringExtra("testType");
+        rows = getIntent().getIntExtra("rows",6);
+        cols = getIntent().getIntExtra("cols",5);
         Log.d(TAG, " TestType : " + testType);
 
         initRes();
 
+
+        if(testType.contains("AV")){
+            BuildTable(rows,cols);
+        }else if(testType.contains("ACPH_AV")){
+            BuildTableTest3(rows,cols);
+        }else if(testType.contains("ACPH_H")){
+            BuildTableTest3(rows,cols);
+        }else if(testType.contains("FIT")){
+            BuildTableTest4(rows,cols);
+        }else if(testType.contains("PCT")){
+            BuildTableTest5(rows,cols);
+        }else if(testType.contains("RCT")){
+            Toast.makeText(CommonTestViewActivity.this, "Coming Soon...", Toast.LENGTH_SHORT).show();
+        }
     }
 
 
