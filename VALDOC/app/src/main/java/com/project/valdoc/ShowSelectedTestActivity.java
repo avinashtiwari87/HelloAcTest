@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -22,6 +23,7 @@ import java.util.List;
 
 public class ShowSelectedTestActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
+    private static final String TAG = "ShowSelectedTest";
     private String userName = "";
     SharedPreferences sharedpreferences;
     Spinner selectTestSpinner;
@@ -29,6 +31,7 @@ public class ShowSelectedTestActivity extends AppCompatActivity implements Adapt
     String[] roomsValues, AHUValues, equipmentValues;
     ArrayList<String> list = null;
     StableArrayAdapter listViewAdapter = null;
+    String selectedItem;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,9 +46,11 @@ public class ShowSelectedTestActivity extends AppCompatActivity implements Adapt
             public void onClick(View view) {
                 Toast.makeText(ShowSelectedTestActivity.this, "Clicked", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(ShowSelectedTestActivity.this, SyncSelectedDataActivity.class);
+                intent.putExtra("TestType",selectedItem);
                 intent.putExtra("rows", 11);
                 intent.putExtra("cols", 11);
                 startActivity(intent);
+                Log.d(TAG, "CodeFlow selectedItem "+selectedItem);
             }
         });
 
@@ -87,8 +92,8 @@ public class ShowSelectedTestActivity extends AppCompatActivity implements Adapt
             @Override
             public void onItemClick(AdapterView<?> parent, final View view,
                                     int position, long id) {
-                final String item = (String) parent.getItemAtPosition(position);
-                Toast.makeText(ShowSelectedTestActivity.this, item, Toast.LENGTH_SHORT).show();
+                selectedItem = (String) parent.getItemAtPosition(position);
+                Toast.makeText(ShowSelectedTestActivity.this, selectedItem, Toast.LENGTH_SHORT).show();
 
             }
 

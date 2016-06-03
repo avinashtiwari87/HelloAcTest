@@ -1,11 +1,13 @@
 package com.project.valdoc;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.CheckBox;
@@ -18,10 +20,11 @@ import android.widget.Toast;
 import com.project.valdoc.utility.Utilityies;
 
 public class SyncSelectedDataActivity extends AppCompatActivity {
+    private static final String TAG = "SyncSelectedData";
     TableLayout table_layout1, table_layout2, table_layout3, table_layout4, table_layout5,
             table_layout6, table_layout7, table_layout8, table_layout9, table_layout10;
     int rows =5, colos =5;
-    private String userName = "";
+    private String userName = "",testType;
     SharedPreferences sharedpreferences;
 
     @Override
@@ -36,6 +39,8 @@ public class SyncSelectedDataActivity extends AppCompatActivity {
            rows = getIntent().getIntExtra("rows",6);
             colos = getIntent().getIntExtra("cols",6);
         }
+        testType = getIntent().getStringExtra("TestType");
+        Log.d(TAG, " Code TestType : " + testType);
 
 
         initRes();
@@ -330,8 +335,12 @@ public class SyncSelectedDataActivity extends AppCompatActivity {
 
         @Override
         public void onClick(View v) {
-            Toast.makeText(mContext, "View Row : "+viewTextId+" Test", Toast.LENGTH_SHORT).show();
-
+            Toast.makeText(mContext, testType+"View Row : "+viewTextId+" Test", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(SyncSelectedDataActivity.this,CommonTestViewActivity.class);
+            intent.putExtra("TestType",testType);
+            intent.putExtra("rows",6);
+            intent.putExtra("cols",5);
+            startActivity(intent);
         }
     }
 }
