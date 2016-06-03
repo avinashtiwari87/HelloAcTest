@@ -39,7 +39,7 @@ public class SyncSelectedDataActivity extends AppCompatActivity {
            rows = getIntent().getIntExtra("rows",6);
             colos = getIntent().getIntExtra("cols",6);
         }
-        testType = getIntent().getStringExtra("testType");
+        testType = getIntent().getStringExtra("TestType");
         Log.d(TAG, " Code TestType : " + testType);
 
 

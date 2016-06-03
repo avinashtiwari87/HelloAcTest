@@ -53,7 +53,7 @@ public class CommonTestViewActivity extends AppCompatActivity {
     ArrayList<TextView> resultTextViewList;
     ProgressDialog pr;
     private String userName = "";
-    String testType;
+    String testType = null;
     SharedPreferences sharedpreferences;
     private int rows,cols;
 
@@ -76,7 +76,7 @@ public class CommonTestViewActivity extends AppCompatActivity {
         if (mActionBar != null)
             Utilityies.setCustomActionBar(CommonTestViewActivity.this, mActionBar, userName);
 
-        testType = getIntent().getStringExtra("testType");
+        testType = getIntent().getStringExtra("TestType");
         rows = getIntent().getIntExtra("rows",6);
         cols = getIntent().getIntExtra("cols",5);
         Log.d(TAG, " TestType : " + testType);
@@ -84,17 +84,22 @@ public class CommonTestViewActivity extends AppCompatActivity {
         initRes();
 
 
-        if(testType.contains("AV")){
+        if(testType != null && testType.contains("AV")){
+            findViewById(R.id.test1_table_ll).setVisibility(View.VISIBLE);
             BuildTable(rows,cols);
-        }else if(testType.contains("ACPH_AV")){
+        }else if(testType != null && testType.contains("ACPH_AV")){
+            findViewById(R.id.test2_table_ll).setVisibility(View.VISIBLE);
+            BuildTableTest2(rows,cols);
+        }else if(testType != null && testType.contains("ACPH_H")){
+            findViewById(R.id.test3_table_ll).setVisibility(View.VISIBLE);
             BuildTableTest3(rows,cols);
-        }else if(testType.contains("ACPH_H")){
-            BuildTableTest3(rows,cols);
-        }else if(testType.contains("FIT")){
+        }else if(testType != null && testType.contains("FIT")){
+            findViewById(R.id.test4_table_ll).setVisibility(View.VISIBLE);
             BuildTableTest4(rows,cols);
-        }else if(testType.contains("PCT")){
+        }else if(testType != null && testType.contains("PCT")){
+            findViewById(R.id.test5_table_ll).setVisibility(View.VISIBLE);
             BuildTableTest5(rows,cols);
-        }else if(testType.contains("RCT")){
+        }else if(testType != null && testType.contains("RCT")){
             Toast.makeText(CommonTestViewActivity.this, "Coming Soon...", Toast.LENGTH_SHORT).show();
         }
     }

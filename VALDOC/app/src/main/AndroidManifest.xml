@@ -72,8 +72,10 @@
         <activity android:name=".SyncSelectedDataActivity" />
         <activity android:name=".CreatePostCertificateActivity" />
         <activity android:name=".ShowSelectedTestActivity" />
-        <activity android:name=".ServerSettingActivity"/>
-        <activity android:name=".CommonTestViewActivity"/>
+        <activity android:name=".ServerSettingActivity" />
+        <activity
+            android:name=".CommonTestViewActivity"
+            android:screenOrientation="landscape" />
     </application>
 
 </manifest>
