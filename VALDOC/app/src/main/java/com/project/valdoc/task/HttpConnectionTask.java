@@ -28,7 +28,7 @@ public class HttpConnectionTask extends AsyncTask<String, Void, Integer> {
         mMethod=method;
         mContext = context;
         mJsonDATA=JsonDATA;
-        mHttpConnection = new HttpConnection((HttpConnection.HttpUrlConnectionResponce) mContext);
+        mHttpConnection = new HttpConnection((HttpConnection.HttpUrlConnectionResponce) mContext,mContext);
         mHttpPostConnection=new HttpPostConnection((HttpPostConnection.HttpUrlConnectionPostResponce) mContext);
         mDialog = new ProgressDialog( mContext);
         Log.d("VALDOC", "avinash HttpConnectionTask");

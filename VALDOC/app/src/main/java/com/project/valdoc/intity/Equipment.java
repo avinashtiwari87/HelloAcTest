@@ -12,14 +12,14 @@ public class Equipment implements Serializable{
     private String equipmentNo;
     private String equipmentName;
     private int roomId;
-    private String occupancyState;
     private double minVelocity;
     private double maxVelocity;
-    private String testReference;
-    private int filterQuantity;
-    private double equipmentLoad;
-    private String isoClause;
-    private String creationDate;
+    private int supplyAirflow;
+    private int equipmentPressure;
+    private int exhustAirflow;
+    private String remarks;
+    private String lastUpdatedDate;
+
 
     public String getEquipment() {
         return equipment;
@@ -61,14 +61,6 @@ public class Equipment implements Serializable{
         this.roomId = roomId;
     }
 
-    public String getOccupancyState() {
-        return occupancyState;
-    }
-
-    public void setOccupancyState(String occupancyState) {
-        this.occupancyState = occupancyState;
-    }
-
     public double getMinVelocity() {
         return minVelocity;
     }
@@ -85,43 +77,43 @@ public class Equipment implements Serializable{
         this.maxVelocity = maxVelocity;
     }
 
-    public String getTestReference() {
-        return testReference;
+    public int getSupplyAirflow() {
+        return supplyAirflow;
     }
 
-    public void setTestReference(String testReference) {
-        this.testReference = testReference;
+    public void setSupplyAirflow(int supplyAirflow) {
+        this.supplyAirflow = supplyAirflow;
     }
 
-    public int getFilterQuantity() {
-        return filterQuantity;
+    public int getEquipmentPressure() {
+        return equipmentPressure;
     }
 
-    public void setFilterQuantity(int filterQuantity) {
-        this.filterQuantity = filterQuantity;
+    public void setEquipmentPressure(int equipmentPressure) {
+        this.equipmentPressure = equipmentPressure;
     }
 
-    public double getEquipmentLoad() {
-        return equipmentLoad;
+    public int getExhustAirflow() {
+        return exhustAirflow;
     }
 
-    public void setEquipmentLoad(double equipmentLoad) {
-        this.equipmentLoad = equipmentLoad;
+    public void setExhustAirflow(int exhustAirflow) {
+        this.exhustAirflow = exhustAirflow;
     }
 
-    public String getIsoClause() {
-        return isoClause;
+    public String getRemarks() {
+        return remarks;
     }
 
-    public void setIsoClause(String isoClause) {
-        this.isoClause = isoClause;
+    public void setRemarks(String remarks) {
+        this.remarks = remarks;
     }
 
-    public String getCreationDate() {
-        return creationDate;
+    public String getLastUpdatedDate() {
+        return lastUpdatedDate;
     }
 
-    public void setCreationDate(String creationDate) {
-        this.creationDate = creationDate;
+    public void setLastUpdatedDate(String lastUpdatedDate) {
+        this.lastUpdatedDate = lastUpdatedDate;
     }
 }

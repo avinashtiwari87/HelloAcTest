@@ -20,6 +20,7 @@ import com.project.valdoc.intity.Equipment;
 import com.project.valdoc.intity.EquipmentFilter;
 import com.project.valdoc.intity.EquipmentGrill;
 import com.project.valdoc.intity.Grill;
+import com.project.valdoc.intity.IsoParticleLimits;
 import com.project.valdoc.intity.PartnerInstrument;
 import com.project.valdoc.intity.PartnerInstrumentTest;
 import com.project.valdoc.intity.PartnerUser;
@@ -73,6 +74,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
     public static final String AHU_FINALFILTERTYPE = "finalFilterType";
     public static final String AHU_FINALFILTEREFFICIENCY = "finalFilterEfficiency";
     public static final String AHU_FINALFILTERLEAK = "finalFilterLeak";
+    public static final String AHU_REMARKS = "remarks";
     public static final String AHU_LASTUPDATEDDATE = "lastUpdatedDate";
 
     // ahu table create statment
@@ -83,7 +85,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
             + AHU_BLEEDFILTERLEAK + " REAL," + AHU_FRESHFILTERTYPE + " TEXT," + AHU_FRESHAIRCFM + " REAL," + AHU_FRESHFILTERQTY
             + " INTEGER," + AHU_FRESHFILTEREFFICIENCY + " TEXT," + AHU_FINALFILTERAIRFLOW + " INTEGER," + AHU_FINALFILTERQTY
             + " INTEGER," + AHU_FINALFILTERTYPE + " TEXT," + AHU_FINALFILTEREFFICIENCY + " TEXT,"
-            + AHU_FINALFILTERLEAK + " TEXT," + AHU_LASTUPDATEDDATE + " TEXT" + ")";
+            + AHU_FINALFILTERLEAK + " TEXT," + AHU_REMARKS + " TEXT," + AHU_LASTUPDATEDDATE + " TEXT" + ")";
 
     //Applicable test ahu table details
     public static final String APLICABLE_TEST_AHU_TABLE_NAME = "aplicable_test_ahu";
@@ -190,21 +192,22 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
     public static final String EQUIPMENT_ROOMID = "roomId";
     public static final String EQUIPMENT_EQUIPMENTNO = "equipmentNo";
     public static final String EQUIPMENT_EQUIPMENTNAME = "equipmentName";
-    public static final String EQUIPMENT_OCCUPANCYSTATE = "occupancyState";
+    //    public static final String EQUIPMENT_OCCUPANCYSTATE = "occupancyState";
     public static final String EQUIPMENT_MINVELOCITY = "minVelocity";
     public static final String EQUIPMENT_MAXVELOCITY = "maxVelocity";
-    public static final String EQUIPMENT_TESTREFERENCE = "testReference";
-    public static final String EQUIPMENT_FILTERQUANTITY = "filterQuantity";
-    public static final String EQUIPMENT_EQUIPMENTLOAD = "equipmentLoad";
-    public static final String EQUIPMENT_ISOCLAUSE = "isoClause";
-    public static final String EQUIPMENT_CREATIONDATE = "creationDate";
+    public static final String EQUIPMENT_SUPPLYAIRFLOW = "supplyAirflow";
+    public static final String EQUIPMENT_EQUIPMENTPRESSURE = "equipmentPressure";
+    public static final String EQUIPMENT_EXHUSTAIRFLOW = "exhustAirflow";
+    public static final String EQUIPMENT_REMARKS = "remarks";
+    public static final String EQUIPMENT_LASTUPDATEDDATE = "lastUpdatedDate";
 
     // equipment table create statment
     private static final String CREATE_TABLE_EQUIPMENT = "CREATE TABLE " + EQUIPMENT_TABLE_NAME
             + "(" + EQUIPMENT_EQUIPMENTID + " INTEGER," + EQUIPMENT_ROOMID + " INTEGER,"
-            + EQUIPMENT_OCCUPANCYSTATE + " TEXT," + EQUIPMENT_EQUIPMENTNO + " TEXT," + EQUIPMENT_EQUIPMENTNAME + " TEXT,"
-            + EQUIPMENT_MINVELOCITY + " REAL," + EQUIPMENT_MAXVELOCITY + " REAL," + EQUIPMENT_TESTREFERENCE + " TEXT," + EQUIPMENT_FILTERQUANTITY + " INTEGER," + EQUIPMENT_EQUIPMENTLOAD + " REAL,"
-            + EQUIPMENT_ISOCLAUSE + " TEXT," + EQUIPMENT_CREATIONDATE + " TEXT " + ")";
+            + EQUIPMENT_EQUIPMENTNO + " TEXT," + EQUIPMENT_EQUIPMENTNAME + " TEXT," + EQUIPMENT_MINVELOCITY + " REAL,"
+            + EQUIPMENT_MAXVELOCITY + " REAL," + EQUIPMENT_SUPPLYAIRFLOW + " INTEGER,"
+            + EQUIPMENT_EQUIPMENTPRESSURE + " INTEGER," + EQUIPMENT_EXHUSTAIRFLOW + " INTEGER," + EQUIPMENT_REMARKS + " TEXT,"
+            + EQUIPMENT_LASTUPDATEDDATE + " TEXT " + ")";
 
 
     //equipment filter able details
@@ -349,7 +352,8 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
             + "(" + CLIENT_INSTRUMENT_CINSTRUMENTID + " INTEGER," + CLIENT_INSTRUMENT_INSTRUMENTID + " TEXT,"
             + CLIENT_INSTRUMENT_SERIALNO + " TEXT," + CLIENT_INSTRUMENT_CINSTRUMENTNAME + " TEXT, " + CLIENT_INSTRUMENT_MAKE + " TEXT,"
             + CLIENT_INSTRUMENT_MODEL + " TEXT," + CLIENT_INSTRUMENT_LASTCALIBRATED + " TEXT,"
-            + CLIENT_INSTRUMENT_CALIBRATIONDUEDATE + " TEXT," + CLIENT_INSTRUMENT_STATUS + " TEXT," + CLIENT_INSTRUMENT_LASTUPDATEDDATE + " TEXT" + ")";
+            + CLIENT_INSTRUMENT_CALIBRATIONDUEDATE + " TEXT," + CLIENT_INSTRUMENT_STATUS + " TEXT," + CLIENT_INSTRUMENT_CERTFILENAME + " TEXT,"
+            + CLIENT_INSTRUMENT_REMARKS + " TEXT," + CLIENT_INSTRUMENT_LASTUPDATEDDATE + " TEXT" + ")";
 //            + CLIENT_INSTRUMENT_CURRENTLOCATION + " TEXT,"+ CLIENT_INSTRUMENT_TESTID
 //            + " INTEGER," + CLIENT_INSTRUMENT_SAMPLINGFLOWRATE + " TEXT,"
 //            + CLIENT_INSTRUMENT_SAMPLINGTIME + " TEXT," + CLIENT_INSTRUMENT_AEROSOLUSED + " TEXT," + CLIENT_INSTRUMENT_AEROSOLGENERATORTYPE + " TEXT " + ")";
@@ -361,10 +365,12 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
     public static final String CLIENT_INSTRUMENT_TEST_CLIENT_INSTRUMENT_ID = "client_instrument_id";
     public static final String CLIENT_INSTRUMENT_TEST_CLIENT_INSTRUMENT_TEST_CODE = "client_instrument_test_code";
     public static final String CLIENT_INSTRUMENT_TEST_CLIENT_INSTRUMENT_TEST_NAME = "client_instrument_test_name";
+    public static final String CLIENT_INSTRUMENT_TEST_LASTUPDATEDDATE = "lastUpdatedDate";
 
     private static final String CREATE_TABLE_CLIENT_INSTRUMENT_TEST = "CREATE TABLE " + CLIENT_INSTRUMENT_TEST_TABLE_NAME
             + "(" + CLIENT_INSTRUMENT_TEST_CLIENT_INSTRUMENT_TEST_ID + " INTEGER," + CLIENT_INSTRUMENT_TEST_CLIENT_INSTRUMENT_ID + " INTEGER,"
-            + CLIENT_INSTRUMENT_TEST_CLIENT_INSTRUMENT_TEST_CODE + " TEXT," + CLIENT_INSTRUMENT_TEST_CLIENT_INSTRUMENT_TEST_NAME + " TEXT" + ")";
+            + CLIENT_INSTRUMENT_TEST_CLIENT_INSTRUMENT_TEST_CODE + " TEXT," + CLIENT_INSTRUMENT_TEST_CLIENT_INSTRUMENT_TEST_NAME + " TEXT,"
+            + CLIENT_INSTRUMENT_TEST_LASTUPDATEDDATE + " TEXT" + ")";
 
     //Partner instrument test table creation
 
@@ -373,10 +379,12 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
     public static final String PARTNER_INSTRUMENT_ID = "partner_instrument_id";
     public static final String PARTNER_INSTRUMENT_TEST_CODE = "partner_instrument_test_code";
     public static final String PARTNER_INSTRUMENT_TEST_NAME = "partner_instrument_test_name";
+    public static final String PARTNER_INSTRUMENT_TEST_LASTUPDATEDDATE = "lastUpdatedDate";
 
     private static final String CREATE_TABLE_PARTNER_INSTRUMENT_TEST = "CREATE TABLE " + PARTNER_INSTRUMENT_TEST_TABLE_NAME
             + "(" + PARTNER_INSTRUMENT_TEST_ID + " INTEGER," + PARTNER_INSTRUMENT_ID + " INTEGER,"
-            + PARTNER_INSTRUMENT_TEST_CODE + " TEXT," + PARTNER_INSTRUMENT_TEST_NAME + " TEXT" + ")";
+            + PARTNER_INSTRUMENT_TEST_CODE + " TEXT," + PARTNER_INSTRUMENT_TEST_NAME + " TEXT,"
+            + PARTNER_INSTRUMENT_TEST_LASTUPDATEDDATE + " TEXT" + ")";
 
 
     //roomfilter able details
@@ -650,7 +658,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
     public static final String PARTNERS_SERVICEINCHARGE = "serviceIncharge";
     public static final String PARTNERS_EMAIL = "email";
     public static final String PARTNERS_CELLNO = "cellNo";
-    public static final String PARTNERS_CREATIONDATE = "creationDate";
+    public static final String PARTNERS_LASTUPDATEDDATE = "lastUpdatedDate";
 
 
     // service_report_detail table create statment
@@ -659,8 +667,22 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
             + PARTNERS_NAME + " TEXT," + PARTNERS_STATUS + " TEXT, " + PARTNERS_APPROVEDSINCE + " INTEGER,"
             + PARTNERS_ADDRESS + " TEXT," + PARTNERS_DIRECTORNAME + " TEXT," + PARTNERS_DIRECTOREMAIL + " TEXT," + PARTNERS_DIRECTORCELLNO + " TEXT,"
             + PARTNERS_REGEMAIL + " TEXT," + PARTNERS_REGCELLNO + " TEXT," + PARTNERS_SERVICEINCHARGE + " TEXT," + PARTNERS_EMAIL + " TEXT," + PARTNERS_CELLNO + " TEXT,"
-            + PARTNERS_CREATIONDATE + " TEXT" + ")";
+            + PARTNERS_LASTUPDATEDDATE + " TEXT" + ")";
 
+    //isoParticleLimits table creation
+    public static final String ISOPARTICLELIMITS_TABLE_NAME ="isoParticleLimits";
+    public static final String ISOPARTICLELIMITS_LIMITID= "limitId";
+    public static final String ISOPARTICLELIMITS_CLASS="class";
+    public static final String ISOPARTICLELIMITS_RESTSMALLPARTICLELIMIT="restSmallParticleLimit";
+    public static final String ISOPARTICLELIMITS_RESTLARGEPARTICLELIMIT="restLargeParticleLimit";
+    public static final String ISOPARTICLELIMITS_OPERATIONSMALLPARTICLELIMIT="operationSmallParticleLimit";
+    public static final String ISOPARTICLELIMITS_OPERATIONLARGEPARTICLELIMIT= "operationLargeParticleLimit";
+
+    // service_report_detail table create statment
+    private static final String CREATE_TABLE_ISOPARTICLELIMITS = "CREATE TABLE " + ISOPARTICLELIMITS_TABLE_NAME
+            + "(" + ISOPARTICLELIMITS_LIMITID + " INTEGER," + ISOPARTICLELIMITS_CLASS + " TEXT,"
+            + ISOPARTICLELIMITS_RESTSMALLPARTICLELIMIT + " TEXT," + ISOPARTICLELIMITS_RESTLARGEPARTICLELIMIT + " TEXT, "
+            + ISOPARTICLELIMITS_OPERATIONSMALLPARTICLELIMIT + ISOPARTICLELIMITS_OPERATIONLARGEPARTICLELIMIT + " TEXT" + ")";
 
     public ValdocDatabaseHandler(Context context) {
 
@@ -698,6 +720,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_APLICABLE_TEST_AHU);
         db.execSQL(CREATE_TABLE_AHU_FILTER);
         db.execSQL(CREATE_TABLE_EQUIPMENTGRILL);
+        db.execSQL(CREATE_TABLE_ISOPARTICLELIMITS);
         Log.d("valdoc", "table created success fully");
     }
 
@@ -734,7 +757,30 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
         return count;
     }
 
-
+    //insert daa in equipment grill filter table
+    public boolean insertIsoParticleLimits(String tableName, ArrayList<IsoParticleLimits> isoParticleLimitsArrayList) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        if (isoParticleLimitsArrayList.size() != 0) {
+            for (IsoParticleLimits isoParticleLimits : isoParticleLimitsArrayList) {
+                ContentValues contentValues = new ContentValues();
+                contentValues.put(ISOPARTICLELIMITS_LIMITID, isoParticleLimits.getLimitId());
+                contentValues.put(ISOPARTICLELIMITS_CLASS, isoParticleLimits.getIsoClass());
+                contentValues.put(ISOPARTICLELIMITS_RESTSMALLPARTICLELIMIT, isoParticleLimits.getRestSmallParticleLimit());
+                contentValues.put(ISOPARTICLELIMITS_RESTLARGEPARTICLELIMIT, isoParticleLimits.getRestLargeParticleLimit());
+                contentValues.put(ISOPARTICLELIMITS_OPERATIONSMALLPARTICLELIMIT, isoParticleLimits.getOperationSmallParticleLimit());
+                contentValues.put(ISOPARTICLELIMITS_OPERATIONLARGEPARTICLELIMIT, isoParticleLimits.getOperationLargeParticleLimit());
+                if (getExistingId(tableName, ISOPARTICLELIMITS_LIMITID, isoParticleLimits.getLimitId()) > 0) {
+                    db.update(tableName, contentValues, ISOPARTICLELIMITS_LIMITID + "=" + isoParticleLimits.getLimitId(), null);
+                } else {
+//                    Log.d("Avinash", "insert applicable partners.getId()=" + partners.getPartnerId() + " partners.getName()=" + partners.getName());
+                    db.insert(tableName, null, contentValues);
+                }
+            }
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     //insert daa in equipment grill filter table
     public boolean insertEquipmentGrill(String tableName, ArrayList<EquipmentGrill> equipmentGrillArrayList) {
@@ -854,7 +900,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 contentValues.put(PARTNERS_SERVICEINCHARGE, partners.getServiceIncharge());
                 contentValues.put(PARTNERS_EMAIL, partners.getEmail());
                 contentValues.put(PARTNERS_CELLNO, partners.getCellNo());
-                contentValues.put(PARTNERS_CREATIONDATE, partners.getCreationDate());
+                contentValues.put(PARTNERS_LASTUPDATEDDATE, partners.getLastUpdatedDate());
 
                 if (getExistingId(tableName, PARTNERS_ID, partners.getPartnerId()) > 0) {
                     db.update(tableName, contentValues, PARTNERS_ID + "=" + partners.getPartnerId(), null);
@@ -1056,6 +1102,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 contentValues.put(AHU_FINALFILTERTYPE, ahu.getFinalFilterType());
                 contentValues.put(AHU_FINALFILTEREFFICIENCY, ahu.getFinalFilterEfficiency());
                 contentValues.put(AHU_FINALFILTERLEAK, ahu.getFinalFilterLeak());
+                contentValues.put(AHU_REMARKS, ahu.getRemarks());
                 contentValues.put(AHU_LASTUPDATEDDATE, ahu.getLastUpdatedDate());
                 if (getExistingId(tableName, AHU_AHUID, ahu.getAhuId()) > 0) {
                     db.update(tableName, contentValues, AHU_AHUID + "=" + ahu.getAhuId(), null);
@@ -1151,14 +1198,13 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 contentValues.put(EQUIPMENT_ROOMID, equipment.getRoomId());
                 contentValues.put(EQUIPMENT_EQUIPMENTNO, equipment.getEquipmentNo());
                 contentValues.put(EQUIPMENT_EQUIPMENTNAME, equipment.getEquipmentName());
-                contentValues.put(EQUIPMENT_OCCUPANCYSTATE, equipment.getOccupancyState());
                 contentValues.put(EQUIPMENT_MINVELOCITY, equipment.getMinVelocity());
                 contentValues.put(EQUIPMENT_MAXVELOCITY, equipment.getMaxVelocity());
-                contentValues.put(EQUIPMENT_TESTREFERENCE, equipment.getTestReference());
-                contentValues.put(EQUIPMENT_FILTERQUANTITY, equipment.getFilterQuantity());
-                contentValues.put(EQUIPMENT_EQUIPMENTLOAD, equipment.getEquipmentLoad());
-                contentValues.put(EQUIPMENT_ISOCLAUSE, equipment.getIsoClause());
-                contentValues.put(EQUIPMENT_CREATIONDATE, equipment.getCreationDate());
+                contentValues.put(EQUIPMENT_SUPPLYAIRFLOW, equipment.getSupplyAirflow());
+                contentValues.put(EQUIPMENT_EQUIPMENTPRESSURE, equipment.getEquipmentPressure());
+                contentValues.put(EQUIPMENT_EXHUSTAIRFLOW, equipment.getExhustAirflow());
+                contentValues.put(EQUIPMENT_REMARKS, equipment.getRemarks());
+                contentValues.put(EQUIPMENT_LASTUPDATEDDATE, equipment.getLastUpdatedDate());
                 Log.d("Avinash", "isert db minvalocity=" + equipment.getMinVelocity() + "equipment.getMaxVelocity()=" + equipment.getMaxVelocity());
                 if (getExistingId(tableName, EQUIPMENT_EQUIPMENTID, equipment.getEquipmentId()) > 0) {
                     db.update(tableName, contentValues, EQUIPMENT_EQUIPMENTID + "=" + equipment.getEquipmentId(), null);
@@ -1188,8 +1234,8 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 contentValues.put(EQUIPMENTFILTER_FILTERTYPE, equipmentFilter.getFilterType());
                 contentValues.put(EQUIPMENTFILTER_EFFICIENCY, equipmentFilter.getEfficiency());
                 contentValues.put(EQUIPMENTFILTER_PARTICLESIZE, equipmentFilter.getParticleSize());
-                contentValues.put(EQUIPMENTFILTER_SPECIFICATIONLEAK,equipmentFilter.getSpecificationLeak());
-                contentValues.put(EQUIPMENTFILTER_LASTUPDATEDDATE,equipmentFilter.getLastUpdatedDate());
+                contentValues.put(EQUIPMENTFILTER_SPECIFICATIONLEAK, equipmentFilter.getSpecificationLeak());
+                contentValues.put(EQUIPMENTFILTER_LASTUPDATEDDATE, equipmentFilter.getLastUpdatedDate());
 
                 if (getExistingId(tableName, EQUIPMENTFILTER_FILTERID, equipmentFilter.getFilterId()) > 0) {
                     db.update(tableName, contentValues, EQUIPMENTFILTER_FILTERID + "=" + equipmentFilter.getFilterId(), null);
@@ -1327,7 +1373,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 contentValues.put(CLIENT_INSTRUMENT_TEST_CLIENT_INSTRUMENT_ID, clientInstrumentTest.getClientInstrumentId());
                 contentValues.put(CLIENT_INSTRUMENT_TEST_CLIENT_INSTRUMENT_TEST_CODE, clientInstrumentTest.getClientInstrumentTestCode());
                 contentValues.put(CLIENT_INSTRUMENT_TEST_CLIENT_INSTRUMENT_TEST_NAME, clientInstrumentTest.getClientInstrumentTestName());
-
+                contentValues.put(CLIENT_INSTRUMENT_TEST_LASTUPDATEDDATE,clientInstrumentTest.getLastUpdatedDate());
                 if (getExistingId(tableName, CLIENT_INSTRUMENT_TEST_CLIENT_INSTRUMENT_TEST_ID, clientInstrumentTest.getClientInstrumentTestId()) > 0) {
                     db.update(tableName, contentValues, CLIENT_INSTRUMENT_TEST_CLIENT_INSTRUMENT_TEST_ID + "=" + clientInstrumentTest.getClientInstrumentTestId(), null);
                 } else {
@@ -1380,6 +1426,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 contentValues.put(PARTNER_INSTRUMENT_ID, partnerInstrumentTest.getPartnerInstrumentId());
                 contentValues.put(PARTNER_INSTRUMENT_TEST_CODE, partnerInstrumentTest.getPartnerInstrumentTestCode());
                 contentValues.put(PARTNER_INSTRUMENT_TEST_NAME, partnerInstrumentTest.getPartnerInstrumentTestName());
+                contentValues.put(PARTNER_INSTRUMENT_TEST_LASTUPDATEDDATE,partnerInstrumentTest.getLastUpdatedDate());
 
                 if (getExistingId(tableName, PARTNER_INSTRUMENT_TEST_ID, partnerInstrumentTest.getPartnerInstrumentTestId()) > 0) {
                     db.update(tableName, contentValues, PARTNER_INSTRUMENT_TEST_ID + "=" + partnerInstrumentTest.getPartnerInstrumentTestId(), null);
@@ -1618,7 +1665,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 user.setRoleType(cursor.getString(10));
                 user.setPermissions(cursor.getString(11));
                 user.setLastUpdated(cursor.getString(12));
-                Log.d("valdoc", "Login method :" + user.getName() + "\n" + user.getPassword());
+                Log.d("valdoc", "Login method :" + user.getEmail() + "\n" + user.getPassword());
                 userArrayList.add(user);
             } while (cursor.moveToNext());
         } // return contact list return wordList; }
@@ -1626,10 +1673,13 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
     }
 
     // select data from clientInstrument table
-    public ArrayList<ClientInstrument> getClientInstrumentInfo() {
+    public ArrayList<ClientInstrument> getClientInstrumentInfo(String testCode) {
+        Log.d("valdoc", "getClientInstrumentInfo :"+" testCode="+testCode);
         ArrayList<ClientInstrument> clientInstrumentArrayList;
         clientInstrumentArrayList = new ArrayList<ClientInstrument>();
-        String selectQuery = "SELECT * FROM " + CLIENT_INSTRUMENT_TABLE_NAME;
+        String selectQuery = "SELECT * FROM " + CLIENT_INSTRUMENT_TABLE_NAME + "," + CLIENT_INSTRUMENT_TEST_TABLE_NAME + " WHERE " + CLIENT_INSTRUMENT_TABLE_NAME
+                + "." + CLIENT_INSTRUMENT_CINSTRUMENTID + "=" + CLIENT_INSTRUMENT_TEST_TABLE_NAME + "." + CLIENT_INSTRUMENT_TEST_CLIENT_INSTRUMENT_ID
+                + " AND " + testCode + "=" + CLIENT_INSTRUMENT_TEST_TABLE_NAME + "." + CLIENT_INSTRUMENT_TEST_CLIENT_INSTRUMENT_TEST_CODE;
         SQLiteDatabase database = this.getWritableDatabase();
         Log.d("Avinash", "db clientInstrument");
         Cursor cursor = database.rawQuery(selectQuery, null);
@@ -1645,8 +1695,9 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 clientInstrument.setLastCalibrated(cursor.getString(6));
                 clientInstrument.setCalibrationDueDate(cursor.getString(7));
 //                clientInstrument.setCurrentLocation(cursor.getString(8));
-                clientInstrument.setStatus(cursor.getString(9));
-//                clientInstrument.setTestId(cursor.getInt(10));
+                clientInstrument.setStatus(cursor.getString(8));
+                clientInstrument.setCertFileName(cursor.getString(9));
+                clientInstrument.setRemarks(cursor.getString(10));
                 clientInstrument.setLastUpdatedDate(cursor.getString(11));
 //                clientInstrument.setSamplingFlowRate(cursor.getString(12));
 //                clientInstrument.setSamplingTime(cursor.getString(13));
@@ -1660,10 +1711,12 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
     }
 
     // select data from partnerInstrument table
-    public ArrayList<PartnerInstrument> getPartnerInstrumentInfo(int partnerId) {
+    public ArrayList<PartnerInstrument> getPartnerInstrumentInfo(int partnerId, String testCode) {
         ArrayList<PartnerInstrument> partnerInstrumentArrayList;
         partnerInstrumentArrayList = new ArrayList<PartnerInstrument>();
-        String selectQuery = "SELECT * FROM " + PARTNER_INSTRUMENT_TABLE_NAME;
+        String selectQuery = "SELECT * FROM " + PARTNER_INSTRUMENT_TABLE_NAME + "," + PARTNER_INSTRUMENT_TEST_TABLE_NAME + " WHERE " + PARTNER_INSTRUMENT_TABLE_NAME
+                + "." + PARTNER_INSTRUMENT_PINSTRUMENTID + "=" + PARTNER_INSTRUMENT_TEST_TABLE_NAME + "." + PARTNER_INSTRUMENT_ID
+                + " AND " + testCode + "=" + PARTNER_INSTRUMENT_TEST_TABLE_NAME + "." + PARTNER_INSTRUMENT_TEST_CODE;
 //                " WHERE " + ValdocDatabaseHandler.PARTNER_INSTRUMENT_PARTNERID + " = " + partnerId;
         SQLiteDatabase database = this.getWritableDatabase();
         Cursor cursor = database.rawQuery(selectQuery, null);
@@ -1742,7 +1795,8 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 ahu.setFinalFilterType(cursor.getString(17));
                 ahu.setFinalFilterEfficiency(cursor.getString(18));
                 ahu.setFinalFilterLeak(cursor.getString(19));
-                ahu.setLastUpdatedDate(cursor.getString(19));
+                ahu.setRemarks(cursor.getString(20));
+                ahu.setLastUpdatedDate(cursor.getString(21));
                 Log.d("valdoc", "TestCreateActivity : ahu1");
                 ahuArrayList.add(ahu);
             } while (cursor.moveToNext());
@@ -1779,16 +1833,15 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 Equipment equipment = new Equipment();
                 equipment.setEquipmentId(cursor.getInt(0));
                 equipment.setRoomId(cursor.getInt(1));
-                equipment.setOccupancyState(cursor.getString(2));
-                equipment.setEquipmentNo(cursor.getString(3));
-                equipment.setEquipmentName(cursor.getString(4));
-                equipment.setMinVelocity(cursor.getDouble(5));
-                equipment.setMaxVelocity(cursor.getDouble(6));
-                equipment.setTestReference(cursor.getString(7));
-                equipment.setFilterQuantity(cursor.getInt(8));
-                equipment.setEquipmentLoad(cursor.getInt(9));
-                equipment.setIsoClause(cursor.getString(10));
-                equipment.setCreationDate(cursor.getString(11));
+                equipment.setEquipmentNo(cursor.getString(2));
+                equipment.setEquipmentName(cursor.getString(3));
+                equipment.setMinVelocity(cursor.getDouble(4));
+                equipment.setMaxVelocity(cursor.getDouble(5));
+                equipment.setSupplyAirflow(cursor.getInt(6));
+                equipment.setEquipmentPressure(cursor.getInt(7));
+                equipment.setExhustAirflow(cursor.getInt(8));
+                equipment.setRemarks(cursor.getString(9));
+                equipment.setLastUpdatedDate(cursor.getString(10));
                 Log.d("Avinash", "get equipment db minvalocity=" + cursor.getDouble(5) + "equipment.getMaxVelocity()=" + cursor.getDouble(6));
 
                 equipmentArrayList.add(equipment);

@@ -9,6 +9,7 @@ public class PartnerInstrumentTest {
     private int partnerInstrumentId;
     private String partnerInstrumentTestCode;
     private String partnerInstrumentTestName;
+    private String lastUpdatedDate;
 
     public String getPartnerInstrumentTest() {
         return partnerInstrumentTest;
@@ -48,5 +49,13 @@ public class PartnerInstrumentTest {
 
     public void setPartnerInstrumentTestName(String partnerInstrumentTestName) {
         this.partnerInstrumentTestName = partnerInstrumentTestName;
+    }
+
+    public String getLastUpdatedDate() {
+        return lastUpdatedDate;
+    }
+
+    public void setLastUpdatedDate(String lastUpdatedDate) {
+        this.lastUpdatedDate = lastUpdatedDate;
     }
 }

@@ -111,7 +111,7 @@ public class AfterLoginActivity extends AppCompatActivity implements HttpConnect
                 public void onClick(View view) {
                     if (Utilityies.checkInternetConnection(AfterLoginActivity.this)) {
                         mValdocControler.getHttpConectionforSync(AfterLoginActivity.this, "GET");
-                        mValdocControler.httpPostSyncData(AfterLoginActivity.this, "POST");
+//                        mValdocControler.httpPostSyncData(AfterLoginActivity.this, "POST");
                     } else {
                         aleartDialog("Please check your internate connection !");
                     }
@@ -197,7 +197,7 @@ public class AfterLoginActivity extends AppCompatActivity implements HttpConnect
             boolean isertFlag = insertDataInTable(arrayListHashMap);
             Log.d("VALDOC", "controler response data  isertFlag=" + isertFlag);
             if (isertFlag) {
-                aleartDialog(message);
+                aleartDialog(""+message);
             } else {
                 aleartDialog("Table is not created successfully,Please sync again !");
             }
@@ -207,8 +207,8 @@ public class AfterLoginActivity extends AppCompatActivity implements HttpConnect
     private boolean insertDataInTable(HashMap<String, ArrayList> arrayListHashMap) {
         boolean isertFlag = true;
         Log.d("VALDOC", "controler response data  insert table hasmap size=" + arrayListHashMap.size());
+        ArrayList userArrayList = null;
         try {
-            ArrayList userArrayList = null;
             userArrayList = (ArrayList) arrayListHashMap.get(ValdocDatabaseHandler.USER_TABLE_NAME);
             Log.d("VALDOC", "controler response data  userArrayList.size()=" + userArrayList.size());
             if (null != userArrayList || userArrayList.size() > 0) {
@@ -218,6 +218,7 @@ public class AfterLoginActivity extends AppCompatActivity implements HttpConnect
         } catch (Exception e) {
 
         }
+
         try {
             ArrayList ahusArrayList = arrayListHashMap.get(ValdocDatabaseHandler.AHU_TABLE_NAME);
             if (null != ahusArrayList || ahusArrayList.size() > 0) {
@@ -227,6 +228,9 @@ public class AfterLoginActivity extends AppCompatActivity implements HttpConnect
         } catch (Exception e) {
 
         }
+//        ArrayList ahusArrayList = arrayListHashMap.get("ahus");
+//        if (null != ahusArrayList || ahusArrayList.size() > 0)
+//            isertFlag=mValdocDatabaseHandler.insertPartnerUser(ValdocDatabaseHandler.PARTNERUSER_TABLE_NAME, createPartnerUserData());
         try {
             ArrayList equipmentsArrayList = arrayListHashMap.get(ValdocDatabaseHandler.EQUIPMENT_TABLE_NAME);
             if (null != equipmentsArrayList || equipmentsArrayList.size() > 0) {
@@ -236,6 +240,7 @@ public class AfterLoginActivity extends AppCompatActivity implements HttpConnect
         } catch (Exception e) {
 
         }
+
         try {
             ArrayList roomsArrayList = arrayListHashMap.get(ValdocDatabaseHandler.ROOM_TABLE_NAME);
             if (null != roomsArrayList || roomsArrayList.size() > 0) {
@@ -245,6 +250,7 @@ public class AfterLoginActivity extends AppCompatActivity implements HttpConnect
         } catch (Exception e) {
 
         }
+
         try {
             ArrayList applicableTestRoomsArrayList = arrayListHashMap.get(ValdocDatabaseHandler.APLICABLE_TEST_ROOM_TABLE_NAME);
             if (null != applicableTestRoomsArrayList || applicableTestRoomsArrayList.size() > 0) {
@@ -254,15 +260,17 @@ public class AfterLoginActivity extends AppCompatActivity implements HttpConnect
         } catch (Exception e) {
 
         }
+
         try {
             ArrayList applicableTestEquipmentsArrayList = arrayListHashMap.get(ValdocDatabaseHandler.APLICABLE_TEST_EQUIPMENT_TABLE_NAME);
             if (null != applicableTestEquipmentsArrayList || applicableTestEquipmentsArrayList.size() > 0) {
-                Log.d("VALDOC", "controler response data  6");
+                Log.d("VALDOC", "controler response data  6 hello");
                 isertFlag = mValdocDatabaseHandler.insertApplicableTestEquipment(ValdocDatabaseHandler.APLICABLE_TEST_EQUIPMENT_TABLE_NAME, applicableTestEquipmentsArrayList);
             }
         } catch (Exception e) {
 
         }
+
         try {
             ArrayList clientInstrumentsArrayList = arrayListHashMap.get(ValdocDatabaseHandler.CLIENT_INSTRUMENT_TABLE_NAME);
             if (null != clientInstrumentsArrayList || clientInstrumentsArrayList.size() > 0) {
@@ -272,6 +280,27 @@ public class AfterLoginActivity extends AppCompatActivity implements HttpConnect
         } catch (Exception e) {
 
         }
+
+        try {
+            ArrayList clientInstrumentsTestArrayList = arrayListHashMap.get(ValdocDatabaseHandler.CLIENT_INSTRUMENT_TEST_TABLE_NAME);
+            if (null != clientInstrumentsTestArrayList || clientInstrumentsTestArrayList.size() > 0) {
+                Log.d("VALDOC", "controler response data  7");
+                isertFlag = mValdocDatabaseHandler.insertClientInstrumentTest(ValdocDatabaseHandler.CLIENT_INSTRUMENT_TEST_TABLE_NAME, clientInstrumentsTestArrayList);
+            }
+        } catch (Exception e) {
+
+        }
+
+        try {
+            ArrayList partnerInstrumentsTestArrayList = arrayListHashMap.get(ValdocDatabaseHandler.PARTNER_INSTRUMENT_TEST_TABLE_NAME);
+            if (null != partnerInstrumentsTestArrayList || partnerInstrumentsTestArrayList.size() > 0) {
+                Log.d("VALDOC", "controler response data  8");
+                isertFlag = mValdocDatabaseHandler.insertPartnerInstrumentTest(ValdocDatabaseHandler.PARTNER_INSTRUMENT_TEST_TABLE_NAME, partnerInstrumentsTestArrayList);
+            }
+        } catch (Exception e) {
+
+        }
+
         try {
             ArrayList partnerInstrumentsArrayList = arrayListHashMap.get(ValdocDatabaseHandler.PARTNER_INSTRUMENT_TABLE_NAME);
             if (null != partnerInstrumentsArrayList || partnerInstrumentsArrayList.size() > 0) {
@@ -281,6 +310,7 @@ public class AfterLoginActivity extends AppCompatActivity implements HttpConnect
         } catch (Exception e) {
 
         }
+
         try {
             ArrayList testMasterArrayList = arrayListHashMap.get(ValdocDatabaseHandler.TESTMASTER_TABLE_NAME);
             if (null != testMasterArrayList || testMasterArrayList.size() > 0)
@@ -297,6 +327,7 @@ public class AfterLoginActivity extends AppCompatActivity implements HttpConnect
         } catch (Exception e) {
 
         }
+
         try {
             ArrayList equipmentFiltersArrayList = arrayListHashMap.get(ValdocDatabaseHandler.EQUIPMENTFILTER_TABLE_NAME);
             if (null != equipmentFiltersArrayList || equipmentFiltersArrayList.size() > 0) {
@@ -306,6 +337,7 @@ public class AfterLoginActivity extends AppCompatActivity implements HttpConnect
         } catch (Exception e) {
 
         }
+
         try {
             ArrayList grillsArrayList = arrayListHashMap.get(ValdocDatabaseHandler.GRILL_TABLE_NAME);
             if (null != grillsArrayList || grillsArrayList.size() > 0) {
@@ -315,6 +347,7 @@ public class AfterLoginActivity extends AppCompatActivity implements HttpConnect
         } catch (Exception e) {
 
         }
+
         try {
             ArrayList roomFiltersArrayList = arrayListHashMap.get(ValdocDatabaseHandler.ROOMFILTER_TABLE_NAME);
             if (null != roomFiltersArrayList || roomFiltersArrayList.size() > 0) {
@@ -324,13 +357,52 @@ public class AfterLoginActivity extends AppCompatActivity implements HttpConnect
         } catch (Exception e) {
 
         }
-
         try {
             ArrayList partnerArrayList = arrayListHashMap.get(ValdocDatabaseHandler.PARTNERS_TABLE_NAME);
             Log.d("VALDOC", "controler response data  13=partnerArrayList=" + partnerArrayList.size());
             if (null != partnerArrayList || partnerArrayList.size() > 0) {
                 Log.d("VALDOC", "controler response data  13=partnerInstrumentArrayList=" + partnerArrayList.size());
                 isertFlag = mValdocDatabaseHandler.insertPartners(ValdocDatabaseHandler.PARTNERS_TABLE_NAME, partnerArrayList);
+            }
+        } catch (Exception e) {
+
+        }
+
+        try {
+            ArrayList ahuFilterArrayList = arrayListHashMap.get(ValdocDatabaseHandler.AHU_FILTER_TABLE_NAME);
+            if (null != ahuFilterArrayList || ahuFilterArrayList.size() > 0) {
+                Log.d("VALDOC", "controler response data  13=partnerInstrumentArrayList=" + ahuFilterArrayList.size());
+                isertFlag = mValdocDatabaseHandler.insertAhuFilter(ValdocDatabaseHandler.AHU_FILTER_TABLE_NAME, ahuFilterArrayList);
+            }
+        } catch (Exception e) {
+
+        }
+
+        try {
+            ArrayList applicableTestAhuArrayList = arrayListHashMap.get(ValdocDatabaseHandler.APLICABLE_TEST_AHU_TABLE_NAME);
+            if (null != applicableTestAhuArrayList || applicableTestAhuArrayList.size() > 0) {
+                Log.d("VALDOC", "controler response data  13=partnerInstrumentArrayList=" + applicableTestAhuArrayList.size());
+                isertFlag = mValdocDatabaseHandler.insertApplicableTestAhu(ValdocDatabaseHandler.APLICABLE_TEST_AHU_TABLE_NAME, applicableTestAhuArrayList);
+            }
+        } catch (Exception e) {
+
+        }
+
+        try {
+            ArrayList equipmentgrillArrayList = arrayListHashMap.get(ValdocDatabaseHandler.EQUIPMENTGRILL_TABLE_NAME);
+            if (null != equipmentgrillArrayList || equipmentgrillArrayList.size() > 0) {
+                Log.d("VALDOC", "controler response data  13=partnerInstrumentArrayList=" + equipmentgrillArrayList.size());
+                isertFlag = mValdocDatabaseHandler.insertEquipmentGrill(ValdocDatabaseHandler.EQUIPMENTGRILL_TABLE_NAME, equipmentgrillArrayList);
+            }
+        } catch (Exception e) {
+
+        }
+
+        try {
+            ArrayList isoParticleLimitsArrayList = arrayListHashMap.get(ValdocDatabaseHandler.ISOPARTICLELIMITS_TABLE_NAME);
+            if (null != isoParticleLimitsArrayList || isoParticleLimitsArrayList.size() > 0) {
+                Log.d("VALDOC", "controler response data  13=partnerInstrumentArrayList=" + isoParticleLimitsArrayList.size());
+                isertFlag = mValdocDatabaseHandler.insertIsoParticleLimits(ValdocDatabaseHandler.ISOPARTICLELIMITS_TABLE_NAME, isoParticleLimitsArrayList);
             }
         } catch (Exception e) {
 

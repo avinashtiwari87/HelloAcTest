@@ -29,6 +29,7 @@ public class Ahu {
     private String finalFilterEfficiency;
     private String finalFilterLeak;
     private String lastUpdatedDate;
+    private String remarks;
 
     public String getAhu() {
         return ahu;
@@ -204,5 +205,13 @@ public class Ahu {
 
     public void setLastUpdatedDate(String lastUpdatedDate) {
         this.lastUpdatedDate = lastUpdatedDate;
+    }
+
+    public String getRemarks() {
+        return remarks;
+    }
+
+    public void setRemarks(String remarks) {
+        this.remarks = remarks;
     }
 }

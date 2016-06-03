@@ -9,6 +9,7 @@ public class ClientInstrumentTest {
     private int clientInstrumentId;
     private String clientInstrumentTestCode;
     private String clientInstrumentTestName;
+    private String lastUpdatedDate;
 
     public String getClientInstrumentTest() {
         return clientInstrumentTest;
@@ -48,5 +49,13 @@ public class ClientInstrumentTest {
 
     public void setClientInstrumentTestName(String clientInstrumentTestName) {
         this.clientInstrumentTestName = clientInstrumentTestName;
+    }
+
+    public String getLastUpdatedDate() {
+        return lastUpdatedDate;
+    }
+
+    public void setLastUpdatedDate(String lastUpdatedDate) {
+        this.lastUpdatedDate = lastUpdatedDate;
     }
 }

@@ -15,6 +15,8 @@ public class ClientInstrument implements Serializable{
     private String model;
     private String lastCalibrated;
     private String calibrationDueDate;
+    private String certFileName;
+    private String remarks;
 //    private String currentLocation;
     private String status;
 //    private int testId;
@@ -98,6 +100,22 @@ public class ClientInstrument implements Serializable{
 
     public String getStatus() {
         return status;
+    }
+
+    public String getCertFileName() {
+        return certFileName;
+    }
+
+    public void setCertFileName(String certFileName) {
+        this.certFileName = certFileName;
+    }
+
+    public String getRemarks() {
+        return remarks;
+    }
+
+    public void setRemarks(String remarks) {
+        this.remarks = remarks;
     }
 
     public void setStatus(String status) {

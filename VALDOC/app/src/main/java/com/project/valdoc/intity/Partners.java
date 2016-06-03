@@ -19,7 +19,7 @@ public class Partners {
     private String serviceIncharge;
     private String email;
     private String cellNo;
-    private String creationDate;
+    private String lastUpdatedDate;
 
     public String getPartners() {
         return partners;
@@ -141,11 +141,11 @@ public class Partners {
         this.cellNo = cellNo;
     }
 
-    public String getCreationDate() {
-        return creationDate;
+    public String getLastUpdatedDate() {
+        return lastUpdatedDate;
     }
 
-    public void setCreationDate(String creationDate) {
-        this.creationDate = creationDate;
+    public void setLastUpdatedDate(String lastUpdatedDate) {
+        this.lastUpdatedDate = lastUpdatedDate;
     }
 }

@@ -368,9 +368,9 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
         testSpecification.setText("Required Air Velocity " + equipment.getMinVelocity()+"-"+equipment.getMaxVelocity() + "fpm");
         areaOfTest.setText(areaName);
         roomName.setText(roomDetails[1]);
-        occupancyState.setText(equipment.getOccupancyState().toString());
-        Log.d("valdoc", "RDAV5UserEnryActivity 1witness= equipment.getTestReference()=" + equipment.getTestReference());
-        testRefrance.setText("" + equipment.getTestReference().toString());
+//        occupancyState.setText(equipment.getOccupancyState().toString());
+//        Log.d("valdoc", "RDAV5UserEnryActivity 1witness= equipment.getTestReference()=" + equipment.getTestReference());
+//        testRefrance.setText("" + equipment.getTestReference().toString());
         equipmentName.setText(equipment.getEquipmentName().toString());
         equipmentNo.setText(equipment.getEquipmentNo().toString());
         testCundoctor.setText(userName);
