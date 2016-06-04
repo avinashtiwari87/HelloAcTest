@@ -63,6 +63,8 @@ public class CommonTestViewActivity extends AppCompatActivity {
         setContentView(R.layout.activity_common_test_view);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         pr = ProgressDialog.show(CommonTestViewActivity.this, "Please Wait", "Loading...");
+        pr.setCancelable(true);
+        pr.setCanceledOnTouchOutside(true);
 
         txtViewList = new ArrayList<TextView>();
         txtPassFailList = new ArrayList<TextView>();
@@ -897,6 +899,7 @@ public class CommonTestViewActivity extends AppCompatActivity {
     }
 
     private void initRes() {
+        findViewById(R.id.header4_linear_layout).setVisibility(View.GONE);
         //Test 1
         table_layout = (TableLayout) findViewById(R.id.tableLayout1);
         table_layout2 = (TableLayout) findViewById(R.id.tableLayout2);
