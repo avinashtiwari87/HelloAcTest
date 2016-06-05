@@ -107,6 +107,7 @@ public class RDRCTUserEntryActivity extends AppCompatActivity {
     String mFinalReading;
     int mCount;
     private String mPartnerName;
+    private String  mTestCode="";
 
     private int year;
     private int month;
@@ -130,7 +131,7 @@ public class RDRCTUserEntryActivity extends AppCompatActivity {
             mTestType = getIntent().getStringExtra("testType");
             Log.d(TAG, " TestType : " + mTestType);
         }
-
+        mTestCode=getIntent().getStringExtra("testCode");
         //dynamic data population
         getExtraFromTestCreateActivity(savedInstanceState);
         //text view initialization
@@ -481,7 +482,7 @@ public class RDRCTUserEntryActivity extends AppCompatActivity {
         testDetails.setAhuNo(ahuNo.getText().toString());
         testDetails.setTesterName(testCundoctor.getText().toString());
         testDetails.setPartnerName("" + mPartnerName);
-        testDetails.setTestCode(mTestType);
+        testDetails.setTestCode(mTestCode);
         StringBuilder witness = new StringBuilder();
         witness.append(witnessFirst.toString());
         if (null != witnessSecond && witnessSecond.length() > 0)

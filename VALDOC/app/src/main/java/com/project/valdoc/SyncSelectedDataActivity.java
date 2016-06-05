@@ -142,7 +142,7 @@ public class SyncSelectedDataActivity extends AppCompatActivity {
                 if (i == 1 && j == 1) {
                     row.addView(addTextView("    RD NO     "));
                 } else {
-                    row.addView(addTextView(""+testDetailList.get(i-2).getRawDataNo()));
+                    row.addView(addTextView(""+testDetailList.get(i-1).getRawDataNo()));
                 }
 
             }

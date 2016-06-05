@@ -316,6 +316,7 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
         intent.putExtra("USERTYPE", loginUserType);
         intent.putExtra("USERNAME", userName);
         intent.putExtra("testType", ACPHH);
+        intent.putExtra("testCode", testCode);
         Log.d("valdoc", "TestCreateActivity witness=" + witnessFirst.getText());
         intent.putExtra("WITNESSFIRST", witnessFirst.getText().toString());
         intent.putExtra("WITNESSSECOND", witnessSecond.getText().toString());
@@ -338,8 +339,8 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
         Log.d("valdoc", "TestCreateActivity areaName=" + areaName);
         intent.putExtra("AREANAME", areaName);
 
-//            ApplicableTestRoom applicableTestRoom = mApplicableTestRoomArrayList.get(testSpinner.getSelectedItemPosition() - 1);
-//            intent.putExtra("LOCATION", applicableTestRoom.getLocation());
+            ApplicableTestRoom applicableTestRoom = mApplicableTestRoomArrayList.get(applicableTestSpinner.getSelectedItemPosition() - 1);
+            intent.putExtra("LOCATION", applicableTestRoom.getLocation());
 
         //get filter list from equipment filter
         Log.d("valdoc", "TestCreateActivity :equipment id equipment1:=" + room.getRoomId());
@@ -354,6 +355,7 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
         intent.putExtra("USERTYPE", loginUserType);
         intent.putExtra("USERNAME", userName);
         intent.putExtra("testType", FIT);
+        intent.putExtra("testCode", testCode);
         Log.d("valdoc", "TestCreateActivity witness=" + witnessFirst.getText());
         intent.putExtra("WITNESSFIRST", witnessFirst.getText().toString());
         intent.putExtra("WITNESSSECOND", witnessSecond.getText().toString());
@@ -390,6 +392,7 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
         intent.putExtra("USERTYPE", loginUserType);
         intent.putExtra("USERNAME", userName);
         intent.putExtra("testType", PCT);
+        intent.putExtra("testCode", testCode);
         Log.d("valdoc", "TestCreateActivity witness=" + witnessFirst.getText());
         intent.putExtra("WITNESSFIRST", witnessFirst.getText().toString());
         intent.putExtra("WITNESSSECOND", witnessSecond.getText().toString());
@@ -425,6 +428,7 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
         intent.putExtra("USERTYPE", loginUserType);
         intent.putExtra("USERNAME", userName);
         intent.putExtra("testType", RCT);
+        intent.putExtra("testCode", testCode);
         Log.d("valdoc", "TestCreateActivity witness=" + witnessFirst.getText());
         intent.putExtra("WITNESSFIRST", witnessFirst.getText().toString());
         intent.putExtra("WITNESSSECOND", witnessSecond.getText().toString());
@@ -460,6 +464,7 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
         intent.putExtra("USERTYPE", loginUserType);
         intent.putExtra("USERNAME", userName);
         intent.putExtra("testType", AV);
+        intent.putExtra("testCode", testCode);
         intent.putExtra("PRTNERNAME", mPartnerName);
         if (loginUserType.equals("CLIENT")) {
             intent.putExtra("ClientInstrument", clientInstrumentArrayList.get(instrumentSpiner.getSelectedItemPosition() - 1));
@@ -909,6 +914,9 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
                         selectedText.setTextColor(Color.BLACK);
                     }
                 }
+                if(pos>0) {
+                    createApplicableTestRoomList(mRoomNoArrayList.get(pos-1).getRoomId());
+                }
 //                Toast.makeText(TestCreateActivity.this, "room room no pos=" + pos, Toast.LENGTH_SHORT).show();
 //                equipmentSpinnerPos = equipmentSpinner.getSelectedItemPosition();
 //                Log.d("TestCreateActivity", "equipment :index= " + equipmentSpinner.getSelectedItemPosition() + "mEquipmentArrayList size=" + mEquipmentArrayList.size());
@@ -1187,15 +1195,15 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
         if (null != mApplicableTestRoomArrayList && mApplicableTestRoomArrayList.size() > 0)
             mApplicableTestRoomArrayList.clear();
         mApplicableTestRoomArrayList = mValdocDatabaseHandler.getApplicableTestRoomInfo(roomId);
-        if (null != applicableTestRoomList && applicableTestRoomList.size() > 0) {
-            applicableTestRoomList.clear();
-//            applicableTestRoomAdapter.notifyDataSetChanged();
-        }
-        applicableTestRoomList.add("Select Test Type");
-        for (ApplicableTestRoom applicableTestRoom : mApplicableTestRoomArrayList) {
-            applicableTestRoomList.add(applicableTestRoom.getTestName());
-            Log.d("valdoc", "TestCreateActivity : ahu" + applicableTestRoom.getTestName());
-        }
+//        if (null != applicableTestRoomList && applicableTestRoomList.size() > 0) {
+//            applicableTestRoomList.clear();
+////            applicableTestRoomAdapter.notifyDataSetChanged();
+//        }
+//        applicableTestRoomList.add("Select Test Type");
+//        for (ApplicableTestRoom applicableTestRoom : mApplicableTestRoomArrayList) {
+//            applicableTestRoomList.add(applicableTestRoom.getTestName());
+//            Log.d("valdoc", "TestCreateActivity : ahu" + applicableTestRoom.getTestName());
+//        }
 //        applicableTestRoomAdapter = new ArrayAdapter<String>(this, R.layout.spiner_text, applicableTestRoomList);
 //        testSpinner.setAdapter(applicableTestRoomAdapter);
 //        testSpinner.setSelection(0);

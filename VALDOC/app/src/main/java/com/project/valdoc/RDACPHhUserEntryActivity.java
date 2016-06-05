@@ -119,6 +119,7 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
     private int year;
     private int month;
     private int day;
+    private String  mTestCode="";
     static final int DATE_PICKER_ID = 1111;
 
     @Override
@@ -142,6 +143,7 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
             mTestType = getIntent().getStringExtra("testType");
             Log.d(TAG, " TestType : " + mTestType);
         }
+        mTestCode=getIntent().getStringExtra("testCode");
         //dynamic data population
         getExtraFromTestCreateActivity(savedInstanceState);
         //text view initialization
@@ -489,7 +491,7 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
         testDetails.setTestReference(testRefrance.getText().toString());
         testDetails.setAhuNo(ahuNo.getText().toString());
         testDetails.setTesterName(testCundoctor.getText().toString());
-        testDetails.setTestCode(mTestType);
+        testDetails.setTestCode(mTestCode);
         StringBuilder witness = new StringBuilder();
         witness.append(witnessFirst.toString());
         if (null != witnessSecond && witnessSecond.length() > 0)

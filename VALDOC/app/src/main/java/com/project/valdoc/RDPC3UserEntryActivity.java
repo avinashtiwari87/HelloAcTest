@@ -117,7 +117,7 @@ public class RDPC3UserEntryActivity extends AppCompatActivity {
     ArrayList<TextView> resultTextViewList;
     private ValdocDatabaseHandler mValdocDatabaseHandler = new ValdocDatabaseHandler(RDPC3UserEntryActivity.this);
     SharedPreferences sharedpreferences;
-
+    private String mTestCode = "";
     private int year;
     private int month;
     private int day;
@@ -143,6 +143,7 @@ public class RDPC3UserEntryActivity extends AppCompatActivity {
             mTestType = getIntent().getStringExtra("testType");
             Log.d(TAG, " TestType : " + mTestType);
         }
+        mTestCode = getIntent().getStringExtra("testCode");
 //dynamic data population
         getExtraFromTestCreateActivity(savedInstanceState);
         //text view initialization
@@ -517,7 +518,7 @@ public class RDPC3UserEntryActivity extends AppCompatActivity {
         testDetails.setAhuNo(ahuNo.getText().toString());
         testDetails.setTesterName(testCundoctor.getText().toString());
         testDetails.setPartnerName("" + mPartnerName);
-        testDetails.setTestCode(mTestType);
+        testDetails.setTestCode(mTestCode);
 
         StringBuilder witness = new StringBuilder();
         witness.append(witnessFirst.toString());

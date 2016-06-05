@@ -70,6 +70,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
     int rows, cols;
     String testType;
     ProgressDialog pr;
+    private String mTestCode="";
 
     /*Unique Ids for EditText and TextView
            must be defined in Constant Class
@@ -150,6 +151,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         }
 
         testType = getIntent().getStringExtra("testType");
+        mTestCode= getIntent().getStringExtra("testCode");
         Log.d(TAG, " TestType : " + testType);
         getExtraFromTestCreateActivity(savedInstanceState);
 
@@ -227,6 +229,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 if (TestCreateActivity.AV.equals(testType)) {
                     roomDetails = extras.getStringArray("RoomDetails");
                     equipment = (Equipment) extras.getSerializable("Equipment");
+                    mTestCode= extras.getString("testCode");
                     //get filter list from equipment filter
                     filterList = new String[extras.getStringArray("FILTERLIST").length];
                     filterList = extras.getStringArray("FILTERLIST");
@@ -396,6 +399,8 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 intent.putExtra("rows", filterList.length + 1);
                 intent.putExtra("cols", applicableTestEquipmentLocation);
                 intent.putExtra("testType", testType);
+                intent.putExtra("testCode", mTestCode);
+
                 startActivity(intent);
             }
             if (TestCreateActivity.ACPHAV.equalsIgnoreCase(testType)) {
@@ -408,6 +413,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 intent.putExtra("WITNESSSECOND", witnessSecond);
                 intent.putExtra("WITNESSTHIRD", witnessThird);
                 intent.putExtra("testType", testType);
+                intent.putExtra("testCode", mTestCode);
                 //get area based on room area id
                 intent.putExtra("AREANAME", areaName);
 
@@ -444,6 +450,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 intent.putExtra("WITNESSSECOND", witnessSecond);
                 intent.putExtra("WITNESSTHIRD", witnessThird);
                 intent.putExtra("testType", testType);
+                intent.putExtra("testCode", mTestCode);
                 //get area based on room area id
                 intent.putExtra("AREANAME", areaName);
 
@@ -475,6 +482,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 intent.putExtra("WITNESSSECOND", witnessSecond);
                 intent.putExtra("WITNESSTHIRD", witnessThird);
                 intent.putExtra("testType", testType);
+                intent.putExtra("testCode", mTestCode);
                 //get area based on room area id
                 intent.putExtra("AREANAME", areaName);
 
@@ -507,6 +515,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 intent.putExtra("WITNESSSECOND", witnessSecond);
                 intent.putExtra("WITNESSTHIRD", witnessThird);
                 intent.putExtra("testType", testType);
+                intent.putExtra("testCode", mTestCode);
                 //get area based on room area id
                 intent.putExtra("AREANAME", areaName);
 
@@ -556,6 +565,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                     intent.putExtra("WITNESSSECOND", witnessSecond);
                     intent.putExtra("WITNESSTHIRD", witnessThird);
                     intent.putExtra("testType", testType);
+                    intent.putExtra("testCode", mTestCode);
                     //get area based on room area id
                     intent.putExtra("AREANAME", areaName);
 

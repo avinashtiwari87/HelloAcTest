@@ -119,6 +119,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
     private ImageView clear;
     private ImageView cancel;
     private String mPartnerName;
+    private String mTestCode;
     ArrayList<TextView> resultTextViewList;
     private ValdocDatabaseHandler mValdocDatabaseHandler = new ValdocDatabaseHandler(RDACPHAVUserEntryActivity.this);
     int testDetailsId = 0;
@@ -153,6 +154,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
             mTestType = getIntent().getStringExtra("testType");
             Log.d(TAG, " TestType : " + mTestType);
         }
+        mTestCode=getIntent().getStringExtra("testCode");
         //dynamic data population
         getExtraFromTestCreateActivity(savedInstanceState);
         //text view initialization
@@ -509,7 +511,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
         testDetails.setTestReference(testRefrance.getText().toString());
         testDetails.setAhuNo(ahuNo.getText().toString());
         testDetails.setTesterName(testCundoctor.getText().toString());
-        testDetails.setTestCode(mTestType);
+        testDetails.setTestCode(mTestCode);
 
         StringBuilder witness = new StringBuilder();
         witness.append(witnessFirst.toString());

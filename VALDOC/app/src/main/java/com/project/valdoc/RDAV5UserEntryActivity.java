@@ -116,6 +116,7 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
     private int year;
     private int month;
     private int day;
+    private String  mTestCode="";
     static final int DATE_PICKER_ID = 1111;
 
     @Override
@@ -138,6 +139,7 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
             mTestType = getIntent().getStringExtra("testType");
             Log.d(TAG, " TestType : " + mTestType);
         }
+        mTestCode=getIntent().getStringExtra("testCode");
         getExtraFromTestCreateActivity(savedInstanceState);
         //text view initialization
         initTextView();
@@ -464,7 +466,7 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
         testDetails.setEquipmentNo("" + equipment.getEquipmentNo());
         testDetails.setTesterName("" + testCundoctor.getText());
         testDetails.setWitnessName("" + testWitness.getText());
-        testDetails.setTestCode(mTestType);
+        testDetails.setTestCode(mTestCode);
         testDetails.setAhuNo("");
         return testDetails;
     }
