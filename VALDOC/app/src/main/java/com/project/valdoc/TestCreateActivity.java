@@ -87,8 +87,8 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
 
     //test name and details
     public static final String AV = "AV";
-    public static final String ACPHAV = "ACPHAV";
-    public static final String ACPHH = "ACPHH";
+    public static final String ACPHAV = "ACPH_AV";
+    public static final String ACPHH = "ACPH_H";
     public static final String FIT = "FIT";
     public static final String PCT = "PCT";
     public static final String RCT = "RCT";
@@ -199,22 +199,9 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
                     editor.putString("witness2", witnessSecond.getText().toString());
                     editor.putString("witness3", witnessThird.getText().toString());
                     editor.commit();
-//                    if (AV.equals(spinerTestType = testSpinner.getSelectedItem().toString())) {
-//                        rdAv5Test();
-//                    } else if (ACPHAV.equals(spinerTestType = testSpinner.getSelectedItem().toString())) {
-//                        rdAcphAv();
-//                    } else if (ACPHH.equals(spinerTestType = testSpinner.getSelectedItem().toString())) {
-//                        rdAcphH();
-//                    } else if (FIT.equals(spinerTestType = testSpinner.getSelectedItem().toString())) {
-//                        rdFit();
-//                    } else if (PCT.equals(spinerTestType = testSpinner.getSelectedItem().toString())) {
-////                        Toast.makeText(TestCreateActivity.this,"Under development",Toast.LENGTH_LONG).show();
-//                        rdPc3();
-//                    } else if (RCT.equals(spinerTestType = testSpinner.getSelectedItem().toString())) {
-//                        rdRct();
-//                    } else {
-//                        Toast.makeText(TestCreateActivity.this, "Please select the correct test to be performed", Toast.LENGTH_SHORT).show();
-//                    }
+                    //redirect on test screen to perform the test
+                    redirectOnTestScreen();
+
                 } else {
                     Toast.makeText(TestCreateActivity.this, "Please select the test to be performed", Toast.LENGTH_SHORT).show();
                 }
@@ -222,12 +209,72 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
         });
     }
 
+    private void redirectOnTestScreen() {
 
-    private void rdAcphAv() {
+        int pos = equipmentAhuOrRoomSpinner.getSelectedItemPosition();
+        if (pos > 0) {
+            if (equipmentAhuOrRoomTestCodeList[pos - 1].toString().equals("AHU")) {
+                performAhuTest();
+            } else if (equipmentAhuOrRoomTestCodeList[pos - 1].toString().equals("EQUIPMENT")) {
+                performEquipmentTest();
+            } else if (equipmentAhuOrRoomTestCodeList[pos - 1].toString().equals("ROOM")) {
+                performRoomTest();
+            }
+        }
+    }
+
+    private void performEquipmentTest() {
+        Log.d("Avinash","performEquipmentTest");
+        int testPosition=applicableTestSpinner.getSelectedItemPosition();
+        if (AV.equals(searchEquipmentTestCode[testPosition])) {
+            rdAv5Test(equipmentTestCode[testPosition],searchEquipmentTestCode[testPosition]);
+        } else if (FIT.equals(searchEquipmentTestCode[testPosition])) {
+            rdFit(equipmentTestCode[testPosition],searchEquipmentTestCode[testPosition]);
+        } else if (PCT.equals(searchEquipmentTestCode[testPosition])) {
+            rdPc3(equipmentTestCode[testPosition],searchEquipmentTestCode[testPosition]);
+        } else if (RCT.equals(searchEquipmentTestCode[testPosition])) {
+            rdRct(equipmentTestCode[testPosition],searchEquipmentTestCode[testPosition]);
+        } else {
+            Toast.makeText(TestCreateActivity.this, "Please select the correct test to be performed", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void performRoomTest() {
+        Log.d("Avinash","performRoomTest");
+        int testPosition=applicableTestSpinner.getSelectedItemPosition();
+        if (ACPHAV.equals(searchRoomsTestCode[testPosition])) {
+            rdAcphAv(roomsTestCode[testPosition],searchRoomsTestCode[testPosition]);
+        } else if (ACPHH.equals(searchRoomsTestCode[testPosition])) {
+            rdAcphH(roomsTestCode[testPosition],searchRoomsTestCode[testPosition]);
+        } else if (FIT.equals(searchRoomsTestCode[testPosition])) {
+            rdFit(roomsTestCode[testPosition],searchRoomsTestCode[testPosition]);
+        } else if (PCT.equals(searchRoomsTestCode[testPosition])) {
+            rdPc3(roomsTestCode[testPosition],searchRoomsTestCode[testPosition]);
+        } else if (RCT.equals(searchRoomsTestCode[testPosition])) {
+            rdRct(roomsTestCode[testPosition],searchRoomsTestCode[testPosition]);
+        } else {
+            Toast.makeText(TestCreateActivity.this, "Please select the correct test to be performed", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void performAhuTest() {
+        Log.d("Avinash","performAhuTest");
+        int testPosition=applicableTestSpinner.getSelectedItemPosition();
+        if (AV.equals(searchAhuTestCode[testPosition])) {
+            rdAv5Test(ahuTestCode[testPosition],searchAhuTestCode[testPosition]);
+        } else if (FIT.equals(searchAhuTestCode[testPosition])) {
+            rdFit(ahuTestCode[testPosition],searchAhuTestCode[testPosition]);
+        } else {
+            Toast.makeText(TestCreateActivity.this, "Please select the correct test to be performed", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void rdAcphAv(String testCode,String searchTestcode) {
         Intent intent = new Intent(TestCreateActivity.this, DynamicTableActivity.class);
         intent.putExtra("USERTYPE", loginUserType);
         intent.putExtra("USERNAME", userName);
         intent.putExtra("testType", ACPHAV);
+        intent.putExtra("testCode", testCode);
         Log.d("valdoc", "TestCreateActivity loginUserType=" + loginUserType);
         Log.d("valdoc", "TestCreateActivity userName=" + userName);
 
@@ -248,11 +295,11 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
         Room room = mRoomArrayList.get(roomSpinner.getSelectedItemPosition() - 1);
         intent.putExtra("Room", room);
         intent.putExtra("AhuNumber", ahuSpinner.getSelectedItem().toString());
+
         //get area based on room area id
         String areaName = mValdocDatabaseHandler.getAreaByRoomAreaId("" + room.getAreaId());
         Log.d("valdoc", "TestCreateActivity areaName=" + areaName);
         intent.putExtra("AREANAME", areaName);
-
         ApplicableTestRoom applicableTestRoom = mApplicableTestRoomArrayList.get(applicableTestSpinner.getSelectedItemPosition() - 1);
         intent.putExtra("LOCATION", applicableTestRoom.getLocation());
 
@@ -264,7 +311,7 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
         startActivity(intent);
     }
 
-    private void rdAcphH() {
+    private void rdAcphH(String testCode,String searchTestCode) {
         Intent intent = new Intent(TestCreateActivity.this, DynamicTableActivity.class);
         intent.putExtra("USERTYPE", loginUserType);
         intent.putExtra("USERNAME", userName);
@@ -302,7 +349,7 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
         startActivity(intent);
     }
 
-    private void rdFit() {
+    private void rdFit(String testCode,String searchTestCode) {
         Intent intent = new Intent(TestCreateActivity.this, DynamicTableActivity.class);
         intent.putExtra("USERTYPE", loginUserType);
         intent.putExtra("USERNAME", userName);
@@ -338,7 +385,7 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
         startActivity(intent);
     }
 
-    private void rdPc3() {
+    private void rdPc3(String testCode,String searchTestCode) {
         Intent intent = new Intent(TestCreateActivity.this, DynamicTableActivity.class);
         intent.putExtra("USERTYPE", loginUserType);
         intent.putExtra("USERNAME", userName);
@@ -373,7 +420,7 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
         startActivity(intent);
     }
 
-    private void rdRct() {
+    private void rdRct(String testCode,String searchTestCode) {
         Intent intent = new Intent(TestCreateActivity.this, DynamicTableActivity.class);
         intent.putExtra("USERTYPE", loginUserType);
         intent.putExtra("USERNAME", userName);
@@ -408,7 +455,7 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
         startActivity(intent);
     }
 
-    private void rdAv5Test() {
+    private void rdAv5Test(String testCode,String searchTestCode) {
         Intent intent = new Intent(TestCreateActivity.this, DynamicTableActivity.class);
         intent.putExtra("USERTYPE", loginUserType);
         intent.putExtra("USERNAME", userName);
@@ -447,26 +494,26 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
 
     //spiner data validation
     private boolean validationSpiner() {
-        boolean flag=false;
+        boolean flag = false;
+        int pos = equipmentAhuOrRoomSpinner.getSelectedItemPosition();
+        if (pos > 0) {
 //        if (equipmentAhuOrRoomSpinner.getSelectedItemPosition() > 0) {
-        if (equipmentAhuOrRoomSpinner.getSelectedItem().toString().equals("AHU")) {
-            if (equipmentAhuOrRoomSpinner.getSelectedItemPosition() > 0 && applicableTestSpinner.getSelectedItemPosition() > 0 && instrumentSpiner.getSelectedItemPosition() > 0
-                    && ahuSpinner.getSelectedItemPosition() > 0 && roomSpinner.getSelectedItemPosition() > 0 && witnessFirst.getText().length() > 0)
-                flag= true;
-        } else if (equipmentAhuOrRoomSpinner.getSelectedItem().toString().equals("EQUIPMENT")) {
-            if (equipmentAhuOrRoomSpinner.getSelectedItemPosition() > 0 && applicableTestSpinner.getSelectedItemPosition() > 0 && instrumentSpiner.getSelectedItemPosition() > 0
-                    && ahuSpinner.getSelectedItemPosition() > 0 && roomSpinner.getSelectedItemPosition() > 0 && witnessFirst.getText().length() > 0)
-                flag= true;
-        } else if (equipmentAhuOrRoomSpinner.getSelectedItem().toString().equals("ROOM")) {
-            if (equipmentAhuOrRoomSpinner.getSelectedItemPosition() > 0 && applicableTestSpinner.getSelectedItemPosition() > 0 && instrumentSpiner.getSelectedItemPosition() > 0
-                    && ahuSpinner.getSelectedItemPosition() > 0 && roomSpinner.getSelectedItemPosition() > 0 && roomNoSpinner.getSelectedItemPosition() > 0 && witnessFirst.getText().length() > 0)
-                flag= true;
-        } else {
-            flag= false;
+            if (equipmentAhuOrRoomTestCodeList[pos - 1].toString().equals("AHU")) {
+                if (equipmentAhuOrRoomSpinner.getSelectedItemPosition() > 0 && applicableTestSpinner.getSelectedItemPosition() > 0 && instrumentSpiner.getSelectedItemPosition() > 0
+                        && ahuSpinner.getSelectedItemPosition() > 0 && roomSpinner.getSelectedItemPosition() > 0 && witnessFirst.getText().length() > 0)
+                    flag = true;
+            } else if (equipmentAhuOrRoomTestCodeList[pos - 1].toString().equals("EQUIPMENT")) {
+                if (equipmentAhuOrRoomSpinner.getSelectedItemPosition() > 0 && applicableTestSpinner.getSelectedItemPosition() > 0 && instrumentSpiner.getSelectedItemPosition() > 0
+                        && ahuSpinner.getSelectedItemPosition() > 0 && roomSpinner.getSelectedItemPosition() > 0 && witnessFirst.getText().length() > 0)
+                    flag = true;
+            } else if (equipmentAhuOrRoomTestCodeList[pos - 1].toString().equals("ROOM")) {
+                if (equipmentAhuOrRoomSpinner.getSelectedItemPosition() > 0 && applicableTestSpinner.getSelectedItemPosition() > 0 && instrumentSpiner.getSelectedItemPosition() > 0
+                        && ahuSpinner.getSelectedItemPosition() > 0 && roomSpinner.getSelectedItemPosition() > 0 && roomNoSpinner.getSelectedItemPosition() > 0 && witnessFirst.getText().length() > 0)
+                    flag = true;
+            } else {
+                flag = false;
+            }
         }
-//        }else{
-//            return true;
-//        }
         return flag;
     }
 
