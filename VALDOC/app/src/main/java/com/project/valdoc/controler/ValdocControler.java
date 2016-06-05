@@ -142,8 +142,9 @@ public class ValdocControler {
             arrayListHashMap.put(ValdocDatabaseHandler.GRILL_TABLE_NAME, grillsArrayList);
 
             //applicableTestRooms data parsing
-            ArrayList applicableTestRoomsList = applicableTestRoomsData(jsonRootObject.optJSONArray("aplicable_test_room"));
+            ArrayList applicableTestRoomsList = applicableTestRoomsData(jsonRootObject.optJSONArray("applicableTestRooms"));
             arrayListHashMap.put(ValdocDatabaseHandler.APLICABLE_TEST_ROOM_TABLE_NAME, applicableTestRoomsList);
+
             //equipments data parsing
             ArrayList equipmentsList = equipmentsData(jsonRootObject.optJSONArray("equipments"));
             arrayListHashMap.put(ValdocDatabaseHandler.EQUIPMENT_TABLE_NAME, equipmentsList);
@@ -162,7 +163,7 @@ public class ValdocControler {
             arrayListHashMap.put(ValdocDatabaseHandler.CLIENT_INSTRUMENT_TABLE_NAME, clientInstrumentsList);
 
             //client instrument Test data parsing
-            ArrayList clientInstrumentsTestList = clientInstrumentsTestData(jsonRootObject.optJSONArray("client_instrument_test"));
+            ArrayList clientInstrumentsTestList = clientInstrumentsTestData(jsonRootObject.optJSONArray("clientInstrumentTests"));
             arrayListHashMap.put(ValdocDatabaseHandler.CLIENT_INSTRUMENT_TEST_TABLE_NAME, clientInstrumentsTestList);
 
             //partner instrument data parsing
@@ -186,7 +187,7 @@ public class ValdocControler {
             arrayListHashMap.put(ValdocDatabaseHandler.EQUIPMENTGRILL_TABLE_NAME, equipmentGrillsList);
 
             //equipmentGrills data parsing
-            ArrayList partnerInstrumentsTestList = partnerInstrumentsTestData(jsonRootObject.optJSONArray("partner_instrument_test"));
+            ArrayList partnerInstrumentsTestList = partnerInstrumentsTestData(jsonRootObject.optJSONArray("partnerInstrumentTests"));
             arrayListHashMap.put(ValdocDatabaseHandler.PARTNER_INSTRUMENT_TEST_TABLE_NAME, partnerInstrumentsTestList);
 
             //equipmentGrills data parsing
@@ -197,14 +198,11 @@ public class ValdocControler {
             SharedPreferences.Editor editor = sharedpreferences.edit();
             editor.putString("lastSyncDate", jsonRootObject.optString("lastSyncDate"));
             editor.commit();
-
         } catch (Exception e) {
-
+Log.d("valdoc","parse exception"+e.getMessage());
         }
         return arrayListHashMap;
     }
-
-
 
 
     private ArrayList isoParticleLimitsData(JSONArray jsonArray) {
@@ -220,7 +218,7 @@ public class ValdocControler {
                 isoParticleLimits.setRestLargeParticleLimit(jsonObject.optString("restLargeParticleLimit").toString());
                 isoParticleLimits.setOperationSmallParticleLimit(jsonObject.optString("operationSmallParticleLimit").toString());
                 isoParticleLimits.setOperationLargeParticleLimit(jsonObject.optString("operationLargeParticleLimit").toString());
-                Log.d("valdoc", "parse isoParticleLimits");
+                Log.d("valdoc", "parse isoParticleLimitsData");
                 arrayList.add(isoParticleLimits);
             } catch (Exception e) {
 
@@ -241,7 +239,7 @@ public class ValdocControler {
                 partnerInstrumentTest.setPartnerInstrumentTestCode(jsonObject.optString("partner_instrument_test_code").toString());
                 partnerInstrumentTest.setPartnerInstrumentTestName(jsonObject.optString("partner_instrument_test_name").toString());
                 partnerInstrumentTest.setLastUpdatedDate(jsonObject.optString("lastUpdatedDate").toString());
-                Log.d("valdoc", "parse partnerInstrumentTest");
+                Log.d("valdoc", "parse partnerInstrumentsTestData");
                 arrayList.add(partnerInstrumentTest);
             } catch (Exception e) {
 
@@ -267,7 +265,7 @@ public class ValdocControler {
                 equipmentGrill.setEffectiveArea(jsonObject.optDouble("effectiveArea"));
                 equipmentGrill.setRemarks(jsonObject.optString("remarks").toString());
                 equipmentGrill.setLastUpdatedDate(jsonObject.optString("lastUpdatedDate").toString());
-                Log.d("valdoc", "parse applicableTestAhu");
+                Log.d("valdoc", "parse equipmentGrillsData");
                 arrayList.add(equipmentGrill);
             } catch (Exception e) {
 
@@ -409,6 +407,7 @@ public class ValdocControler {
                 clientInstrumentTest.setClientInstrumentTestName(jsonObject.optString("client_instrument_test_name").toString());
                 clientInstrumentTest.setLastUpdatedDate(jsonObject.optString("lastUpdatedDate").toString());
                 arrayList.add(clientInstrumentTest);
+                Log.d("valdoc", "parse clientInstrumentsTestData");
             } catch (Exception e) {
 
             }
@@ -475,6 +474,7 @@ public class ValdocControler {
                 applicableTestEquipment.setNoOfCycle(jsonObject.optInt("noOfCycle"));
                 applicableTestEquipment.setLastUpdatedDate(jsonObject.optString("lastUpdatedDate").toString());
                 arrayList.add(applicableTestEquipment);
+                Log.d("valdoc", "parse applicableTestEquipmentsData");
             } catch (Exception e) {
 
             }
@@ -501,6 +501,7 @@ public class ValdocControler {
                 equipmentFilter.setLength(jsonObject.optDouble("length"));
                 equipmentFilter.setLastUpdatedDate(jsonObject.optString("lastUpdatedDate").toString());
                 arrayList.add(equipmentFilter);
+                Log.d("valdoc", "parse equipmentFiltersData");
             } catch (Exception e) {
 
             }
@@ -530,6 +531,7 @@ public class ValdocControler {
                 equipment.setLastUpdatedDate(jsonObject.optString("lastUpdatedDate").toString());
 //                Log.d("Avinash", "parsing equipment db minvalocity=" + equipment.getMinVelocity() + "equipment.getMaxVelocity()=" + equipment.getMaxVelocity());
                 arrayList.add(equipment);
+                Log.d("valdoc", "parse equipmentsData");
             } catch (Exception e) {
 
             }
@@ -561,6 +563,7 @@ public class ValdocControler {
 
                 applicableTestRoom.setLastUpdatedDate(jsonObject.optString("lastUpdatedDate").toString());
                 arrayList.add(applicableTestRoom);
+                Log.d("valdoc", "parse applicableTestRoomsData");
             } catch (Exception e) {
 
             }
@@ -596,6 +599,7 @@ public class ValdocControler {
 //                }
                 grill.setLastUpdatedDate(jsonObject.optString("lastUpdatedDate").toString());
                 arrayList.add(grill);
+                Log.d("valdoc", "parse grillsData");
             } catch (Exception e) {
 
             }
@@ -630,6 +634,7 @@ public class ValdocControler {
 
                 roomFilter.setLastUpdatedDate(jsonObject.optString("lastUpdatedDate").toString());
                 arrayList.add(roomFilter);
+                Log.d("valdoc", "parse roomFiltersData");
             } catch (Exception e) {
 
             }
@@ -677,6 +682,7 @@ public class ValdocControler {
                 room.setRemarks(jsonObject.optString("remarks").toString());
                 room.setLastUpdatedDate(jsonObject.optString("lastUpdatedDate").toString());
                 arrayList.add(room);
+                Log.d("valdoc", "parse room");
             } catch (Exception e) {
 
             }
@@ -697,6 +703,7 @@ public class ValdocControler {
                 area.setAdditionalDetails(jsonObject.optString("additionalDetails").toString());
                 area.setlastUpdatedDate(jsonObject.optString("lastUpdatedDate").toString());
                 arrayList.add(area);
+                Log.d("valdoc", "parse area");
             } catch (Exception e) {
 
             }
@@ -735,6 +742,7 @@ public class ValdocControler {
                 ahu.setRemarks(jsonObject.optString("remarks").toString());
                 ahu.setLastUpdatedDate(jsonObject.optString("lastUpdatedDate").toString());
                 arrayList.add(ahu);
+                Log.d("valdoc", "parse ahu");
             } catch (Exception e) {
 
             }
@@ -768,6 +776,7 @@ public class ValdocControler {
                 user.setPermissions(jsonObject.optString("permissions").toString());
                 user.setLastUpdated(jsonObject.optString("last_updated").toString());
                 arrayList.add(user);
+                Log.d("valdoc", "parse user");
             } catch (Exception e) {
 
             }
