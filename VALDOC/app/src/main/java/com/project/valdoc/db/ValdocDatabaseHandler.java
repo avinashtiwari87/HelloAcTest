@@ -1824,32 +1824,69 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
     }
 
     // select data from user table
-    public ArrayList<Equipment> getEquipmentInfo() {
-        ArrayList<Equipment> equipmentArrayList;
-        equipmentArrayList = new ArrayList<Equipment>();
-        String selectQuery = "SELECT * FROM " + EQUIPMENT_TABLE_NAME;
+    public ArrayList<String> getEquipmentName() {
+        ArrayList<String> equipmentNameArrayList;
+        equipmentNameArrayList = new ArrayList<String>();
+        String selectQuery = "SELECT DISTINCT "+EQUIPMENT_EQUIPMENTNAME+" FROM " + EQUIPMENT_TABLE_NAME;
         SQLiteDatabase database = this.getWritableDatabase();
         Cursor cursor = database.rawQuery(selectQuery, null);
+        String equipmentName = "";
         if (cursor.moveToFirst()) {
             do {
-                Equipment equipment = new Equipment();
-                equipment.setEquipmentId(cursor.getInt(0));
-                equipment.setRoomId(cursor.getInt(1));
-                equipment.setEquipmentNo(cursor.getString(2));
-                equipment.setEquipmentName(cursor.getString(3));
-                equipment.setMinVelocity(cursor.getDouble(4));
-                equipment.setMaxVelocity(cursor.getDouble(5));
-                equipment.setSupplyAirflow(cursor.getInt(6));
-                equipment.setEquipmentPressure(cursor.getInt(7));
-                equipment.setExhustAirflow(cursor.getInt(8));
-                equipment.setRemarks(cursor.getString(9));
-                equipment.setLastUpdatedDate(cursor.getString(10));
-                Log.d("Avinash", "get equipment db minvalocity=" + cursor.getDouble(5) + "equipment.getMaxVelocity()=" + cursor.getDouble(6));
+                equipmentName = cursor.getString(cursor.getColumnIndex(EQUIPMENT_EQUIPMENTNAME));
+                equipmentNameArrayList.add(equipmentName);
+//                Equipment equipment = new Equipment();
+//                equipment.setEquipmentId(cursor.getInt(0));
+//                equipment.setRoomId(cursor.getInt(1));
+//                equipment.setEquipmentNo(cursor.getString(2));
+//                equipment.setEquipmentName(cursor.getString(3));
+//                equipment.setMinVelocity(cursor.getDouble(4));
+//                equipment.setMaxVelocity(cursor.getDouble(5));
+//                equipment.setSupplyAirflow(cursor.getInt(6));
+//                equipment.setEquipmentPressure(cursor.getInt(7));
+//                equipment.setExhustAirflow(cursor.getInt(8));
+//                equipment.setRemarks(cursor.getString(9));
+//                equipment.setLastUpdatedDate(cursor.getString(10));
+//                Log.d("Avinash", "get equipment db minvalocity=" + cursor.getDouble(5) + "equipment.getMaxVelocity()=" + cursor.getDouble(6));
 
-                equipmentArrayList.add(equipment);
+//                equipmentArrayList.add(equipment);
             } while (cursor.moveToNext());
         } // return contact list return wordList; }
-        return equipmentArrayList;
+        return equipmentNameArrayList;
+    }
+
+
+    // select data from user table
+    public ArrayList<String> getEquipmentNoInfoByEquipmentName(String equipmentName) {
+        ArrayList<String> equipmentNoArrayList;
+        equipmentNoArrayList = new ArrayList<String>();
+        String selectQuery = "SELECT " + EQUIPMENT_EQUIPMENTNO + " FROM " + EQUIPMENT_TABLE_NAME
+                +" WHERE " + ValdocDatabaseHandler.EQUIPMENT_EQUIPMENTNAME + " = " +'"'+ equipmentName+'"';
+        SQLiteDatabase database = this.getWritableDatabase();
+        Cursor cursor = database.rawQuery(selectQuery, null);
+        String equipmentNo = "";
+        if (cursor.moveToFirst()) {
+            do {
+                equipmentNo = cursor.getString(cursor.getColumnIndex(EQUIPMENT_EQUIPMENTNO));
+                equipmentNoArrayList.add(equipmentNo);
+//                Equipment equipment = new Equipment();
+//                equipment.setEquipmentId(cursor.getInt(0));
+//                equipment.setRoomId(cursor.getInt(1));
+//                equipment.setEquipmentNo(cursor.getString(2));
+//                equipment.setEquipmentName(cursor.getString(3));
+//                equipment.setMinVelocity(cursor.getDouble(4));
+//                equipment.setMaxVelocity(cursor.getDouble(5));
+//                equipment.setSupplyAirflow(cursor.getInt(6));
+//                equipment.setEquipmentPressure(cursor.getInt(7));
+//                equipment.setExhustAirflow(cursor.getInt(8));
+//                equipment.setRemarks(cursor.getString(9));
+//                equipment.setLastUpdatedDate(cursor.getString(10));
+//                Log.d("Avinash", "get equipment db minvalocity=" + cursor.getDouble(5) + "equipment.getMaxVelocity()=" + cursor.getDouble(6));
+
+//                equipmentArrayList.add(equipment);
+            } while (cursor.moveToNext());
+        } // return contact list return wordList; }
+        return equipmentNoArrayList;
     }
 
     // select data from user table
