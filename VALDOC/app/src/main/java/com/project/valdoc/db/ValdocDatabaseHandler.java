@@ -2259,7 +2259,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
         ArrayList<TestDetails> testDetailList = new ArrayList<TestDetails>();
 
         String selectQuery = "SELECT * FROM " + TEST_DETAILS_TABLE_NAME +
-                " WHERE " + ValdocDatabaseHandler.TEST_DETAILS_TESTCODE + " = " + testCode;
+                " WHERE " + ValdocDatabaseHandler.TEST_DETAILS_TESTCODE + " = " + '"'+testCode+'"';
 
         SQLiteDatabase database = this.getWritableDatabase();
         Cursor cursor = database.rawQuery(selectQuery, null);
