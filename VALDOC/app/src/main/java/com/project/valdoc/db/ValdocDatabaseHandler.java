@@ -2216,6 +2216,58 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
         return roomArrayList;
     }
 
+    // Select data from Test Detail table
+
+    public ArrayList<TestDetails>getTestDetailByTestCode(String testCode){
+        ArrayList<TestDetails> testDetailList = new ArrayList<TestDetails>();
+
+        String selectQuery = "SELECT * FROM " + TEST_DETAILS_TABLE_NAME +
+                " WHERE " + ValdocDatabaseHandler.TEST_DETAILS_TESTCODE + " = " + testCode;
+
+        SQLiteDatabase database = this.getWritableDatabase();
+        Cursor cursor = database.rawQuery(selectQuery, null);
+        if (cursor.moveToFirst()) {
+            do {
+                TestDetails TestDetails = new TestDetails();
+                TestDetails.setTest_detail_id(cursor.getInt(0));//TEST_DETAILS_TEST_DETAIL_ID
+                TestDetails.setTestName(cursor.getString(1));//TEST_DETAILS_TESTNAME
+                TestDetails.setCustomer(cursor.getString(2));//TEST_DETAILS_CUSTOMER
+                TestDetails.setRawDataNo(cursor.getString(3));//TEST_DETAILS_RAWDATANO
+                TestDetails.setDateOfTest(cursor.getString(4));//TEST_DETAILS_DATEOFTEST
+                TestDetails.setInstrumentUsed(cursor.getString(5));//TEST_DETAILS_INSTRUMENTUSED
+                TestDetails.setInstrumentNo(cursor.getString(6));//TEST_DETAILS_INSTRUMENTNO
+                TestDetails.setMake(cursor.getString(7));//TEST_DETAILS_MAKE
+                TestDetails.setModel(cursor.getString(8));//TEST_DETAILS_MODEL
+                TestDetails.setCalibratedOn(cursor.getString(9));//TEST_DETAILS_CALIBRATEDON
+
+                TestDetails.setCalibratedDueOn(cursor.getString(10));//TEST_DETAILS_CALIBRATEDDUEON
+                TestDetails.setTestSpecification(cursor.getString(11));//TEST_DETAILS_TESTSPECIFICATION
+                TestDetails.setTestReference(cursor.getString(12));//TEST_DETAILS_TEST_TESTREFERENCE
+                TestDetails.setOccupencyState(cursor.getString(13));//TEST_DETAILS_OCCUPENCYSTATE
+                TestDetails.setBlockName(cursor.getString(14));//TEST_DETAILS_BLOCKNAME
+
+                TestDetails.setTestArea(cursor.getString(15));//TEST_DETAILS_TESTAREA
+                TestDetails.setAhuNo(cursor.getString(16));//TEST_DETAILS_AHUNO
+                TestDetails.setRoomNo(cursor.getString(17));//TEST_DETAILS_ROOMNO
+                TestDetails.setRoomName(cursor.getString(18));//TEST_DETAILS_ROOMNAME
+                TestDetails.setEquipmentNo(cursor.getString(19));//TEST_DETAILS_EQUIPMENTNO
+                TestDetails.setEquipmentName(cursor.getString(20));//TEST_DETAILS_EQUIPMENTNAME
+
+                TestDetails.setTesterName(cursor.getString(21));//TEST_DETAILS_TESTERNAME
+                TestDetails.setWitnessName(cursor.getString(22));//TEST_DETAILS_WITNESSNAME
+                TestDetails.setPartnerName(cursor.getString(23));//TEST_DETAILS_PARTNERNAME
+
+                TestDetails.setSamplingFlowRate(cursor.getString(24));//TEST_DETAILS_SAMPLINGFLOWRATE
+                TestDetails.setSamplingTime(cursor.getString(25));//TEST_DETAILS_SAMPLINGTIME
+                TestDetails.setAerosolUsed(cursor.getString(26));//TEST_DETAILS_AEROSOLUSED
+                TestDetails.setAerosolGeneratorType(cursor.getString(27));//TEST_DETAILS_AEROSOLGENERATORTYPE
+                TestDetails.setTestCode(cursor.getString(28));//TEST_DETAILS_TESTCODE
+
+                testDetailList.add(TestDetails);
+            } while (cursor.moveToNext());
+        }
+        return testDetailList;
+    }
 
     // select data from Room info table
     public ArrayList<Room> getRoomNoInfoByroomNameAndAhu(String roomName,int ahuNo) {
