@@ -2256,6 +2256,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
     // Select data from Test Detail table
 
     public ArrayList<TestDetails>getTestDetailByTestCode(String testCode){
+        Log.d("Saurabh"," TestCode "+testCode);
         ArrayList<TestDetails> testDetailList = new ArrayList<TestDetails>();
 
         String selectQuery = "SELECT * FROM " + TEST_DETAILS_TABLE_NAME +

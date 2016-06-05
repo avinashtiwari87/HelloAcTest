@@ -17,23 +17,31 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.project.valdoc.db.ValdocDatabaseHandler;
+import com.project.valdoc.intity.TestDetails;
 import com.project.valdoc.utility.Utilityies;
+
+import java.util.ArrayList;
 
 public class SyncSelectedDataActivity extends AppCompatActivity {
     private static final String TAG = "SyncSelectedData";
     TableLayout table_layout1, table_layout2, table_layout3, table_layout4, table_layout5,
             table_layout6, table_layout7, table_layout8, table_layout9, table_layout10;
     int rows =5, colos =5;
-    private String userName = "",testType;
+    private String userName = "",testType = "";
     SharedPreferences sharedpreferences;
+    private ValdocDatabaseHandler mValdocDatabaseHandler;
+    private ArrayList<TestDetails> testDetailList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sync_selected_data);
 
+        mValdocDatabaseHandler = new ValdocDatabaseHandler(SyncSelectedDataActivity.this);
         sharedpreferences = getSharedPreferences("valdoc", Context.MODE_PRIVATE);
         userName = sharedpreferences.getString("USERNAME", "");
+        testDetailList = new ArrayList<TestDetails>();
 
         if(getIntent().hasExtra("rows")){
            rows = getIntent().getIntExtra("rows",6);
@@ -42,14 +50,46 @@ public class SyncSelectedDataActivity extends AppCompatActivity {
         testType = getIntent().getStringExtra("TestType");
         Log.d(TAG, " Code TestType : " + testType);
 
-
-        initRes();
-        BuildSyncDataTable(rows,colos);
-
         //Custom Action Bar
         ActionBar mActionBar = getSupportActionBar();
         if (mActionBar != null)
             Utilityies.setCustomActionBar(SyncSelectedDataActivity.this, mActionBar, userName);
+
+
+        initRes();
+        if(getTestDataByTestCode(testType).size()>0){
+            BuildSyncDataTable(getTestDataByTestCode(testType).size(),colos);
+        }else{
+            findViewById(R.id.no_data_found_tv).setVisibility(View.VISIBLE);
+        }
+    }
+
+    private ArrayList<TestDetails> getTestDataByTestCode(String testType) {
+        ArrayList<TestDetails>testDetailsArrayList = new ArrayList<TestDetails>();
+        if(testType.contains("ACPH_AV")){
+            testDetailsArrayList = mValdocDatabaseHandler.getTestDetailByTestCode("ACPH_AV");
+        }else if(testType.contains("ACPH_H")){
+            testDetailsArrayList =  mValdocDatabaseHandler.getTestDetailByTestCode("ACPH_H");
+        }else if(testType.contains("FIT")){
+            testDetailsArrayList = mValdocDatabaseHandler.getTestDetailByTestCode("FIT");
+        }else if(testType.contains("PCT")){
+            testDetailsArrayList = mValdocDatabaseHandler.getTestDetailByTestCode("PCT");
+        }else if(testType.contains("RCT")){
+            testDetailsArrayList = mValdocDatabaseHandler.getTestDetailByTestCode("RCT");
+        }else if(testType.contains("ARD_AF_AHU")){
+            testDetailsArrayList = mValdocDatabaseHandler.getTestDetailByTestCode("ARD_AF_AHU");
+        }else if(testType.contains("ARD_FIT_AHU")){
+            testDetailsArrayList =  mValdocDatabaseHandler.getTestDetailByTestCode("ARD_FIT_AHU");
+        }else if(testType.contains("ERD_AV")){
+            testDetailsArrayList = mValdocDatabaseHandler.getTestDetailByTestCode("ERD_AV");
+        }else if(testType.contains("ERD_FIT")){
+            testDetailsArrayList =  mValdocDatabaseHandler.getTestDetailByTestCode("ERD_FIT");
+        }else if(testType.contains("ERD_PCT")){
+            testDetailsArrayList = mValdocDatabaseHandler.getTestDetailByTestCode("ERD_PCT");
+        }else if(testType.contains("ERD_RCT")){
+            testDetailsArrayList = mValdocDatabaseHandler.getTestDetailByTestCode("ERD_RCT");
+        }
+        return testDetailsArrayList;
     }
 
     private void BuildSyncDataTable(int rows, int cols) {
@@ -102,7 +142,7 @@ public class SyncSelectedDataActivity extends AppCompatActivity {
                 if (i == 1 && j == 1) {
                     row.addView(addTextView("    RD NO     "));
                 } else {
-                    row.addView(addTextView(""));
+                    row.addView(addTextView(""+testDetailList.get(i-2).getRawDataNo()));
                 }
 
             }
@@ -121,7 +161,7 @@ public class SyncSelectedDataActivity extends AppCompatActivity {
                 if (i == 1 && j == 1) {
                     row.addView(addTextView("   Date       "));
                 } else {
-                    row.addView(addTextView(""));
+                    row.addView(addTextView(""+testDetailList.get(i-2).getDateOfTest()));
                 }
 
             }
@@ -140,7 +180,7 @@ public class SyncSelectedDataActivity extends AppCompatActivity {
                 if (i == 1 && j == 1) {
                     row.addView(addTextView("   Area Name    "));
                 } else {
-                    row.addView(addTextView(""));
+                    row.addView(addTextView(""+testDetailList.get(i-2).getTestArea()));
                 }
 
             }
@@ -159,7 +199,7 @@ public class SyncSelectedDataActivity extends AppCompatActivity {
                 if (i == 1 && j == 1) {
                     row.addView(addTextView("   AHU No   "));
                 } else {
-                    row.addView(addTextView(1+i+""));
+                    row.addView(addTextView(""+testDetailList.get(i-2).getAhuNo()));
                 }
 
             }
@@ -178,7 +218,7 @@ public class SyncSelectedDataActivity extends AppCompatActivity {
                 if (i == 1 && j == 1) {
                     row.addView(addTextView("   Room Name    "));
                 } else {
-                    row.addView(addTextView(""));
+                    row.addView(addTextView(""+testDetailList.get(i-2).getRoomName()));
                 }
 
             }
@@ -197,7 +237,7 @@ public class SyncSelectedDataActivity extends AppCompatActivity {
                 if (i == 1 && j == 1) {
                     row.addView(addTextView("   Room No   "));
                 } else {
-                    row.addView(addTextView(""));
+                    row.addView(addTextView(""+testDetailList.get(i-2).getRoomNo()));
                 }
 
             }
