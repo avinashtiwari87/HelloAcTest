@@ -80,9 +80,6 @@ public class ShowSelectedTestActivity extends AppCompatActivity implements Adapt
                 "Recovery Test (ERD_RCT)"};
 
         list = new ArrayList<String>();
-        for (int i = 0; i < roomsValues.length; ++i) {
-            list.add(roomsValues[i]);
-        }
         listViewAdapter = new StableArrayAdapter(this,android.R.layout.simple_list_item_single_choice, list);
         listview.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
         listview.setAdapter(listViewAdapter);
@@ -160,12 +157,11 @@ public class ShowSelectedTestActivity extends AppCompatActivity implements Adapt
         listViewAdapter.clear();
         list = new ArrayList<String>();
         for (int i = 0; i < values.length; ++i) {
-            list.add(roomsValues[i]);
+            list.add(values[i]);
         }
         listViewAdapter = new StableArrayAdapter(this,android.R.layout.simple_list_item_single_choice, list);
         listview.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
         listview.setAdapter(listViewAdapter);
-        listview.deferNotifyDataSetChanged();
         progress.dismiss();
 
     }

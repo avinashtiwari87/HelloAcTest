@@ -142,7 +142,10 @@ public class SyncSelectedDataActivity extends AppCompatActivity {
                 if (i == 1 && j == 1) {
                     row.addView(addTextView("    RD NO     "));
                 } else {
-                    row.addView(addTextView(""+testDetailList.get(i-1).getRawDataNo()));
+                    if (testDetailList.size() > 0)
+                        row.addView(addTextView("" + testDetailList.get(i - 2).getRawDataNo()));
+                    else
+                        row.addView(addTextView(""));
                 }
 
             }
@@ -161,7 +164,10 @@ public class SyncSelectedDataActivity extends AppCompatActivity {
                 if (i == 1 && j == 1) {
                     row.addView(addTextView("   Date       "));
                 } else {
-                    row.addView(addTextView(""+testDetailList.get(i-2).getDateOfTest()));
+                    if (testDetailList.size() > 0)
+                        row.addView(addTextView("" + testDetailList.get(i - 2).getDateOfTest()));
+                    else
+                        row.addView(addTextView(""));
                 }
 
             }
@@ -180,7 +186,10 @@ public class SyncSelectedDataActivity extends AppCompatActivity {
                 if (i == 1 && j == 1) {
                     row.addView(addTextView("   Area Name    "));
                 } else {
-                    row.addView(addTextView(""+testDetailList.get(i-2).getTestArea()));
+                    if (testDetailList.size() > 0)
+                        row.addView(addTextView("" + testDetailList.get(i - 2).getTestArea()));
+                    else
+                        row.addView(addTextView(""));
                 }
 
             }
@@ -199,7 +208,10 @@ public class SyncSelectedDataActivity extends AppCompatActivity {
                 if (i == 1 && j == 1) {
                     row.addView(addTextView("   AHU No   "));
                 } else {
-                    row.addView(addTextView(""+testDetailList.get(i-2).getAhuNo()));
+                    if (testDetailList.size() > 0)
+                        row.addView(addTextView("" + testDetailList.get(i - 2).getAhuNo()));
+                    else
+                        row.addView(addTextView(""));
                 }
 
             }
@@ -218,7 +230,10 @@ public class SyncSelectedDataActivity extends AppCompatActivity {
                 if (i == 1 && j == 1) {
                     row.addView(addTextView("   Room Name    "));
                 } else {
-                    row.addView(addTextView(""+testDetailList.get(i-2).getRoomName()));
+                    if (testDetailList.size() > 0)
+                        row.addView(addTextView("" + testDetailList.get(i - 2).getRoomName()));
+                    else
+                        row.addView(addTextView(""));
                 }
 
             }
@@ -237,7 +252,10 @@ public class SyncSelectedDataActivity extends AppCompatActivity {
                 if (i == 1 && j == 1) {
                     row.addView(addTextView("   Room No   "));
                 } else {
-                    row.addView(addTextView(""+testDetailList.get(i-2).getRoomNo()));
+                    if (testDetailList.size() > 0)
+                        row.addView(addTextView("" + testDetailList.get(i - 2).getRoomNo()));
+                    else
+                        row.addView(addTextView(""));
                 }
 
             }
