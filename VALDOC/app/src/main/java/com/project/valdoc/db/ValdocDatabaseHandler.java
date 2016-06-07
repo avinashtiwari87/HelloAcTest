@@ -1827,7 +1827,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
     public ArrayList<String> getEquipmentName() {
         ArrayList<String> equipmentNameArrayList;
         equipmentNameArrayList = new ArrayList<String>();
-        String selectQuery = "SELECT DISTINCT "+EQUIPMENT_EQUIPMENTNAME+" FROM " + EQUIPMENT_TABLE_NAME;
+        String selectQuery = "SELECT DISTINCT " + EQUIPMENT_EQUIPMENTNAME + " FROM " + EQUIPMENT_TABLE_NAME;
         SQLiteDatabase database = this.getWritableDatabase();
         Cursor cursor = database.rawQuery(selectQuery, null);
         String equipmentName = "";
@@ -1857,33 +1857,32 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
 
 
     // select data from user table
-    public ArrayList<String> getEquipmentNoInfoByEquipmentName(String equipmentName) {
-        ArrayList<String> equipmentNoArrayList;
-        equipmentNoArrayList = new ArrayList<String>();
-        String selectQuery = "SELECT " + EQUIPMENT_EQUIPMENTNO + " FROM " + EQUIPMENT_TABLE_NAME
-                +" WHERE " + ValdocDatabaseHandler.EQUIPMENT_EQUIPMENTNAME + " = " +'"'+ equipmentName+'"';
+    public ArrayList<Equipment> getEquipmentNoInfoByEquipmentName(String equipmentName) {
+        ArrayList<Equipment> equipmentNoArrayList;
+        equipmentNoArrayList = new ArrayList<Equipment>();
+        String selectQuery = "SELECT * FROM " + EQUIPMENT_TABLE_NAME
+                + " WHERE " + ValdocDatabaseHandler.EQUIPMENT_EQUIPMENTNAME + " = " + '"' + equipmentName + '"';
         SQLiteDatabase database = this.getWritableDatabase();
         Cursor cursor = database.rawQuery(selectQuery, null);
-        String equipmentNo = "";
+//        String equipmentNo = "";
         if (cursor.moveToFirst()) {
             do {
-                equipmentNo = cursor.getString(cursor.getColumnIndex(EQUIPMENT_EQUIPMENTNO));
-                equipmentNoArrayList.add(equipmentNo);
-//                Equipment equipment = new Equipment();
-//                equipment.setEquipmentId(cursor.getInt(0));
-//                equipment.setRoomId(cursor.getInt(1));
-//                equipment.setEquipmentNo(cursor.getString(2));
-//                equipment.setEquipmentName(cursor.getString(3));
-//                equipment.setMinVelocity(cursor.getDouble(4));
-//                equipment.setMaxVelocity(cursor.getDouble(5));
-//                equipment.setSupplyAirflow(cursor.getInt(6));
-//                equipment.setEquipmentPressure(cursor.getInt(7));
-//                equipment.setExhustAirflow(cursor.getInt(8));
-//                equipment.setRemarks(cursor.getString(9));
-//                equipment.setLastUpdatedDate(cursor.getString(10));
+//                equipmentNo = cursor.getString(cursor.getColumnIndex(EQUIPMENT_EQUIPMENTNO));
+//                equipmentNoArrayList.add(equipmentNo);
+                Equipment equipment = new Equipment();
+                equipment.setEquipmentId(cursor.getInt(0));
+                equipment.setRoomId(cursor.getInt(1));
+                equipment.setEquipmentNo(cursor.getString(2));
+                equipment.setEquipmentName(cursor.getString(3));
+                equipment.setMinVelocity(cursor.getDouble(4));
+                equipment.setMaxVelocity(cursor.getDouble(5));
+                equipment.setSupplyAirflow(cursor.getInt(6));
+                equipment.setEquipmentPressure(cursor.getInt(7));
+                equipment.setExhustAirflow(cursor.getInt(8));
+                equipment.setRemarks(cursor.getString(9));
+                equipment.setLastUpdatedDate(cursor.getString(10));
 //                Log.d("Avinash", "get equipment db minvalocity=" + cursor.getDouble(5) + "equipment.getMaxVelocity()=" + cursor.getDouble(6));
-
-//                equipmentArrayList.add(equipment);
+                equipmentNoArrayList.add(equipment);
             } while (cursor.moveToNext());
         } // return contact list return wordList; }
         return equipmentNoArrayList;
@@ -2116,13 +2115,14 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
     public String getAreaByRoomAreaId(String areaId) {
         String selectQuery = " SELECT " + AREA_AREANAME + " FROM " + AREA_TABLE_NAME +
 //        String selectQuery = " SELECT * FROM " + PARTNERUSER_TABLE_NAME +
-                " WHERE " + ValdocDatabaseHandler.AREA_AREAID + " = " + areaId;
+                " WHERE " + ValdocDatabaseHandler.AREA_AREAID + " = " + '"' + areaId + '"';
         SQLiteDatabase database = this.getWritableDatabase();
         Cursor cursor = database.rawQuery(selectQuery, null);
         String strings = "";
         if (cursor.moveToFirst()) {
             do {
                 strings = cursor.getString(cursor.getColumnIndex(AREA_AREANAME));
+                Log.d("valdoc", "ValdocDatabaseHelper :AREA_AREANAME:=" + strings);
             } while (cursor.moveToNext());
         } // return contact list return wordList; }
         return strings;
@@ -2203,6 +2203,75 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
         return strings;
     }
 
+    // select data from equipment Grill table
+    public ArrayList<EquipmentGrill> getGrillFromEquipmentGrill(int equipmentId) {
+        ArrayList<EquipmentGrill> grillArrayList;
+        grillArrayList = new ArrayList<EquipmentGrill>();
+        String selectQuery = " SELECT * FROM " + EQUIPMENTGRILL_TABLE_NAME +
+//        String selectQuery = " SELECT * FROM " + PARTNERUSER_TABLE_NAME +
+                " WHERE " + ValdocDatabaseHandler.EQUIPMENTGRILL_EQUIPMENTID + " = " + equipmentId;
+        SQLiteDatabase database = this.getWritableDatabase();
+        Cursor cursor = database.rawQuery(selectQuery, null);
+        Log.d("valdoc", "ValdocDatabaseHelper :Equipment grill code equipment1:=" + cursor.getCount());
+//        String[] strings = new String[cursor.getCount()];
+        int i = 0;
+        if (cursor.moveToFirst()) {
+            do {
+                EquipmentGrill equipmentGrill = new EquipmentGrill();
+                equipmentGrill.setGrillId(cursor.getInt(0));
+                equipmentGrill.setGrillCode(cursor.getString(1).toString());
+                equipmentGrill.setEquipmentId(cursor.getInt(2));
+                ;
+                equipmentGrill.setLength(cursor.getDouble(3));
+                equipmentGrill.setWidth(cursor.getDouble(4));
+                equipmentGrill.setArea(cursor.getDouble(5));
+                equipmentGrill.setEffectiveArea(cursor.getDouble(6));
+                equipmentGrill.setRemarks(cursor.getString(7).toString());
+                equipmentGrill.setLastUpdatedDate(cursor.getString(8).toString());
+//                Log.d("valdoc", "ValdocDatabaseHelper :filter code equipment1:=" + cursor.getColumnIndex(EQUIPMENTFILTER_FILTERCODE));
+//                strings[i] = cursor.getString(cursor.getColumnIndex(EQUIPMENTGRILL_GRILLCODE));
+//                Log.d("valdoc", "ValdocDatabaseHelper :equipment1:=" + strings[i] + "i=" + i);
+//                i++;
+                grillArrayList.add(equipmentGrill);
+            } while (cursor.moveToNext());
+        } // return contact list return wordList; }
+        return grillArrayList;
+    }
+
+    // select data from equipment filter table
+    public ArrayList<AhuFilter> getFilterFromAhuFilter(int ahuId) {
+        ArrayList<AhuFilter> ahuFilterArrayList;
+        ahuFilterArrayList = new ArrayList<AhuFilter>();
+        String selectQuery = " SELECT * FROM " + AHU_FILTER_TABLE_NAME +
+//        String selectQuery = " SELECT * FROM " + PARTNERUSER_TABLE_NAME +
+                " WHERE " + ValdocDatabaseHandler.AHU_FILTER_AHUID + " = " + ahuId;
+        SQLiteDatabase database = this.getWritableDatabase();
+        Cursor cursor = database.rawQuery(selectQuery, null);
+        Log.d("valdoc", "ValdocDatabaseHelper :grill code equipment1:=" + cursor.getCount());
+//        String[] strings = new String[cursor.getCount()];
+        int i = 0;
+        if (cursor.moveToFirst()) {
+            do {
+                AhuFilter ahuFilter = new AhuFilter();
+                ahuFilter.setFilterId(cursor.getInt(0));
+                ahuFilter.setAhuId(cursor.getInt(1));
+                ahuFilter.setFilterCategory(cursor.getString(2));
+                ahuFilter.setFilterCode(cursor.getString(3));
+                ahuFilter.setWidth(cursor.getDouble(4));
+                ahuFilter.setLength(cursor.getDouble(5));
+                ahuFilter.setDepthArea(cursor.getDouble(6));
+                ahuFilter.setArea(cursor.getDouble(7));
+                ahuFilter.setEffectiveArea(cursor.getDouble(8));
+//                Log.d("valdoc", "ValdocDatabaseHelper :filter code equipment1:=" + cursor.getColumnIndex(EQUIPMENTFILTER_FILTERCODE));
+//                strings[i] = cursor.getString(cursor.getColumnIndex(EQUIPMENTGRILL_GRILLCODE));
+//                Log.d("valdoc", "ValdocDatabaseHelper :equipment1:=" + strings[i] + "i=" + i);
+//                i++;
+                ahuFilterArrayList.add(ahuFilter);
+            } while (cursor.moveToNext());
+        } // return contact list return wordList; }
+        return ahuFilterArrayList;
+    }
+
 
     // select data from Room info table
     public ArrayList<Room> getRoomInfoByAhu(int ahuNo) {
@@ -2255,12 +2324,12 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
 
     // Select data from Test Detail table
 
-    public ArrayList<TestDetails>getTestDetailByTestCode(String testCode){
-        Log.d("Saurabh"," TestCode "+testCode);
+    public ArrayList<TestDetails> getTestDetailByTestCode(String testCode) {
+        Log.d("Saurabh", " TestCode " + testCode);
         ArrayList<TestDetails> testDetailList = new ArrayList<TestDetails>();
 
         String selectQuery = "SELECT * FROM " + TEST_DETAILS_TABLE_NAME +
-                " WHERE " + ValdocDatabaseHandler.TEST_DETAILS_TESTCODE + " = " + '"'+testCode+'"';
+                " WHERE " + ValdocDatabaseHandler.TEST_DETAILS_TESTCODE + " = " + '"' + testCode + '"';
 
         SQLiteDatabase database = this.getWritableDatabase();
         Cursor cursor = database.rawQuery(selectQuery, null);
@@ -2308,11 +2377,11 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
     }
 
     // select data from Room info table
-    public ArrayList<Room> getRoomNoInfoByroomNameAndAhu(String roomName,int ahuNo) {
+    public ArrayList<Room> getRoomNoInfoByroomNameAndAhu(String roomName, int ahuNo) {
         ArrayList<Room> roomArrayList;
         roomArrayList = new ArrayList<Room>();
         String selectQuery = "SELECT * FROM " + ROOM_TABLE_NAME +
-                " WHERE " + ValdocDatabaseHandler.ROOM_ROOMNAME + " = " +'"'+roomName+'"'+" AND "+ValdocDatabaseHandler.ROOM_AHUID+" = "+'"'+ ahuNo+'"';
+                " WHERE " + ValdocDatabaseHandler.ROOM_ROOMNAME + " = " + '"' + roomName + '"' + " AND " + ValdocDatabaseHandler.ROOM_AHUID + " = " + '"' + ahuNo + '"';
         SQLiteDatabase database = this.getWritableDatabase();
         Cursor cursor = database.rawQuery(selectQuery, null);
         if (cursor.moveToFirst()) {
@@ -2389,17 +2458,46 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
         return applicableTestRoomArrayList;
     }
 
+
+    // select data from applicable test ahu table
+    public ApplicableTestAhu getApplicableTestAhuInfo(int ahuId) {
+        String selectQuery = "SELECT * FROM " + APLICABLE_TEST_AHU_TABLE_NAME +
+                " WHERE " + ValdocDatabaseHandler.APLICABLE_TEST_AHU_AHUID + " = " + ahuId;
+        SQLiteDatabase database = this.getWritableDatabase();
+        Cursor cursor = database.rawQuery(selectQuery, null);
+        ApplicableTestAhu applicableTestAhu = new ApplicableTestAhu();
+        if (cursor.moveToFirst()) {
+            do {
+
+                applicableTestAhu.setAplicable_testId(cursor.getInt(0));
+                applicableTestAhu.setAhuId(cursor.getInt(1));
+                applicableTestAhu.setTestName(cursor.getString(2));
+                applicableTestAhu.setTestCode(cursor.getString(3));
+                applicableTestAhu.setTestFormat(cursor.getString(4));
+                applicableTestAhu.setTestItem(cursor.getString(5));
+                applicableTestAhu.setTestSpecification(cursor.getString(6));
+                applicableTestAhu.setOccupencyState(cursor.getString(7));
+                applicableTestAhu.setTestReference(cursor.getString(8));
+                applicableTestAhu.setTestProp(cursor.getString(9));
+                applicableTestAhu.setPeriodicity(cursor.getString(10));
+                applicableTestAhu.setLocation(cursor.getString(11));
+                applicableTestAhu.setNoOfCycle(cursor.getInt(12));
+                applicableTestAhu.setLastUpdatedDate(cursor.getString(13));
+            } while (cursor.moveToNext());
+        } // return contact list return wordList; }
+        return applicableTestAhu;
+    }
+
     // select data from applicable test room table
-    public ArrayList<ApplicableTestEquipment> getApplicableTestEquipmentInfo(int equipmentId) {
-        ArrayList<ApplicableTestEquipment> applicableTestEquipmentArrayList;
-        applicableTestEquipmentArrayList = new ArrayList<ApplicableTestEquipment>();
+    public ApplicableTestEquipment getApplicableTestEquipmentInfo(int equipmentId) {
         String selectQuery = "SELECT * FROM " + APLICABLE_TEST_EQUIPMENT_TABLE_NAME +
                 " WHERE " + ValdocDatabaseHandler.APLICABLE_TEST_EQUIPMENT_EQUIPMENTID + " = " + equipmentId;
         SQLiteDatabase database = this.getWritableDatabase();
         Cursor cursor = database.rawQuery(selectQuery, null);
+        ApplicableTestEquipment applicableTestEquipment = new ApplicableTestEquipment();
         if (cursor.moveToFirst()) {
             do {
-                ApplicableTestEquipment applicableTestEquipment = new ApplicableTestEquipment();
+
                 applicableTestEquipment.setAplicable_testId(cursor.getInt(0));
                 applicableTestEquipment.setEquipmentId(cursor.getInt(1));
                 applicableTestEquipment.setTestName(cursor.getString(2));
@@ -2413,10 +2511,9 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 applicableTestEquipment.setLocation(cursor.getInt(10));
                 applicableTestEquipment.setNoOfCycle(cursor.getInt(11));
                 applicableTestEquipment.setLastUpdatedDate(cursor.getString(12));
-                applicableTestEquipmentArrayList.add(applicableTestEquipment);
             } while (cursor.moveToNext());
         } // return contact list return wordList; }
-        return applicableTestEquipmentArrayList;
+        return applicableTestEquipment;
     }
 
     // select name data from partners table

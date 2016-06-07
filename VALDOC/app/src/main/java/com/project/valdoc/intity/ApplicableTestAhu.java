@@ -1,9 +1,11 @@
 package com.project.valdoc.intity;
 
+import java.io.Serializable;
+
 /**
  * Created by Avinash on 5/26/2016.
  */
-public class ApplicableTestAhu {
+public class ApplicableTestAhu implements Serializable{
 
     private String aplicable_test_ahu;
     private int aplicable_testId;

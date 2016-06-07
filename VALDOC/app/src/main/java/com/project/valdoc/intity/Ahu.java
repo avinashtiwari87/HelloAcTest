@@ -1,12 +1,13 @@
 package com.project.valdoc.intity;
 
 
+import java.io.Serializable;
 import java.sql.Date;
 
 /**
  * Created by Avinash on 2/13/2016.
  */
-public class Ahu {
+public class Ahu implements Serializable{
     private String ahu;
     private int ahuId;
     private String ahuNo;

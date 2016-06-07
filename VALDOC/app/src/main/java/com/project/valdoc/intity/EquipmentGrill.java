@@ -1,9 +1,11 @@
 package com.project.valdoc.intity;
 
+import java.io.Serializable;
+
 /**
  * Created by Avinash on 5/28/2016.
  */
-public class EquipmentGrill {
+public class EquipmentGrill implements Serializable{
     private int grillId;
     private String grillCode;
     private int equipmentId;

@@ -27,8 +27,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.project.valdoc.db.ValdocDatabaseHandler;
+import com.project.valdoc.intity.Ahu;
+import com.project.valdoc.intity.AhuFilter;
+import com.project.valdoc.intity.ApplicableTestAhu;
+import com.project.valdoc.intity.ApplicableTestEquipment;
 import com.project.valdoc.intity.ClientInstrument;
 import com.project.valdoc.intity.Equipment;
+import com.project.valdoc.intity.EquipmentGrill;
 import com.project.valdoc.intity.PartnerInstrument;
 import com.project.valdoc.intity.TestDetails;
 import com.project.valdoc.intity.TestReading;
@@ -62,7 +67,6 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
     private String witnessSecond;
     private String witnessThird;
     private String userName = "";
-    private int applicableTestEquipmentLocation;
 
     //certificate view id creation
     private TextView aerosolUsed;
@@ -112,12 +116,18 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
     ArrayList<TextView> resultTextViewList;
     private ValdocDatabaseHandler mValdocDatabaseHandler = new ValdocDatabaseHandler(RDAV5UserEntryActivity.this);
     SharedPreferences sharedpreferences;
-    int testDetailsId=0;
+    int testDetailsId = 0;
     private int year;
     private int month;
     private int day;
-    private String  mTestCode="";
+    private String mTestCode = "";
     static final int DATE_PICKER_ID = 1111;
+    private String mTestBasedOn;
+    private ArrayList<EquipmentGrill> mEquipmentGrillArrayList = null;
+    private ApplicableTestEquipment applicableTestEquipment = null;
+    private Ahu ahu = null;
+    private ArrayList<AhuFilter> mAhuFilterArrayList = null;
+    private ApplicableTestAhu mApplicableTestAhu = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,7 +141,7 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
         resultTextViewList = new ArrayList<TextView>();
 
         sharedpreferences = getSharedPreferences("valdoc", Context.MODE_PRIVATE);
-        testDetailsId = (sharedpreferences.getInt("TESTDETAILSID", 0)+1);
+        testDetailsId = (sharedpreferences.getInt("TESTDETAILSID", 0) + 1);
 
         if (getIntent().hasExtra("rows") && getIntent().hasExtra("cols")) {
             rows = getIntent().getIntExtra("rows", 0);
@@ -139,7 +149,7 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
             mTestType = getIntent().getStringExtra("testType");
             Log.d(TAG, " TestType : " + mTestType);
         }
-        mTestCode=getIntent().getStringExtra("testCode");
+        mTestCode = getIntent().getStringExtra("testCode");
         getExtraFromTestCreateActivity(savedInstanceState);
         //text view initialization
         initTextView();
@@ -367,7 +377,7 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
             calibrationDueOn.setText(Utilityies.parseDateToddMMyyyy(partnerInstrument.getCalibrationDueDate()));
         }
 
-        testSpecification.setText("Required Air Velocity " + equipment.getMinVelocity()+"-"+equipment.getMaxVelocity() + "fpm");
+        testSpecification.setText("Required Air Velocity " + equipment.getMinVelocity() + "-" + equipment.getMaxVelocity() + "fpm");
         areaOfTest.setText(areaName);
         roomName.setText(roomDetails[1]);
 //        occupancyState.setText(equipment.getOccupancyState().toString());
@@ -376,12 +386,12 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
         equipmentName.setText(equipment.getEquipmentName().toString());
         equipmentNo.setText(equipment.getEquipmentNo().toString());
         testCundoctor.setText(userName);
-        if(sharedpreferences.getString("USERTYPE", "").equalsIgnoreCase("CLIENT")){
-            testCondoctorOrg.setText("("+sharedpreferences.getString("CLIENTORG", "")+")");
-            testWitnessOrg.setText("("+sharedpreferences.getString("CLIENTORG", "")+")");
-        }else{
-            testCondoctorOrg.setText("("+sharedpreferences.getString("PARTNERORG", "")+")");
-            testWitnessOrg.setText("("+sharedpreferences.getString("CLIENTORG", "")+")");
+        if (sharedpreferences.getString("USERTYPE", "").equalsIgnoreCase("CLIENT")) {
+            testCondoctorOrg.setText("(" + sharedpreferences.getString("CLIENTORG", "") + ")");
+            testWitnessOrg.setText("(" + sharedpreferences.getString("CLIENTORG", "") + ")");
+        } else {
+            testCondoctorOrg.setText("(" + sharedpreferences.getString("PARTNERORG", "") + ")");
+            testWitnessOrg.setText("(" + sharedpreferences.getString("CLIENTORG", "") + ")");
         }
 
         Log.d("valdoc", "RDAV5UserEnryActivity 1witness=" + witnessFirst);
@@ -455,7 +465,7 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
         }
 
 
-        testDetails.setTestSpecification("" + equipment.getMinVelocity()+"-"+equipment.getMaxVelocity());
+        testDetails.setTestSpecification("" + equipment.getMinVelocity() + "-" + equipment.getMaxVelocity());
         testDetails.setBlockName(plantName.getText().toString());
         testDetails.setTestArea("" + areaName);
         testDetails.setRoomName("" + roomName.getText());
@@ -487,31 +497,42 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
                 witnessFirst = null;
                 witnessSecond = null;
                 witnessThird = null;
-                applicableTestEquipmentLocation = 0;
             } else {
-                Log.d("valdoc", "DynamicTableActivity" + "onresume rows=extra not null");
                 loginUserType = extras.getString("USERTYPE");
                 userName = extras.getString("USERNAME");
+                witnessFirst = extras.getString("WITNESSFIRST");
+                witnessSecond = extras.getString("WITNESSSECOND");
+                witnessThird = extras.getString("WITNESSTHIRD");
+                //get area based on room area id
+                areaName = extras.getString("AREANAME");
                 mPartnerName = extras.getString("PRTNERNAME");
+                mTestBasedOn = extras.getString("testBasedOn");
+                mTestCode = extras.getString("testCode");
+
                 if (loginUserType.equals("CLIENT")) {
                     clientInstrument = (ClientInstrument) extras.getSerializable("ClientInstrument");
                 } else {
                     partnerInstrument = (PartnerInstrument) extras.getSerializable("PartnerInstrument");
                 }
-                roomDetails = extras.getStringArray("RoomDetails");
-                equipment = (Equipment) extras.getSerializable("Equipment");
-                //get filter list from equipment filter
-                filterList = new String[extras.getStringArray("FILTERLIST").length];
-                filterList = extras.getStringArray("FILTERLIST");
-                Log.d("valdoc", "DynamicTableActivity" + "onresume rows=filterList=" + filterList.length);
-                //get area based on room area id
-                areaName = extras.getString("AREANAME");
-                witnessFirst = extras.getString("WITNESSFIRST");
-                Log.d("valdoc", "RDAV5UserEnryActivity witness=" + witnessFirst);
-                witnessSecond = extras.getString("WITNESSSECOND");
-                witnessThird = extras.getString("WITNESSTHIRD");
-                applicableTestEquipmentLocation = extras.getInt("LOCATION");
-                Log.d("valdoc", "DynamicTableActivity" + "onresume rows=applicableTestEquipmentLocation" + applicableTestEquipmentLocation);
+                if (mTestBasedOn.equalsIgnoreCase("EQUIPMENT")) {
+                    roomDetails = extras.getStringArray("RoomDetails");
+                    equipment = (Equipment) extras.getSerializable("Equipment");
+                    //get filter list from equipment filter
+//                        filterList = new String[extras.getStringArray("FILTERLIST").length];
+                    mEquipmentGrillArrayList = (ArrayList<EquipmentGrill>) extras.getSerializable("GRILLLIST");
+                    applicableTestEquipment = (ApplicableTestEquipment) extras.getSerializable("ApplicableTestEquipment");
+                } else if (mTestBasedOn.equalsIgnoreCase("AHU")) {
+                    ahu = (Ahu) extras.getSerializable("Ahu");
+                    mAhuFilterArrayList = (ArrayList<AhuFilter>) extras.getSerializable("FILTERLIST");
+                    mApplicableTestAhu = (ApplicableTestAhu) extras.getSerializable("ApplicableTestAhu");
+                }
+//                //get filter list from equipment filter
+//                filterList = new String[extras.getStringArray("FILTERLIST").length];
+//                filterList = extras.getStringArray("FILTERLIST");
+//                Log.d("valdoc", "DynamicTableActivity" + "onresume rows=filterList=" + filterList.length);
+//                //get area based on room area id
+//                applicableTestEquipmentLocation = extras.getInt("LOCATION");
+//                Log.d("valdoc", "DynamicTableActivity" + "onresume rows=applicableTestEquipmentLocation" + applicableTestEquipmentLocation);
             }
         }
 
@@ -531,7 +552,12 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
                 if (i == 1 && j == 1) {
                     row.addView(addTextView("Grille / Filter ID"));
                 } else {
-                    row.addView(addTextView("QC/DGC/HF/0" + i));
+                    if(mTestBasedOn.equalsIgnoreCase("AHU")) {
+                        row.addView(addTextView(mAhuFilterArrayList.get(i - 2).getFilterCode()));
+                    }else if(mTestBasedOn.equalsIgnoreCase("EQUIPMENT")){
+                        row.addView(addTextView(mEquipmentGrillArrayList.get(i - 2).getGrillCode()));
+                    }
+//                    row.addView(addTextView("QC/DGC/HF/0" + i));
                 }
 
             }
