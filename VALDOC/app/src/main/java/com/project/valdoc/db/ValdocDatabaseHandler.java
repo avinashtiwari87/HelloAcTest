@@ -2375,6 +2375,55 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
         }
         return testDetailList;
     }
+// select data from TestSpecificationValue table
+    public ArrayList<TestSpesificationValue>getTestSpecificationValueById(String testDetailId) {
+        ArrayList<TestSpesificationValue>testSpecificValueList = new ArrayList<TestSpesificationValue>();
+
+        String selectQuery = "SELECT * FROM " + TESTSPECIFICATIONVALUE_TABLE_NAME  +
+                " WHERE " + ValdocDatabaseHandler.TESTSPECIFICATIONVALUE_TEST_DETAIL_ID
+                + " = " + '"' + testDetailId + '"';
+
+        SQLiteDatabase database = this.getWritableDatabase();
+        Cursor cursor = database.rawQuery(selectQuery, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                TestSpesificationValue testSpecificValue = new TestSpesificationValue();
+                testSpecificValue.setTest_specific_id(cursor.getInt(0));//TESTSPECIFICATIONVALUE_TEST_SPECIFIC_ID
+                testSpecificValue.setTest_detail_id(cursor.getString(1));//TESTSPECIFICATIONVALUE_TEST_DETAIL_ID
+                testSpecificValue.setFieldName(cursor.getString(2));//TESTSPECIFICATIONVALUE_FIELDNAME
+                testSpecificValue.setFieldValue(cursor.getString(3));//TESTSPECIFICATIONVALUE_FIELDVALUE
+
+                testSpecificValueList.add(testSpecificValue);
+            } while (cursor.moveToNext());
+        }
+        return testSpecificValueList;
+    }
+
+    //Select data from TestReading table;
+    public ArrayList<TestReading>getTestReadingDataById(String testReadingId) {
+        ArrayList<TestReading> testReadingList = new ArrayList<TestReading>();
+
+        String selectQuery = "SELECT * FROM " + TESTREADING_TABLE_NAME +
+                " WHERE " + ValdocDatabaseHandler.TESTREADING_TESTREADINGID
+                + " = " + '"' + testReadingId + '"';
+
+        SQLiteDatabase database = this.getWritableDatabase();
+        Cursor cursor = database.rawQuery(selectQuery, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                TestReading testReading = new TestReading();
+                testReading.setTestReadingID(cursor.getInt(0));//TESTREADING_TESTREADINGID
+                testReading.setTest_detail_id(cursor.getInt(1));//TESTREADING_TEST_DETAIL_ID
+                testReading.setEntityName(cursor.getString(2));//TESTREADING_ENTITYNAME
+                testReading.setValue(cursor.getString(3));//TESTREADING_VALUE
+
+                testReadingList.add(testReading);
+            } while (cursor.moveToNext());
+        }
+        return testReadingList;
+    }
 
     // select data from Room info table
     public ArrayList<Room> getRoomNoInfoByroomNameAndAhu(String roomName, int ahuNo) {
