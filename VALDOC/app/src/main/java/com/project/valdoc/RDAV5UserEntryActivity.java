@@ -194,7 +194,6 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
             } else {
                 infarance.setText(getResources().getString(R.string.dont_meet_infrance_value));
                 tvl.setTextColor(getResources().getColor(R.color.red));
-
             }
         }
         //Custom Action Bar
@@ -377,23 +376,6 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
             calibrationDueOn.setText(Utilityies.parseDateToddMMyyyy(partnerInstrument.getCalibrationDueDate()));
         }
 
-        testSpecification.setText("Required Air Velocity " + equipment.getMinVelocity() + "-" + equipment.getMaxVelocity() + "fpm");
-        areaOfTest.setText(areaName);
-        roomName.setText(roomDetails[1]);
-//        occupancyState.setText(equipment.getOccupancyState().toString());
-//        Log.d("valdoc", "RDAV5UserEnryActivity 1witness= equipment.getTestReference()=" + equipment.getTestReference());
-//        testRefrance.setText("" + equipment.getTestReference().toString());
-        equipmentName.setText(equipment.getEquipmentName().toString());
-        equipmentNo.setText(equipment.getEquipmentNo().toString());
-        testCundoctor.setText(userName);
-        if (sharedpreferences.getString("USERTYPE", "").equalsIgnoreCase("CLIENT")) {
-            testCondoctorOrg.setText("(" + sharedpreferences.getString("CLIENTORG", "") + ")");
-            testWitnessOrg.setText("(" + sharedpreferences.getString("CLIENTORG", "") + ")");
-        } else {
-            testCondoctorOrg.setText("(" + sharedpreferences.getString("PARTNERORG", "") + ")");
-            testWitnessOrg.setText("(" + sharedpreferences.getString("CLIENTORG", "") + ")");
-        }
-
         Log.d("valdoc", "RDAV5UserEnryActivity 1witness=" + witnessFirst);
         StringBuilder witness = new StringBuilder();
         witness.append(witnessFirst.toString());
@@ -402,6 +384,33 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
         if (null != witnessThird && witnessThird.length() > 0)
             witness.append(",   " + witnessThird);
         testWitness.setText(witness);
+        areaOfTest.setText(areaName);
+        roomName.setText(roomDetails[1]);
+        testCundoctor.setText(userName);
+
+        if (sharedpreferences.getString("USERTYPE", "").equalsIgnoreCase("CLIENT")) {
+            testCondoctorOrg.setText("(" + sharedpreferences.getString("CLIENTORG", "") + ")");
+            testWitnessOrg.setText("(" + sharedpreferences.getString("CLIENTORG", "") + ")");
+        } else {
+            testCondoctorOrg.setText("(" + sharedpreferences.getString("PARTNERORG", "") + ")");
+            testWitnessOrg.setText("(" + sharedpreferences.getString("CLIENTORG", "") + ")");
+        }
+
+//        testSpecification.setText("Required Air Velocity " + equipment.getMinVelocity() + "-" + equipment.getMaxVelocity() + "fpm");
+        if (mTestBasedOn.equalsIgnoreCase("EQUIPMENT")) {
+            testSpecification.setText(""+applicableTestEquipment.getTestSpecification());
+            equipmentName.setText(equipment.getEquipmentName().toString());
+            equipmentNo.setText(equipment.getEquipmentNo().toString());
+        } else if (mTestBasedOn.equalsIgnoreCase("AHU")) {
+            testSpecification.setText(""+mApplicableTestAhu.getTestSpecification());
+        }
+
+
+
+//        occupancyState.setText(equipment.getOccupancyState().toString());
+//        Log.d("valdoc", "RDAV5UserEnryActivity 1witness= equipment.getTestReference()=" + equipment.getTestReference());
+//        testRefrance.setText("" + equipment.getTestReference().toString());
+
     }
 
     private ArrayList<TestReading> testReading() {
@@ -410,7 +419,6 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
 //        testReading.setTestReadingID(1);
 //        TO DO test details id is id of test details table
         testReading.setTest_detail_id(testDetailsId);
-
         testReading.setEntityName("filterList");
         StringBuilder sb = new StringBuilder();
         int index = 0;
@@ -420,7 +428,6 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
             index++;
             sb.append(testvalue.getText());
         }
-
         //Receiving Result Data from Bundle
         HashMap<Integer, Integer> resultHashMap = (HashMap<Integer, Integer>) getIntent().getSerializableExtra("ResultData");
         for (Map.Entry n : resultHashMap.entrySet()) {
@@ -522,6 +529,7 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
                     mEquipmentGrillArrayList = (ArrayList<EquipmentGrill>) extras.getSerializable("GRILLLIST");
                     applicableTestEquipment = (ApplicableTestEquipment) extras.getSerializable("ApplicableTestEquipment");
                 } else if (mTestBasedOn.equalsIgnoreCase("AHU")) {
+                    roomDetails = extras.getStringArray("RoomDetails");
                     ahu = (Ahu) extras.getSerializable("Ahu");
                     mAhuFilterArrayList = (ArrayList<AhuFilter>) extras.getSerializable("FILTERLIST");
                     mApplicableTestAhu = (ApplicableTestAhu) extras.getSerializable("ApplicableTestAhu");

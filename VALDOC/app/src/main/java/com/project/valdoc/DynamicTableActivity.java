@@ -422,6 +422,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                     intent.putExtra("cols", applicableTestEquipment.getLocation());
                 } else if (mTestBasedOn.equalsIgnoreCase("AHU")) {
                     intent.putExtra("Ahu", ahu);
+                    intent.putExtra("RoomDetails", roomDetails);
                     intent.putExtra("FILTERLIST",mAhuFilterArrayList);
                     intent.putExtra("ApplicableTestAhu",mApplicableTestAhu);
                     intent.putExtra("rows", mAhuFilterArrayList.size() + 1);
