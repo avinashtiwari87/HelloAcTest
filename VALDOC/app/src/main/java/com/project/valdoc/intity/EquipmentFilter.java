@@ -1,11 +1,12 @@
 package com.project.valdoc.intity;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Created by Avinash on 2/13/2016.
  */
-public class EquipmentFilter {
+public class EquipmentFilter implements Serializable {
     private String equipmentfilter;
     private int filterId;
     private String filterCode;

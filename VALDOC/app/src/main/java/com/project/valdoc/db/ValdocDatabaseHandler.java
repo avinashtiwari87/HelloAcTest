@@ -2183,24 +2183,32 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
     }
 
     // select data from equipment filter table
-    public String[] getFilterFromEquipmentFilter(int equipmentId) {
+    public ArrayList<EquipmentFilter> getFilterFromEquipmentFilter(int equipmentId) {
+        ArrayList<EquipmentFilter> filterArrayList;
+        filterArrayList = new ArrayList<EquipmentFilter>();
         String selectQuery = " SELECT " + EQUIPMENTFILTER_FILTERCODE + " FROM " + EQUIPMENTFILTER_TABLE_NAME +
 //        String selectQuery = " SELECT * FROM " + PARTNERUSER_TABLE_NAME +
                 " WHERE " + ValdocDatabaseHandler.EQUIPMENTFILTER_EQUIPMENTID + " = " + equipmentId;
         SQLiteDatabase database = this.getWritableDatabase();
         Cursor cursor = database.rawQuery(selectQuery, null);
-        Log.d("valdoc", "ValdocDatabaseHelper :filter code equipment1:=" + cursor.getCount());
-        String[] strings = new String[cursor.getCount()];
-        int i = 0;
         if (cursor.moveToFirst()) {
             do {
-//                Log.d("valdoc", "ValdocDatabaseHelper :filter code equipment1:=" + cursor.getColumnIndex(EQUIPMENTFILTER_FILTERCODE));
-                strings[i] = cursor.getString(cursor.getColumnIndex(EQUIPMENTFILTER_FILTERCODE));
-//                Log.d("valdoc", "ValdocDatabaseHelper :equipment1:=" + strings[i] + "i=" + i);
-                i++;
+                EquipmentFilter equipmentFilter = new EquipmentFilter();
+                equipmentFilter.setFilterId(cursor.getInt(0));
+                equipmentFilter.setFilterCode(cursor.getString(1).toString());
+                equipmentFilter.setEquipmentId(cursor.getInt(2));
+                equipmentFilter.setFilterType(cursor.getString(3).toString());
+                equipmentFilter.setEfficiency(cursor.getDouble(4));
+                equipmentFilter.setParticleSize(cursor.getDouble(5));
+                equipmentFilter.setSpecificationLeak(cursor.getDouble(6));
+                equipmentFilter.setWidth(cursor.getDouble(7));
+                equipmentFilter.setLength(cursor.getDouble(8));
+                equipmentFilter.setGrillArea(cursor.getDouble(9));
+                equipmentFilter.setLastUpdatedDate(cursor.getString(10).toString());
+                filterArrayList.add(equipmentFilter);
             } while (cursor.moveToNext());
         } // return contact list return wordList; }
-        return strings;
+        return filterArrayList;
     }
 
     // select data from equipment Grill table
@@ -2476,16 +2484,15 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
 
 
     // select data from applicable test room table
-    public ArrayList<ApplicableTestRoom> getApplicableTestRoomInfo(int roomId) {
-        ArrayList<ApplicableTestRoom> applicableTestRoomArrayList;
-        applicableTestRoomArrayList = new ArrayList<ApplicableTestRoom>();
+    public ApplicableTestRoom getApplicableTestRoomInfo(int roomId) {
         String selectQuery = "SELECT * FROM " + APLICABLE_TEST_ROOM_TABLE_NAME +
                 " WHERE " + ValdocDatabaseHandler.APLICABLE_TEST_ROOM_ROOMID + " = " + roomId;
         SQLiteDatabase database = this.getWritableDatabase();
         Cursor cursor = database.rawQuery(selectQuery, null);
+        ApplicableTestRoom applicableTestRoom = new ApplicableTestRoom();
         if (cursor.moveToFirst()) {
             do {
-                ApplicableTestRoom applicableTestRoom = new ApplicableTestRoom();
+
                 applicableTestRoom.setAplicable_testId(cursor.getInt(0));
                 applicableTestRoom.setRoomId(cursor.getInt(1));
                 applicableTestRoom.setTestName(cursor.getString(2));
@@ -2501,10 +2508,9 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 applicableTestRoom.setNoOfCycle(cursor.getInt(11));
                 applicableTestRoom.setLastUpdatedDate(cursor.getString(12));
                 Log.d("Avinash", "applicableTestRoom=" + applicableTestRoom.getTestName());
-                applicableTestRoomArrayList.add(applicableTestRoom);
             } while (cursor.moveToNext());
         } // return contact list return wordList; }
-        return applicableTestRoomArrayList;
+        return applicableTestRoom;
     }
 
 

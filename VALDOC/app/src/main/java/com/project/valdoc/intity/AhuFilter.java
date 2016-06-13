@@ -1,9 +1,11 @@
 package com.project.valdoc.intity;
 
+import java.io.Serializable;
+
 /**
  * Created by Avinash on 5/27/2016.
  */
-public class AhuFilter {
+public class AhuFilter implements Serializable{
     private String ahufilter;
     private int filterId;
     private int ahuId;

@@ -1,11 +1,12 @@
 package com.project.valdoc.intity;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Created by Avinash on 2/13/2016.
  */
-public class ApplicableTestRoom {
+public class ApplicableTestRoom implements Serializable{
     private String aplicable_test_room;
     private int aplicable_testId;
     private int roomId;
