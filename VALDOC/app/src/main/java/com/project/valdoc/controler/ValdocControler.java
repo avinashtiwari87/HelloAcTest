@@ -293,7 +293,7 @@ Log.d("valdoc","parse exception"+e.getMessage());
 
                 applicableTestAhu.setTestProp(jsonObject.optString("testProp").toString());
                 applicableTestAhu.setPeriodicity(jsonObject.optString("periodicity").toString());
-                applicableTestAhu.setLocation(jsonObject.optString("location").toString());
+                applicableTestAhu.setLocation(Integer.parseInt(jsonObject.optString("location").toString()));
                 applicableTestAhu.setNoOfCycle(jsonObject.optInt("noOfCycle"));
                 applicableTestAhu.setLastUpdatedDate(jsonObject.optString("lastUpdatedDate").toString());
                 Log.d("valdoc", "parse applicableTestAhu");

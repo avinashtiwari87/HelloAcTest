@@ -623,7 +623,7 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
             String areaName = mValdocDatabaseHandler.getAreaByRoomAreaId(roomDetails[2]);
             Log.d("valdoc", "TestCreateActivity areaName=" + areaName);
             intent.putExtra("AREANAME", areaName);
-            intent.putExtra("TestItem", areaName);
+//            intent.putExtra("TestItem", );
         }
     }
 

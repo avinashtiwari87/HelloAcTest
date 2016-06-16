@@ -109,7 +109,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
             + "(" + APLICABLE_TEST_AHU_APLICABLE_TESTID + " INTEGER," + APLICABLE_TEST_AHU_AHUID + " INTEGER," + APLICABLE_TEST_AHU_TESTNAME + " TEXT,"
             + APLICABLE_TEST_AHU_TESTCODE + " TEXT," + APLICABLE_TEST_AHU_TESTFORMAT + " TEXT," + APLICABLE_TEST_AHU_TESTITEM + " TEXT," + APLICABLE_TEST_AHU_TESTSPECIFICATION + " TEXT,"
             + APLICABLE_TEST_AHU_OCCUPENCYSTATE + " TEXT," + APLICABLE_TEST_AHU_TESTREFERENCE + " TEXT," + APLICABLE_TEST_AHU_TESTPROP + " TEXT,"
-            + APLICABLE_TEST_AHU_PERIODICITY + " TEXT," + APLICABLE_TEST_AHU_LOCATION + " TEXT," + APLICABLE_TEST_AHU_NOOFCYCLE
+            + APLICABLE_TEST_AHU_PERIODICITY + " TEXT," + APLICABLE_TEST_AHU_LOCATION + " INTEGER," + APLICABLE_TEST_AHU_NOOFCYCLE
             + " INTEGER," + APLICABLE_TEST_AHU_LASTUPDATEDDATE + " TEXT" + ")";
 
     //ahu filter table details
@@ -2535,7 +2535,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 applicableTestAhu.setTestReference(cursor.getString(8));
                 applicableTestAhu.setTestProp(cursor.getString(9));
                 applicableTestAhu.setPeriodicity(cursor.getString(10));
-                applicableTestAhu.setLocation(cursor.getString(11));
+                applicableTestAhu.setLocation(cursor.getInt(11));
                 applicableTestAhu.setNoOfCycle(cursor.getInt(12));
                 applicableTestAhu.setLastUpdatedDate(cursor.getString(13));
             } while (cursor.moveToNext());
