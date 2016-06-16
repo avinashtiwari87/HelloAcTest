@@ -329,7 +329,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         if (TestCreateActivity.AV.equalsIgnoreCase(testType)) {
             if(mTestBasedOn.equalsIgnoreCase("AHU")){
                 if (mAhuFilterArrayList != null && mAhuFilterArrayList.size() > 0)
-                    BuildTable(mAhuFilterArrayList.size() + 1, mApplicableTestAhu.getNoOfCycle());
+                    BuildTable(mAhuFilterArrayList.size() + 1, mApplicableTestAhu.getLocation());
                 else
                     aleartDialog("There is no filter or equipment location");
             }else if(mTestBasedOn.equalsIgnoreCase("EQUIPMENT")){
