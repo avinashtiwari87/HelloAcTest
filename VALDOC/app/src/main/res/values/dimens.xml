@@ -9,6 +9,7 @@
     <dimen name="header_normal_text_size">18sp</dimen>
     <dimen name="normal_text_size">15sp</dimen>
     <dimen name="normal_text_size1">11sp</dimen>
+    <dimen name="normal_text_size2">13sp</dimen>
     <dimen name="header_left_padding">3dp</dimen>
     <dimen name="text_view_height">80dp</dimen>
 </resources>

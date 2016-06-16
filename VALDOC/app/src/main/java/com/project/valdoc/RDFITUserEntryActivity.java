@@ -693,7 +693,100 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
 
     }
 
+    private void buildTestFour(int rows, int column){
+        //first section
+        // outer for loop
+        for (int i = 1; i <= rows; i++) {
+            TableRow row = new TableRow(this);
+            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+                    TableRow.LayoutParams.WRAP_CONTENT));
+            // inner for loop
+            for (int j = 1; j <= 1; j++) {
+                if (i == 1 && j == 1) {
+                    row.addView(addTextView(" Filter No \n         "));
+                } else {
+                    row.addView(addTextView("HF -00"+i));
+                }
 
+            }
+            test4_table_layout.addView(row);
+        }
+
+        //Second section
+        // outer for loop
+        for (int i = 1; i <= rows; i++) {
+            TableRow row = new TableRow(this);
+            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+                    TableRow.LayoutParams.WRAP_CONTENT));
+            // inner for loop
+            for (int j = 1; j <= 1; j++) {
+                if (i == 1 && j == 1) {
+                    row.addView(addTextView(" Average \nbefore Scanning "));
+                } else {
+                    row.addView(addTextView(30+i+""));
+                }
+
+            }
+            test4_table_layout2.addView(row);
+        }
+
+        //Third section
+        // outer for loop
+        for (int i = 1; i <= rows; i++) {
+            TableRow row = new TableRow(this);
+            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+                    TableRow.LayoutParams.WRAP_CONTENT));
+            // inner for loop
+            for (int j = 1; j <= 1; j++) {
+                if (i == 1 && j == 1) {
+                    row.addView(addTextView(" Average \nAfter Scanning"));
+                } else {
+                    row.addView(addTextView(20+i+""));
+                }
+
+            }
+            test4_table_layout3.addView(row);
+        }
+        //fourth section
+        // outer for loop
+        for (int i = 1; i <= rows; i++) {
+            TableRow row = new TableRow(this);
+            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+                    TableRow.LayoutParams.WRAP_CONTENT));
+            // inner for loop
+            for (int j = 1; j <= 1; j++) {
+                if (i == 1 && j == 1) {
+                    row.addView(addTextView(" Variation \nin Concentration*"));
+                } else {
+                    row.addView(addTextView(10+i+"%"));
+                }
+
+            }
+            test4_table_layout4.addView(row);
+        }
+        //fifth section
+        // outer for loop
+        for (int i = 1; i <= rows; i++) {
+            TableRow row = new TableRow(this);
+            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+                    TableRow.LayoutParams.WRAP_CONTENT));
+            // inner for loop
+            for (int j = 1; j <= 1; j++) {
+                if (i == 1 && j == 1) {
+                    row.addView(addTextView(" Obtained Leakage \n(% Leakage)"));
+                } else {
+                    row.addView(addTextView(3+i+""));
+                }
+
+            }
+            test4_table_layout5.addView(row);
+        }
+
+        //dismiss progressbar
+        if (pr.isShowing())
+            pr.dismiss();
+
+    }
     private TextView addTextView(String textValue) {
         TextView tv = new TextView(this);
         tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,

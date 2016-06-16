@@ -188,16 +188,19 @@
 
                     <TableLayout
                         android:id="@+id/test4_tableLayout6"
+                        android:visibility="gone"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
 
                     <TableLayout
                         android:id="@+id/test4_tableLayout7"
+                        android:visibility="gone"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
 
                     <TableLayout
                         android:id="@+id/test4_tableLayout8"
+                        android:visibility="gone"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_marginRight="5dp" />
