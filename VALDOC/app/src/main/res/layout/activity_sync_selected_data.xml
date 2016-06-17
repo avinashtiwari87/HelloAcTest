@@ -20,16 +20,15 @@
     <ScrollView
         android:layout_below="@+id/header_sunc_data"
         android:layout_above="@+id/button2"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:scrollbars="vertical"
-        android:paddingRight="10dp"
         android:scrollbarStyle="insideOverlay"
         android:scrollbarFadeDuration="10000"
         android:scrollbarAlwaysDrawVerticalTrack="true"
         android:layout_height="wrap_content">
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <TextView
@@ -43,13 +42,12 @@
             android:text="No Record Found!!!"
             android:textSize="@dimen/header_text_size" />
     <HorizontalScrollView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
         android:orientation="horizontal">
         <TableLayout
             android:id="@+id/syncData_tableLayout1"
