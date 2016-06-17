@@ -447,12 +447,14 @@ public class CommonTestViewActivity extends AppCompatActivity {
                 if (i == 1 && j == 1) {
                     row.addView(addTextView(" Filter No \n         "));
                 } else {
-                    row.addView(addTextView("fyhgff"));
+                    row.addView(addTextView("HF -00"+i));
                 }
 
             }
             test4_table_layout.addView(row);
         }
+
+
 
         //Second section
         // outer for loop
@@ -463,16 +465,16 @@ public class CommonTestViewActivity extends AppCompatActivity {
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
-                    row.addView(addTextView(" Filter Type  \n         "));
+                    row.addView(addTextView("Average before Scanning\n Concentration (µg/liter) "));
                 } else {
-                    row.addView(addTextView("fgfrtrre"));
+                    row.addView(addTextView(30+i+""));
                 }
 
             }
             test4_table_layout2.addView(row);
         }
 
-        //Third section
+        //Third section section
         // outer for loop
         for (int i = 1; i <= rows; i++) {
             TableRow row = new TableRow(this);
@@ -481,16 +483,16 @@ public class CommonTestViewActivity extends AppCompatActivity {
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
-                    row.addView(addTextView(" Filter Efficiency\n at Particle Size* "));
+                    row.addView(addTextView(" Average After Scanning\nConcentration (µg/liter) "));
                 } else {
-                    row.addView(addTextView("guygg"));
+                    row.addView(addTextView(20+i+""));
                 }
 
             }
             test4_table_layout3.addView(row);
         }
 
-        //Fourth section
+        //fourth section
         // outer for loop
         for (int i = 1; i <= rows; i++) {
             TableRow row = new TableRow(this);
@@ -499,16 +501,15 @@ public class CommonTestViewActivity extends AppCompatActivity {
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
-                    row.addView(addTextView(" Average Up Stream\n Concentration (µg/liter) "));
+                    row.addView(addTextView(" Variation \nin Concentration*"));
                 } else {
-                    row.addView(addTextView("hhuhi"));
+                    row.addView(addTextView(10+i+"%"));
                 }
 
             }
             test4_table_layout4.addView(row);
         }
-
-        //Fifthe section section
+        //fifth section
         // outer for loop
         for (int i = 1; i <= rows; i++) {
             TableRow row = new TableRow(this);
@@ -517,68 +518,14 @@ public class CommonTestViewActivity extends AppCompatActivity {
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
-                    row.addView(addTextView(" Average Up Stream after\nConcentration (µg/liter) "));
+                    row.addView(addTextView(" Obtained Leakage \n(% Leakage)"));
                 } else {
-                    row.addView(addTextView("vyg"));
+                    row.addView(addTextView(3+i+""));
+                    //row.addView(addEditTextView(i));
                 }
 
             }
             test4_table_layout5.addView(row);
-        }
-
-        //Sixth section
-        // outer for loop
-        for (int i = 1; i <= rows; i++) {
-            TableRow row = new TableRow(this);
-            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
-                    TableRow.LayoutParams.WRAP_CONTENT));
-            // inner for loop
-            for (int j = 1; j <= 1; j++) {
-                if (i == 1 && j == 1) {
-                    row.addView(addTextView(" SLP of DL for Tests\n after Installation** "));
-                } else {
-                    row.addView(addTextView("tytyu56"));
-                }
-
-            }
-            test4_table_layout6.addView(row);
-        }
-
-        //Sixth section
-        // outer for loop
-        for (int i = 1; i <= rows; i++) {
-            TableRow row = new TableRow(this);
-            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
-                    TableRow.LayoutParams.WRAP_CONTENT));
-            // inner for loop
-            for (int j = 1; j <= 1; j++) {
-                if (i == 1 && j == 1) {
-                    row.addView(addTextView(" Obtained Test Results\n (% Leakage) "));
-                } else {
-                    //row.addView(addTextView(" 0.0015 "));
-                    row.addView(addInputDataTextView());
-                }
-
-            }
-            test4_table_layout7.addView(row);
-        }
-
-        //Seventh section
-        // outer for loop
-        for (int i = 1; i <= rows; i++) {
-            TableRow row = new TableRow(this);
-            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
-                    TableRow.LayoutParams.WRAP_CONTENT));
-            // inner for loop
-            for (int j = 1; j <= 1; j++) {
-                if (i == 1 && j == 1) {
-                    row.addView(addTextView(" Test Status\n    "));
-                } else {
-                    //row.addView(addTextView(" Pass "));
-                    row.addView(addTextPassFail(" ", i));
-                }
-            }
-            test4_table_layout8.addView(row);
         }
 
         //dismiss progressbar
