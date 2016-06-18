@@ -1765,8 +1765,8 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                         // Pass Fail Calculation
                         TextView txtPassFail = txtPassFailList.get(i);
                         if (tvl.getTag() == txtPassFail.getTag()) {
-                            double minvalue =10.00; //equipment.getMinVelocity();
-                            double maxValue = 100.00;//equipment.getMaxVelocity();
+                            double minvalue = equipment.getMinVelocity();
+                            double maxValue = equipment.getMaxVelocity();
 //                            double percentValue = ((valocity * 20) / 100);
                             if (minvalue <= getRoundedAverageValue(tagF) && getRoundedAverageValue(tagF) <= maxValue) {
                                 txtPassFail.setTextColor(getResources().getColor(R.color.blue));

@@ -472,15 +472,15 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
         }
 
 
-        testDetails.setTestSpecification("" + 10 /*equipment.getMinVelocity()*/ + "-" + 200 /*equipment.getMaxVelocity()*/);
+        testDetails.setTestSpecification("" + equipment.getMinVelocity() + "-" + equipment.getMaxVelocity());
         testDetails.setBlockName(plantName.getText().toString());
         testDetails.setTestArea("" + areaName);
         testDetails.setRoomName("" + roomName.getText());
         testDetails.setRoomNo("" + roomDetails[0]);
         testDetails.setOccupencyState("" + occupancyState.getText());
         testDetails.setTestReference("" + testRefrance.getText());
-        testDetails.setEquipmentName("" + "saurabh"/*equipment.getEquipmentName()*/);
-        testDetails.setEquipmentNo("" +"LM342H7G" /*equipment.getEquipmentNo()*/);
+        testDetails.setEquipmentName(""+equipment.getEquipmentName());
+        testDetails.setEquipmentNo("" +equipment.getEquipmentNo());
         testDetails.setTesterName("" + testCundoctor.getText());
         testDetails.setWitnessName("" + testWitness.getText());
         testDetails.setTestCode(mTestCode);
