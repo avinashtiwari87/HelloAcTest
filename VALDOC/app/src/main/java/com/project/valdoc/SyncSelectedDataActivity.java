@@ -58,38 +58,37 @@ public class SyncSelectedDataActivity extends AppCompatActivity {
 
         initRes();
         if(getTestDataByTestCode(testType).size()>0){
-            BuildSyncDataTable(getTestDataByTestCode(testType).size(),colos);
+            BuildSyncDataTable(getTestDataByTestCode(testType).size()+1,colos+1);
         }else{
             findViewById(R.id.no_data_found_tv).setVisibility(View.VISIBLE);
         }
     }
 
     private ArrayList<TestDetails> getTestDataByTestCode(String testType) {
-        ArrayList<TestDetails>testDetailsArrayList = new ArrayList<TestDetails>();
         if(testType.contains("ACPH_AV")){
-            testDetailsArrayList = mValdocDatabaseHandler.getTestDetailByTestCode("ACPH_AV");
+            testDetailList = mValdocDatabaseHandler.getTestDetailByTestCode("ACPH_AV");
         }else if(testType.contains("ACPH_H")){
-            testDetailsArrayList =  mValdocDatabaseHandler.getTestDetailByTestCode("ACPH_H");
+            testDetailList =  mValdocDatabaseHandler.getTestDetailByTestCode("ACPH_H");
         }else if(testType.contains("FIT")){
-            testDetailsArrayList = mValdocDatabaseHandler.getTestDetailByTestCode("FIT");
+            testDetailList = mValdocDatabaseHandler.getTestDetailByTestCode("FIT");
         }else if(testType.contains("PCT")){
-            testDetailsArrayList = mValdocDatabaseHandler.getTestDetailByTestCode("PCT");
+            testDetailList = mValdocDatabaseHandler.getTestDetailByTestCode("PCT");
         }else if(testType.contains("RCT")){
-            testDetailsArrayList = mValdocDatabaseHandler.getTestDetailByTestCode("RCT");
+            testDetailList = mValdocDatabaseHandler.getTestDetailByTestCode("RCT");
         }else if(testType.contains("ARD_AF_AHU")){
-            testDetailsArrayList = mValdocDatabaseHandler.getTestDetailByTestCode("ARD_AF_AHU");
+            testDetailList = mValdocDatabaseHandler.getTestDetailByTestCode("ARD_AF_AHU");
         }else if(testType.contains("ARD_FIT_AHU")){
-            testDetailsArrayList =  mValdocDatabaseHandler.getTestDetailByTestCode("ARD_FIT_AHU");
+            testDetailList =  mValdocDatabaseHandler.getTestDetailByTestCode("ARD_FIT_AHU");
         }else if(testType.contains("ERD_AV")){
-            testDetailsArrayList = mValdocDatabaseHandler.getTestDetailByTestCode("ERD_AV");
+            testDetailList = mValdocDatabaseHandler.getTestDetailByTestCode("ERD_AV");
         }else if(testType.contains("ERD_FIT")){
-            testDetailsArrayList =  mValdocDatabaseHandler.getTestDetailByTestCode("ERD_FIT");
+            testDetailList =  mValdocDatabaseHandler.getTestDetailByTestCode("ERD_FIT");
         }else if(testType.contains("ERD_PCT")){
-            testDetailsArrayList = mValdocDatabaseHandler.getTestDetailByTestCode("ERD_PCT");
+            testDetailList = mValdocDatabaseHandler.getTestDetailByTestCode("ERD_PCT");
         }else if(testType.contains("ERD_RCT")){
-            testDetailsArrayList = mValdocDatabaseHandler.getTestDetailByTestCode("ERD_RCT");
+            testDetailList = mValdocDatabaseHandler.getTestDetailByTestCode("ERD_RCT");
         }
-        return testDetailsArrayList;
+        return testDetailList;
     }
 
     private void BuildSyncDataTable(int rows, int cols) {
@@ -396,6 +395,7 @@ public class SyncSelectedDataActivity extends AppCompatActivity {
             Toast.makeText(mContext, testType+"View Row : "+viewTextId+" Test", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(SyncSelectedDataActivity.this,CommonTestViewActivity.class);
             intent.putExtra("TestType",testType);
+            intent.putExtra("testDetailId",testDetailList.get(viewTextId-2).getTest_detail_id());
             intent.putExtra("rows",6);
             intent.putExtra("cols",5);
             startActivity(intent);

@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import com.project.valdoc.db.ValdocDatabaseHandler;
 import com.project.valdoc.intity.RoomFilter;
+import com.project.valdoc.intity.TestReading;
 import com.project.valdoc.utility.Utilityies;
 
 import java.util.ArrayList;
@@ -55,7 +56,9 @@ public class CommonTestViewActivity extends AppCompatActivity {
     private String userName = "";
     String testType = null;
     SharedPreferences sharedpreferences;
-    private int rows,cols;
+    private ValdocDatabaseHandler mValdocDatabaseHandler;
+    private int rows,cols,testDetailId =1;
+    private ArrayList<TestReading>testReadingList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +68,9 @@ public class CommonTestViewActivity extends AppCompatActivity {
         pr = ProgressDialog.show(CommonTestViewActivity.this, "Please Wait", "Loading...");
         pr.setCancelable(true);
         pr.setCanceledOnTouchOutside(true);
+
+        mValdocDatabaseHandler = new ValdocDatabaseHandler(CommonTestViewActivity.this);
+        testReadingList = new ArrayList<TestReading>();
 
         txtViewList = new ArrayList<TextView>();
         txtPassFailList = new ArrayList<TextView>();
@@ -79,16 +85,29 @@ public class CommonTestViewActivity extends AppCompatActivity {
             Utilityies.setCustomActionBar(CommonTestViewActivity.this, mActionBar, userName);
 
         testType = getIntent().getStringExtra("TestType");
+        testDetailId = getIntent().getIntExtra("testDetailId",1);
         rows = getIntent().getIntExtra("rows",6);
         cols = getIntent().getIntExtra("cols",5);
-        Log.d(TAG, " TestType : " + testType);
+        Log.d(TAG, " TestType : " + testType+" testDetailId "+testDetailId);
 
         initRes();
 
-
-        if(testType != null && testType.contains("AV")){
+        String spiltValue[] = null;
+        if(testType != null && (testType.contains("AV")||testType.contains("AF"))){
             findViewById(R.id.test1_table_ll).setVisibility(View.VISIBLE);
-            BuildTable(rows,cols);
+            testReadingList = mValdocDatabaseHandler.getTestReadingDataById(testDetailId+"");
+            spiltValue =testReadingList.get(0).getValue().split(",");
+            Log.d(TAG, "CodeFlow : spiltValue length : " + spiltValue.length);
+            BuildTable(testReadingList.size()+1,spiltValue.length-1);
+            //input Data
+            if(spiltValue != null && spiltValue.length>0){
+                int textId = 200;
+                for (int i = 0; i <spiltValue.length-1; i++) {
+                    txtViewList.get(i).setText(""+spiltValue[i]);
+                }
+            }
+            //Result
+            resultTextViewList.get(0).setText(""+spiltValue[spiltValue.length-1]);
         }else if(testType != null && testType.contains("ACPH_AV")){
             findViewById(R.id.test2_table_ll).setVisibility(View.VISIBLE);
             BuildTableTest2(rows,cols);
@@ -104,6 +123,20 @@ public class CommonTestViewActivity extends AppCompatActivity {
         }else if(testType != null && testType.contains("RCT")){
             Toast.makeText(CommonTestViewActivity.this, "Coming Soon...", Toast.LENGTH_SHORT).show();
         }
+
+
+
+
+
+
+
+        //cancel button click
+        findViewById(R.id.cancel).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
 
