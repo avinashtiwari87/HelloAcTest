@@ -24,9 +24,12 @@ import com.project.valdoc.utility.Utilityies;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.HttpURLConnection;
+import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -109,6 +112,7 @@ public class AfterLoginActivity extends AppCompatActivity implements HttpConnect
             findViewById(R.id.sync_btn).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+//                    copyDb();
                     if (Utilityies.checkInternetConnection(AfterLoginActivity.this)) {
                         mValdocControler.getHttpConectionforSync(AfterLoginActivity.this, "GET");
 //                        mValdocControler.httpPostSyncData(AfterLoginActivity.this, "POST");
@@ -121,7 +125,7 @@ public class AfterLoginActivity extends AppCompatActivity implements HttpConnect
             findViewById(R.id.sync_data_table_btn).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toast.makeText(AfterLoginActivity.this, "Clicked", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(AfterLoginActivity.this, "Clicked", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(AfterLoginActivity.this, ShowSelectedTestActivity.class);
                     startActivity(intent);
                 }
@@ -138,7 +142,31 @@ public class AfterLoginActivity extends AppCompatActivity implements HttpConnect
         imgView.getLayoutParams().width = 60;*/
 
     }
-
+    private void copyDb() {
+        try {
+            File sd = Environment.getExternalStorageDirectory();
+            File data = Environment.getDataDirectory();
+            Log.d("copydb", "db creted start");
+            if (sd.canWrite()) {
+                String currentDBPath = "/data/data/" + getPackageName() + "/databases/valdoc.db";
+                String backupDBPath = "valdocbackupname.db";
+                File currentDB = new File(currentDBPath);
+                File backupDB = new File(sd + "/avinash", backupDBPath);
+                Log.d("copydb", "db creted start1currentDB.exists()=" + currentDB.exists());
+                if (currentDB.exists()) {
+                    Log.d("copydb", "db creted start2");
+                    FileChannel src = new FileInputStream(currentDB).getChannel();
+                    FileChannel dst = new FileOutputStream(backupDB).getChannel();
+                    dst.transferFrom(src, 0, src.size());
+                    src.close();
+                    dst.close();
+                    Log.d("copydb", "db creted succesfully");
+                }
+            }
+        } catch (Exception e) {
+            Log.d("copydb", "db exception" + e.getMessage());
+        }
+    }
 
     public void aleartDialog(String message) {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
@@ -425,7 +453,7 @@ public class AfterLoginActivity extends AppCompatActivity implements HttpConnect
                     try {
                         response = new JSONObject(resultData);
                         if (response.getString("status").equalsIgnoreCase("success")) {
-                            if (mValdocDatabaseHandler.deleteTable()) {
+                            if (mValdocDatabaseHandler.deleteTestReportTable()) {
                                 aleartDialog("Data synked successfully");
                             } else {
                                 aleartDialog("Post Data not syncked successfully,Please sync again !");

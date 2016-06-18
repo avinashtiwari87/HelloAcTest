@@ -525,7 +525,6 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
         } else if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
             for (RoomFilter roomFilter : mRoomFilterArrayList) {
                 TestReading testReading = new TestReading();
-//            testReading.setTestReadingID(index);
 //        TO DO test details id is id of test details table
                 testReading.setTest_detail_id(testDetailsId);
                 testReading.setEntityName("" + roomFilter.getFilterCode().toString());

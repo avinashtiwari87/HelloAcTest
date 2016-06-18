@@ -730,19 +730,35 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
         Log.d("valdoc", "table created success fully");
     }
 
-    public boolean deleteTable() {
+    public boolean deleteTestReportTable() {
         SQLiteDatabase db = this.getWritableDatabase();
 //        db.delete("DROP TABLE IF EXISTS " + TEST_DETAILS_TABLE_NAME);
 //        db.execSQL("DROP TABLE IF EXISTS " + TESTREADING_TABLE_NAME);
 //        db.execSQL("DROP TABLE IF EXISTS " + TESTSPECIFICATIONVALUE_TABLE_NAME);
 //        db.execSQL("DROP TABLE IF EXISTS " + SERVICE_REPORT_TABLE_NAME);
 //        db.execSQL("DROP TABLE IF EXISTS " + SERVICE_REPORT_DETAIL_TABLE_NAME);
-        db.delete(TEST_DETAILS_TABLE_NAME, null, null);
-        db.delete(TESTREADING_TABLE_NAME, null, null);
-        db.delete(TESTSPECIFICATIONVALUE_TABLE_NAME, null, null);
+//        db.delete(TEST_DETAILS_TABLE_NAME, null, null);
+//        db.delete(TESTREADING_TABLE_NAME, null, null);
+//        db.delete(TESTSPECIFICATIONVALUE_TABLE_NAME, null, null);
         db.delete(SERVICE_REPORT_TABLE_NAME, null, null);
         db.delete(SERVICE_REPORT_DETAIL_TABLE_NAME, null, null);
         return true;
+    }
+
+    public boolean deleteTestTableRow(int testDetailsId) {
+        boolean val = false;
+        SQLiteDatabase db = this.getWritableDatabase();
+        try {
+            Log.d("Avinash", "testDetailsId" + testDetailsId);
+            val = db.delete(TEST_DETAILS_TABLE_NAME, TEST_DETAILS_TEST_DETAIL_ID + " = " + testDetailsId, null) > 0;
+            val = db.delete(TESTREADING_TABLE_NAME, TESTREADING_TEST_DETAIL_ID + " = " + testDetailsId, null) > 0;
+            val = db.delete(TESTSPECIFICATIONVALUE_TABLE_NAME, TESTSPECIFICATIONVALUE_TEST_DETAIL_ID + " = " + testDetailsId, null) > 0;
+        } catch (Exception e) {
+
+        } finally {
+            db.close();
+        }
+        return val;
     }
 
     // chek id in db table
@@ -2107,7 +2123,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
     // select data from room table
     public String[] getRoomByAhu(int ahuId) {
         Log.d("ValdocDatabaseHandler", "roomId=" + ahuId);
-        String selectQuery = " SELECT " + ROOM_ROOMNO + "," + ROOM_ROOMNAME + "," + ROOM_AREAID + "," + ROOM_ACPH +","+ROOM_VOLUME+ " FROM " + ROOM_TABLE_NAME +
+        String selectQuery = " SELECT " + ROOM_ROOMNO + "," + ROOM_ROOMNAME + "," + ROOM_AREAID + "," + ROOM_ACPH + "," + ROOM_VOLUME + " FROM " + ROOM_TABLE_NAME +
 //        String selectQuery = " SELECT * FROM " + PARTNERUSER_TABLE_NAME +
                 " WHERE " + ValdocDatabaseHandler.ROOM_AHUID + " = " + ahuId;
         SQLiteDatabase database = this.getWritableDatabase();
@@ -2446,7 +2462,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
     }
 
     //Select data from TestReading table;
-    public ArrayList<TestReading>getTestReadingDataById(String testDetailId) {
+    public ArrayList<TestReading> getTestReadingDataById(String testDetailId) {
         ArrayList<TestReading> testReadingList = new ArrayList<TestReading>();
 
         String selectQuery = "SELECT * FROM " + TESTREADING_TABLE_NAME +

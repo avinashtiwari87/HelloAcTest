@@ -10,6 +10,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TableLayout;
@@ -22,30 +23,43 @@ import com.project.valdoc.intity.TestDetails;
 import com.project.valdoc.utility.Utilityies;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class SyncSelectedDataActivity extends AppCompatActivity {
     private static final String TAG = "SyncSelectedData";
     TableLayout table_layout1, table_layout2, table_layout3, table_layout4, table_layout5,
             table_layout6, table_layout7, table_layout8, table_layout9, table_layout10;
-    int rows =5, colos =5;
-    private String userName = "",testType = "";
+    int rows = 5, colos = 5;
+    private String userName = "", testType = "";
     SharedPreferences sharedpreferences;
     private ValdocDatabaseHandler mValdocDatabaseHandler;
     private ArrayList<TestDetails> testDetailList;
+    private HashMap<Integer,Integer> selectePosition=new HashMap<Integer,Integer>();
+    Button syncSelectedButton;
+
+//    private ValdocDatabaseHandler mValdocDatabaseHandler = new ValdocDatabaseHandler(TestCreateActivity.this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sync_selected_data);
+        syncSelectedButton = (Button) findViewById(R.id.sync_selected_button);
+        syncSelectedButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                syncTestData();
+
+            }
+        });
 
         mValdocDatabaseHandler = new ValdocDatabaseHandler(SyncSelectedDataActivity.this);
         sharedpreferences = getSharedPreferences("valdoc", Context.MODE_PRIVATE);
         userName = sharedpreferences.getString("USERNAME", "");
         testDetailList = new ArrayList<TestDetails>();
 
-        if(getIntent().hasExtra("rows")){
-           rows = getIntent().getIntExtra("rows",6);
-            colos = getIntent().getIntExtra("cols",6);
+        if (getIntent().hasExtra("rows")) {
+            rows = getIntent().getIntExtra("rows", 6);
+            colos = getIntent().getIntExtra("cols", 6);
         }
         testType = getIntent().getStringExtra("TestType");
         Log.d(TAG, " Code TestType : " + testType);
@@ -57,35 +71,44 @@ public class SyncSelectedDataActivity extends AppCompatActivity {
 
 
         initRes();
-        if(getTestDataByTestCode(testType).size()>0){
-            BuildSyncDataTable(getTestDataByTestCode(testType).size()+1,colos+1);
-        }else{
+        if (getTestDataByTestCode(testType).size() > 0) {
+            BuildSyncDataTable(getTestDataByTestCode(testType).size() + 1, colos + 1);
+        } else {
             findViewById(R.id.no_data_found_tv).setVisibility(View.VISIBLE);
         }
     }
 
+//    private void syncTestData() {
+//        if(selectePosition.size()>0) {
+//            for (Integer value : selectePosition.values()) {
+//                mValdocDatabaseHandler.deleteTestTableRow(testDetailList.get(value).getTest_detail_id());
+//            }
+//        }
+//
+//    }
+
     private ArrayList<TestDetails> getTestDataByTestCode(String testType) {
-        if(testType.contains("ACPH_AV")){
+        if (testType.contains("ACPH_AV")) {
             testDetailList = mValdocDatabaseHandler.getTestDetailByTestCode("ACPH_AV");
-        }else if(testType.contains("ACPH_H")){
-            testDetailList =  mValdocDatabaseHandler.getTestDetailByTestCode("ACPH_H");
-        }else if(testType.contains("FIT")){
+        } else if (testType.contains("ACPH_H")) {
+            testDetailList = mValdocDatabaseHandler.getTestDetailByTestCode("ACPH_H");
+        } else if (testType.contains("FIT")) {
             testDetailList = mValdocDatabaseHandler.getTestDetailByTestCode("FIT");
-        }else if(testType.contains("PCT")){
+        } else if (testType.contains("PCT")) {
             testDetailList = mValdocDatabaseHandler.getTestDetailByTestCode("PCT");
-        }else if(testType.contains("RCT")){
+        } else if (testType.contains("RCT")) {
             testDetailList = mValdocDatabaseHandler.getTestDetailByTestCode("RCT");
-        }else if(testType.contains("ARD_AF_AHU")){
+        } else if (testType.contains("ARD_AF_AHU")) {
             testDetailList = mValdocDatabaseHandler.getTestDetailByTestCode("ARD_AF_AHU");
-        }else if(testType.contains("ARD_FIT_AHU")){
-            testDetailList =  mValdocDatabaseHandler.getTestDetailByTestCode("ARD_FIT_AHU");
-        }else if(testType.contains("ERD_AV")){
+        } else if (testType.contains("ARD_FIT_AHU")) {
+            testDetailList = mValdocDatabaseHandler.getTestDetailByTestCode("ARD_FIT_AHU");
+        } else if (testType.contains("ERD_AV")) {
             testDetailList = mValdocDatabaseHandler.getTestDetailByTestCode("ERD_AV");
-        }else if(testType.contains("ERD_FIT")){
-            testDetailList =  mValdocDatabaseHandler.getTestDetailByTestCode("ERD_FIT");
-        }else if(testType.contains("ERD_PCT")){
+        } else if (testType.contains("ERD_FIT")) {
+            testDetailList = mValdocDatabaseHandler.getTestDetailByTestCode("ERD_FIT");
+        } else if (testType.contains("ERD_PCT")) {
             testDetailList = mValdocDatabaseHandler.getTestDetailByTestCode("ERD_PCT");
-        }else if(testType.contains("ERD_RCT")){
+        } else if (testType.contains("ERD_RCT")) {
             testDetailList = mValdocDatabaseHandler.getTestDetailByTestCode("ERD_RCT");
         }
         return testDetailList;
@@ -104,7 +127,7 @@ public class SyncSelectedDataActivity extends AppCompatActivity {
                 if (i == 1 && j == 1) {
                     row.addView(addTextView("SI # "));
                 } else {
-                    row.addView(addTextView(i-1+""));
+                    row.addView(addTextView(i - 1 + ""));
                 }
 
             }
@@ -123,7 +146,7 @@ public class SyncSelectedDataActivity extends AppCompatActivity {
                 if (i == 1 && j == 1) {
                     row.addView(addTextView("Select "));
                 } else {
-                    row.addView(addCheckBox(1+i));
+                    row.addView(addCheckBox(1 + i));
                 }
 
             }
@@ -301,7 +324,6 @@ public class SyncSelectedDataActivity extends AppCompatActivity {
         }
 
 
-
     }
 
     private void initRes() {
@@ -317,6 +339,7 @@ public class SyncSelectedDataActivity extends AppCompatActivity {
         table_layout10 = (TableLayout) findViewById(R.id.syncData_tableLayout10);
 
     }
+
     private TextView addTextView(String textValue) {
         TextView tv = new TextView(this);
         tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
@@ -333,6 +356,7 @@ public class SyncSelectedDataActivity extends AppCompatActivity {
         tv.setText(textValue);
         return tv;
     }
+
     private TextView addActionTextView(String view, int rowId) {
         TextView tv = new TextView(this);
         tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
@@ -344,11 +368,12 @@ public class SyncSelectedDataActivity extends AppCompatActivity {
         tv.setHeight(70);
         tv.setMaxLines(3);
         tv.setEllipsize(TextUtils.TruncateAt.END);
-        tv.setOnClickListener(new ViewActionValidator(SyncSelectedDataActivity.this,rowId));
+        tv.setOnClickListener(new ViewActionValidator(SyncSelectedDataActivity.this, rowId));
         tv.setText(view);
         return tv;
     }
-    private CheckBox  addCheckBox(int row){
+
+    private CheckBox addCheckBox(int row) {
         CheckBox cb = new CheckBox(this);
         cb.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
                 TableRow.LayoutParams.WRAP_CONTENT));
@@ -356,9 +381,9 @@ public class SyncSelectedDataActivity extends AppCompatActivity {
         cb.setHeight(70);
         cb.setGravity(Gravity.CENTER);
         cb.setId(row);
-        cb.setTag(row+1);
-        cb.setOnCheckedChangeListener(new CheckedValidator(SyncSelectedDataActivity.this,row));
-        return  cb;
+        cb.setTag(row + 1);
+        cb.setOnCheckedChangeListener(new CheckedValidator(SyncSelectedDataActivity.this, row));
+        return cb;
     }
 
     private class CheckedValidator implements CompoundButton.OnCheckedChangeListener {
@@ -372,10 +397,15 @@ public class SyncSelectedDataActivity extends AppCompatActivity {
 
         @Override
         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-            if (isChecked)
-                Toast.makeText(mContext, "CheckBox : "+checkBpxId+" Checked", Toast.LENGTH_SHORT).show();
-            else
-                Toast.makeText(mContext, "CheckBox : "+checkBpxId+" Unchecked", Toast.LENGTH_SHORT).show();
+
+            if (isChecked) {
+                selectePosition.put(checkBpxId, checkBpxId - 3);
+                Toast.makeText(mContext, "CheckBox : " + checkBpxId + " Checked ", Toast.LENGTH_SHORT).show();
+            }
+            else {
+                selectePosition.remove(checkBpxId);
+//                Toast.makeText(mContext, "CheckBox : " + checkBpxId + " Unchecked", Toast.LENGTH_SHORT).show();
+            }
 
         }
     }
@@ -392,12 +422,12 @@ public class SyncSelectedDataActivity extends AppCompatActivity {
 
         @Override
         public void onClick(View v) {
-            Toast.makeText(mContext, testType+"View Row : "+viewTextId+" Test", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(SyncSelectedDataActivity.this,CommonTestViewActivity.class);
-            intent.putExtra("TestType",testType);
-            intent.putExtra("testDetailId",testDetailList.get(viewTextId-2).getTest_detail_id());
-            intent.putExtra("rows",6);
-            intent.putExtra("cols",5);
+            Toast.makeText(mContext, testType + "View Row : " + viewTextId + " Test", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(SyncSelectedDataActivity.this, CommonTestViewActivity.class);
+            intent.putExtra("TestType", testType);
+            intent.putExtra("testDetailId", testDetailList.get(viewTextId - 2).getTest_detail_id());
+            intent.putExtra("rows", 6);
+            intent.putExtra("cols", 5);
             startActivity(intent);
         }
     }
