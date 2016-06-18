@@ -2446,12 +2446,12 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
     }
 
     //Select data from TestReading table;
-    public ArrayList<TestReading> getTestReadingDataById(String testReadingId) {
+    public ArrayList<TestReading>getTestReadingDataById(String testDetailId) {
         ArrayList<TestReading> testReadingList = new ArrayList<TestReading>();
 
         String selectQuery = "SELECT * FROM " + TESTREADING_TABLE_NAME +
-                " WHERE " + ValdocDatabaseHandler.TESTREADING_TESTREADINGID
-                + " = " + '"' + testReadingId + '"';
+                " WHERE " + ValdocDatabaseHandler.TESTREADING_TEST_DETAIL_ID
+                + " = " + '"' + testDetailId + '"';
 
         SQLiteDatabase database = this.getWritableDatabase();
         Cursor cursor = database.rawQuery(selectQuery, null);

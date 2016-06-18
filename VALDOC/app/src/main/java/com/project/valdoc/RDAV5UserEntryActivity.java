@@ -479,8 +479,8 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
         testDetails.setRoomNo("" + roomDetails[0]);
         testDetails.setOccupencyState("" + occupancyState.getText());
         testDetails.setTestReference("" + testRefrance.getText());
-        testDetails.setEquipmentName("" + equipment.getEquipmentName());
-        testDetails.setEquipmentNo("" + equipment.getEquipmentNo());
+        testDetails.setEquipmentName(""+equipment.getEquipmentName());
+        testDetails.setEquipmentNo("" +equipment.getEquipmentNo());
         testDetails.setTesterName("" + testCundoctor.getText());
         testDetails.setWitnessName("" + testWitness.getText());
         testDetails.setTestCode(mTestCode);
