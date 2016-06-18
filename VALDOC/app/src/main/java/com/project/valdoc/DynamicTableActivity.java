@@ -279,6 +279,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                     }else if (mTestBasedOn.equalsIgnoreCase("AHU")) {
                         ahuNumber = extras.getString("AhuNumber");
                         roomDetails=extras.getStringArray("RoomDetails");
+                        Log.d("Dynamictest","roomDetails="+roomDetails[1]);
                         mAhuFilterArrayList=(ArrayList<AhuFilter>)extras.getSerializable("AhuFilter");
                         mApplicableTestAhu = (ApplicableTestAhu) extras.getSerializable("ApplicableTestAhu");
                     }else if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
@@ -2224,9 +2225,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         if (TestCreateActivity.FIT.equalsIgnoreCase(testType)) {
             instrumentNo = (TextView) findViewById(R.id.instrument_no4);
             testerName = (TextView) findViewById(R.id.tester_name_test4);
-            roomName = (TextView) findViewById(R.id.room_name4);
             instrumentName = (TextView) findViewById(R.id.instrument_name4);
-            roomName.setText("" + room.getRoomName());
             testerName.setText(userName);
             if (loginUserType.equals("CLIENT")) {
                 instrumentName.setText(clientInstrument.getcInstrumentName());
@@ -2236,6 +2235,14 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 instrumentNo.setText("" + partnerInstrument.getSerialNo());
             }
             findViewById(R.id.test4_table_ll).setVisibility(View.VISIBLE);
+            if (mTestBasedOn.equalsIgnoreCase("EQUIPMENT")) {
+                roomName.setText("" + roomDetails[1]);
+            } else if (mTestBasedOn.equalsIgnoreCase("AHU")) {
+                roomName.setText("hello" + roomDetails[1]);
+            } else if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
+                roomName.setText("" + room.getRoomName());
+            }
+
         }
 
         //Test5

@@ -441,8 +441,10 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
     public static final String ROOM_FRESHAIRCFM = "freshAirCFM";
     public static final String ROOM_BLEEDAIRCFM = "bleedAirCFM";
     public static final String ROOM_EXHAUSTAIRFLOW = "exhaustAirFlow";
-    public static final String ROOM_TEMPERATURE = "temperature";
-    public static final String ROOM_RH = "rh";
+    public static final String ROOM_MAXTEMPERATURE = "maxTemperature";
+    public static final String ROOM_MAXRH = "maxRH";
+    public static final String ROOM_MINTEMPERATURE = "minTemperature";
+    public static final String ROOM_MINRH = "minRH";
     public static final String ROOM_RETURNAIRFLOW = "returnAirFlow";
     //    public static final String ROOM_SUPPLYAIRGRILLQTY = "supplyAirGrillQTY";
 //    public static final String ROOM_RETURNAIRGRILLQTY = "returnAirGrillQTY";
@@ -458,8 +460,8 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
             + ROOM_HEIGHT + " REAL," + ROOM_LENGTH + " REAL," + ROOM_AREA + " REAL," + ROOM_VOLUME + " REAL,"
             + ROOM_ACPH + " INTEGER," + ROOM_TESTREF + " TEXT," + ROOM_ISOCLAUSE + " TEXT," + ROOM_OCCUPANCYSTATE + " TEXT,"
             + ROOM_SUPPLYAIRFLOW + " REAL," + ROOM_AHUFLOWCFM + " REAL," + ROOM_ROOMPRESSUREPA + " REAL,"
-            + ROOM_FRESHAIRCFM + " REAL," + ROOM_BLEEDAIRCFM + " REAL," + ROOM_EXHAUSTAIRFLOW + " REAL," + ROOM_TEMPERATURE + " REAL,"
-            + ROOM_RH + " REAL," + ROOM_RETURNAIRFLOW + " REAL," + ROOM_REMARKS + " TEXT,"
+            + ROOM_FRESHAIRCFM + " REAL," + ROOM_BLEEDAIRCFM + " REAL," + ROOM_EXHAUSTAIRFLOW + " REAL," + ROOM_MAXTEMPERATURE + " REAL,"
+            + ROOM_MAXRH + " REAL," +ROOM_MINTEMPERATURE+" REAL,"+ROOM_MINRH+" REAL,"+ ROOM_RETURNAIRFLOW + " REAL," + ROOM_REMARKS + " TEXT,"
             + ROOM_LASTUPDATEDDATE + " TEXT " + ")";
 //    + ROOM_SUPPLYAIRGRILLQTY + " INTEGER," + ROOM_RETURNAIRGRILLQTY
 //            + " INTEGER," + ROOM_SUPPLYAIRFILTERQTY + " INTEGER," + ROOM_RETURNAIRFILTERQTY + " INTEGER,"
@@ -1306,14 +1308,11 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 contentValues.put(PARTNER_INSTRUMENT_REMARKS, partnerInstrument.getRemarks());
                 contentValues.put(PARTNER_INSTRUMENT_LASTUPDATEDDATE, partnerInstrument.getLastUpdatedDate());
 //                contentValues.put(PARTNER_INSTRUMENT_CURRENTLOCATION, partnerInstrument.getCurrentLocation());
-
 //                contentValues.put(PARTNER_INSTRUMENT_TESTID, partnerInstrument.getTestId());
-//
 //                contentValues.put(PARTNER_INSTRUMENT_SAMPLINGFLOWRATE, partnerInstrument.getSamplingFlowRate());
 //                contentValues.put(PARTNER_INSTRUMENT_SAMPLINGTIME, partnerInstrument.getSamplingTime());
 //                contentValues.put(PARTNER_INSTRUMENT_AEROSOLUSED, partnerInstrument.getAerosolUsed());
 //                contentValues.put(PARTNER_INSTRUMENT_AEROSOLGENERATORTYPE, partnerInstrument.getAerosolGeneratorType());
-                Log.d("VALDOC", "controler response data  13=inserting=");
 
                 if (getExistingId(tableName, PARTNER_INSTRUMENT_PINSTRUMENTID, partnerInstrument.getpInstrumentId()) > 0) {
                     db.update(tableName, contentValues, PARTNER_INSTRUMENT_PINSTRUMENTID + "=" + partnerInstrument.getpInstrumentId(), null);
@@ -1470,8 +1469,10 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 contentValues.put(ROOM_FRESHAIRCFM, room.getFreshAirCFM());
                 contentValues.put(ROOM_BLEEDAIRCFM, room.getBleedAirCFM());
                 contentValues.put(ROOM_EXHAUSTAIRFLOW, room.getExhaustAirFlow());
-                contentValues.put(ROOM_TEMPERATURE, room.getTemperature());
-                contentValues.put(ROOM_RH, room.getRh());
+                contentValues.put(ROOM_MAXTEMPERATURE, room.getMaxTemperature());
+                contentValues.put(ROOM_MAXRH, room.getMaxRH());
+                contentValues.put(ROOM_MINTEMPERATURE, room.getMinTemperature());
+                contentValues.put(ROOM_MINRH, room.getMinRH());
                 contentValues.put(ROOM_RETURNAIRFLOW, room.getReturnAirFlow());
 //                contentValues.put(ROOM_SUPPLYAIRGRILLQTY, room.getSupplyAirGrillQTY());
 //                contentValues.put(ROOM_RETURNAIRGRILLQTY, room.getReturnAirGrillQTY());
@@ -2084,14 +2085,38 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
 
     // select data from room table
     public String[] getRoomByEquipment(int roomId) {
+        Log.d("ValdocDatabaseHandler","roomId="+roomId);
         String selectQuery = " SELECT " + ROOM_ROOMNO + "," + ROOM_ROOMNAME + "," + ROOM_AREAID + " FROM " + ROOM_TABLE_NAME +
 //        String selectQuery = " SELECT * FROM " + PARTNERUSER_TABLE_NAME +
                 " WHERE " + ValdocDatabaseHandler.ROOM_ROOMID + " = " + roomId;
         SQLiteDatabase database = this.getWritableDatabase();
         Cursor cursor = database.rawQuery(selectQuery, null);
+        Log.d("ValdocDatabaseHandler","cursor="+cursor.getCount());
         String[] strings = new String[3];
         if (cursor.moveToFirst()) {
             do {
+                Log.d("ValdocDatabaseHandler","roomId="+roomId);
+                strings[0] = cursor.getString(cursor.getColumnIndex(ROOM_ROOMNO));
+                strings[1] = cursor.getString(cursor.getColumnIndex(ROOM_ROOMNAME));
+                strings[2] = cursor.getString(cursor.getColumnIndex(ROOM_AREAID));
+            } while (cursor.moveToNext());
+        } // return contact list return wordList; }
+        return strings;
+    }
+
+    // select data from room table
+    public String[] getRoomByAhu(int ahuId) {
+        Log.d("ValdocDatabaseHandler","roomId="+ahuId);
+        String selectQuery = " SELECT " + ROOM_ROOMNO + "," + ROOM_ROOMNAME + "," + ROOM_AREAID + " FROM " + ROOM_TABLE_NAME +
+//        String selectQuery = " SELECT * FROM " + PARTNERUSER_TABLE_NAME +
+                " WHERE " + ValdocDatabaseHandler.ROOM_AHUID + " = " + ahuId;
+        SQLiteDatabase database = this.getWritableDatabase();
+        Cursor cursor = database.rawQuery(selectQuery, null);
+        Log.d("ValdocDatabaseHandler","cursor="+cursor.getCount());
+        String[] strings = new String[3];
+        if (cursor.moveToFirst()) {
+            do {
+                Log.d("ValdocDatabaseHandler","roomId="+ahuId);
                 strings[0] = cursor.getString(cursor.getColumnIndex(ROOM_ROOMNO));
                 strings[1] = cursor.getString(cursor.getColumnIndex(ROOM_ROOMNAME));
                 strings[2] = cursor.getString(cursor.getColumnIndex(ROOM_AREAID));
@@ -2193,7 +2218,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
     public ArrayList<EquipmentFilter> getFilterFromEquipmentFilter(int equipmentId) {
         ArrayList<EquipmentFilter> filterArrayList;
         filterArrayList = new ArrayList<EquipmentFilter>();
-        String selectQuery = " SELECT " + EQUIPMENTFILTER_FILTERCODE + " FROM " + EQUIPMENTFILTER_TABLE_NAME +
+        String selectQuery = " SELECT * FROM " + EQUIPMENTFILTER_TABLE_NAME +
 //        String selectQuery = " SELECT * FROM " + PARTNERUSER_TABLE_NAME +
                 " WHERE " + ValdocDatabaseHandler.EQUIPMENTFILTER_EQUIPMENTID + " = " + equipmentId;
         SQLiteDatabase database = this.getWritableDatabase();
@@ -2321,16 +2346,17 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 room.setFreshAirCFM(cursor.getDouble(17));
                 room.setBleedAirCFM(cursor.getDouble(18));
                 room.setExhaustAirFlow(cursor.getDouble(19));
-                room.setTemperature(cursor.getDouble(20));
-                room.setRh(cursor.getDouble(21));
-
-                room.setReturnAirFlow(cursor.getDouble(22));
+                room.setMaxTemperature(cursor.getDouble(20));
+                room.setMaxRH(cursor.getDouble(21));
+                room.setMinTemperature(cursor.getDouble(22));
+                room.setMinRH(cursor.getDouble(23));
+                room.setReturnAirFlow(cursor.getDouble(24));
 //                room.setSupplyAirGrillQTY(cursor.getInt(23));
 //                room.setReturnAirGrillQTY(cursor.getInt(24));
 //                room.setSupplyAirFilterQTY(cursor.getInt(25));
 //                room.setReturnAirFilterQTY(cursor.getInt(26));
-                room.setRemarks(cursor.getString(23));
-                room.setLastUpdatedDate(cursor.getString(24));
+                room.setRemarks(cursor.getString(25));
+                room.setLastUpdatedDate(cursor.getString(26));
                 roomArrayList.add(room);
             } while (cursor.moveToNext());
         } // return contact list return wordList; }
@@ -2474,16 +2500,18 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 room.setFreshAirCFM(cursor.getDouble(17));
                 room.setBleedAirCFM(cursor.getDouble(18));
                 room.setExhaustAirFlow(cursor.getDouble(19));
-                room.setTemperature(cursor.getDouble(20));
-                room.setRh(cursor.getDouble(21));
+                room.setMaxTemperature(cursor.getDouble(20));
+                room.setMaxRH(cursor.getDouble(21));
+                room.setMinTemperature(cursor.getDouble(22));
+                room.setMinRH(cursor.getDouble(23));
 
-                room.setReturnAirFlow(cursor.getDouble(22));
+                room.setReturnAirFlow(cursor.getDouble(24));
 //                room.setSupplyAirGrillQTY(cursor.getInt(23));
 //                room.setReturnAirGrillQTY(cursor.getInt(24));
 //                room.setSupplyAirFilterQTY(cursor.getInt(25));
 //                room.setReturnAirFilterQTY(cursor.getInt(26));
-                room.setRemarks(cursor.getString(23));
-                room.setLastUpdatedDate(cursor.getString(24));
+                room.setRemarks(cursor.getString(25));
+                room.setLastUpdatedDate(cursor.getString(26));
                 roomArrayList.add(room);
             } while (cursor.moveToNext());
         } // return contact list return wordList; }
@@ -2515,7 +2543,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 applicableTestRoom.setLocation(cursor.getInt(10));
                 applicableTestRoom.setNoOfCycle(cursor.getInt(11));
                 applicableTestRoom.setLastUpdatedDate(cursor.getString(12));
-                Log.d("Avinash", "applicableTestRoom=" + applicableTestRoom.getTestName());
+//                Log.d("Avinash", "applicableTestRoom=" + applicableTestRoom.getTestName());
             } while (cursor.moveToNext());
         } // return contact list return wordList; }
         return applicableTestRoom;
@@ -2552,15 +2580,16 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
     }
 
     // select data from applicable test room table
-    public ApplicableTestEquipment getApplicableTestEquipmentInfo(int equipmentId) {
+    public ApplicableTestEquipment getApplicableTestEquipmentInfo(int equipmentId,String testCode) {
         String selectQuery = "SELECT * FROM " + APLICABLE_TEST_EQUIPMENT_TABLE_NAME +
-                " WHERE " + ValdocDatabaseHandler.APLICABLE_TEST_EQUIPMENT_EQUIPMENTID + " = " + equipmentId;
+                " WHERE " +ValdocDatabaseHandler.APLICABLE_TEST_EQUIPMENT_TESTCODE + " = " + '"' + testCode + '"' + " AND "
+                + ValdocDatabaseHandler.APLICABLE_TEST_EQUIPMENT_EQUIPMENTID + " = " + equipmentId;
         SQLiteDatabase database = this.getWritableDatabase();
         Cursor cursor = database.rawQuery(selectQuery, null);
         ApplicableTestEquipment applicableTestEquipment = new ApplicableTestEquipment();
+        Log.d("Avinash","applicableTestEquipment before="+cursor.getCount());
         if (cursor.moveToFirst()) {
             do {
-
                 applicableTestEquipment.setAplicable_testId(cursor.getInt(0));
                 applicableTestEquipment.setEquipmentId(cursor.getInt(1));
                 applicableTestEquipment.setTestName(cursor.getString(2));
@@ -2574,6 +2603,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 applicableTestEquipment.setLocation(cursor.getInt(10));
                 applicableTestEquipment.setNoOfCycle(cursor.getInt(11));
                 applicableTestEquipment.setLastUpdatedDate(cursor.getString(12));
+                Log.d("Avinash","applicableTestEquipment.setAplicable_testId(cursor.getInt(0));="+applicableTestEquipment.getAplicable_testId());
             } while (cursor.moveToNext());
         } // return contact list return wordList; }
         return applicableTestEquipment;

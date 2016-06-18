@@ -16,6 +16,7 @@ public class AhuFilter implements Serializable{
     private double depthArea;
     private double area;
     private double effectiveArea;
+    private String lastUpdatedDate;
 
     public String getAhufilter() {
         return ahufilter;
@@ -95,5 +96,13 @@ public class AhuFilter implements Serializable{
 
     public void setEffectiveArea(double effectiveArea) {
         this.effectiveArea = effectiveArea;
+    }
+
+    public String getLastUpdatedDate() {
+        return lastUpdatedDate;
+    }
+
+    public void setLastUpdatedDate(String lastUpdatedDate) {
+        this.lastUpdatedDate = lastUpdatedDate;
     }
 }

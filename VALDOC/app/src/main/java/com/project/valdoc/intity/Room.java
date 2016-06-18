@@ -28,8 +28,10 @@ public class Room implements Serializable{
     private double freshAirCFM;
     private double bleedAirCFM;
     private double exhaustAirFlow;
-    private double temperature;
-    private double rh;
+    private double maxTemperature;
+    private double maxRH;
+    private double minTemperature;
+    private double minRH;
     private double returnAirFlow;
 //    private int supplyAirGrillQTY;
 //    private int returnAirGrillQTY;
@@ -206,20 +208,36 @@ public class Room implements Serializable{
         this.exhaustAirFlow = exhaustAirFlow;
     }
 
-    public double getTemperature() {
-        return temperature;
+    public double getMaxTemperature() {
+        return maxTemperature;
     }
 
-    public void setTemperature(double temperature) {
-        this.temperature = temperature;
+    public void setMaxTemperature(double maxTemperature) {
+        this.maxTemperature = maxTemperature;
     }
 
-    public double getRh() {
-        return rh;
+    public double getMaxRH() {
+        return maxRH;
     }
 
-    public void setRh(double rh) {
-        this.rh = rh;
+    public void setMaxRH(double maxRH) {
+        this.maxRH = maxRH;
+    }
+
+    public double getMinTemperature() {
+        return minTemperature;
+    }
+
+    public void setMinTemperature(double minTemperature) {
+        this.minTemperature = minTemperature;
+    }
+
+    public double getMinRH() {
+        return minRH;
+    }
+
+    public void setMinRH(double minRH) {
+        this.minRH = minRH;
     }
 
     public double getReturnAirFlow() {

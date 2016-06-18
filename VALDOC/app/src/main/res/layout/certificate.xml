@@ -283,6 +283,11 @@
                 android:id="@+id/ahu_no_lable"
                 style="@style/TextAppearance.AppCompat.header_left"
                 android:text="@string/ahu_no" />
+            <TextView
+                android:id="@+id/equipment_lable"
+                style="@style/TextAppearance.AppCompat.header_left"
+                android:text="@string/equipment_name"
+                android:visibility="gone"/>
         </LinearLayout>
 
         <LinearLayout
@@ -308,10 +313,15 @@
                 android:text="@string/area_of_test_label_details" />
 
             <TextView
-                android:id="@+id/ahu_no"
-                style="@style/TextAppearance.AppCompat.header_right"
-                android:text="" />
+            android:id="@+id/ahu_no"
+            style="@style/TextAppearance.AppCompat.header_right"
+            android:text="" />
 
+            <TextView
+                android:id="@+id/equipment_name"
+                style="@style/TextAppearance.AppCompat.header_right"
+                android:text=""
+                android:visibility="gone"/>
 
         </LinearLayout>
 
@@ -347,6 +357,12 @@
                     style="@style/TextAppearance.AppCompat.header_left"
                     android:text="@string/room_no" />
 
+                <TextView
+                    android:id="@+id/equipment_no_lable"
+                    style="@style/TextAppearance.AppCompat.header_left"
+                    android:text="@string/equipment_no"
+                    android:visibility="gone"/>
+
             </LinearLayout>
 
             <LinearLayout
@@ -375,6 +391,12 @@
                     android:id="@+id/room_no"
                     style="@style/TextAppearance.AppCompat.header_right"
                     android:text="" />
+
+                <TextView
+                    android:id="@+id/equipment_no"
+                    style="@style/TextAppearance.AppCompat.header_right"
+                    android:text=""
+                    android:visibility="gone"/>
             </LinearLayout>
 
         </LinearLayout>

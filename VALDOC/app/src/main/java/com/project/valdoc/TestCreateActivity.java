@@ -237,7 +237,7 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
         if (AV.equals(searchEquipmentTestCode[testPosition])) {
             rdAv5Test(equipmentTestCode[testPosition], testBasedOn);
         } else if (FIT.equals(searchEquipmentTestCode[testPosition])) {
-            rdFit(equipmentTestCode[testPosition], testBasedOn);
+            rdFit(equipmentTestCode[testPosition], testBasedOn,FIT);
         } else if (PCT.equals(searchEquipmentTestCode[testPosition])) {
 //            rdPc3(equipmentTestCode[testPosition],searchEquipmentTestCode[testPosition]);
             rdPc3(equipmentTestCode[testPosition], testBasedOn);
@@ -256,7 +256,7 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
         } else if (ACPHH.equals(searchRoomsTestCode[testPosition])) {
             rdAcphH(roomsTestCode[testPosition], testBasedOn);
         } else if (FIT.equals(searchRoomsTestCode[testPosition])) {
-            rdFit(roomsTestCode[testPosition], testBasedOn);
+            rdFit(roomsTestCode[testPosition], testBasedOn,FIT);
         } else if (PCT.equals(searchRoomsTestCode[testPosition])) {
             rdPc3(roomsTestCode[testPosition], testBasedOn);
         } else if (RCT.equals(searchRoomsTestCode[testPosition])) {
@@ -275,7 +275,7 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
             rdAv5Test(ahuTestCode[testPosition], testBasedOn);
         } else if (FIT.equals(searchAhuTestCode[testPosition])) {
 //            rdFit(ahuTestCode[testPosition],searchAhuTestCode[testPosition]);
-            rdFit(ahuTestCode[testPosition], testBasedOn);
+            rdFit(ahuTestCode[testPosition], testBasedOn,FIT);
         } else {
             Toast.makeText(TestCreateActivity.this, "Please select the correct test to be performed", Toast.LENGTH_SHORT).show();
         }
@@ -362,7 +362,7 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
         startActivity(intent);
     }
 
-    private void rdFit(String testCode, String testBasedOn) {
+    private void rdFit(String testCode, String testBasedOn,String testType) {
         Intent intent = new Intent(TestCreateActivity.this, DynamicTableActivity.class);
         intent.putExtra("USERTYPE", loginUserType);
         intent.putExtra("USERNAME", userName);
@@ -395,8 +395,7 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
             //get filter list from equipment filter
             mEquipmentFilterArrayList = mValdocDatabaseHandler.getFilterFromEquipmentFilter(equipment.getEquipmentId());
             intent.putExtra("EquipmentFilter", mEquipmentFilterArrayList);
-            Log.d("valdoc", "TestCreateActivity :equipment1:=" + mEquipmentGrillArrayList.size());
-            ApplicableTestEquipment applicableTestEquipment = createApplicableTestEquipmentList(equipment.getEquipmentId());
+            ApplicableTestEquipment applicableTestEquipment = createApplicableTestEquipmentList(equipment.getEquipmentId(),testType);
             intent.putExtra("ApplicableTestEquipment", applicableTestEquipment);
 
 
@@ -410,7 +409,7 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
                 ahu = mAhuArrayList.get(ahuIndex - 1);
             }
 //            intent.putExtra("Ahu", ahu);
-            roomDetails = mValdocDatabaseHandler.getRoomByEquipment(ahu.getAhuId());
+            roomDetails = mValdocDatabaseHandler.getRoomByAhu(ahu.getAhuId());
             intent.putExtra("RoomDetails", roomDetails);
             Log.d("valdoc", "TestCreateActivity roomDetails[2]=" + roomDetails[2]);
             String areaName = mValdocDatabaseHandler.getAreaByRoomAreaId(roomDetails[2]);
@@ -425,7 +424,7 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
 
             //get room name,roomNo,and area id
             Log.d("valdoc", "TestCreateActivity :roomNoSpinner:=" + roomNoSpinner.getSelectedItemPosition());
-            int pos = roomNoSpinner.getSelectedItemPosition() - 1;
+            int pos = roomNoSpinner.getSelectedItemPosition();
             if (pos > 0) {
                 room = mRoomNoArrayList.get(roomNoSpinner.getSelectedItemPosition() - 1);
                 intent.putExtra("Room", room);
@@ -547,7 +546,7 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
 //            Log.d("valdoc", "TestCreateActivity :equipment1:=" + mEquipmentGrillArrayList.size());
 //            ApplicableTestEquipment applicableTestEquipment = createApplicableTestEquipmentList(equipment.getEquipmentId());
 //            intent.putExtra("ApplicableTestEquipment", applicableTestEquipment);
-            equipmentTestSelection(intent);
+            equipmentTestSelection(intent,AV);
         } else if (testBasedOn.equalsIgnoreCase("AHU")) {
 //            int ahuIndex = ahuSpinner.getSelectedItemPosition();
 //            Ahu ahu = null;
@@ -580,7 +579,7 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
         startActivity(intent);
     }
 
-    private void equipmentTestSelection(Intent intent) {
+    private void equipmentTestSelection(Intent intent,String testcode) {
 
         String[] roomDetails = null;
         //get room name,roomNo,and area id
@@ -596,8 +595,7 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
         Log.d("valdoc", "TestCreateActivity :equipment id name equipment1:=" + equipment.getEquipmentName());
         mEquipmentGrillArrayList = mValdocDatabaseHandler.getGrillFromEquipmentGrill(equipment.getEquipmentId());
         intent.putExtra("GRILLLIST", mEquipmentGrillArrayList);
-        Log.d("valdoc", "TestCreateActivity :equipment1:=" + mEquipmentGrillArrayList.size());
-        ApplicableTestEquipment applicableTestEquipment = createApplicableTestEquipmentList(equipment.getEquipmentId());
+        ApplicableTestEquipment applicableTestEquipment = createApplicableTestEquipmentList(equipment.getEquipmentId(),testcode);
         intent.putExtra("ApplicableTestEquipment", applicableTestEquipment);
 
     }
@@ -617,7 +615,7 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
 
             ApplicableTestAhu applicableTestAhu = createApplicableTestAhuList(ahu.getAhuId());
             intent.putExtra("ApplicableTestAhu", applicableTestAhu);
-            roomDetails = mValdocDatabaseHandler.getRoomByEquipment(ahu.getAhuId());
+            roomDetails = mValdocDatabaseHandler.getRoomByAhu(ahu.getAhuId());
             intent.putExtra("RoomDetails", roomDetails);
             Log.d("valdoc", "TestCreateActivity roomDetails[2]=" + roomDetails[2]);
             String areaName = mValdocDatabaseHandler.getAreaByRoomAreaId(roomDetails[2]);
@@ -1317,8 +1315,8 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
         mApplicableTestRoom = mValdocDatabaseHandler.getApplicableTestRoomInfo(roomId);
     }
 
-    private ApplicableTestEquipment createApplicableTestEquipmentList(int equipmentId) {
-        mApplicableTestEquipment = mValdocDatabaseHandler.getApplicableTestEquipmentInfo(equipmentId);
+    private ApplicableTestEquipment createApplicableTestEquipmentList(int equipmentId,String testcode) {
+        mApplicableTestEquipment = mValdocDatabaseHandler.getApplicableTestEquipmentInfo(equipmentId,testcode);
         return mApplicableTestEquipment;
     }
 
