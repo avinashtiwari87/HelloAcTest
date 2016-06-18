@@ -741,6 +741,9 @@ Log.d("valdoc","parse exception"+e.getMessage());
                 ahu.setFinalFilterLeak(jsonObject.optString("finalFilterLeak").toString());
                 ahu.setRemarks(jsonObject.optString("remarks").toString());
                 ahu.setLastUpdatedDate(jsonObject.optString("lastUpdatedDate").toString());
+                ahu.setFreshParticleSize(jsonObject.optDouble("freshParticleSize"));
+                ahu.setBleedParticleSize(jsonObject.optDouble("bleedParticleSize"));
+                ahu.setFinalParticleSize(jsonObject.optDouble("finalParticleSize"));
                 arrayList.add(ahu);
                 Log.d("valdoc", "parse ahu");
             } catch (Exception e) {

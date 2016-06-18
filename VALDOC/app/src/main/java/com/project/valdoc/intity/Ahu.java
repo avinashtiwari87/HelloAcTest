@@ -31,6 +31,9 @@ public class Ahu implements Serializable{
     private String finalFilterLeak;
     private String lastUpdatedDate;
     private String remarks;
+    private double freshParticleSize;
+    private double bleedParticleSize;
+    private double finalParticleSize;
 
     public String getAhu() {
         return ahu;
@@ -214,5 +217,29 @@ public class Ahu implements Serializable{
 
     public void setRemarks(String remarks) {
         this.remarks = remarks;
+    }
+
+    public double getFreshParticleSize() {
+        return freshParticleSize;
+    }
+
+    public void setFreshParticleSize(double freshParticleSize) {
+        this.freshParticleSize = freshParticleSize;
+    }
+
+    public double getBleedParticleSize() {
+        return bleedParticleSize;
+    }
+
+    public void setBleedParticleSize(double bleedParticleSize) {
+        this.bleedParticleSize = bleedParticleSize;
+    }
+
+    public double getFinalParticleSize() {
+        return finalParticleSize;
+    }
+
+    public void setFinalParticleSize(double finalParticleSize) {
+        this.finalParticleSize = finalParticleSize;
     }
 }

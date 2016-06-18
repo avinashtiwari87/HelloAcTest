@@ -76,6 +76,9 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
     public static final String AHU_FINALFILTERLEAK = "finalFilterLeak";
     public static final String AHU_REMARKS = "remarks";
     public static final String AHU_LASTUPDATEDDATE = "lastUpdatedDate";
+    public static final String AHU_FRESHPARTICLESIZE = "freshParticleSize";
+    public static final String AHU_BLEEDPARTICLESIZE = "bleedParticleSize";
+    public static final String AHU_FINALPARTICLESIZE = "finalParticleSize";
 
     // ahu table create statment
     private static final String CREATE_TABLE_AHU = "CREATE TABLE " + AHU_TABLE_NAME
@@ -85,7 +88,8 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
             + AHU_BLEEDFILTERLEAK + " REAL," + AHU_FRESHFILTERTYPE + " TEXT," + AHU_FRESHAIRCFM + " REAL," + AHU_FRESHFILTERQTY
             + " INTEGER," + AHU_FRESHFILTEREFFICIENCY + " TEXT," + AHU_FINALFILTERAIRFLOW + " INTEGER," + AHU_FINALFILTERQTY
             + " INTEGER," + AHU_FINALFILTERTYPE + " TEXT," + AHU_FINALFILTEREFFICIENCY + " TEXT,"
-            + AHU_FINALFILTERLEAK + " TEXT," + AHU_REMARKS + " TEXT," + AHU_LASTUPDATEDDATE + " TEXT" + ")";
+            + AHU_FINALFILTERLEAK + " TEXT," + AHU_REMARKS + " TEXT," + AHU_LASTUPDATEDDATE + " TEXT," + AHU_FRESHPARTICLESIZE + " REAL,"
+            + AHU_BLEEDPARTICLESIZE + " REAL," + AHU_FINALPARTICLESIZE + " REAL" + ")";
 
     //Applicable test ahu table details
     public static final String APLICABLE_TEST_AHU_TABLE_NAME = "aplicable_test_ahu";
@@ -1799,6 +1803,9 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 ahu.setFinalFilterLeak(cursor.getString(19));
                 ahu.setRemarks(cursor.getString(20));
                 ahu.setLastUpdatedDate(cursor.getString(21));
+                ahu.setFreshParticleSize(cursor.getDouble(22));
+                ahu.setBleedParticleSize(cursor.getDouble(23));
+                ahu.setFinalParticleSize(cursor.getDouble(24));
                 Log.d("valdoc", "TestCreateActivity : ahu1");
                 ahuArrayList.add(ahu);
             } while (cursor.moveToNext());
@@ -2383,11 +2390,12 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
         }
         return testDetailList;
     }
-// select data from TestSpecificationValue table
-    public ArrayList<TestSpesificationValue>getTestSpecificationValueById(String testDetailId) {
-        ArrayList<TestSpesificationValue>testSpecificValueList = new ArrayList<TestSpesificationValue>();
 
-        String selectQuery = "SELECT * FROM " + TESTSPECIFICATIONVALUE_TABLE_NAME  +
+    // select data from TestSpecificationValue table
+    public ArrayList<TestSpesificationValue> getTestSpecificationValueById(String testDetailId) {
+        ArrayList<TestSpesificationValue> testSpecificValueList = new ArrayList<TestSpesificationValue>();
+
+        String selectQuery = "SELECT * FROM " + TESTSPECIFICATIONVALUE_TABLE_NAME +
                 " WHERE " + ValdocDatabaseHandler.TESTSPECIFICATIONVALUE_TEST_DETAIL_ID
                 + " = " + '"' + testDetailId + '"';
 
@@ -2409,7 +2417,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
     }
 
     //Select data from TestReading table;
-    public ArrayList<TestReading>getTestReadingDataById(String testReadingId) {
+    public ArrayList<TestReading> getTestReadingDataById(String testReadingId) {
         ArrayList<TestReading> testReadingList = new ArrayList<TestReading>();
 
         String selectQuery = "SELECT * FROM " + TESTREADING_TABLE_NAME +
