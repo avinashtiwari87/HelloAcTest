@@ -18,9 +18,10 @@ public class RoomFilter implements Serializable{
     private double specification;
     private double width;
     private double length;
-//    private double  grillArea;
-//    private double effectiveGrillArea;
+//    private double  area;
+    private double effectiveFilterArea;
     private int isSupplyFilter;
+//    private String filterLocation;
     private String lastUpdatedDate;
 
     public String getRoomfilter() {
@@ -103,21 +104,13 @@ public class RoomFilter implements Serializable{
         this.length = length;
     }
 
-//    public double getGrillArea() {
-//        return grillArea;
-//    }
-//
-//    public void setGrillArea(double grillArea) {
-//        this.grillArea = grillArea;
-//    }
-//
-//    public double getEffectiveGrillArea() {
-//        return effectiveGrillArea;
-//    }
-//
-//    public void setEffectiveGrillArea(double effectiveGrillArea) {
-//        this.effectiveGrillArea = effectiveGrillArea;
-//    }
+    public double getEffectiveFilterArea() {
+        return effectiveFilterArea;
+    }
+
+    public void setEffectiveFilterArea(double effectiveFilterArea) {
+        this.effectiveFilterArea = effectiveFilterArea;
+    }
 
     public int getIsSupplyFilter() {
         return isSupplyFilter;
