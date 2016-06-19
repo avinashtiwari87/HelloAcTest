@@ -839,7 +839,7 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
                 if (i == 1 && j == 1) {
                     row.addView(addTextView(" Average \nbefore Scanning "));
                 } else {
-                    row.addView(addTextView(30 + i + ""));
+                    row.addView(addInputDataTextViewBeforeStream());
                 }
 
             }
@@ -857,7 +857,7 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
                 if (i == 1 && j == 1) {
                     row.addView(addTextView(" Average \nAfter Scanning"));
                 } else {
-                    row.addView(addTextView(20 + i + ""));
+                    row.addView(addInputDataTextViewAfterStream());
                 }
 
             }
@@ -891,11 +891,29 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
                 if (i == 1 && j == 1) {
                     row.addView(addTextView(" Obtained Leakage \n(% Leakage)"));
                 } else {
-                    row.addView(addTextView(3 + i + ""));
+                    row.addView(addInputDataTextView());
                 }
 
             }
             test4_table_layout5.addView(row);
+        }
+
+        //Sixth section
+        // outer for loop
+        for (int i = 1; i <= rows; i++) {
+            TableRow row = new TableRow(this);
+            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+                    TableRow.LayoutParams.WRAP_CONTENT));
+            // inner for loop
+            for (int j = 1; j <= 1; j++) {
+                if (i == 1 && j == 1) {
+                    row.addView(addTextView(" Test Status\n    "));
+                } else {
+                    //row.addView(addTextView(" Pass "));
+                    row.addView(addTextPassFail(" ", i));
+                }
+            }
+            test4_table_layout8.addView(row);
         }
 
         //dismiss progressbar
