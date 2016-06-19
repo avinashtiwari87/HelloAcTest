@@ -610,7 +610,6 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                     intent.putExtra("cols", applicableTestRoomLocation);
                 }
 
-
                 //sending Result Data over Bundle
                 intent.putExtra("PassFailData", passFailHashMap);
                 //sending Input Data
@@ -1139,6 +1138,22 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             }
             test4_table_layout5.addView(row);
         }
+        //Eighth section
+        // outer for loop
+        for (int i = 1; i <= rows; i++) {
+            TableRow row = new TableRow(this);
+            // inner for loop
+            for (int j = 1; j <= 1; j++) {
+                if (i == 1 && j == 1) {
+                    row.addView(addTextView(" Test Status\n    "));
+                } else {
+                    //row.addView(addTextView(" Pass "));
+                    row.addView(addTextPassFail("", i));
+                }
+
+            }
+            test4_table_layout8.addView(row);
+        }
 
         //dismiss progressbar
         if (pr.isShowing())
@@ -1535,7 +1550,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 TableRow.LayoutParams.WRAP_CONTENT));
         tv.setBackgroundResource(R.drawable.border1);
         tv.setGravity(Gravity.CENTER);
-        //tv.setPadding(5, 5, 5, 5);
+        tv.setPadding(5, 5, 5, 5);
         tv.setTextColor(getResources().getColor(R.color.black));
         tv.setTextSize(getResources().getDimension(R.dimen.normal_text_size));
         tv.setGravity(Gravity.CENTER);
