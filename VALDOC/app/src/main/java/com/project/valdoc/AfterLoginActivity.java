@@ -112,7 +112,7 @@ public class AfterLoginActivity extends AppCompatActivity implements HttpConnect
             findViewById(R.id.sync_btn).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-//                    copyDb();
+                    copyDb();
                     if (Utilityies.checkInternetConnection(AfterLoginActivity.this)) {
                         mValdocControler.getHttpConectionforSync(AfterLoginActivity.this, "GET");
                         mValdocControler.httpServiceReportPostSyncData(AfterLoginActivity.this, "POST");

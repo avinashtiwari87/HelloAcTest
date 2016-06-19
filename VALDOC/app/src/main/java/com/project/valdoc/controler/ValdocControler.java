@@ -32,6 +32,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.net.HttpURLConnection;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -117,11 +118,16 @@ public class ValdocControler {
         sharedpreferences = mContext.getSharedPreferences("valdoc", Context.MODE_PRIVATE);
         HttpConnectionTask httpConnectionTask = new HttpConnectionTask(mContext, method, new JSONObject());
         lastSyncDate = sharedpreferences.getString("lastSyncDate", "");
-        httpConnectionTask.execute(url + lastSyncDate);
+        String query = "";
+        query = lastSyncDate.replace(" ", "%20");
+        httpConnectionTask.execute(url + query);
+
     }
 
     public void getAllDb(int statusCode, String resultData) {
+        Log.d("valdocControler", "resultData=" + resultData);
         if (statusCode == HttpURLConnection.HTTP_OK) {
+            Log.d("valdocControler", "resultData2=" + resultData);
             HashMap<String, ArrayList> arrayListHashMap = parseResponse(resultData);
             controlerResponse.controlerResult(arrayListHashMap, "Data synked successfully");
         }
