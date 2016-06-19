@@ -115,7 +115,7 @@ public class AfterLoginActivity extends AppCompatActivity implements HttpConnect
 //                    copyDb();
                     if (Utilityies.checkInternetConnection(AfterLoginActivity.this)) {
                         mValdocControler.getHttpConectionforSync(AfterLoginActivity.this, "GET");
-//                        mValdocControler.httpPostSyncData(AfterLoginActivity.this, "POST");
+                        mValdocControler.httpServiceReportPostSyncData(AfterLoginActivity.this, "POST");
                     } else {
                         aleartDialog("Please check your internate connection !");
                     }
@@ -454,18 +454,18 @@ public class AfterLoginActivity extends AppCompatActivity implements HttpConnect
                         response = new JSONObject(resultData);
                         if (response.getString("status").equalsIgnoreCase("success")) {
                             if (mValdocDatabaseHandler.deleteTestReportTable()) {
-                                aleartDialog("Data synked successfully");
+                                aleartDialog("Data synced successfully");
                             } else {
-                                aleartDialog("Post Data not syncked successfully,Please sync again !");
+                                aleartDialog("Post Data not synced successfully,Please sync again !");
                             }
                         }
                     } catch (Exception e) {
                         Log.d("valdoc", "AfterLoginActivity reponse exception=" + e.getMessage());
-                        aleartDialog("Post Data not syncked successfully,Please sync again !");
+                        aleartDialog("Post Data not synced successfully,Please sync again !");
                     }
 
                 } else {
-                    aleartDialog("Post Data not syncked successfully,Please sync again !");
+                    aleartDialog("Post Data not synced successfully,Please sync again !");
                 }
             }
         });

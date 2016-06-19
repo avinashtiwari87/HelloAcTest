@@ -732,14 +732,6 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
 
     public boolean deleteTestReportTable() {
         SQLiteDatabase db = this.getWritableDatabase();
-//        db.delete("DROP TABLE IF EXISTS " + TEST_DETAILS_TABLE_NAME);
-//        db.execSQL("DROP TABLE IF EXISTS " + TESTREADING_TABLE_NAME);
-//        db.execSQL("DROP TABLE IF EXISTS " + TESTSPECIFICATIONVALUE_TABLE_NAME);
-//        db.execSQL("DROP TABLE IF EXISTS " + SERVICE_REPORT_TABLE_NAME);
-//        db.execSQL("DROP TABLE IF EXISTS " + SERVICE_REPORT_DETAIL_TABLE_NAME);
-//        db.delete(TEST_DETAILS_TABLE_NAME, null, null);
-//        db.delete(TESTREADING_TABLE_NAME, null, null);
-//        db.delete(TESTSPECIFICATIONVALUE_TABLE_NAME, null, null);
         db.delete(SERVICE_REPORT_TABLE_NAME, null, null);
         db.delete(SERVICE_REPORT_DETAIL_TABLE_NAME, null, null);
         return true;
@@ -1930,10 +1922,11 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
     }
 
     // select data from test reading table
-    public JSONArray getTestReadingInfo() {
+    public JSONArray getTestReadingInfo(String idList) {
         JSONArray testReadingJsonArray;
         testReadingJsonArray = new JSONArray();
-        String selectQuery = "SELECT * FROM " + TESTREADING_TABLE_NAME;
+        String selectQuery = "SELECT * FROM " + TESTREADING_TABLE_NAME
+                + " WHERE " + ValdocDatabaseHandler.TESTREADING_TEST_DETAIL_ID + " IN " + "(" + idList + ")";
         SQLiteDatabase database = this.getWritableDatabase();
         Cursor cursor = database.rawQuery(selectQuery, null);
         if (cursor.moveToFirst()) {
@@ -1955,10 +1948,12 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
 
 
     // select data from test details table
-    public JSONArray getTestDetailsInfo() {
+    public JSONArray getTestDetailsInfo(String idList) {
         JSONArray testDetailsJsonArray;
         testDetailsJsonArray = new JSONArray();
-        String selectQuery = "SELECT * FROM " + TEST_DETAILS_TABLE_NAME;
+        String selectQuery = "SELECT * FROM " + TEST_DETAILS_TABLE_NAME
+                + " WHERE " + ValdocDatabaseHandler.TEST_DETAILS_TEST_DETAIL_ID + " IN " + "(" + idList + ")";
+//        SELECT * FROM TABLE WHERE ID IN (id1, id2, ..., idn)
         SQLiteDatabase database = this.getWritableDatabase();
         Cursor cursor = database.rawQuery(selectQuery, null);
         if (cursor.moveToFirst()) {
@@ -2008,10 +2003,11 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
     }
 
     // select data from test spesification value table
-    public JSONArray getTestSpecificationValueInfo() {
+    public JSONArray getTestSpecificationValueInfo(String idList) {
         JSONArray testSpecificationValueJsonArray;
         testSpecificationValueJsonArray = new JSONArray();
-        String selectQuery = "SELECT * FROM " + TESTSPECIFICATIONVALUE_TABLE_NAME;
+        String selectQuery = "SELECT * FROM " + TESTSPECIFICATIONVALUE_TABLE_NAME
+                + " WHERE " + ValdocDatabaseHandler.TESTSPECIFICATIONVALUE_TEST_DETAIL_ID + " IN " + "(" + idList + ")";
         SQLiteDatabase database = this.getWritableDatabase();
         Cursor cursor = database.rawQuery(selectQuery, null);
         if (cursor.moveToFirst()) {

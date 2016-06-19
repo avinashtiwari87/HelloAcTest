@@ -1,9 +1,11 @@
 package com.project.valdoc;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -18,14 +20,18 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.project.valdoc.controler.ValdocControler;
 import com.project.valdoc.db.ValdocDatabaseHandler;
 import com.project.valdoc.intity.TestDetails;
+import com.project.valdoc.task.HttpConnection;
+import com.project.valdoc.task.HttpPostConnection;
 import com.project.valdoc.utility.Utilityies;
 
+import java.net.HttpURLConnection;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class SyncSelectedDataActivity extends AppCompatActivity {
+public class SyncSelectedDataActivity extends AppCompatActivity implements HttpPostConnection.HttpUrlConnectionPostResponce, HttpConnection.HttpUrlConnectionResponce {
     private static final String TAG = "SyncSelectedData";
     TableLayout table_layout1, table_layout2, table_layout3, table_layout4, table_layout5,
             table_layout6, table_layout7, table_layout8, table_layout9, table_layout10;
@@ -34,9 +40,9 @@ public class SyncSelectedDataActivity extends AppCompatActivity {
     SharedPreferences sharedpreferences;
     private ValdocDatabaseHandler mValdocDatabaseHandler;
     private ArrayList<TestDetails> testDetailList;
-    private HashMap<Integer,Integer> selectePosition=new HashMap<Integer,Integer>();
+    private HashMap<Integer, Integer> selectePosition = new HashMap<Integer, Integer>();
     Button syncSelectedButton;
-
+    ValdocControler mValdocControler;
 //    private ValdocDatabaseHandler mValdocDatabaseHandler = new ValdocDatabaseHandler(TestCreateActivity.this);
 
     @Override
@@ -44,6 +50,7 @@ public class SyncSelectedDataActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sync_selected_data);
         syncSelectedButton = (Button) findViewById(R.id.sync_selected_button);
+        mValdocControler = new ValdocControler();
         syncSelectedButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -78,38 +85,56 @@ public class SyncSelectedDataActivity extends AppCompatActivity {
         }
     }
 
-//    private void syncTestData() {
+    private void syncTestData() {
+        mValdocControler.httpCertificatePostSyncData(SyncSelectedDataActivity.this, "POST", getTestDetailsIdList());
 //        if(selectePosition.size()>0) {
 //            for (Integer value : selectePosition.values()) {
 //                mValdocDatabaseHandler.deleteTestTableRow(testDetailList.get(value).getTest_detail_id());
 //            }
 //        }
 //
-//    }
+    }
+
+    private String getTestDetailsIdList() {
+        StringBuilder idList = new StringBuilder();
+        int flag = 0;
+        if (selectePosition.size() > 0) {
+            for (Integer value : selectePosition.values()) {
+                if (flag == 0) {
+                    idList.append("" + testDetailList.get(value).getTest_detail_id());
+                    flag = 1;
+                } else
+                    idList.append("," + testDetailList.get(value).getTest_detail_id());
+            }
+        }
+        return idList.toString();
+    }
 
     private ArrayList<TestDetails> getTestDataByTestCode(String testType) {
-        if (testType.contains("ACPH_AV")) {
-            testDetailList = mValdocDatabaseHandler.getTestDetailByTestCode("ACPH_AV");
-        } else if (testType.contains("ACPH_H")) {
-            testDetailList = mValdocDatabaseHandler.getTestDetailByTestCode("ACPH_H");
-        } else if (testType.contains("FIT")) {
-            testDetailList = mValdocDatabaseHandler.getTestDetailByTestCode("FIT");
-        } else if (testType.contains("PCT")) {
-            testDetailList = mValdocDatabaseHandler.getTestDetailByTestCode("PCT");
-        } else if (testType.contains("RCT")) {
-            testDetailList = mValdocDatabaseHandler.getTestDetailByTestCode("RCT");
-        } else if (testType.contains("ARD_AF_AHU")) {
-            testDetailList = mValdocDatabaseHandler.getTestDetailByTestCode("ARD_AF_AHU");
-        } else if (testType.contains("ARD_FIT_AHU")) {
-            testDetailList = mValdocDatabaseHandler.getTestDetailByTestCode("ARD_FIT_AHU");
-        } else if (testType.contains("ERD_AV")) {
-            testDetailList = mValdocDatabaseHandler.getTestDetailByTestCode("ERD_AV");
-        } else if (testType.contains("ERD_FIT")) {
-            testDetailList = mValdocDatabaseHandler.getTestDetailByTestCode("ERD_FIT");
-        } else if (testType.contains("ERD_PCT")) {
-            testDetailList = mValdocDatabaseHandler.getTestDetailByTestCode("ERD_PCT");
-        } else if (testType.contains("ERD_RCT")) {
-            testDetailList = mValdocDatabaseHandler.getTestDetailByTestCode("ERD_RCT");
+        if ( !testType.equals(null) && testType.length() > 0) {
+            if (testType.contains("ACPH_AV")) {
+                testDetailList = mValdocDatabaseHandler.getTestDetailByTestCode("ACPH_AV");
+            } else if (testType.contains("ACPH_H")) {
+                testDetailList = mValdocDatabaseHandler.getTestDetailByTestCode("ACPH_H");
+            } else if (testType.contains("FIT")) {
+                testDetailList = mValdocDatabaseHandler.getTestDetailByTestCode("FIT");
+            } else if (testType.contains("PCT")) {
+                testDetailList = mValdocDatabaseHandler.getTestDetailByTestCode("PCT");
+            } else if (testType.contains("RCT")) {
+                testDetailList = mValdocDatabaseHandler.getTestDetailByTestCode("RCT");
+            } else if (testType.contains("ARD_AF_AHU")) {
+                testDetailList = mValdocDatabaseHandler.getTestDetailByTestCode("ARD_AF_AHU");
+            } else if (testType.contains("ARD_FIT_AHU")) {
+                testDetailList = mValdocDatabaseHandler.getTestDetailByTestCode("ARD_FIT_AHU");
+            } else if (testType.contains("ERD_AV")) {
+                testDetailList = mValdocDatabaseHandler.getTestDetailByTestCode("ERD_AV");
+            } else if (testType.contains("ERD_FIT")) {
+                testDetailList = mValdocDatabaseHandler.getTestDetailByTestCode("ERD_FIT");
+            } else if (testType.contains("ERD_PCT")) {
+                testDetailList = mValdocDatabaseHandler.getTestDetailByTestCode("ERD_PCT");
+            } else if (testType.contains("ERD_RCT")) {
+                testDetailList = mValdocDatabaseHandler.getTestDetailByTestCode("ERD_RCT");
+            }
         }
         return testDetailList;
     }
@@ -386,6 +411,59 @@ public class SyncSelectedDataActivity extends AppCompatActivity {
         return cb;
     }
 
+
+    @Override
+    public void httpPostResponceResult(String resultData, int statusCode) {
+
+        final int statuscode = statusCode;
+        Log.d("VALDOC", "controler httpPostResponceResult response data1  statusCode=" + statusCode);
+        Log.d("VALDOC", "controler httpPostResponceResult response data1  resultData=" + resultData);
+        SyncSelectedDataActivity.this.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (statuscode == HttpURLConnection.HTTP_OK) {
+                    if (selectePosition.size() > 0) {
+                        for (Integer value : selectePosition.values()) {
+                            mValdocDatabaseHandler.deleteTestTableRow(testDetailList.get(value).getTest_detail_id());
+                        }
+                    }
+                    aleartDialog("Data synced successfully");
+                } else {
+                    aleartDialog("Post Data not synced successfully,Please sync again !");
+                }
+            }
+        });
+
+    }
+
+    public void aleartDialog(String message) {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setMessage(message);
+
+        alertDialogBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface arg0, int arg1) {
+//                finish();
+            }
+        });
+
+//        alertDialogBuilder.setNegativeButton("No",new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//                finish();
+//            }
+//        });
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+    }
+
+    @Override
+    public void httpResponceResult(String resultData, int statusCode) {
+
+    }
+
+
     private class CheckedValidator implements CompoundButton.OnCheckedChangeListener {
         int checkBpxId;
         Context mContext;
@@ -401,8 +479,7 @@ public class SyncSelectedDataActivity extends AppCompatActivity {
             if (isChecked) {
                 selectePosition.put(checkBpxId, checkBpxId - 3);
                 Toast.makeText(mContext, "CheckBox : " + checkBpxId + " Checked ", Toast.LENGTH_SHORT).show();
-            }
-            else {
+            } else {
                 selectePosition.remove(checkBpxId);
 //                Toast.makeText(mContext, "CheckBox : " + checkBpxId + " Unchecked", Toast.LENGTH_SHORT).show();
             }

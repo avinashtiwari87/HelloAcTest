@@ -54,40 +54,58 @@ public class ValdocControler {
         getConection(method);
     }
 
-    public void httpPostSyncData(Context context, String method) {
+    public void httpCertificatePostSyncData(Context context, String method, String testDetailsIdList) {
         mContext = context;
-        JSONObject jsonObject = getCertificateData();
+//        Log.d("Avinash","testDetailsIdList="+testDetailsIdList);
+        JSONObject jsonObject = getCertificateData(testDetailsIdList);
         postConnection(method, jsonObject);
     }
 
-    private JSONObject getCertificateData() {
+    public void httpServiceReportPostSyncData(Context context, String method) {
+        mContext = context;
+//        Log.d("Avinash","testDetailsIdList="+testDetailsIdList);
+        JSONObject jsonObject = getServiceReportData();
+        postConnection(method, jsonObject);
+    }
+
+    private JSONObject getCertificateData(String testDetailsIdList) {
         JSONObject jsonObject = null;
         JSONArray testDetailsJsonArray = null;
         JSONArray testReadingJsonArray = null;
         JSONArray testSpecificationValueJsonArray = null;
-        JSONArray serviceReportJsonArray = null;
-        JSONArray serviceReportDetailsJsonArray = null;
+
         jsonObject = new JSONObject();
         try {
-            testDetailsJsonArray = mValdocDatabaseHandler.getTestDetailsInfo();
-            testReadingJsonArray = mValdocDatabaseHandler.getTestReadingInfo();
-            testSpecificationValueJsonArray = mValdocDatabaseHandler.getTestSpecificationValueInfo();
-            serviceReportJsonArray = mValdocDatabaseHandler.getServiceReport();
-            serviceReportDetailsJsonArray = mValdocDatabaseHandler.getServiceReportDetailsInfo();
+            testDetailsJsonArray = mValdocDatabaseHandler.getTestDetailsInfo(testDetailsIdList);
+            testReadingJsonArray = mValdocDatabaseHandler.getTestReadingInfo(testDetailsIdList);
+            testSpecificationValueJsonArray = mValdocDatabaseHandler.getTestSpecificationValueInfo(testDetailsIdList);
 
-            jsonObject.put("serviceReportDTOs", serviceReportJsonArray);
-            jsonObject.put("serviceReportDetailDTOs", serviceReportDetailsJsonArray);
             jsonObject.put("testDetailDTOs", testDetailsJsonArray);
             jsonObject.put("testReadingDTOs", testReadingJsonArray);
             jsonObject.put("testSpecificValueDTOs", testSpecificationValueJsonArray);
         } catch (Exception e) {
             Log.d("getCertificateData", "certificate json exception=" + e.getMessage());
         }
-
         Log.d("getCertificateData", "certificate json=" + jsonObject.toString());
         return jsonObject;
     }
 
+    public JSONObject getServiceReportData() {
+        JSONObject jsonObject = null;
+        JSONArray serviceReportJsonArray = null;
+        JSONArray serviceReportDetailsJsonArray = null;
+        jsonObject = new JSONObject();
+        try {
+            serviceReportJsonArray = mValdocDatabaseHandler.getServiceReport();
+            serviceReportDetailsJsonArray = mValdocDatabaseHandler.getServiceReportDetailsInfo();
+            jsonObject.put("serviceReportDTOs", serviceReportJsonArray);
+            jsonObject.put("serviceReportDetailDTOs", serviceReportDetailsJsonArray);
+        } catch (Exception e) {
+            Log.d("getCertificateData", "certificate json exception=" + e.getMessage());
+        }
+        Log.d("getCertificateData", "certificate json=" + jsonObject.toString());
+        return jsonObject;
+    }
 
     private void postConnection(String method, JSONObject jsonDATA) {
         HttpConnectionTask httpConnectionTask = new HttpConnectionTask(mContext, method, jsonDATA);
@@ -199,7 +217,7 @@ public class ValdocControler {
             editor.putString("lastSyncDate", jsonRootObject.optString("lastSyncDate"));
             editor.commit();
         } catch (Exception e) {
-Log.d("valdoc","parse exception"+e.getMessage());
+            Log.d("valdoc", "parse exception" + e.getMessage());
         }
         return arrayListHashMap;
     }
@@ -371,7 +389,7 @@ Log.d("valdoc","parse exception"+e.getMessage());
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                 clientInstrument.setcInstrumentId(jsonObject.optInt("cInstrumentId"));
                 clientInstrument.setInstrumentId(jsonObject.optString("instrumentId", ""));
-                clientInstrument.setSerialNo(jsonObject.optString("serialNo","").toString());
+                clientInstrument.setSerialNo(jsonObject.optString("serialNo", "").toString());
                 clientInstrument.setcInstrumentName(jsonObject.optString("cInstrumentName").toString());
                 clientInstrument.setMake(jsonObject.optString("make").toString());
                 clientInstrument.setModel(jsonObject.optString("model").toString());
@@ -404,7 +422,7 @@ Log.d("valdoc","parse exception"+e.getMessage());
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                 clientInstrumentTest.setClientInstrumentTestId(jsonObject.optInt("client_instrument_test_id"));
                 clientInstrumentTest.setClientInstrumentId(jsonObject.optInt("client_instrument_id"));
-                clientInstrumentTest.setClientInstrumentTestCode(jsonObject.optString("client_instrument_test_code","").toString());
+                clientInstrumentTest.setClientInstrumentTestCode(jsonObject.optString("client_instrument_test_code", "").toString());
                 clientInstrumentTest.setClientInstrumentTestName(jsonObject.optString("client_instrument_test_name").toString());
                 clientInstrumentTest.setLastUpdatedDate(jsonObject.optString("lastUpdatedDate").toString());
                 arrayList.add(clientInstrumentTest);

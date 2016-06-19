@@ -31,7 +31,7 @@ public class ShowSelectedTestActivity extends AppCompatActivity implements Adapt
     String[] roomsValues, AHUValues, equipmentValues;
     ArrayList<String> list = null;
     StableArrayAdapter listViewAdapter = null;
-    String selectedItem;
+    String selectedItem="";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
