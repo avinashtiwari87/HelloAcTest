@@ -476,25 +476,68 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
         int hasStreamBefore = 800;
         int hashstreamAfter = 900;
         int passHasMapKey = 300;
-        for (RoomFilter roomFilter : filterArrayList) {
+//        if (mTestBasedOn.equalsIgnoreCase("EQUIPMENT")) {
+//            for (EquipmentFilter equipmentFilter : mEquipmentFilterArrayList) {
+//
+//                TestReading testReading = new TestReading();
+////            testReading.setTestReadingID(index);
+////        TO DO test details id is id of test details table
+//                testReading.setTest_detail_id(testDetailsId);
+//                testReading.setEntityName(equipmentFilter.getFilterCode());
+//                StringBuilder grilList = new StringBuilder();
+//                grilList.append(equipmentFilter.getFilterType()).append(',').append(equipmentFilter.getEfficiency()).append(",").append(likageDataMap.get(hasStreamBefore)).append(",")
+//                        .append(likageDataMap.get(hashstreamAfter)).append(",").append(equipmentFilter.getSpecification()).append(",")
+//                        .append(likageDataMap.get(hasMapKey)).append(",").append(PassFailHashMap.get(passHasMapKey));
+//                hasStreamBefore++;
+//                hashstreamAfter++;
+//                passHasMapKey++;
+//                hasMapKey++;
+//                index++;
+//                testReading.setValue(grilList.toString());
+//                testReadingArrayList.add(testReading);
+//            }
+//        } else if (mTestBasedOn.equalsIgnoreCase("AHU")) {
+//            for (RoomFilter roomFilter : filterArrayList) {
+//
+//                TestReading testReading = new TestReading();
+////            testReading.setTestReadingID(index);
+////        TO DO test details id is id of test details table
+//                testReading.setTest_detail_id(testDetailsId);
+//                testReading.setEntityName(roomFilter.getFilterCode());
+//                StringBuilder grilList = new StringBuilder();
+//                grilList.append(roomFilter.getFilterType()).append(',').append(roomFilter.getEfficiency()).append(",").append(likageDataMap.get(hasStreamBefore)).append(",")
+//                        .append(likageDataMap.get(hashstreamAfter)).append(",").append(roomFilter.getSpecification()).append(",")
+//                        .append(likageDataMap.get(hasMapKey)).append(",").append(PassFailHashMap.get(passHasMapKey));
+//                hasStreamBefore++;
+//                hashstreamAfter++;
+//                passHasMapKey++;
+//                hasMapKey++;
+//                index++;
+//                testReading.setValue(grilList.toString());
+//                testReadingArrayList.add(testReading);
+//            }
+//        }else if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
+//            for (RoomFilter roomFilter : filterArrayList) {
+//
+//                TestReading testReading = new TestReading();
+////            testReading.setTestReadingID(index);
+////        TO DO test details id is id of test details table
+//                testReading.setTest_detail_id(testDetailsId);
+//                testReading.setEntityName(roomFilter.getFilterCode());
+//                StringBuilder grilList = new StringBuilder();
+//                grilList.append(roomFilter.getFilterType()).append(',').append(roomFilter.getEfficiency()).append(",").append(likageDataMap.get(hasStreamBefore)).append(",")
+//                        .append(likageDataMap.get(hashstreamAfter)).append(",").append(roomFilter.getSpecification()).append(",")
+//                        .append(likageDataMap.get(hasMapKey)).append(",").append(PassFailHashMap.get(passHasMapKey));
+//                hasStreamBefore++;
+//                hashstreamAfter++;
+//                passHasMapKey++;
+//                hasMapKey++;
+//                index++;
+//                testReading.setValue(grilList.toString());
+//                testReadingArrayList.add(testReading);
+//            }
+//        }
 
-            TestReading testReading = new TestReading();
-//            testReading.setTestReadingID(index);
-//        TO DO test details id is id of test details table
-            testReading.setTest_detail_id(testDetailsId);
-            testReading.setEntityName(roomFilter.getFilterCode());
-            StringBuilder grilList = new StringBuilder();
-            grilList.append(roomFilter.getFilterType()).append(',').append(roomFilter.getEfficiency()).append(",").append(likageDataMap.get(hasStreamBefore)).append(",")
-                    .append(likageDataMap.get(hashstreamAfter)).append(",").append(roomFilter.getSpecification()).append(",")
-                    .append(likageDataMap.get(hasMapKey)).append(",").append(PassFailHashMap.get(passHasMapKey));
-            hasStreamBefore++;
-            hashstreamAfter++;
-            passHasMapKey++;
-            hasMapKey++;
-            index++;
-            testReading.setValue(grilList.toString());
-            testReadingArrayList.add(testReading);
-        }
         return testReadingArrayList;
     }
 
