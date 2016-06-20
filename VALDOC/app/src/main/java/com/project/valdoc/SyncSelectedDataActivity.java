@@ -55,7 +55,6 @@ public class SyncSelectedDataActivity extends AppCompatActivity implements HttpP
             @Override
             public void onClick(View view) {
                 syncTestData();
-
             }
         });
 
@@ -111,7 +110,7 @@ public class SyncSelectedDataActivity extends AppCompatActivity implements HttpP
     }
 
     private ArrayList<TestDetails> getTestDataByTestCode(String testType) {
-        if ( !testType.equals(null) && testType.length() > 0) {
+        if (!testType.equals(null) && testType.length() > 0) {
             if (testType.contains("ACPH_AV")) {
                 testDetailList = mValdocDatabaseHandler.getTestDetailByTestCode("ACPH_AV");
             } else if (testType.contains("ACPH_H")) {
@@ -428,6 +427,7 @@ public class SyncSelectedDataActivity extends AppCompatActivity implements HttpP
                         }
                     }
                     aleartDialog("Data synced successfully");
+                    finish();
                 } else {
                     aleartDialog("Post Data not synced successfully,Please sync again !");
                 }
