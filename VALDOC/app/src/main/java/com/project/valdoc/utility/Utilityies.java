@@ -1,9 +1,11 @@
 package com.project.valdoc.utility;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
@@ -72,5 +74,28 @@ public class Utilityies {
             Toast.makeText(context, " Not Connected ", Toast.LENGTH_LONG).show();
             return false;
         }
+    }
+
+    public static void showAlert(Context context, String msg){
+        AlertDialog.Builder builder1 = new AlertDialog.Builder(context);
+        builder1.setMessage(msg);
+        builder1.setCancelable(true);
+        builder1.setPositiveButton(
+                "Ok",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+/*
+        builder1.setNegativeButton(
+                "No",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });*/
+        AlertDialog alert11 = builder1.create();
+        alert11.show();
     }
 }

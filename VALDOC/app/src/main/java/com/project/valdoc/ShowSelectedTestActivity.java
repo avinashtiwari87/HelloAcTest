@@ -44,13 +44,18 @@ public class ShowSelectedTestActivity extends AppCompatActivity implements Adapt
         findViewById(R.id.go_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(ShowSelectedTestActivity.this, "Clicked", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(ShowSelectedTestActivity.this, SyncSelectedDataActivity.class);
-                intent.putExtra("TestType",selectedItem);
-                intent.putExtra("rows", 11);
-                intent.putExtra("cols", 11);
-                startActivity(intent);
-                Log.d(TAG, "CodeFlow selectedItem "+selectedItem);
+                if("Airvelocity Test (ERD_AV)".equals(selectedItem)) {
+                    Intent intent = new Intent(ShowSelectedTestActivity.this, SyncSelectedDataActivity.class);
+                    intent.putExtra("TestType", selectedItem);
+                    intent.putExtra("rows", 11);
+                    intent.putExtra("cols", 11);
+                    startActivity(intent);
+                    Log.d(TAG, "CodeFlow selectedItem " + selectedItem);
+                }else {
+                    //Toast.makeText(ShowSelectedTestActivity.this, "Under Development", Toast.LENGTH_SHORT).show();
+                    Utilityies.showAlert(ShowSelectedTestActivity.this,"Under Development");
+                }
+
             }
         });
 
