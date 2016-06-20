@@ -109,12 +109,12 @@ public class CommonTestViewActivity extends AppCompatActivity {
                     for (int i = 0; i <spiltValue.length-1; i++) {
                         txtViewList.get(textId).setText(""+spiltValue[i]);
                         textId++;
+                        //Result
+                        resultTextViewList.get(i).setText(""+spiltValue[i]);
                         Log.d(TAG, "CodeFlow : InnerForLoop I: " + i+" textId "+textId);
                     }
                 }
             }
-            //Result
-            resultTextViewList.get(0).setText(""+spiltValue[spiltValue.length-1]);
         }else if(testType != null && testType.contains("ACPH_AV")){
             findViewById(R.id.test2_table_ll).setVisibility(View.VISIBLE);
             BuildTableTest2(rows,cols);
