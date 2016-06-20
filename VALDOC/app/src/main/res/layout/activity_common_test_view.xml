@@ -49,13 +49,16 @@
             layout="@layout/test_table_6_a"
             android:visibility="gone" />
 
-        <ImageView
+        <include layout="@layout/tester_witness_footer" />
+
+
+      <!--  <ImageView
             android:id="@+id/cancel"
             android:layout_marginTop="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center|bottom"
-            android:background="@drawable/cancel_btn" />
+            android:background="@drawable/cancel_btn" />-->
 
     </LinearLayout>
 

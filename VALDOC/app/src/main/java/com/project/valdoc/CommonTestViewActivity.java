@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -880,6 +881,8 @@ public class CommonTestViewActivity extends AppCompatActivity {
 
     private void initRes() {
         findViewById(R.id.header4_linear_layout).setVisibility(View.GONE);
+        findViewById(R.id.submit).setVisibility(View.GONE);
+        findViewById(R.id.clear).setVisibility(View.GONE);
         //Test 1
         table_layout = (TableLayout) findViewById(R.id.tableLayout1);
         table_layout2 = (TableLayout) findViewById(R.id.tableLayout2);
