@@ -103,8 +103,11 @@ public class CommonTestViewActivity extends AppCompatActivity {
             //input Data
             if(spiltValue != null && spiltValue.length>0){
                 int textId = 200;
-                for (int i = 0; i <spiltValue.length-1; i++) {
-                    txtViewList.get(i).setText(""+spiltValue[i]);
+                for (int j = 0; j < testReadingList.size(); j++) {
+                    spiltValue =testReadingList.get(j).getValue().split(",");
+                    for (int i = 0; i <spiltValue.length-1; i++) {
+                        txtViewList.get(i).setText(""+spiltValue[i]);
+                    }
                 }
             }
             //Result
