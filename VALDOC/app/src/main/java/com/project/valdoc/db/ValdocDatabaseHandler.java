@@ -765,6 +765,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
             cursor = database.rawQuery(selectQuery, null);
             if (null != cursor)
                 count = cursor.getCount();
+            Log.d("Avinash", "db update count=" + count);
         } catch (Exception e) {
             Log.d("Avinash", "db update exception=" + e.getMessage());
         }
@@ -2601,6 +2602,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 + ValdocDatabaseHandler.APLICABLE_TEST_EQUIPMENT_EQUIPMENTID + " = " + equipmentId;
         SQLiteDatabase database = this.getWritableDatabase();
         Cursor cursor = database.rawQuery(selectQuery, null);
+        Log.d("Avinash", "applicableTestEquipment selectQuery=" + selectQuery);
         ApplicableTestEquipment applicableTestEquipment = new ApplicableTestEquipment();
         Log.d("Avinash", "applicableTestEquipment before=" + cursor.getCount());
         if (cursor.moveToFirst()) {

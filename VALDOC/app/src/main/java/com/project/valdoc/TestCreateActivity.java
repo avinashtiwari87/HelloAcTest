@@ -582,7 +582,7 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
         intent.putExtra("GRILLLIST", mEquipmentGrillArrayList);
         ApplicableTestEquipment applicableTestEquipment = createApplicableTestEquipmentList(equipment.getEquipmentId(), testcode);
         intent.putExtra("ApplicableTestEquipment", applicableTestEquipment);
-
+        Log.d("valdoc", "TestCreateActivity :equipment id name getLocation:=" + applicableTestEquipment.getLocation());
     }
 
     private void ahuTestSelection(Intent intent) {

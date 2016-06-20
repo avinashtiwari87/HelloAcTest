@@ -342,15 +342,18 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
 
     private void createTableRowColum() {
         if (TestCreateActivity.AV.equalsIgnoreCase(testType)) {
-
+Log.d("avinash","mApplicableTestEquipment.getLocation()="+mApplicableTestEquipment.getLocation());
             if(mTestBasedOn.equalsIgnoreCase("AHU")){
                 if (mAhuFilterArrayList != null && mAhuFilterArrayList.size() > 0)
                     BuildTable(mAhuFilterArrayList.size() + 1, mApplicableTestAhu.getLocation());
                 else
                     aleartDialog("There is no filter or equipment location");
             }else if(mTestBasedOn.equalsIgnoreCase("EQUIPMENT")){
-                if (mEquipmentGrillArrayList != null && mEquipmentGrillArrayList.size() > 0)
+                Log.d("avinash","mApplicableTestEquipment.getLocation()="+mApplicableTestEquipment.getLocation());
+                if (mEquipmentGrillArrayList != null && mEquipmentGrillArrayList.size() > 0) {
+                    Log.d("avinash","mApplicableTestEquipment.getLocation()="+mApplicableTestEquipment.getLocation());
                     BuildTable(mEquipmentGrillArrayList.size() + 1, mApplicableTestEquipment.getLocation());
+                }
                 else
                     aleartDialog("There is no filter or equipment location");
             }

@@ -84,6 +84,8 @@ public class ValdocControler {
             jsonObject.put("testDetailDTOs", testDetailsJsonArray);
             jsonObject.put("testReadingDTOs", testReadingJsonArray);
             jsonObject.put("testSpecificValueDTOs", testSpecificationValueJsonArray);
+            jsonObject.put("serviceReportDTOs", null);
+            jsonObject.put("serviceReportDetailDTOs", null);
         } catch (Exception e) {
             Log.d("getCertificateData", "certificate json exception=" + e.getMessage());
         }
@@ -99,6 +101,9 @@ public class ValdocControler {
         try {
             serviceReportJsonArray = mValdocDatabaseHandler.getServiceReport();
             serviceReportDetailsJsonArray = mValdocDatabaseHandler.getServiceReportDetailsInfo();
+            jsonObject.put("testDetailDTOs", null);
+            jsonObject.put("testReadingDTOs", null);
+            jsonObject.put("testSpecificValueDTOs", null);
             jsonObject.put("serviceReportDTOs", serviceReportJsonArray);
             jsonObject.put("serviceReportDetailDTOs", serviceReportDetailsJsonArray);
         } catch (Exception e) {
@@ -487,12 +492,12 @@ public class ValdocControler {
                 applicableTestEquipment.setTestName(jsonObject.optString("testName").toString());
                 applicableTestEquipment.setEquipmentId(jsonObject.optInt("equipmentId"));
 
-                applicableTestEquipment.setPeriodicity(jsonObject.optString("testCode").toString());
-                applicableTestEquipment.setLocation(jsonObject.optInt("testFormat"));
-                applicableTestEquipment.setNoOfCycle(jsonObject.optInt("testSpecification"));
-                applicableTestEquipment.setLastUpdatedDate(jsonObject.optString("occupencyState").toString());
-                applicableTestEquipment.setPeriodicity(jsonObject.optString("testReference").toString());
-                applicableTestEquipment.setLocation(jsonObject.optInt("testProp"));
+                applicableTestEquipment.setTestCode(jsonObject.optString("testCode").toString());
+                applicableTestEquipment.setTestFormat(jsonObject.optString("testFormat"));
+                applicableTestEquipment.setTestSpecification(jsonObject.optString("testSpecification"));
+                applicableTestEquipment.setOccupencyState(jsonObject.optString("occupencyState").toString());
+                applicableTestEquipment.setTestReference(jsonObject.optString("testReference").toString());
+                applicableTestEquipment.setTestProp(jsonObject.optString("testProp"));
 
                 applicableTestEquipment.setPeriodicity(jsonObject.optString("periodicity").toString());
                 applicableTestEquipment.setLocation(jsonObject.optInt("location"));
