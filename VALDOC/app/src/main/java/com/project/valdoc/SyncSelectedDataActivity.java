@@ -55,7 +55,6 @@ public class SyncSelectedDataActivity extends AppCompatActivity implements HttpP
             @Override
             public void onClick(View view) {
                 syncTestData();
-                finish();
             }
         });
 
@@ -428,6 +427,7 @@ public class SyncSelectedDataActivity extends AppCompatActivity implements HttpP
                         }
                     }
                     aleartDialog("Data synced successfully");
+                    finish();
                 } else {
                     aleartDialog("Post Data not synced successfully,Please sync again !");
                 }
