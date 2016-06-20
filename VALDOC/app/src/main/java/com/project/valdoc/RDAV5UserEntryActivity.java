@@ -398,48 +398,42 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
 
 //        testSpecification.setText("Required Air Velocity " + equipment.getMinVelocity() + "-" + equipment.getMaxVelocity() + "fpm");
         if (mTestBasedOn.equalsIgnoreCase("EQUIPMENT")) {
-            testSpecification.setText(""+applicableTestEquipment.getTestSpecification());
+            testSpecification.setText("" + applicableTestEquipment.getTestSpecification());
             equipmentName.setText(equipment.getEquipmentName().toString());
             equipmentNo.setText(equipment.getEquipmentNo().toString());
         } else if (mTestBasedOn.equalsIgnoreCase("AHU")) {
-            testSpecification.setText(""+mApplicableTestAhu.getTestSpecification());
+            testSpecification.setText("" + mApplicableTestAhu.getTestSpecification());
         }
-
-
-
-//        occupancyState.setText(equipment.getOccupancyState().toString());
-//        Log.d("valdoc", "RDAV5UserEnryActivity 1witness= equipment.getTestReference()=" + equipment.getTestReference());
-//        testRefrance.setText("" + equipment.getTestReference().toString());
 
     }
 
     private ArrayList<TestReading> testReading() {
         ArrayList<TestReading> readingArrayList = new ArrayList<TestReading>();
         TestReading testReading = new TestReading();
-//        testReading.setTestReadingID(1);
 //        TO DO test details id is id of test details table
-        testReading.setTest_detail_id(testDetailsId);
-        testReading.setEntityName("filterList");
-        StringBuilder sb = new StringBuilder();
-        int index = 0;
-        for (TextView testvalue : txtViewList) {
-            if (index != 0)
-                sb.append(',');
-            index++;
-            sb.append(testvalue.getText());
+        int grilSize = mEquipmentGrillArrayList.size();
+        int inputDataSize = txtViewList.size() / grilSize;
+        int k = 0;
+        for (int i = 0; i < grilSize; i++) {
+            testReading.setTest_detail_id(testDetailsId);
+            testReading.setEntityName("" + mEquipmentGrillArrayList.get(i).getGrillCode());
+
+            StringBuilder sb = new StringBuilder();
+            int index = 0;
+            for (int j = 0; j < inputDataSize; j++) {
+                TextView testvalue=txtViewList.get(k);
+                if (index != 0)
+                    sb.append(',');
+                index++;
+                sb.append(testvalue.getText());
+                k++;
+            }
+            sb.append(","+resultTextViewList.get(i).getText());
+            sb.append(","+txtPassFailList.get(i).getText());
+            testReading.setValue(sb.toString());
+            readingArrayList.add(testReading);
         }
-        //Receiving Result Data from Bundle
-        HashMap<Integer, Integer> resultHashMap = (HashMap<Integer, Integer>) getIntent().getSerializableExtra("ResultData");
-        for (Map.Entry n : resultHashMap.entrySet()) {
-            Log.v(TAG, " Result: " + n.getKey() + " " + n.getValue());
-        }
-        for (int i = 0; i < resultTextViewList.size(); i++) {
-            TextView tvl = resultTextViewList.get(i);
-            sb.append(',');
-            sb.append(tvl.getText().toString());
-        }
-        testReading.setValue(sb.toString());
-        readingArrayList.add(testReading);
+
         return readingArrayList;
     }
 
@@ -479,8 +473,8 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
         testDetails.setRoomNo("" + roomDetails[0]);
         testDetails.setOccupencyState("" + occupancyState.getText());
         testDetails.setTestReference("" + testRefrance.getText());
-        testDetails.setEquipmentName(""+equipment.getEquipmentName());
-        testDetails.setEquipmentNo("" +equipment.getEquipmentNo());
+        testDetails.setEquipmentName("" + equipment.getEquipmentName());
+        testDetails.setEquipmentNo("" + equipment.getEquipmentNo());
         testDetails.setTesterName("" + testCundoctor.getText());
         testDetails.setWitnessName("" + testWitness.getText());
         testDetails.setTestCode(mTestCode);
@@ -560,9 +554,9 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
                 if (i == 1 && j == 1) {
                     row.addView(addTextView("Grille / Filter ID"));
                 } else {
-                    if(mTestBasedOn.equalsIgnoreCase("AHU")) {
+                    if (mTestBasedOn.equalsIgnoreCase("AHU")) {
                         row.addView(addTextView(mAhuFilterArrayList.get(i - 2).getFilterCode()));
-                    }else if(mTestBasedOn.equalsIgnoreCase("EQUIPMENT")){
+                    } else if (mTestBasedOn.equalsIgnoreCase("EQUIPMENT")) {
                         row.addView(addTextView(mEquipmentGrillArrayList.get(i - 2).getGrillCode()));
                     }
 //                    row.addView(addTextView("QC/DGC/HF/0" + i));

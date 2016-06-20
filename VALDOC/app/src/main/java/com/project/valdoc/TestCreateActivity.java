@@ -1,11 +1,13 @@
 package com.project.valdoc;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -222,11 +224,13 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
         int pos = equipmentAhuOrRoomSpinner.getSelectedItemPosition();
         if (pos > 0) {
             if (equipmentAhuOrRoomTestCodeList[pos - 1].toString().equals("AHU")) {
-                performAhuTest("AHU");
+                aleartDialog("Under development");
+//                performAhuTest("AHU");
             } else if (equipmentAhuOrRoomTestCodeList[pos - 1].toString().equals("EQUIPMENT")) {
                 performEquipmentTest("EQUIPMENT");
             } else if (equipmentAhuOrRoomTestCodeList[pos - 1].toString().equals("ROOM")) {
-                performRoomTest("ROOM");
+                aleartDialog("Under development");
+//                performRoomTest("ROOM");
             }
         }
     }
@@ -237,12 +241,14 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
         if (AV.equals(searchEquipmentTestCode[testPosition])) {
             rdAv5Test(equipmentTestCode[testPosition], testBasedOn);
         } else if (FIT.equals(searchEquipmentTestCode[testPosition])) {
-            rdFit(equipmentTestCode[testPosition], testBasedOn, FIT);
+            aleartDialog("Under development");
+//            rdFit(equipmentTestCode[testPosition], testBasedOn, FIT);
         } else if (PCT.equals(searchEquipmentTestCode[testPosition])) {
-//            rdPc3(equipmentTestCode[testPosition],searchEquipmentTestCode[testPosition]);
-            rdPc3(equipmentTestCode[testPosition], testBasedOn);
+            aleartDialog("Under development");
+//            rdPc3(equipmentTestCode[testPosition], testBasedOn);
         } else if (RCT.equals(searchEquipmentTestCode[testPosition])) {
-            rdRct(equipmentTestCode[testPosition], testBasedOn);
+            aleartDialog("Under development");
+//            rdRct(equipmentTestCode[testPosition], testBasedOn);
         } else {
             Toast.makeText(TestCreateActivity.this, "Please select the correct test to be performed", Toast.LENGTH_SHORT).show();
         }
@@ -882,7 +888,7 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
                     if (pos > 0)
                         getInstrumentList(loginUserType, searchAhuTestCode[pos]);
                 } else if (spinerAhuOrEquipment.equals("EQUIPMENT")) {
-                    Log.d("EQUIPMENT", "pos=" + applicableTestSpinner.getSelectedItemPosition() + " Testcode=" + searchAhuTestCode[applicableTestSpinner.getSelectedItemPosition()]);
+//                    Log.d("EQUIPMENT", "pos=" + applicableTestSpinner.getSelectedItemPosition() + " Testcode=" + searchAhuTestCode[applicableTestSpinner.getSelectedItemPosition()]);
                     if (pos > 0)
                         getInstrumentList(loginUserType, searchEquipmentTestCode[pos]);
                 } else if (spinerAhuOrEquipment.equals("ROOM")) {
@@ -1316,5 +1322,27 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
         Intent afterLoginIntent = new Intent(TestCreateActivity.this, AfterLoginActivity.class);
         startActivity(afterLoginIntent);
         TestCreateActivity.this.finish();
+    }
+
+    public void aleartDialog(String message) {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setMessage(message);
+
+        alertDialogBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface arg0, int arg1) {
+//                finish();
+            }
+        });
+
+//        alertDialogBuilder.setNegativeButton("No",new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//                finish();
+//            }
+//        });
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
     }
 }
