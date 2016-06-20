@@ -99,14 +99,17 @@ public class CommonTestViewActivity extends AppCompatActivity {
             testReadingList = mValdocDatabaseHandler.getTestReadingDataById(testDetailId+"");
             spiltValue =testReadingList.get(0).getValue().split(",");
             Log.d(TAG, "CodeFlow : spiltValue length : " + spiltValue.length);
-            BuildTable(testReadingList.size()+1,spiltValue.length-1);
+            BuildTable(testReadingList.size()+1,(spiltValue.length-1));
             //input Data
             if(spiltValue != null && spiltValue.length>0){
-                int textId = 200;
+                int textId =0;
                 for (int j = 0; j < testReadingList.size(); j++) {
                     spiltValue =testReadingList.get(j).getValue().split(",");
+                    Log.d(TAG, "CodeFlow : outerForLoop J: " + j);
                     for (int i = 0; i <spiltValue.length-1; i++) {
-                        txtViewList.get(i).setText(""+spiltValue[i]);
+                        txtViewList.get(textId).setText(""+spiltValue[i]);
+                        textId++;
+                        Log.d(TAG, "CodeFlow : InnerForLoop I: " + i+" textId "+textId);
                     }
                 }
             }
@@ -812,6 +815,7 @@ public class CommonTestViewActivity extends AppCompatActivity {
         tv.setEllipsize(TextUtils.TruncateAt.END);
         idCountEtv++;
         txtViewList.add(tv);
+        Log.d(TAG,"CodeFlow idCountEtv "+idCountEtv);
         return tv;
     }
 
