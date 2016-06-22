@@ -53,6 +53,7 @@ public class CommonTestViewActivity extends AppCompatActivity {
     ArrayList<TextView> txtViewList;
     ArrayList<TextView> txtPassFailList;
     ArrayList<TextView> resultTextViewList;
+    ArrayList<TextView> gridTextList;
     ProgressDialog pr;
     private String userName = "";
     String testType = null;
@@ -76,6 +77,7 @@ public class CommonTestViewActivity extends AppCompatActivity {
         txtViewList = new ArrayList<TextView>();
         txtPassFailList = new ArrayList<TextView>();
         resultTextViewList = new ArrayList<TextView>();
+        gridTextList = new ArrayList<TextView>();
 
         sharedpreferences = getSharedPreferences("valdoc", Context.MODE_PRIVATE);
         userName = sharedpreferences.getString("USERNAME", "");
@@ -101,20 +103,25 @@ public class CommonTestViewActivity extends AppCompatActivity {
             Log.d(TAG, "CodeFlow : spiltValue length : " + spiltValue.length);
             BuildTable(testReadingList.size()+1,(spiltValue.length-1));
             //input Data
-            if(spiltValue != null && spiltValue.length>0){
                 int textId =0;
                 for (int j = 0; j < testReadingList.size(); j++) {
-                    spiltValue =testReadingList.get(j).getValue().split(",");
                     Log.d(TAG, "CodeFlow : outerForLoop J: " + j);
+                    //filter
+                    gridTextList.get(j).setText(testReadingList.get(j).getEntityName());
+                    //Average
+                    resultTextViewList.get(j).setText(""+spiltValue[spiltValue.length-2]);
+                    //Results pass/fail
+                    txtPassFailList.get(j).setText(""+spiltValue[spiltValue.length-1]);
+                    //V1, V2, v3.. Value..
+                    spiltValue =testReadingList.get(j).getValue().split(",");
                     for (int i = 0; i <spiltValue.length-1; i++) {
                         txtViewList.get(textId).setText(""+spiltValue[i]);
-                        textId++;
-                        //Result
-                        resultTextViewList.get(i).setText(""+spiltValue[i]);
                         Log.d(TAG, "CodeFlow : InnerForLoop I: " + i+" textId "+textId);
+                        textId++;
+
                     }
+
                 }
-            }
         }else if(testType != null && testType.contains("ACPH_AV")){
             findViewById(R.id.test2_table_ll).setVisibility(View.VISIBLE);
             BuildTableTest2(rows,cols);
@@ -160,7 +167,7 @@ public class CommonTestViewActivity extends AppCompatActivity {
                 if (i == 1 && j == 1) {
                     row.addView(addTextView("Grille / Filter ID"));
                 } else {
-                    row.addView(addTextView("QC/DGC/HF/0" + i));
+                    row.addView(addGridTextView(""));
                 }
 
             }
@@ -791,6 +798,25 @@ public class CommonTestViewActivity extends AppCompatActivity {
         tv.setSingleLine(false);
         tv.setMaxLines(3);
         tv.setEllipsize(TextUtils.TruncateAt.END);
+        tv.setText(textValue);
+        return tv;
+    }
+
+    private TextView addGridTextView(String textValue) {
+        TextView tv = new TextView(this);
+        tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+                TableRow.LayoutParams.WRAP_CONTENT));
+        tv.setBackgroundResource(R.drawable.border1);
+        tv.setGravity(Gravity.CENTER);
+        //tv.setPadding(5, 5, 5, 5);
+        tv.setTextColor(getResources().getColor(R.color.black));
+        tv.setTextSize(getResources().getDimension(R.dimen.normal_text_size));
+        tv.setGravity(Gravity.CENTER);
+        //tv.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD);
+        tv.setSingleLine(false);
+        tv.setMaxLines(3);
+        tv.setEllipsize(TextUtils.TruncateAt.END);
+        gridTextList.add(tv);
         tv.setText(textValue);
         return tv;
     }
