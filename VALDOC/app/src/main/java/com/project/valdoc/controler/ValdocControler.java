@@ -57,26 +57,29 @@ public class ValdocControler {
 
     public void httpCertificatePostSyncData(Context context, String method, String testDetailsIdList) {
         mContext = context;
-//        Log.d("Avinash","testDetailsIdList="+testDetailsIdList);
+        mValdocDatabaseHandler = new ValdocDatabaseHandler(mContext);
+        Log.d("Avinash","testDetailsIdList="+testDetailsIdList);
         JSONObject jsonObject = getCertificateData(testDetailsIdList);
         postConnection(method, jsonObject);
     }
 
     public void httpServiceReportPostSyncData(Context context, String method) {
         mContext = context;
+        mValdocDatabaseHandler = new ValdocDatabaseHandler(mContext);
 //        Log.d("Avinash","testDetailsIdList="+testDetailsIdList);
         JSONObject jsonObject = getServiceReportData();
         postConnection(method, jsonObject);
     }
 
     private JSONObject getCertificateData(String testDetailsIdList) {
-        JSONObject jsonObject = null;
+        JSONObject jsonObject = new JSONObject();
         JSONArray testDetailsJsonArray = null;
         JSONArray testReadingJsonArray = null;
         JSONArray testSpecificationValueJsonArray = null;
 
-        jsonObject = new JSONObject();
+//        jsonObject = new JSONObject();
         try {
+            Log.d("Avinash","testDetailsIdList2="+testDetailsIdList);
             testDetailsJsonArray = mValdocDatabaseHandler.getTestDetailsInfo(testDetailsIdList);
             testReadingJsonArray = mValdocDatabaseHandler.getTestReadingInfo(testDetailsIdList);
             testSpecificationValueJsonArray = mValdocDatabaseHandler.getTestSpecificationValueInfo(testDetailsIdList);
@@ -84,8 +87,8 @@ public class ValdocControler {
             jsonObject.put("testDetailDTOs", testDetailsJsonArray);
             jsonObject.put("testReadingDTOs", testReadingJsonArray);
             jsonObject.put("testSpecificValueDTOs", testSpecificationValueJsonArray);
-            jsonObject.put("serviceReportDTOs", null);
-            jsonObject.put("serviceReportDetailDTOs", null);
+            jsonObject.put("serviceReportDTOs", "[]");
+            jsonObject.put("serviceReportDetailDTOs", "[]");
         } catch (Exception e) {
             Log.d("getCertificateData", "certificate json exception=" + e.getMessage());
         }
@@ -101,9 +104,9 @@ public class ValdocControler {
         try {
             serviceReportJsonArray = mValdocDatabaseHandler.getServiceReport();
             serviceReportDetailsJsonArray = mValdocDatabaseHandler.getServiceReportDetailsInfo();
-            jsonObject.put("testDetailDTOs", null);
-            jsonObject.put("testReadingDTOs", null);
-            jsonObject.put("testSpecificValueDTOs", null);
+            jsonObject.put("testDetailDTOs", "[]");
+            jsonObject.put("testReadingDTOs", "[]");
+            jsonObject.put("testSpecificValueDTOs", "[]");
             jsonObject.put("serviceReportDTOs", serviceReportJsonArray);
             jsonObject.put("serviceReportDetailDTOs", serviceReportDetailsJsonArray);
         } catch (Exception e) {

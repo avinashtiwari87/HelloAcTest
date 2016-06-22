@@ -409,12 +409,13 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
 
     private ArrayList<TestReading> testReading() {
         ArrayList<TestReading> readingArrayList = new ArrayList<TestReading>();
-        TestReading testReading = new TestReading();
+
 //        TO DO test details id is id of test details table
         int grilSize = mEquipmentGrillArrayList.size();
         int inputDataSize = txtViewList.size() / grilSize;
         int k = 0;
         for (int i = 0; i < grilSize; i++) {
+            TestReading testReading = new TestReading();
             testReading.setTest_detail_id(testDetailsId);
             testReading.setEntityName("" + mEquipmentGrillArrayList.get(i).getGrillCode());
 
@@ -479,6 +480,10 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
         testDetails.setWitnessName("" + testWitness.getText());
         testDetails.setTestCode(mTestCode);
         testDetails.setAhuNo("");
+        testDetails.setSamplingFlowRate("");
+        testDetails.setSamplingTime("");
+        testDetails.setAerosolGeneratorType("");
+        testDetails.setAerosolUsed("");
         return testDetails;
     }
 

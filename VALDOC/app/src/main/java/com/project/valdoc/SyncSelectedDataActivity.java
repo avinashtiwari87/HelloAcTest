@@ -423,7 +423,7 @@ public class SyncSelectedDataActivity extends AppCompatActivity implements HttpP
                 if (statuscode == HttpURLConnection.HTTP_OK) {
                     if (selectePosition.size() > 0) {
                         for (Integer value : selectePosition.values()) {
-                            mValdocDatabaseHandler.deleteTestTableRow(testDetailList.get(value).getTest_detail_id());
+//                            mValdocDatabaseHandler.deleteTestTableRow(testDetailList.get(value).getTest_detail_id());
                         }
                     }
                     aleartDialog("Data synced successfully");

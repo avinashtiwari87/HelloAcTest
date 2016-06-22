@@ -1925,6 +1925,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
     // select data from test reading table
     public JSONArray getTestReadingInfo(String idList) {
         JSONArray testReadingJsonArray;
+        Log.d("Avinash","testDetailsIdList getTestReadingInfo idList="+idList);
         testReadingJsonArray = new JSONArray();
         String selectQuery = "SELECT * FROM " + TESTREADING_TABLE_NAME
                 + " WHERE " + ValdocDatabaseHandler.TESTREADING_TEST_DETAIL_ID + " IN " + "(" + idList + ")";
@@ -1950,10 +1951,13 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
 
     // select data from test details table
     public JSONArray getTestDetailsInfo(String idList) {
+        Log.d("Avinash","testDetailsIdList TEST_DETAILS_TABLE_NAME1="+idList);
         JSONArray testDetailsJsonArray;
         testDetailsJsonArray = new JSONArray();
+        Log.d("Avinash","testDetailsIdList TEST_DETAILS_TABLE_NAME2="+idList);
         String selectQuery = "SELECT * FROM " + TEST_DETAILS_TABLE_NAME
                 + " WHERE " + ValdocDatabaseHandler.TEST_DETAILS_TEST_DETAIL_ID + " IN " + "(" + idList + ")";
+        Log.d("Avinash","testDetailsIdList TEST_DETAILS_TABLE_NAME selectQuery="+selectQuery);
 //        SELECT * FROM TABLE WHERE ID IN (id1, id2, ..., idn)
         SQLiteDatabase database = this.getWritableDatabase();
         Cursor cursor = database.rawQuery(selectQuery, null);
@@ -1993,7 +1997,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                     jsonObject.put(TEST_DETAILS_AEROSOLGENERATORTYPE, cursor.getString(26).toString());
                     jsonObject.put(TEST_DETAILS_AEROSOLUSED, cursor.getString(27).toString());
                     jsonObject.put(TEST_DETAILS_TESTCODE, cursor.getString(28).toString());
-                    Log.d("getCertificateData", "test details=" + jsonObject.toString());
+                    Log.d("testDetailsIdList", "getCertificateData test details=" + jsonObject.toString());
                     testDetailsJsonArray.put(jsonObject);
                 } catch (Exception e) {
 
@@ -2007,8 +2011,10 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
     public JSONArray getTestSpecificationValueInfo(String idList) {
         JSONArray testSpecificationValueJsonArray;
         testSpecificationValueJsonArray = new JSONArray();
+        Log.d("Avinash","testDetailsIdList getTestSpecificationValueInfo idList="+idList);
         String selectQuery = "SELECT * FROM " + TESTSPECIFICATIONVALUE_TABLE_NAME
                 + " WHERE " + ValdocDatabaseHandler.TESTSPECIFICATIONVALUE_TEST_DETAIL_ID + " IN " + "(" + idList + ")";
+        Log.d("Avinash","testDetailsIdList TEST_DETAILS_TABLE_NAME selectQuery="+selectQuery);
         SQLiteDatabase database = this.getWritableDatabase();
         Cursor cursor = database.rawQuery(selectQuery, null);
         if (cursor.moveToFirst()) {
