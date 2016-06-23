@@ -226,7 +226,6 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
 
     private void initTextView() {
         // layout data which is not in use
-        instrumentNoTextView = (TextView) findViewById(R.id.instrument_no);
         instrumentNoTextView.setVisibility(View.GONE);
         testerNameTextView = (TextView) findViewById(R.id.tester_name);
         testerNameTextView.setVisibility(View.GONE);
@@ -234,13 +233,10 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
         instrumentUsedTextView.setVisibility(View.GONE);
         testCunductedByTextView = (TextView) findViewById(R.id.testcunducted_by);
         testCunductedByTextView.setVisibility(View.GONE);
-        roomNameLable = (TextView) findViewById(R.id.room_name_lable1);
         roomNameLable.setVisibility(View.GONE);
         instrumentNoLable = (TextView) findViewById(R.id.instrument_no_lable);
         instrumentNoLable.setVisibility(View.GONE);
-        roomNameTest = (TextView) findViewById(R.id.room_name1);
         roomNameTest.setVisibility(View.GONE);
-        instrument_name = (TextView) findViewById(R.id.instrument_name);
         instrument_name.setVisibility(View.GONE);
 
         dateTextView = (TextView) findViewById(R.id.datetextview);

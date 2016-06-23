@@ -114,7 +114,9 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textStyle">bold</item>
         <item name="android:ellipsize">end</item>
+        <item name="android:singleLine">true</item>
         <item name="android:maxLines">1</item>
+        <item name="android:layout_weight">1</item>
         <item name="android:textColor">@color/black</item>
     </style>
 
@@ -122,6 +124,9 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:ellipsize">end</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:paddingLeft">5dp</item>
         <item name="android:maxLines">1</item>
         <item name="android:textColor">@color/black</item>
     </style>

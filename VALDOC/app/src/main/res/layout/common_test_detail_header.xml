@@ -1,128 +1,184 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:weightSum="3">
 
-    <TableLayout
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp">
+        android:orientation="vertical"
+        android:paddingLeft="5dp">
 
-        <TableRow>
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-            <TextView
-                style="@style/TestHeaderTextViewBold"
-                android:text="Room Name" />
+            <TableRow
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp">
 
-            <TextView
-                style="@style/TestHeaderTextViewNormal"
-                android:text="Filtration Room" />
-        </TableRow>
+                <TextView
+                    android:id="@+id/common_test_header1_tv"
+                    style="@style/TestHeaderTextViewBold"
+                    android:text="Equipment Name:" />
 
-        <TableRow>
+                <TextView
+                    android:id="@+id/common_test_value1_tv"
+                    style="@style/TestHeaderTextViewNormal"
+                    android:text="Filtration Room " />
+            </TableRow>
 
-            <TextView
-                style="@style/TestHeaderTextViewBold"
-                android:text="Instrument Used :" />
+            <TableRow
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp">
 
-            <TextView
-                style="@style/TestHeaderTextViewNormal"
-                android:text="Aerosol Photometer" />
-        </TableRow>
+                <TextView
+                    android:id="@+id/common_test_header2_tv"
+                    style="@style/TestHeaderTextViewBold"
+                    android:text="Instrument Used :" />
 
-        <TableRow>
+                <TextView
+                    android:id="@+id/common_test_value2tv"
+                    style="@style/TestHeaderTextViewNormal"
+                    android:text="Aerosol Photometer" />
+            </TableRow>
 
-            <TextView
-                style="@style/TestHeaderTextViewBold"
-                android:text="Test Conduted By :" />
+            <TableRow
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp">
 
-            <TextView
-                style="@style/TestHeaderTextViewNormal"
-                android:text="Pradeep" />
-        </TableRow>
+                <TextView
+                    android:id="@+id/common_test_header3_tv"
+                    style="@style/TestHeaderTextViewBold"
+                    android:text="Test Conduted By :" />
 
-    </TableLayout>
+                <TextView
+                    android:id="@+id/common_test_value3_tv"
+                    style="@style/TestHeaderTextViewNormal"
+                    android:text="Pradeep" />
+            </TableRow>
 
-    <TableLayout
-        android:layout_width="wrap_content"
+        </TableLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:paddingRight="10dp">
+        android:orientation="vertical">
 
-        <TableRow>
+        <TableLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
 
-            <TextView
-                style="@style/TestHeaderTextViewBold"
-                android:text="Room Name" />
+            <TableRow
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp">
 
-            <TextView
-                style="@style/TestHeaderTextViewNormal"
-                android:text="Filtration Room" />
-        </TableRow>
+                <TextView
+                    android:id="@+id/common_test_header4_tv"
+                    style="@style/TestHeaderTextViewBold"
+                    android:text="Room Name" />
 
-        <TableRow>
+                <TextView
+                    android:id="@+id/common_test_value4_tv"
+                    style="@style/TestHeaderTextViewNormal"
+                    android:text="Filtration Room" />
+            </TableRow>
 
-            <TextView
-                style="@style/TestHeaderTextViewBold"
-                android:text="Instrument Used :" />
+            <TableRow
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp">
 
-            <TextView
-                style="@style/TestHeaderTextViewNormal"
-                android:text="Aerosol Photometer" />
-        </TableRow>
+                <TextView
+                    android:id="@+id/common_test_header5_tv"
+                    style="@style/TestHeaderTextViewBold"
+                    android:text="Instrument Used :" />
 
-        <TableRow>
+                <TextView
+                    android:id="@+id/common_test_value5_tv"
+                    style="@style/TestHeaderTextViewNormal"
+                    android:text="Aerosol Photometer" />
+            </TableRow>
 
-            <TextView
-                style="@style/TestHeaderTextViewBold"
-                android:text="Test Conduted By :" />
+            <TableRow
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp">
 
-            <TextView
-                style="@style/TestHeaderTextViewNormal"
-                android:text="Pradeep" />
-        </TableRow>
-    </TableLayout>
+                <TextView
+                    android:id="@+id/common_test_header6_tv"
+                    style="@style/TestHeaderTextViewBold"
+                    android:text="Test Conduted By :" />
 
-    <TableLayout
-        android:layout_width="wrap_content"
+                <TextView
+                    android:id="@+id/common_test_value6_tv"
+                    style="@style/TestHeaderTextViewNormal"
+                    android:text="Pradeep" />
+            </TableRow>
+        </TableLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:paddingRight="10dp">
+        android:orientation="vertical"
+        android:paddingRight="5dp">
 
-        <TableRow>
+        <TableLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
 
-            <TextView
-                style="@style/TestHeaderTextViewBold"
-                android:text="Room Name" />
+            <TableRow
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp">
 
-            <TextView
-                style="@style/TestHeaderTextViewNormal"
-                android:text="Filtration Room" />
-        </TableRow>
+                <TextView
+                    android:id="@+id/common_test_header7_tv"
+                    style="@style/TestHeaderTextViewBold"
+                    android:text="Room Name" />
 
-        <TableRow>
+                <TextView
+                    android:id="@+id/common_test_value7_tv"
+                    style="@style/TestHeaderTextViewNormal"
+                    android:text="Filtration Room" />
+            </TableRow>
 
-            <TextView
-                style="@style/TestHeaderTextViewBold"
-                android:text="Instrument Used :" />
+            <TableRow
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp">
 
-            <TextView
-                style="@style/TestHeaderTextViewNormal"
-                android:text="Aerosol Photometer" />
-        </TableRow>
+                <TextView
+                    android:id="@+id/common_test_header8_tv"
+                    style="@style/TestHeaderTextViewBold"
+                    android:text="Instrument Used :" />
 
-        <TableRow>
+                <TextView
+                    android:id="@+id/common_test_value8_tv"
+                    style="@style/TestHeaderTextViewNormal"
+                    android:text="Aerosol Photometer" />
+            </TableRow>
 
-            <TextView
-                style="@style/TestHeaderTextViewBold"
-                android:text="Test Conduted By :" />
+            <TableRow
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp">
 
-            <TextView
-                style="@style/TestHeaderTextViewNormal"
-                android:text="Pradeep" />
-        </TableRow>
-    </TableLayout>
+                <TextView
+                    android:id="@+id/common_test_header9_tv"
+                    style="@style/TestHeaderTextViewBold"
+                    android:text="Test Conduted By :" />
+
+                <TextView
+                    android:id="@+id/common_test_value9_tv"
+                    style="@style/TestHeaderTextViewNormal"
+                    android:text="Pradeep" />
+            </TableRow>
+        </TableLayout>
+    </LinearLayout>
+
 
 </LinearLayout>
