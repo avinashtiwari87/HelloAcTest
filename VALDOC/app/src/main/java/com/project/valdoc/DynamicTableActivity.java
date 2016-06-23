@@ -369,8 +369,10 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 else
                     aleartDialog("There is no gril or applicable test room location");
             }else if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
-                if (mRoomFilterArrayList != null && mRoomFilterArrayList.size() > 0 && mApplicableTestRoom.getLocation() > 0)
+                if (mRoomFilterArrayList != null && mRoomFilterArrayList.size() > 0 && mApplicableTestRoom.getLocation() > 0) {
+                    Log.d("Avinash", "room location acph_av=" + mApplicableTestRoom.getLocation());
                     BuildTableTest2(mRoomFilterArrayList.size() + 1, mApplicableTestRoom.getLocation());
+                }
                 else
                     aleartDialog("There is no gril or applicable test room location");
             }
