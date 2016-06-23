@@ -34,8 +34,9 @@
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:text="@string/test_data_sheet"
+            android:textStyle="bold"
             android:textColor="@android:color/black"
-            android:textSize="16sp" />
+            android:textSize="22sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -210,7 +211,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="10dp"
-                    android:src="@drawable/submit_btn"
+                    android:src="@drawable/go_btn"
                     android:textColor="@color/white" />
             </RelativeLayout>
         </LinearLayout>
