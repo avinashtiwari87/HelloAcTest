@@ -1925,7 +1925,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
     // select data from test reading table
     public JSONArray getTestReadingInfo(String idList) {
         JSONArray testReadingJsonArray;
-        Log.d("Avinash","testDetailsIdList getTestReadingInfo idList="+idList);
+        Log.d("Avinash", "testDetailsIdList getTestReadingInfo idList=" + idList);
         testReadingJsonArray = new JSONArray();
         String selectQuery = "SELECT * FROM " + TESTREADING_TABLE_NAME
                 + " WHERE " + ValdocDatabaseHandler.TESTREADING_TEST_DETAIL_ID + " IN " + "(" + idList + ")";
@@ -1951,13 +1951,13 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
 
     // select data from test details table
     public JSONArray getTestDetailsInfo(String idList) {
-        Log.d("Avinash","testDetailsIdList TEST_DETAILS_TABLE_NAME1="+idList);
+        Log.d("Avinash", "testDetailsIdList TEST_DETAILS_TABLE_NAME1=" + idList);
         JSONArray testDetailsJsonArray;
         testDetailsJsonArray = new JSONArray();
-        Log.d("Avinash","testDetailsIdList TEST_DETAILS_TABLE_NAME2="+idList);
+        Log.d("Avinash", "testDetailsIdList TEST_DETAILS_TABLE_NAME2=" + idList);
         String selectQuery = "SELECT * FROM " + TEST_DETAILS_TABLE_NAME
                 + " WHERE " + ValdocDatabaseHandler.TEST_DETAILS_TEST_DETAIL_ID + " IN " + "(" + idList + ")";
-        Log.d("Avinash","testDetailsIdList TEST_DETAILS_TABLE_NAME selectQuery="+selectQuery);
+        Log.d("Avinash", "testDetailsIdList TEST_DETAILS_TABLE_NAME selectQuery=" + selectQuery);
 //        SELECT * FROM TABLE WHERE ID IN (id1, id2, ..., idn)
         SQLiteDatabase database = this.getWritableDatabase();
         Cursor cursor = database.rawQuery(selectQuery, null);
@@ -2011,10 +2011,10 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
     public JSONArray getTestSpecificationValueInfo(String idList) {
         JSONArray testSpecificationValueJsonArray;
         testSpecificationValueJsonArray = new JSONArray();
-        Log.d("Avinash","testDetailsIdList getTestSpecificationValueInfo idList="+idList);
+        Log.d("Avinash", "testDetailsIdList getTestSpecificationValueInfo idList=" + idList);
         String selectQuery = "SELECT * FROM " + TESTSPECIFICATIONVALUE_TABLE_NAME
                 + " WHERE " + ValdocDatabaseHandler.TESTSPECIFICATIONVALUE_TEST_DETAIL_ID + " IN " + "(" + idList + ")";
-        Log.d("Avinash","testDetailsIdList TEST_DETAILS_TABLE_NAME selectQuery="+selectQuery);
+        Log.d("Avinash", "testDetailsIdList TEST_DETAILS_TABLE_NAME selectQuery=" + selectQuery);
         SQLiteDatabase database = this.getWritableDatabase();
         Cursor cursor = database.rawQuery(selectQuery, null);
         if (cursor.moveToFirst()) {
@@ -2542,9 +2542,10 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
 
 
     // select data from applicable test room table
-    public ApplicableTestRoom getApplicableTestRoomInfo(int roomId) {
+    public ApplicableTestRoom getApplicableTestRoomInfo(int roomId, String testCode) {
         String selectQuery = "SELECT * FROM " + APLICABLE_TEST_ROOM_TABLE_NAME +
-                " WHERE " + ValdocDatabaseHandler.APLICABLE_TEST_ROOM_ROOMID + " = " + roomId;
+                " WHERE " + ValdocDatabaseHandler.APLICABLE_TEST_ROOM_TESTCODE + " = " + '"' + testCode + '"' + " AND "
+                + ValdocDatabaseHandler.APLICABLE_TEST_ROOM_ROOMID + " = " + roomId;
         SQLiteDatabase database = this.getWritableDatabase();
         Cursor cursor = database.rawQuery(selectQuery, null);
         ApplicableTestRoom applicableTestRoom = new ApplicableTestRoom();
@@ -2565,7 +2566,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 applicableTestRoom.setLocation(cursor.getInt(10));
                 applicableTestRoom.setNoOfCycle(cursor.getInt(11));
                 applicableTestRoom.setLastUpdatedDate(cursor.getString(12));
-//                Log.d("Avinash", "applicableTestRoom=" + applicableTestRoom.getTestName());
+                Log.d("Avinash", "applicableTestRoom=" + applicableTestRoom.getTestName());
             } while (cursor.moveToNext());
         } // return contact list return wordList; }
         return applicableTestRoom;
@@ -2573,9 +2574,10 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
 
 
     // select data from applicable test ahu table
-    public ApplicableTestAhu getApplicableTestAhuInfo(int ahuId) {
+    public ApplicableTestAhu getApplicableTestAhuInfo(int ahuId, String testCode) {
         String selectQuery = "SELECT * FROM " + APLICABLE_TEST_AHU_TABLE_NAME +
-                " WHERE " + ValdocDatabaseHandler.APLICABLE_TEST_AHU_AHUID + " = " + ahuId;
+                " WHERE " + ValdocDatabaseHandler.APLICABLE_TEST_AHU_TESTCODE + " = " + '"' + testCode + '"' + " AND "
+                + ValdocDatabaseHandler.APLICABLE_TEST_AHU_AHUID + " = " + ahuId;
         SQLiteDatabase database = this.getWritableDatabase();
         Cursor cursor = database.rawQuery(selectQuery, null);
         ApplicableTestAhu applicableTestAhu = new ApplicableTestAhu();
