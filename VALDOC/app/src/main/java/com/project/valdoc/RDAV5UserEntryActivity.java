@@ -225,20 +225,6 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
     }
 
     private void initTextView() {
-        // layout data which is not in use
-        instrumentNoTextView.setVisibility(View.GONE);
-        testerNameTextView = (TextView) findViewById(R.id.tester_name);
-        testerNameTextView.setVisibility(View.GONE);
-        instrumentUsedTextView = (TextView) findViewById(R.id.instrument_used);
-        instrumentUsedTextView.setVisibility(View.GONE);
-        testCunductedByTextView = (TextView) findViewById(R.id.testcunducted_by);
-        testCunductedByTextView.setVisibility(View.GONE);
-        roomNameLable.setVisibility(View.GONE);
-        instrumentNoLable = (TextView) findViewById(R.id.instrument_no_lable);
-        instrumentNoLable.setVisibility(View.GONE);
-        roomNameTest.setVisibility(View.GONE);
-        instrument_name.setVisibility(View.GONE);
-
         dateTextView = (TextView) findViewById(R.id.datetextview);
         customerName = (TextView) findViewById(R.id.customer_name);
         certificateNo = (TextView) findViewById(R.id.certificate_no);
@@ -679,7 +665,7 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
         tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
                 TableRow.LayoutParams.WRAP_CONTENT));
         tv.setBackgroundResource(R.drawable.border);
-        tv.setPadding(5, 6, 5, 6);
+        tv.setPadding(5, 4, 5, 5);
         tv.setTextColor(getResources().getColor(R.color.black));
         tv.setTextSize(getResources().getDimension(R.dimen.normal_text_size));
         tv.setGravity(Gravity.CENTER);
@@ -756,11 +742,15 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
         table_layout2 = (TableLayout) findViewById(R.id.tableLayout2);
         table_layout3 = (TableLayout) findViewById(R.id.tableLayout3);
         table_layout4 = (TableLayout) findViewById(R.id.tableLayout4);
+        table_layout4.setVisibility(View.GONE);
         //Hide view coming form test tabl 1
         test_table_1_footer = (LinearLayout) findViewById(R.id.test_table_footer_ll);
         test_table_1_header_l = (LinearLayout) findViewById(R.id.test_table_1_header_l_ll);
         test_table_1_header_2 = (LinearLayout) findViewById(R.id.test_table_1_header_2_ll);
         test_table_1_header_l.setVisibility(View.GONE);
         test_table_1_header_2.setVisibility(View.GONE);
+        findViewById(R.id.common_test_header).setVisibility(View.GONE);
+        TextView TestHeader = (TextView)findViewById(R.id.common_header_tv);
+        TestHeader.setText("TEST RAW DATA EQUIPMENT (ERD_AV)\n(Average Air Flow Velocity Testing)");
     }
 }
