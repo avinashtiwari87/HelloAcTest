@@ -15,8 +15,16 @@
 
 
             </LinearLayout>-->
+    <TextView
+        android:id="@+id/test_note_tv"
+        android:padding="5dp"
+        style="@style/TestHeaderTextViewNormal"
+        android:textColor="@color/red"
+        android:visibility="gone"
+        android:text="Note: Red Bakground values are failed to meet requirement"/>
 
     <LinearLayout
+        android:id="@+id/test_interference"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@drawable/border"

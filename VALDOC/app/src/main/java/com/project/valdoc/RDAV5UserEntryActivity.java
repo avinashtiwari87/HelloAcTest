@@ -69,10 +69,6 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
     private String userName = "";
 
     //certificate view id creation
-    private TextView aerosolUsed;
-    private TextView aerosolGeneratorType;
-    private TextView aerosolUsedLable;
-    private TextView aerosolGeneratorTypeLable;
     private TextView instrumentUsed;
     private TextView make;
     private TextView model;
@@ -83,12 +79,8 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
     private TextView plantName;
     private TextView areaOfTest;
     private TextView roomName;
-    private TextView roomNoLable;
     private TextView occupancyState;
     private TextView testRefrance;
-    private TextView equipmentName;
-    private TextView equipmentNo;
-    private TextView roomNameText;
     private TextView infarance;
     private TextView testCundoctor;
     private TextView testWitnessOrg;
@@ -96,16 +88,7 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
     private TextView testWitness;
     private TextView dateTextView;
     private TextView customerName;
-    private TextView certificateNo;
-
-    private TextView instrumentNoTextView;
-    private TextView testerNameTextView;
-    private TextView instrumentUsedTextView;
-    private TextView testCunductedByTextView;
-    private TextView roomNameLable;
-    private TextView instrumentNoLable;
-    private TextView roomNameTest;
-    private TextView instrument_name;
+    //private TextView certificateNo;
 
     ArrayList<TextView> txtViewList;
     ArrayList<TextView> txtPassFailList;
@@ -216,7 +199,7 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
 // Now formattedDate have current date/time
 //        Toast.makeText(this, formattedDate, Toast.LENGTH_SHORT).show();
         int mon = month + 1;
-        certificateNo.setText("V5/" + mon + "/" + year + "/" + formattedDate);
+        //certificateNo.setText("V5/" + mon + "/" + year + "/" + formattedDate);
 
         // Show current date
         String date = new StringBuilder().append(day).append("-").append(month + 1).append("-").append(year).append(" ").toString();
@@ -227,17 +210,8 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
     private void initTextView() {
         dateTextView = (TextView) findViewById(R.id.datetextview);
         customerName = (TextView) findViewById(R.id.customer_name);
-        certificateNo = (TextView) findViewById(R.id.certificate_no);
+        //certificateNo = (TextView) findViewById(R.id.certificate_no);
         instrumentUsed = (TextView) findViewById(R.id.instrumentused);
-        //hiding extra field
-        aerosolUsedLable = (TextView) findViewById(R.id.aerosol_used_lable);
-        aerosolUsedLable.setVisibility(View.GONE);
-        aerosolGeneratorTypeLable = (TextView) findViewById(R.id.aerosol_generator_type_lable);
-        aerosolGeneratorTypeLable.setVisibility(View.GONE);
-        aerosolUsed = (TextView) findViewById(R.id.aerosol_used);
-        aerosolUsed.setVisibility(View.GONE);
-        aerosolGeneratorType = (TextView) findViewById(R.id.aerosol_generator_type);
-        aerosolGeneratorType.setVisibility(View.GONE);
 
         make = (TextView) findViewById(R.id.make);
         model = (TextView) findViewById(R.id.modle);
@@ -250,15 +224,9 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
 
 //        roomNameLable = (TextView) findViewById(R.id.ahu_no_lable);
 //        roomNameLable.setText(getResources().getString(R.string.room_name));
-        roomName = (TextView) findViewById(R.id.ahu_no);
+        roomName = (TextView) findViewById(R.id.room_name);
         occupancyState = (TextView) findViewById(R.id.ocupancystate);
         testRefrance = (TextView) findViewById(R.id.testrefrence);
-        roomNameText = (TextView) findViewById(R.id.room_name_lable);
-        roomNameText.setText(getResources().getString(R.string.equipment_name));
-        roomNoLable = (TextView) findViewById(R.id.room_no_lable);
-        roomNoLable.setText(getResources().getString(R.string.equipment_no));
-        equipmentName = (TextView) findViewById(R.id.room_name);
-        equipmentNo = (TextView) findViewById(R.id.room_no);
         infarance = (TextView) findViewById(R.id.infarance);
         testCundoctor = (TextView) findViewById(R.id.testcunducter);
         testCondoctorOrg = (TextView) findViewById(R.id.test_condoctor_org);
@@ -381,8 +349,10 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
 //        testSpecification.setText("Required Air Velocity " + equipment.getMinVelocity() + "-" + equipment.getMaxVelocity() + "fpm");
         if (mTestBasedOn.equalsIgnoreCase("EQUIPMENT")) {
             testSpecification.setText("" + applicableTestEquipment.getTestSpecification());
-            equipmentName.setText(equipment.getEquipmentName().toString());
-            equipmentNo.setText(equipment.getEquipmentNo().toString());
+            //equipmentName.setText(equipment.getEquipmentName().toString());
+            make.setText(equipment.getEquipmentName().toString());
+            //equipmentNo.setText(equipment.getEquipmentNo().toString());
+            model.setText(equipment.getEquipmentNo().toString());
         } else if (mTestBasedOn.equalsIgnoreCase("AHU")) {
             testSpecification.setText("" + mApplicableTestAhu.getTestSpecification());
         }
@@ -427,7 +397,7 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
         testDetails.setCustomer(customerName.getText().toString());
         int newmonth = month + 1;
         testDetails.setDateOfTest("" + year + "-" + newmonth + "-" + day);
-        testDetails.setRawDataNo(certificateNo.getText().toString());
+        //testDetails.setRawDataNo(certificateNo.getText().toString());
         testDetails.setPartnerName("" + mPartnerName);
         testDetails.setTestName(TestCreateActivity.AV);
         if (loginUserType.equals("CLIENT")) {
@@ -752,5 +722,7 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
         findViewById(R.id.common_test_header).setVisibility(View.GONE);
         TextView TestHeader = (TextView)findViewById(R.id.common_header_tv);
         TestHeader.setText("TEST RAW DATA EQUIPMENT (ERD_AV)\n(Average Air Flow Velocity Testing)");
+        findViewById(R.id.test_interference).setVisibility(View.GONE);
+        findViewById(R.id.test_note_tv).setVisibility(View.VISIBLE);
     }
 }
