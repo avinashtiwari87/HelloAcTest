@@ -51,7 +51,7 @@
     <string name="instrument_serial_no_details">Q625150</string>
     <string name="calibrated">Calibrated On</string>
     <string name="calibrated_date">29.07.2013</string>
-    <string name="calibration_due">Calibration Due On</string>
+    <string name="calibration_due">Due On</string>
     <string name="calibration_due_on_date">29.07.2014</string>
     <string name="details_of_specification_area">Details Of Specification And Area</string>
     <string name="test_specification">Test Spesification</string>
@@ -98,11 +98,11 @@
     <string name="title_activity_main">MainActivity</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
-    <string name="header_title">Average Air Flow Velocity Testing</string>
+    <string name="header_title">FORM :TEST RAW DATA EQUIPMENT (ERD_AV)\n(Average Air Flow Velocity Testing)</string>
     <string name="verify_test_header">Measured Test Value</string>
     <string name="header2_title">Details of Instruments Used for testing</string>
     <string name="header3_title">Details of Specification and Area</string>
-    <string name="header_title_result">Obtained Test Value</string>
+    <string name="header_title_result">Obtained Test  Values</string>
     <string name="test_create_activity">TestCreateActivity</string>
     <string name="title_activity_login">Sign in</string>
 
