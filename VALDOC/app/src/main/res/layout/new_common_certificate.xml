@@ -42,7 +42,7 @@
                 <TextView
                     android:id="@+id/customer_name"
                     style="@style/TestHeaderTextViewNormal"
-                    android:text="Kem Well Biopharma Prt Ltd" />
+                    android:text="" />
             </TableRow>
 
             <TableRow
@@ -56,7 +56,7 @@
                 <TextView
                     style="@style/TestHeaderTextViewNormal"
                     android:id="@+id/plantname"
-                    android:text="@string/block_plant_details" />
+                    android:text="" />
             </TableRow>
 
             <TableRow
@@ -70,7 +70,7 @@
                 <TextView
                     android:id="@+id/instrumentused"
                     style="@style/TestHeaderTextViewNormal"
-                    android:text="@string/instrument_used_details" />
+                    android:text="" />
             </TableRow>
             <TableRow
                 android:paddingBottom="5dp"
@@ -83,7 +83,7 @@
                 <TextView
                     style="@style/TestHeaderTextViewNormal"
                     android:id="@+id/testspecification"
-                    android:text="@string/test_specification_details" />
+                    android:text="" />
             </TableRow>
             <TableRow
                 android:paddingBottom="5dp"
@@ -96,7 +96,7 @@
                 <TextView
                     style="@style/TestHeaderTextViewNormal"
                     android:id="@+id/areaoftest"
-                    android:text="@string/area_of_test_label_details" />
+                    android:text="" />
             </TableRow>
             <TableRow
                 android:paddingBottom="5dp"
@@ -151,7 +151,7 @@
 
                 <TextView
                     style="@style/TestHeaderTextViewNormal"
-                    android:text="Filtration Room " />
+                    android:text=" " />
             </TableRow>
 
             <TableRow
@@ -165,7 +165,7 @@
 
                 <TextView
                     style="@style/TestHeaderTextViewNormal"
-                    android:text="Aerosol Photometer" />
+                    android:text="" />
             </TableRow>
 
             <TableRow
@@ -179,7 +179,7 @@
                 <TextView
                     android:id="@+id/instrumentserialno"
                     style="@style/TestHeaderTextViewNormal"
-                    android:text="@string/instrument_serial_no_details" />
+                    android:text="" />
             </TableRow>
             <TableRow
                 android:paddingBottom="5dp"
@@ -192,7 +192,7 @@
                 <TextView
                     style="@style/TestHeaderTextViewNormal"
                     android:id="@+id/calibratedon"
-                    android:text="@string/calibrated_date"/>
+                    android:text=""/>
             </TableRow>
             <TableRow
                 android:visibility="invisible"
@@ -205,7 +205,7 @@
 
                 <TextView
                     style="@style/TestHeaderTextViewNormal"
-                    android:text="Pradeep" />
+                    android:text="" />
             </TableRow>
             <TableRow
                 android:paddingBottom="5dp"
@@ -217,8 +217,8 @@
 
                 <TextView
                     style="@style/TestHeaderTextViewNormal"
-                    android:id="@+id/make"
-                    android:text="@string/make_details" />
+                    android:id="@+id/equiment_name"
+                    android:text="" />
             </TableRow>
             <TableRow
                 android:paddingBottom="5dp"
@@ -230,8 +230,8 @@
 
                 <TextView
                     style="@style/TestHeaderTextViewNormal"
-                    android:id="@+id/modle"
-                    android:text="@string/modle_details" />
+                    android:id="@+id/equiment_no"
+                    android:text="" />
             </TableRow>
         </TableLayout>
     </LinearLayout>
@@ -257,8 +257,9 @@
                     android:text="TRD No :" />
 
                 <TextView
+                    android:id="@+id/trd_no"
                     style="@style/TestHeaderTextViewNormal"
-                    android:text="Filtration Room " />
+                    android:text="" />
             </TableRow>
 
             <TableRow
@@ -273,20 +274,17 @@
                 <TextView
                     android:id="@+id/datetextview"
                     style="@style/TestHeaderTextViewNormal"
-                    android:text="@string/dae_of_test_details" />
+                    android:text="" />
             </TableRow>
 
-            <TableRow
-                android:paddingBottom="5dp"
-                android:paddingTop="5dp">
-
+            <TableRow>
                 <TextView
                     style="@style/TestHeaderTextViewBold"
                     android:text="@string/calibration_due" />
 
                 <TextView
-                    style="@style/TestHeaderTextViewNormal"
                     android:id="@+id/calibrationdueon"
+                    style="@style/TestHeaderTextViewNormal"
                     android:text="@string/calibration_due_on_date" />
             </TableRow>
             <TableRow
@@ -314,7 +312,7 @@
                 <TextView
                     style="@style/TestHeaderTextViewNormal"
                     android:id="@+id/testrefrence"
-                    android:text="@string/test_refrence_details" />
+                    android:text="" />
             </TableRow>
             <TableRow
                 android:visibility="invisible"
@@ -328,7 +326,7 @@
                 <TextView
                     android:id="@+id/ahu_no"
                     style="@style/TestHeaderTextViewNormal"
-                    android:text="Pradeep" />
+                    android:text="" />
             </TableRow>
             <TableRow
                 android:visibility="invisible"
@@ -341,7 +339,7 @@
 
                 <TextView
                     style="@style/TestHeaderTextViewNormal"
-                    android:text="Pradeep" />
+                    android:text="" />
             </TableRow>
         </TableLayout>
     </LinearLayout>
