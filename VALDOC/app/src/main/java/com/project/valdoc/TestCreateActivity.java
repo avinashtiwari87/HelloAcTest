@@ -335,7 +335,8 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
             //get area based on room area id
             String areaName = mValdocDatabaseHandler.getAreaByRoomAreaId("" + room.getAreaId());
             intent.putExtra("AREANAME", areaName);
-            createApplicableTestRoomList(room.getRoomId(),ACPHAV);
+//            createApplicableTestRoomList(room.getRoomId(),ACPHAV);
+            createApplicableTestRoomList(room.getRoomId(),AV);
             Log.d("valdoc", "TestCreateActivity mApplicableTestRoom=" + mApplicableTestRoom.getLocation());
             intent.putExtra("ApplicableTestRoom", mApplicableTestRoom);
 

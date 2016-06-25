@@ -1,5 +1,7 @@
 package com.project.valdoc;
 
+import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -19,6 +21,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -42,7 +45,9 @@ import com.project.valdoc.intity.Room;
 import com.project.valdoc.intity.RoomFilter;
 import com.project.valdoc.utility.Utilityies;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -79,6 +84,10 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
     String testType;
     ProgressDialog pr;
     private String mTestCode = "";
+    private int year;
+    private int month;
+    private int day;
+    static final int DATE_PICKER_ID = 1111;
 
     /*Unique Ids for EditText and TextView
            must be defined in Constant Class
@@ -376,13 +385,14 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 else
                     aleartDialog("There is no gril or applicable test room location");
             }
-
+            setCommonTestHeader(testType, mTestBasedOn);
         }
         else if (TestCreateActivity.ACPHH.equalsIgnoreCase(testType)) {
             if (grillAndSizeFromGrill != null && grillAndSizeFromGrill.size() > 0)
                 BuildTableTest3(grillAndSizeFromGrill.size() + 1, applicableTestRoomLocation);
             else
                 aleartDialog("There is no gril or applicable test room location");
+            setCommonTestHeader(testType, mTestBasedOn);
         }
         else if (TestCreateActivity.FIT.equalsIgnoreCase(testType)) {
             if(mTestBasedOn.equalsIgnoreCase("ROOM")){
@@ -401,7 +411,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 else
                     aleartDialog("There is no filter ");
             }
-
+            setCommonTestHeader(testType, mTestBasedOn);
         }
         else if (TestCreateActivity.PCT.equalsIgnoreCase(testType)) {
             rows = applicableTestRoomLocation + 1;
@@ -409,6 +419,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 BuildTableTest5(applicableTestRoomLocation + 1, noOfCycle);
             } else
                 aleartDialog("There is no noOfCycle or applicable test room location");
+            setCommonTestHeader(testType, mTestBasedOn);
         }
         else if (TestCreateActivity.RCT.equalsIgnoreCase(testType)) {
 //            if (grillAndSizeFromGrill != null && grillAndSizeFromGrill.size() > 0)
@@ -416,6 +427,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             BuildTableTest6(3, 1);
 //            else
 //                aleartDialog("There is no gril");
+            setCommonTestHeader(testType, mTestBasedOn);
         }
 
         if (pr.isShowing())
@@ -436,25 +448,76 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             test_header8.setText("Due :");
             test_header9.setText("Occupancy State :");
             if (loginUserType.equals("CLIENT")) {
-                test_value1.setText(clientInstrument.getcInstrumentName());
-                test_value4.setText("" + clientInstrument.getSerialNo());
+                test_value2.setText(clientInstrument.getcInstrumentName());
+                test_value5.setText(""+clientInstrument.getSerialNo());
+                test_value6.setText(""+clientInstrument.getLastCalibrated());
+                test_value8.setText(""+clientInstrument.getCalibrationDueDate());
             } else {
-                test_value1.setText(partnerInstrument.getpInstrumentName());
-                test_value4.setText("" + partnerInstrument.getSerialNo());
+                test_value2.setText(partnerInstrument.getpInstrumentName());
+                test_value5.setText(""+partnerInstrument.getSerialNo());
+                test_value6.setText(""+partnerInstrument.getLastCalibrationDate());
+                test_value8.setText(""+partnerInstrument.getCalibrationDueDate());
             }
             test_value3.setText(userName);
 
-            test_value2.setText("");
-            test_value5.setText("");
-            test_value6.setText("");
-            test_value7.setText("");
-            test_value8.setText("");
-            test_value9.setText("");
+            test_value1.setText(""+equipment.getEquipmentName());
+            test_value4.setText(""+equipment.getEquipmentNo());
 
+            test_value9.setText(""+mApplicableTestEquipment.getOccupencyState());
+            datePicker();
         }
-
-
     }
+
+    private void datePicker() {
+        // Get current date by calender
+        final Calendar c = Calendar.getInstance();
+        year = c.get(Calendar.YEAR);
+        month = c.get(Calendar.MONTH);
+        day = c.get(Calendar.DAY_OF_MONTH);
+
+        //raw data no
+        SimpleDateFormat df = new SimpleDateFormat("HH:mm:ss");
+        String formattedDate = df.format(c.getTime());
+// Now formattedDate have current date/time
+//        Toast.makeText(this, formattedDate, Toast.LENGTH_SHORT).show();
+        int mon = month + 1;
+//        certificateNo.setText("V5/" + mon + "/" + year + "/" + formattedDate);
+
+        // Show current date
+        String date = new StringBuilder().append(day).append("-").append(month + 1).append("-").append(year).append(" ").toString();
+        // Month is 0 based, just add 1
+        test_value7.setText(""+date);
+    }
+
+
+    @Override
+    protected Dialog onCreateDialog(int id) {
+        switch (id) {
+            case DATE_PICKER_ID:
+
+                // open datepicker dialog.
+                // set date picker for current date
+                // add pickerListener listner to date picker
+                return new DatePickerDialog(this, pickerListener, year, month, day);
+        }
+        return null;
+    }
+
+    private DatePickerDialog.OnDateSetListener pickerListener = new DatePickerDialog.OnDateSetListener() {
+
+        // when dialog box is closed, below method will be called.
+        @Override
+        public void onDateSet(DatePicker view, int selectedYear,
+                              int selectedMonth, int selectedDay) {
+            year = selectedYear;
+            month = selectedMonth;
+            day = selectedDay;
+            String date = new StringBuilder().append(day).append("-").append(month + 1).append("-").append(year).append(" ").toString();
+            // Show selected date
+            test_value7.setText(""+date);
+        }
+    };
+
 
     @Override
     protected void onStart() {
@@ -2387,6 +2450,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             }
             findViewById(R.id.test6A_table_ll).setVisibility(View.VISIBLE);
         }
+
         //Common Test Header and Value;
         test_header1 = (TextView)findViewById(R.id.common_test_header1_tv);
         test_header2 = (TextView)findViewById(R.id.common_test_header2_tv);
@@ -2404,6 +2468,13 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         test_value5 = (TextView)findViewById(R.id.common_test_value5_tv);
         test_value6 = (TextView)findViewById(R.id.common_test_value6_tv);
         test_value7 = (TextView)findViewById(R.id.common_test_value7_tv);
+        test_value7.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // On button click show datepicker dialog
+                showDialog(DATE_PICKER_ID);
+            }
+        });
         test_value8 = (TextView)findViewById(R.id.common_test_value8_tv);
         test_value9 = (TextView)findViewById(R.id.common_test_value9_tv);
     }
