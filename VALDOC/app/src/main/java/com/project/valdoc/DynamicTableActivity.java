@@ -385,13 +385,14 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 else
                     aleartDialog("There is no gril or applicable test room location");
             }
-
+            setCommonTestHeader(testType, mTestBasedOn);
         }
         else if (TestCreateActivity.ACPHH.equalsIgnoreCase(testType)) {
             if (grillAndSizeFromGrill != null && grillAndSizeFromGrill.size() > 0)
                 BuildTableTest3(grillAndSizeFromGrill.size() + 1, applicableTestRoomLocation);
             else
                 aleartDialog("There is no gril or applicable test room location");
+            setCommonTestHeader(testType, mTestBasedOn);
         }
         else if (TestCreateActivity.FIT.equalsIgnoreCase(testType)) {
             if(mTestBasedOn.equalsIgnoreCase("ROOM")){
@@ -410,7 +411,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 else
                     aleartDialog("There is no filter ");
             }
-
+            setCommonTestHeader(testType, mTestBasedOn);
         }
         else if (TestCreateActivity.PCT.equalsIgnoreCase(testType)) {
             rows = applicableTestRoomLocation + 1;
@@ -418,6 +419,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 BuildTableTest5(applicableTestRoomLocation + 1, noOfCycle);
             } else
                 aleartDialog("There is no noOfCycle or applicable test room location");
+            setCommonTestHeader(testType, mTestBasedOn);
         }
         else if (TestCreateActivity.RCT.equalsIgnoreCase(testType)) {
 //            if (grillAndSizeFromGrill != null && grillAndSizeFromGrill.size() > 0)
@@ -425,6 +427,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             BuildTableTest6(3, 1);
 //            else
 //                aleartDialog("There is no gril");
+            setCommonTestHeader(testType, mTestBasedOn);
         }
 
         if (pr.isShowing())
@@ -446,12 +449,12 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             test_header9.setText("Occupancy State :");
             if (loginUserType.equals("CLIENT")) {
                 test_value2.setText(clientInstrument.getcInstrumentName());
-                test_value5.setText("" + clientInstrument.getSerialNo());
+                test_value5.setText(""+clientInstrument.getSerialNo());
                 test_value6.setText(""+clientInstrument.getLastCalibrated());
                 test_value8.setText(""+clientInstrument.getCalibrationDueDate());
             } else {
                 test_value2.setText(partnerInstrument.getpInstrumentName());
-                test_value5.setText("" + partnerInstrument.getSerialNo());
+                test_value5.setText(""+partnerInstrument.getSerialNo());
                 test_value6.setText(""+partnerInstrument.getLastCalibrationDate());
                 test_value8.setText(""+partnerInstrument.getCalibrationDueDate());
             }
@@ -506,14 +509,12 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         @Override
         public void onDateSet(DatePicker view, int selectedYear,
                               int selectedMonth, int selectedDay) {
-
             year = selectedYear;
             month = selectedMonth;
             day = selectedDay;
             String date = new StringBuilder().append(day).append("-").append(month + 1).append("-").append(year).append(" ").toString();
             // Show selected date
             test_value7.setText(""+date);
-
         }
     };
 
