@@ -212,6 +212,7 @@
                 android:paddingTop="5dp">
 
                 <TextView
+                    android:id="@+id/equiment_name_text"
                     style="@style/TestHeaderTextViewBold"
                     android:text="Equipment Name: " />
 
@@ -225,6 +226,7 @@
                 android:paddingTop="5dp">
 
                 <TextView
+                    android:id="@+id/equiment_no_text"
                     style="@style/TestHeaderTextViewBold"
                     android:text="Equipment No:" />
 
@@ -315,29 +317,34 @@
                     android:text="" />
             </TableRow>
             <TableRow
-                android:visibility="invisible"
                 android:paddingBottom="5dp"
                 android:paddingTop="5dp">
 
                 <TextView
+                    android:visibility="invisible"
+                    android:id="@+id/ahu_no_text"
                     style="@style/TestHeaderTextViewBold"
                     android:text="AHU Number: " />
 
                 <TextView
+                    android:visibility="invisible"
                     android:id="@+id/ahu_no"
                     style="@style/TestHeaderTextViewNormal"
                     android:text="" />
             </TableRow>
             <TableRow
-                android:visibility="invisible"
                 android:paddingBottom="5dp"
                 android:paddingTop="5dp">
 
                 <TextView
+                    android:id="@+id/room_volume_text"
+                    android:visibility="invisible"
                     style="@style/TestHeaderTextViewBold"
-                    android:text="Test Conduted By :" />
+                    android:text="Room Volume (ft3) :" />
 
                 <TextView
+                    android:id="@+id/room_volume"
+                    android:visibility="invisible"
                     style="@style/TestHeaderTextViewNormal"
                     android:text="" />
             </TableRow>

@@ -87,8 +87,8 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
     private int newCertificateNo = 0;
     //certificate view id creation
     private TextView instrumentUsed;
-    private TextView make;
-    private TextView model;
+    //    private TextView make;
+//    private TextView model;
     private TextView instrumentSerialNo;
     private TextView calibrationOn;
     private TextView calibrationDueOn;
@@ -98,10 +98,13 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
     private TextView roomName;
     private TextView occupancyState;
     private TextView testRefrance;
-    //    private TextView equipmentNameText;
-//    private TextView equipmentNoText;
+    private TextView equipmentNameText;
+    private TextView equipmentNoText;
     private TextView roomNo;
     private TextView ahuNo;
+    private TextView ahuNoText;
+    private TextView roomVolume;
+    private TextView roomVolumeText;
     private TextView testCundoctor;
     private TextView testWitness;
     private TextView dateTextView;
@@ -180,10 +183,10 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
 
         //setting the test 2 room volume
         if (roomVolumeTxtList != null && roomVolumeTxtList.size() > 0) {
-            if(mTestBasedOn.equalsIgnoreCase("AHU")){
-                roomVolumeTxtList.get((int) (roomVolumeTxtList.size() / 2)).setText(""+roomDetails[4]);
-            }else if(mTestBasedOn.equalsIgnoreCase("ROOM")) {
-                roomVolumeTxtList.get((int) (roomVolumeTxtList.size() / 2)).setText(""+room.getVolume());
+            if (mTestBasedOn.equalsIgnoreCase("AHU")) {
+                roomVolumeTxtList.get((int) (roomVolumeTxtList.size() / 2)).setText("" + roomDetails[4]);
+            } else if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
+                roomVolumeTxtList.get((int) (roomVolumeTxtList.size() / 2)).setText("" + room.getVolume());
             }
 //            roomVolumeTxtList.get((int) (roomVolumeTxtList.size() / 2)).setText("8500");
         }
@@ -227,19 +230,19 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
         if (airChangeTxtList != null && airChangeTxtList.size() > 0) {
             TextView airChangeTxt = airChangeTxtList.get(airChangeTxtList.size() / 2);
             airChangeValue = getIntent().getIntExtra("AirChangeValue", 0);
-            if(mTestBasedOn.equalsIgnoreCase("AHU")){
-                int value=0;
-                try{
-                    value=Integer.parseInt(roomDetails[3]);
-                }catch(Exception e){
-                    value=0;
+            if (mTestBasedOn.equalsIgnoreCase("AHU")) {
+                int value = 0;
+                try {
+                    value = Integer.parseInt(roomDetails[3]);
+                } catch (Exception e) {
+                    value = 0;
                 }
-                if (airChangeValue >value ) {
+                if (airChangeValue > value) {
                     infarance.setText("The above Airflow Volume Test and Derived No.of Air chanages per hour meets the specificed requirement");
                 } else {
                     infarance.setText("The above Airflow Volume Test and Derived No.of Air chanages per hour do not meets the specificed requirement");
                 }
-            }else if(mTestBasedOn.equalsIgnoreCase("ROOM")) {
+            } else if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
                 if (airChangeValue > room.getAcph()) {
                     infarance.setText("The above Airflow Volume Test and Derived No.of Air chanages per hour meets the specificed requirement");
                 } else {
@@ -280,7 +283,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
 // Now formattedDate have current date/time
         Toast.makeText(this, formattedDate, Toast.LENGTH_SHORT).show();
         int mon = month + 1;
-        //certificateNo.setText("AV/" + mon + "/" + year + "/" + formattedDate);
+        certificateNo.setText("AV/" + mon + "/" + year + "/" + formattedDate);
 //        SharedPreferences.Editor editor = sharedpreferences.edit();
 //        editor.putInt("CERTIFICATE_NO", newCertificateNo);
 //        editor.commit();
@@ -298,15 +301,15 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
     private void textViewValueAssignment() {
         if (loginUserType.equals("CLIENT")) {
             instrumentUsed.setText(clientInstrument.getcInstrumentName());
-            make.setText(clientInstrument.getMake());
-            model.setText(clientInstrument.getModel());
+//            make.setText(clientInstrument.getMake());
+//            model.setText(clientInstrument.getModel());
             instrumentSerialNo.setText("" + clientInstrument.getSerialNo());
             calibrationOn.setText(Utilityies.parseDateToddMMyyyy(clientInstrument.getLastCalibrated()));
             calibrationDueOn.setText(Utilityies.parseDateToddMMyyyy(clientInstrument.getCalibrationDueDate()));
         } else {
             instrumentUsed.setText(partnerInstrument.getpInstrumentName());
-            make.setText(partnerInstrument.getMake());
-            model.setText(partnerInstrument.getModel());
+//            make.setText(partnerInstrument.getMake());
+//            model.setText(partnerInstrument.getModel());
             instrumentSerialNo.setText("" + partnerInstrument.getpInstrumentId());
             calibrationOn.setText(Utilityies.parseDateToddMMyyyy(partnerInstrument.getLastCalibrationDate()));
             calibrationDueOn.setText(Utilityies.parseDateToddMMyyyy(partnerInstrument.getCalibrationDueDate()));
@@ -314,7 +317,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
 
         testCundoctor.setText(userName);
 
-       if (mTestBasedOn.equalsIgnoreCase("AHU")) {
+        if (mTestBasedOn.equalsIgnoreCase("AHU")) {
             testSpecification.setText(mApplicableTestAhu.getTestSpecification());
             occupancyState.setText(mApplicableTestAhu.getOccupencyState());
             testRefrance.setText(mApplicableTestAhu.getTestReference());
@@ -323,6 +326,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
             // room no not needed
             roomNo.setText(roomDetails[2]);
             ahuNo.setText(ahuNumber);
+            roomVolume.setText("" + roomDetails[4]);
         } else if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
             testSpecification.setText(mApplicableTestRoom.getTestSpecification());
             occupancyState.setText(mApplicableTestRoom.getOccupencyState());
@@ -330,6 +334,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
             areaOfTest.setText(areaName);
             roomName.setText(room.getRoomName().toString());
             roomNo.setText(room.getRoomNo().toString());
+            roomVolume.setText("" + room.getVolume());
             ahuNo.setText(ahuNumber);
         }
 
@@ -358,14 +363,14 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
 
     private void initTextView() {
         // layout data which is not in use
-//        instrumentNoTextView = (TextView) findViewById(R.id.instrument_no2);
-//        instrumentNoTextView.setVisibility(View.GONE);
-//        testerNameTextView = (TextView) findViewById(R.id.tester_name_test2);
-//        testerNameTextView.setVisibility(View.GONE);
-//        instrumentUsedTextView = (TextView) findViewById(R.id.instrument_used);
-//        instrumentUsedTextView.setVisibility(View.GONE);
-//        testCunductedByTextView = (TextView) findViewById(R.id.testcunducted_by);
-//        testCunductedByTextView.setVisibility(View.GONE);
+        roomVolumeText = (TextView) findViewById(R.id.room_volume_text);
+        roomVolumeText.setVisibility(View.VISIBLE);
+        roomVolume = (TextView) findViewById(R.id.room_volume);
+        roomVolume.setVisibility(View.VISIBLE);
+        ahuNo = (TextView) findViewById(R.id.ahu_no);
+        ahuNo.setVisibility(View.VISIBLE);
+        ahuNoText = (TextView) findViewById(R.id.ahu_no_text);
+        ahuNoText.setVisibility(View.VISIBLE);
 
 //        roomNameLable = (TextView) findViewById(R.id.room_name_lable2);
 //        roomNameLable.setVisibility(View.GONE);
@@ -378,10 +383,10 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
 
         dateTextView = (TextView) findViewById(R.id.datetextview);
         customerName = (TextView) findViewById(R.id.customer_name);
-        certificateNo = (TextView) findViewById(R.id.certificate_no);
+        certificateNo = (TextView) findViewById(R.id.trd_no);
         instrumentUsed = (TextView) findViewById(R.id.instrumentused);
-        make = (TextView) findViewById(R.id.make);
-        model = (TextView) findViewById(R.id.modle);
+//        make = (TextView) findViewById(R.id.make);
+//        model = (TextView) findViewById(R.id.modle);
 
         instrumentSerialNo = (TextView) findViewById(R.id.instrumentserialno);
         calibrationOn = (TextView) findViewById(R.id.calibratedon);
@@ -391,11 +396,12 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
         areaOfTest = (TextView) findViewById(R.id.areaoftest);
         occupancyState = (TextView) findViewById(R.id.ocupancystate);
         testRefrance = (TextView) findViewById(R.id.testrefrence);
-//        equipmentNameText = (TextView) findViewById(R.id.room);
-//        equipmentNoText = (TextView) findViewById(R.id.equipment_no_text);
+        equipmentNameText = (TextView) findViewById(R.id.equiment_name_text);
+        equipmentNameText.setVisibility(View.INVISIBLE);
+        equipmentNoText = (TextView) findViewById(R.id.equiment_no_text);
+        equipmentNoText.setVisibility(View.INVISIBLE);
         roomName = (TextView) findViewById(R.id.room_name);
         roomNo = (TextView) findViewById(R.id.room_no);
-        ahuNo = (TextView) findViewById(R.id.ahu_no);
         infarance = (TextView) findViewById(R.id.infarance);
         testCundoctor = (TextView) findViewById(R.id.testcunducter);
         testWitness = (TextView) findViewById(R.id.testwitness);
@@ -465,9 +471,9 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
 //        testSpesificationValue1.setTest_specific_id(1);
         testSpesificationValue1.setTest_detail_id("" + testDetailsId);
         testSpesificationValue1.setFieldName("RV");
-        if(mTestBasedOn.equalsIgnoreCase("AHU")){
+        if (mTestBasedOn.equalsIgnoreCase("AHU")) {
             testSpesificationValue1.setFieldValue("" + roomDetails[4]);
-        }else if(mTestBasedOn.equalsIgnoreCase("ROOM")) {
+        } else if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
             testSpesificationValue1.setFieldValue("" + room.getVolume());
         }
 
@@ -1011,7 +1017,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
         test_table_1_header_2.setVisibility(View.GONE);
         findViewById(R.id.test_interference).setVisibility(View.GONE);
         findViewById(R.id.test_note_tv).setVisibility(View.VISIBLE);
-        TextView TestHeader = (TextView)findViewById(R.id.common_header_tv);
+        TextView TestHeader = (TextView) findViewById(R.id.common_header_tv);
         TestHeader.setText("TEST RAW DATA (RD_ACPH_AV)\n(Air Flow Velocity, Volume Testing and Determination of Air Changes per Hour Rates)");
     }
 }

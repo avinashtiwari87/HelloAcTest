@@ -1569,7 +1569,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
-                    row.addView(addTextView(" Grill/Filter Size\n in ft2(A)"));
+                    row.addView(addTextView(" Grill/Filter\n Area"));
                 } else {
 
                     if (mTestBasedOn.equalsIgnoreCase("AHU")) {
