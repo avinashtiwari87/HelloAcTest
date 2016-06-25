@@ -358,23 +358,23 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
 
     private void initTextView() {
         // layout data which is not in use
-        instrumentNoTextView = (TextView) findViewById(R.id.instrument_no2);
-        instrumentNoTextView.setVisibility(View.GONE);
-        testerNameTextView = (TextView) findViewById(R.id.tester_name_test2);
-        testerNameTextView.setVisibility(View.GONE);
-        instrumentUsedTextView = (TextView) findViewById(R.id.instrument_used);
-        instrumentUsedTextView.setVisibility(View.GONE);
-        testCunductedByTextView = (TextView) findViewById(R.id.testcunducted_by);
-        testCunductedByTextView.setVisibility(View.GONE);
+//        instrumentNoTextView = (TextView) findViewById(R.id.instrument_no2);
+//        instrumentNoTextView.setVisibility(View.GONE);
+//        testerNameTextView = (TextView) findViewById(R.id.tester_name_test2);
+//        testerNameTextView.setVisibility(View.GONE);
+//        instrumentUsedTextView = (TextView) findViewById(R.id.instrument_used);
+//        instrumentUsedTextView.setVisibility(View.GONE);
+//        testCunductedByTextView = (TextView) findViewById(R.id.testcunducted_by);
+//        testCunductedByTextView.setVisibility(View.GONE);
 
-        roomNameLable = (TextView) findViewById(R.id.room_name_lable2);
-        roomNameLable.setVisibility(View.GONE);
-        instrumentNoLable = (TextView) findViewById(R.id.instrument_no_lable);
-        instrumentNoLable.setVisibility(View.GONE);
-        roomNameTest = (TextView) findViewById(R.id.room_name2);
-        roomNameTest.setVisibility(View.GONE);
-        instrument_name = (TextView) findViewById(R.id.instrument_name2);
-        instrument_name.setVisibility(View.GONE);
+//        roomNameLable = (TextView) findViewById(R.id.room_name_lable2);
+//        roomNameLable.setVisibility(View.GONE);
+//        instrumentNoLable = (TextView) findViewById(R.id.instrument_no_lable);
+//        instrumentNoLable.setVisibility(View.GONE);
+//        roomNameTest = (TextView) findViewById(R.id.room_name2);
+//        roomNameTest.setVisibility(View.GONE);
+//        instrument_name = (TextView) findViewById(R.id.instrument_name2);
+//        instrument_name.setVisibility(View.GONE);
 
         dateTextView = (TextView) findViewById(R.id.datetextview);
         customerName = (TextView) findViewById(R.id.customer_name);

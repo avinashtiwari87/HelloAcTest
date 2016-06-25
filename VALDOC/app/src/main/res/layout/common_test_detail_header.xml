@@ -21,12 +21,12 @@
                 android:paddingTop="5dp">
 
                 <TextView
-                    android:id="@+id/common_test_header1_tv"
+                    android:id="@+id/common_dynamic_test_header1_tv"
                     style="@style/TestHeaderTextViewBold"
                     android:text="Equipment Name:" />
 
                 <TextView
-                    android:id="@+id/common_test_value1_tv"
+                    android:id="@+id/common_dynamic_test_value1_tv"
                     style="@style/TestHeaderTextViewNormal"
                     android:text="Filtration Room " />
             </TableRow>
@@ -36,12 +36,12 @@
                 android:paddingTop="5dp">
 
                 <TextView
-                    android:id="@+id/common_test_header2_tv"
+                    android:id="@+id/common_dynamic_test_header2_tv"
                     style="@style/TestHeaderTextViewBold"
                     android:text="Instrument Used :" />
 
                 <TextView
-                    android:id="@+id/common_test_value2tv"
+                    android:id="@+id/common_dynamic_test_value2tv"
                     style="@style/TestHeaderTextViewNormal"
                     android:text="Aerosol Photometer" />
             </TableRow>
@@ -51,12 +51,12 @@
                 android:paddingTop="5dp">
 
                 <TextView
-                    android:id="@+id/common_test_header3_tv"
+                    android:id="@+id/common_dynamic_test_header3_tv"
                     style="@style/TestHeaderTextViewBold"
                     android:text="Test Conduted By :" />
 
                 <TextView
-                    android:id="@+id/common_test_value3_tv"
+                    android:id="@+id/common_dynamic_test_value3_tv"
                     style="@style/TestHeaderTextViewNormal"
                     android:text="Pradeep" />
             </TableRow>
@@ -80,12 +80,12 @@
                 android:paddingTop="5dp">
 
                 <TextView
-                    android:id="@+id/common_test_header4_tv"
+                    android:id="@+id/common_dynamic_test_header4_tv"
                     style="@style/TestHeaderTextViewBold"
                     android:text="Room Name" />
 
                 <TextView
-                    android:id="@+id/common_test_value4_tv"
+                    android:id="@+id/common_dynamic_test_value4_tv"
                     style="@style/TestHeaderTextViewNormal"
                     android:text="Filtration Room" />
             </TableRow>
@@ -95,12 +95,12 @@
                 android:paddingTop="5dp">
 
                 <TextView
-                    android:id="@+id/common_test_header5_tv"
+                    android:id="@+id/common_dynamic_test_header5_tv"
                     style="@style/TestHeaderTextViewBold"
                     android:text="Instrument Used :" />
 
                 <TextView
-                    android:id="@+id/common_test_value5_tv"
+                    android:id="@+id/common_dynamic_test_value5_tv"
                     style="@style/TestHeaderTextViewNormal"
                     android:text="Aerosol Photometer" />
             </TableRow>
@@ -110,12 +110,12 @@
                 android:paddingTop="5dp">
 
                 <TextView
-                    android:id="@+id/common_test_header6_tv"
+                    android:id="@+id/common_dynamic_test_header6_tv"
                     style="@style/TestHeaderTextViewBold"
                     android:text="Test Conduted By :" />
 
                 <TextView
-                    android:id="@+id/common_test_value6_tv"
+                    android:id="@+id/common_dynamic_test_value6_tv"
                     style="@style/TestHeaderTextViewNormal"
                     android:text="Pradeep" />
             </TableRow>
@@ -139,12 +139,12 @@
                 android:paddingTop="5dp">
 
                 <TextView
-                    android:id="@+id/common_test_header7_tv"
+                    android:id="@+id/common_dynamic_test_header7_tv"
                     style="@style/TestHeaderTextViewBold"
                     android:text="Room Name" />
 
                 <TextView
-                    android:id="@+id/common_test_value7_tv"
+                    android:id="@+id/common_dynamic_test_value7_tv"
                     style="@style/TestHeaderTextViewNormal"
                     android:text="Filtration Room" />
             </TableRow>
@@ -154,12 +154,12 @@
                 android:paddingTop="5dp">
 
                 <TextView
-                    android:id="@+id/common_test_header8_tv"
+                    android:id="@+id/common_dynamic_test_header8_tv"
                     style="@style/TestHeaderTextViewBold"
                     android:text="Instrument Used :" />
 
                 <TextView
-                    android:id="@+id/common_test_value8_tv"
+                    android:id="@+id/common_dynamic_test_value8_tv"
                     style="@style/TestHeaderTextViewNormal"
                     android:text="Aerosol Photometer" />
             </TableRow>
@@ -169,12 +169,12 @@
                 android:paddingTop="5dp">
 
                 <TextView
-                    android:id="@+id/common_test_header9_tv"
+                    android:id="@+id/common_dynamic_test_header9_tv"
                     style="@style/TestHeaderTextViewBold"
                     android:text="Test Conduted By :" />
 
                 <TextView
-                    android:id="@+id/common_test_value9_tv"
+                    android:id="@+id/common_dynamic_test_value9_tv"
                     style="@style/TestHeaderTextViewNormal"
                     android:text="Pradeep" />
             </TableRow>
