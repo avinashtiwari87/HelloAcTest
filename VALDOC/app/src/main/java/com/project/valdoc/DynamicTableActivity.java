@@ -2472,7 +2472,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         table_layout4 = (TableLayout) findViewById(R.id.tableLayout4);
         table_layout4.setVisibility(View.GONE);
         if (TestCreateActivity.AV.equalsIgnoreCase(testType)) {
-            findViewById(R.id.test1_table_ll).setVisibility(View.VISIBLE);
+            findViewById(R.id.test1_dynamic_table_ll).setVisibility(View.VISIBLE);
         }
         //Test 2
         test2_table_layout = (TableLayout) findViewById(R.id.test2_tableLayout1);
