@@ -1,0 +1,349 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/header_linear_layout"
+        style="@style/TextAppearance.AppCompat.header_top"
+        android:background="@color/black_overlay">
+
+        <TextView
+            android:id="@+id/common_header_tv"
+            style="@style/TextAppearance.AppCompat.header_text"
+            android:text="@string/verify_test_header" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:paddingLeft="5dp">
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TableRow
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp">
+
+                <TextView
+                    style="@style/TestHeaderTextViewBold"
+                    android:text="@string/customer" />
+
+                <TextView
+                    android:id="@+id/customer_name"
+                    style="@style/TestHeaderTextViewNormal"
+                    android:text="Kem Well Biopharma Prt Ltd" />
+            </TableRow>
+
+            <TableRow
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp">
+
+                <TextView
+                    style="@style/TestHeaderTextViewBold"
+                    android:text="@string/block_plant_name" />
+
+                <TextView
+                    style="@style/TestHeaderTextViewNormal"
+                    android:id="@+id/plantname"
+                    android:text="@string/block_plant_details" />
+            </TableRow>
+
+            <TableRow
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp">
+
+                <TextView
+                    style="@style/TestHeaderTextViewBold"
+                    android:text="@string/instrument_used" />
+
+                <TextView
+                    android:id="@+id/instrumentused"
+                    style="@style/TestHeaderTextViewNormal"
+                    android:text="@string/instrument_used_details" />
+            </TableRow>
+            <TableRow
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp">
+
+                <TextView
+                    style="@style/TestHeaderTextViewBold"
+                    android:text="@string/test_specification" />
+
+                <TextView
+                    style="@style/TestHeaderTextViewNormal"
+                    android:id="@+id/testspecification"
+                    android:text="@string/test_specification_details" />
+            </TableRow>
+            <TableRow
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp">
+
+                <TextView
+                    style="@style/TestHeaderTextViewBold"
+                    android:text="@string/area_of_test_label" />
+
+                <TextView
+                    style="@style/TestHeaderTextViewNormal"
+                    android:id="@+id/areaoftest"
+                    android:text="@string/area_of_test_label_details" />
+            </TableRow>
+            <TableRow
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp">
+
+                <TextView
+                    style="@style/TestHeaderTextViewBold"
+                    android:id="@+id/room_name_lable"
+                    android:text="@string/room_name"/>
+
+                <TextView
+                    style="@style/TestHeaderTextViewNormal"
+                    android:id="@+id/room_name"
+                    android:text="" />
+            </TableRow>
+            <TableRow
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp">
+
+                <TextView
+                    style="@style/TestHeaderTextViewBold"
+                    android:id="@+id/room_no_lable"
+                    android:text="@string/room_no" />
+
+                <TextView
+                    style="@style/TestHeaderTextViewNormal"
+                    android:id="@+id/room_no"
+                    android:text=""  />
+            </TableRow>
+        </TableLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:paddingLeft="5dp">
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TableRow
+                android:visibility="invisible"
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp">
+
+                <TextView
+                    style="@style/TestHeaderTextViewBold"
+                    android:text="Equipment Name:" />
+
+                <TextView
+                    style="@style/TestHeaderTextViewNormal"
+                    android:text="Filtration Room " />
+            </TableRow>
+
+            <TableRow
+                android:visibility="invisible"
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp">
+
+                <TextView
+                    style="@style/TestHeaderTextViewBold"
+                    android:text="Instrument Used :" />
+
+                <TextView
+                    style="@style/TestHeaderTextViewNormal"
+                    android:text="Aerosol Photometer" />
+            </TableRow>
+
+            <TableRow
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp">
+
+                <TextView
+                    style="@style/TestHeaderTextViewBold"
+                    android:text="@string/instrument_serial_no" />
+
+                <TextView
+                    android:id="@+id/instrumentserialno"
+                    style="@style/TestHeaderTextViewNormal"
+                    android:text="@string/instrument_serial_no_details" />
+            </TableRow>
+            <TableRow
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp">
+
+                <TextView
+                    style="@style/TestHeaderTextViewBold"
+                    android:text="@string/calibrated" />
+
+                <TextView
+                    style="@style/TestHeaderTextViewNormal"
+                    android:id="@+id/calibratedon"
+                    android:text="@string/calibrated_date"/>
+            </TableRow>
+            <TableRow
+                android:visibility="invisible"
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp">
+
+                <TextView
+                    style="@style/TestHeaderTextViewBold"
+                    android:text="Test Conduted By :" />
+
+                <TextView
+                    style="@style/TestHeaderTextViewNormal"
+                    android:text="Pradeep" />
+            </TableRow>
+            <TableRow
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp">
+
+                <TextView
+                    style="@style/TestHeaderTextViewBold"
+                    android:text="Equipment Name: " />
+
+                <TextView
+                    style="@style/TestHeaderTextViewNormal"
+                    android:id="@+id/make"
+                    android:text="@string/make_details" />
+            </TableRow>
+            <TableRow
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp">
+
+                <TextView
+                    style="@style/TestHeaderTextViewBold"
+                    android:text="Equipment No:" />
+
+                <TextView
+                    style="@style/TestHeaderTextViewNormal"
+                    android:id="@+id/modle"
+                    android:text="@string/modle_details" />
+            </TableRow>
+        </TableLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:paddingLeft="5dp">
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TableRow
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp">
+
+                <TextView
+                    android:id="@+id/common_test_header1_tv"
+                    style="@style/TestHeaderTextViewBold"
+                    android:text="TRD No :" />
+
+                <TextView
+                    style="@style/TestHeaderTextViewNormal"
+                    android:text="Filtration Room " />
+            </TableRow>
+
+            <TableRow
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp">
+
+                <TextView
+                    android:id="@+id/common_test_header2_tv"
+                    style="@style/TestHeaderTextViewBold"
+                    android:text="@string/date_of_test" />
+
+                <TextView
+                    android:id="@+id/datetextview"
+                    style="@style/TestHeaderTextViewNormal"
+                    android:text="@string/dae_of_test_details" />
+            </TableRow>
+
+            <TableRow
+                android:visibility="invisible"
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp">
+
+                <TextView
+                    android:id="@+id/common_test_header3_tv"
+                    style="@style/TestHeaderTextViewBold"
+                    android:text="dfewf" />
+
+                <TextView
+                    style="@style/TestHeaderTextViewNormal"
+                    android:text="Pradeep" />
+            </TableRow>
+            <TableRow
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp">
+
+                <TextView
+                    style="@style/TestHeaderTextViewBold"
+                    android:text="@string/calibration_due" />
+
+                <TextView
+                    style="@style/TestHeaderTextViewNormal"
+                    android:id="@+id/calibrationdueon"
+                    android:text="@string/calibration_due_on_date" />
+            </TableRow>
+            <TableRow
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp">
+
+                <TextView
+                    style="@style/TestHeaderTextViewBold"
+                    android:text="@string/test_refrence" />
+
+                <TextView
+                    style="@style/TestHeaderTextViewNormal"
+                    android:id="@+id/testrefrence"
+                    android:text="@string/test_refrence_details" />
+            </TableRow>
+            <TableRow
+                android:visibility="invisible"
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp">
+
+                <TextView
+                    style="@style/TestHeaderTextViewBold"
+                    android:text="Test Conduted By :" />
+
+                <TextView
+                    style="@style/TestHeaderTextViewNormal"
+                    android:text="Pradeep" />
+            </TableRow>
+            <TableRow
+                android:visibility="invisible"
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp">
+
+                <TextView
+                    style="@style/TestHeaderTextViewBold"
+                    android:text="Test Conduted By :" />
+
+                <TextView
+                    style="@style/TestHeaderTextViewNormal"
+                    android:text="Pradeep" />
+            </TableRow>
+        </TableLayout>
+    </LinearLayout>
+
+</LinearLayout>
+
+</LinearLayout>
