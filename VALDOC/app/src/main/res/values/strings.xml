@@ -98,11 +98,11 @@
     <string name="title_activity_main">MainActivity</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
-    <string name="header_title">* Average Air Flow Velocity Testing *</string>
+    <string name="header_title">Average Air Flow Velocity Testing</string>
     <string name="verify_test_header">Measured Test Value</string>
     <string name="header2_title">Details of Instruments Used for testing</string>
     <string name="header3_title">Details of Specification and Area</string>
-    <string name="header_title_result">* Obtained Test  Results *</string>
+    <string name="header_title_result">Obtained Test Value</string>
     <string name="test_create_activity">TestCreateActivity</string>
     <string name="title_activity_login">Sign in</string>
 
