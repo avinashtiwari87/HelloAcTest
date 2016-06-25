@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/border"
     android:orientation="vertical">
 
     <LinearLayout
@@ -276,20 +277,6 @@
             </TableRow>
 
             <TableRow
-                android:visibility="invisible"
-                android:paddingBottom="5dp"
-                android:paddingTop="5dp">
-
-                <TextView
-                    android:id="@+id/common_test_header3_tv"
-                    style="@style/TestHeaderTextViewBold"
-                    android:text="dfewf" />
-
-                <TextView
-                    style="@style/TestHeaderTextViewNormal"
-                    android:text="Pradeep" />
-            </TableRow>
-            <TableRow
                 android:paddingBottom="5dp"
                 android:paddingTop="5dp">
 
@@ -301,6 +288,20 @@
                     style="@style/TestHeaderTextViewNormal"
                     android:id="@+id/calibrationdueon"
                     android:text="@string/calibration_due_on_date" />
+            </TableRow>
+            <TableRow
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp">
+
+                <TextView
+                    android:id="@+id/common_test_header3_tv"
+                    style="@style/TestHeaderTextViewBold"
+                    android:text="@string/ocupancy_state" />
+
+                <TextView
+                    android:id="@+id/ocupancystate"
+                    style="@style/TestHeaderTextViewNormal"
+                    android:text="" />
             </TableRow>
             <TableRow
                 android:paddingBottom="5dp"
@@ -322,9 +323,10 @@
 
                 <TextView
                     style="@style/TestHeaderTextViewBold"
-                    android:text="Test Conduted By :" />
+                    android:text="AHU Number: " />
 
                 <TextView
+                    android:id="@+id/ahu_no"
                     style="@style/TestHeaderTextViewNormal"
                     android:text="Pradeep" />
             </TableRow>

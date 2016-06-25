@@ -719,7 +719,6 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
         test_table_1_header_2 = (LinearLayout) findViewById(R.id.test_table_1_header_2_ll);
         test_table_1_header_l.setVisibility(View.GONE);
         test_table_1_header_2.setVisibility(View.GONE);
-        findViewById(R.id.common_test_header).setVisibility(View.GONE);
         TextView TestHeader = (TextView)findViewById(R.id.common_header_tv);
         TestHeader.setText("TEST RAW DATA EQUIPMENT (ERD_AV)\n(Average Air Flow Velocity Testing)");
         findViewById(R.id.test_interference).setVisibility(View.GONE);

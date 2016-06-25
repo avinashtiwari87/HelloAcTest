@@ -203,24 +203,12 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         rowTagHashMap = new HashMap<Integer, Integer>();
 
 
-        createTableRowColum();
-        //setting the test 2 room volume
-        if (roomVolumeTxtList != null && roomVolumeTxtList.size() > 0)
-            if (TestCreateActivity.ACPHH.equals(testType)) {
-                roomVolumeTxtList.get((int) (roomVolumeTxtList.size() / 2)).setText("" + room.getVolume());
-            } else if (TestCreateActivity.ACPHAV.equals(testType)) {
-                if (mTestBasedOn.equalsIgnoreCase("AHU")) {
-                    roomVolumeTxtList.get((int) (roomVolumeTxtList.size() / 2)).setText("" + roomDetails[4]);
-                } else if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
-                    roomVolumeTxtList.get((int) (roomVolumeTxtList.size() / 2)).setText("" + room.getVolume());
-                }
-            }
-
         //Custom Action Bar
         ActionBar mActionBar = getSupportActionBar();
         if (mActionBar != null)
             Utilityies.setCustomActionBar(DynamicTableActivity.this, mActionBar, userName);
     }
+
 
     private void getExtraFromTestCreateActivity(Bundle savedInstanceState) {
         if (savedInstanceState == null) {
@@ -353,43 +341,41 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
     }
 
     private void createTableRowColum() {
-        setCommonTestHeader(testType, mTestBasedOn);
         if (TestCreateActivity.AV.equalsIgnoreCase(testType)) {
-            Log.d("avinash", "mApplicableTestEquipment.getLocation()=" + mApplicableTestEquipment.getLocation());
             if (mTestBasedOn.equalsIgnoreCase("AHU")) {
                 if (mAhuFilterArrayList != null && mAhuFilterArrayList.size() > 0)
                     BuildTable(mAhuFilterArrayList.size() + 1, mApplicableTestAhu.getLocation());
                 else
                     aleartDialog("There is no filter or equipment location");
             } else if (mTestBasedOn.equalsIgnoreCase("EQUIPMENT")) {
-                Log.d("avinash", "mApplicableTestEquipment.getLocation()=" + mApplicableTestEquipment.getLocation());
                 if (mEquipmentGrillArrayList != null && mEquipmentGrillArrayList.size() > 0) {
                     Log.d("avinash", "mApplicableTestEquipment.getLocation()=" + mApplicableTestEquipment.getLocation());
                     BuildTable(mEquipmentGrillArrayList.size() + 1, mApplicableTestEquipment.getLocation());
                 } else
                     aleartDialog("There is no filter or equipment location");
             }
-
+            setCommonTestHeader(testType, mTestBasedOn);
         } else if (TestCreateActivity.ACPHAV.equalsIgnoreCase(testType)) {
+            Log.d("Saurabh ","CodeFlow testType : "+testType);
             if (mTestBasedOn.equalsIgnoreCase("AHU")) {
+                setCommonTestHeader(testType, mTestBasedOn);
                 if (mAhuFilterArrayList != null && mAhuFilterArrayList.size() > 0 && mApplicableTestAhu.getLocation() > 0)
                     BuildTableTest2(mAhuFilterArrayList.size() + 1, mApplicableTestAhu.getLocation());
                 else
                     aleartDialog("There is no gril or applicable test room location");
             } else if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
+                setCommonTestHeader(testType, mTestBasedOn);
                 if (mRoomFilterArrayList != null && mRoomFilterArrayList.size() > 0 && mApplicableTestRoom.getLocation() > 0) {
-                    Log.d("Avinash", "room location acph_av=" + mApplicableTestRoom.getLocation());
                     BuildTableTest2(mRoomFilterArrayList.size() + 1, mApplicableTestRoom.getLocation());
                 } else
                     aleartDialog("There is no gril or applicable test room location");
             }
-//            setCommonTestHeader(testType, mTestBasedOn);
         } else if (TestCreateActivity.ACPHH.equalsIgnoreCase(testType)) {
             if (grillAndSizeFromGrill != null && grillAndSizeFromGrill.size() > 0)
                 BuildTableTest3(grillAndSizeFromGrill.size() + 1, applicableTestRoomLocation);
             else
                 aleartDialog("There is no gril or applicable test room location");
-//            setCommonTestHeader(testType, mTestBasedOn);
+          setCommonTestHeader(testType, mTestBasedOn);
         } else if (TestCreateActivity.FIT.equalsIgnoreCase(testType)) {
             if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
                 if (mRoomFilterArrayList != null && mRoomFilterArrayList.size() > 0)
@@ -457,7 +443,8 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
 
             test_value9.setText("" + mApplicableTestEquipment.getOccupencyState());
             datePicker();
-        } else if (TestCreateActivity.ACPHAV.equalsIgnoreCase(testType)) {
+        } else if (TestCreateActivity.ACPHAV.equalsIgnoreCase(testType) && TestBasedOn.equalsIgnoreCase("ROOM")) {
+            Log.d("Saurabh", "CodeFlow TestBasedOn"+TestBasedOn);
             test_header1.setText("Room Name :");
             test_header2.setText("Instrument Used :");
             test_header3.setText("Test Conducted By:");
@@ -685,6 +672,18 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
     protected void onStart() {
         super.onStart();
         //removeView();
+        createTableRowColum();
+        //setting the test 2 room volume
+        if (roomVolumeTxtList != null && roomVolumeTxtList.size() > 0)
+            if (TestCreateActivity.ACPHH.equals(testType)) {
+                roomVolumeTxtList.get((int) (roomVolumeTxtList.size() / 2)).setText("" + room.getVolume());
+            } else if (TestCreateActivity.ACPHAV.equals(testType)) {
+                if (mTestBasedOn.equalsIgnoreCase("AHU")) {
+                    roomVolumeTxtList.get((int) (roomVolumeTxtList.size() / 2)).setText("" + roomDetails[4]);
+                } else if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
+                    roomVolumeTxtList.get((int) (roomVolumeTxtList.size() / 2)).setText("" + room.getVolume());
+                }
+            }
 
     }
 
@@ -2459,10 +2458,36 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 finish();
             }
         });
+
+        //Common Test Header and Value;
+        test_header1 = (TextView) findViewById(R.id.common_dynamic_test_header1_tv);
+        test_header2 = (TextView) findViewById(R.id.common_dynamic_test_header2_tv);
+        test_header3 = (TextView) findViewById(R.id.common_dynamic_test_header3_tv);
+        test_header4 = (TextView) findViewById(R.id.common_dynamic_test_header4_tv);
+        test_header5 = (TextView) findViewById(R.id.common_dynamic_test_header5_tv);
+        test_header6 = (TextView) findViewById(R.id.common_dynamic_test_header6_tv);
+        test_header7 = (TextView) findViewById(R.id.common_dynamic_test_header7_tv);
+        test_header8 = (TextView) findViewById(R.id.common_dynamic_test_header8_tv);
+        test_header9 = (TextView) findViewById(R.id.common_dynamic_test_header9_tv);
+        test_value1 = (TextView) findViewById(R.id.common_dynamic_test_value1_tv);
+        test_value2 = (TextView) findViewById(R.id.common_dynamic_test_value2tv);
+        test_value3 = (TextView) findViewById(R.id.common_dynamic_test_value3_tv);
+        test_value4 = (TextView) findViewById(R.id.common_dynamic_test_value4_tv);
+        test_value5 = (TextView) findViewById(R.id.common_dynamic_test_value5_tv);
+        test_value6 = (TextView) findViewById(R.id.common_dynamic_test_value6_tv);
+        test_value7 = (TextView) findViewById(R.id.common_dynamic_test_value7_tv);
+        test_value7.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // On button click show datepicker dialog
+                showDialog(DATE_PICKER_ID);
+            }
+        });
+        test_value8 = (TextView) findViewById(R.id.common_dynamic_test_value8_tv);
+        test_value9 = (TextView) findViewById(R.id.common_dynamic_test_value9_tv);
 
         //Test 1
         table_layout = (TableLayout) findViewById(R.id.tableLayout1);
@@ -2472,7 +2497,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         table_layout4 = (TableLayout) findViewById(R.id.tableLayout4);
         table_layout4.setVisibility(View.GONE);
         if (TestCreateActivity.AV.equalsIgnoreCase(testType)) {
-            findViewById(R.id.test1_table_ll).setVisibility(View.VISIBLE);
+            findViewById(R.id.test1_dynamic_table_ll).setVisibility(View.VISIBLE);
         }
         //Test 2
         test2_table_layout = (TableLayout) findViewById(R.id.test2_tableLayout1);
@@ -2491,8 +2516,8 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         test2_table_layout8.setVisibility(View.GONE);
         if (TestCreateActivity.ACPHAV.equalsIgnoreCase(testType)) {
             findViewById(R.id.test2_dynamic_table_ll).setVisibility(View.VISIBLE);
-//            findViewById(R.id.test1_dynamic_table_ll).setVisibility(View.GONE);
-
+            TextView testHeaderAv = (TextView)findViewById(R.id.test_type_header_AVTest);
+            testHeaderAv.setText(R.string.header_title1);
         }
 
         //Test3
@@ -2503,11 +2528,6 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         test3_table_layout5 = (TableLayout) findViewById(R.id.test3_tableLayout5);
 
         if (TestCreateActivity.ACPHH.equalsIgnoreCase(testType)) {
-//            findViewById(R.id.test1_dynamic_table_ll).setVisibility(View.GONE);
-            instrumentNo = (TextView) findViewById(R.id.instrument_no3);
-            testerName = (TextView) findViewById(R.id.tester_name_test3);
-            roomName = (TextView) findViewById(R.id.room_name3);
-            instrumentName = (TextView) findViewById(R.id.instrument_name3);
             roomName.setText("" + room.getRoomName());
             testerName.setText(userName);
             if (loginUserType.equals("CLIENT")) {
@@ -2609,33 +2629,6 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             }
             findViewById(R.id.test6A_dynamic_table_ll).setVisibility(View.VISIBLE);
         }
-
-        //Common Test Header and Value;
-        test_header1 = (TextView) findViewById(R.id.common_dynamic_test_header1_tv);
-        test_header2 = (TextView) findViewById(R.id.common_dynamic_test_header2_tv);
-        test_header3 = (TextView) findViewById(R.id.common_dynamic_test_header3_tv);
-        test_header4 = (TextView) findViewById(R.id.common_dynamic_test_header4_tv);
-        test_header5 = (TextView) findViewById(R.id.common_dynamic_test_header5_tv);
-        test_header6 = (TextView) findViewById(R.id.common_dynamic_test_header6_tv);
-        test_header7 = (TextView) findViewById(R.id.common_dynamic_test_header7_tv);
-        test_header8 = (TextView) findViewById(R.id.common_dynamic_test_header8_tv);
-        test_header9 = (TextView) findViewById(R.id.common_dynamic_test_header9_tv);
-        test_value1 = (TextView) findViewById(R.id.common_dynamic_test_value1_tv);
-        test_value2 = (TextView) findViewById(R.id.common_dynamic_test_value2tv);
-        test_value3 = (TextView) findViewById(R.id.common_dynamic_test_value3_tv);
-        test_value4 = (TextView) findViewById(R.id.common_dynamic_test_value4_tv);
-        test_value5 = (TextView) findViewById(R.id.common_dynamic_test_value5_tv);
-        test_value6 = (TextView) findViewById(R.id.common_dynamic_test_value6_tv);
-        test_value7 = (TextView) findViewById(R.id.common_dynamic_test_value7_tv);
-        test_value7.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // On button click show datepicker dialog
-                showDialog(DATE_PICKER_ID);
-            }
-        });
-        test_value8 = (TextView) findViewById(R.id.common_dynamic_test_value8_tv);
-        test_value9 = (TextView) findViewById(R.id.common_dynamic_test_value9_tv);
     }
 
     private void removeView() {

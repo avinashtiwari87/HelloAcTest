@@ -10,11 +10,13 @@
         android:background="@color/black_overlay">
 
         <TextView
+            android:id="@+id/test_type_header_AVTest"
             style="@style/TextAppearance.AppCompat.header_text"
             android:text="@string/header_title" />
     </LinearLayout>
 
-    <include layout="@layout/common_test_detail_header" />
+    <include layout="@layout/common_test_detail_header"
+        android:id="@+id/common_header_test1"/>
 
     <LinearLayout
         android:id="@+id/test_table_1_header_2_ll"

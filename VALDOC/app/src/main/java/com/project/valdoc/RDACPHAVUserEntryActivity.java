@@ -280,7 +280,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
 // Now formattedDate have current date/time
         Toast.makeText(this, formattedDate, Toast.LENGTH_SHORT).show();
         int mon = month + 1;
-        certificateNo.setText("AV/" + mon + "/" + year + "/" + formattedDate);
+        //certificateNo.setText("AV/" + mon + "/" + year + "/" + formattedDate);
 //        SharedPreferences.Editor editor = sharedpreferences.edit();
 //        editor.putInt("CERTIFICATE_NO", newCertificateNo);
 //        editor.commit();
@@ -382,15 +382,6 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
         instrumentUsed = (TextView) findViewById(R.id.instrumentused);
         make = (TextView) findViewById(R.id.make);
         model = (TextView) findViewById(R.id.modle);
-        //hiding extra field
-        aerosolUsedLable = (TextView) findViewById(R.id.aerosol_used_lable);
-        aerosolUsedLable.setVisibility(View.GONE);
-        aerosolGeneratorTypeLable = (TextView) findViewById(R.id.aerosol_generator_type_lable);
-        aerosolGeneratorTypeLable.setVisibility(View.GONE);
-        aerosolUsed = (TextView) findViewById(R.id.aerosol_used);
-        aerosolUsed.setVisibility(View.GONE);
-        aerosolGeneratorType = (TextView) findViewById(R.id.aerosol_generator_type);
-        aerosolGeneratorType.setVisibility(View.GONE);
 
         instrumentSerialNo = (TextView) findViewById(R.id.instrumentserialno);
         calibrationOn = (TextView) findViewById(R.id.calibratedon);
@@ -1008,12 +999,19 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
         test2_table_layout4 = (TableLayout) findViewById(R.id.test2_tableLayout4);
         test2_table_layout5 = (TableLayout) findViewById(R.id.test2_tableLayout5);
         test2_table_layout6 = (TableLayout) findViewById(R.id.test2_tableLayout6);
+        test2_table_layout6.setVisibility(View.GONE);
         test2_table_layout7 = (TableLayout) findViewById(R.id.test2_tableLayout7);
+        test2_table_layout7.setVisibility(View.GONE);
         test2_table_layout8 = (TableLayout) findViewById(R.id.test2_tableLayout8);
+        test2_table_layout8.setVisibility(View.GONE);
         //Hide view coming form test tabl 1
         test_table_1_header_l = (LinearLayout) findViewById(R.id.test_table_2_header_l_ll);
         test_table_1_header_2 = (LinearLayout) findViewById(R.id.test_table_2_header_2_ll);
         test_table_1_header_l.setVisibility(View.GONE);
         test_table_1_header_2.setVisibility(View.GONE);
+        findViewById(R.id.test_interference).setVisibility(View.GONE);
+        findViewById(R.id.test_note_tv).setVisibility(View.VISIBLE);
+        TextView TestHeader = (TextView)findViewById(R.id.common_header_tv);
+        TestHeader.setText("TEST RAW DATA (RD_ACPH_AV)\n(Air Flow Velocity, Volume Testing and Determination of Air Changes per Hour Rates)");
     }
 }

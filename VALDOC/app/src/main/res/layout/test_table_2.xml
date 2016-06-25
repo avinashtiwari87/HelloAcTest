@@ -6,6 +6,7 @@
 
     <LinearLayout
         android:id="@+id/test_table_2_header_l_ll"
+        android:visibility="gone"
         style="@style/TextAppearance.AppCompat.header_top"
         android:background="@color/black_overlay">
 
@@ -14,9 +15,11 @@
             android:text="@string/header_title1" />
     </LinearLayout>
 
-    <include layout="@layout/common_test_detail_header" />
+<!--    <include layout="@layout/common_test_detail_header"
+        android:id="@+id/common_header_test2"/>-->
 
     <LinearLayout
+        android:visibility="gone"
         android:id="@+id/test_table_2_header_2_ll"
         style="@style/TextAppearance.AppCompat.header_top"
         android:layout_marginTop="10dp"

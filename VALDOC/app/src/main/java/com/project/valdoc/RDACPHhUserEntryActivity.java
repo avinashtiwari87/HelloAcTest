@@ -308,9 +308,6 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
 
     private void initTextView() {
         // layout data which is not in use
-        instrumentNoTextView = (TextView) findViewById(R.id.instrument_no3);
-        instrumentNoTextView.setVisibility(View.GONE);
-        testerNameTextView = (TextView) findViewById(R.id.tester_name_test3);
         testerNameTextView.setVisibility(View.GONE);
         instrumentUsedTextView = (TextView) findViewById(R.id.instrument_used);
         instrumentUsedTextView.setVisibility(View.GONE);
@@ -321,9 +318,6 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
         roomNameLable.setVisibility(View.GONE);
         instrumentNoLable= (TextView) findViewById(R.id.instrument_no_lable);
         instrumentNoLable.setVisibility(View.GONE);
-        roomNameTest= (TextView) findViewById(R.id.room_name3);
-        roomNameTest.setVisibility(View.GONE);
-        instrument_name= (TextView) findViewById(R.id.instrument_name3);
         instrument_name.setVisibility(View.GONE);
         dateTextView = (TextView) findViewById(R.id.datetextview);
         customerName = (TextView) findViewById(R.id.customer_name);
