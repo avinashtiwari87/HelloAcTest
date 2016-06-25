@@ -2303,22 +2303,30 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         });
 
         //Test 1
-        findViewById(R.id.test1_table_ll).setVisibility(View.VISIBLE);
         table_layout = (TableLayout) findViewById(R.id.tableLayout1);
         table_layout2 = (TableLayout) findViewById(R.id.tableLayout2);
         table_layout3 = (TableLayout) findViewById(R.id.tableLayout3);
         table_layout3.setVisibility(View.GONE);
         table_layout4 = (TableLayout) findViewById(R.id.tableLayout4);
         table_layout4.setVisibility(View.GONE);
+        if (TestCreateActivity.AV.equalsIgnoreCase(testType)) {
+            findViewById(R.id.test1_table_ll).setVisibility(View.VISIBLE);
+        }
         //Test 2
         test2_table_layout = (TableLayout) findViewById(R.id.test2_tableLayout1);
         test2_table_layout2 = (TableLayout) findViewById(R.id.test2_tableLayout2);
+        test2_table_layout2.setVisibility(View.GONE);
         test2_table_layout3 = (TableLayout) findViewById(R.id.test2_tableLayout3);
         test2_table_layout4 = (TableLayout) findViewById(R.id.test2_tableLayout4);
+        test2_table_layout4.setVisibility(View.GONE);
         test2_table_layout5 = (TableLayout) findViewById(R.id.test2_tableLayout5);
+        test2_table_layout5.setVisibility(View.GONE);
         test2_table_layout6 = (TableLayout) findViewById(R.id.test2_tableLayout6);
+        test2_table_layout6.setVisibility(View.GONE);
         test2_table_layout7 = (TableLayout) findViewById(R.id.test2_tableLayout7);
+        test2_table_layout7.setVisibility(View.GONE);
         test2_table_layout8 = (TableLayout) findViewById(R.id.test2_tableLayout8);
+        test2_table_layout8.setVisibility(View.GONE);
         if (TestCreateActivity.ACPHAV.equalsIgnoreCase(testType)) {
             instrumentNo = (TextView) findViewById(R.id.instrument_no2);
             testerName = (TextView) findViewById(R.id.tester_name_test2);

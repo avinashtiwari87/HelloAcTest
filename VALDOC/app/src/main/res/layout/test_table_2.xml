@@ -138,6 +138,14 @@
             android:text="@string/header_title_result" />
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            style="@style/TextAppearance.AppCompat.header_text"
+            android:text="Measured Air Velocity" />
+    </LinearLayout>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -159,7 +167,6 @@
                     android:gravity="center"
                     android:orientation="horizontal">
 
-
                     <TableLayout
                         android:id="@+id/test2_tableLayout1"
                         android:layout_width="wrap_content"
@@ -169,12 +176,15 @@
                     <TableLayout
                         android:id="@+id/test2_tableLayout2"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content">
+                    </TableLayout>
+
 
                     <TableLayout
                         android:id="@+id/test2_tableLayout3"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content" >
+                        </TableLayout>
 
                     <TableLayout
                         android:id="@+id/test2_tableLayout4"
