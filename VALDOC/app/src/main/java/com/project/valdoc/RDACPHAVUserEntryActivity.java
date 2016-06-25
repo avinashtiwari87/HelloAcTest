@@ -89,6 +89,8 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
     private TextView instrumentUsed;
     private TextView make;
     private TextView model;
+    private TextView TFRTxtv;
+    private TextView TFTAVTxtv;
     private TextView instrumentSerialNo;
     private TextView calibrationOn;
     private TextView calibrationDueOn;
@@ -298,8 +300,8 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
     private void textViewValueAssignment() {
         if (loginUserType.equals("CLIENT")) {
             instrumentUsed.setText(clientInstrument.getcInstrumentName());
-            make.setText(clientInstrument.getMake());
-            model.setText(clientInstrument.getModel());
+//            make.setText(clientInstrument.getMake());
+           // model.setText(clientInstrument.getModel());
             instrumentSerialNo.setText("" + clientInstrument.getSerialNo());
             calibrationOn.setText(Utilityies.parseDateToddMMyyyy(clientInstrument.getLastCalibrated()));
             calibrationDueOn.setText(Utilityies.parseDateToddMMyyyy(clientInstrument.getCalibrationDueDate()));
@@ -459,6 +461,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
         testSpesificationValue.setTest_detail_id("" + testDetailsId);
         testSpesificationValue.setFieldName("TFR");
         testSpesificationValue.setFieldValue("" + totalAirFlowRate);
+        TFRTxtv.setText(""+totalAirFlowRate);
         spesificationValueArrayList.add(testSpesificationValue);
 
         TestSpesificationValue testSpesificationValue1 = new TestSpesificationValue();
@@ -478,6 +481,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
         testSpesificationValue2.setTest_detail_id("" + testDetailsId);
         testSpesificationValue2.setFieldName("((TFR/RV)x60))");
         testSpesificationValue2.setFieldValue("" + airChangeValue);
+        TFTAVTxtv.setText(""+airChangeValue);
         spesificationValueArrayList.add(testSpesificationValue2);
 
         return spesificationValueArrayList;
@@ -1004,6 +1008,8 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
         test2_table_layout7.setVisibility(View.GONE);
         test2_table_layout8 = (TableLayout) findViewById(R.id.test2_tableLayout8);
         test2_table_layout8.setVisibility(View.GONE);
+        TFRTxtv = (TextView)findViewById(R.id.acph_av_tfr_value_tv);
+        TFTAVTxtv = (TextView)findViewById(R.id.acph_av_tfrby_av_value_tv);
         //Hide view coming form test tabl 1
         test_table_1_header_l = (LinearLayout) findViewById(R.id.test_table_2_header_l_ll);
         test_table_1_header_2 = (LinearLayout) findViewById(R.id.test_table_2_header_2_ll);
@@ -1011,6 +1017,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
         test_table_1_header_2.setVisibility(View.GONE);
         findViewById(R.id.test_interference).setVisibility(View.GONE);
         findViewById(R.id.test_note_tv).setVisibility(View.VISIBLE);
+        findViewById(R.id.acph_av_final_calc_ll).setVisibility(View.VISIBLE);
         TextView TestHeader = (TextView)findViewById(R.id.common_header_tv);
         TestHeader.setText("TEST RAW DATA (RD_ACPH_AV)\n(Air Flow Velocity, Volume Testing and Determination of Air Changes per Hour Rates)");
     }
