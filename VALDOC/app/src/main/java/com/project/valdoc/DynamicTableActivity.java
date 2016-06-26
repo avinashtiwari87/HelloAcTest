@@ -2499,6 +2499,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         table_layout4.setVisibility(View.GONE);
         if (TestCreateActivity.AV.equalsIgnoreCase(testType)) {
             findViewById(R.id.test1_dynamic_table_ll).setVisibility(View.VISIBLE);
+            findViewById(R.id.test1_reading_header).setVisibility(View.VISIBLE);
         }
         //Test 2
         test2_table_layout = (TableLayout) findViewById(R.id.test2_tableLayout1);
@@ -2520,6 +2521,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
 //            linearLayout.setVisibility(View.VISIBLE);
             TextView testHeaderAv = (TextView)findViewById(R.id.test_type_header_AVTest);
             testHeaderAv.setText(R.string.header_title1);
+            findViewById(R.id.test2_reading_header).setVisibility(View.VISIBLE);
         }
 
         //Test3
