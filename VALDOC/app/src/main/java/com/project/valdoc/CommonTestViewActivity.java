@@ -102,7 +102,7 @@ public class CommonTestViewActivity extends AppCompatActivity {
             testReadingList = mValdocDatabaseHandler.getTestReadingDataById(testDetailId+"");
             spiltValue =testReadingList.get(0).getValue().split(",");
             Log.d(TAG, "CodeFlow : spiltValue length : " + spiltValue.length);
-            BuildTable(testReadingList.size()+1,(spiltValue.length-1));
+            BuildTable(testReadingList.size()+1,(spiltValue.length-2));
             //input Data
                 int textId =0;
                 for (int j = 0; j < testReadingList.size(); j++) {
@@ -112,10 +112,10 @@ public class CommonTestViewActivity extends AppCompatActivity {
                     //Average
                     resultTextViewList.get(j).setText(""+spiltValue[spiltValue.length-2]);
                     //Results pass/fail
-                    txtPassFailList.get(j).setText(""+spiltValue[spiltValue.length-1]);
+                    //txtPassFailList.get(j).setText(""+spiltValue[spiltValue.length-1]);
                     //V1, V2, v3.. Value..
                     spiltValue =testReadingList.get(j).getValue().split(",");
-                    for (int i = 0; i <spiltValue.length-1; i++) {
+                    for (int i = 0; i <spiltValue.length-2; i++) {
                         txtViewList.get(textId).setText(""+spiltValue[i]);
                         Log.d(TAG, "CodeFlow : InnerForLoop I: " + i+" textId "+textId);
                         textId++;
