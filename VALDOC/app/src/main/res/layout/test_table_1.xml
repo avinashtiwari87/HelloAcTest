@@ -29,6 +29,16 @@
             android:text="@string/header_title_result" />
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/test1_reading_header"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            style="@style/TextAppearance.AppCompat.header_text"
+            android:text="Airflow Velocity " />
+    </LinearLayout>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
