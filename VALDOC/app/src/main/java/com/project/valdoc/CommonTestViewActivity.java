@@ -23,6 +23,7 @@ import android.widget.Toast;
 
 import com.project.valdoc.db.ValdocDatabaseHandler;
 import com.project.valdoc.intity.RoomFilter;
+import com.project.valdoc.intity.TestDetails;
 import com.project.valdoc.intity.TestReading;
 import com.project.valdoc.utility.Utilityies;
 
@@ -55,13 +56,37 @@ public class CommonTestViewActivity extends AppCompatActivity {
     ArrayList<TextView> txtPassFailList;
     ArrayList<TextView> resultTextViewList;
     ArrayList<TextView> gridTextList;
+    TestDetails mTestDetails;
     ProgressDialog pr;
     private String userName = "";
     String testType = null;
     SharedPreferences sharedpreferences;
     private ValdocDatabaseHandler mValdocDatabaseHandler;
-    private int rows,cols,testDetailId =1;
-    private ArrayList<TestReading>testReadingList;
+    private int rows, cols, testDetailId = 1;
+    private ArrayList<TestReading> testReadingList;
+    //certificate view id creation
+    private TextView instrumentUsed;
+    private TextView equipmentName;
+    private TextView equipmentNo;
+    private TextView instrumentSerialNo;
+    private TextView calibrationOn;
+    private TextView calibrationDueOn;
+    private TextView testSpecification;
+    private TextView plantName;
+    private TextView areaOfTest;
+    private TextView roomName;
+    private TextView roomNo;
+    private TextView occupancyState;
+    private TextView testRefrance;
+    private TextView infarance;
+    private TextView testCundoctor;
+    private TextView testWitnessOrg;
+    private TextView testCondoctorOrg;
+    private TextView testWitness;
+    private TextView dateTextView;
+    private TextView customerName;
+    private TextView certificateNo;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,61 +114,56 @@ public class CommonTestViewActivity extends AppCompatActivity {
             Utilityies.setCustomActionBar(CommonTestViewActivity.this, mActionBar, userName);
 
         testType = getIntent().getStringExtra("TestType");
-        testDetailId = getIntent().getIntExtra("testDetailId",1);
-        rows = getIntent().getIntExtra("rows",6);
-        cols = getIntent().getIntExtra("cols",5);
-        Log.d(TAG, " TestType : " + testType+" testDetailId "+testDetailId);
+        testDetailId = getIntent().getIntExtra("testDetailId", 1);
+        rows = getIntent().getIntExtra("rows", 6);
+        cols = getIntent().getIntExtra("cols", 5);
+        Log.d(TAG, " TestType : " + testType + " testDetailId " + testDetailId);
 
         initRes();
-
+        initTextView();
         String spiltValue[] = null;
-        if(testType != null && (testType.contains("AV")||testType.contains("AF"))){
+        if (testType != null && (testType.contains("AV") || testType.contains("AF"))) {
             findViewById(R.id.test1_table_ll).setVisibility(View.VISIBLE);
-            testReadingList = mValdocDatabaseHandler.getTestReadingDataById(testDetailId+"");
-            spiltValue =testReadingList.get(0).getValue().split(",");
+            testReadingList = mValdocDatabaseHandler.getTestReadingDataById(testDetailId + "");
+            spiltValue = testReadingList.get(0).getValue().split(",");
             Log.d(TAG, "CodeFlow : spiltValue length : " + spiltValue.length);
-            BuildTable(testReadingList.size()+1,(spiltValue.length-1));
+            BuildTable(testReadingList.size() + 1, (spiltValue.length - 1));
             //input Data
-                int textId =0;
-                for (int j = 0; j < testReadingList.size(); j++) {
-                    Log.d(TAG, "CodeFlow : outerForLoop J: " + j);
-                    //filter
-                    gridTextList.get(j).setText(testReadingList.get(j).getEntityName());
-                    //Average
-                    resultTextViewList.get(j).setText(""+spiltValue[spiltValue.length-2]);
-                    //Results pass/fail
-                    txtPassFailList.get(j).setText(""+spiltValue[spiltValue.length-1]);
-                    //V1, V2, v3.. Value..
-                    spiltValue =testReadingList.get(j).getValue().split(",");
-                    for (int i = 0; i <spiltValue.length-1; i++) {
-                        txtViewList.get(textId).setText(""+spiltValue[i]);
-                        Log.d(TAG, "CodeFlow : InnerForLoop I: " + i+" textId "+textId);
-                        textId++;
-
-                    }
+            int textId = 0;
+            for (int j = 0; j < testReadingList.size(); j++) {
+                Log.d(TAG, "CodeFlow : outerForLoop J: " + j);
+                //filter
+                gridTextList.get(j).setText(testReadingList.get(j).getEntityName());
+                //Average
+                resultTextViewList.get(j).setText("" + spiltValue[spiltValue.length - 2]);
+                //Results pass/fail
+                txtPassFailList.get(j).setText("" + spiltValue[spiltValue.length - 1]);
+                //V1, V2, v3.. Value..
+                spiltValue = testReadingList.get(j).getValue().split(",");
+                for (int i = 0; i < spiltValue.length - 1; i++) {
+                    txtViewList.get(textId).setText("" + spiltValue[i]);
+                    Log.d(TAG, "CodeFlow : InnerForLoop I: " + i + " textId " + textId);
+                    textId++;
 
                 }
-        }else if(testType != null && testType.contains("ACPH_AV")){
+
+            }
+        } else if (testType != null && testType.contains("ACPH_AV")) {
             findViewById(R.id.test2_table_ll).setVisibility(View.VISIBLE);
-            BuildTableTest2(rows,cols);
-        }else if(testType != null && testType.contains("ACPH_H")){
+            BuildTableTest2(rows, cols);
+        } else if (testType != null && testType.contains("ACPH_H")) {
             findViewById(R.id.test3_table_ll).setVisibility(View.VISIBLE);
-            BuildTableTest3(rows,cols);
-        }else if(testType != null && testType.contains("FIT")){
+            BuildTableTest3(rows, cols);
+        } else if (testType != null && testType.contains("FIT")) {
             findViewById(R.id.test4_table_ll).setVisibility(View.VISIBLE);
-            BuildTableTest4(rows,cols);
-        }else if(testType != null && testType.contains("PCT")){
+            BuildTableTest4(rows, cols);
+        } else if (testType != null && testType.contains("PCT")) {
             findViewById(R.id.test5_table_ll).setVisibility(View.VISIBLE);
-            BuildTableTest5(rows,cols);
-        }else if(testType != null && testType.contains("RCT")){
+            BuildTableTest5(rows, cols);
+        } else if (testType != null && testType.contains("RCT")) {
             Toast.makeText(CommonTestViewActivity.this, "Coming Soon...", Toast.LENGTH_SHORT).show();
         }
-
-
-
-
-
-
+        mTestDetails = mValdocDatabaseHandler.getTestDetailById(testDetailId);
 
         //cancel button click
         findViewById(R.id.cancel).setOnClickListener(new View.OnClickListener() {
@@ -152,8 +172,69 @@ public class CommonTestViewActivity extends AppCompatActivity {
                 finish();
             }
         });
+        textViewValueAsignment();
     }
 
+    private void textViewValueAsignment() {
+        dateTextView.setText(""+mTestDetails.getDateOfTest());
+        customerName.setText(""+mTestDetails.getCustomer());
+        certificateNo.setText(""+mTestDetails.getRawDataNo());
+        instrumentUsed.setText(""+mTestDetails.getInstrumentUsed());
+
+//        make = (TextView) findViewById(R.id.make);
+//        model = (TextView) findViewById(R.id.modle);
+        instrumentSerialNo.setText(""+mTestDetails.getInstrumentNo());
+        calibrationOn.setText(""+mTestDetails.getCalibratedOn());
+        calibrationDueOn.setText(""+mTestDetails.getCalibratedDueOn());
+        testSpecification.setText(""+mTestDetails.getTestSpecification());
+        plantName.setText(""+mTestDetails.getBlockName());
+        areaOfTest.setText(""+mTestDetails.getTestArea());
+
+//        roomNameLable = (TextView) findViewById(R.id.ahu_no_lable);
+//        roomNameLable.setText(getResources().getString(R.string.room_name));
+        roomName.setText(""+mTestDetails.getRoomName());
+        roomNo.setText(""+mTestDetails.getRoomNo());
+        equipmentName.setText(""+mTestDetails.getEquipmentName());
+        equipmentNo.setText(""+mTestDetails.getEquipmentNo());
+        occupancyState.setText(""+mTestDetails.getOccupencyState());
+        testRefrance.setText(""+mTestDetails.getTestReference());
+        infarance.setText("");
+        testCundoctor.setText(""+mTestDetails.getTesterName());
+        testCondoctorOrg.setText("");
+        testWitnessOrg.setText("");
+        testWitness.setText(""+mTestDetails.getWitnessName());
+    }
+
+    private void initTextView() {
+        dateTextView = (TextView) findViewById(R.id.datetextview);
+        customerName = (TextView) findViewById(R.id.customer_name);
+        certificateNo = (TextView) findViewById(R.id.trd_no);
+        instrumentUsed = (TextView) findViewById(R.id.instrumentused);
+
+//        make = (TextView) findViewById(R.id.make);
+//        model = (TextView) findViewById(R.id.modle);
+        instrumentSerialNo = (TextView) findViewById(R.id.instrumentserialno);
+        calibrationOn = (TextView) findViewById(R.id.calibratedon);
+        calibrationDueOn = (TextView) findViewById(R.id.calibrationdueon);
+        testSpecification = (TextView) findViewById(R.id.testspecification);
+        plantName = (TextView) findViewById(R.id.plantname);
+        areaOfTest = (TextView) findViewById(R.id.areaoftest);
+
+//        roomNameLable = (TextView) findViewById(R.id.ahu_no_lable);
+//        roomNameLable.setText(getResources().getString(R.string.room_name));
+        roomName = (TextView) findViewById(R.id.room_name);
+        roomNo = (TextView) findViewById(R.id.room_no);
+        equipmentName = (TextView) findViewById(R.id.equiment_name);
+        equipmentNo = (TextView) findViewById(R.id.equiment_no);
+        occupancyState = (TextView) findViewById(R.id.ocupancystate);
+        testRefrance = (TextView) findViewById(R.id.testrefrence);
+        infarance = (TextView) findViewById(R.id.infarance);
+        testCundoctor = (TextView) findViewById(R.id.testcunducter);
+        testCondoctorOrg = (TextView) findViewById(R.id.test_condoctor_org);
+        testWitnessOrg = (TextView) findViewById(R.id.testwitness_org);
+        testWitness = (TextView) findViewById(R.id.testwitness);
+
+    }
 
     private void BuildTable(int rows, int cols) {
         //first section
@@ -238,6 +319,7 @@ public class CommonTestViewActivity extends AppCompatActivity {
             pr.dismiss();
 
     }
+
     private void BuildTableTest2(int rows, int cols) {
         //first section
         // outer for loop
@@ -250,7 +332,7 @@ public class CommonTestViewActivity extends AppCompatActivity {
                 if (i == 1 && j == 1) {
                     row.addView(addTextView(" Grille / Filter ID\n "));
                 } else {
-                        row.addView(addTextView("grillAndSizeFromGrill"));
+                    row.addView(addTextView("grillAndSizeFromGrill"));
 //                    row.addView(addTextView("AHU 2031/0.3MICRON/" + i));
                 }
 
@@ -388,6 +470,7 @@ public class CommonTestViewActivity extends AppCompatActivity {
             pr.dismiss();
 
     }
+
     private void BuildTableTest3(int rows, int cols) {
         //first section
         // outer for loop
@@ -400,7 +483,7 @@ public class CommonTestViewActivity extends AppCompatActivity {
                 if (i == 1 && j == 1) {
                     row.addView(addTextView(" Grille/Filter ID No\n "));
                 } else {
-                        row.addView(addTextView("grillAndSizeFromGrill"));
+                    row.addView(addTextView("grillAndSizeFromGrill"));
 //                    row.addView(addTextView(" Filter No " + i));
                 }
             }
@@ -453,7 +536,7 @@ public class CommonTestViewActivity extends AppCompatActivity {
                 if (i == 1 && j == 1) {
                     row.addView(addTextView(" Room Volume in\n ft3(RV)"));
                 } else {
-                    row.addView(addTextViewWithoutBorder(""+678));
+                    row.addView(addTextViewWithoutBorder("" + 678));
                 }
             }
             test3_table_layout4.addView(row);
@@ -495,13 +578,12 @@ public class CommonTestViewActivity extends AppCompatActivity {
                 if (i == 1 && j == 1) {
                     row.addView(addTextView(" Filter No \n         "));
                 } else {
-                    row.addView(addTextView("HF -00"+i));
+                    row.addView(addTextView("HF -00" + i));
                 }
 
             }
             test4_table_layout.addView(row);
         }
-
 
 
         //Second section
@@ -515,7 +597,7 @@ public class CommonTestViewActivity extends AppCompatActivity {
                 if (i == 1 && j == 1) {
                     row.addView(addTextView("Average before Scanning\n Concentration (µg/liter) "));
                 } else {
-                    row.addView(addTextView(30+i+""));
+                    row.addView(addTextView(30 + i + ""));
                 }
 
             }
@@ -533,7 +615,7 @@ public class CommonTestViewActivity extends AppCompatActivity {
                 if (i == 1 && j == 1) {
                     row.addView(addTextView(" Average After Scanning\nConcentration (µg/liter) "));
                 } else {
-                    row.addView(addTextView(20+i+""));
+                    row.addView(addTextView(20 + i + ""));
                 }
 
             }
@@ -551,7 +633,7 @@ public class CommonTestViewActivity extends AppCompatActivity {
                 if (i == 1 && j == 1) {
                     row.addView(addTextView(" Variation \nin Concentration*"));
                 } else {
-                    row.addView(addTextView(10+i+"%"));
+                    row.addView(addTextView(10 + i + "%"));
                 }
 
             }
@@ -568,7 +650,7 @@ public class CommonTestViewActivity extends AppCompatActivity {
                 if (i == 1 && j == 1) {
                     row.addView(addTextView(" Obtained Leakage \n(% Leakage)"));
                 } else {
-                    row.addView(addTextView(3+i+""));
+                    row.addView(addTextView(3 + i + ""));
                     //row.addView(addEditTextView(i));
                 }
 
@@ -768,7 +850,6 @@ public class CommonTestViewActivity extends AppCompatActivity {
     }
 
 
-
     private TextView addTextViewWithoutBorder(String s) {
         TextView tv = new TextView(this);
         tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
@@ -842,7 +923,7 @@ public class CommonTestViewActivity extends AppCompatActivity {
         tv.setEllipsize(TextUtils.TruncateAt.END);
         idCountEtv++;
         txtViewList.add(tv);
-        Log.d(TAG,"CodeFlow idCountEtv "+idCountEtv);
+        Log.d(TAG, "CodeFlow idCountEtv " + idCountEtv);
         return tv;
     }
 
@@ -922,7 +1003,7 @@ public class CommonTestViewActivity extends AppCompatActivity {
         table_layout3 = (TableLayout) findViewById(R.id.tableLayout3);
         table_layout4 = (TableLayout) findViewById(R.id.tableLayout4);
         table_layout4.setVisibility(View.GONE);
-        if (testType != null && (testType.contains("AV")||testType.contains("AF"))) {
+        if (testType != null && (testType.contains("AV") || testType.contains("AF"))) {
             findViewById(R.id.test_table_1_header_l_ll).setVisibility(View.GONE);
             TextView TestHeader = (TextView) findViewById(R.id.common_header_tv);
             TestHeader.setText("TEST RAW DATA EQUIPMENT (ERD_AV)\n(Average Air Flow Velocity Testing)");
@@ -931,7 +1012,6 @@ public class CommonTestViewActivity extends AppCompatActivity {
             findViewById(R.id.test1_reading_header).setVisibility(View.VISIBLE);
             findViewById(R.id.common_header_test1).setVisibility(View.GONE);
         }
-
 
 
         //Test 2
