@@ -208,6 +208,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         ActionBar mActionBar = getSupportActionBar();
         if (mActionBar != null)
             Utilityies.setCustomActionBar(DynamicTableActivity.this, mActionBar, userName);
+        createTableRowColum();
     }
 
 
@@ -668,12 +669,16 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         }
     };
 
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+    }
 
     @Override
     protected void onStart() {
         super.onStart();
         //removeView();
-        createTableRowColum();
+
         //setting the test 2 room volume
         if (roomVolumeTxtList != null && roomVolumeTxtList.size() > 0)
             if (TestCreateActivity.ACPHH.equals(testType)) {
@@ -688,12 +693,12 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
 
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-
-    }
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+//
+//
+//    }
 
     @Override
     public void onBackPressed() {
