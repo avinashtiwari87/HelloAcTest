@@ -110,19 +110,6 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
     private TextView dateTextView;
     private TextView customerName;
     private TextView certificateNo;
-    private TextView aerosolUsed;
-    private TextView aerosolGeneratorType;
-    private TextView aerosolUsedLable;
-    private TextView aerosolGeneratorTypeLable;
-    private TextView instrumentNoTextView;
-    private TextView testerNameTextView;
-    private TextView instrumentUsedTextView;
-    private TextView testCunductedByTextView;
-
-    private TextView roomNameLable;
-    private TextView instrumentNoLable;
-    private TextView roomNameTest;
-    private TextView instrument_name;
 
     ArrayList<TextView> txtViewList;
     private double totalAirFlowRate = 0;
@@ -225,6 +212,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
             TextView mtvl = totalAirFlowRateTxtList.get(middleTxt);
             totalAirFlowRate = getIntent().getFloatExtra("totalAirFlowRate", 0f);
             mtvl.setText(totalAirFlowRate + "");
+            TFRTxtv.setText(totalAirFlowRate + "");
         }
         //AirFlow Change
         if (airChangeTxtList != null && airChangeTxtList.size() > 0) {
@@ -252,6 +240,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
 
 //            infarance.setText("Obtained Test Result");
             airChangeTxt.setText("" + airChangeValue);
+            TFTAVTxtv.setText("" + airChangeValue);
         }
 
         //Custom Action Bar
@@ -464,7 +453,6 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
         testSpesificationValue.setTest_detail_id("" + testDetailsId);
         testSpesificationValue.setFieldName("TFR");
         testSpesificationValue.setFieldValue("" + totalAirFlowRate);
-        TFRTxtv.setText(""+totalAirFlowRate);
         spesificationValueArrayList.add(testSpesificationValue);
 
         TestSpesificationValue testSpesificationValue1 = new TestSpesificationValue();
@@ -484,7 +472,6 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
         testSpesificationValue2.setTest_detail_id("" + testDetailsId);
         testSpesificationValue2.setFieldName("((TFR/RV)x60))");
         testSpesificationValue2.setFieldValue("" + airChangeValue);
-        TFTAVTxtv.setText(""+airChangeValue);
         spesificationValueArrayList.add(testSpesificationValue2);
 
         return spesificationValueArrayList;
