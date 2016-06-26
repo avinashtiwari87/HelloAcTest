@@ -2110,13 +2110,13 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
     // select data from room table
     public String[] getRoomByEquipment(int roomId) {
         Log.d("ValdocDatabaseHandler", "roomId=" + roomId);
-        String selectQuery = " SELECT " + ROOM_ROOMNO + "," + ROOM_ROOMNAME + "," + ROOM_AREAID + " FROM " + ROOM_TABLE_NAME +
+        String selectQuery = " SELECT " + ROOM_ROOMNO + "," + ROOM_ROOMNAME + "," + ROOM_AREAID + "," + ROOM_ACPH + "," + ROOM_VOLUME + "," + ROOM_AHUID + " FROM " + ROOM_TABLE_NAME +
 //        String selectQuery = " SELECT * FROM " + PARTNERUSER_TABLE_NAME +
                 " WHERE " + ValdocDatabaseHandler.ROOM_ROOMID + " = " + roomId;
         SQLiteDatabase database = this.getWritableDatabase();
         Cursor cursor = database.rawQuery(selectQuery, null);
         Log.d("ValdocDatabaseHandler", "cursor=" + cursor.getCount());
-        String[] strings = new String[3];
+        String[] strings = new String[6];
         if (cursor.moveToFirst()) {
             do {
                 Log.d("ValdocDatabaseHandler", "roomId=" + roomId);
@@ -2134,13 +2134,13 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
     // select data from room table
     public String[] getRoomByAhu(int ahuId) {
         Log.d("ValdocDatabaseHandler", "roomId=" + ahuId);
-        String selectQuery = " SELECT " + ROOM_ROOMNO + "," + ROOM_ROOMNAME + "," + ROOM_AREAID + "," + ROOM_ACPH + "," + ROOM_VOLUME + " FROM " + ROOM_TABLE_NAME +
+        String selectQuery = " SELECT " + ROOM_ROOMNO + "," + ROOM_ROOMNAME + "," + ROOM_AREAID + "," + ROOM_ACPH + "," + ROOM_VOLUME + "," + ROOM_AHUID + " FROM " + ROOM_TABLE_NAME +
 //        String selectQuery = " SELECT * FROM " + PARTNERUSER_TABLE_NAME +
                 " WHERE " + ValdocDatabaseHandler.ROOM_AHUID + " = " + ahuId;
         SQLiteDatabase database = this.getWritableDatabase();
         Cursor cursor = database.rawQuery(selectQuery, null);
         Log.d("ValdocDatabaseHandler", "cursor=" + cursor.getCount());
-        String[] strings = new String[5];
+        String[] strings = new String[6];
         if (cursor.moveToFirst()) {
             do {
                 Log.d("ValdocDatabaseHandler", "roomId=" + ahuId);
