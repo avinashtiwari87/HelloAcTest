@@ -35,6 +35,7 @@ public class SyncSelectedDataActivity extends AppCompatActivity implements HttpP
     private static final String TAG = "SyncSelectedData";
     TableLayout table_layout1, table_layout2, table_layout3, table_layout4, table_layout5,
             table_layout6, table_layout7, table_layout8, table_layout9, table_layout10;
+    TextView table_header_tv;
     int rows = 5, colos = 5;
     private String userName = "", testType = "";
     SharedPreferences sharedpreferences;
@@ -49,19 +50,15 @@ public class SyncSelectedDataActivity extends AppCompatActivity implements HttpP
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sync_selected_data);
-        syncSelectedButton = (Button) findViewById(R.id.sync_selected_button);
-        mValdocControler = new ValdocControler();
-        syncSelectedButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                syncTestData();
-            }
-        });
+        //Init Layout res
+        initRes();
 
+        //Common Object init
+        mValdocControler = new ValdocControler();
         mValdocDatabaseHandler = new ValdocDatabaseHandler(SyncSelectedDataActivity.this);
+        testDetailList = new ArrayList<TestDetails>();
         sharedpreferences = getSharedPreferences("valdoc", Context.MODE_PRIVATE);
         userName = sharedpreferences.getString("USERNAME", "");
-        testDetailList = new ArrayList<TestDetails>();
 
         if (getIntent().hasExtra("rows")) {
             rows = getIntent().getIntExtra("rows", 6);
@@ -69,6 +66,7 @@ public class SyncSelectedDataActivity extends AppCompatActivity implements HttpP
         }
         testType = getIntent().getStringExtra("TestType");
         Log.d(TAG, " Code TestType : " + testType);
+        table_header_tv.setText(testType);
 
         //Custom Action Bar
         ActionBar mActionBar = getSupportActionBar();
@@ -76,7 +74,6 @@ public class SyncSelectedDataActivity extends AppCompatActivity implements HttpP
             Utilityies.setCustomActionBar(SyncSelectedDataActivity.this, mActionBar, userName);
 
 
-        initRes();
         if (getTestDataByTestCode(testType).size() > 0) {
             BuildSyncDataTable(getTestDataByTestCode(testType).size() + 1, colos + 1);
         } else {
@@ -351,6 +348,8 @@ public class SyncSelectedDataActivity extends AppCompatActivity implements HttpP
     }
 
     private void initRes() {
+        table_header_tv = (TextView)findViewById(R.id.header_sunc_data);
+        syncSelectedButton = (Button) findViewById(R.id.sync_selected_button);
         table_layout1 = (TableLayout) findViewById(R.id.syncData_tableLayout1);
         table_layout2 = (TableLayout) findViewById(R.id.syncData_tableLayout2);
         table_layout3 = (TableLayout) findViewById(R.id.syncData_tableLayout3);
@@ -361,6 +360,13 @@ public class SyncSelectedDataActivity extends AppCompatActivity implements HttpP
         table_layout8 = (TableLayout) findViewById(R.id.syncData_tableLayout8);
         table_layout9 = (TableLayout) findViewById(R.id.syncData_tableLayout9);
         table_layout10 = (TableLayout) findViewById(R.id.syncData_tableLayout10);
+
+        syncSelectedButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                syncTestData();
+            }
+        });
 
     }
 
