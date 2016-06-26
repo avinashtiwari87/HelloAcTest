@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -913,7 +914,6 @@ public class CommonTestViewActivity extends AppCompatActivity {
     }
 
     private void initRes() {
-        findViewById(R.id.header4_linear_layout).setVisibility(View.GONE);
         findViewById(R.id.submit).setVisibility(View.GONE);
         findViewById(R.id.clear).setVisibility(View.GONE);
         //Test 1
@@ -921,6 +921,19 @@ public class CommonTestViewActivity extends AppCompatActivity {
         table_layout2 = (TableLayout) findViewById(R.id.tableLayout2);
         table_layout3 = (TableLayout) findViewById(R.id.tableLayout3);
         table_layout4 = (TableLayout) findViewById(R.id.tableLayout4);
+        table_layout4.setVisibility(View.GONE);
+        if (testType != null && (testType.contains("AV")||testType.contains("AF"))) {
+            findViewById(R.id.test_table_1_header_l_ll).setVisibility(View.GONE);
+            TextView TestHeader = (TextView) findViewById(R.id.common_header_tv);
+            TestHeader.setText("TEST RAW DATA EQUIPMENT (ERD_AV)\n(Average Air Flow Velocity Testing)");
+            findViewById(R.id.test_interference).setVisibility(View.GONE);
+            findViewById(R.id.test_note_tv).setVisibility(View.VISIBLE);
+            findViewById(R.id.test1_reading_header).setVisibility(View.VISIBLE);
+            findViewById(R.id.common_header_test1).setVisibility(View.GONE);
+        }
+
+
+
         //Test 2
         test2_table_layout = (TableLayout) findViewById(R.id.test2_tableLayout1);
         test2_table_layout2 = (TableLayout) findViewById(R.id.test2_tableLayout2);

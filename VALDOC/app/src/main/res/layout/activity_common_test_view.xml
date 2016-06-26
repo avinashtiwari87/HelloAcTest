@@ -17,22 +17,19 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <include layout="@layout/certificate" />
+        <include layout="@layout/new_common_certificate" />
 
         <include
             android:id="@+id/test1_table_ll"
-            layout="@layout/test_table_1"
-            android:visibility="gone" />
+            layout="@layout/test_table_1"/>
 
         <include
             android:id="@+id/test2_table_ll"
-            layout="@layout/test_table_2"
-            android:visibility="gone" />
+            layout="@layout/test_table_2" />
 
         <include
             android:id="@+id/test3_table_ll"
-            layout="@layout/test_table_3"
-            android:visibility="gone" />
+            layout="@layout/test_table_3"/>
 
         <include
             android:id="@+id/test4_table_ll"
