@@ -13,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputType;
+import android.text.Layout;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -207,6 +208,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         ActionBar mActionBar = getSupportActionBar();
         if (mActionBar != null)
             Utilityies.setCustomActionBar(DynamicTableActivity.this, mActionBar, userName);
+        createTableRowColum();
     }
 
 
@@ -667,12 +669,16 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         }
     };
 
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+    }
 
     @Override
     protected void onStart() {
         super.onStart();
         //removeView();
-        createTableRowColum();
+
         //setting the test 2 room volume
         if (roomVolumeTxtList != null && roomVolumeTxtList.size() > 0)
             if (TestCreateActivity.ACPHH.equals(testType)) {
@@ -687,12 +693,12 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
 
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-
-    }
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+//
+//
+//    }
 
     @Override
     public void onBackPressed() {
@@ -2516,7 +2522,8 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         test2_table_layout8 = (TableLayout) findViewById(R.id.test2_tableLayout8);
         test2_table_layout8.setVisibility(View.GONE);
         if (TestCreateActivity.ACPHAV.equalsIgnoreCase(testType)) {
-            findViewById(R.id.test2_dynamic_table_ll).setVisibility(View.VISIBLE);
+//            LinearLayout linearLayout=(LinearLayout)findViewById(R.id.test_table2);
+//            linearLayout.setVisibility(View.VISIBLE);
             TextView testHeaderAv = (TextView)findViewById(R.id.test_type_header_AVTest);
             testHeaderAv.setText(R.string.header_title1);
             findViewById(R.id.test2_reading_header).setVisibility(View.VISIBLE);

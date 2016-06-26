@@ -403,9 +403,10 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
     public static final String ROOMFILTER_SPECIFICATION = "specification";
     public static final String ROOMFILTER_WIDTH = "width";
     public static final String ROOMFILTER_LENGTH = "length";
-    //    public static final String ROOMFILTER_GRILLAREA = "grillArea";
+    public static final String ROOMFILTER_AREA = "area";
     public static final String ROOMFILTER_EFFECTIVEFILTERAREA = "effectiveFilterArea";
-    public static final String ROOMFILTER_ISSUPPLYFILTER = "isSupplyFilter";
+    public static final String ROOMFILTER_FILTERLOCATION = "filterLocation";
+    public static final String ROOMFILTER_ISSUPPLYFILTER = "supplyFilter";
     public static final String ROOMFILTER_LASTUPDATEDDATE = "lastUpdatedDate";
 
     // roomfilter table create statment
@@ -413,7 +414,8 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
             + "(" + ROOMFILTER_FILTERID + " INTEGER," + ROOMFILTER_FILTERTYPE + " TEXT,"
             + ROOMFILTER_EFFICIENCY + " REAL," + ROOMFILTER_FILTERCODE + " TEXT," + ROOMFILTER_PARTICLESIZE + " TEXT,"
             + ROOMFILTER_ROOMID + " INTEGER," + ROOMFILTER_SPECIFICATION + " REAL,"
-            + ROOMFILTER_WIDTH + " REAL," + ROOMFILTER_LENGTH + " REAL," + ROOMFILTER_EFFECTIVEFILTERAREA + " REAL," + ROOMFILTER_ISSUPPLYFILTER + " INTEGER,"
+            + ROOMFILTER_WIDTH + " REAL," + ROOMFILTER_LENGTH + " REAL," + ROOMFILTER_AREA + " REAL," + ROOMFILTER_EFFECTIVEFILTERAREA
+            + " REAL," + ROOMFILTER_FILTERLOCATION + " TEXT," + ROOMFILTER_ISSUPPLYFILTER + " INTEGER,"
             + ROOMFILTER_LASTUPDATEDDATE + " TEXT " + ")";
 //    + ROOMFILTER_GRILLAREA + " REAL,"
 //            + ROOMFILTER_EFFECTIVEGRILLAREA + " REAL,"
@@ -1521,7 +1523,9 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 contentValues.put(ROOMFILTER_SPECIFICATION, roomFilter.getSpecification());
                 contentValues.put(ROOMFILTER_WIDTH, roomFilter.getWidth());
                 contentValues.put(ROOMFILTER_LENGTH, roomFilter.getLength());
+                contentValues.put(ROOMFILTER_AREA, roomFilter.getArea());
                 contentValues.put(ROOMFILTER_EFFECTIVEFILTERAREA, roomFilter.getEffectiveFilterArea());
+                contentValues.put(ROOMFILTER_FILTERLOCATION, roomFilter.getFilterLocation());
                 contentValues.put(ROOMFILTER_ISSUPPLYFILTER, roomFilter.getIsSupplyFilter());
                 contentValues.put(ROOMFILTER_LASTUPDATEDDATE, roomFilter.getLastUpdatedDate());
 
@@ -2204,8 +2208,9 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 roomFilter.setSpecification(cursor.getDouble(6));
                 roomFilter.setWidth(cursor.getDouble(7));
                 roomFilter.setLength(cursor.getDouble(8));
-//                roomFilter.setGrillArea(cursor.getDouble(9));
-                roomFilter.setEffectiveFilterArea(cursor.getInt(9));
+                roomFilter.setArea(cursor.getDouble(9));
+                roomFilter.setEffectiveFilterArea(cursor.getDouble(9));
+                roomFilter.setFilterLocation(cursor.getString(9));
                 roomFilter.setIsSupplyFilter(cursor.getInt(10));
                 roomFilter.setLastUpdatedDate(cursor.getString(11));
                 filterArrayList.add(roomFilter);
