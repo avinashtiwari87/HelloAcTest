@@ -18,11 +18,28 @@ public class RoomFilter implements Serializable{
     private double specification;
     private double width;
     private double length;
-//    private double  area;
+    private double  area;
     private double effectiveFilterArea;
     private int isSupplyFilter;
-//    private String filterLocation;
+    private String filterLocation;
     private String lastUpdatedDate;
+
+
+    public double getArea() {
+        return area;
+    }
+
+    public void setArea(double area) {
+        this.area = area;
+    }
+
+    public String getFilterLocation() {
+        return filterLocation;
+    }
+
+    public void setFilterLocation(String filterLocation) {
+        this.filterLocation = filterLocation;
+    }
 
     public String getRoomfilter() {
         return roomfilter;

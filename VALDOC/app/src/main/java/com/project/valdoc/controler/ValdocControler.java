@@ -657,8 +657,8 @@ public class ValdocControler {
                 roomFilter.setSpecification(jsonObject.optDouble("specification"));
                 roomFilter.setWidth(jsonObject.optDouble("width"));
                 roomFilter.setLength(jsonObject.optDouble("length"));
-//                roomFilter.setGrillArea(jsonObject.optDouble("grillArea"));
-//                roomFilter.setEffectiveGrillArea(jsonObject.optDouble("effectiveGrillArea"));
+                roomFilter.setArea(jsonObject.optDouble("grillArea"));
+                roomFilter.setEffectiveFilterArea(jsonObject.optDouble("effectiveGrillArea"));
                 if (jsonObject.optBoolean("isSupplyFilter")) {
                     roomFilter.setIsSupplyFilter(1);
                 } else {

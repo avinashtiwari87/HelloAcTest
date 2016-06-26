@@ -335,8 +335,8 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
             //get area based on room area id
             String areaName = mValdocDatabaseHandler.getAreaByRoomAreaId("" + room.getAreaId());
             intent.putExtra("AREANAME", areaName);
-//            createApplicableTestRoomList(room.getRoomId(),ACPHAV);
-            createApplicableTestRoomList(room.getRoomId(),AV);
+            createApplicableTestRoomList(room.getRoomId(),ACPHAV);
+//            createApplicableTestRoomList(room.getRoomId(),A);
             Log.d("valdoc", "TestCreateActivity mApplicableTestRoom=" + mApplicableTestRoom.getLocation());
             intent.putExtra("ApplicableTestRoom", mApplicableTestRoom);
 
@@ -379,7 +379,7 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
         String areaName = mValdocDatabaseHandler.getAreaByRoomAreaId("" + room.getAreaId());
         Log.d("valdoc", "TestCreateActivity areaName=" + areaName);
         intent.putExtra("AREANAME", areaName);
-
+        createApplicableTestRoomList(room.getRoomId(),ACPHH);
         intent.putExtra("ApplicableTestRoom", mApplicableTestRoom);
 
         //get filter list from equipment filter
@@ -468,6 +468,7 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
             Log.d("valdoc", "TestCreateActivity areaName=" + areaName);
             intent.putExtra("AREANAME", areaName);
             createApplicableTestRoomList(room.getRoomId(),testType);
+            createApplicableTestRoomList(room.getRoomId(),FIT);
             intent.putExtra("ApplicableTestRoom", mApplicableTestRoom);
 
         }

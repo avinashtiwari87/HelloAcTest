@@ -747,15 +747,18 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
                 } else {
                     if (mTestBasedOn.equalsIgnoreCase("AHU")) {
                         double filterSize = 0.0f;
-                        if (!mAhuFilterArrayList.isEmpty())
+                        if (!mAhuFilterArrayList.isEmpty()) {
                             filterSize = mAhuFilterArrayList.get(i - 2).getEffectiveArea();
-                        row.addView(addTextView("" + filterSize));
+                            row.addView(addTextView("" + filterSize));
+                        }
 
                     } else if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
                         double filterSize = 0.0f;
-                        if (!mRoomFilterArrayList.isEmpty())
+                        if (!mRoomFilterArrayList.isEmpty()) {
                             filterSize = mRoomFilterArrayList.get(i - 2).getEffectiveFilterArea();
-                        row.addView(addTextView("" + filterSize));
+                            Log.d("rdacphav","filterSize="+filterSize);
+                            row.addView(addTextView("" + filterSize));
+                        }
                     }
                 }
             }
