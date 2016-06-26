@@ -1500,6 +1500,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
 
             }
             return true;
+
         } else {
             return false;
         }
@@ -1520,7 +1521,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 contentValues.put(ROOMFILTER_SPECIFICATION, roomFilter.getSpecification());
                 contentValues.put(ROOMFILTER_WIDTH, roomFilter.getWidth());
                 contentValues.put(ROOMFILTER_LENGTH, roomFilter.getLength());
-//                contentValues.put(ROOMFILTER_EFFECTIVEGRILLAREA, roomFilter.getEffectiveGrillArea());
+                contentValues.put(ROOMFILTER_EFFECTIVEFILTERAREA, roomFilter.getEffectiveFilterArea());
                 contentValues.put(ROOMFILTER_ISSUPPLYFILTER, roomFilter.getIsSupplyFilter());
                 contentValues.put(ROOMFILTER_LASTUPDATEDDATE, roomFilter.getLastUpdatedDate());
 
