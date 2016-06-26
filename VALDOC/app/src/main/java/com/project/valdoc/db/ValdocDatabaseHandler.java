@@ -2123,6 +2123,9 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 strings[0] = cursor.getString(cursor.getColumnIndex(ROOM_ROOMNO));
                 strings[1] = cursor.getString(cursor.getColumnIndex(ROOM_ROOMNAME));
                 strings[2] = cursor.getString(cursor.getColumnIndex(ROOM_AREAID));
+                strings[3] = cursor.getString(cursor.getColumnIndex(ROOM_ACPH));
+                strings[4] = cursor.getString(cursor.getColumnIndex(ROOM_VOLUME));
+                strings[5] = cursor.getString(cursor.getColumnIndex(ROOM_AHUID));
             } while (cursor.moveToNext());
         } // return contact list return wordList; }
         return strings;
@@ -2146,6 +2149,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 strings[2] = cursor.getString(cursor.getColumnIndex(ROOM_AREAID));
                 strings[3] = cursor.getString(cursor.getColumnIndex(ROOM_ACPH));
                 strings[4] = cursor.getString(cursor.getColumnIndex(ROOM_VOLUME));
+                strings[5] = cursor.getString(cursor.getColumnIndex(ROOM_AHUID));
 
             } while (cursor.moveToNext());
         } // return contact list return wordList; }

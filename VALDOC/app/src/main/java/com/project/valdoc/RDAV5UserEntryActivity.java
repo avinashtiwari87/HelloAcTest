@@ -133,6 +133,7 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
             mTestType = getIntent().getStringExtra("testType");
             Log.d(TAG, " TestType : " + mTestType);
         }
+
         mTestCode = getIntent().getStringExtra("testCode");
         getExtraFromTestCreateActivity(savedInstanceState);
         //text view initialization
@@ -403,7 +404,7 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
         testDetails.setCustomer(customerName.getText().toString());
         int newmonth = month + 1;
         testDetails.setDateOfTest("" + year + "-" + newmonth + "-" + day);
-        //testDetails.setRawDataNo(certificateNo.getText().toString());
+        testDetails.setRawDataNo(certificateNo.getText().toString());
         testDetails.setPartnerName("" + mPartnerName);
         testDetails.setTestName(TestCreateActivity.AV);
         if (loginUserType.equals("CLIENT")) {
