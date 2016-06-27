@@ -66,13 +66,7 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
     private String userName = "";
 
     //certificate view id creation
-    private TextView aerosolUsed;
-    private TextView aerosolGeneratorType;
-    private TextView aerosolUsedLable;
-    private TextView aerosolGeneratorTypeLable;
     private TextView instrumentUsed;
-    private TextView make;
-    private TextView model;
     private TextView instrumentSerialNo;
     private TextView calibrationOn;
     private TextView calibrationDueOn;
@@ -92,19 +86,18 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
     private TextView testWitness;
     private TextView dateTextView;
     private TextView customerName;
-    private TextView certificateNo;
+   // private TextView certificateNo;
     private TextView infarance;
+    private TextView TFRTxtv;
+    private TextView TFTAVTxtv;
 
-    private TextView instrumentNoTextView;
-    private TextView testerNameTextView;
     private TextView instrumentUsedTextView;
     private TextView testCunductedByTextView;
     private TextView roomNameLable;
     private TextView instrumentNoLable;
-    private TextView roomNameTest;
-    private TextView instrument_name;
 
     ArrayList<TextView> txtViewList;
+    ArrayList<TextView>avgTxtViewList;
     private ImageView submit;
     private ImageView clear;
     private ImageView cancel;
@@ -129,7 +122,10 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         pr = ProgressDialog.show(this, "Please Wait", "Loading...");
 
+        initRes();
+
         txtViewList = new ArrayList<TextView>();
+        avgTxtViewList = new ArrayList<TextView>();
         roomVolumeTxtList = new ArrayList<TextView>();
         totalAirFlowRateTxtList = new ArrayList<TextView>();
         airChangeTxtList = new ArrayList<TextView>();
@@ -149,7 +145,6 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
         //text view initialization
         initTextView();
         textViewValueAssignment();
-        initRes();
         datePicker();
 
         if (TestCreateActivity.ACPHH.equalsIgnoreCase(mTestType)) {
@@ -168,6 +163,10 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
         for (int i = 0; i < txtViewList.size(); i++) {
             TextView tvl = txtViewList.get(i);
             tvl.setText(supplyAirVelocity.get(tvl.getId()) + "");
+
+            //Average
+            TextView avgTvl = avgTxtViewList.get(i);
+            avgTvl.setText(supplyAirVelocity.get(tvl.getId()) + "");
         }
 
         //Total AirFlow Rate (sum of AirFlow Rate)
@@ -176,6 +175,7 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
             TextView mtvl = totalAirFlowRateTxtList.get(middleTxt);
             totalAirFlowRate=getIntent().getFloatExtra("totalAirFlowRate", 0f);
             mtvl.setText(totalAirFlowRate + "");
+            TFRTxtv.setText(totalAirFlowRate + "");
         }
 
         //AirFlow Change
@@ -188,6 +188,7 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
                 infarance.setText("The above Airflow Volume Test and Derived No.of Air chanages per hour do not meets the specificed requirement");
             }
             airChangeTxt.setText(airChangeValue + "");
+            TFTAVTxtv.setText("" + airChangeValue);
         }
         //Custom Action Bar
         ActionBar mActionBar = getSupportActionBar();
@@ -209,7 +210,7 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
 // Now formattedDate have current date/time
 //        Toast.makeText(this, formattedDate, Toast.LENGTH_SHORT).show();
         int mon = month + 1;
-        certificateNo.setText("HH/" + mon + "/" + year + "/" + formattedDate);
+       // certificateNo.setText("HH/" + mon + "/" + year + "/" + formattedDate);
 
         // Show current date
         String date = new StringBuilder().append(day).append("-").append(month + 1).append("-").append(year).append(" ").toString();
@@ -257,15 +258,11 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
     private void textViewValueAssignment() {
         if (loginUserType.equals("CLIENT")) {
             instrumentUsed.setText(clientInstrument.getcInstrumentName());
-            make.setText(clientInstrument.getMake());
-            model.setText(clientInstrument.getModel());
             instrumentSerialNo.setText(""+clientInstrument.getSerialNo());
             calibrationOn.setText(Utilityies.parseDateToddMMyyyy(clientInstrument.getLastCalibrated()));
             calibrationDueOn.setText(Utilityies.parseDateToddMMyyyy(clientInstrument.getCalibrationDueDate()));
         } else {
             instrumentUsed.setText(partnerInstrument.getpInstrumentName());
-            make.setText(partnerInstrument.getMake());
-            model.setText(partnerInstrument.getModel());
             instrumentSerialNo.setText(""+partnerInstrument.getpInstrumentId());
             calibrationOn.setText(Utilityies.parseDateToddMMyyyy(partnerInstrument.getLastCalibrationDate()));
             calibrationDueOn.setText(Utilityies.parseDateToddMMyyyy(partnerInstrument.getCalibrationDueDate()));
@@ -308,34 +305,20 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
 
     private void initTextView() {
         // layout data which is not in use
-        testerNameTextView.setVisibility(View.GONE);
-        instrumentUsedTextView = (TextView) findViewById(R.id.instrument_used);
-        instrumentUsedTextView.setVisibility(View.GONE);
-        testCunductedByTextView = (TextView) findViewById(R.id.testcunducted_by);
-        testCunductedByTextView.setVisibility(View.GONE);
+       // instrumentUsedTextView = (TextView) findViewById(R.id.instrument_used);
+       // instrumentUsedTextView.setVisibility(View.GONE);
+       // testCunductedByTextView = (TextView) findViewById(R.id.testcunducted_by);
+        //testCunductedByTextView.setVisibility(View.GONE);
 
-        roomNameLable= (TextView) findViewById(R.id.room_name_lable);
-        roomNameLable.setVisibility(View.GONE);
-        instrumentNoLable= (TextView) findViewById(R.id.instrument_no_lable);
-        instrumentNoLable.setVisibility(View.GONE);
-        instrument_name.setVisibility(View.GONE);
+       // roomNameLable= (TextView) findViewById(R.id.room_name_lable);
+        //roomNameLable.setVisibility(View.GONE);
+        //instrumentNoLable= (TextView) findViewById(R.id.instrument_no_lable);
+        //instrumentNoLable.setVisibility(View.GONE);
         dateTextView = (TextView) findViewById(R.id.datetextview);
         customerName = (TextView) findViewById(R.id.customer_name);
-        certificateNo = (TextView) findViewById(R.id.certificate_no);
+        //certificateNo = (TextView) findViewById(R.id.certificate_no);
         instrumentUsed = (TextView) findViewById(R.id.instrumentused);
 
-        //hiding extra field
-        aerosolUsedLable = (TextView) findViewById(R.id.aerosol_used_lable);
-        aerosolUsedLable.setVisibility(View.GONE);
-        aerosolGeneratorTypeLable = (TextView) findViewById(R.id.aerosol_generator_type_lable);
-        aerosolGeneratorTypeLable.setVisibility(View.GONE);
-        aerosolUsed = (TextView) findViewById(R.id.aerosol_used);
-        aerosolUsed.setVisibility(View.GONE);
-        aerosolGeneratorType = (TextView) findViewById(R.id.aerosol_generator_type);
-        aerosolGeneratorType.setVisibility(View.GONE);
-
-        make = (TextView) findViewById(R.id.make);
-        model = (TextView) findViewById(R.id.modle);
         instrumentSerialNo = (TextView) findViewById(R.id.instrumentserialno);
         calibrationOn = (TextView) findViewById(R.id.calibratedon);
         calibrationDueOn = (TextView) findViewById(R.id.calibrationdueon);
@@ -457,7 +440,7 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
         testDetails.setCustomer(customerName.getText().toString());
         String date = year+"-"+(month + 1)+"-"+day+" ";
         testDetails.setDateOfTest(""+date);
-        testDetails.setRawDataNo(certificateNo.getText().toString());
+       // testDetails.setRawDataNo(certificateNo.getText().toString());
         testDetails.setPartnerName("" + mPartnerName);
         testDetails.setTestName(TestCreateActivity.ACPHH);
         if (loginUserType.equals("CLIENT")) {
@@ -574,7 +557,7 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
-                    row.addView(addTextView(" Measured Supply Air\n Velocity in cfm (in cfm) "));
+                    row.addView(addTextView("Measured Air Flow Quantity\n Q1 (in cfm) "));
                 } else {
                     //row.addView(addTextView(" "));
                     row.addView(addInputDataTextView());
@@ -592,10 +575,11 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
-                    row.addView(addTextView(" Total Air Flow Rate\n in cfm (TFR)"));
+                    row.addView(addTextView("Air Flow Rate\n(Average) cfm "));
                 } else {
                     //row.addView(addTextViewWithoutBorder("0"));
-                    row.addView(addTextViewWithIdsNoBorder(i, totalAirFlowRateIds, totalAirFlowRateTxtList));
+                    //row.addView(addTextViewWithIdsNoBorder(i, totalAirFlowRateIds, totalAirFlowRateTxtList));
+                    row.addView(addAverageInputDataTextView());
                 }
             }
             test3_table_layout3.addView(row);
@@ -681,6 +665,25 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
         return tv;
     }
 
+    int idAvgtv = 600;
+    private TextView addAverageInputDataTextView() {
+        TextView tv = new TextView(this);
+        tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+                TableRow.LayoutParams.WRAP_CONTENT));
+        tv.setBackgroundResource(R.drawable.border1);
+        //tv.setPadding(5, 5, 5, 5);
+        tv.setTextColor(getResources().getColor(R.color.black));
+        tv.setTextSize(getResources().getDimension(R.dimen.normal_text_size));
+        //tv.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD);
+        tv.setId(idAvgtv);
+        tv.setSingleLine(false);
+        tv.setMaxLines(3);
+        tv.setEllipsize(TextUtils.TruncateAt.END);
+        idAvgtv++;
+        avgTxtViewList.add(tv);
+        return tv;
+    }
+
     private TextView addTextViewWithIdsNoBorder(int Tag, int ids, ArrayList<TextView> txtViewList) {
         TextView tv = new TextView(this);
         tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
@@ -709,8 +712,17 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
         test3_table_layout2 = (TableLayout) findViewById(R.id.test3_tableLayout2);
         test3_table_layout3 = (TableLayout) findViewById(R.id.test3_tableLayout3);
         test3_table_layout4 = (TableLayout) findViewById(R.id.test3_tableLayout4);
+        test3_table_layout4.setVisibility(View.GONE);
         test3_table_layout5 = (TableLayout) findViewById(R.id.test3_tableLayout5);
+        test3_table_layout5.setVisibility(View.GONE);
+        TFRTxtv = (TextView)findViewById(R.id.acph_h_tfr_value_tv);
+        TFTAVTxtv = (TextView)findViewById(R.id.acph_h_tfrby_av_value_tv);
         findViewById(R.id.test_table_3_header_l_ll).setVisibility(View.GONE);
-        findViewById(R.id.test_table_3_header_2_ll).setVisibility(View.GONE);
+        findViewById(R.id.test_table_3_header_2_ll).setVisibility(View.VISIBLE);
+        findViewById(R.id.test_interference).setVisibility(View.GONE);
+        findViewById(R.id.test_note_tv).setVisibility(View.VISIBLE);
+        findViewById(R.id.acph_h_final_calc_ll).setVisibility(View.VISIBLE);
+        TextView TestHeader = (TextView)findViewById(R.id.common_header_tv);
+        TestHeader.setText("TEST RAW DATA (ACPH_H)\n(Air Flow Velocity, Volume Testing and Determination of Air Changes per Hour Rates)");
     }
 }
