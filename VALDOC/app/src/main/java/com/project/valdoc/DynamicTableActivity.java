@@ -504,7 +504,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
 
             test_value1.setText("" + room.getRoomName());
             test_value4.setText("" + room.getRoomNo());
-            test_value9.setText("" + mApplicableTestRoom.getOccupencyState());
+//            test_value9.setText("" + mApplicableTestRoom.getOccupencyState());
             datePicker();
         } else if (TestCreateActivity.FIT.equalsIgnoreCase(testType)) {
          if (TestBasedOn.equalsIgnoreCase("EQUIPMENT")) {
@@ -1467,7 +1467,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
-                    row.addView(addTextView(" Measured Supply Air\n Velocity in cfm (in cfm) "));
+                    row.addView(addTextView("Measured Airflow Qty\n(in cfm) "));
                 } else {
                     row.addView(addEditTextView(i));
                 }
@@ -2533,20 +2533,16 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         test3_table_layout = (TableLayout) findViewById(R.id.test3_tableLayout1);
         test3_table_layout2 = (TableLayout) findViewById(R.id.test3_tableLayout2);
         test3_table_layout3 = (TableLayout) findViewById(R.id.test3_tableLayout3);
+        test3_table_layout3.setVisibility(View.GONE);
         test3_table_layout4 = (TableLayout) findViewById(R.id.test3_tableLayout4);
+        test3_table_layout4.setVisibility(View.GONE);
         test3_table_layout5 = (TableLayout) findViewById(R.id.test3_tableLayout5);
-
+        test3_table_layout5.setVisibility(View.GONE);
         if (TestCreateActivity.ACPHH.equalsIgnoreCase(testType)) {
-            roomName.setText("" + room.getRoomName());
-            testerName.setText(userName);
-            if (loginUserType.equals("CLIENT")) {
-                instrumentName.setText(clientInstrument.getcInstrumentName());
-                instrumentNo.setText("" + clientInstrument.getSerialNo());
-            } else {
-                instrumentName.setText(partnerInstrument.getpInstrumentName());
-                instrumentNo.setText("" + partnerInstrument.getSerialNo());
-            }
+            TextView testHeaderAv = (TextView)findViewById(R.id.test_type_header_AVTest);
+            testHeaderAv.setText("FORM: TEST RAW DATA (RD_ACPH_H)\n(Air Flow Velocity, Volume Testing and Determination of Air Changes per Hour Rates)");
             findViewById(R.id.test3_dynamic_table_ll).setVisibility(View.VISIBLE);
+
         }
 
         //Test4
