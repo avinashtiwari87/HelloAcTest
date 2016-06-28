@@ -201,8 +201,8 @@ public class CommonTestViewActivity extends AppCompatActivity {
         testRefrance.setText(""+mTestDetails.getTestReference());
         infarance.setText("");
         testCundoctor.setText(""+mTestDetails.getTesterName());
-        testCondoctorOrg.setText("");
-        testWitnessOrg.setText("");
+        testCondoctorOrg.setText(""+mTestDetails.getTestCondoctorOrg());
+        testWitnessOrg.setText(""+mTestDetails.getTestWitnessOrg());
         testWitness.setText(""+mTestDetails.getWitnessName());
     }
 

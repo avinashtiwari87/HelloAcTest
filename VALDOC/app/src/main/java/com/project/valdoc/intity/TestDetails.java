@@ -1,5 +1,7 @@
 package com.project.valdoc.intity;
 
+import android.widget.TextView;
+
 import java.security.PrivateKey;
 
 /**
@@ -36,7 +38,9 @@ public class TestDetails {
     private String AerosolUsed;
     private String AerosolGeneratorType;
     private String testCode;
-
+    private String roomVolume;
+    private String testWitnessOrg;
+    private String testCondoctorOrg;
     public String getTest_details() {
         return test_details;
     }
@@ -275,5 +279,29 @@ public class TestDetails {
 
     public void setTestCode(String testCode) {
         this.testCode = testCode;
+    }
+
+    public String getRoomVolume() {
+        return roomVolume;
+    }
+
+    public void setRoomVolume(String roomVolume) {
+        this.roomVolume = roomVolume;
+    }
+
+    public String getTestWitnessOrg() {
+        return testWitnessOrg;
+    }
+
+    public void setTestWitnessOrg(String testWitnessOrg) {
+        this.testWitnessOrg = testWitnessOrg;
+    }
+
+    public String getTestCondoctorOrg() {
+        return testCondoctorOrg;
+    }
+
+    public void setTestCondoctorOrg(String testCondoctorOrg) {
+        this.testCondoctorOrg = testCondoctorOrg;
     }
 }

@@ -183,6 +183,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
         for (Map.Entry m : userEnterdValue.entrySet()) {
             Log.v(TAG, m.getKey() + " " + m.getValue());
         }
+
         Log.v(TAG, " txtViewList size: " + txtViewList.size());
         for (int i = 0; i < txtViewList.size(); i++) {
             TextView tvl = txtViewList.get(i);
@@ -204,6 +205,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
         totalAirFlowRateMap = (HashMap<Integer, Float>) getIntent().getSerializableExtra("ResultData2");
         for (int i = 0; i < airFlowRateTxtViewList.size(); i++) {
             TextView tvl = airFlowRateTxtViewList.get(i);
+            Log.v(TAG, " totalAirFlowRateMap: " + tvl.getId());
             tvl.setText(totalAirFlowRateMap.get(tvl.getId()) + "");
         }
         //Total AirFlow Rate (sum of AirFlow Rate)
@@ -345,8 +347,6 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
         if (null != witnessThird && witnessThird.length() > 0)
             witness.append("," + witnessThird);
         testWitness.setText(witness);
-
-
     }
 
     private void initTextView() {
@@ -480,6 +480,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
     private ArrayList<TestReading> testReading() {
         ArrayList<TestReading> testReadingArrayList = new ArrayList<TestReading>();
         int index = 0;
+        int avindex = 300;
         int hasMapKey = 200;
         if (mTestBasedOn.equalsIgnoreCase("AHU")) {
             for (AhuFilter ahuFilter : mAhuFilterArrayList) {
@@ -502,8 +503,9 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
                         }
                     }
                 }
-                grilList.append("" + ahuFilter.getEffectiveArea()).append(',').append(sb).append(",").append(airFlowRateMap.get(index + 1)).append(",").append(totalAirFlowRateMap.get(index + 1));
+                grilList.append("" + ahuFilter.getEffectiveArea()).append(',').append(sb).append(",").append(airFlowRateMap.get(index + 1)).append(",").append(totalAirFlowRateMap.get(avindex));
                 index++;
+                avindex++;
                 testReading.setValue(grilList.toString());
                 testReadingArrayList.add(testReading);
             }
@@ -527,8 +529,9 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
                         }
                     }
                 }
-                grilList.append("" + roomFilter.getEffectiveFilterArea()).append(',').append(sb).append(",").append(airFlowRateMap.get(index + 1)).append(",").append(totalAirFlowRateMap.get(index + 1));
+                grilList.append("" + roomFilter.getEffectiveFilterArea()).append(',').append(sb).append(",").append(airFlowRateMap.get(index + 1)).append(",").append(totalAirFlowRateMap.get(avindex));
                 index++;
+                avindex++;
                 testReading.setValue(grilList.toString());
                 testReadingArrayList.add(testReading);
             }
@@ -543,8 +546,18 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
 //        TO DO: need to make it dynamic
         testDetails.setTest_detail_id(testDetailsId);
         testDetails.setCustomer(customerName.getText().toString());
-        String date = year + "-" + (month + 1) + "-" + (day) + " ";
-        testDetails.setDateOfTest(date);
+//        StringBuilder sb = new StringBuilder();
+//        sb.append("");
+//        sb.append(String.valueOf(year));
+//        sb.append("-");
+//        sb.append(String.valueOf(month + 1));
+//        sb.append("-");
+//        sb.append(String.valueOf(day));
+//        String strI = sb.toString();
+        String date = new StringBuilder().append(day).append("-").append(month + 1).append("-").append(year).append(" ").toString();
+//        String date = String.valueOf(year) + "-" + (String.valueOf(month + 1)) + "-" + (String.valueOf(day)) + " ";
+        testDetails.setDateOfTest(new String(new StringBuilder().append(day).append("-").append(month + 1).append("-").append(year).append(" ").toString()));
+//        testDetails.setDateOfTest();
         testDetails.setRawDataNo(certificateNo.getText().toString());
         testDetails.setPartnerName("" + mPartnerName);
         testDetails.setTestName(mTestCode);
@@ -585,6 +598,11 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
         testDetails.setWitnessName("" + witness);
         testDetails.setEquipmentName("");
         testDetails.setEquipmentNo("");
+
+        testDetails.setSamplingFlowRate("");
+        testDetails.setSamplingTime("");
+        testDetails.setAerosolGeneratorType("");
+        testDetails.setAerosolUsed("");
         return testDetails;
     }
 
@@ -743,7 +761,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
                         double filterSize = 0.0f;
                         if (!mRoomFilterArrayList.isEmpty()) {
                             filterSize = mRoomFilterArrayList.get(i - 2).getEffectiveFilterArea();
-                            Log.d("rdacphav","filterSize="+filterSize);
+                            Log.d("rdacphav", "filterSize=" + filterSize);
                             row.addView(addTextView("" + filterSize));
                         }
                     }
@@ -1001,8 +1019,8 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
         test2_table_layout7.setVisibility(View.GONE);
         test2_table_layout8 = (TableLayout) findViewById(R.id.test2_tableLayout8);
         test2_table_layout8.setVisibility(View.GONE);
-        TFRTxtv = (TextView)findViewById(R.id.acph_av_tfr_value_tv);
-        TFTAVTxtv = (TextView)findViewById(R.id.acph_av_tfrby_av_value_tv);
+        TFRTxtv = (TextView) findViewById(R.id.acph_av_tfr_value_tv);
+        TFTAVTxtv = (TextView) findViewById(R.id.acph_av_tfrby_av_value_tv);
         //Hide view coming form test tabl 1
         test_table_1_header_l = (LinearLayout) findViewById(R.id.test_table_2_header_l_ll);
         test_table_1_header_2 = (LinearLayout) findViewById(R.id.test_table_2_header_2_ll);
@@ -1011,7 +1029,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
         findViewById(R.id.test_interference).setVisibility(View.GONE);
         findViewById(R.id.test_note_tv).setVisibility(View.VISIBLE);
         findViewById(R.id.acph_av_final_calc_ll).setVisibility(View.VISIBLE);
-        TextView TestHeader = (TextView)findViewById(R.id.common_header_tv);
+        TextView TestHeader = (TextView) findViewById(R.id.common_header_tv);
         TestHeader.setText("TEST RAW DATA (RD_ACPH_AV)\n(Air Flow Velocity, Volume Testing and Determination of Air Changes per Hour Rates)");
     }
 }
