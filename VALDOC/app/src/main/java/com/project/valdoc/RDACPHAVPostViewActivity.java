@@ -128,6 +128,7 @@ public class RDACPHAVPostViewActivity extends AppCompatActivity {
     private ArrayList<TestSpesificationValue> testSpesificationValueArrayList;
     private TestDetails mTestDetails;
     String spiltValue[] = null;
+
     //    @Override
 //    protected void onCreate(Bundle savedInstanceState) {
 //        super.onCreate(savedInstanceState);
@@ -153,12 +154,12 @@ public class RDACPHAVPostViewActivity extends AppCompatActivity {
 
         //text view initialization
         initTextView();
-
+        mTestType = getIntent().getStringExtra("TestType");
         testDetailId = getIntent().getIntExtra("testDetailId", 1);
         testReadingArrayList = mValdocDatabaseHandler.getTestReadingDataById(testDetailId + "");
         mTestDetails = mValdocDatabaseHandler.getTestDetailById(testDetailId);
         testSpesificationValueArrayList = mValdocDatabaseHandler.getTestSpecificationValueById(testDetailId + "");
-        spiltValue =testReadingArrayList.get(0).getValue().split(",");
+        spiltValue = testReadingArrayList.get(0).getValue().split(",");
 //        for (int i = 0; i <spiltValue.length-2; i++) {
 //            txtViewList.get(textId).setText(""+spiltValue[i]);
 //            Log.d(TAG, "CodeFlow : InnerForLoop I: " + i+" textId "+textId);
@@ -168,8 +169,8 @@ public class RDACPHAVPostViewActivity extends AppCompatActivity {
         textViewValueAssignment();
         initRes();
 //        datePicker();
-        if (TestCreateActivity.ACPHAV.equalsIgnoreCase(mTestType)) {
-            BuildTableTest2(testReadingArrayList.size()+1, spiltValue.length-3);
+        if (mTestType.contains(TestCreateActivity.ACPHAV)) {
+            BuildTableTest2(testReadingArrayList.size() + 1, spiltValue.length - 3);
         }
 
         //Custom Action Bar
@@ -180,7 +181,7 @@ public class RDACPHAVPostViewActivity extends AppCompatActivity {
 
 
     private void textViewValueAssignment() {
-        dateTextView.setText(""+mTestDetails.getDateOfTest());
+        dateTextView.setText("" + mTestDetails.getDateOfTest());
         instrumentUsed.setText(mTestDetails.getInstrumentUsed());
 //            make.setText(clientInstrument.getMake());
         instrumentSerialNo.setText("" + mTestDetails.getInstrumentNo());
@@ -199,7 +200,7 @@ public class RDACPHAVPostViewActivity extends AppCompatActivity {
         testCondoctorOrg.setText(mTestDetails.getTestCondoctorOrg());
         testWitnessOrg.setText(mTestDetails.getTestWitnessOrg());
         testWitness.setText(mTestDetails.getWitnessName());
-        certificateNo.setText(""+mTestDetails.getRawDataNo());
+        certificateNo.setText("" + mTestDetails.getRawDataNo());
     }
 
     private void initTextView() {
@@ -264,13 +265,13 @@ public class RDACPHAVPostViewActivity extends AppCompatActivity {
                     row.addView(addTextView(" Grille / Filter ID\n "));
                 } else {
 //                    if (mTestBasedOn.equalsIgnoreCase("AHU")) {
-                        if (null != testReadingArrayList && testReadingArrayList.size() > 0) {
+                    if (null != testReadingArrayList && testReadingArrayList.size() > 0) {
 //                            HashMap<String, String> grill = (HashMap<String, String>) grillAndSizeFromGrill.get(i - 2);
 //                            Log.d("valdoc", "DynamicTableActivity grillAndSizeFromGrill=" + grillAndSizeFromGrill.size() + "i=" + i);
-                            row.addView(addTextView(testReadingArrayList.get(i - 2).getEntityName()));
-                        } else {
-                            row.addView(addTextView("grillAndSizeFromGrill"));
-                        }
+                        row.addView(addTextView(testReadingArrayList.get(i - 2).getEntityName()));
+                    } else {
+                        row.addView(addTextView("grillAndSizeFromGrill"));
+                    }
 //                    } else if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
 //                        if (null != mRoomFilterArrayList && mRoomFilterArrayList.size() > 0) {
 ////                            HashMap<String, String> grill = (HashMap<String, String>) grillAndSizeFromGrill.get(i - 2);
@@ -299,7 +300,10 @@ public class RDACPHAVPostViewActivity extends AppCompatActivity {
         //Second section
         // outer for loop
         for (int i = 1; i <= rows; i++) {
-            String [] spiltValue1 =testReadingArrayList.get(i-1).getValue().split(",");
+//            String[] spiltValue1
+//            if (i < rows){
+
+//        }
             TableRow row = new TableRow(this);
             row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
                     TableRow.LayoutParams.WRAP_CONTENT));
@@ -310,10 +314,11 @@ public class RDACPHAVPostViewActivity extends AppCompatActivity {
                 } else {
 //                    if (mTestBasedOn.equalsIgnoreCase("AHU")) {
 //                        double filterSize = 0.0f;
-                    int index=i-2;
-                        if (spiltValue1.length<=index) {
-                            row.addView(addTextView("" + spiltValue1[index]));
-                        }
+                    int index = i - 2;
+                    String[] spiltValue1 = testReadingArrayList.get(index).getValue().split(",");
+//                    if (spiltValue1.length <= index) {
+                        row.addView(addTextView("" + spiltValue1[index]));
+//                    }
 //
 //                    } else if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
 //                        double filterSize = 0.0f;
@@ -332,7 +337,9 @@ public class RDACPHAVPostViewActivity extends AppCompatActivity {
         //Third section
         // outer for loop
         for (int i = 1; i <= rows; i++) {
-            String [] spiltValue2 =testReadingArrayList.get(i-1).getValue().split(",");
+            String[] spiltValue2 = null;
+            if (i > 1)
+                spiltValue2 = testReadingArrayList.get(i - 2).getValue().split(",");
             TableRow row = new TableRow(this);
             row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
                     TableRow.LayoutParams.WRAP_CONTENT));
@@ -343,6 +350,7 @@ public class RDACPHAVPostViewActivity extends AppCompatActivity {
                     row.addView(addTextView(" V " + j + "\n "));
                 } else {
                     //row.addView(addEditTextView());
+
                     row.addView(addTextView(spiltValue2[j]));
                 }
             }
@@ -351,8 +359,12 @@ public class RDACPHAVPostViewActivity extends AppCompatActivity {
         //Fourth section
         // outer for loop
         for (int i = 1; i <= rows; i++) {
-          String [] spiltValue3 =testReadingArrayList.get(i-1).getValue().split(",");
-            int length=spiltValue3.length;
+            String[] spiltValue3 = null;
+            int length = 0;
+            if (i > 1) {
+                spiltValue3 = testReadingArrayList.get(i - 2).getValue().split(",");
+                length = spiltValue3.length;
+            }
             TableRow row = new TableRow(this);
             row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
                     TableRow.LayoutParams.WRAP_CONTENT));
@@ -362,7 +374,7 @@ public class RDACPHAVPostViewActivity extends AppCompatActivity {
                     row.addView(addTextView(" Avg Velocity in\n fpm(AV)"));
                 } else {
                     //result data  set
-                    row.addView(addTextView(spiltValue3[length-2]));
+                    row.addView(addTextView(spiltValue3[length - 2]));
                 }
             }
             test2_table_layout4.addView(row);
@@ -371,8 +383,12 @@ public class RDACPHAVPostViewActivity extends AppCompatActivity {
         //Fifth section
         // outer for loop
         for (int i = 1; i <= rows; i++) {
-            String [] spiltValue3 =testReadingArrayList.get(i-1).getValue().split(",");
-            int length=spiltValue3.length;
+            String[] spiltValue4 = null;
+            int length = 0;
+            if (i > 1) {
+                spiltValue4 = testReadingArrayList.get(i - 2).getValue().split(",");
+                length = spiltValue4.length;
+            }
             TableRow row = new TableRow(this);
             row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
                     TableRow.LayoutParams.WRAP_CONTENT));
@@ -382,7 +398,7 @@ public class RDACPHAVPostViewActivity extends AppCompatActivity {
                     row.addView(addTextView(" Air Flow Rate\n in cfm(AxAv)"));
                 } else {
                     //row.addView(addTextView("490"));
-                    row.addView(addTextView(spiltValue3[length-1]));
+                    row.addView(addTextView(spiltValue4[length - 1]));
                     airFlowRateIds++;
                 }
             }

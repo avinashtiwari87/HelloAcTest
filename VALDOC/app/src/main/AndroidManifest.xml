@@ -77,7 +77,9 @@
         <activity
             android:name=".CommonTestViewActivity"
             android:screenOrientation="landscape" />
-        <activity android:name=".RDACPHAVPostViewActivity"></activity>
+        <activity
+            android:name=".RDACPHAVPostViewActivity"
+            android:screenOrientation="landscape"></activity>
     </application>
 
 </manifest>
