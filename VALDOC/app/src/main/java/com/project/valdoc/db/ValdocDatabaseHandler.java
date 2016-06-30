@@ -578,6 +578,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
     public static final String TEST_DETAILS_ROOMVOLUME = "roomVolume";
     public static final String TEST_DETAILS_TESTWITNESSORG = "testWitnessOrg";
     public static final String TEST_DETAILS_TESTCONDOCTORORG = "testCondoctorOrg";
+    public static final String TEST_DETAILS_TESTITEM = "testItem";
 
     // test details table create statment
     private static final String CREATE_TABLE_TESTDETAILS = "CREATE TABLE " + TEST_DETAILS_TABLE_NAME
@@ -591,7 +592,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
             + TEST_DETAILS_TESTERNAME + " TEXT," + TEST_DETAILS_WITNESSNAME + " TEXT," + TEST_DETAILS_PARTNERNAME + " TEXT,"
             + TEST_DETAILS_SAMPLINGFLOWRATE + " TEXT," + TEST_DETAILS_SAMPLINGTIME + " TEXT," + TEST_DETAILS_AEROSOLUSED
             + " TEXT," + TEST_DETAILS_AEROSOLGENERATORTYPE + " TEXT," + TEST_DETAILS_TESTCODE + " TEXT," + TEST_DETAILS_ROOMVOLUME
-            + " TEXT," + TEST_DETAILS_TESTWITNESSORG + " TEXT," + TEST_DETAILS_TESTCONDOCTORORG + " TEXT" + ")";
+            + " TEXT," + TEST_DETAILS_TESTWITNESSORG + " TEXT," + TEST_DETAILS_TESTCONDOCTORORG + " TEXT,"+TEST_DETAILS_TESTITEM+" TEXT" + ")";
 
 
     //test spesification table details
@@ -1074,6 +1075,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
         contentValues.put(TEST_DETAILS_ROOMVOLUME, testDetails.getRoomVolume());
         contentValues.put(TEST_DETAILS_TESTWITNESSORG, testDetails.getTestWitnessOrg());
         contentValues.put(TEST_DETAILS_TESTCONDOCTORORG, testDetails.getTestCondoctorOrg());
+        contentValues.put(TEST_DETAILS_TESTITEM,testDetails.getTestItem());
 
         db.insert(tableName, null, contentValues);
 //            }
@@ -2014,6 +2016,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                     jsonObject.put(TEST_DETAILS_ROOMVOLUME, cursor.getString(29).toString());
                     jsonObject.put(TEST_DETAILS_TESTWITNESSORG, cursor.getString(30).toString());
                     jsonObject.put(TEST_DETAILS_TESTCONDOCTORORG, cursor.getString(31).toString());
+                    jsonObject.put(TEST_DETAILS_TESTITEM,cursor.getString(32).toString());
 
                     Log.d("testDetailsIdList", "getCertificateData test details=" + jsonObject.toString());
                     testDetailsJsonArray.put(jsonObject);
@@ -2458,6 +2461,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 TestDetails.setRoomVolume(cursor.getString(29).toString());
                 TestDetails.setTestWitnessOrg(cursor.getString(30).toString());
                 TestDetails.setTestCondoctorOrg(cursor.getString(31).toString());
+                TestDetails.setTestItem(cursor.getString(32).toString());
 //                testDetailList.add(TestDetails);
             } while (cursor.moveToNext());
         }
@@ -2515,6 +2519,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 TestDetails.setRoomVolume(cursor.getString(29).toString());
                 TestDetails.setTestWitnessOrg(cursor.getString(30).toString());
                 TestDetails.setTestCondoctorOrg(cursor.getString(31).toString());
+                TestDetails.setTestItem(cursor.getString(32).toString());
                 testDetailList.add(TestDetails);
             } while (cursor.moveToNext());
         }

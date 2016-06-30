@@ -41,6 +41,7 @@ public class TestDetails {
     private String roomVolume;
     private String testWitnessOrg;
     private String testCondoctorOrg;
+    private String testItem;
     public String getTest_details() {
         return test_details;
     }
@@ -303,5 +304,13 @@ public class TestDetails {
 
     public void setTestCondoctorOrg(String testCondoctorOrg) {
         this.testCondoctorOrg = testCondoctorOrg;
+    }
+
+    public String getTestItem() {
+        return testItem;
+    }
+
+    public void setTestItem(String testItem) {
+        this.testItem = testItem;
     }
 }
