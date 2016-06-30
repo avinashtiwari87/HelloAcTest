@@ -575,6 +575,9 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
     public static final String TEST_DETAILS_AEROSOLUSED = "aerosolUsed";
     public static final String TEST_DETAILS_AEROSOLGENERATORTYPE = "aerosolGeneratorType";
     public static final String TEST_DETAILS_TESTCODE = "testCode";
+    public static final String TEST_DETAILS_ROOMVOLUME = "roomVolume";
+    public static final String TEST_DETAILS_TESTWITNESSORG = "testWitnessOrg";
+    public static final String TEST_DETAILS_TESTCONDOCTORORG = "testCondoctorOrg";
 
     // test details table create statment
     private static final String CREATE_TABLE_TESTDETAILS = "CREATE TABLE " + TEST_DETAILS_TABLE_NAME
@@ -587,7 +590,8 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
             + TEST_DETAILS_ROOMNAME + " TEXT," + TEST_DETAILS_EQUIPMENTNO + " TEXT," + TEST_DETAILS_EQUIPMENTNAME + " TEXT,"
             + TEST_DETAILS_TESTERNAME + " TEXT," + TEST_DETAILS_WITNESSNAME + " TEXT," + TEST_DETAILS_PARTNERNAME + " TEXT,"
             + TEST_DETAILS_SAMPLINGFLOWRATE + " TEXT," + TEST_DETAILS_SAMPLINGTIME + " TEXT," + TEST_DETAILS_AEROSOLUSED
-            + " TEXT," + TEST_DETAILS_AEROSOLGENERATORTYPE + " TEXT," + TEST_DETAILS_TESTCODE + " TEXT" + ")";
+            + " TEXT," + TEST_DETAILS_AEROSOLGENERATORTYPE + " TEXT," + TEST_DETAILS_TESTCODE + " TEXT," + TEST_DETAILS_ROOMVOLUME
+            + " TEXT," + TEST_DETAILS_TESTWITNESSORG + " TEXT," + TEST_DETAILS_TESTCONDOCTORORG + " TEXT" + ")";
 
 
     //test spesification table details
@@ -1066,6 +1070,10 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
         contentValues.put(TEST_DETAILS_AEROSOLGENERATORTYPE, testDetails.getAerosolGeneratorType());
         contentValues.put(TEST_DETAILS_AEROSOLUSED, testDetails.getAerosolUsed());
         contentValues.put(TEST_DETAILS_TESTCODE, testDetails.getTestCode());
+
+        contentValues.put(TEST_DETAILS_ROOMVOLUME, testDetails.getRoomVolume());
+        contentValues.put(TEST_DETAILS_TESTWITNESSORG, testDetails.getTestWitnessOrg());
+        contentValues.put(TEST_DETAILS_TESTCONDOCTORORG, testDetails.getTestCondoctorOrg());
 
         db.insert(tableName, null, contentValues);
 //            }
@@ -2002,6 +2010,11 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                     jsonObject.put(TEST_DETAILS_AEROSOLGENERATORTYPE, cursor.getString(26).toString());
                     jsonObject.put(TEST_DETAILS_AEROSOLUSED, cursor.getString(27).toString());
                     jsonObject.put(TEST_DETAILS_TESTCODE, cursor.getString(28).toString());
+
+                    jsonObject.put(TEST_DETAILS_ROOMVOLUME, cursor.getString(29).toString());
+                    jsonObject.put(TEST_DETAILS_TESTWITNESSORG, cursor.getString(30).toString());
+                    jsonObject.put(TEST_DETAILS_TESTCONDOCTORORG, cursor.getString(31).toString());
+
                     Log.d("testDetailsIdList", "getCertificateData test details=" + jsonObject.toString());
                     testDetailsJsonArray.put(jsonObject);
                 } catch (Exception e) {
@@ -2402,7 +2415,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
 //        ArrayList<TestDetails> testDetailList = new ArrayList<TestDetails>();
         TestDetails TestDetails = new TestDetails();
         String selectQuery = "SELECT * FROM " + TEST_DETAILS_TABLE_NAME +
-                " WHERE " + ValdocDatabaseHandler.TEST_DETAILS_TEST_DETAIL_ID + " = "+ id;
+                " WHERE " + ValdocDatabaseHandler.TEST_DETAILS_TEST_DETAIL_ID + " = " + id;
 
         SQLiteDatabase database = this.getWritableDatabase();
         Cursor cursor = database.rawQuery(selectQuery, null);
@@ -2442,7 +2455,9 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 TestDetails.setAerosolUsed(cursor.getString(26));//TEST_DETAILS_AEROSOLUSED
                 TestDetails.setAerosolGeneratorType(cursor.getString(27));//TEST_DETAILS_AEROSOLGENERATORTYPE
                 TestDetails.setTestCode(cursor.getString(28));//TEST_DETAILS_TESTCODE
-
+                TestDetails.setRoomVolume(cursor.getString(29).toString());
+                TestDetails.setTestWitnessOrg(cursor.getString(30).toString());
+                TestDetails.setTestCondoctorOrg(cursor.getString(31).toString());
 //                testDetailList.add(TestDetails);
             } while (cursor.moveToNext());
         }
@@ -2497,7 +2512,9 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 TestDetails.setAerosolUsed(cursor.getString(26));//TEST_DETAILS_AEROSOLUSED
                 TestDetails.setAerosolGeneratorType(cursor.getString(27));//TEST_DETAILS_AEROSOLGENERATORTYPE
                 TestDetails.setTestCode(cursor.getString(28));//TEST_DETAILS_TESTCODE
-
+                TestDetails.setRoomVolume(cursor.getString(29).toString());
+                TestDetails.setTestWitnessOrg(cursor.getString(30).toString());
+                TestDetails.setTestCondoctorOrg(cursor.getString(31).toString());
                 testDetailList.add(TestDetails);
             } while (cursor.moveToNext());
         }
