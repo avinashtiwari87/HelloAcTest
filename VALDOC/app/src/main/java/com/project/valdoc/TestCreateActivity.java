@@ -66,8 +66,8 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
             "Airchanges/hr Test (ACPH_H)", "Filter Integrity Test (FIT)",
             "Particle Count Test (PCT)", "Recovery Test (RCT)"};
 
-    private String[] ahuTestValues = new String[]{"Select Required Test", "Airflow Test (ARD_AF_AHU)",
-            "Filter Integrity Test (ARD_FIT_AHU)"};
+    private String[] ahuTestValues = new String[]{"Select Required Test", "Airflow Test (AF_AHU)",
+            "Filter Integrity Test (FIT_AHU)"};
 
     private String[] equipmentTestValues = new String[]{"Select Required Test", "Airvelocity Test (ERD_AV)",
             "Filter Integrity Test (ERD_FIT)", "Particle Count Test (ERD_PCT)",

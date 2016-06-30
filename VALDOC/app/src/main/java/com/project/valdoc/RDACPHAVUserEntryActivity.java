@@ -103,6 +103,9 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
     private TextView roomNo;
     private TextView ahuNo;
     private TextView ahuNoText;
+    private TextView testItemText;
+    private TextView testItemValue;
+
     private TextView roomVolume;
     private TextView roomVolumeText;
     private TextView testCundoctor;
@@ -317,6 +320,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
             roomNo.setText(roomDetails[2]);
             ahuNo.setText(ahuNumber);
             roomVolume.setText("" + roomDetails[4]);
+            testItemValue.setText(""+mApplicableTestAhu.getTestItem());
         } else if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
             testSpecification.setText(mApplicableTestRoom.getTestSpecification());
             occupancyState.setText(mApplicableTestRoom.getOccupencyState());
@@ -359,7 +363,12 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
         ahuNo.setVisibility(View.VISIBLE);
         ahuNoText = (TextView) findViewById(R.id.ahu_no_text);
         ahuNoText.setVisibility(View.VISIBLE);
-
+        if (mTestBasedOn.equalsIgnoreCase("AHU")) {
+            testItemText = (TextView) findViewById(R.id.test_item_text);
+            testItemText.setVisibility(View.VISIBLE);
+            testItemValue = (TextView) findViewById(R.id.test_item_value);
+            testItemValue.setVisibility(View.VISIBLE);
+        }
 //        roomNameLable = (TextView) findViewById(R.id.room_name_lable2);
 //        roomNameLable.setVisibility(View.GONE);
 //        instrumentNoLable = (TextView) findViewById(R.id.instrument_no_lable);

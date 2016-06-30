@@ -348,6 +348,22 @@
                     style="@style/TestHeaderTextViewNormal"
                     android:text="" />
             </TableRow>
+            <TableRow
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp">
+
+                <TextView
+                    android:id="@+id/test_item_text"
+                    android:visibility="invisible"
+                    style="@style/TestHeaderTextViewBold"
+                    android:text="Test Item :" />
+
+                <TextView
+                    android:id="@+id/test_item_value"
+                    android:visibility="invisible"
+                    style="@style/TestHeaderTextViewNormal"
+                    android:text="" />
+            </TableRow>
         </TableLayout>
     </LinearLayout>
 

@@ -445,7 +445,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
 
             test_value9.setText("" + mApplicableTestEquipment.getOccupencyState());
             datePicker();
-        } else if (TestCreateActivity.ACPHAV.equalsIgnoreCase(testType) && TestBasedOn.equalsIgnoreCase("ROOM")) {
+        } else if (TestCreateActivity.ACPHAV.equalsIgnoreCase(testType)) {
             Log.d("Saurabh", "CodeFlow TestBasedOn"+TestBasedOn);
             test_header1.setText("Room Name :");
             test_header2.setText("Instrument Used :");

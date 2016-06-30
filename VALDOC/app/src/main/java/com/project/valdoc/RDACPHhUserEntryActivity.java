@@ -78,19 +78,21 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
     private TextView testRefrance;
     private TextView roomNo;
     private TextView ahuNo;
+    private TextView ahuNoText;
     private TextView testWitnessOrg;
     private TextView testCondoctorOrg;
-//    private TextView equipmentNameText;
-//    private TextView equipmentNoText;
+    private TextView equipmentNameText;
+    private TextView equipmentNoText;
     private TextView testCundoctor;
     private TextView testWitness;
     private TextView dateTextView;
     private TextView customerName;
-   // private TextView certificateNo;
+    private TextView certificateNo;
     private TextView infarance;
     private TextView TFRTxtv;
     private TextView TFTAVTxtv;
-
+    private TextView roomVolume;
+    private TextView roomVolumeText;
     private TextView instrumentUsedTextView;
     private TextView testCunductedByTextView;
     private TextView roomNameLable;
@@ -210,7 +212,7 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
 // Now formattedDate have current date/time
 //        Toast.makeText(this, formattedDate, Toast.LENGTH_SHORT).show();
         int mon = month + 1;
-       // certificateNo.setText("HH/" + mon + "/" + year + "/" + formattedDate);
+        certificateNo.setText("HH/" + mon + "/" + year + "/" + formattedDate);
 
         // Show current date
         String date = new StringBuilder().append(day).append("-").append(month + 1).append("-").append(year).append(" ").toString();
@@ -275,9 +277,9 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
         occupancyState.setText(room.getOccupancyState().toString());
         Log.d("valdoc", "RDAV5UserEnryActivity 1witness= equipment.getTestReference()=" + room.getTestRef());
         testRefrance.setText("" + room.getTestRef().toString());
-//        equipmentName.setText(room.getRoomName().toString());
 //        equipmentNo.setText(room.getRoomNo().toString());
         roomNo.setText(room.getRoomNo().toString());
+        roomVolume.setText("" + room.getVolume());
         ahuNo.setText(ahuNumber);
 //        equipmentNameText.setText(getResources().getString(R.string.room_no));
 //        equipmentNoText.setText(getResources().getString(R.string.ahu_no));
@@ -314,9 +316,24 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
         //roomNameLable.setVisibility(View.GONE);
         //instrumentNoLable= (TextView) findViewById(R.id.instrument_no_lable);
         //instrumentNoLable.setVisibility(View.GONE);
+
+        roomVolumeText = (TextView) findViewById(R.id.room_volume_text);
+        roomVolumeText.setVisibility(View.VISIBLE);
+        roomVolume = (TextView) findViewById(R.id.room_volume);
+        roomVolume.setVisibility(View.VISIBLE);
+        ahuNo = (TextView) findViewById(R.id.ahu_no);
+        ahuNo.setVisibility(View.VISIBLE);
+        ahuNoText = (TextView) findViewById(R.id.ahu_no_text);
+        ahuNoText.setVisibility(View.VISIBLE);
+
+        equipmentNameText = (TextView) findViewById(R.id.equiment_name_text);
+        equipmentNameText.setVisibility(View.INVISIBLE);
+        equipmentNoText = (TextView) findViewById(R.id.equiment_no_text);
+        equipmentNoText.setVisibility(View.INVISIBLE);
+
         dateTextView = (TextView) findViewById(R.id.datetextview);
         customerName = (TextView) findViewById(R.id.customer_name);
-        //certificateNo = (TextView) findViewById(R.id.certificate_no);
+        certificateNo = (TextView) findViewById(R.id.trd_no);
         instrumentUsed = (TextView) findViewById(R.id.instrumentused);
 
         instrumentSerialNo = (TextView) findViewById(R.id.instrumentserialno);
@@ -328,8 +345,6 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
         roomName = (TextView) findViewById(R.id.room_name);
         occupancyState = (TextView) findViewById(R.id.ocupancystate);
         testRefrance = (TextView) findViewById(R.id.testrefrence);
-//        equipmentNameText = (TextView) findViewById(R.id.equipment_name_text);
-//        equipmentNoText = (TextView) findViewById(R.id.equipment_no_text);
         roomNo = (TextView) findViewById(R.id.room_no);
         ahuNo = (TextView) findViewById(R.id.ahu_no);
         infarance = (TextView) findViewById(R.id.infarance);
