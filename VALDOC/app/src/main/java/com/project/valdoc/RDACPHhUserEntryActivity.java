@@ -185,7 +185,8 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
             mtvl.setText(totalAirFlowRate + "");
             TFRTxtv.setText(totalAirFlowRate + "");
         }
-
+        totalAirFlowRate=getIntent().getFloatExtra("totalAirFlowRate", 0f);
+        TFRTxtv.setText(""+totalAirFlowRate);
         //AirFlow Change
         if (airChangeTxtList != null && airChangeTxtList.size() > 0) {
             TextView airChangeTxt = airChangeTxtList.get(airChangeTxtList.size() / 2);
@@ -198,6 +199,8 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
             airChangeTxt.setText(airChangeValue + "");
             TFTAVTxtv.setText("" + airChangeValue);
         }
+        airChangeValue=getIntent().getIntExtra("AirChangeValue", 0);
+        TFTAVTxtv.setText("" + airChangeValue);
         //Custom Action Bar
         ActionBar mActionBar = getSupportActionBar();
         if (mActionBar != null)
