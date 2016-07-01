@@ -284,7 +284,9 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                     room = (Room) extras.getSerializable("Room");
                     ahuNumber = extras.getString("AhuNumber");
                     //get filter list from grill filter
-                    grillAndSizeFromGrill = (ArrayList<HashMap<String, String>>) extras.getSerializable("GRILLIST");
+                    mRoomFilterArrayList = (ArrayList<RoomFilter>) extras.getSerializable("RoomFilter");
+                    mApplicableTestRoom = (ApplicableTestRoom) extras.getSerializable("ApplicableTestRoom");
+//                    grillAndSizeFromGrill = (ArrayList<HashMap<String, String>>) extras.getSerializable("GRILLIST");
                 }
                 if (TestCreateActivity.FIT.equals(testType)) {
                     if (mTestBasedOn.equalsIgnoreCase("EQUIPMENT")) {
@@ -373,8 +375,8 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                     aleartDialog("There is no gril or applicable test room location");
             }
         } else if (TestCreateActivity.ACPHH.equalsIgnoreCase(testType)) {
-            if (grillAndSizeFromGrill != null && grillAndSizeFromGrill.size() > 0)
-                BuildTableTest3(grillAndSizeFromGrill.size() + 1, applicableTestRoomLocation);
+            if (mRoomFilterArrayList != null && mRoomFilterArrayList.size() > 0)
+                BuildTableTest3(mRoomFilterArrayList.size() + 1, mApplicableTestRoom.getLocation());
             else
                 aleartDialog("There is no gril or applicable test room location");
           setCommonTestHeader(testType, mTestBasedOn);
@@ -767,7 +769,6 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 intent.putExtra("testType", testType);
                 intent.putExtra("testCode", mTestCode);
                 intent.putExtra("testBasedOn", mTestBasedOn);
-
                 //get area based on room area id
                 intent.putExtra("AREANAME", areaName);
 
@@ -822,11 +823,13 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 } else {
                     intent.putExtra("PartnerInstrument", partnerInstrument);
                 }
+
+                intent.putExtra("RoomFilter", mRoomFilterArrayList);
+                intent.putExtra("ApplicableTestRoom", mApplicableTestRoom);
+                intent.putExtra("rows", mRoomFilterArrayList.size() + 1);
+                intent.putExtra("cols", mApplicableTestRoom.getLocation());
                 intent.putExtra("Room", room);
                 intent.putExtra("AhuNumber", ahuNumber);
-                intent.putExtra("rows", grillAndSizeFromGrill.size() + 1);
-                intent.putExtra("cols", applicableTestRoomLocation);
-                intent.putExtra("GRILLIST", grillAndSizeFromGrill);
                 //sending Result Data over Bundle
                 intent.putExtra("totalAirFlowRate", totalAirFlowRate);
                 intent.putExtra("AirChangeValue", AirChangeValue);
@@ -1445,10 +1448,13 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 if (i == 1 && j == 1) {
                     row.addView(addTextView(" Grille/Filter ID No\n "));
                 } else {
-                    if (null != grillAndSizeFromGrill && grillAndSizeFromGrill.size() > 0) {
-                        HashMap<String, String> grill = (HashMap<String, String>) grillAndSizeFromGrill.get(i - 2);
-                        Log.d("valdoc", "DynamicTableActivity grillAndSizeFromGrill=" + grillAndSizeFromGrill.size() + "i=" + i);
-                        row.addView(addTextView(grill.get(ValdocDatabaseHandler.GRILL_GRILLCODE).toString()));
+                    if (null != mRoomFilterArrayList && mRoomFilterArrayList.size() > 0) {
+                        RoomFilter roomFilter = mRoomFilterArrayList.get(i - 2);
+                        Log.d("valdoc", "DynamicTableActivity filterArrayList=" + mRoomFilterArrayList.size() + "i=" + i);
+                        row.addView(addTextView(roomFilter.getFilterCode()));
+//                        HashMap<String, String> grill = (HashMap<String, String>) grillAndSizeFromGrill.get(i - 2);
+//                        Log.d("valdoc", "DynamicTableActivity grillAndSizeFromGrill=" + grillAndSizeFromGrill.size() + "i=" + i);
+//                        row.addView(addTextView(grill.get());
                     } else {
 //                        row.addView(addTextView("grillAndSizeFromGrill"));
                     }

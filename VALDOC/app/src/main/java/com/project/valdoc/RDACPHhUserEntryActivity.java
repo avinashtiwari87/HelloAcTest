@@ -24,9 +24,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.project.valdoc.db.ValdocDatabaseHandler;
+import com.project.valdoc.intity.AhuFilter;
+import com.project.valdoc.intity.ApplicableTestRoom;
 import com.project.valdoc.intity.ClientInstrument;
 import com.project.valdoc.intity.PartnerInstrument;
 import com.project.valdoc.intity.Room;
+import com.project.valdoc.intity.RoomFilter;
 import com.project.valdoc.intity.TestDetails;
 import com.project.valdoc.intity.TestReading;
 import com.project.valdoc.intity.TestSpesificationValue;
@@ -58,7 +61,9 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
     private PartnerInstrument partnerInstrument;
     private String ahuNumber;
     private Room room;
-    private ArrayList<HashMap<String, String>> grillAndSizeFromGrill;
+    private ApplicableTestRoom mApplicableTestRoom = null;
+    private ArrayList<RoomFilter> mRoomFilterArrayList;
+    //    private ArrayList<HashMap<String, String>> grillAndSizeFromGrill;
     private String areaName;
     private String witnessFirst;
     private String witnessSecond;
@@ -93,9 +98,13 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
     private TextView TFTAVTxtv;
     private TextView roomVolume;
     private TextView roomVolumeText;
+    private TextView instrumentUsedTextView;
+    private TextView testCunductedByTextView;
+    private TextView roomNameLable;
+    private TextView instrumentNoLable;
 
     ArrayList<TextView> txtViewList;
-    ArrayList<TextView>avgTxtViewList;
+    ArrayList<TextView> avgTxtViewList;
     private ImageView submit;
     private ImageView clear;
     private ImageView cancel;
@@ -106,11 +115,12 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
     ArrayList<TextView> resultTextViewList;
     private ValdocDatabaseHandler mValdocDatabaseHandler = new ValdocDatabaseHandler(RDACPHhUserEntryActivity.this);
     SharedPreferences sharedpreferences;
-    int testDetailsId=0;
+    int testDetailsId = 0;
     private int year;
     private int month;
     private int day;
-    private String  mTestCode="";
+    private String mTestCode = "";
+    private String mTestBasedOn;
     static final int DATE_PICKER_ID = 1111;
 
     @Override
@@ -129,7 +139,7 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
         airChangeTxtList = new ArrayList<TextView>();
 
         sharedpreferences = getSharedPreferences("valdoc", Context.MODE_PRIVATE);
-        testDetailsId = (sharedpreferences.getInt("TESTDETAILSID", 0)+1);
+        testDetailsId = (sharedpreferences.getInt("TESTDETAILSID", 0) + 1);
 
         if (getIntent().hasExtra("rows") && getIntent().hasExtra("cols")) {
             rows = getIntent().getIntExtra("rows", 0);
@@ -137,7 +147,7 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
             mTestType = getIntent().getStringExtra("testType");
             Log.d(TAG, " TestType : " + mTestType);
         }
-        mTestCode=getIntent().getStringExtra("testCode");
+        mTestCode = getIntent().getStringExtra("testCode");
         //dynamic data population
         getExtraFromTestCreateActivity(savedInstanceState);
         //text view initialization
@@ -171,17 +181,15 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
         if (totalAirFlowRateTxtList != null && totalAirFlowRateTxtList.size() > 0) {
             int middleTxt = totalAirFlowRateTxtList.size() / 2;
             TextView mtvl = totalAirFlowRateTxtList.get(middleTxt);
-            totalAirFlowRate=getIntent().getFloatExtra("totalAirFlowRate", 0f);
+            totalAirFlowRate = getIntent().getFloatExtra("totalAirFlowRate", 0f);
             mtvl.setText(totalAirFlowRate + "");
-            //TFRTxtv.setText(""+totalAirFlowRate);
+            TFRTxtv.setText(totalAirFlowRate + "");
         }
-        totalAirFlowRate=getIntent().getFloatExtra("totalAirFlowRate", 0f);
-        TFRTxtv.setText(""+totalAirFlowRate);
 
         //AirFlow Change
         if (airChangeTxtList != null && airChangeTxtList.size() > 0) {
             TextView airChangeTxt = airChangeTxtList.get(airChangeTxtList.size() / 2);
-            airChangeValue=getIntent().getIntExtra("AirChangeValue", 0);
+            airChangeValue = getIntent().getIntExtra("AirChangeValue", 0);
             if (airChangeValue > room.getAcph()) {
                 infarance.setText("The above Airflow Volume Test and Derived No.of Air chanages per hour meets the specificed requirement");
             } else {
@@ -190,10 +198,6 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
             airChangeTxt.setText(airChangeValue + "");
             TFTAVTxtv.setText("" + airChangeValue);
         }
-        airChangeValue=getIntent().getIntExtra("AirChangeValue", 0);
-        TFTAVTxtv.setText("" + airChangeValue);
-
-
         //Custom Action Bar
         ActionBar mActionBar = getSupportActionBar();
         if (mActionBar != null)
@@ -262,12 +266,12 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
     private void textViewValueAssignment() {
         if (loginUserType.equals("CLIENT")) {
             instrumentUsed.setText(clientInstrument.getcInstrumentName());
-            instrumentSerialNo.setText(""+clientInstrument.getSerialNo());
+            instrumentSerialNo.setText("" + clientInstrument.getSerialNo());
             calibrationOn.setText(Utilityies.parseDateToddMMyyyy(clientInstrument.getLastCalibrated()));
             calibrationDueOn.setText(Utilityies.parseDateToddMMyyyy(clientInstrument.getCalibrationDueDate()));
         } else {
             instrumentUsed.setText(partnerInstrument.getpInstrumentName());
-            instrumentSerialNo.setText(""+partnerInstrument.getpInstrumentId());
+            instrumentSerialNo.setText("" + partnerInstrument.getpInstrumentId());
             calibrationOn.setText(Utilityies.parseDateToddMMyyyy(partnerInstrument.getLastCalibrationDate()));
             calibrationDueOn.setText(Utilityies.parseDateToddMMyyyy(partnerInstrument.getCalibrationDueDate()));
         }
@@ -288,12 +292,12 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
 
 
         testCundoctor.setText(userName);
-        if(sharedpreferences.getString("USERTYPE", "").equalsIgnoreCase("CLIENT")){
-            testCondoctorOrg.setText("("+sharedpreferences.getString("CLIENTORG", "")+")");
-            testWitnessOrg.setText("("+sharedpreferences.getString("CLIENTORG", "")+")");
-        }else{
-            testCondoctorOrg.setText("("+sharedpreferences.getString("PARTNERORG", "")+")");
-            testWitnessOrg.setText("("+sharedpreferences.getString("CLIENTORG", "")+")");
+        if (sharedpreferences.getString("USERTYPE", "").equalsIgnoreCase("CLIENT")) {
+            testCondoctorOrg.setText("(" + sharedpreferences.getString("CLIENTORG", "") + ")");
+            testWitnessOrg.setText("(" + sharedpreferences.getString("CLIENTORG", "") + ")");
+        } else {
+            testCondoctorOrg.setText("(" + sharedpreferences.getString("PARTNERORG", "") + ")");
+            testWitnessOrg.setText("(" + sharedpreferences.getString("CLIENTORG", "") + ")");
         }
         Log.d("valdoc", "RDAV5UserEnryActivity 1witness=" + witnessFirst);
         StringBuilder witness = new StringBuilder();
@@ -309,12 +313,12 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
 
     private void initTextView() {
         // layout data which is not in use
-       // instrumentUsedTextView = (TextView) findViewById(R.id.instrument_used);
-       // instrumentUsedTextView.setVisibility(View.GONE);
-       // testCunductedByTextView = (TextView) findViewById(R.id.testcunducted_by);
+        // instrumentUsedTextView = (TextView) findViewById(R.id.instrument_used);
+        // instrumentUsedTextView.setVisibility(View.GONE);
+        // testCunductedByTextView = (TextView) findViewById(R.id.testcunducted_by);
         //testCunductedByTextView.setVisibility(View.GONE);
 
-       // roomNameLable= (TextView) findViewById(R.id.room_name_lable);
+        // roomNameLable= (TextView) findViewById(R.id.room_name_lable);
         //roomNameLable.setVisibility(View.GONE);
         //instrumentNoLable= (TextView) findViewById(R.id.instrument_no_lable);
         //instrumentNoLable.setVisibility(View.GONE);
@@ -379,7 +383,7 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
                             Toast.makeText(RDACPHhUserEntryActivity.this, "Data saved sussessfully", Toast.LENGTH_LONG).show();
                             Intent intent = new Intent(RDACPHhUserEntryActivity.this, TestCreateActivity.class);
                             intent.putExtra(TestCreateActivity.ACPHH, true);
-                                    startActivity(intent);
+                            startActivity(intent);
                             finish();
                         } else {
                             Toast.makeText(RDACPHhUserEntryActivity.this, "Data not saved", Toast.LENGTH_LONG).show();
@@ -416,14 +420,14 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
 
         TestSpesificationValue testSpesificationValue1 = new TestSpesificationValue();
 //        testSpesificationValue1.setTest_specific_id(1);
-        testSpesificationValue1.setTest_detail_id(""+testDetailsId);
+        testSpesificationValue1.setTest_detail_id("" + testDetailsId);
         testSpesificationValue1.setFieldName("RV");
         testSpesificationValue1.setFieldValue("" + room.getVolume());
         spesificationValueArrayList.add(testSpesificationValue1);
 
         TestSpesificationValue testSpesificationValue2 = new TestSpesificationValue();
 //        testSpesificationValue2.setTest_specific_id(1);
-        testSpesificationValue2.setTest_detail_id(""+testDetailsId);
+        testSpesificationValue2.setTest_detail_id("" + testDetailsId);
         testSpesificationValue2.setFieldName("((TFR/RV)x60))");
         testSpesificationValue2.setFieldValue("" + airChangeValue);
         spesificationValueArrayList.add(testSpesificationValue2);
@@ -436,12 +440,12 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
         ArrayList<TestReading> testReadingArrayList = new ArrayList<TestReading>();
         int index = 0;
         int hasMapKey = 200;
-        for (HashMap<String, String> grill : grillAndSizeFromGrill) {
+        for (RoomFilter roomFilter : mRoomFilterArrayList) {
             TestReading testReading = new TestReading();
 //            testReading.setTestReadingID(index);
 //        TO DO test details id is id of test details table
             testReading.setTest_detail_id(testDetailsId);
-            testReading.setEntityName(grill.get(ValdocDatabaseHandler.GRILL_GRILLCODE).toString());
+            testReading.setEntityName(roomFilter.getFilterCode().toString());
             testReading.setValue(supplyAirVelocity.get(hasMapKey).toString());
             hasMapKey++;
             index++;
@@ -455,11 +459,11 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
 //        TO DO: need to make it dynamic
         testDetails.setTest_detail_id(testDetailsId);
         testDetails.setCustomer(customerName.getText().toString());
-        String date = year+"-"+(month + 1)+"-"+day+" ";
-        testDetails.setDateOfTest(""+date);
-       // testDetails.setRawDataNo(certificateNo.getText().toString());
+        String date = year + "-" + (month + 1) + "-" + day + " ";
+        testDetails.setDateOfTest("" + date);
+        testDetails.setRawDataNo(certificateNo.getText().toString());
         testDetails.setPartnerName("" + mPartnerName);
-        testDetails.setTestName(TestCreateActivity.ACPHH);
+        testDetails.setTestName(mTestCode);
         if (loginUserType.equals("CLIENT")) {
             testDetails.setInstrumentUsed(clientInstrument.getcInstrumentName());
             testDetails.setMake(clientInstrument.getMake());
@@ -495,6 +499,15 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
         testDetails.setWitnessName("" + witness);
         testDetails.setEquipmentName("");
         testDetails.setEquipmentNo("");
+
+        testDetails.setSamplingFlowRate("");
+        testDetails.setSamplingTime("");
+        testDetails.setAerosolGeneratorType("");
+        testDetails.setAerosolUsed("");
+        testDetails.setTestItem("");
+        testDetails.setRoomVolume("" + roomVolume.getText());
+        testDetails.setTestWitnessOrg("" + testWitnessOrg.getText());
+        testDetails.setTestCondoctorOrg("" + testCondoctorOrg.getText());
         return testDetails;
     }
 
@@ -508,7 +521,7 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
                 clientInstrument = null;
                 partnerInstrument = null;
                 ahuNumber = null;
-                grillAndSizeFromGrill = null;
+//                grillAndSizeFromGrill = null;
                 room = null;
                 areaName = null;
                 witnessFirst = null;
@@ -522,7 +535,7 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
                 witnessThird = extras.getString("WITNESSTHIRD");
                 //get area based on room area id
                 areaName = extras.getString("AREANAME");
-                mPartnerName=extras.getString("PRTNERNAME");
+                mPartnerName = extras.getString("PRTNERNAME");
 
                 if (loginUserType.equals("CLIENT")) {
                     clientInstrument = (ClientInstrument) extras.getSerializable("ClientInstrument");
@@ -532,7 +545,13 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
 
                 room = (Room) extras.getSerializable("Room");
                 ahuNumber = extras.getString("AhuNumber");
-                grillAndSizeFromGrill = (ArrayList<HashMap<String, String>>) extras.getSerializable("GRILLIST");
+//                grillAndSizeFromGrill = (ArrayList<HashMap<String, String>>) extras.getSerializable("GRILLIST");
+
+                mRoomFilterArrayList = (ArrayList<RoomFilter>) extras.getSerializable("RoomFilter");
+                mApplicableTestRoom = (ApplicableTestRoom) extras.getSerializable("ApplicableTestRoom");
+                mTestCode = extras.getString("testCode");
+                mTestBasedOn = extras.getString("testBasedOn");
+                //get area based on room area id
 
             }
         }
@@ -552,10 +571,8 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
                 if (i == 1 && j == 1) {
                     row.addView(addTextView(" Grille/Filter ID No\n "));
                 } else {
-                    if (null != grillAndSizeFromGrill && grillAndSizeFromGrill.size() > 0) {
-                        HashMap<String, String> grill = (HashMap<String, String>) grillAndSizeFromGrill.get(i - 2);
-                        Log.d("valdoc", "DynamicTableActivity grillAndSizeFromGrill=" + grillAndSizeFromGrill.size() + "i=" + i);
-                        row.addView(addTextView(grill.get(ValdocDatabaseHandler.GRILL_GRILLCODE).toString()));
+                    if (null != mRoomFilterArrayList && mRoomFilterArrayList.size() > 0) {
+                        row.addView(addTextView(mRoomFilterArrayList.get(i - 2).getFilterCode()));
                     } else {
                         row.addView(addTextView("grillAndSizeFromGrill"));
                     }
@@ -683,6 +700,7 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
     }
 
     int idAvgtv = 600;
+
     private TextView addAverageInputDataTextView() {
         TextView tv = new TextView(this);
         tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
@@ -732,14 +750,14 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
         test3_table_layout4.setVisibility(View.GONE);
         test3_table_layout5 = (TableLayout) findViewById(R.id.test3_tableLayout5);
         test3_table_layout5.setVisibility(View.GONE);
-        TFRTxtv = (TextView)findViewById(R.id.acph_h_tfr_value_tv);
-        TFTAVTxtv = (TextView)findViewById(R.id.acph_h_tfrby_av_value_tv);
+        TFRTxtv = (TextView) findViewById(R.id.acph_h_tfr_value_tv);
+        TFTAVTxtv = (TextView) findViewById(R.id.acph_h_tfrby_av_value_tv);
         findViewById(R.id.test_table_3_header_l_ll).setVisibility(View.GONE);
         findViewById(R.id.test_table_3_header_2_ll).setVisibility(View.VISIBLE);
         findViewById(R.id.test_interference).setVisibility(View.GONE);
         findViewById(R.id.test_note_tv).setVisibility(View.VISIBLE);
         findViewById(R.id.acph_h_final_calc_ll).setVisibility(View.VISIBLE);
-        TextView TestHeader = (TextView)findViewById(R.id.common_header_tv);
+        TextView TestHeader = (TextView) findViewById(R.id.common_header_tv);
         TestHeader.setText("TEST RAW DATA (ACPH_H)\n(Air Flow Velocity, Volume Testing and Determination of Air Changes per Hour Rates)");
     }
 }

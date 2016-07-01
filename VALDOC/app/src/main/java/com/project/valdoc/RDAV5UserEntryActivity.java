@@ -443,6 +443,10 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
         testDetails.setSamplingTime("");
         testDetails.setAerosolGeneratorType("");
         testDetails.setAerosolUsed("");
+        testDetails.setTestItem("");
+        testDetails.setRoomVolume("");
+        testDetails.setTestWitnessOrg(""+testWitnessOrg.getText());
+        testDetails.setTestCondoctorOrg(""+testCondoctorOrg.getText());
         return testDetails;
     }
 

@@ -555,18 +555,9 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
 //        TO DO: need to make it dynamic
         testDetails.setTest_detail_id(testDetailsId);
         testDetails.setCustomer(customerName.getText().toString());
-//        StringBuilder sb = new StringBuilder();
-//        sb.append("");
-//        sb.append(String.valueOf(year));
-//        sb.append("-");
-//        sb.append(String.valueOf(month + 1));
-//        sb.append("-");
-//        sb.append(String.valueOf(day));
-//        String strI = sb.toString();
         String date = new StringBuilder().append(day).append("-").append(month + 1).append("-").append(year).append(" ").toString();
 //        String date = String.valueOf(year) + "-" + (String.valueOf(month + 1)) + "-" + (String.valueOf(day)) + " ";
         testDetails.setDateOfTest(new String(new StringBuilder().append(day).append("-").append(month + 1).append("-").append(year).append(" ").toString()));
-//        testDetails.setDateOfTest();
         testDetails.setRawDataNo(certificateNo.getText().toString());
         testDetails.setPartnerName("" + mPartnerName);
         testDetails.setTestName(mTestCode);
@@ -612,6 +603,10 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
         testDetails.setSamplingTime("");
         testDetails.setAerosolGeneratorType("");
         testDetails.setAerosolUsed("");
+        testDetails.setTestItem(""+testItemValue.getText());
+        testDetails.setRoomVolume(""+roomVolume.getText());
+        testDetails.setTestWitnessOrg(""+testWitnessOrg.getText());
+        testDetails.setTestCondoctorOrg(""+testCondoctorOrg.getText());
         return testDetails;
     }
 

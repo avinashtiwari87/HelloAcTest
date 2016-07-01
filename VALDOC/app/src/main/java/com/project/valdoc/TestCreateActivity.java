@@ -328,7 +328,7 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
             ArrayList<RoomFilter> roomFilterList = null;
             //get room name,roomNo,and area id
             Log.d("valdoc", "TestCreateActivity :equipment:=" + roomNoSpinner.getSelectedItemPosition());
-            Room room = mRoomArrayList.get(roomNoSpinner.getSelectedItemPosition() - 1);
+            Room room = mRoomNoArrayList.get(roomNoSpinner.getSelectedItemPosition() - 1);
             intent.putExtra("Room", room);
             intent.putExtra("AhuNumber", ahuSpinner.getSelectedItem().toString());
 
@@ -352,6 +352,7 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
     }
 
     private void rdAcphH(String testCode, String testBasedOn) {
+        ArrayList<RoomFilter> roomFilterList = null;
         Intent intent = new Intent(TestCreateActivity.this, DynamicTableActivity.class);
         intent.putExtra("USERTYPE", loginUserType);
         intent.putExtra("USERNAME", userName);
@@ -371,8 +372,8 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
         }
 
         //get room name,roomNo,and area id
-        Log.d("valdoc", "TestCreateActivity :equipment:=" + roomSpinner.getSelectedItemPosition());
-        Room room = mRoomArrayList.get(roomSpinner.getSelectedItemPosition() - 1);
+        Log.d("valdoc", "TestCreateActivity :equipment:=" + roomNoSpinner.getSelectedItemPosition());
+        Room room = mRoomNoArrayList.get(roomNoSpinner.getSelectedItemPosition() - 1);
         intent.putExtra("Room", room);
         intent.putExtra("AhuNumber", ahuSpinner.getSelectedItem().toString());
         //get area based on room area id
@@ -382,11 +383,15 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
         createApplicableTestRoomList(room.getRoomId(),ACPHH);
         intent.putExtra("ApplicableTestRoom", mApplicableTestRoom);
 
+        roomFilterList = mValdocDatabaseHandler.getFromRoomFilter(room.getRoomId());
+        Log.d("valdoc", "TestCreateActivity filterArrayList=" + roomFilterList.size());
+        intent.putExtra("RoomFilter", roomFilterList);
+
         //get filter list from equipment filter
-        Log.d("valdoc", "TestCreateActivity :equipment id equipment1:=" + room.getRoomId());
-        ArrayList<HashMap<String, String>> grillAndSizeFromGrill = mValdocDatabaseHandler.getGrillAndSizeFromGrill(room.getRoomId());
-        intent.putExtra("GRILLIST", grillAndSizeFromGrill);
-        Log.d("valdoc", "TestCreateActivity :grill size:=" + grillAndSizeFromGrill.size());
+//        Log.d("valdoc", "TestCreateActivity :equipment id equipment1:=" + room.getRoomId());
+//        ArrayList<HashMap<String, String>> grillAndSizeFromGrill = mValdocDatabaseHandler.getGrillAndSizeFromGrill(room.getRoomId());
+//        intent.putExtra("GRILLIST", grillAndSizeFromGrill);
+//        Log.d("valdoc", "TestCreateActivity :grill size:=" + grillAndSizeFromGrill.size());
         startActivity(intent);
     }
 
@@ -496,8 +501,7 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
         }
 
         //get room name,roomNo,and area id
-        Log.d("valdoc", "TestCreateActivity :equipment:=" + roomSpinner.getSelectedItemPosition());
-        Room room = mRoomArrayList.get(roomSpinner.getSelectedItemPosition() - 1);
+        Room room = mRoomNoArrayList.get(roomNoSpinner.getSelectedItemPosition() - 1);
         intent.putExtra("Room", room);
         intent.putExtra("AhuNumber", ahuSpinner.getSelectedItem().toString());
 
@@ -530,8 +534,8 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
         }
 
         //get room name,roomNo,and area id
-        Log.d("valdoc", "TestCreateActivity :equipment:=" + roomSpinner.getSelectedItemPosition());
-        Room room = mRoomArrayList.get(roomSpinner.getSelectedItemPosition() - 1);
+        Log.d("valdoc", "TestCreateActivity :equipment:=" + roomNoSpinner.getSelectedItemPosition());
+        Room room = mRoomNoArrayList.get(roomNoSpinner.getSelectedItemPosition() - 1);
         intent.putExtra("Room", room);
         intent.putExtra("AhuNumber", ahuSpinner.getSelectedItem().toString());
         intent.putExtra("ApplicableTestRoom", mApplicableTestRoom);
