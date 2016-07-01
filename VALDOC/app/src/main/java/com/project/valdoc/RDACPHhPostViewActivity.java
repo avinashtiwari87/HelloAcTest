@@ -59,13 +59,13 @@ public class RDACPHhPostViewActivity extends AppCompatActivity {
                 if (i == 1 && j == 1) {
                     row.addView(addTextView(" Grille/Filter ID No\n "));
                 } else {
-                    if (null != grillAndSizeFromGrill && grillAndSizeFromGrill.size() > 0) {
+/*                    if (null != grillAndSizeFromGrill && grillAndSizeFromGrill.size() > 0) {
                         HashMap<String, String> grill = (HashMap<String, String>) grillAndSizeFromGrill.get(i - 2);
                         Log.d("valdoc", "DynamicTableActivity grillAndSizeFromGrill=" + grillAndSizeFromGrill.size() + "i=" + i);
                         row.addView(addTextView(grill.get(ValdocDatabaseHandler.GRILL_GRILLCODE).toString()));
-                    } else {
+                    } else {*/
                         row.addView(addTextView("grillAndSizeFromGrill"));
-                    }
+                    //}
 //                    row.addView(addTextView(" Filter No " + i));
                 }
             }
