@@ -79,7 +79,8 @@
             android:screenOrientation="landscape" />
         <activity
             android:name=".RDACPHAVPostViewActivity"
-            android:screenOrientation="landscape"></activity>
+            android:screenOrientation="landscape" />
+        <activity android:name=".RDACPHhPostViewActivity"></activity>
     </application>
 
 </manifest>
