@@ -93,10 +93,6 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
     private TextView TFTAVTxtv;
     private TextView roomVolume;
     private TextView roomVolumeText;
-    private TextView instrumentUsedTextView;
-    private TextView testCunductedByTextView;
-    private TextView roomNameLable;
-    private TextView instrumentNoLable;
 
     ArrayList<TextView> txtViewList;
     ArrayList<TextView>avgTxtViewList;
@@ -177,8 +173,10 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
             TextView mtvl = totalAirFlowRateTxtList.get(middleTxt);
             totalAirFlowRate=getIntent().getFloatExtra("totalAirFlowRate", 0f);
             mtvl.setText(totalAirFlowRate + "");
-            TFRTxtv.setText(totalAirFlowRate + "");
+            //TFRTxtv.setText(""+totalAirFlowRate);
         }
+        totalAirFlowRate=getIntent().getFloatExtra("totalAirFlowRate", 0f);
+        TFRTxtv.setText(""+totalAirFlowRate);
 
         //AirFlow Change
         if (airChangeTxtList != null && airChangeTxtList.size() > 0) {
@@ -192,6 +190,10 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
             airChangeTxt.setText(airChangeValue + "");
             TFTAVTxtv.setText("" + airChangeValue);
         }
+        airChangeValue=getIntent().getIntExtra("AirChangeValue", 0);
+        TFTAVTxtv.setText("" + airChangeValue);
+
+
         //Custom Action Bar
         ActionBar mActionBar = getSupportActionBar();
         if (mActionBar != null)
