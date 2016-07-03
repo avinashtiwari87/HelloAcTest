@@ -71,10 +71,6 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
 
     //certificate view id creation
     private TextView instrumentUsed;
-    private TextView make;
-    private TextView model;
-    private TextView aerosolUsed;
-    private TextView aerosolGeneratorType;
     private TextView instrumentSerialNo;
     private TextView calibrationOn;
     private TextView calibrationDueOn;
@@ -147,12 +143,13 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         pr = ProgressDialog.show(this, "Please Wait", "Loading...");
 
+        //init res file from xml
+        initRes();
+
         txtPassFailList = new ArrayList<TextView>();
         txtViewList = new ArrayList<TextView>();
-
         sharedpreferences = getSharedPreferences("valdoc", Context.MODE_PRIVATE);
         testDetailsId = (sharedpreferences.getInt("TESTDETAILSID", 0) + 1);
-
         if (getIntent().hasExtra("rows") && getIntent().hasExtra("cols")) {
             rows = getIntent().getIntExtra("rows", 0);
             cols = getIntent().getIntExtra("cols", 0);
@@ -160,12 +157,13 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
             Log.d(TAG, " TestType : " + mTestType);
         }
         mTestCode = getIntent().getStringExtra("testCode");
+
         //dynamic data population
         getExtraFromTestCreateActivity(savedInstanceState);
         //text view initialization
         initTextView();
         textViewValueAssignment();
-        initRes();
+
         datePicker();
         if (TestCreateActivity.FIT.equalsIgnoreCase(mTestType)) {
             buildTestFour(rows, cols);
@@ -225,7 +223,7 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
 // Now formattedDate have current date/time
         Toast.makeText(this, formattedDate, Toast.LENGTH_SHORT).show();
         int mon = month + 1;
-        certificateNo.setText("IT/" + mon + "/" + year + "/" + formattedDate);
+        //certificateNo.setText("IT/" + mon + "/" + year + "/" + formattedDate);
 
         // Show current date
         String date = new StringBuilder().append(day).append("-").append(month + 1).append("-").append(year).append(" ").toString();
@@ -272,15 +270,11 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
     private void textViewValueAssignment() {
         if (loginUserType.equals("CLIENT")) {
             instrumentUsed.setText(clientInstrument.getcInstrumentName());
-            make.setText(clientInstrument.getMake());
-            model.setText(clientInstrument.getModel());
             instrumentSerialNo.setText("" + clientInstrument.getSerialNo());
             calibrationOn.setText(Utilityies.parseDateToddMMyyyy(clientInstrument.getLastCalibrated()));
             calibrationDueOn.setText(Utilityies.parseDateToddMMyyyy(clientInstrument.getCalibrationDueDate()));
         } else {
             instrumentUsed.setText(partnerInstrument.getpInstrumentName());
-            make.setText(partnerInstrument.getMake());
-            model.setText(partnerInstrument.getModel());
             instrumentSerialNo.setText("" + partnerInstrument.getpInstrumentId());
             calibrationOn.setText(Utilityies.parseDateToddMMyyyy(partnerInstrument.getLastCalibrationDate()));
             calibrationDueOn.setText(Utilityies.parseDateToddMMyyyy(partnerInstrument.getCalibrationDueDate()));
@@ -289,8 +283,6 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
             JSONObject jsonObject = null;
             try {
                 jsonObject = new JSONObject(mApplicableTestEquipment.getTestProp());
-                aerosolUsed.setText(jsonObject.optString("AEROSOL_USED"));
-                aerosolGeneratorType.setText(jsonObject.optString("AEROSOL_GENERATOR_TYPE"));
             } catch (Exception e) {
 
             }
@@ -307,8 +299,8 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
             JSONObject jsonObject = null;
             try {
                 jsonObject = new JSONObject(mApplicableTestAhu.getTestProp());
-                aerosolUsed.setText(jsonObject.optString("AEROSOL_USED"));
-                aerosolGeneratorType.setText(jsonObject.optString("AEROSOL_GENERATOR_TYPE"));
+                //aerosolUsed.setText(jsonObject.optString("AEROSOL_USED"));
+               // aerosolGeneratorType.setText(jsonObject.optString("AEROSOL_GENERATOR_TYPE"));
             } catch (Exception e) {
 
             }
@@ -324,8 +316,8 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
             JSONObject jsonObject = null;
             try {
                 jsonObject = new JSONObject(mApplicableTestRoom.getTestProp());
-                aerosolUsed.setText(jsonObject.optString("AEROSOL_USED"));
-                aerosolGeneratorType.setText(jsonObject.optString("AEROSOL_GENERATOR_TYPE"));
+                //aerosolUsed.setText(jsonObject.optString("AEROSOL_USED"));
+                //aerosolGeneratorType.setText(jsonObject.optString("AEROSOL_GENERATOR_TYPE"));
             } catch (Exception e) {
 
             }
@@ -390,12 +382,8 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
 
         dateTextView = (TextView) findViewById(R.id.datetextview);
         customerName = (TextView) findViewById(R.id.customer_name);
-        certificateNo = (TextView) findViewById(R.id.certificate_no);
+       // certificateNo = (TextView) findViewById(R.id.certificate_no);
         instrumentUsed = (TextView) findViewById(R.id.instrumentused);
-        make = (TextView) findViewById(R.id.make);
-        model = (TextView) findViewById(R.id.modle);
-        aerosolUsed = (TextView) findViewById(R.id.aerosol_used);
-        aerosolGeneratorType = (TextView) findViewById(R.id.aerosol_generator_type);
         instrumentSerialNo = (TextView) findViewById(R.id.instrumentserialno);
         calibrationOn = (TextView) findViewById(R.id.calibratedon);
         calibrationDueOn = (TextView) findViewById(R.id.calibrationdueon);
@@ -549,13 +537,13 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
         testDetails.setCustomer(customerName.getText().toString());
         String date = year + "-" + (month + 1) + "-" + day + " ";
         testDetails.setDateOfTest(date);
-        testDetails.setRawDataNo(certificateNo.getText().toString());
+        //testDetails.setRawDataNo(certificateNo.getText().toString());
         testDetails.setPartnerName("" + mPartnerName);
         testDetails.setTestName("Filter Integrity Test");
         if (loginUserType.equals("CLIENT")) {
             testDetails.setInstrumentUsed(instrumentUsed.getText().toString());
-            testDetails.setMake("" + make.getText().toString());
-            testDetails.setModel("" + model.getText().toString());
+            //testDetails.setMake("" + make.getText().toString());
+            //testDetails.setModel("" + model.getText().toString());
             testDetails.setInstrumentNo("" + instrumentSerialNo.getText());
             testDetails.setCalibratedOn("" + clientInstrument.getLastCalibrated());
             testDetails.setCalibratedDueOn("" + clientInstrument.getCalibrationDueDate());
@@ -572,8 +560,8 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
             testDetails.setSamplingFlowRate("");
             testDetails.setSamplingTime("");
         }
-        testDetails.setAerosolUsed("" + aerosolUsed.getText());
-        testDetails.setAerosolGeneratorType("" + aerosolGeneratorType.getText());
+        //testDetails.setAerosolUsed("" + aerosolUsed.getText());
+        //testDetails.setAerosolGeneratorType("" + aerosolGeneratorType.getText());
 
         testDetails.setTestSpecification(testSpecification.getText().toString());
         testDetails.setBlockName(plantName.getText().toString());
@@ -1095,5 +1083,8 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
         test4_table_layout8 = (TableLayout) findViewById(R.id.test4_tableLayout8);
         findViewById(R.id.test_table_4_header_l_ll).setVisibility(View.GONE);
         findViewById(R.id.test_table_4_header_2_ll).setVisibility(View.GONE);
+        findViewById(R.id.test_interference).setVisibility(View.GONE);
+        findViewById(R.id.test_note_tv).setVisibility(View.VISIBLE);
+        findViewById(R.id.test_note_fit_tv).setVisibility(View.VISIBLE);
     }
 }
