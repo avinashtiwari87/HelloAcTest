@@ -1347,7 +1347,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
-                    row.addView(addTextView("Average before Scanning\nConcentration (µg/liter) "));
+                    row.addView(addTextView("Average\nbefore Scanning(%) "));
                 } else {
                     row.addView(addEditTextViewbeforestream(i));
                     //row.addView(addEditTextView(i));
@@ -1366,7 +1366,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
-                    row.addView(addTextView("Average After Scanning\nConcentration (µg/liter) "));
+                    row.addView(addTextView("Average\nAfter Scanning(%)"));
                 } else {
                     row.addView(addEditTextViewAfterStream(i));
                     //row.addView(addEditTextView(i));
@@ -2560,6 +2560,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         test4_table_layout6 = (TableLayout) findViewById(R.id.test4_tableLayout6);
         test4_table_layout7 = (TableLayout) findViewById(R.id.test4_tableLayout7);
         test4_table_layout8 = (TableLayout) findViewById(R.id.test4_tableLayout8);
+        test4_table_layout8.setVisibility(View.GONE);
         if (TestCreateActivity.FIT.equalsIgnoreCase(testType)) {
 //            findViewById(R.id.test1_dynamic_table_ll).setVisibility(View.GONE);
             instrumentNo = (TextView) findViewById(R.id.instrument_no4);
@@ -2573,13 +2574,15 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 instrumentName.setText(partnerInstrument.getpInstrumentName());
                 instrumentNo.setText("" + partnerInstrument.getSerialNo());
             }
+            TextView testHeaderAv = (TextView)findViewById(R.id.test_type_header_AVTest);
+            testHeaderAv.setText("FORM:TEST RAW DATA (FIT)\nInstalled HEPA Filter System Leakage Test by Aerosol Photometer Method");
             findViewById(R.id.test4_dynamic_table_ll).setVisibility(View.VISIBLE);
             if (mTestBasedOn.equalsIgnoreCase("EQUIPMENT")) {
                 roomName.setText("" + roomDetails[1]);
             } else if (mTestBasedOn.equalsIgnoreCase("AHU")) {
                 roomName.setText("hello" + roomDetails[1]);
             } else if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
-                roomName.setText("" + room.getRoomName());
+               // roomName.setText("" + room.getRoomName());
             }
 
         }

@@ -6,6 +6,7 @@
 
 
     <LinearLayout
+        android:visibility="gone"
         android:id="@+id/test_table_4_header_l_ll"
         style="@style/TextAppearance.AppCompat.header_top"
         android:background="@color/black_overlay">
@@ -16,6 +17,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:visibility="gone"
         android:id="@+id/instrument_and_username_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -72,6 +74,7 @@
 
     </LinearLayout>
     <LinearLayout
+        android:visibility="gone"
         android:id="@+id/instrument_no_and_roomname_layout"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
@@ -128,6 +131,7 @@
 
     </LinearLayout>
     <LinearLayout
+        android:visibility="gone"
         android:id="@+id/test_table_4_header_2_ll"
         style="@style/TextAppearance.AppCompat.header_top"
         android:layout_marginTop="10dp"
