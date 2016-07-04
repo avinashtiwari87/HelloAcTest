@@ -23,7 +23,6 @@
         android:id="@+id/test4_dynamic_table_ll"/>
 
     <include layout="@layout/test_table_5"
-        android:visibility="gone"
         android:id="@+id/test5_dynamic_table_ll"/>
 
     <include layout="@layout/test_table_6_a"
