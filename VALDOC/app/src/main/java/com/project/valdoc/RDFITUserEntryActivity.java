@@ -652,7 +652,7 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-//        headerText.setText("*  Installed HEPA Filter System Leakage Test *");
+       headerText.setText("TEST RAW DATA (FIT)\nInstalled HEPA Filter System Leakage Test by Aerosol Photometer Method");
     }
 
     private void BuildTableTest4(int rows, int cols) {
@@ -1082,7 +1082,7 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
         test4_table_layout7 = (TableLayout) findViewById(R.id.test4_tableLayout7);
         test4_table_layout8 = (TableLayout) findViewById(R.id.test4_tableLayout8);
         findViewById(R.id.test_table_4_header_l_ll).setVisibility(View.GONE);
-        findViewById(R.id.test_table_4_header_2_ll).setVisibility(View.GONE);
+        findViewById(R.id.test_table_4_header_2_ll).setVisibility(View.VISIBLE);
         findViewById(R.id.test_interference).setVisibility(View.GONE);
         findViewById(R.id.test_note_tv).setVisibility(View.VISIBLE);
         findViewById(R.id.test_note_fit_tv).setVisibility(View.VISIBLE);

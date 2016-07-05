@@ -11,7 +11,7 @@
         android:orientation="vertical"
         tools:context="com.app.voldoc.RDPC3UserEntryActivity">
 
-        <include layout="@layout/certificate" />
+        <include layout="@layout/new_common_certificate" />
 
         <include layout="@layout/test_table_5"
             android:visibility="visible"
