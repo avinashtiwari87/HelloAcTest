@@ -275,13 +275,13 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
             }
         });
 
-        dateTextView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // On button click show datepicker dialog
-                showDialog(DATE_PICKER_ID);
-            }
-        });
+//        dateTextView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                // On button click show datepicker dialog
+//                showDialog(DATE_PICKER_ID);
+//            }
+//        });
     }
 
     @Override

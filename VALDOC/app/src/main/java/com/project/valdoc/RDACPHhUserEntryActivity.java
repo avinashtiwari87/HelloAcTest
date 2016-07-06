@@ -255,7 +255,6 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
             month = selectedMonth;
             day = selectedDay;
 
-
             // Show selected date
             String date = new StringBuilder().append(day).append("-").append(month + 1).append("-").append(year).append(" ").toString();
             dateTextView.setText(date);
@@ -310,8 +309,6 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
         if (null != witnessThird && witnessThird.length() > 0)
             witness.append("," + witnessThird);
         testWitness.setText(witness);
-
-
     }
 
     private void initTextView() {
@@ -403,13 +400,13 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
             }
         });
 
-        dateTextView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // On button click show datepicker dialog
-                showDialog(DATE_PICKER_ID);
-            }
-        });
+//        dateTextView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                // On button click show datepicker dialog
+//                showDialog(DATE_PICKER_ID);
+//            }
+//        });
     }
 
     private ArrayList<TestSpesificationValue> testSpesificationValue() {

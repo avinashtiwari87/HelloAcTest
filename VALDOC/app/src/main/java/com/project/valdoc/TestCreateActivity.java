@@ -1,5 +1,7 @@
 package com.project.valdoc;
 
+import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -17,6 +19,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
@@ -39,8 +42,10 @@ import com.project.valdoc.intity.RoomFilter;
 import com.project.valdoc.utility.Utilityies;
 
 import java.lang.reflect.Array;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
@@ -83,7 +88,7 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
     private String[] searchEquipmentTestCode = new String[]{"", "AV", "FIT", "PCT", "RCT"};
 
     private ImageView submit;
-    private TextView user_name;
+    private TextView test_date;
     private EditText witnessFirst;
     private EditText witnessSecond;
     private EditText witnessThird;
@@ -119,7 +124,10 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
     private static String spinerTestType;
     private static int spinerEquipment;
     private String mPartnerName;
-
+    private int year;
+    private int month;
+    private int day;
+    static final int DATE_PICKER_ID = 1111;
     //Storing spinner position to show selected
     // after Certificate submit
     int instrumentSpinerPos = 0, equipmentOrAhuSpinnerPos = 0,
@@ -171,7 +179,7 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
         listItemCreation();
         spinnerCreation();
         initButton();
-
+        datePicker();
         //Custom Action Bar
         ActionBar mActionBar = getSupportActionBar();
         if (mActionBar != null)
@@ -594,7 +602,14 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
         //get filter list from equipment filter
         Log.d("valdoc", "TestCreateActivity :equipment id name equipment1:=" + equipment.getEquipmentName());
         mEquipmentGrillArrayList = mValdocDatabaseHandler.getGrillFromEquipmentGrill(equipment.getEquipmentId());
-        intent.putExtra("GRILLLIST", mEquipmentGrillArrayList);
+        if(null!=mEquipmentGrillArrayList&&mEquipmentGrillArrayList.size()>0) {
+            intent.putExtra("GrilFilterType", "Grill");
+            intent.putExtra("GRILLLIST", mEquipmentGrillArrayList);
+        }else{
+            mEquipmentFilterArrayList=mValdocDatabaseHandler.getFilterFromEquipmentFilter(equipment.getEquipmentId());
+            intent.putExtra("GrilFilterType", "Filter");
+            intent.putExtra("GRILLLIST", mEquipmentGrillArrayList);
+        }
         ApplicableTestEquipment applicableTestEquipment = createApplicableTestEquipmentList(equipment.getEquipmentId(), testcode);
         intent.putExtra("ApplicableTestEquipment", applicableTestEquipment);
         Log.d("valdoc", "TestCreateActivity :equipment id name getLocation:=" + applicableTestEquipment.getLocation());
@@ -650,10 +665,67 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
         return flag;
     }
 
+    @Override
+    protected Dialog onCreateDialog(int id) {
+        switch (id) {
+            case DATE_PICKER_ID:
+
+                // open datepicker dialog.
+                // set date picker for current date
+                // add pickerListener listner to date picker
+                return new DatePickerDialog(this, pickerListener, year, month, day);
+        }
+        return null;
+    }
+
+    private DatePickerDialog.OnDateSetListener pickerListener = new DatePickerDialog.OnDateSetListener() {
+
+        // when dialog box is closed, below method will be called.
+        @Override
+        public void onDateSet(DatePicker view, int selectedYear,
+                              int selectedMonth, int selectedDay) {
+
+            year = selectedYear;
+            month = selectedMonth;
+            day = selectedDay;
+
+            // Show selected date
+            String date = new StringBuilder().append(day).append("-").append(month + 1).append("-").append(year).append(" ").toString();
+            test_date.setText(date);
+//            new StringBuilder().append(year)
+//                    .append("-").append(month + 1).append("-").append(day)
+//                    .append(" "));
+
+        }
+    };
+    private void datePicker() {
+        // Get current date by calender
+
+        final Calendar c = Calendar.getInstance();
+        year = c.get(Calendar.YEAR);
+        month = c.get(Calendar.MONTH);
+        day = c.get(Calendar.DAY_OF_MONTH);
+
+        //raw data no
+        SimpleDateFormat df = new SimpleDateFormat("HH:mm:ss");
+        String formattedDate = df.format(c.getTime());
+
+        // Show current date
+        String date = new StringBuilder().append(day).append("-").append(month + 1).append("-").append(year).append(" ").toString();
+        test_date.setText(date);
+    }
+
     public void spinerInitialization() {
-        user_name = (TextView) findViewById(R.id.user_name);
-        user_name.setText("" + sharedpreferences.getString("USERNAME", ""));
-        user_name.setVisibility(View.GONE);
+        test_date = (TextView) findViewById(R.id.test_date);
+        test_date.setText("");
+        test_date.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // On button click show datepicker dialog
+                showDialog(DATE_PICKER_ID);
+            }
+        });
+//        test_date.setVisibility(View.GONE);
         equipmentAhuOrRoomSpinner = (Spinner) findViewById(R.id.equipment_ahu_room_spinner);
         equipmentAhuOrRoomSpinner.setOnTouchListener(this);
 
