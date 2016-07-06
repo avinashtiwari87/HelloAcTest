@@ -70,8 +70,6 @@ public class RDPC3UserEntryActivity extends AppCompatActivity {
 
     //certificate view id creation
     private TextView instrumentUsed;
-    private TextView make;
-    private TextView model;
     private TextView samplingTimeLable;
     private TextView samplingFlowRateLable;
     private TextView samplingTime;
@@ -94,7 +92,7 @@ public class RDPC3UserEntryActivity extends AppCompatActivity {
     private TextView testWitness;
     private TextView dateTextView;
     private TextView customerName;
-    private TextView certificateNo;
+    //private TextView certificateNo;
     private TextView testWitnessOrg;
     private TextView testCondoctorOrg;
     private TextView instrumentNoTextView;
@@ -152,8 +150,8 @@ public class RDPC3UserEntryActivity extends AppCompatActivity {
         initRes();
         datePicker();
         if (TestCreateActivity.PCT.equalsIgnoreCase(mTestType)) {
-            BuildTableTest5(rows, cols);
-//            BuildTableTest55(rows, cols);
+           // BuildTableTest5(rows, cols);
+            BuildTableTest5(7, 3);
         }
 
 
@@ -207,7 +205,7 @@ public class RDPC3UserEntryActivity extends AppCompatActivity {
 // Now formattedDate have current date/time
         Toast.makeText(this, formattedDate, Toast.LENGTH_SHORT).show();
         int mon = month + 1;
-        certificateNo.setText("C3/" + mon + "/" + year + "/" + formattedDate);
+        //certificateNo.setText("C3/" + mon + "/" + year + "/" + formattedDate);
 
         // Show current date
         String date = new StringBuilder().append(day).append("-").append(month + 1).append("-").append(year).append(" ").toString();
@@ -255,8 +253,6 @@ public class RDPC3UserEntryActivity extends AppCompatActivity {
     private void textViewValueAssignment() {
         if (loginUserType.equals("CLIENT")) {
             instrumentUsed.setText(clientInstrument.getcInstrumentName());
-            make.setText(clientInstrument.getMake());
-            model.setText(clientInstrument.getModel());
             instrumentSerialNo.setText("" + clientInstrument.getSerialNo());
             calibrationOn.setText(Utilityies.parseDateToddMMyyyy(clientInstrument.getLastCalibrated()));
             calibrationDueOn.setText(Utilityies.parseDateToddMMyyyy(clientInstrument.getCalibrationDueDate()));
@@ -264,8 +260,6 @@ public class RDPC3UserEntryActivity extends AppCompatActivity {
 //            samplingTime.setText(clientInstrument.getSamplingTime());
         } else {
             instrumentUsed.setText(partnerInstrument.getpInstrumentName());
-            make.setText(partnerInstrument.getMake());
-            model.setText(partnerInstrument.getModel());
             instrumentSerialNo.setText("" + partnerInstrument.getpInstrumentId());
             calibrationOn.setText(Utilityies.parseDateToddMMyyyy(partnerInstrument.getLastCalibrationDate()));
             calibrationDueOn.setText(Utilityies.parseDateToddMMyyyy(partnerInstrument.getCalibrationDueDate()));
@@ -324,17 +318,15 @@ public class RDPC3UserEntryActivity extends AppCompatActivity {
 
         dateTextView = (TextView) findViewById(R.id.datetextview);
         customerName = (TextView) findViewById(R.id.customer_name);
-        certificateNo = (TextView) findViewById(R.id.certificate_no);
+        //certificateNo = (TextView) findViewById(R.id.certificate_no);
         instrumentUsed = (TextView) findViewById(R.id.instrumentused);
-        make = (TextView) findViewById(R.id.make);
-        model = (TextView) findViewById(R.id.modle);
 
-        samplingTimeLable = (TextView) findViewById(R.id.aerosol_used_lable);
-        samplingFlowRateLable = (TextView) findViewById(R.id.aerosol_generator_type_lable);
-        samplingFlowRateLable.setText(getResources().getString(R.string.sampling_flow_rate_lable));
-        samplingTimeLable.setText(getResources().getString(R.string.sampling_time_lable));
-        samplingTime = (TextView) findViewById(R.id.aerosol_used);
-        samplingFlowRate = (TextView) findViewById(R.id.aerosol_generator_type);
+        //samplingTimeLable = (TextView) findViewById(R.id.aerosol_used_lable);
+       /// samplingFlowRateLable = (TextView) findViewById(R.id.aerosol_generator_type_lable);
+       // samplingFlowRateLable.setText(getResources().getString(R.string.sampling_flow_rate_lable));
+       // samplingTimeLable.setText(getResources().getString(R.string.sampling_time_lable));
+       // samplingTime = (TextView) findViewById(R.id.aerosol_used);
+       // samplingFlowRate = (TextView) findViewById(R.id.aerosol_generator_type);
 
         instrumentSerialNo = (TextView) findViewById(R.id.instrumentserialno);
         calibrationOn = (TextView) findViewById(R.id.calibratedon);
@@ -480,7 +472,7 @@ public class RDPC3UserEntryActivity extends AppCompatActivity {
         int mon = month + 1;
         String date = year + "-" + mon + "-" + day;
         testDetails.setDateOfTest("" + date);
-        testDetails.setRawDataNo(certificateNo.getText().toString());
+       // testDetails.setRawDataNo(certificateNo.getText().toString());
         testDetails.setPartnerName("" + mPartnerName);
         testDetails.setTestName(TestCreateActivity.PCT);
         if (loginUserType.equals("CLIENT")) {
@@ -587,7 +579,7 @@ public class RDPC3UserEntryActivity extends AppCompatActivity {
 
                     TextView textView = addTextView(" Location ");
                     ViewGroup.LayoutParams params = textView.getLayoutParams();
-                    params.height = getResources().getDimensionPixelSize(R.dimen.text_view_height);
+                    params.height = getResources().getDimensionPixelSize(R.dimen.text_view_height2);
                     textView.setLayoutParams(params);
                     row.addView(textView);
                 } else {
@@ -598,13 +590,13 @@ public class RDPC3UserEntryActivity extends AppCompatActivity {
             }
             test5_table_layout.addView(row);
         }
-        for (int sk = 0; sk < 3; sk++) {
+/*        for (int sk = 0; sk < 3; sk++) {
             TableRow row = new TableRow(this);
             row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
                     TableRow.LayoutParams.WRAP_CONTENT));
             row.addView(addTextView("    "));
             test5_table_layout.addView(row);
-        }
+        }*/
 
 // adding no of partical text
 //        if(i==1) {
@@ -664,7 +656,7 @@ public class RDPC3UserEntryActivity extends AppCompatActivity {
                 if (i == 1 && j == 1) {
                     TextView textView = addTextView(" Average ");
                     ViewGroup.LayoutParams params = textView.getLayoutParams();
-                    params.height = getResources().getDimensionPixelSize(R.dimen.text_view_height);
+                    params.height = getResources().getDimensionPixelSize(R.dimen.text_view_height2);
                     textView.setLayoutParams(params);
                     row.addView(textView);
                 } else {
@@ -737,9 +729,9 @@ public class RDPC3UserEntryActivity extends AppCompatActivity {
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
-                    TextView textView = addTextView(" Average ");
+                    TextView textView = addTextView("Average");
                     ViewGroup.LayoutParams params = textView.getLayoutParams();
-                    params.height = getResources().getDimensionPixelSize(R.dimen.text_view_height);
+                    params.height = getResources().getDimensionPixelSize(R.dimen.text_view_height2);
                     textView.setLayoutParams(params);
                     row.addView(textView);
                 } else {
@@ -778,7 +770,7 @@ public class RDPC3UserEntryActivity extends AppCompatActivity {
                 TableRow.LayoutParams.WRAP_CONTENT));
         tv.setBackgroundResource(R.drawable.border1);
         tv.setGravity(Gravity.CENTER);
-        //tv.setPadding(5, 5, 5, 5);
+        //tv.setPadding(3, 3, 3, 3);
         tv.setTextColor(getResources().getColor(R.color.black));
         tv.setTextSize(getResources().getDimension(R.dimen.normal_text_size));
         tv.setGravity(Gravity.CENTER);
@@ -838,7 +830,7 @@ public class RDPC3UserEntryActivity extends AppCompatActivity {
         tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
                 TableRow.LayoutParams.WRAP_CONTENT));
         tv.setBackgroundResource(R.drawable.border);
-        tv.setPadding(5, 6, 5, 9);
+        tv.setPadding(5, 19, 5, 0);
         tv.setTextColor(getResources().getColor(R.color.black));
         tv.setTextSize(getResources().getDimension(R.dimen.normal_text_size));
         //tv.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD);
@@ -876,22 +868,24 @@ public class RDPC3UserEntryActivity extends AppCompatActivity {
 
     private void initRes() {
         headerText = (TextView) findViewById(R.id.common_header_tv);
-//        headerText.setText("* Airborne Particle Count Test for Classification of Cleanrooms/zones and Clean Air Devices *");
+        headerText.setText("TEST RAW DATA (RD_PCT)\nAirborne Particle Count Test for Classification of Cleanrooms/zones and Clean Air Devices");
         //Test5
         test5_table_layout = (TableLayout) findViewById(R.id.test5_tableLayout1);
         test5_table_layout2 = (TableLayout) findViewById(R.id.test5_tableLayout2);
+        test5_table_layout2.setVisibility(View.GONE);
         test5_table_layout2_1 = (TableLayout) findViewById(R.id.test5_tableLayout2_1);
         test5_tableLayout2_2 = (TableLayout) findViewById(R.id.test5_tableLayout2_2);
         test5_table_layout3 = (TableLayout) findViewById(R.id.test5_tableLayout3);
         test5_table_layout3_1 = (TableLayout) findViewById(R.id.test5_tableLayout3_1);
+        test5_table_layout3_1.setVisibility(View.GONE);
         test5_table_layout4 = (TableLayout) findViewById(R.id.test5_tableLayout4);
+        test5_table_layout4.setVisibility(View.GONE);
         test5_table_layout4_1 = (TableLayout) findViewById(R.id.test5_tableLayout4_1);
         test5_tableLayout4_2 = (TableLayout) findViewById(R.id.test5_tableLayout4_2);
         test5_table_layout5 = (TableLayout) findViewById(R.id.test5_tableLayout5);
         test5_table_layout5_1 = (TableLayout) findViewById(R.id.test5_tableLayout5_1);
-
-
+        test5_table_layout5_1.setVisibility(View.GONE);
         findViewById(R.id.test_table_5_header_l_ll).setVisibility(View.GONE);
-        findViewById(R.id.test_table_5_header_2_ll).setVisibility(View.GONE);
+        findViewById(R.id.test_table_5_header_2_ll).setVisibility(View.VISIBLE);
     }
 }

@@ -397,14 +397,15 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 else
                     aleartDialog("There is no filter ");
             }
-//            setCommonTestHeader(testType, mTestBasedOn);
+           setCommonTestHeader(testType, mTestBasedOn);
         } else if (TestCreateActivity.PCT.equalsIgnoreCase(testType)) {
             rows = applicableTestRoomLocation + 1;
             if (rows >= 1) {
-                BuildTableTest5(applicableTestRoomLocation + 1, noOfCycle);
+               // BuildTableTest5(applicableTestRoomLocation + 1, noOfCycle);
+                BuildTableTest5(7, 3);
             } else
                 aleartDialog("There is no noOfCycle or applicable test room location");
-//            setCommonTestHeader(testType, mTestBasedOn);
+            // setCommonTestHeader(testType, mTestBasedOn);
         } else if (TestCreateActivity.RCT.equalsIgnoreCase(testType)) {
 //            if (grillAndSizeFromGrill != null && grillAndSizeFromGrill.size() > 0)
 //                BuildTableTest6(grillAndSizeFromGrill.size() + 1, cols);
@@ -1124,7 +1125,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                     TextView textView = addTextView(" Location ");
                     ViewGroup.LayoutParams params = textView.getLayoutParams();
                     params.height = getResources().getDimensionPixelSize(R.dimen.text_view_height);
-                    textView.setLayoutParams(params);
+                   textView.setLayoutParams(params);
                     row.addView(textView);
                 } else {
                     int position = i - 1;
@@ -1134,13 +1135,13 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             }
             test5_table_layout.addView(row);
         }
-        for (int sk = 0; sk < 3; sk++) {
+/*        for (int sk = 0; sk < 3; sk++) {
             TableRow row = new TableRow(this);
             row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
                     TableRow.LayoutParams.WRAP_CONTENT));
             row.addView(addTextView("    "));
             test5_table_layout.addView(row);
-        }
+        }*/
 
 // adding no of partical text
 //        if(i==1) {
@@ -2508,6 +2509,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         table_layout3.setVisibility(View.GONE);
         table_layout4 = (TableLayout) findViewById(R.id.tableLayout4);
         table_layout4.setVisibility(View.GONE);
+        TextView testHeaderAv = (TextView)findViewById(R.id.test_type_header_AVTest);
         if (TestCreateActivity.AV.equalsIgnoreCase(testType)) {
             findViewById(R.id.test1_dynamic_table_ll).setVisibility(View.VISIBLE);
             findViewById(R.id.test1_reading_header).setVisibility(View.VISIBLE);
@@ -2530,7 +2532,6 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         if (TestCreateActivity.ACPHAV.equalsIgnoreCase(testType)) {
 //            LinearLayout linearLayout=(LinearLayout)findViewById(R.id.test_table2);
 //            linearLayout.setVisibility(View.VISIBLE);
-            TextView testHeaderAv = (TextView)findViewById(R.id.test_type_header_AVTest);
             testHeaderAv.setText(R.string.header_title1);
             findViewById(R.id.test2_reading_header).setVisibility(View.VISIBLE);
         }
@@ -2545,7 +2546,6 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         test3_table_layout5 = (TableLayout) findViewById(R.id.test3_tableLayout5);
         test3_table_layout5.setVisibility(View.GONE);
         if (TestCreateActivity.ACPHH.equalsIgnoreCase(testType)) {
-            TextView testHeaderAv = (TextView)findViewById(R.id.test_type_header_AVTest);
             testHeaderAv.setText("FORM: TEST RAW DATA (RD_ACPH_H)\n(Air Flow Velocity, Volume Testing and Determination of Air Changes per Hour Rates)");
             findViewById(R.id.test3_dynamic_table_ll).setVisibility(View.VISIBLE);
 
@@ -2574,7 +2574,6 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 instrumentName.setText(partnerInstrument.getpInstrumentName());
                 instrumentNo.setText("" + partnerInstrument.getSerialNo());
             }
-            TextView testHeaderAv = (TextView)findViewById(R.id.test_type_header_AVTest);
             testHeaderAv.setText("FORM:TEST RAW DATA (FIT)\nInstalled HEPA Filter System Leakage Test by Aerosol Photometer Method");
             findViewById(R.id.test4_dynamic_table_ll).setVisibility(View.VISIBLE);
             if (mTestBasedOn.equalsIgnoreCase("EQUIPMENT")) {
@@ -2590,15 +2589,21 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         //Test5
         test5_table_layout = (TableLayout) findViewById(R.id.test5_tableLayout1);
         test5_table_layout2 = (TableLayout) findViewById(R.id.test5_tableLayout2);
+        test5_table_layout2.setVisibility(View.GONE);
         test5_table_layout2_1 = (TableLayout) findViewById(R.id.test5_tableLayout2_1);
         test5_tableLayout2_2 = (TableLayout) findViewById(R.id.test5_tableLayout2_2);
         test5_table_layout3 = (TableLayout) findViewById(R.id.test5_tableLayout3);
+        test5_table_layout3.setVisibility(View.GONE);
         test5_table_layout3_1 = (TableLayout) findViewById(R.id.test5_tableLayout3_1);
+        test5_table_layout3_1.setVisibility(View.GONE);
         test5_table_layout4 = (TableLayout) findViewById(R.id.test5_tableLayout4);
+        test5_table_layout4.setVisibility(View.GONE);
         test5_tableLayout4_2 = (TableLayout) findViewById(R.id.test5_tableLayout4_2);
         test5_table_layout4_1 = (TableLayout) findViewById(R.id.test5_tableLayout4_1);
         test5_table_layout5 = (TableLayout) findViewById(R.id.test5_tableLayout5);
+        test5_table_layout5.setVisibility(View.GONE);
         test5_table_layout5_1 = (TableLayout) findViewById(R.id.test5_tableLayout5_1);
+        test5_table_layout5_1.setVisibility(View.GONE);
         if (TestCreateActivity.PCT.equalsIgnoreCase(testType)) {
 //            findViewById(R.id.test1_dynamic_table_ll).setVisibility(View.GONE);
             instrumentNo = (TextView) findViewById(R.id.instrument_no5);
@@ -2614,6 +2619,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 instrumentName.setText(partnerInstrument.getpInstrumentName());
                 instrumentNo.setText("" + partnerInstrument.getSerialNo());
             }
+            testHeaderAv.setText("FORM:TEST RAW DATA (RD_PCT)\nAirborne Particle Count Test for Classification of Cleanrooms/zones and Clean Air Devices");
             findViewById(R.id.test5_dynamic_table_ll).setVisibility(View.VISIBLE);
         }
 
