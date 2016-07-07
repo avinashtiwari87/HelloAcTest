@@ -249,14 +249,14 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
         if (AV.equals(searchEquipmentTestCode[testPosition])) {
             rdAv5Test(equipmentTestCode[testPosition], testBasedOn);
         } else if (FIT.equals(searchEquipmentTestCode[testPosition])) {
-            aleartDialog("Under development");
-//            rdFit(equipmentTestCode[testPosition], testBasedOn, FIT);
+//            aleartDialog("Under development");
+            rdFit(equipmentTestCode[testPosition], testBasedOn, FIT);
         } else if (PCT.equals(searchEquipmentTestCode[testPosition])) {
-            aleartDialog("Under development");
-//            rdPc3(equipmentTestCode[testPosition], testBasedOn);
+//            aleartDialog("Under development");
+            rdPc3(equipmentTestCode[testPosition], testBasedOn);
         } else if (RCT.equals(searchEquipmentTestCode[testPosition])) {
-            aleartDialog("Under development");
-//            rdRct(equipmentTestCode[testPosition], testBasedOn);
+//            aleartDialog("Under development");
+            rdRct(equipmentTestCode[testPosition], testBasedOn);
         } else {
             Toast.makeText(TestCreateActivity.this, "Please select the correct test to be performed", Toast.LENGTH_SHORT).show();
         }
@@ -348,13 +348,16 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
             Log.d("valdoc", "TestCreateActivity mApplicableTestRoom=" + mApplicableTestRoom.getLocation());
             intent.putExtra("ApplicableTestRoom", mApplicableTestRoom);
 
-            //get filter list from equipment filter
-            roomFilterList = mValdocDatabaseHandler.getFromRoomFilter(room.getRoomId());
-            Log.d("valdoc", "TestCreateActivity filterArrayList=" + roomFilterList.size());
-            intent.putExtra("RoomFilter", roomFilterList);
-//            ArrayList<HashMap<String, String>> grillAndSizeFromGrill = mValdocDatabaseHandler.getGrillAndSizeFromGrill(room.getRoomId());
-//            intent.putExtra("GRILLIST", grillAndSizeFromGrill);
-
+            ArrayList<HashMap<String, String>> grillAndSizeFromGrill = mValdocDatabaseHandler.getGrillAndSizeFromGrill(room.getRoomId());
+            if(null!=grillAndSizeFromGrill&&grillAndSizeFromGrill.size()>0) {
+                intent.putExtra("GrilFilterType", "Grill");
+                intent.putExtra("GRILLLIST", grillAndSizeFromGrill);
+            }else{
+                roomFilterList = mValdocDatabaseHandler.getFromRoomFilter(room.getRoomId());
+                Log.d("valdoc", "TestCreateActivity filterArrayList=" + roomFilterList.size());
+                intent.putExtra("RoomFilter", roomFilterList);
+                intent.putExtra("GrilFilterType", "Filter");
+            }
         }
         startActivity(intent);
     }
@@ -391,14 +394,18 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
         createApplicableTestRoomList(room.getRoomId(),ACPHH);
         intent.putExtra("ApplicableTestRoom", mApplicableTestRoom);
 
-        roomFilterList = mValdocDatabaseHandler.getFromRoomFilter(room.getRoomId());
-        Log.d("valdoc", "TestCreateActivity filterArrayList=" + roomFilterList.size());
-        intent.putExtra("RoomFilter", roomFilterList);
-
+        ArrayList<HashMap<String, String>> grillAndSizeFromGrill = mValdocDatabaseHandler.getGrillAndSizeFromGrill(room.getRoomId());
+        if(null!=grillAndSizeFromGrill&&grillAndSizeFromGrill.size()>0) {
+            intent.putExtra("GrilFilterType", "Grill");
+            intent.putExtra("GRILLLIST", grillAndSizeFromGrill);
+        }else{
+            roomFilterList = mValdocDatabaseHandler.getFromRoomFilter(room.getRoomId());
+            Log.d("valdoc", "TestCreateActivity filterArrayList=" + roomFilterList.size());
+            intent.putExtra("RoomFilter", roomFilterList);
+            intent.putExtra("GrilFilterType", "Filter");
+        }
         //get filter list from equipment filter
 //        Log.d("valdoc", "TestCreateActivity :equipment id equipment1:=" + room.getRoomId());
-//        ArrayList<HashMap<String, String>> grillAndSizeFromGrill = mValdocDatabaseHandler.getGrillAndSizeFromGrill(room.getRoomId());
-//        intent.putExtra("GRILLIST", grillAndSizeFromGrill);
 //        Log.d("valdoc", "TestCreateActivity :grill size:=" + grillAndSizeFromGrill.size());
         startActivity(intent);
     }
@@ -444,6 +451,7 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
             String[] roomDetails = null;
             //TO Do testspesification will be shown from room filter spesification
             intent.putExtra("AhuNumber", ahuSpinner.getSelectedItem().toString());
+            intent.putExtra("testItem",roomSpinner.getSelectedItem().toString());
             int ahuIndex = ahuSpinner.getSelectedItemPosition();
             Ahu ahu = null;
             if (ahuIndex > 0) {
@@ -462,7 +470,6 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
             intent.putExtra("ApplicableTestAhu", applicableTestAhu);
 
         } else if (testBasedOn.equalsIgnoreCase("ROOM")) {
-
             //get room name,roomNo,and area id
             Log.d("valdoc", "TestCreateActivity :roomNoSpinner:=" + roomNoSpinner.getSelectedItemPosition());
             int pos = roomNoSpinner.getSelectedItemPosition();
@@ -608,7 +615,7 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
         }else{
             mEquipmentFilterArrayList=mValdocDatabaseHandler.getFilterFromEquipmentFilter(equipment.getEquipmentId());
             intent.putExtra("GrilFilterType", "Filter");
-            intent.putExtra("GRILLLIST", mEquipmentGrillArrayList);
+            intent.putExtra("GRILLLIST", mEquipmentFilterArrayList);
         }
         ApplicableTestEquipment applicableTestEquipment = createApplicableTestEquipmentList(equipment.getEquipmentId(), testcode);
         intent.putExtra("ApplicableTestEquipment", applicableTestEquipment);

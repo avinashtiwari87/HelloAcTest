@@ -63,7 +63,7 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
     private Room room;
     private ApplicableTestRoom mApplicableTestRoom = null;
     private ArrayList<RoomFilter> mRoomFilterArrayList;
-    //    private ArrayList<HashMap<String, String>> grillAndSizeFromGrill;
+    private ArrayList<HashMap<String, String>> grillAndSizeFromGrill;
     private String areaName;
     private String witnessFirst;
     private String witnessSecond;
@@ -121,6 +121,7 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
     private int day;
     private String mTestCode = "";
     private String mTestBasedOn;
+    private String mGrilFilterType;
     static final int DATE_PICKER_ID = 1111;
 
     @Override
@@ -147,6 +148,7 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
             mTestType = getIntent().getStringExtra("testType");
             Log.d(TAG, " TestType : " + mTestType);
         }
+        mGrilFilterType = getIntent().getStringExtra("GrilFilterType");
         mTestCode = getIntent().getStringExtra("testCode");
         //dynamic data population
         getExtraFromTestCreateActivity(savedInstanceState);
@@ -185,8 +187,8 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
             mtvl.setText(totalAirFlowRate + "");
             TFRTxtv.setText(totalAirFlowRate + "");
         }
-        totalAirFlowRate=getIntent().getFloatExtra("totalAirFlowRate", 0f);
-        TFRTxtv.setText(""+totalAirFlowRate);
+        totalAirFlowRate = getIntent().getFloatExtra("totalAirFlowRate", 0f);
+        TFRTxtv.setText("" + totalAirFlowRate);
         //AirFlow Change
         if (airChangeTxtList != null && airChangeTxtList.size() > 0) {
             TextView airChangeTxt = airChangeTxtList.get(airChangeTxtList.size() / 2);
@@ -199,7 +201,7 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
             airChangeTxt.setText(airChangeValue + "");
             TFTAVTxtv.setText("" + airChangeValue);
         }
-        airChangeValue=getIntent().getIntExtra("AirChangeValue", 0);
+        airChangeValue = getIntent().getIntExtra("AirChangeValue", 0);
         TFTAVTxtv.setText("" + airChangeValue);
         //Custom Action Bar
         ActionBar mActionBar = getSupportActionBar();
@@ -440,16 +442,30 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
         ArrayList<TestReading> testReadingArrayList = new ArrayList<TestReading>();
         int index = 0;
         int hasMapKey = 200;
-        for (RoomFilter roomFilter : mRoomFilterArrayList) {
-            TestReading testReading = new TestReading();
+        if (mGrilFilterType.equalsIgnoreCase("Grill")) {
+            for (HashMap<String, String> grillHashMapArrayList : grillAndSizeFromGrill) {
+                TestReading testReading = new TestReading();
 //            testReading.setTestReadingID(index);
 //        TO DO test details id is id of test details table
-            testReading.setTest_detail_id(testDetailsId);
-            testReading.setEntityName(roomFilter.getFilterCode().toString());
-            testReading.setValue(supplyAirVelocity.get(hasMapKey).toString());
-            hasMapKey++;
-            index++;
-            testReadingArrayList.add(testReading);
+                testReading.setTest_detail_id(testDetailsId);
+                testReading.setEntityName(grillHashMapArrayList.get(ValdocDatabaseHandler.GRILL_GRILLCODE).toString());
+                testReading.setValue(supplyAirVelocity.get(hasMapKey).toString());
+                hasMapKey++;
+                index++;
+                testReadingArrayList.add(testReading);
+            }
+        } else {
+            for (RoomFilter roomFilter : mRoomFilterArrayList) {
+                TestReading testReading = new TestReading();
+//            testReading.setTestReadingID(index);
+//        TO DO test details id is id of test details table
+                testReading.setTest_detail_id(testDetailsId);
+                testReading.setEntityName(roomFilter.getFilterCode().toString());
+                testReading.setValue(supplyAirVelocity.get(hasMapKey).toString());
+                hasMapKey++;
+                index++;
+                testReadingArrayList.add(testReading);
+            }
         }
         return testReadingArrayList;
     }
@@ -546,8 +562,11 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
                 room = (Room) extras.getSerializable("Room");
                 ahuNumber = extras.getString("AhuNumber");
 //                grillAndSizeFromGrill = (ArrayList<HashMap<String, String>>) extras.getSerializable("GRILLIST");
-
-                mRoomFilterArrayList = (ArrayList<RoomFilter>) extras.getSerializable("RoomFilter");
+                if (mGrilFilterType.equalsIgnoreCase("Grill")) {
+                    grillAndSizeFromGrill = (ArrayList<HashMap<String, String>>) extras.getSerializable("GRILLIST");
+                } else {
+                    mRoomFilterArrayList = (ArrayList<RoomFilter>) extras.getSerializable("RoomFilter");
+                }
                 mApplicableTestRoom = (ApplicableTestRoom) extras.getSerializable("ApplicableTestRoom");
                 mTestCode = extras.getString("testCode");
                 mTestBasedOn = extras.getString("testBasedOn");
@@ -571,12 +590,25 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
                 if (i == 1 && j == 1) {
                     row.addView(addTextView(" Grille/Filter ID No\n "));
                 } else {
-                    if (null != mRoomFilterArrayList && mRoomFilterArrayList.size() > 0) {
-                        row.addView(addTextView(mRoomFilterArrayList.get(i - 2).getFilterCode()));
+
+                    if (mGrilFilterType.equalsIgnoreCase("Grill")) {
+                        if (null != grillAndSizeFromGrill && grillAndSizeFromGrill.size() > 0) {
+                            row.addView(addTextView(grillAndSizeFromGrill.get(i - 2).get(ValdocDatabaseHandler.GRILL_GRILLCODE).toString()));
+                        } else {
+                            row.addView(addTextView("grillAndSizeFromGrill"));
+                        }
+
                     } else {
-                        row.addView(addTextView("grillAndSizeFromGrill"));
+                        if (null != mRoomFilterArrayList && mRoomFilterArrayList.size() > 0) {
+//                            HashMap<String, String> grill = (HashMap<String, String>) grillAndSizeFromGrill.get(i - 2);
+//                            Log.d("valdoc", "DynamicTableActivity grillAndSizeFromGrill=" + grillAndSizeFromGrill.size() + "i=" + i);
+                            row.addView(addTextView(mRoomFilterArrayList.get(i - 2).getFilterCode()));
+                        } else {
+                            row.addView(addTextView("grillAndSizeFromGrill"));
+                        }
+
                     }
-//                    row.addView(addTextView(" Filter No " + i));
+
                 }
             }
             test3_table_layout.addView(row);

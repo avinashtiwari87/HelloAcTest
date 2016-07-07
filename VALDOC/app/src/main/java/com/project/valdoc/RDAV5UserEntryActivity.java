@@ -33,6 +33,7 @@ import com.project.valdoc.intity.ApplicableTestAhu;
 import com.project.valdoc.intity.ApplicableTestEquipment;
 import com.project.valdoc.intity.ClientInstrument;
 import com.project.valdoc.intity.Equipment;
+import com.project.valdoc.intity.EquipmentFilter;
 import com.project.valdoc.intity.EquipmentGrill;
 import com.project.valdoc.intity.PartnerInstrument;
 import com.project.valdoc.intity.TestDetails;
@@ -107,7 +108,9 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
     private String mTestCode = "";
     static final int DATE_PICKER_ID = 1111;
     private String mTestBasedOn;
+    private String mGrilFilterType ;
     private ArrayList<EquipmentGrill> mEquipmentGrillArrayList = null;
+    private ArrayList<EquipmentFilter> mEquipmentFilterArrayList = null;
     private ApplicableTestEquipment applicableTestEquipment = null;
     private Ahu ahu = null;
     private ArrayList<AhuFilter> mAhuFilterArrayList = null;
@@ -133,7 +136,7 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
             mTestType = getIntent().getStringExtra("testType");
             Log.d(TAG, " TestType : " + mTestType);
         }
-
+        mGrilFilterType =getIntent().getStringExtra("GrilFilterType");
         mTestCode = getIntent().getStringExtra("testCode");
         getExtraFromTestCreateActivity(savedInstanceState);
         //text view initialization
@@ -370,13 +373,23 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
         ArrayList<TestReading> readingArrayList = new ArrayList<TestReading>();
 
 //        TO DO test details id is id of test details table
-        int grilSize = mEquipmentGrillArrayList.size();
+        int grilSize =0;
+        if(mGrilFilterType.equalsIgnoreCase("Grill")) {
+            grilSize= mEquipmentGrillArrayList.size();
+        }else{
+            grilSize= mEquipmentFilterArrayList.size();
+        }
         int inputDataSize = txtViewList.size() / grilSize;
         int k = 0;
         for (int i = 0; i < grilSize; i++) {
             TestReading testReading = new TestReading();
             testReading.setTest_detail_id(testDetailsId);
-            testReading.setEntityName("" + mEquipmentGrillArrayList.get(i).getGrillCode());
+            if(mGrilFilterType.equalsIgnoreCase("Grill")) {
+                testReading.setEntityName("" + mEquipmentGrillArrayList.get(i).getGrillCode());
+            }else{
+                testReading.setEntityName("" + mEquipmentFilterArrayList.get(i).getFilterCode());
+            }
+
 
             StringBuilder sb = new StringBuilder();
             int index = 0;
@@ -488,7 +501,11 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
                     equipment = (Equipment) extras.getSerializable("Equipment");
                     //get filter list from equipment filter
 //                        filterList = new String[extras.getStringArray("FILTERLIST").length];
-                    mEquipmentGrillArrayList = (ArrayList<EquipmentGrill>) extras.getSerializable("GRILLLIST");
+                    if(mGrilFilterType.equalsIgnoreCase("Grill")) {
+                        mEquipmentGrillArrayList = (ArrayList<EquipmentGrill>) extras.getSerializable("GRILLLIST");
+                    }else{
+                        mEquipmentFilterArrayList=( ArrayList<EquipmentFilter>) extras.getSerializable("GRILLLIST");
+                    }
                     applicableTestEquipment = (ApplicableTestEquipment) extras.getSerializable("ApplicableTestEquipment");
                 } else if (mTestBasedOn.equalsIgnoreCase("AHU")) {
                     roomDetails = extras.getStringArray("RoomDetails");
@@ -525,7 +542,12 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
                     if (mTestBasedOn.equalsIgnoreCase("AHU")) {
                         row.addView(addTextView(mAhuFilterArrayList.get(i - 2).getFilterCode()));
                     } else if (mTestBasedOn.equalsIgnoreCase("EQUIPMENT")) {
-                        row.addView(addTextView(mEquipmentGrillArrayList.get(i - 2).getGrillCode()));
+                        if(mGrilFilterType.equalsIgnoreCase("Grill")) {
+                            row.addView(addTextView(mEquipmentGrillArrayList.get(i - 2).getGrillCode()));
+                        }else{
+                            row.addView(addTextView(mEquipmentFilterArrayList.get(i - 2).getFilterCode()));
+                        }
+
                     }
 //                    row.addView(addTextView("QC/DGC/HF/0" + i));
                 }

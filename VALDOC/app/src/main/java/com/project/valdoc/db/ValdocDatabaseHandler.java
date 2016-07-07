@@ -2474,10 +2474,8 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
     public ArrayList<TestDetails> getTestDetailByTestCode(String testCode) {
         Log.d("Saurabh", " TestCode " + testCode);
         ArrayList<TestDetails> testDetailList = new ArrayList<TestDetails>();
-
         String selectQuery = "SELECT * FROM " + TEST_DETAILS_TABLE_NAME +
                 " WHERE " + ValdocDatabaseHandler.TEST_DETAILS_TESTCODE + " = " + '"' + testCode + '"';
-
         SQLiteDatabase database = this.getWritableDatabase();
         Cursor cursor = database.rawQuery(selectQuery, null);
         if (cursor.moveToFirst()) {
@@ -2529,14 +2527,11 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
     // select data from TestSpecificationValue table
     public ArrayList<TestSpesificationValue> getTestSpecificationValueById(String testDetailId) {
         ArrayList<TestSpesificationValue> testSpecificValueList = new ArrayList<TestSpesificationValue>();
-
         String selectQuery = "SELECT * FROM " + TESTSPECIFICATIONVALUE_TABLE_NAME +
                 " WHERE " + ValdocDatabaseHandler.TESTSPECIFICATIONVALUE_TEST_DETAIL_ID
                 + " = " + '"' + testDetailId + '"';
-
         SQLiteDatabase database = this.getWritableDatabase();
         Cursor cursor = database.rawQuery(selectQuery, null);
-
         if (cursor.moveToFirst()) {
             do {
                 TestSpesificationValue testSpecificValue = new TestSpesificationValue();

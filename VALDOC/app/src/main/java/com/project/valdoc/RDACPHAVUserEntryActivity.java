@@ -74,8 +74,9 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
     private ApplicableTestRoom mApplicableTestRoom = null;
     private ArrayList<AhuFilter> mAhuFilterArrayList = null;
     private ArrayList<RoomFilter> mRoomFilterArrayList;
-    //    private ArrayList<HashMap<String, String>> grillAndSizeFromGrill;
-//    private int applicableTestRoomLocation;
+    private ArrayList<HashMap<String, String>> grillAndSizeFromGrill;
+
+    //    private int applicableTestRoomLocation;
     private String areaName;
     private TextView infarance;
     private String witnessFirst;
@@ -125,6 +126,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
     private String mPartnerName;
     private String mTestCode;
     private String mTestBasedOn;
+    private String mGrilFilterType;
     ArrayList<TextView> resultTextViewList;
     private ValdocDatabaseHandler mValdocDatabaseHandler = new ValdocDatabaseHandler(RDACPHAVUserEntryActivity.this);
     int testDetailsId = 0;
@@ -159,6 +161,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
             mTestType = getIntent().getStringExtra("testType");
             Log.d(TAG, " TestType : " + mTestType);
         }
+        mGrilFilterType = getIntent().getStringExtra("GrilFilterType");
         mTestCode = getIntent().getStringExtra("testCode");
         //dynamic data population
         getExtraFromTestCreateActivity(savedInstanceState);
@@ -320,7 +323,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
             roomNo.setText(roomDetails[2]);
             ahuNo.setText(ahuNumber);
             roomVolume.setText("" + roomDetails[4]);
-            testItemValue.setText(""+mApplicableTestAhu.getTestItem());
+            testItemValue.setText("" + mApplicableTestAhu.getTestItem());
         } else if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
             testSpecification.setText(mApplicableTestRoom.getTestSpecification());
             occupancyState.setText(mApplicableTestRoom.getOccupencyState());
@@ -519,30 +522,62 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
                 testReadingArrayList.add(testReading);
             }
         } else if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
-            for (RoomFilter roomFilter : mRoomFilterArrayList) {
-                TestReading testReading = new TestReading();
+            if (mGrilFilterType.equalsIgnoreCase("Grill")) {
+                for (HashMap<String, String> grillHashMapArrayList : grillAndSizeFromGrill) {
+                    TestReading testReading = new TestReading();
 //        TO DO test details id is id of test details table
-                testReading.setTest_detail_id(testDetailsId);
-                testReading.setEntityName("" + roomFilter.getFilterCode().toString());
-                StringBuilder grilList = new StringBuilder();
-                //v1,v2....value cration
-                StringBuilder sb = new StringBuilder();
-                for (int i = 0; i < mApplicableTestRoom.getLocation(); i++) {
-                    if (i != 0)
-                        sb.append(',');
-                    if (null != userEnterdValue && userEnterdValue.size() > 0) {
-                        Log.d("Avinash", "value=" + userEnterdValue.isEmpty());
-                        if (null != userEnterdValue.get(hasMapKey).toString()) {
-                            sb.append("" + userEnterdValue.get(hasMapKey).toString());
-                            hasMapKey++;
+                    testReading.setTest_detail_id(testDetailsId);
+                    testReading.setEntityName("" + grillHashMapArrayList.get(ValdocDatabaseHandler.GRILL_GRILLCODE).toString());
+                    StringBuilder grilList = new StringBuilder();
+                    //v1,v2....value cration
+                    StringBuilder sb = new StringBuilder();
+                    for (int i = 0; i < mApplicableTestRoom.getLocation(); i++) {
+                        if (i != 0)
+                            sb.append(',');
+                        if (null != userEnterdValue && userEnterdValue.size() > 0) {
+                            Log.d("Avinash", "value=" + userEnterdValue.isEmpty());
+                            if (null != userEnterdValue.get(hasMapKey).toString()) {
+                                sb.append("" + userEnterdValue.get(hasMapKey).toString());
+                                hasMapKey++;
+                            }
                         }
                     }
+
+                    grilList.append("" + grillHashMapArrayList.get(ValdocDatabaseHandler.GRILL_EFFECTIVEAREA).toString()).append(',').append(sb).append(",").append(airFlowRateMap.get(index + 1)).append(",").append(totalAirFlowRateMap.get(avindex));
+                    index++;
+                    avindex++;
+                    testReading.setValue(grilList.toString());
+                    testReadingArrayList.add(testReading);
                 }
-                grilList.append("" + roomFilter.getEffectiveFilterArea()).append(',').append(sb).append(",").append(airFlowRateMap.get(index + 1)).append(",").append(totalAirFlowRateMap.get(avindex));
-                index++;
-                avindex++;
-                testReading.setValue(grilList.toString());
-                testReadingArrayList.add(testReading);
+
+
+            } else {
+                for (RoomFilter roomFilter : mRoomFilterArrayList) {
+                    TestReading testReading = new TestReading();
+//        TO DO test details id is id of test details table
+                    testReading.setTest_detail_id(testDetailsId);
+                    testReading.setEntityName("" + roomFilter.getFilterCode().toString());
+                    StringBuilder grilList = new StringBuilder();
+                    //v1,v2....value cration
+                    StringBuilder sb = new StringBuilder();
+                    for (int i = 0; i < mApplicableTestRoom.getLocation(); i++) {
+                        if (i != 0)
+                            sb.append(',');
+                        if (null != userEnterdValue && userEnterdValue.size() > 0) {
+                            Log.d("Avinash", "value=" + userEnterdValue.isEmpty());
+                            if (null != userEnterdValue.get(hasMapKey).toString()) {
+                                sb.append("" + userEnterdValue.get(hasMapKey).toString());
+                                hasMapKey++;
+                            }
+                        }
+                    }
+
+                    grilList.append("" + roomFilter.getEffectiveFilterArea()).append(',').append(sb).append(",").append(airFlowRateMap.get(index + 1)).append(",").append(totalAirFlowRateMap.get(avindex));
+                    index++;
+                    avindex++;
+                    testReading.setValue(grilList.toString());
+                    testReadingArrayList.add(testReading);
+                }
             }
         }
 
@@ -603,10 +638,10 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
         testDetails.setSamplingTime("");
         testDetails.setAerosolGeneratorType("");
         testDetails.setAerosolUsed("");
-        testDetails.setTestItem(""+testItemValue.getText());
-        testDetails.setRoomVolume(""+roomVolume.getText());
-        testDetails.setTestWitnessOrg(""+testWitnessOrg.getText());
-        testDetails.setTestCondoctorOrg(""+testCondoctorOrg.getText());
+        testDetails.setTestItem("" + testItemValue.getText());
+        testDetails.setRoomVolume("" + roomVolume.getText());
+        testDetails.setTestWitnessOrg("" + testWitnessOrg.getText());
+        testDetails.setTestCondoctorOrg("" + testCondoctorOrg.getText());
         return testDetails;
     }
 
@@ -695,7 +730,11 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
                 } else if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
                     room = (Room) extras.getSerializable("Room");
                     ahuNumber = extras.getString("AhuNumber");
-                    mRoomFilterArrayList = (ArrayList<RoomFilter>) extras.getSerializable("RoomFilter");
+                    if (mGrilFilterType.equalsIgnoreCase("Grill")) {
+                        grillAndSizeFromGrill = (ArrayList<HashMap<String, String>>) extras.getSerializable("GRILLIST");
+                    } else {
+                        mRoomFilterArrayList = (ArrayList<RoomFilter>) extras.getSerializable("RoomFilter");
+                    }
                     mApplicableTestRoom = (ApplicableTestRoom) extras.getSerializable("ApplicableTestRoom");
                 }
 
@@ -726,13 +765,24 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
                             row.addView(addTextView("grillAndSizeFromGrill"));
                         }
                     } else if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
-                        if (null != mRoomFilterArrayList && mRoomFilterArrayList.size() > 0) {
+                        if (mGrilFilterType.equalsIgnoreCase("Grill")) {
+                            if (null != grillAndSizeFromGrill && grillAndSizeFromGrill.size() > 0) {
+                                row.addView(addTextView(grillAndSizeFromGrill.get(i - 2).get(ValdocDatabaseHandler.GRILL_GRILLCODE).toString()));
+                            } else {
+                                row.addView(addTextView("grillAndSizeFromGrill"));
+                            }
+
+                        } else {
+                            if (null != mRoomFilterArrayList && mRoomFilterArrayList.size() > 0) {
 //                            HashMap<String, String> grill = (HashMap<String, String>) grillAndSizeFromGrill.get(i - 2);
 //                            Log.d("valdoc", "DynamicTableActivity grillAndSizeFromGrill=" + grillAndSizeFromGrill.size() + "i=" + i);
-                            row.addView(addTextView(mRoomFilterArrayList.get(i - 2).getFilterCode()));
-                        } else {
-                            row.addView(addTextView("grillAndSizeFromGrill"));
+                                row.addView(addTextView(mRoomFilterArrayList.get(i - 2).getFilterCode()));
+                            } else {
+                                row.addView(addTextView("grillAndSizeFromGrill"));
+                            }
+
                         }
+
                     }
 
 //                    row.addView(addTextView("AHU 2031/0.3MICRON/" + i));
@@ -762,12 +812,25 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
                         }
 
                     } else if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
-                        double filterSize = 0.0f;
-                        if (!mRoomFilterArrayList.isEmpty()) {
-                            filterSize = mRoomFilterArrayList.get(i - 2).getEffectiveFilterArea();
-                            Log.d("rdacphav", "filterSize=" + filterSize);
+                        if (mGrilFilterType.equalsIgnoreCase("Grill")) {
+                            if (null != grillAndSizeFromGrill && grillAndSizeFromGrill.size() > 0) {
+                                HashMap<String, String> grill = (HashMap<String, String>) grillAndSizeFromGrill.get(i - 2);
+                                float filterSize = 0.0f;
+                                if (!grill.isEmpty())
+                                    filterSize = Float.parseFloat(grill.get(ValdocDatabaseHandler.GRILL_EFFECTIVEAREA).toString());
+                                row.addView(addTextView("" + filterSize));
+//                                row.addView(addTextViewWithTagIds(i, filterSizeIds, filterSizeTxtViewList, filterSize + ""));
+                            }
+
+                        } else {
+                            double filterSize = 0.0f;
+                            if (!mRoomFilterArrayList.isEmpty())
+                                filterSize = mRoomFilterArrayList.get(i - 2).getEffectiveFilterArea();
+//                            row.addView(addTextViewWithTagIds(i, filterSizeIds, filterSizeTxtViewList, filterSize + ""));
                             row.addView(addTextView("" + filterSize));
+
                         }
+
                     }
                 }
             }

@@ -37,6 +37,7 @@
 
                 <TextView
                     style="@style/TestHeaderTextViewBold"
+                    android:gravity="right"
                     android:text="@string/customer" />
 
                 <TextView
@@ -51,6 +52,7 @@
 
                 <TextView
                     style="@style/TestHeaderTextViewBold"
+                    android:gravity="right"
                     android:text="@string/block_plant_name" />
 
                 <TextView
@@ -65,6 +67,7 @@
 
                 <TextView
                     style="@style/TestHeaderTextViewBold"
+                    android:gravity="right"
                     android:text="@string/instrument_used" />
 
                 <TextView
@@ -78,6 +81,7 @@
 
                 <TextView
                     style="@style/TestHeaderTextViewBold"
+                    android:gravity="right"
                     android:text="@string/test_specification" />
 
                 <TextView
@@ -91,6 +95,7 @@
 
                 <TextView
                     style="@style/TestHeaderTextViewBold"
+                    android:gravity="right"
                     android:text="@string/area_of_test_label" />
 
                 <TextView
@@ -105,6 +110,7 @@
                 <TextView
                     style="@style/TestHeaderTextViewBold"
                     android:id="@+id/room_name_lable"
+                    android:gravity="right"
                     android:text="@string/room_name"/>
 
                 <TextView
@@ -119,6 +125,7 @@
                 <TextView
                     style="@style/TestHeaderTextViewBold"
                     android:id="@+id/room_no_lable"
+                    android:gravity="right"
                     android:text="@string/room_no" />
 
                 <TextView
@@ -147,6 +154,7 @@
 
                 <TextView
                     style="@style/TestHeaderTextViewBold"
+                    android:gravity="right"
                     android:text="Equipment Name:" />
 
                 <TextView
@@ -161,6 +169,7 @@
 
                 <TextView
                     style="@style/TestHeaderTextViewBold"
+                    android:gravity="right"
                     android:text="Instrument Used :" />
 
                 <TextView
@@ -174,6 +183,7 @@
 
                 <TextView
                     style="@style/TestHeaderTextViewBold"
+                    android:gravity="right"
                     android:text="@string/instrument_serial_no" />
 
                 <TextView
@@ -186,12 +196,14 @@
                 android:paddingTop="5dp">
 
                 <TextView
+                    android:id="@+id/common_test_header3_tv"
                     style="@style/TestHeaderTextViewBold"
-                    android:text="@string/calibrated" />
+                    android:gravity="right"
+                    android:text="@string/ocupancy_state" />
 
                 <TextView
                     style="@style/TestHeaderTextViewNormal"
-                    android:id="@+id/calibratedon"
+                    android:id="@+id/ocupancystate"
                     android:text=""/>
             </TableRow>
             <TableRow
@@ -201,6 +213,7 @@
 
                 <TextView
                     style="@style/TestHeaderTextViewBold"
+                    android:gravity="right"
                     android:text="Test Conduted By :" />
 
                 <TextView
@@ -213,6 +226,7 @@
 
                 <TextView
                     android:id="@+id/equiment_name_text"
+                    android:gravity="right"
                     style="@style/TestHeaderTextViewBold"
                     android:text="Equipment Name: " />
 
@@ -227,6 +241,7 @@
 
                 <TextView
                     android:id="@+id/equiment_no_text"
+                    android:gravity="right"
                     style="@style/TestHeaderTextViewBold"
                     android:text="Equipment No:" />
 
@@ -255,6 +270,7 @@
 
                 <TextView
                     android:id="@+id/common_test_header1_tv"
+                    android:gravity="right"
                     style="@style/TestHeaderTextViewBold"
                     android:text="TRD No :" />
 
@@ -270,6 +286,7 @@
 
                 <TextView
                     android:id="@+id/common_test_header2_tv"
+                    android:gravity="right"
                     style="@style/TestHeaderTextViewBold"
                     android:text="@string/date_of_test" />
 
@@ -282,6 +299,7 @@
             <TableRow>
                 <TextView
                     style="@style/TestHeaderTextViewBold"
+                    android:gravity="right"
                     android:text="@string/calibration_due" />
 
                 <TextView
@@ -294,12 +312,12 @@
                 android:paddingTop="5dp">
 
                 <TextView
-                    android:id="@+id/common_test_header3_tv"
                     style="@style/TestHeaderTextViewBold"
-                    android:text="@string/ocupancy_state" />
+                    android:gravity="right"
+                    android:text="@string/calibrated" />
 
                 <TextView
-                    android:id="@+id/ocupancystate"
+                    android:id="@+id/calibratedon"
                     style="@style/TestHeaderTextViewNormal"
                     android:text="" />
             </TableRow>
@@ -309,6 +327,7 @@
 
                 <TextView
                     style="@style/TestHeaderTextViewBold"
+                    android:gravity="right"
                     android:text="@string/test_refrence" />
 
                 <TextView
@@ -323,6 +342,7 @@
                 <TextView
                     android:visibility="invisible"
                     android:id="@+id/ahu_no_text"
+                    android:gravity="right"
                     style="@style/TestHeaderTextViewBold"
                     android:text="AHU Number: " />
 
@@ -339,6 +359,7 @@
                 <TextView
                     android:id="@+id/room_volume_text"
                     android:visibility="invisible"
+                    android:gravity="right"
                     style="@style/TestHeaderTextViewBold"
                     android:text="Room Volume (ft3) :" />
 
@@ -355,6 +376,7 @@
                 <TextView
                     android:id="@+id/test_item_text"
                     android:visibility="invisible"
+                    android:gravity="right"
                     style="@style/TestHeaderTextViewBold"
                     android:text="Test Item :" />
 
