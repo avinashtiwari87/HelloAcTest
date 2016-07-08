@@ -887,5 +887,7 @@ public class RDPC3UserEntryActivity extends AppCompatActivity {
         test5_table_layout5_1.setVisibility(View.GONE);
         findViewById(R.id.test_table_5_header_l_ll).setVisibility(View.GONE);
         findViewById(R.id.test_table_5_header_2_ll).setVisibility(View.VISIBLE);
+        findViewById(R.id.test_interference).setVisibility(View.GONE);
+
     }
 }

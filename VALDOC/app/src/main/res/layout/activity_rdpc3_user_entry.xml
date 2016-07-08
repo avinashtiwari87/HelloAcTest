@@ -17,6 +17,8 @@
             android:visibility="visible"
             android:id="@+id/test5_table_ll"/>
 
+        <include layout="@layout/pct_test_footer"/>
+
         <include layout="@layout/tester_witness_footer"/>
 
     </LinearLayout>

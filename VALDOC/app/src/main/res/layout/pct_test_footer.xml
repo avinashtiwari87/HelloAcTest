@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="5">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.3"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/TestHeaderTextViewBold"
+                android:layout_width="match_parent"
+                android:background="@drawable/border"
+                android:text="Test Results " />
+
+            <TextView
+                style="@style/TestHeaderTextViewBold"
+                android:layout_width="match_parent"
+                android:background="@drawable/border"
+                android:text="Mean Average " />
+
+            <TextView
+                style="@style/TestHeaderTextViewBold"
+                android:layout_width="match_parent"
+                android:background="@drawable/border"
+                android:text="Standard Deviation " />
+
+            <TextView
+                style="@style/TestHeaderTextViewBold"
+                android:layout_width="match_parent"
+                android:background="@drawable/border"
+                android:text="95% UCL " />
+
+            <TextView
+                style="@style/TestHeaderTextViewBold"
+                android:layout_width="match_parent"
+                android:background="@drawable/border"
+                android:text="MinImum Value " />
+
+            <TextView
+                style="@style/TestHeaderTextViewBold"
+                android:layout_width="match_parent"
+                android:background="@drawable/border"
+                android:text="Maximum Value" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/TestHeaderTextViewBold"
+                android:layout_width="match_parent"
+                android:background="@drawable/border"
+                android:text="No. of Particles ≥ 0. 5 µm/m³ " />
+
+            <TextView
+                style="@style/TestHeaderTextViewNormal"
+                android:layout_width="match_parent"
+                android:background="@drawable/border"
+                android:gravity="center"
+                android:text="3433556" />
+
+            <TextView
+                style="@style/TestHeaderTextViewNormal"
+                android:layout_width="match_parent"
+                android:background="@drawable/border"
+                android:gravity="center"
+                android:text="656765 " />
+
+            <TextView
+                style="@style/TestHeaderTextViewNormal"
+                android:layout_width="match_parent"
+                android:background="@drawable/border"
+                android:gravity="center"
+                android:text="7866786 " />
+
+            <TextView
+                style="@style/TestHeaderTextViewNormal"
+                android:layout_width="match_parent"
+                android:background="@drawable/border"
+                android:gravity="center"
+                android:text="6789" />
+
+            <TextView
+                style="@style/TestHeaderTextViewNormal"
+                android:layout_width="match_parent"
+                android:background="@drawable/border"
+                android:gravity="center"
+                android:text="6543" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/TestHeaderTextViewBold"
+                android:layout_width="match_parent"
+                android:background="@drawable/border"
+                android:text="No. of Particles ≥ 5 µm/m³" />
+
+            <TextView
+                style="@style/TestHeaderTextViewNormal"
+                android:layout_width="match_parent"
+                android:background="@drawable/border"
+                android:gravity="center"
+                android:text="29876 " />
+
+            <TextView
+                style="@style/TestHeaderTextViewNormal"
+                android:layout_width="match_parent"
+                android:background="@drawable/border"
+                android:gravity="center"
+                android:text="87654" />
+
+            <TextView
+                style="@style/TestHeaderTextViewNormal"
+                android:layout_width="match_parent"
+                android:background="@drawable/border"
+                android:gravity="center"
+                android:text="3214" />
+
+            <TextView
+                style="@style/TestHeaderTextViewNormal"
+                android:layout_width="match_parent"
+                android:background="@drawable/border"
+                android:gravity="center"
+                android:text="1234" />
+
+            <TextView
+                style="@style/TestHeaderTextViewNormal"
+                android:layout_width="match_parent"
+                android:background="@drawable/border"
+                android:gravity="center"
+                android:text="35687" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:text="(Maximum concentration limits (particles/m³ of air) for particles equal to and larger than the considered sizes)"
+        android:textColor="@color/black" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="5">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.3"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/TestHeaderTextViewBold"
+                android:layout_width="match_parent"
+                android:background="@drawable/border" />
+
+            <TextView
+                style="@style/TestHeaderTextViewBold"
+                android:layout_width="match_parent"
+                android:background="@drawable/border"
+                android:gravity="center"
+                android:text="Class" />
+
+            <TextView
+                style="@style/TestHeaderTextViewBold"
+                android:layout_width="match_parent"
+                android:background="@drawable/border"
+                android:gravity="center"
+                android:text="ISO-8" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/TestHeaderTextViewBold"
+                android:layout_width="match_parent"
+                android:background="@drawable/border"
+                android:gravity="center"
+                android:text="At Rest" />
+
+            <TextView
+                style="@style/TestHeaderTextViewNormal"
+                android:layout_width="match_parent"
+                android:background="@drawable/border"
+                android:gravity="center"
+                android:text="0.5 µm particles/m3" />
+
+            <TextView
+                style="@style/TestHeaderTextViewNormal"
+                android:layout_width="match_parent"
+                android:background="@drawable/border"
+                android:gravity="center"
+                android:text="3520000" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/TestHeaderTextViewBold"
+                android:layout_width="match_parent"
+                android:background="@drawable/border"
+                android:gravity="center"
+                android:text="At Rest" />
+
+            <TextView
+                style="@style/TestHeaderTextViewNormal"
+                android:layout_width="match_parent"
+                android:background="@drawable/border"
+                android:gravity="center"
+                android:text="5 µm particles/m3" />
+
+            <TextView
+                style="@style/TestHeaderTextViewNormal"
+                android:layout_width="match_parent"
+                android:background="@drawable/border"
+                android:gravity="center"
+                android:text="29300" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</LinearLayout>
