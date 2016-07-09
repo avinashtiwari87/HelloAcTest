@@ -2770,8 +2770,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         test6A_table_layout4 = (TableLayout) findViewById(R.id.test6A_tableLayout4);
         finalReadingTv = (TextView) findViewById(R.id.test6_final_reading_tv);
         finalReadingValueTv = (EditText) findViewById(R.id.test6_final_reading_value_tv);
-        finalReadingValueTv.addTextChangedListener((new TextValidator(
-                DynamicTableActivity.this, 0)));
+        finalReadingValueTv.addTextChangedListener((new TextValidator(DynamicTableActivity.this, 0)));
         if (TestCreateActivity.RCT.equalsIgnoreCase(testType)) {
 //            findViewById(R.id.test1_dynamic_table_ll).setVisibility(View.GONE);
 //            instrumentNo = (TextView) findViewById(R.id.instrument_no6);
@@ -2788,6 +2787,8 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
 //                instrumentNo.setText("" + partnerInstrument.getSerialNo());
 //            }
             findViewById(R.id.test6A_dynamic_table_ll).setVisibility(View.VISIBLE);
+            testHeaderAv.setText("FORM :TEST RAW DATA (RD_RCT)\nAirborne Particle Count Test for Classification of Cleanrooms/zones and Clean Air Devices");
+
         }
     }
 
