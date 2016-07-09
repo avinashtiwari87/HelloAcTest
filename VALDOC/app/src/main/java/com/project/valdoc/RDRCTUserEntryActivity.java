@@ -56,8 +56,6 @@ public class RDRCTUserEntryActivity extends AppCompatActivity {
 
     //certificate view id creation
     private TextView instrumentUsed;
-    private TextView make;
-    private TextView model;
     private TextView instrumentSerialNo;
     private TextView calibrationOn;
     private TextView calibrationDueOn;
@@ -78,7 +76,7 @@ public class RDRCTUserEntryActivity extends AppCompatActivity {
     private TextView certificateNo;
     private TextView samplingTimeLable;
     private TextView samplingFlowRateLable;
-    private TextView samplingTime;
+    //private TextView samplingTime;
     private TextView samplingFlowRate;
     private TextView instrumentNoTextView;
     private TextView testerNameTextView;
@@ -176,7 +174,7 @@ public class RDRCTUserEntryActivity extends AppCompatActivity {
 // Now formattedDate have current date/time
         Toast.makeText(this, formattedDate, Toast.LENGTH_SHORT).show();
         int mon = month + 1;
-        certificateNo.setText("CT/" + mon + "/" + year + "/" + formattedDate);
+        //certificateNo.setText("CT/" + mon + "/" + year + "/" + formattedDate);
 
         // Show current date
         String date = new StringBuilder().append(day).append("-").append(month + 1).append("-").append(year).append(" ").toString();
@@ -222,8 +220,6 @@ public class RDRCTUserEntryActivity extends AppCompatActivity {
     private void textViewValueAssignment() {
         if (loginUserType.equals("CLIENT")) {
             instrumentUsed.setText(clientInstrument.getcInstrumentName());
-            make.setText(clientInstrument.getMake());
-            model.setText(clientInstrument.getModel());
             instrumentSerialNo.setText("" + clientInstrument.getSerialNo());
             calibrationOn.setText(Utilityies.parseDateToddMMyyyy(clientInstrument.getLastCalibrated()));
             calibrationDueOn.setText(Utilityies.parseDateToddMMyyyy(clientInstrument.getCalibrationDueDate()));
@@ -231,8 +227,8 @@ public class RDRCTUserEntryActivity extends AppCompatActivity {
 //            samplingTime.setText(clientInstrument.getSamplingTime());
         } else {
             instrumentUsed.setText(partnerInstrument.getpInstrumentName());
-            make.setText(partnerInstrument.getMake());
-            model.setText(partnerInstrument.getModel());
+            //make.setText(partnerInstrument.getMake());
+            //model.setText(partnerInstrument.getModel());
             instrumentSerialNo.setText("" + partnerInstrument.getpInstrumentId());
             calibrationOn.setText(Utilityies.parseDateToddMMyyyy(partnerInstrument.getLastCalibrationDate()));
             calibrationDueOn.setText(Utilityies.parseDateToddMMyyyy(partnerInstrument.getCalibrationDueDate()));
@@ -276,6 +272,8 @@ public class RDRCTUserEntryActivity extends AppCompatActivity {
     }
 
     private void initTextView() {
+        headerText = (TextView) findViewById(R.id.common_header_tv);
+        headerText.setText("TEST RAW DATA (RD_RCT)\nAirborne Particle Count Test for Classification of Cleanrooms/zones and Clean Air Devices");
         // layout data which is not in use
         instrumentNoTextView = (TextView) findViewById(R.id.instrument_no6);
 //        instrumentNoTextView.setVisibility(View.GONE);
@@ -304,15 +302,13 @@ public class RDRCTUserEntryActivity extends AppCompatActivity {
         customerName = (TextView) findViewById(R.id.customer_name);
         certificateNo = (TextView) findViewById(R.id.certificate_no);
         instrumentUsed = (TextView) findViewById(R.id.instrumentused);
-        make = (TextView) findViewById(R.id.make);
-        model = (TextView) findViewById(R.id.modle);
 
-        samplingTimeLable = (TextView) findViewById(R.id.aerosol_used_lable);
-        samplingFlowRateLable = (TextView) findViewById(R.id.aerosol_generator_type_lable);
-        samplingFlowRateLable.setText(getResources().getString(R.string.sampling_flow_rate_lable));
-        samplingTimeLable.setText(getResources().getString(R.string.sampling_time_lable));
-        samplingTime = (TextView) findViewById(R.id.aerosol_used);
-        samplingFlowRate = (TextView) findViewById(R.id.aerosol_generator_type);
+       // samplingTimeLable = (TextView) findViewById(R.id.aerosol_used_lable);
+      //  samplingFlowRateLable = (TextView) findViewById(R.id.aerosol_generator_type_lable);
+//    samplingFlowRateLable.setText(getResources().getString(R.string.sampling_flow_rate_lable));
+       // samplingTimeLable.setText(getResources().getString(R.string.sampling_time_lable));
+       // samplingTime = (TextView) findViewById(R.id.aerosol_used);
+       // samplingFlowRate = (TextView) findViewById(R.id.aerosol_generator_type);
 
         instrumentSerialNo = (TextView) findViewById(R.id.instrumentserialno);
         calibrationOn = (TextView) findViewById(R.id.calibratedon);
@@ -378,6 +374,8 @@ public class RDRCTUserEntryActivity extends AppCompatActivity {
 //                showDialog(DATE_PICKER_ID);
 //            }
 //        });
+        findViewById(R.id.test_interference).setVisibility(View.GONE);
+        findViewById(R.id.test_table_6b_header_2_ll).setVisibility(View.VISIBLE);
     }
 
     private ArrayList<TestSpesificationValue> testSpesificationValue() {
@@ -456,8 +454,8 @@ public class RDRCTUserEntryActivity extends AppCompatActivity {
             testDetails.setCalibratedDueOn("" + clientInstrument.getCalibrationDueDate());
             testDetails.setAerosolUsed("");
             testDetails.setAerosolGeneratorType("");
-            testDetails.setSamplingFlowRate("" + samplingFlowRate.getText().toString());
-            testDetails.setSamplingTime("" + samplingTime.getText().toString());
+           // testDetails.setSamplingFlowRate("" + samplingFlowRate.getText().toString());
+           // testDetails.setSamplingTime("" + samplingTime.getText().toString());
         } else {
             testDetails.setInstrumentUsed(partnerInstrument.getpInstrumentName());
             testDetails.setMake(partnerInstrument.getMake());
@@ -467,8 +465,8 @@ public class RDRCTUserEntryActivity extends AppCompatActivity {
             testDetails.setCalibratedDueOn("" + partnerInstrument.getCalibrationDueDate());
             testDetails.setAerosolUsed("");
             testDetails.setAerosolGeneratorType("");
-            testDetails.setSamplingFlowRate("" + samplingFlowRate.getText().toString());
-            testDetails.setSamplingTime("" + samplingTime.getText().toString());
+            //testDetails.setSamplingFlowRate("" + samplingFlowRate.getText().toString());
+           // testDetails.setSamplingTime("" + samplingTime.getText().toString());
         }
 
 
