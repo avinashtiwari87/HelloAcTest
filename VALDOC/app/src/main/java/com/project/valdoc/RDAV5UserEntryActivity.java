@@ -428,6 +428,8 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
             testDetails.setInstrumentNo("" + clientInstrument.getSerialNo());
             testDetails.setCalibratedOn("" + clientInstrument.getLastCalibrated());
             testDetails.setCalibratedDueOn("" + clientInstrument.getCalibrationDueDate());
+            testDetails.setSamplingFlowRate("");
+            testDetails.setSamplingTime("");
         } else {
             Log.d("getCertificateData", "instrumentUsed.getText()=" + instrumentUsed.getText());
             testDetails.setInstrumentUsed("" + instrumentUsed.getText());
@@ -436,6 +438,8 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
             testDetails.setInstrumentNo("" + partnerInstrument.getpInstrumentId());
             testDetails.setCalibratedOn("" + partnerInstrument.getLastCalibrationDate());
             testDetails.setCalibratedDueOn("" + partnerInstrument.getCalibrationDueDate());
+            testDetails.setSamplingFlowRate("");
+            testDetails.setSamplingTime("");
         }
 
 

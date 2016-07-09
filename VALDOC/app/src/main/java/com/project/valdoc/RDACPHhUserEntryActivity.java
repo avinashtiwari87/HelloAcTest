@@ -488,6 +488,8 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
             testDetails.setInstrumentNo(clientInstrument.getSerialNo());
             testDetails.setCalibratedOn(clientInstrument.getLastCalibrated());
             testDetails.setCalibratedDueOn(clientInstrument.getCalibrationDueDate());
+            testDetails.setSamplingFlowRate("");
+            testDetails.setSamplingTime("");
         } else {
             testDetails.setInstrumentUsed(partnerInstrument.getpInstrumentName());
             testDetails.setMake(partnerInstrument.getMake());
@@ -495,6 +497,8 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
             testDetails.setInstrumentNo("" + partnerInstrument.getpInstrumentId());
             testDetails.setCalibratedOn(partnerInstrument.getLastCalibrationDate());
             testDetails.setCalibratedDueOn(partnerInstrument.getCalibrationDueDate());
+            testDetails.setSamplingFlowRate("");
+            testDetails.setSamplingTime("");
         }
 
         testDetails.setTestSpecification(testSpecification.getText().toString());

@@ -64,6 +64,7 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
     private Room room;
     private ArrayList<RoomFilter> filterArrayList;
     private String areaName;
+    private String mTestItem;
     private String witnessFirst;
     private String witnessSecond;
     private String witnessThird;
@@ -292,9 +293,12 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
             JSONObject jsonObject = null;
             try {
                 jsonObject = new JSONObject(mApplicableTestEquipment.getTestProp());
+                aerosolUsed.setText(jsonObject.optString("AEROSOL_USED"));
+                aerosolGeneratorType.setText(jsonObject.optString("AEROSOL_GENERATOR_TYPE"));
             } catch (Exception e) {
 
             }
+//            filtertypeEficiancy.setText(mEquipmentFilterArrayList.);
             equipmentName.setText(equipment.getEquipmentName());
             equipmentNo.setText(equipment.getEquipmentNo());
             testSpecification.setText(mApplicableTestEquipment.getTestSpecification());
@@ -308,8 +312,8 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
             JSONObject jsonObject = null;
             try {
                 jsonObject = new JSONObject(mApplicableTestAhu.getTestProp());
-                //aerosolUsed.setText(jsonObject.optString("AEROSOL_USED"));
-               // aerosolGeneratorType.setText(jsonObject.optString("AEROSOL_GENERATOR_TYPE"));
+                aerosolUsed.setText(jsonObject.optString("AEROSOL_USED"));
+                aerosolGeneratorType.setText(jsonObject.optString("AEROSOL_GENERATOR_TYPE"));
             } catch (Exception e) {
 
             }
@@ -317,16 +321,16 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
             occupancyState.setText(mApplicableTestAhu.getOccupencyState());
             testRefrance.setText(mApplicableTestAhu.getTestReference());
             areaOfTest.setText(areaName);
-            roomName.setText(roomDetails[1]);
+            roomName.setText(mTestItem);
             // room no not needed
-            roomNo.setText(roomDetails[2]);
+//            roomNo.setText(roomDetails[2]);
             ahuNo.setText(ahuNumber);
         } else if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
             JSONObject jsonObject = null;
             try {
                 jsonObject = new JSONObject(mApplicableTestRoom.getTestProp());
-                //aerosolUsed.setText(jsonObject.optString("AEROSOL_USED"));
-                //aerosolGeneratorType.setText(jsonObject.optString("AEROSOL_GENERATOR_TYPE"));
+                aerosolUsed.setText(jsonObject.optString("AEROSOL_USED"));
+                aerosolGeneratorType.setText(jsonObject.optString("AEROSOL_GENERATOR_TYPE"));
             } catch (Exception e) {
 
             }
@@ -338,14 +342,6 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
             roomNo.setText(room.getRoomNo().toString());
             ahuNo.setText(ahuNumber);
         }
-
-
-//                plantName
-
-
-//        equipmentNameText.setText(getResources().getString(R.string.room_no));
-//        equipmentNoText.setText(getResources().getString(R.string.ahu_no));
-
 
         ///Common data
         testCundoctor.setText(userName);
@@ -400,36 +396,41 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
         aerosolGeneratorTable.setVisibility(View.VISIBLE);
         aerosolUsedTable= (TableRow) findViewById(R.id.aerosol_used_table);
         aerosolUsedTable.setVisibility(View.VISIBLE);
-        aerosolGeneratorType= (TextView) findViewById(R.id.aerosol_generator_type);
+        aerosolGeneratorType= (TextView) findViewById(R.id.aerosol_generator_type_value);
         aerosolUsed= (TextView) findViewById(R.id.aerosol_used);
 
-        if(mTestBasedOn.equalsIgnoreCase("ROOM")){
+        if(mTestBasedOn.equalsIgnoreCase("ROOM")||mTestBasedOn.equalsIgnoreCase("AHU")){
             equipmentNameText = (TextView) findViewById(R.id.equiment_name_text);
             equipmentNameText.setVisibility(View.INVISIBLE);
             equipmentNoText = (TextView) findViewById(R.id.equiment_no_text);
             equipmentNoText.setVisibility(View.INVISIBLE);
+            ahuNoText = (TextView) findViewById(R.id.ahu_no_text);
+            ahuNoText.setVisibility(View.VISIBLE);
+            ahuNo = (TextView) findViewById(R.id.ahu_no);
+            ahuNo.setVisibility(View.VISIBLE);
         }
+
         testSpecification = (TextView) findViewById(R.id.testspecification);
         plantName = (TextView) findViewById(R.id.plantname);
         areaOfTest = (TextView) findViewById(R.id.areaoftest);
         roomName = (TextView) findViewById(R.id.room_name);
+        roomNo = (TextView) findViewById(R.id.room_no);
+        if(mTestBasedOn.equalsIgnoreCase("AHU")){
+            roomName.setText("Test Item :");
+            roomNo.setVisibility(View.INVISIBLE);
+        }
         occupancyState = (TextView) findViewById(R.id.ocupancystate);
         testRefrance = (TextView) findViewById(R.id.testrefrence);
         if (mTestBasedOn.equalsIgnoreCase("EQUIPMENT")) {
             equipmentLable = (TextView) findViewById(R.id.equiment_name_text);
             equipmentLable.setVisibility(View.VISIBLE);
-            equipmentName = (TextView) findViewById(R.id.equipment_name);
+            equipmentName = (TextView) findViewById(R.id.equiment_name);
             equipmentName.setVisibility(View.VISIBLE);
             equipmentNoLable = (TextView) findViewById(R.id.equiment_no_text);
             equipmentNoLable.setVisibility(View.VISIBLE);
-            equipmentNo = (TextView) findViewById(R.id.equipment_no);
+            equipmentNo = (TextView) findViewById(R.id.equiment_no);
             equipmentNo.setVisibility(View.VISIBLE);
         }
-        roomNo = (TextView) findViewById(R.id.room_no);
-        ahuNoText = (TextView) findViewById(R.id.ahu_no_text);
-        ahuNoText.setVisibility(View.VISIBLE);
-        ahuNo = (TextView) findViewById(R.id.ahu_no);
-        ahuNo.setVisibility(View.VISIBLE);
         testLocationText=(TextView) findViewById(R.id.room_volume_text);
         testLocationText.setVisibility(View.VISIBLE);
         testLocationText.setText("Test Location :");
@@ -502,7 +503,6 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
         int passHasMapKey = 300;
 //        if (mTestBasedOn.equalsIgnoreCase("EQUIPMENT")) {
 //            for (EquipmentFilter equipmentFilter : mEquipmentFilterArrayList) {
-//
 //                TestReading testReading = new TestReading();
 ////            testReading.setTestReadingID(index);
 ////        TO DO test details id is id of test details table
@@ -573,13 +573,13 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
         testDetails.setCustomer(customerName.getText().toString());
         String date = year + "-" + (month + 1) + "-" + day + " ";
         testDetails.setDateOfTest(date);
-        //testDetails.setRawDataNo(certificateNo.getText().toString());
         testDetails.setPartnerName("" + mPartnerName);
-        testDetails.setTestName("Filter Integrity Test");
+        testDetails.setRawDataNo(certificateNo.getText().toString());
+        testDetails.setTestName(mTestCode);
         if (loginUserType.equals("CLIENT")) {
             testDetails.setInstrumentUsed(instrumentUsed.getText().toString());
-            //testDetails.setMake("" + make.getText().toString());
-            //testDetails.setModel("" + model.getText().toString());
+            testDetails.setMake("" + clientInstrument.getMake().toString());
+            testDetails.setModel("" + clientInstrument.getModel().toString());
             testDetails.setInstrumentNo("" + instrumentSerialNo.getText());
             testDetails.setCalibratedOn("" + clientInstrument.getLastCalibrated());
             testDetails.setCalibratedDueOn("" + clientInstrument.getCalibrationDueDate());
@@ -596,8 +596,8 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
             testDetails.setSamplingFlowRate("");
             testDetails.setSamplingTime("");
         }
-        //testDetails.setAerosolUsed("" + aerosolUsed.getText());
-        //testDetails.setAerosolGeneratorType("" + aerosolGeneratorType.getText());
+        testDetails.setAerosolUsed("" + aerosolUsed.getText());
+        testDetails.setAerosolGeneratorType("" + aerosolGeneratorType.getText());
 
         testDetails.setTestSpecification(testSpecification.getText().toString());
         testDetails.setBlockName(plantName.getText().toString());
@@ -606,7 +606,6 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
         testDetails.setRoomNo(roomNo.getText().toString());
         testDetails.setOccupencyState(occupancyState.getText().toString());
         testDetails.setTestReference(testRefrance.getText().toString());
-        testDetails.setAhuNo(ahuNo.getText().toString());
         testDetails.setTesterName(testCundoctor.getText().toString());
         testDetails.setTestCode(mTestCode);
         StringBuilder witness = new StringBuilder();
@@ -616,12 +615,22 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
         if (null != witnessThird && witnessThird.length() > 0)
             witness.append("," + witnessThird);
         testDetails.setWitnessName("" + witness);
+        if(mTestBasedOn.equalsIgnoreCase("AHU")){
+            testDetails.setTestItem("" + mTestItem);
+        }else{
+            testDetails.setTestItem("");
+        }
+        testDetails.setRoomVolume("");
+        testDetails.setTestWitnessOrg("" + testWitnessOrg.getText());
+        testDetails.setTestCondoctorOrg("" + testCondoctorOrg.getText());
         if (mTestBasedOn.equalsIgnoreCase("EQUIPMENT")) {
             testDetails.setEquipmentName("" + equipmentName.getText().toString());
             testDetails.setEquipmentNo("" + equipmentNo.getText().toString());
+            testDetails.setAhuNo("");
         }else{
             testDetails.setEquipmentName("");
             testDetails.setEquipmentNo("");
+            testDetails.setAhuNo(ahuNo.getText().toString());
         }
         return testDetails;
     }
@@ -650,6 +659,7 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
                 witnessThird = extras.getString("WITNESSTHIRD");
                 //get area based on room area id
                 areaName = extras.getString("AREANAME");
+                mTestItem= extras.getString("testItem");
                 mPartnerName = extras.getString("PRTNERNAME");
                 mTestBasedOn = extras.getString("testBasedOn");
                 testType = extras.getString("testType");

@@ -266,7 +266,7 @@
                     android:id="@+id/equiment_name_text"
                     android:gravity="right"
                     style="@style/TestHeaderTextViewBold"
-                    android:text="Equipment Name: " />
+                    android:text="Equipment Name : " />
 
                 <TextView
                     style="@style/TestHeaderTextViewNormal"
@@ -281,7 +281,7 @@
                     android:id="@+id/equiment_no_text"
                     android:gravity="right"
                     style="@style/TestHeaderTextViewBold"
-                    android:text="Equipment No:" />
+                    android:text="Equipment No :" />
 
                 <TextView
                     style="@style/TestHeaderTextViewNormal"
