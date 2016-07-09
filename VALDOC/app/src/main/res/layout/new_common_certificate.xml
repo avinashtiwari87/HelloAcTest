@@ -76,6 +76,25 @@
                     android:text="" />
             </TableRow>
             <TableRow
+                android:id="@+id/aerosol_generator_table"
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/aerosol_generator_type_text"
+                    style="@style/TestHeaderTextViewBold"
+                    android:gravity="right"
+                    android:text="Aerosol Generator Type :" />
+
+                <TextView
+
+                    style="@style/TestHeaderTextViewNormal"
+                    android:id="@+id/aerosol_generator_type_value"
+                    android:text="" />
+            </TableRow>
+
+            <TableRow
                 android:paddingBottom="5dp"
                 android:paddingTop="5dp">
 
@@ -89,6 +108,8 @@
                     android:id="@+id/testspecification"
                     android:text="" />
             </TableRow>
+
+
             <TableRow
                 android:paddingBottom="5dp"
                 android:paddingTop="5dp">
@@ -190,6 +211,23 @@
                     android:id="@+id/instrumentserialno"
                     style="@style/TestHeaderTextViewNormal"
                     android:text="" />
+            </TableRow>
+            <TableRow
+                android:id="@+id/aerosol_used_table"
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/aerosol_used_text"
+                    style="@style/TestHeaderTextViewBold"
+                    android:gravity="right"
+                    android:text="Aerosol Used :" />
+
+                <TextView
+                    style="@style/TestHeaderTextViewNormal"
+                    android:id="@+id/aerosol_used"
+                    android:text=""/>
             </TableRow>
             <TableRow
                 android:paddingBottom="5dp"
@@ -344,7 +382,7 @@
                     android:id="@+id/ahu_no_text"
                     android:gravity="right"
                     style="@style/TestHeaderTextViewBold"
-                    android:text="AHU Number: " />
+                    android:text="AHU Number : " />
 
                 <TextView
                     android:visibility="invisible"

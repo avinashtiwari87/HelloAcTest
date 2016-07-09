@@ -65,8 +65,10 @@
             </TableRow>
 
             <TableRow
+                android:id="@+id/sampling_flow_rate"
                 android:paddingBottom="5dp"
-                android:paddingTop="5dp">
+                android:paddingTop="5dp"
+                android:visibility="gone">
 
                 <TextView
                     android:id="@+id/common_dynamic_test_header10_tv"
@@ -143,8 +145,10 @@
             </TableRow>
 
             <TableRow
+                android:id="@+id/sampling_time"
                 android:paddingBottom="5dp"
-                android:paddingTop="5dp">
+                android:paddingTop="5dp"
+                android:visibility="gone">
 
                 <TextView
                     android:id="@+id/common_dynamic_test_header11_tv"
@@ -222,8 +226,10 @@
             </TableRow>
 
             <TableRow
+                android:id="@+id/clean_room_class"
                 android:paddingBottom="5dp"
-                android:paddingTop="5dp">
+                android:paddingTop="5dp"
+                android:visibility="gone">
 
                 <TextView
                     android:id="@+id/common_dynamic_test_header12_tv"

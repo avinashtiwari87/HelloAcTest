@@ -36,6 +36,7 @@ import com.project.valdoc.intity.ClientInstrument;
 import com.project.valdoc.intity.Equipment;
 import com.project.valdoc.intity.EquipmentFilter;
 import com.project.valdoc.intity.EquipmentGrill;
+import com.project.valdoc.intity.Grill;
 import com.project.valdoc.intity.PartnerInstrument;
 import com.project.valdoc.intity.Room;
 import com.project.valdoc.intity.RoomFilter;
@@ -334,6 +335,7 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
             intent.putExtra("ApplicableTestAhu", applicableTestAhu);
         } else if (testBasedOn.equalsIgnoreCase("ROOM")) {
             ArrayList<RoomFilter> roomFilterList = null;
+            ArrayList<Grill> grillAndSizeFromGrill=null;
             //get room name,roomNo,and area id
             Log.d("valdoc", "TestCreateActivity :equipment:=" + roomNoSpinner.getSelectedItemPosition());
             Room room = mRoomNoArrayList.get(roomNoSpinner.getSelectedItemPosition() - 1);
@@ -348,7 +350,7 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
             Log.d("valdoc", "TestCreateActivity mApplicableTestRoom=" + mApplicableTestRoom.getLocation());
             intent.putExtra("ApplicableTestRoom", mApplicableTestRoom);
 
-            ArrayList<HashMap<String, String>> grillAndSizeFromGrill = mValdocDatabaseHandler.getGrillAndSizeFromGrill(room.getRoomId());
+            grillAndSizeFromGrill = mValdocDatabaseHandler.getGrill(room.getRoomId());
             if(null!=grillAndSizeFromGrill&&grillAndSizeFromGrill.size()>0) {
                 intent.putExtra("GrilFilterType", "Grill");
                 intent.putExtra("GRILLLIST", grillAndSizeFromGrill);
@@ -394,7 +396,7 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
         createApplicableTestRoomList(room.getRoomId(),ACPHH);
         intent.putExtra("ApplicableTestRoom", mApplicableTestRoom);
 
-        ArrayList<HashMap<String, String>> grillAndSizeFromGrill = mValdocDatabaseHandler.getGrillAndSizeFromGrill(room.getRoomId());
+        ArrayList<Grill> grillAndSizeFromGrill = mValdocDatabaseHandler.getGrill(room.getRoomId());
         if(null!=grillAndSizeFromGrill&&grillAndSizeFromGrill.size()>0) {
             intent.putExtra("GrilFilterType", "Grill");
             intent.putExtra("GRILLLIST", grillAndSizeFromGrill);

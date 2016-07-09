@@ -29,6 +29,7 @@ import com.project.valdoc.intity.ApplicableTestAhu;
 import com.project.valdoc.intity.ApplicableTestRoom;
 import com.project.valdoc.intity.ClientInstrument;
 import com.project.valdoc.intity.Equipment;
+import com.project.valdoc.intity.Grill;
 import com.project.valdoc.intity.PartnerInstrument;
 import com.project.valdoc.intity.Room;
 import com.project.valdoc.intity.RoomFilter;
@@ -74,7 +75,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
     private ApplicableTestRoom mApplicableTestRoom = null;
     private ArrayList<AhuFilter> mAhuFilterArrayList = null;
     private ArrayList<RoomFilter> mRoomFilterArrayList;
-    private ArrayList<HashMap<String, String>> grillAndSizeFromGrill;
+    private ArrayList<Grill> grillAndSizeFromGrill;
 
     //    private int applicableTestRoomLocation;
     private String areaName;
@@ -523,11 +524,11 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
             }
         } else if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
             if (mGrilFilterType.equalsIgnoreCase("Grill")) {
-                for (HashMap<String, String> grillHashMapArrayList : grillAndSizeFromGrill) {
+                for (Grill grill : grillAndSizeFromGrill) {
                     TestReading testReading = new TestReading();
 //        TO DO test details id is id of test details table
                     testReading.setTest_detail_id(testDetailsId);
-                    testReading.setEntityName("" + grillHashMapArrayList.get(ValdocDatabaseHandler.GRILL_GRILLCODE).toString());
+                    testReading.setEntityName("" + grill.getGrillCode().toString());
                     StringBuilder grilList = new StringBuilder();
                     //v1,v2....value cration
                     StringBuilder sb = new StringBuilder();
@@ -543,7 +544,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
                         }
                     }
 
-                    grilList.append("" + grillHashMapArrayList.get(ValdocDatabaseHandler.GRILL_EFFECTIVEAREA).toString()).append(',').append(sb).append(",").append(airFlowRateMap.get(index + 1)).append(",").append(totalAirFlowRateMap.get(avindex));
+                    grilList.append("" + grill.getEffectiveArea()).append(',').append(sb).append(",").append(airFlowRateMap.get(index + 1)).append(",").append(totalAirFlowRateMap.get(avindex));
                     index++;
                     avindex++;
                     testReading.setValue(grilList.toString());
@@ -731,7 +732,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
                     room = (Room) extras.getSerializable("Room");
                     ahuNumber = extras.getString("AhuNumber");
                     if (mGrilFilterType.equalsIgnoreCase("Grill")) {
-                        grillAndSizeFromGrill = (ArrayList<HashMap<String, String>>) extras.getSerializable("GRILLIST");
+                        grillAndSizeFromGrill = (ArrayList<Grill>) extras.getSerializable("GRILLLIST");
                     } else {
                         mRoomFilterArrayList = (ArrayList<RoomFilter>) extras.getSerializable("RoomFilter");
                     }
@@ -767,7 +768,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
                     } else if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
                         if (mGrilFilterType.equalsIgnoreCase("Grill")) {
                             if (null != grillAndSizeFromGrill && grillAndSizeFromGrill.size() > 0) {
-                                row.addView(addTextView(grillAndSizeFromGrill.get(i - 2).get(ValdocDatabaseHandler.GRILL_GRILLCODE).toString()));
+                                row.addView(addTextView(grillAndSizeFromGrill.get(i - 2).getGrillCode().toString()));
                             } else {
                                 row.addView(addTextView("grillAndSizeFromGrill"));
                             }
@@ -814,10 +815,10 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
                     } else if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
                         if (mGrilFilterType.equalsIgnoreCase("Grill")) {
                             if (null != grillAndSizeFromGrill && grillAndSizeFromGrill.size() > 0) {
-                                HashMap<String, String> grill = (HashMap<String, String>) grillAndSizeFromGrill.get(i - 2);
+//                                HashMap<String, String> grill = (HashMap<String, String>) grillAndSizeFromGrill.get(i - 2);
                                 float filterSize = 0.0f;
-                                if (!grill.isEmpty())
-                                    filterSize = Float.parseFloat(grill.get(ValdocDatabaseHandler.GRILL_EFFECTIVEAREA).toString());
+//                                if (!grill.isEmpty())
+                                    filterSize = (float)(grillAndSizeFromGrill.get(i - 2).getEffectiveArea());
                                 row.addView(addTextView("" + filterSize));
 //                                row.addView(addTextViewWithTagIds(i, filterSizeIds, filterSizeTxtViewList, filterSize + ""));
                             }

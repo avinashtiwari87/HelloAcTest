@@ -41,6 +41,7 @@ import com.project.valdoc.intity.ClientInstrument;
 import com.project.valdoc.intity.Equipment;
 import com.project.valdoc.intity.EquipmentFilter;
 import com.project.valdoc.intity.EquipmentGrill;
+import com.project.valdoc.intity.Grill;
 import com.project.valdoc.intity.PartnerInstrument;
 import com.project.valdoc.intity.Room;
 import com.project.valdoc.intity.RoomFilter;
@@ -142,7 +143,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
     private String ahuNumber;
     private String mTestItem;
     private Room room;
-    private ArrayList<HashMap<String, String>> grillAndSizeFromGrill;
+    private ArrayList<Grill> grillAndSizeFromGrill;
     private ArrayList<RoomFilter> mRoomFilterArrayList;
     private String witnessFirst;
     private String witnessSecond;
@@ -284,7 +285,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                         room = (Room) extras.getSerializable("Room");
                         ahuNumber = extras.getString("AhuNumber");
                         if (mGrilFilterType.equalsIgnoreCase("Grill")) {
-                            grillAndSizeFromGrill = (ArrayList<HashMap<String, String>>) extras.getSerializable("GRILLIST");
+                            grillAndSizeFromGrill = (ArrayList<Grill>) extras.getSerializable("GRILLLIST");
                         } else {
                             mRoomFilterArrayList = (ArrayList<RoomFilter>) extras.getSerializable("RoomFilter");
                         }
@@ -301,7 +302,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                     ahuNumber = extras.getString("AhuNumber");
                     //get filter list from grill filter
                     if (mGrilFilterType.equalsIgnoreCase("Grill")) {
-                        grillAndSizeFromGrill = (ArrayList<HashMap<String, String>>) extras.getSerializable("GRILLIST");
+                        grillAndSizeFromGrill = (ArrayList<Grill>) extras.getSerializable("GRILLIST");
                     } else {
                         mRoomFilterArrayList = (ArrayList<RoomFilter>) extras.getSerializable("RoomFilter");
                     }
@@ -793,14 +794,15 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                     if (mGrilFilterType.equalsIgnoreCase("Grill")) {
                         intent.putExtra("GrilFilterType", "Grill");
                         intent.putExtra("GRILLLIST", mEquipmentGrillArrayList);
-                        intent.putExtra("rows", mEquipmentGrillArrayList.size() + 1);
+                        if(null!=grillAndSizeFromGrill&&grillAndSizeFromGrill.size()>0) {
+                            intent.putExtra("rows", mEquipmentGrillArrayList.size() + 1);
+
+                        }
                     } else {
                         intent.putExtra("GrilFilterType", "Filter");
                         intent.putExtra("GRILLLIST", mEquipmentFilterArrayList);
                         intent.putExtra("rows", mEquipmentFilterArrayList.size() + 1);
                     }
-
-
 //                    ApplicableTestEquipment
                     intent.putExtra("ApplicableTestEquipment", mApplicableTestEquipment);
 
@@ -856,7 +858,9 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                     if (mGrilFilterType.equalsIgnoreCase("Grill")) {
                         intent.putExtra("GrilFilterType", "Grill");
                         intent.putExtra("GRILLLIST", grillAndSizeFromGrill);
-                        intent.putExtra("rows", grillAndSizeFromGrill.size() + 1);
+                        if(null!=grillAndSizeFromGrill&&grillAndSizeFromGrill.size()>0) {
+                            intent.putExtra("rows", grillAndSizeFromGrill.size() + 1);
+                        }
                     } else {
                         intent.putExtra("GrilFilterType", "Filter");
                         intent.putExtra("RoomFilter", mRoomFilterArrayList);
@@ -898,7 +902,9 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 if (mGrilFilterType.equalsIgnoreCase("Grill")) {
                     intent.putExtra("GrilFilterType", "Grill");
                     intent.putExtra("GRILLLIST", grillAndSizeFromGrill);
-                    intent.putExtra("rows", grillAndSizeFromGrill.size() + 1);
+                    if(null!=grillAndSizeFromGrill&&grillAndSizeFromGrill.size()>0) {
+                        intent.putExtra("rows", grillAndSizeFromGrill.size() + 1);
+                    }
                 } else {
                     intent.putExtra("GrilFilterType", "Filter");
                     intent.putExtra("RoomFilter", mRoomFilterArrayList);
@@ -1530,7 +1536,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
 
                     if (mGrilFilterType.equalsIgnoreCase("Grill")) {
                         if (null != grillAndSizeFromGrill && grillAndSizeFromGrill.size() > 0) {
-                            row.addView(addTextView(grillAndSizeFromGrill.get(i - 2).get(ValdocDatabaseHandler.GRILL_GRILLCODE).toString()));
+                            row.addView(addTextView(grillAndSizeFromGrill.get(i - 2).getGrillCode().toString()));
                         } else {
                             row.addView(addTextView("grillAndSizeFromGrill"));
                         }
@@ -1651,7 +1657,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                     } else if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
                         if (mGrilFilterType.equalsIgnoreCase("Grill")) {
                             if (null != grillAndSizeFromGrill && grillAndSizeFromGrill.size() > 0) {
-                                row.addView(addTextView(grillAndSizeFromGrill.get(i - 2).get(ValdocDatabaseHandler.GRILL_GRILLCODE).toString()));
+                                row.addView(addTextView(grillAndSizeFromGrill.get(i - 2).getGrillCode().toString()));
                             } else {
                                 row.addView(addTextView("grillAndSizeFromGrill"));
                             }
@@ -1704,11 +1710,11 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
 
                     } else if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
                         if (mGrilFilterType.equalsIgnoreCase("Grill")) {
-                            if (null != grillAndSizeFromGrill && grillAndSizeFromGrill.size() > 0) {
-                                HashMap<String, String> grill = (HashMap<String, String>) grillAndSizeFromGrill.get(i - 2);
+                            if (null != grillAndSizeFromGrill && grillAndSizeFromGrill.size() > 0){
+//                                String grill = grillAndSizeFromGrill.get(i - 2)[1].toString();
                                 float filterSize = 0.0f;
-                                if (!grill.isEmpty())
-                                    filterSize = Float.parseFloat(grill.get(ValdocDatabaseHandler.GRILL_EFFECTIVEAREA).toString());
+//                                if (!grill.isEmpty())
+                                 filterSize = (float)(grillAndSizeFromGrill.get(i - 2).getEffectiveArea());
                                 row.addView(addTextViewWithTagIds(i, filterSizeIds, filterSizeTxtViewList, filterSize + ""));
                             }
 
