@@ -75,11 +75,13 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
     TableLayout test6A_table_layout, test6A_table_layout2, test6A_table_layout3,
             test6A_table_layout4;
     //Common Test Header
-    TextView test_header1, test_header2, test_header3, test_header4, test_header5, test_header6, test_header7, test_header8, test_header9,test_header10,test_header11,test_header12;
-    TextView test_value1, test_value2, test_value3, test_value4, test_value5, test_value6, test_value7, test_value8, test_value9,test_value10,test_value11,test_value12;
+    TextView test_header1, test_header2, test_header3, test_header4, test_header5, test_header6, test_header7, test_header8, test_header9, test_header10, test_header11, test_header12;
+    TextView test_value1, test_value2, test_value3, test_value4, test_value5, test_value6, test_value7, test_value8, test_value9, test_value10, test_value11, test_value12;
     TextView finalReadingTv;
     EditText finalReadingValueTv;
-
+    private TableRow sampling_flow_rate;
+    private TableRow sampling_time;
+    private TableRow clean_room_class;
     ImageView verify_btn, clear, cancel;
     ImageView addRow_Btn, deleteRow_Btn;
     int rows, cols;
@@ -149,7 +151,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
     private String witnessSecond;
     private String witnessThird;
     private int applicableTestEquipmentLocation;
-    private int applicableTestRoomLocation;
+    //    private int applicableTestRoomLocation;
     private TextView roomName;
     private TextView instrumentName;
     private TextView instrumentNo;
@@ -275,7 +277,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                     if (mTestBasedOn.equalsIgnoreCase("AHU")) {
                         roomDetails = extras.getStringArray("RoomDetails");
 //                        ahu = (Ahu) extras.getSerializable("Ahu");
-                        mTestItem= extras.getString("testItem");
+                        mTestItem = extras.getString("testItem");
                         ahuNumber = extras.getString("AhuNumber");
                         mAhuFilterArrayList = (ArrayList<AhuFilter>) extras.getSerializable("AhuFilter");
                         mApplicableTestAhu = (ApplicableTestAhu) extras.getSerializable("ApplicableTestAhu");
@@ -316,7 +318,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                         equipment = (Equipment) extras.getSerializable("Equipment");
                         mApplicableTestEquipment = (ApplicableTestEquipment) extras.getSerializable("ApplicableTestEquipment");
                     } else if (mTestBasedOn.equalsIgnoreCase("AHU")) {
-                        mTestItem= extras.getString("testItem");
+                        mTestItem = extras.getString("testItem");
                         ahuNumber = extras.getString("AhuNumber");
                         roomDetails = extras.getStringArray("RoomDetails");
                         Log.d("Dynamictest", "roomDetails=" + roomDetails[1]);
@@ -334,17 +336,39 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                     //TO Do testspesification will be shown from room filter spesification
                 }
                 if (TestCreateActivity.PCT.equals(testType)) {
-                    room = (Room) extras.getSerializable("Room");
-                    ahuNumber = extras.getString("AhuNumber");
-                    applicableTestRoomLocation = extras.getInt("LOCATION");
-                    noOfCycle = extras.getInt("NOOFCYCLE");
-                    Log.d("valdoc", "DynamicTableActivity" + "NOOFCYCLE NOOFCYCLE=" + noOfCycle + "location=" + applicableTestRoomLocation);
+                    if (mTestBasedOn.equalsIgnoreCase("EQUIPMENT")) {
+//                        mEquipmentFilterArrayList = (ArrayList<EquipmentFilter>) extras.getSerializable("EquipmentFilter");
+                        roomDetails = extras.getStringArray("RoomDetails");
+                        equipment = (Equipment) extras.getSerializable("Equipment");
+                        mApplicableTestEquipment = (ApplicableTestEquipment) extras.getSerializable("ApplicableTestEquipment");
+                    } else if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
+                        room = (Room) extras.getSerializable("Room");
+                        ahuNumber = extras.getString("AhuNumber");
+//                        mRoomFilterArrayList = (ArrayList<RoomFilter>) extras.getSerializable("RoomFilter");
+                        mApplicableTestRoom = (ApplicableTestRoom) extras.getSerializable("ApplicableTestRoom");
+                    }
+//                    room = (Room) extras.getSerializable("Room");
+//                    ahuNumber = extras.getString("AhuNumber");
+//                    applicableTestRoomLocation = extras.getInt("LOCATION");
+//                    noOfCycle = extras.getInt("NOOFCYCLE");
+//                    Log.d("valdoc", "DynamicTableActivity" + "NOOFCYCLE NOOFCYCLE=" + noOfCycle + "location=" + applicableTestRoomLocation);
                 }
                 if (TestCreateActivity.RCT.equals(testType)) {
-                    room = (Room) extras.getSerializable("Room");
-                    ahuNumber = extras.getString("AhuNumber");
-                    applicableTestRoomLocation = extras.getInt("LOCATION");
-                    noOfCycle = extras.getInt("NOOFCYCLE");//throwing Exception...plz check tiwari jee
+                    if (mTestBasedOn.equalsIgnoreCase("EQUIPMENT")) {
+//                        mEquipmentFilterArrayList = (ArrayList<EquipmentFilter>) extras.getSerializable("EquipmentFilter");
+                        roomDetails = extras.getStringArray("RoomDetails");
+                        equipment = (Equipment) extras.getSerializable("Equipment");
+                        mApplicableTestEquipment = (ApplicableTestEquipment) extras.getSerializable("ApplicableTestEquipment");
+                    } else if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
+                        room = (Room) extras.getSerializable("Room");
+                        ahuNumber = extras.getString("AhuNumber");
+//                        mRoomFilterArrayList = (ArrayList<RoomFilter>) extras.getSerializable("RoomFilter");
+                        mApplicableTestRoom = (ApplicableTestRoom) extras.getSerializable("ApplicableTestRoom");
+                    }
+//                    room = (Room) extras.getSerializable("Room");
+//                    ahuNumber = extras.getString("AhuNumber");
+//                    applicableTestRoomLocation = extras.getInt("LOCATION");
+//                    noOfCycle = extras.getInt("NOOFCYCLE");//throwing Exception...plz check tiwari jee
                 }
             }
         }
@@ -428,6 +452,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
 
             setCommonTestHeader(testType, mTestBasedOn);
         } else if (TestCreateActivity.FIT.equalsIgnoreCase(testType)) {
+
             if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
                 if (mRoomFilterArrayList != null && mRoomFilterArrayList.size() > 0)
                     BuildTableTest4(mRoomFilterArrayList.size() + 1, mApplicableTestRoom.getLocation());
@@ -446,20 +471,33 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             }
             setCommonTestHeader(testType, mTestBasedOn);
         } else if (TestCreateActivity.PCT.equalsIgnoreCase(testType)) {
-            rows = applicableTestRoomLocation + 1;
-            if (rows >= 1) {
-                // BuildTableTest5(applicableTestRoomLocation + 1, noOfCycle);
-                BuildTableTest5(7, 3);
-            } else
-                aleartDialog("There is no noOfCycle or applicable test room location");
-            // setCommonTestHeader(testType, mTestBasedOn);
+
+            if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
+                rows = mApplicableTestRoom.getLocation() + 1;
+                if (rows >= 1) {
+                    BuildTableTest5(rows, mApplicableTestRoom.getNoOfCycle());
+//                    BuildTableTest5(7, 3);
+                } else
+                    aleartDialog("There is no noOfCycle or applicable test room location");
+
+            } else if (mTestBasedOn.equalsIgnoreCase("EQUIPMENT")) {
+                rows = mApplicableTestEquipment.getLocation() + 1;
+                if (rows >= 1) {
+                    BuildTableTest5(rows + 1, mApplicableTestEquipment.getNoOfCycle());
+//                    BuildTableTest5(7, 3);
+                } else
+                    aleartDialog("There is no noOfCycle or applicable test room location");
+            }
+
+
+            setCommonTestHeader(testType, mTestBasedOn);
         } else if (TestCreateActivity.RCT.equalsIgnoreCase(testType)) {
 //            if (grillAndSizeFromGrill != null && grillAndSizeFromGrill.size() > 0)
 //                BuildTableTest6(grillAndSizeFromGrill.size() + 1, cols);
             BuildTableTest6(3, 1);
 //            else
 //                aleartDialog("There is no gril");
-//            setCommonTestHeader(testType, mTestBasedOn);
+            setCommonTestHeader(testType, mTestBasedOn);
         }
 
         if (pr.isShowing())
@@ -560,10 +598,10 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             if (TestBasedOn.equalsIgnoreCase("EQUIPMENT")) {
                 test_header1.setText("Equipment Name :");
                 test_header4.setText("Eqipment No :");
-            } else if(TestBasedOn.equalsIgnoreCase("ROOM")){
+            } else if (TestBasedOn.equalsIgnoreCase("ROOM")) {
                 test_header1.setText("Room Name :");
                 test_header4.setText("Room No :");
-            }else{
+            } else {
                 test_header1.setText("AHU :");
                 test_header4.setText("Test Item :");
             }
@@ -794,7 +832,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                     if (mGrilFilterType.equalsIgnoreCase("Grill")) {
                         intent.putExtra("GrilFilterType", "Grill");
                         intent.putExtra("GRILLLIST", mEquipmentGrillArrayList);
-                        if(null!=grillAndSizeFromGrill&&grillAndSizeFromGrill.size()>0) {
+                        if (null != grillAndSizeFromGrill && grillAndSizeFromGrill.size() > 0) {
                             intent.putExtra("rows", mEquipmentGrillArrayList.size() + 1);
 
                         }
@@ -858,7 +896,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                     if (mGrilFilterType.equalsIgnoreCase("Grill")) {
                         intent.putExtra("GrilFilterType", "Grill");
                         intent.putExtra("GRILLLIST", grillAndSizeFromGrill);
-                        if(null!=grillAndSizeFromGrill&&grillAndSizeFromGrill.size()>0) {
+                        if (null != grillAndSizeFromGrill && grillAndSizeFromGrill.size() > 0) {
                             intent.putExtra("rows", grillAndSizeFromGrill.size() + 1);
                         }
                     } else {
@@ -902,7 +940,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 if (mGrilFilterType.equalsIgnoreCase("Grill")) {
                     intent.putExtra("GrilFilterType", "Grill");
                     intent.putExtra("GRILLLIST", grillAndSizeFromGrill);
-                    if(null!=grillAndSizeFromGrill&&grillAndSizeFromGrill.size()>0) {
+                    if (null != grillAndSizeFromGrill && grillAndSizeFromGrill.size() > 0) {
                         intent.putExtra("rows", grillAndSizeFromGrill.size() + 1);
                     }
                 } else {
@@ -967,7 +1005,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                     intent.putExtra("RoomFilterList", mRoomFilterArrayList);
                     intent.putExtra("ApplicableTestRoom", mApplicableTestRoom);
                     intent.putExtra("rows", mRoomFilterArrayList.size() + 1);
-                    intent.putExtra("cols", applicableTestRoomLocation);
+                    intent.putExtra("cols", mApplicableTestRoom.getLocation());
                 }
 
                 //sending Result Data over Bundle
@@ -990,6 +1028,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 intent.putExtra("WITNESSTHIRD", witnessThird);
                 intent.putExtra("testType", testType);
                 intent.putExtra("testCode", mTestCode);
+                intent.putExtra("testBasedOn", mTestBasedOn);
                 //get area based on room area id
                 intent.putExtra("AREANAME", areaName);
 
@@ -998,12 +1037,30 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 } else {
                     intent.putExtra("PartnerInstrument", partnerInstrument);
                 }
-                intent.putExtra("Room", room);
-                intent.putExtra("AhuNumber", ahuNumber);
-                intent.putExtra("LOCATION", applicableTestRoomLocation);
-                intent.putExtra("NOOFCYCLE", noOfCycle);
-                intent.putExtra("rows", applicableTestRoomLocation + 1);
-                intent.putExtra("cols", noOfCycle);
+
+                if (mTestBasedOn.equalsIgnoreCase("EQUIPMENT")) {
+                    intent.putExtra("RoomDetails", roomDetails);
+                    intent.putExtra("Equipment", equipment);
+                    intent.putExtra("AREANAME", areaName);
+//                    intent.putExtra("EquipmentFilter", mEquipmentFilterArrayList);
+                    intent.putExtra("ApplicableTestEquipment", mApplicableTestEquipment);
+                    intent.putExtra("rows", mEquipmentFilterArrayList.size() + 1);
+                    intent.putExtra("cols", mApplicableTestEquipment.getLocation());
+                } else if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
+                    intent.putExtra("Room", room);
+                    intent.putExtra("AhuNumber", ahuNumber);
+//                    intent.putExtra("RoomFilterList", mRoomFilterArrayList);
+                    intent.putExtra("ApplicableTestRoom", mApplicableTestRoom);
+                    intent.putExtra("rows", mRoomFilterArrayList.size() + 1);
+                    intent.putExtra("cols", mApplicableTestRoom.getLocation());
+                }
+
+//                intent.putExtra("Room", room);
+//                intent.putExtra("AhuNumber", ahuNumber);
+//                intent.putExtra("LOCATION", applicableTestRoomLocation);
+//                intent.putExtra("NOOFCYCLE", noOfCycle);
+//                intent.putExtra("rows", applicableTestRoomLocation + 1);
+//                intent.putExtra("cols", noOfCycle);
                 //sending Input Data
                 intent.putExtra("InputData", inputDataHashMap);
                 //sending Result Data over Bundle
@@ -1040,6 +1097,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                     intent.putExtra("WITNESSTHIRD", witnessThird);
                     intent.putExtra("testType", testType);
                     intent.putExtra("testCode", mTestCode);
+                    intent.putExtra("testBasedOn", mTestBasedOn);
                     //get area based on room area id
                     intent.putExtra("AREANAME", areaName);
 
@@ -1048,10 +1106,23 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                     } else {
                         intent.putExtra("PartnerInstrument", partnerInstrument);
                     }
-                    intent.putExtra("Room", room);
-                    intent.putExtra("AhuNumber", ahuNumber);
-                    intent.putExtra("LOCATION", applicableTestRoomLocation);
-                    intent.putExtra("NOOFCYCLE", noOfCycle);
+
+                    if (mTestBasedOn.equalsIgnoreCase("EQUIPMENT")) {
+                        intent.putExtra("RoomDetails", roomDetails);
+                        intent.putExtra("Equipment", equipment);
+                        intent.putExtra("AREANAME", areaName);
+//                    intent.putExtra("EquipmentFilter", mEquipmentFilterArrayList);
+                        intent.putExtra("ApplicableTestEquipment", mApplicableTestEquipment);
+                        intent.putExtra("rows", mEquipmentFilterArrayList.size() + 1);
+                        intent.putExtra("cols", mApplicableTestEquipment.getLocation());
+                    } else if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
+                        intent.putExtra("Room", room);
+                        intent.putExtra("AhuNumber", ahuNumber);
+//                    intent.putExtra("RoomFilterList", mRoomFilterArrayList);
+                        intent.putExtra("ApplicableTestRoom", mApplicableTestRoom);
+                        intent.putExtra("rows", mRoomFilterArrayList.size() + 1);
+                        intent.putExtra("cols", mApplicableTestRoom.getLocation());
+                    }
                     intent.putExtra("InitialReading", "" + inputDataHashMap.get(200));
                     intent.putExtra("WorstCaseReading", "" + inputDataHashMap.get(201));
                     intent.putExtra("FinalReading", "" + finalReadingValueTv.getText().toString());
@@ -1711,11 +1782,11 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
 
                     } else if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
                         if (mGrilFilterType.equalsIgnoreCase("Grill")) {
-                            if (null != grillAndSizeFromGrill && grillAndSizeFromGrill.size() > 0){
+                            if (null != grillAndSizeFromGrill && grillAndSizeFromGrill.size() > 0) {
 //                                String grill = grillAndSizeFromGrill.get(i - 2)[1].toString();
                                 float filterSize = 0.0f;
 //                                if (!grill.isEmpty())
-                                 filterSize = (float)(grillAndSizeFromGrill.get(i - 2).getEffectiveArea());
+                                filterSize = (float) (grillAndSizeFromGrill.get(i - 2).getEffectiveArea());
                                 row.addView(addTextViewWithTagIds(i, filterSizeIds, filterSizeTxtViewList, filterSize + ""));
                             }
 
@@ -2610,6 +2681,11 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             }
         });
 
+        sampling_flow_rate = (TableRow) findViewById(R.id.sampling_flow_rate);
+        sampling_time = (TableRow) findViewById(R.id.sampling_time);
+        clean_room_class = (TableRow) findViewById(R.id.clean_room_class);
+
+
         //Common Test Header and Value;
         test_header1 = (TextView) findViewById(R.id.common_dynamic_test_header1_tv);
         test_header2 = (TextView) findViewById(R.id.common_dynamic_test_header2_tv);
@@ -2630,13 +2706,13 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         test_value5 = (TextView) findViewById(R.id.common_dynamic_test_value5_tv);
         test_value6 = (TextView) findViewById(R.id.common_dynamic_test_value6_tv);
         test_value7 = (TextView) findViewById(R.id.common_dynamic_test_value7_tv);
-        test_value7.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // On button click show datepicker dialog
-                showDialog(DATE_PICKER_ID);
-            }
-        });
+//        test_value7.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                // On button click show datepicker dialog
+//                showDialog(DATE_PICKER_ID);
+//            }
+//        });
         test_value8 = (TextView) findViewById(R.id.common_dynamic_test_value8_tv);
         test_value9 = (TextView) findViewById(R.id.common_dynamic_test_value9_tv);
         test_value10 = (TextView) findViewById(R.id.common_dynamic_test_value10_tv);
@@ -2715,6 +2791,9 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
 //                instrumentName.setText(partnerInstrument.getpInstrumentName());
 //                instrumentNo.setText("" + partnerInstrument.getSerialNo());
 //            }
+//            test_header10.setVisibility(View.GONE);
+//            test_header11.setVisibility(View.GONE);
+//            test_header12.setVisibility(View.GONE);
             testHeaderAv.setText("FORM:TEST RAW DATA (FIT)\nInstalled HEPA Filter System Leakage Test by Aerosol Photometer Method");
             findViewById(R.id.test4_dynamic_table_ll).setVisibility(View.VISIBLE);
 //            if (mTestBasedOn.equalsIgnoreCase("EQUIPMENT")) {
@@ -2760,8 +2839,12 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
 //                instrumentName.setText(partnerInstrument.getpInstrumentName());
 //                instrumentNo.setText("" + partnerInstrument.getSerialNo());
 //            }
+
             testHeaderAv.setText("FORM:TEST RAW DATA (RD_PCT)\nAirborne Particle Count Test for Classification of Cleanrooms/zones and Clean Air Devices");
             findViewById(R.id.test5_dynamic_table_ll).setVisibility(View.VISIBLE);
+            sampling_flow_rate.setVisibility(View.VISIBLE);
+            sampling_time.setVisibility(View.VISIBLE);
+            clean_room_class.setVisibility(View.VISIBLE);
         }
 
         //Test6
@@ -2787,6 +2870,9 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
 //                instrumentName.setText(partnerInstrument.getpInstrumentName());
 //                instrumentNo.setText("" + partnerInstrument.getSerialNo());
 //            }
+            sampling_flow_rate.setVisibility(View.VISIBLE);
+            sampling_time.setVisibility(View.VISIBLE);
+//            clean_room_class.setVisibility(View.VISIBLE);
             findViewById(R.id.test6A_dynamic_table_ll).setVisibility(View.VISIBLE);
             testHeaderAv.setText("FORM :TEST RAW DATA (RD_RCT)\nAirborne Particle Count Test for Classification of Cleanrooms/zones and Clean Air Devices");
 

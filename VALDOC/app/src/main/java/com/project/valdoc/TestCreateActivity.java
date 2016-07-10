@@ -489,7 +489,6 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
             String areaName = mValdocDatabaseHandler.getAreaByRoomAreaId("" + room.getAreaId());
             Log.d("valdoc", "TestCreateActivity areaName=" + areaName);
             intent.putExtra("AREANAME", areaName);
-            createApplicableTestRoomList(room.getRoomId(),testType);
             createApplicableTestRoomList(room.getRoomId(),FIT);
             intent.putExtra("ApplicableTestRoom", mApplicableTestRoom);
 
@@ -516,17 +515,47 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
         } else {
             intent.putExtra("PartnerInstrument", partnerInstrumentArrayList.get(instrumentSpiner.getSelectedItemPosition() - 1));
         }
+        Room room = null;
+        if (testBasedOn.equalsIgnoreCase("EQUIPMENT")) {
+            String[] roomDetails = null;
+            //get room name,roomNo,and area id
+            Equipment equipment = mEquipmentArrayList.get(roomSpinner.getSelectedItemPosition() - 1);
+            roomDetails = mValdocDatabaseHandler.getRoomByEquipment(equipment.getRoomId());
+            intent.putExtra("RoomDetails", roomDetails);
+            intent.putExtra("Equipment", equipment);
+            String areaName = mValdocDatabaseHandler.getAreaByRoomAreaId(roomDetails[2]);
+            Log.d("valdoc", "TestCreateActivity areaName=" + areaName);
+            intent.putExtra("AREANAME", areaName);
+            //get filter list from equipment filter
+//            mEquipmentFilterArrayList = mValdocDatabaseHandler.getFilterFromEquipmentFilter(equipment.getEquipmentId());
+//            intent.putExtra("EquipmentFilter", mEquipmentFilterArrayList);
+            ApplicableTestEquipment applicableTestEquipment = createApplicableTestEquipmentList(equipment.getEquipmentId(), PCT);
+            intent.putExtra("ApplicableTestEquipment", applicableTestEquipment);
 
-        //get room name,roomNo,and area id
-        Room room = mRoomNoArrayList.get(roomNoSpinner.getSelectedItemPosition() - 1);
-        intent.putExtra("Room", room);
-        intent.putExtra("AhuNumber", ahuSpinner.getSelectedItem().toString());
 
-        intent.putExtra("mApplicableTestRoom", mApplicableTestRoom);
-        //get area based on room area id
-        String areaName = mValdocDatabaseHandler.getAreaByRoomAreaId("" + room.getAreaId());
-        Log.d("valdoc", "TestCreateActivity areaName=" + areaName);
-        intent.putExtra("AREANAME", areaName);
+        } else if (testBasedOn.equalsIgnoreCase("ROOM")) {
+            //get room name,roomNo,and area id
+            Log.d("valdoc", "TestCreateActivity :roomNoSpinner:=" + roomNoSpinner.getSelectedItemPosition());
+            int pos = roomNoSpinner.getSelectedItemPosition();
+            if (pos > 0) {
+                room = mRoomNoArrayList.get(roomNoSpinner.getSelectedItemPosition() - 1);
+                intent.putExtra("Room", room);
+                //take test specification from room filter
+//                roomFilterList = mValdocDatabaseHandler.getFromRoomFilter(room.getRoomId());
+//                Log.d("valdoc", "TestCreateActivity filterArrayList=" + roomFilterList.size());
+//                intent.putExtra("RoomFilter", roomFilterList);
+            }
+            //TO Do testspesification will be shown from room filter spesification
+            intent.putExtra("AhuNumber", ahuSpinner.getSelectedItem().toString());
+            //get area based on room area id
+            String areaName = mValdocDatabaseHandler.getAreaByRoomAreaId("" + room.getAreaId());
+            Log.d("valdoc", "TestCreateActivity areaName=" + areaName);
+            intent.putExtra("AREANAME", areaName);
+            createApplicableTestRoomList(room.getRoomId(),PCT);
+            intent.putExtra("ApplicableTestRoom", mApplicableTestRoom);
+
+        }
+
         // location will be the size off rommfilter list
         startActivity(intent);
     }
@@ -550,16 +579,57 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
             intent.putExtra("PartnerInstrument", partnerInstrumentArrayList.get(instrumentSpiner.getSelectedItemPosition() - 1));
         }
 
-        //get room name,roomNo,and area id
-        Log.d("valdoc", "TestCreateActivity :equipment:=" + roomNoSpinner.getSelectedItemPosition());
-        Room room = mRoomNoArrayList.get(roomNoSpinner.getSelectedItemPosition() - 1);
-        intent.putExtra("Room", room);
-        intent.putExtra("AhuNumber", ahuSpinner.getSelectedItem().toString());
-        intent.putExtra("ApplicableTestRoom", mApplicableTestRoom);
-        //get area based on room area id
-        String areaName = mValdocDatabaseHandler.getAreaByRoomAreaId("" + room.getAreaId());
-        Log.d("valdoc", "TestCreateActivity areaName=" + areaName);
-        intent.putExtra("AREANAME", areaName);
+        Room room = null;
+        if (testBasedOn.equalsIgnoreCase("EQUIPMENT")) {
+            String[] roomDetails = null;
+            //get room name,roomNo,and area id
+            Equipment equipment = mEquipmentArrayList.get(roomSpinner.getSelectedItemPosition() - 1);
+            roomDetails = mValdocDatabaseHandler.getRoomByEquipment(equipment.getRoomId());
+            intent.putExtra("RoomDetails", roomDetails);
+            intent.putExtra("Equipment", equipment);
+            String areaName = mValdocDatabaseHandler.getAreaByRoomAreaId(roomDetails[2]);
+            Log.d("valdoc", "TestCreateActivity areaName=" + areaName);
+            intent.putExtra("AREANAME", areaName);
+            //get filter list from equipment filter
+//            mEquipmentFilterArrayList = mValdocDatabaseHandler.getFilterFromEquipmentFilter(equipment.getEquipmentId());
+//            intent.putExtra("EquipmentFilter", mEquipmentFilterArrayList);
+            ApplicableTestEquipment applicableTestEquipment = createApplicableTestEquipmentList(equipment.getEquipmentId(),RCT);
+            intent.putExtra("ApplicableTestEquipment", applicableTestEquipment);
+
+
+        } else if (testBasedOn.equalsIgnoreCase("ROOM")) {
+            //get room name,roomNo,and area id
+            Log.d("valdoc", "TestCreateActivity :roomNoSpinner:=" + roomNoSpinner.getSelectedItemPosition());
+            int pos = roomNoSpinner.getSelectedItemPosition();
+            if (pos > 0) {
+                room = mRoomNoArrayList.get(roomNoSpinner.getSelectedItemPosition() - 1);
+                intent.putExtra("Room", room);
+                //take test specification from room filter
+//                roomFilterList = mValdocDatabaseHandler.getFromRoomFilter(room.getRoomId());
+//                Log.d("valdoc", "TestCreateActivity filterArrayList=" + roomFilterList.size());
+//                intent.putExtra("RoomFilter", roomFilterList);
+            }
+            //TO Do testspesification will be shown from room filter spesification
+            intent.putExtra("AhuNumber", ahuSpinner.getSelectedItem().toString());
+            //get area based on room area id
+            String areaName = mValdocDatabaseHandler.getAreaByRoomAreaId("" + room.getAreaId());
+            Log.d("valdoc", "TestCreateActivity areaName=" + areaName);
+            intent.putExtra("AREANAME", areaName);
+            createApplicableTestRoomList(room.getRoomId(),RCT);
+            intent.putExtra("ApplicableTestRoom", mApplicableTestRoom);
+
+        }
+
+//        //get room name,roomNo,and area id
+//        Log.d("valdoc", "TestCreateActivity :equipment:=" + roomNoSpinner.getSelectedItemPosition());
+//        Room room = mRoomNoArrayList.get(roomNoSpinner.getSelectedItemPosition() - 1);
+//        intent.putExtra("Room", room);
+//        intent.putExtra("AhuNumber", ahuSpinner.getSelectedItem().toString());
+//        intent.putExtra("ApplicableTestRoom", mApplicableTestRoom);
+//        //get area based on room area id
+//        String areaName = mValdocDatabaseHandler.getAreaByRoomAreaId("" + room.getAreaId());
+//        Log.d("valdoc", "TestCreateActivity areaName=" + areaName);
+//        intent.putExtra("AREANAME", areaName);
         // location will be the size off rommfilter list
         startActivity(intent);
     }
