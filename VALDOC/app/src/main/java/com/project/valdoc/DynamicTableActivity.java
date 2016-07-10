@@ -803,6 +803,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
     public void onClick(View view) {
         if (view == verify_btn) {
             Intent intent = null;
+            int rowSize = 0;
             if (TestCreateActivity.AV.equalsIgnoreCase(testType)) {
 
                 intent = new Intent(DynamicTableActivity.this, RDAV5UserEntryActivity.class);
@@ -833,13 +834,16 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                         intent.putExtra("GrilFilterType", "Grill");
                         intent.putExtra("GRILLLIST", mEquipmentGrillArrayList);
                         if (null != grillAndSizeFromGrill && grillAndSizeFromGrill.size() > 0) {
-                            intent.putExtra("rows", mEquipmentGrillArrayList.size() + 1);
-
+                            rowSize = mEquipmentGrillArrayList.size() + 1;
+                            intent.putExtra("rows",rowSize);
+//                            intent.putExtra("rows", mEquipmentGrillArrayList.size() + 1);
                         }
+
                     } else {
                         intent.putExtra("GrilFilterType", "Filter");
                         intent.putExtra("GRILLLIST", mEquipmentFilterArrayList);
-                        intent.putExtra("rows", mEquipmentFilterArrayList.size() + 1);
+                        rowSize = mEquipmentFilterArrayList.size() + 1;
+                        intent.putExtra("rows", rowSize);
                     }
 //                    ApplicableTestEquipment
                     intent.putExtra("ApplicableTestEquipment", mApplicableTestEquipment);
@@ -850,7 +854,8 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                     intent.putExtra("RoomDetails", roomDetails);
                     intent.putExtra("FILTERLIST", mAhuFilterArrayList);
                     intent.putExtra("ApplicableTestAhu", mApplicableTestAhu);
-                    intent.putExtra("rows", mAhuFilterArrayList.size() + 1);
+                    rowSize = mAhuFilterArrayList.size() + 1;
+                    intent.putExtra("rows", rowSize);
                     intent.putExtra("cols", mApplicableTestAhu.getLocation());
                 }
 
@@ -860,6 +865,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 //sending Input Data
                 intent.putExtra("InputData", inputDataHashMap);
                 startActivity(intent);
+                Log.d(TAG, "CodeFlow rowSize "+rowSize);
             }
             if (TestCreateActivity.ACPHAV.equalsIgnoreCase(testType)) {
                 intent = new Intent(DynamicTableActivity.this, RDACPHAVUserEntryActivity.class);

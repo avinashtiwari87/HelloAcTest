@@ -152,6 +152,8 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_rdfituser_entry);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         pr = ProgressDialog.show(this, "Please Wait", "Loading...");
+        pr.setCanceledOnTouchOutside(true);
+        pr.setCancelable(true);
 
         //init res file from xml
         initRes();
@@ -984,7 +986,7 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
-                    row.addView(addTextView(" Test Status\n    "));
+                    row.addView(addTextView(" Test Results\n(Passed / Not Passed)"));
                 } else {
                     //row.addView(addTextView(" Pass "));
                     row.addView(addTextPassFail(" ", i));
@@ -1130,7 +1132,5 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
         findViewById(R.id.test_table_4_header_l_ll).setVisibility(View.GONE);
         findViewById(R.id.test_table_4_header_2_ll).setVisibility(View.VISIBLE);
         findViewById(R.id.test_interference).setVisibility(View.GONE);
-        findViewById(R.id.test_note_tv).setVisibility(View.VISIBLE);
-        findViewById(R.id.test_note_fit_tv).setVisibility(View.VISIBLE);
     }
 }

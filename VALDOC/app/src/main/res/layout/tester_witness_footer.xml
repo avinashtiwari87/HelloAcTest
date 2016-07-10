@@ -23,13 +23,6 @@
         android:textColor="@color/black"
         android:background="@drawable/border"
         android:text=" * The upstrean aerosol concentration measurements taken immediately upstream of the filters should not vary more than +/-15% in time about the average measured values."/>
-    <TextView
-        android:id="@+id/test_note_tv"
-        android:padding="5dp"
-        style="@style/TestHeaderTextViewNormal"
-        android:textColor="@color/red"
-        android:visibility="gone"
-        android:text="Note: Red Bakground values are failed to meet requirement"/>
 
     <LinearLayout
         android:id="@+id/test_interference"

@@ -7,13 +7,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -28,7 +28,6 @@ import com.project.valdoc.intity.AhuFilter;
 import com.project.valdoc.intity.ApplicableTestAhu;
 import com.project.valdoc.intity.ApplicableTestRoom;
 import com.project.valdoc.intity.ClientInstrument;
-import com.project.valdoc.intity.Equipment;
 import com.project.valdoc.intity.Grill;
 import com.project.valdoc.intity.PartnerInstrument;
 import com.project.valdoc.intity.Room;
@@ -37,8 +36,6 @@ import com.project.valdoc.intity.TestDetails;
 import com.project.valdoc.intity.TestReading;
 import com.project.valdoc.intity.TestSpesificationValue;
 import com.project.valdoc.utility.Utilityies;
-
-import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -89,8 +86,8 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
     private int newCertificateNo = 0;
     //certificate view id creation
     private TextView instrumentUsed;
-    private TextView TFRTxtv;
-    private TextView TFTAVTxtv;
+    private TextView TFRtv;
+    private TextView TFTByRvTv;
     private TextView instrumentSerialNo;
     private TextView calibrationOn;
     private TextView calibrationDueOn;
@@ -145,6 +142,8 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
         sharedpreferences = getSharedPreferences("valdoc", Context.MODE_PRIVATE);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         pr = ProgressDialog.show(this, "Please Wait", "Loading...");
+        pr.setCanceledOnTouchOutside(true);
+        pr.setCancelable(true);
 
         testDetailsId = (sharedpreferences.getInt("TESTDETAILSID", 0) + 1);
 
@@ -221,7 +220,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
             TextView mtvl = totalAirFlowRateTxtList.get(middleTxt);
             totalAirFlowRate = getIntent().getFloatExtra("totalAirFlowRate", 0f);
             mtvl.setText(totalAirFlowRate + "");
-            TFRTxtv.setText(totalAirFlowRate + "");
+            TFRtv.setText(totalAirFlowRate + "");
         }
         //AirFlow Change
         if (airChangeTxtList != null && airChangeTxtList.size() > 0) {
@@ -236,20 +235,24 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
                 }
                 if (airChangeValue > value) {
                     infarance.setText("The above Airflow Volume Test and Derived No.of Air chanages per hour meets the specificed requirement");
+                    TFTByRvTv.setTextColor(ContextCompat.getColor(this, R.color.blue));
                 } else {
                     infarance.setText("The above Airflow Volume Test and Derived No.of Air chanages per hour do not meets the specificed requirement");
+                    TFTByRvTv.setTextColor(ContextCompat.getColor(this, R.color.red));
                 }
             } else if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
                 if (airChangeValue > room.getAcph()) {
                     infarance.setText("The above Airflow Volume Test and Derived No.of Air chanages per hour meets the specificed requirement");
+                    TFTByRvTv.setTextColor(ContextCompat.getColor(this, R.color.blue));
                 } else {
                     infarance.setText("The above Airflow Volume Test and Derived No.of Air chanages per hour do not meets the specificed requirement");
+                    TFTByRvTv.setTextColor(ContextCompat.getColor(this, R.color.red));
                 }
             }
 
 //            infarance.setText("Obtained Test Result");
             airChangeTxt.setText("" + airChangeValue);
-            TFTAVTxtv.setText("" + airChangeValue);
+            TFTByRvTv.setText("" + airChangeValue);
         }
 
         //Custom Action Bar
@@ -1091,15 +1094,14 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
         test2_table_layout7.setVisibility(View.GONE);
         test2_table_layout8 = (TableLayout) findViewById(R.id.test2_tableLayout8);
         test2_table_layout8.setVisibility(View.GONE);
-        TFRTxtv = (TextView) findViewById(R.id.acph_av_tfr_value_tv);
-        TFTAVTxtv = (TextView) findViewById(R.id.acph_av_tfrby_av_value_tv);
+        TFRtv = (TextView) findViewById(R.id.acph_av_tfr_value_tv);
+        TFTByRvTv = (TextView) findViewById(R.id.acph_av_tfrby_av_value_tv);
         //Hide view coming form test tabl 1
         test_table_1_header_l = (LinearLayout) findViewById(R.id.test_table_2_header_l_ll);
         test_table_1_header_2 = (LinearLayout) findViewById(R.id.test_table_2_header_2_ll);
         test_table_1_header_l.setVisibility(View.GONE);
         test_table_1_header_2.setVisibility(View.GONE);
         findViewById(R.id.test_interference).setVisibility(View.GONE);
-        findViewById(R.id.test_note_tv).setVisibility(View.VISIBLE);
         findViewById(R.id.acph_av_final_calc_ll).setVisibility(View.VISIBLE);
         TextView TestHeader = (TextView) findViewById(R.id.common_header_tv);
         TestHeader.setText("TEST RAW DATA (RD_ACPH_AV)\n(Air Flow Velocity, Volume Testing and Determination of Air Changes per Hour Rates)");

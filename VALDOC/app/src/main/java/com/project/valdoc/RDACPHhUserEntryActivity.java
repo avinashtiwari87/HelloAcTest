@@ -7,24 +7,21 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.project.valdoc.db.ValdocDatabaseHandler;
-import com.project.valdoc.intity.AhuFilter;
 import com.project.valdoc.intity.ApplicableTestRoom;
 import com.project.valdoc.intity.ClientInstrument;
 import com.project.valdoc.intity.Grill;
@@ -95,8 +92,8 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
     private TextView customerName;
     private TextView certificateNo;
     private TextView infarance;
-    private TextView TFRTxtv;
-    private TextView TFTAVTxtv;
+    private TextView TFRtv;
+    private TextView TFTByRvTv;
     private TextView roomVolume;
     private TextView roomVolumeText;
     private TextView instrumentUsedTextView;
@@ -131,6 +128,8 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_rdacphh_user_entry);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         pr = ProgressDialog.show(this, "Please Wait", "Loading...");
+        pr.setCanceledOnTouchOutside(true);
+        pr.setCancelable(true);
 
         initRes();
 
@@ -186,24 +185,26 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
             TextView mtvl = totalAirFlowRateTxtList.get(middleTxt);
             totalAirFlowRate = getIntent().getFloatExtra("totalAirFlowRate", 0f);
             mtvl.setText(totalAirFlowRate + "");
-            TFRTxtv.setText(totalAirFlowRate + "");
+            TFRtv.setText(totalAirFlowRate + "");
         }
         totalAirFlowRate = getIntent().getFloatExtra("totalAirFlowRate", 0f);
-        TFRTxtv.setText("" + totalAirFlowRate);
+        TFRtv.setText("" + totalAirFlowRate);
         //AirFlow Change
         if (airChangeTxtList != null && airChangeTxtList.size() > 0) {
             TextView airChangeTxt = airChangeTxtList.get(airChangeTxtList.size() / 2);
             airChangeValue = getIntent().getIntExtra("AirChangeValue", 0);
             if (airChangeValue > room.getAcph()) {
-                infarance.setText("The above Airflow Volume Test and Derived No.of Air chanages per hour meets the specificed requirement");
+                infarance.setText("The above Airflow Volume Test and Derived No.of Air changes per hour meets the specified requirement");
+                TFTByRvTv.setTextColor(ContextCompat.getColor(this, R.color.blue));
             } else {
-                infarance.setText("The above Airflow Volume Test and Derived No.of Air chanages per hour do not meets the specificed requirement");
+                infarance.setText("The above Airflow Volume Test and Derived No.of Air changes per hour do not meets the specified requirement");
+                TFTByRvTv.setTextColor(ContextCompat.getColor(this, R.color.red));
             }
             airChangeTxt.setText(airChangeValue + "");
-            TFTAVTxtv.setText("" + airChangeValue);
+            TFTByRvTv.setText("" + airChangeValue);
         }
         airChangeValue = getIntent().getIntExtra("AirChangeValue", 0);
-        TFTAVTxtv.setText("" + airChangeValue);
+        TFTByRvTv.setText("" + airChangeValue);
         //Custom Action Bar
         ActionBar mActionBar = getSupportActionBar();
         if (mActionBar != null)
@@ -787,12 +788,11 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
         test3_table_layout4.setVisibility(View.GONE);
         test3_table_layout5 = (TableLayout) findViewById(R.id.test3_tableLayout5);
         test3_table_layout5.setVisibility(View.GONE);
-        TFRTxtv = (TextView) findViewById(R.id.acph_h_tfr_value_tv);
-        TFTAVTxtv = (TextView) findViewById(R.id.acph_h_tfrby_av_value_tv);
+        TFRtv = (TextView) findViewById(R.id.acph_h_tfr_value_tv);
+        TFTByRvTv = (TextView) findViewById(R.id.acph_h_tfrby_av_value_tv);
         findViewById(R.id.test_table_3_header_l_ll).setVisibility(View.GONE);
         findViewById(R.id.test_table_3_header_2_ll).setVisibility(View.VISIBLE);
         findViewById(R.id.test_interference).setVisibility(View.GONE);
-        findViewById(R.id.test_note_tv).setVisibility(View.VISIBLE);
         findViewById(R.id.acph_h_final_calc_ll).setVisibility(View.VISIBLE);
         TextView TestHeader = (TextView) findViewById(R.id.common_header_tv);
         TestHeader.setText("TEST RAW DATA (ACPH_H)\n(Air Flow Velocity, Volume Testing and Determination of Air Changes per Hour Rates)");
