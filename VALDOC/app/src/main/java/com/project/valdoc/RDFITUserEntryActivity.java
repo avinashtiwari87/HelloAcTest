@@ -986,7 +986,7 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
-                    row.addView(addTextView(" Test Status\n    "));
+                    row.addView(addTextView(" Test Results\n(Passed / Not Passed)"));
                 } else {
                     //row.addView(addTextView(" Pass "));
                     row.addView(addTextPassFail(" ", i));
