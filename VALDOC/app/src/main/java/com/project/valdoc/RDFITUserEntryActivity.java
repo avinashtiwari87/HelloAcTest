@@ -1132,7 +1132,5 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
         findViewById(R.id.test_table_4_header_l_ll).setVisibility(View.GONE);
         findViewById(R.id.test_table_4_header_2_ll).setVisibility(View.VISIBLE);
         findViewById(R.id.test_interference).setVisibility(View.GONE);
-        findViewById(R.id.test_note_tv).setVisibility(View.VISIBLE);
-        findViewById(R.id.test_note_fit_tv).setVisibility(View.VISIBLE);
     }
 }
