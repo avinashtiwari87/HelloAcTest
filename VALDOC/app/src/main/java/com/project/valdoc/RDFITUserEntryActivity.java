@@ -152,6 +152,8 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_rdfituser_entry);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         pr = ProgressDialog.show(this, "Please Wait", "Loading...");
+        pr.setCanceledOnTouchOutside(true);
+        pr.setCancelable(true);
 
         //init res file from xml
         initRes();

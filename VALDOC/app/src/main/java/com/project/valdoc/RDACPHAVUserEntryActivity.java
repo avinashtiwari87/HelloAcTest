@@ -145,6 +145,8 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
         sharedpreferences = getSharedPreferences("valdoc", Context.MODE_PRIVATE);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         pr = ProgressDialog.show(this, "Please Wait", "Loading...");
+        pr.setCanceledOnTouchOutside(true);
+        pr.setCancelable(true);
 
         testDetailsId = (sharedpreferences.getInt("TESTDETAILSID", 0) + 1);
 

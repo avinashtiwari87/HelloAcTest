@@ -131,6 +131,8 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_rdacphh_user_entry);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         pr = ProgressDialog.show(this, "Please Wait", "Loading...");
+        pr.setCanceledOnTouchOutside(true);
+        pr.setCancelable(true);
 
         initRes();
 
