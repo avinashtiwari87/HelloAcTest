@@ -254,7 +254,7 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
             rdFit(equipmentTestCode[testPosition], testBasedOn, FIT);
         } else if (PCT.equals(searchEquipmentTestCode[testPosition])) {
 //            aleartDialog("Under development");
-            rdPc3(equipmentTestCode[testPosition], testBasedOn);
+            rdPcT(equipmentTestCode[testPosition], testBasedOn);
         } else if (RCT.equals(searchEquipmentTestCode[testPosition])) {
 //            aleartDialog("Under development");
             rdRct(equipmentTestCode[testPosition], testBasedOn);
@@ -273,7 +273,7 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
         } else if (FIT.equals(searchRoomsTestCode[testPosition])) {
             rdFit(roomsTestCode[testPosition], testBasedOn, FIT);
         } else if (PCT.equals(searchRoomsTestCode[testPosition])) {
-            rdPc3(roomsTestCode[testPosition], testBasedOn);
+            rdPcT(roomsTestCode[testPosition], testBasedOn);
         } else if (RCT.equals(searchRoomsTestCode[testPosition])) {
 //            rdRct(roomsTestCode[testPosition], searchRoomsTestCode[testPosition]);
             rdRct(roomsTestCode[testPosition], testBasedOn);
@@ -497,7 +497,7 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
         startActivity(intent);
     }
 
-    private void rdPc3(String testCode, String testBasedOn) {
+    private void rdPcT(String testCode, String testBasedOn) {
         Intent intent = new Intent(TestCreateActivity.this, DynamicTableActivity.class);
         intent.putExtra("USERTYPE", loginUserType);
         intent.putExtra("USERNAME", userName);
