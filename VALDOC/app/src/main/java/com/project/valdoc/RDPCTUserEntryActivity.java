@@ -2,7 +2,6 @@ package com.project.valdoc;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -15,9 +14,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -25,9 +22,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.project.valdoc.db.ValdocDatabaseHandler;
+import com.project.valdoc.intity.ApplicableTestEquipment;
+import com.project.valdoc.intity.ApplicableTestRoom;
 import com.project.valdoc.intity.ClientInstrument;
+import com.project.valdoc.intity.Equipment;
 import com.project.valdoc.intity.PartnerInstrument;
 import com.project.valdoc.intity.Room;
+import com.project.valdoc.intity.RoomFilter;
 import com.project.valdoc.intity.TestDetails;
 import com.project.valdoc.intity.TestReading;
 import com.project.valdoc.intity.TestSpesificationValue;
@@ -37,9 +38,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
-import java.util.Map;
 
-public class RDPC3UserEntryActivity extends AppCompatActivity {
+public class RDPCTUserEntryActivity extends AppCompatActivity {
     private static final String TAG = "RDPC3";
     TextView headerText;
     //Test 5 View ...
@@ -61,7 +61,7 @@ public class RDPC3UserEntryActivity extends AppCompatActivity {
     private PartnerInstrument partnerInstrument;
     private String ahuNumber;
     private Room room;
-    private ArrayList<HashMap<String, String>> grillAndSizeFromGrill;
+//    private ArrayList<HashMap<String, String>> grillAndSizeFromGrill;
     private String areaName;
     private String witnessFirst;
     private String witnessSecond;
@@ -104,7 +104,10 @@ public class RDPC3UserEntryActivity extends AppCompatActivity {
     private TextView instrumentNoLable;
     private TextView roomNameTest;
     private TextView instrument_name;
-
+    private String[] roomDetails;
+    private Equipment equipment;
+    private ApplicableTestRoom mApplicableTestRoom = null;
+    private ApplicableTestEquipment mApplicableTestEquipment = null;
     ArrayList<TextView> txtViewList;
     private String mPartnerName;
     private ImageView submit;
@@ -113,9 +116,11 @@ public class RDPC3UserEntryActivity extends AppCompatActivity {
     HashMap<Integer, Integer> rHashMap;
     HashMap<Integer, Long> averageResultHashMap;
     ArrayList<TextView> resultTextViewList;
-    private ValdocDatabaseHandler mValdocDatabaseHandler = new ValdocDatabaseHandler(RDPC3UserEntryActivity.this);
+    private ValdocDatabaseHandler mValdocDatabaseHandler = new ValdocDatabaseHandler(RDPCTUserEntryActivity.this);
     SharedPreferences sharedpreferences;
     private String mTestCode = "";
+    private String testType;
+    private String mTestBasedOn;
     private int year;
     private int month;
     private int day;
@@ -142,6 +147,8 @@ public class RDPC3UserEntryActivity extends AppCompatActivity {
             Log.d(TAG, " TestType : " + mTestType);
         }
         mTestCode = getIntent().getStringExtra("testCode");
+        mTestBasedOn = getIntent().getStringExtra("testBasedOn");
+        testType = getIntent().getStringExtra("testType");
 //dynamic data population
         getExtraFromTestCreateActivity(savedInstanceState);
         //text view initialization
@@ -150,8 +157,8 @@ public class RDPC3UserEntryActivity extends AppCompatActivity {
         initRes();
         datePicker();
         if (TestCreateActivity.PCT.equalsIgnoreCase(mTestType)) {
-           // BuildTableTest5(rows, cols);
-            BuildTableTest5(7, 3);
+            BuildTableTest5(rows, cols);
+//            BuildTableTest5(7, 3);
         }
 
 
@@ -188,7 +195,7 @@ public class RDPC3UserEntryActivity extends AppCompatActivity {
         //Custom Action Bar
         ActionBar mActionBar = getSupportActionBar();
         if (mActionBar != null)
-            Utilityies.setCustomActionBar(RDPC3UserEntryActivity.this, mActionBar, userName);
+            Utilityies.setCustomActionBar(RDPCTUserEntryActivity.this, mActionBar, userName);
     }
 
     private void datePicker() {
@@ -368,20 +375,20 @@ public class RDPC3UserEntryActivity extends AppCompatActivity {
                             editor.putInt("TESTDETAILSID", testDetailsId);
                             editor.commit();
 
-                            Toast.makeText(RDPC3UserEntryActivity.this, "Data saved successfully", Toast.LENGTH_LONG).show();
-                            Intent intent = new Intent(RDPC3UserEntryActivity.this, TestCreateActivity.class);
+                            Toast.makeText(RDPCTUserEntryActivity.this, "Data saved successfully", Toast.LENGTH_LONG).show();
+                            Intent intent = new Intent(RDPCTUserEntryActivity.this, TestCreateActivity.class);
                             intent.putExtra(TestCreateActivity.PCT, true);
                             startActivity(intent);
                             finish();
                         } else {
-                            Toast.makeText(RDPC3UserEntryActivity.this, "Data not saved", Toast.LENGTH_LONG).show();
+                            Toast.makeText(RDPCTUserEntryActivity.this, "Data not saved", Toast.LENGTH_LONG).show();
                         }
                     } else {
-                        Toast.makeText(RDPC3UserEntryActivity.this, "Data not saved", Toast.LENGTH_LONG).show();
+                        Toast.makeText(RDPCTUserEntryActivity.this, "Data not saved", Toast.LENGTH_LONG).show();
                     }
 
                 } else {
-                    Toast.makeText(RDPC3UserEntryActivity.this, "Data not saved", Toast.LENGTH_LONG).show();
+                    Toast.makeText(RDPCTUserEntryActivity.this, "Data not saved", Toast.LENGTH_LONG).show();
                 }
 
 //                mValdocDatabaseHandler.insertTestSpesificationValue(ValdocDatabaseHandler.TESTSPECIFICATIONVALUE_TABLE_NAME, testSpesificationValueDataCreation());
@@ -535,7 +542,7 @@ public class RDPC3UserEntryActivity extends AppCompatActivity {
                 clientInstrument = null;
                 partnerInstrument = null;
                 ahuNumber = null;
-                grillAndSizeFromGrill = null;
+//                grillAndSizeFromGrill = null;
                 room = null;
                 areaName = null;
                 witnessFirst = null;
@@ -555,11 +562,16 @@ public class RDPC3UserEntryActivity extends AppCompatActivity {
                 } else {
                     partnerInstrument = (PartnerInstrument) extras.getSerializable("PartnerInstrument");
                 }
-
-                room = (Room) extras.getSerializable("Room");
-                ahuNumber = extras.getString("AhuNumber");
-                grillAndSizeFromGrill = (ArrayList<HashMap<String, String>>) extras.getSerializable("GRILLIST");
-
+                if (mTestBasedOn.equalsIgnoreCase("EQUIPMENT")) {
+                    roomDetails = extras.getStringArray("RoomDetails");
+                    equipment = (Equipment) extras.getSerializable("Equipment");
+                    areaName = extras.getString("AREANAME");
+                    mApplicableTestEquipment = (ApplicableTestEquipment) extras.getSerializable("ApplicableTestEquipment");
+                } else if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
+                    room = (Room) extras.getSerializable("Room");
+                    ahuNumber = extras.getString("AhuNumber");
+                    mApplicableTestRoom = (ApplicableTestRoom) extras.getSerializable("ApplicableTestRoom");
+                }
             }
         }
 

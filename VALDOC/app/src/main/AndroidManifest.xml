@@ -62,7 +62,7 @@
             android:name=".RDFITUserEntryActivity"
             android:screenOrientation="landscape" />
         <activity
-            android:name=".RDPC3UserEntryActivity"
+            android:name=".RDPCTUserEntryActivity"
             android:screenOrientation="landscape" />
         <activity
             android:name=".RDRCTUserEntryActivity"

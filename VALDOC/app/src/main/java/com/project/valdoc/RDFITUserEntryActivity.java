@@ -133,7 +133,7 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
     private int day;
     static final int DATE_PICKER_ID = 1111;
 
-    String testType;
+    private String testType;
     private String mTestCode = "";
     private String mTestBasedOn;
     private String[] roomDetails;

@@ -6,14 +6,12 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputType;
-import android.text.Layout;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -21,17 +19,14 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.project.valdoc.db.ValdocDatabaseHandler;
 import com.project.valdoc.intity.Ahu;
 import com.project.valdoc.intity.AhuFilter;
 import com.project.valdoc.intity.ApplicableTestAhu;
@@ -51,7 +46,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class DynamicTableActivity extends AppCompatActivity implements View.OnClickListener {
@@ -673,17 +667,30 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 test_value1.setText("" + room.getRoomName());
                 test_value4.setText("" + room.getRoomNo());
                 test_value6.setText("" + mApplicableTestRoom.getOccupencyState());
+                test_value10.setText("under discussion");
+                String samplingTime = getSamplingTime(mApplicableTestRoom.getTestSpecification(),"");
+                test_value11.setText(""+samplingTime);
+                test_value12.setText("" + mApplicableTestRoom.getTestSpecification());
             } else if (TestBasedOn.equalsIgnoreCase("EQUIPMENT")) {
                 test_value1.setText("" + equipment.getEquipmentName());
                 test_value4.setText("" + equipment.getEquipmentNo());
                 test_value6.setText("" + mApplicableTestEquipment.getOccupencyState());
+                test_value10.setText("under discussion");
+                String samplingTime = getSamplingTime(mApplicableTestEquipment.getTestSpecification(),"");
+                test_value11.setText(""+samplingTime);
+                test_value12.setText("" + mApplicableTestEquipment.getTestSpecification());
             }
             datePicker();
         } else if (TestCreateActivity.RCT.equalsIgnoreCase(testType)) {
-            test_header1.setText("Room Name :");
+            if (TestBasedOn.equalsIgnoreCase("EQUIPMENT")) {
+                test_header1.setText("Equipment Name :");
+                test_header4.setText("Eqipment No:");
+            } else {
+                test_header1.setText("Room Name :");
+                test_header4.setText("Room No:");
+            }
             test_header2.setText("Instrument Used :");
             test_header3.setText("Test Conducted By:");
-            test_header4.setText("Room No:");
             test_header5.setText("Instrument Sr. No:");
             test_header6.setText("Occupancy State :");
             test_header7.setText("Date of Test :");
@@ -703,13 +710,37 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 test_value8.setText("" + partnerInstrument.getCalibrationDueDate());
             }
             test_value3.setText(userName);
-
-            test_value1.setText("" + equipment.getEquipmentName());
-            test_value4.setText("" + equipment.getEquipmentNo());
-
-            test_value6.setText("" + mApplicableTestEquipment.getOccupencyState());
+            test_value11.setText("1 Minute");
+            if (TestBasedOn.equalsIgnoreCase("ROOM")) {
+                test_header12.setText("Cleanroom Class :");
+                test_value1.setText("" + room.getRoomName());
+                test_value4.setText("" + room.getRoomNo());
+                test_value6.setText("" + mApplicableTestRoom.getOccupencyState());
+            } else if (TestBasedOn.equalsIgnoreCase("EQUIPMENT")) {
+                test_value1.setText("" + equipment.getEquipmentName());
+                test_value4.setText("" + equipment.getEquipmentNo());
+                test_value6.setText("" + mApplicableTestEquipment.getOccupencyState());
+            }
             datePicker();
         }
+    }
+
+    private String getSamplingTime(String testSpecification, String range) {
+        String samplingTime = "";
+        if (testSpecification.contains("5") || testSpecification.contains("6")) {
+            if (range.contains("28.3")) {
+                samplingTime = "36 Minute";
+            }else if(range.contains("50")){
+                samplingTime = "20 Minute";
+            }else if(range.contains("75")){
+                samplingTime = "14 Minute";
+            }else if(range.contains("100")){
+                samplingTime = "10 Minute";
+            }
+        } else {
+            samplingTime = "1 Minute";
+        }
+        return samplingTime;
     }
 
     private void datePicker() {
@@ -834,7 +865,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                         intent.putExtra("GRILLLIST", mEquipmentGrillArrayList);
                         if (null != grillAndSizeFromGrill && grillAndSizeFromGrill.size() > 0) {
                             rowSize = mEquipmentGrillArrayList.size() + 1;
-                            intent.putExtra("rows",rowSize);
+                            intent.putExtra("rows", rowSize);
 //                            intent.putExtra("rows", mEquipmentGrillArrayList.size() + 1);
                         }
 
@@ -864,7 +895,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 //sending Input Data
                 intent.putExtra("InputData", inputDataHashMap);
                 startActivity(intent);
-                Log.d(TAG, "CodeFlow rowSize "+rowSize);
+                Log.d(TAG, "CodeFlow rowSize " + rowSize);
             }
             if (TestCreateActivity.ACPHAV.equalsIgnoreCase(testType)) {
                 intent = new Intent(DynamicTableActivity.this, RDACPHAVUserEntryActivity.class);
@@ -1023,7 +1054,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 startActivity(intent);
             }
             if (TestCreateActivity.PCT.equalsIgnoreCase(testType)) {
-                intent = new Intent(DynamicTableActivity.this, RDPC3UserEntryActivity.class);
+                intent = new Intent(DynamicTableActivity.this, RDPCTUserEntryActivity.class);
                 // put bundel data
                 intent.putExtra("USERTYPE", loginUserType);
                 intent.putExtra("USERNAME", userName);
@@ -1049,7 +1080,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                     intent.putExtra("AREANAME", areaName);
 //                    intent.putExtra("EquipmentFilter", mEquipmentFilterArrayList);
                     intent.putExtra("ApplicableTestEquipment", mApplicableTestEquipment);
-                    intent.putExtra("rows", mApplicableTestEquipment.getLocation()+ 1);
+                    intent.putExtra("rows", mApplicableTestEquipment.getLocation() + 1);
                     intent.putExtra("cols", mApplicableTestEquipment.getNoOfCycle());
                 } else if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
                     intent.putExtra("Room", room);
@@ -2721,6 +2752,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         test_value9 = (TextView) findViewById(R.id.common_dynamic_test_value9_tv);
         test_value10 = (TextView) findViewById(R.id.common_dynamic_test_value10_tv);
         test_value11 = (TextView) findViewById(R.id.common_dynamic_test_value11_tv);
+        test_value12 = (TextView) findViewById(R.id.common_dynamic_test_value12_tv);
 
         //Test 1
         table_layout = (TableLayout) findViewById(R.id.tableLayout1);
