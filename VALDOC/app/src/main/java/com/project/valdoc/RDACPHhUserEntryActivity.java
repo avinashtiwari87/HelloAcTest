@@ -594,7 +594,7 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
-                    row.addView(addTextView(" Grille/Filter ID No\n "));
+                    row.addView(addTextView(" Grille/Filter No\n "));
                 } else {
 
                     if (mGrilFilterType.equalsIgnoreCase("Grill")) {
