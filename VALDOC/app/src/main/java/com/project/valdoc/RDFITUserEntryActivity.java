@@ -362,8 +362,6 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
         if (null != witnessThird && witnessThird.length() > 0)
             witness.append("," + witnessThird);
         testWitness.setText(witness);
-
-
     }
 
     private void initTextView() {
@@ -498,11 +496,11 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
 
     private ArrayList<TestReading> testReading() {
         ArrayList<TestReading> testReadingArrayList = new ArrayList<TestReading>();
-        int index = 0;
-        int hasMapKey = 200;
-        int hasStreamBefore = 800;
-        int hashstreamAfter = 900;
-        int passHasMapKey = 300;
+//        int index = 0;
+//        int hasMapKey = 200;
+//        int hasStreamBefore = 800;
+//        int hashstreamAfter = 900;
+//        int passHasMapKey = 300;
 //        if (mTestBasedOn.equalsIgnoreCase("EQUIPMENT")) {
 //            for (EquipmentFilter equipmentFilter : mEquipmentFilterArrayList) {
 //                TestReading testReading = new TestReading();
@@ -544,7 +542,6 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
 //            }
 //        }else if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
 //            for (RoomFilter roomFilter : filterArrayList) {
-//
 //                TestReading testReading = new TestReading();
 ////            testReading.setTestReadingID(index);
 ////        TO DO test details id is id of test details table
@@ -563,7 +560,7 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
 //                testReadingArrayList.add(testReading);
 //            }
 //        }
-
+//
         return testReadingArrayList;
     }
 
@@ -659,6 +656,7 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
                 witnessFirst = extras.getString("WITNESSFIRST");
                 witnessSecond = extras.getString("WITNESSSECOND");
                 witnessThird = extras.getString("WITNESSTHIRD");
+
                 //get area based on room area id
                 areaName = extras.getString("AREANAME");
                 mTestItem= extras.getString("testItem");
@@ -666,6 +664,7 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
                 mTestBasedOn = extras.getString("testBasedOn");
                 testType = extras.getString("testType");
                 mTestCode = extras.getString("testCode");
+
                 if (loginUserType.equals("CLIENT")) {
                     clientInstrument = (ClientInstrument) extras.getSerializable("ClientInstrument");
                 } else {
@@ -690,11 +689,8 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
                     mRoomFilterArrayList = (ArrayList<RoomFilter>) extras.getSerializable("RoomFilterList");
                     mApplicableTestRoom = (ApplicableTestRoom) extras.getSerializable("ApplicableTestRoom");
                 }
-
             }
         }
-
-
     }
 
     @Override

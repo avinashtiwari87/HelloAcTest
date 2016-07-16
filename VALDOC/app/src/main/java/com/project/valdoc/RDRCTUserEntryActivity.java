@@ -16,11 +16,15 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.project.valdoc.db.ValdocDatabaseHandler;
+import com.project.valdoc.intity.ApplicableTestEquipment;
+import com.project.valdoc.intity.ApplicableTestRoom;
 import com.project.valdoc.intity.ClientInstrument;
+import com.project.valdoc.intity.Equipment;
 import com.project.valdoc.intity.PartnerInstrument;
 import com.project.valdoc.intity.Room;
 import com.project.valdoc.intity.TestDetails;
@@ -44,7 +48,7 @@ public class RDRCTUserEntryActivity extends AppCompatActivity {
     private PartnerInstrument partnerInstrument;
     private String ahuNumber;
     private Room room;
-    private ArrayList<HashMap<String, String>> grillAndSizeFromGrill;
+//    private ArrayList<HashMap<String, String>> grillAndSizeFromGrill;
     private String areaName;
     private String witnessFirst;
     private String witnessSecond;
@@ -78,6 +82,17 @@ public class RDRCTUserEntryActivity extends AppCompatActivity {
     private TextView samplingFlowRateLable;
     //private TextView samplingTime;
     private TextView samplingFlowRate;
+    private TableRow samplingFlowTable;
+    private TableRow samplingTimeTable;
+    private TextView samplingFlowRateText;
+    private TextView samplingTimeText;
+    private TextView samplingTime;
+
+    private TextView equipmentLable;
+    private TextView equipmentName;
+    private TextView equipmentNoLable;
+    private TextView equipmentNo;
+    private TextView ahuNoText;
     private TextView instrumentNoTextView;
     private TextView testerNameTextView;
     private TextView instrumentUsedTextView;
@@ -86,7 +101,8 @@ public class RDRCTUserEntryActivity extends AppCompatActivity {
     private TextView instrumentNoLable;
     private TextView roomNameTest;
     private TextView instrument_name;
-
+    private TextView cleanRoomClass;
+    private TextView testspecificationText;
     private TextView initialReading;
     private TextView worstCase;
     private TextView finalReading;
@@ -96,6 +112,12 @@ public class RDRCTUserEntryActivity extends AppCompatActivity {
     private ImageView submit;
     private ImageView clear;
     private ImageView cancel;
+
+    private String[] roomDetails;
+    private Equipment equipment;
+    private ApplicableTestRoom mApplicableTestRoom = null;
+    private ApplicableTestEquipment mApplicableTestEquipment = null;
+
     ArrayList<TextView> resultTextViewList;
     private ValdocDatabaseHandler mValdocDatabaseHandler = new ValdocDatabaseHandler(RDRCTUserEntryActivity.this);
     SharedPreferences sharedpreferences;
@@ -106,7 +128,8 @@ public class RDRCTUserEntryActivity extends AppCompatActivity {
     int mCount;
     private String mPartnerName;
     private String  mTestCode="";
-
+    private String testType;
+    private String mTestBasedOn;
     private int year;
     private int month;
     private int day;
@@ -129,13 +152,15 @@ public class RDRCTUserEntryActivity extends AppCompatActivity {
             mTestType = getIntent().getStringExtra("testType");
             Log.d(TAG, " TestType : " + mTestType);
         }
-        mTestCode=getIntent().getStringExtra("testCode");
+        mTestCode = getIntent().getStringExtra("testCode");
+        mTestBasedOn = getIntent().getStringExtra("testBasedOn");
+        testType = getIntent().getStringExtra("testType");
         //dynamic data population
         getExtraFromTestCreateActivity(savedInstanceState);
         //text view initialization
         initTextView();
         textViewValueAssignment();
-        //        initRes();
+        //initRes();
         datePicker();
 //        if ("RD_PC_3".equalsIgnoreCase(testType)) {
 //            BuildTableTest5(rows, cols);
@@ -174,7 +199,7 @@ public class RDRCTUserEntryActivity extends AppCompatActivity {
 // Now formattedDate have current date/time
         Toast.makeText(this, formattedDate, Toast.LENGTH_SHORT).show();
         int mon = month + 1;
-        //certificateNo.setText("CT/" + mon + "/" + year + "/" + formattedDate);
+        certificateNo.setText("CT/" + mon + "/" + year + "/" + formattedDate);
 
         // Show current date
         String date = new StringBuilder().append(day).append("-").append(month + 1).append("-").append(year).append(" ").toString();
@@ -243,16 +268,42 @@ public class RDRCTUserEntryActivity extends AppCompatActivity {
             int count = mCount + 1;
             recoveryTime.setText("" + count);
         }
-
-        testSpecification.setText("" + room.getAcph());
-//                plantName
         areaOfTest.setText(areaName);
-        roomName.setText(room.getRoomName());
-        occupancyState.setText(room.getOccupancyState().toString());
-        Log.d("valdoc", "RDAV5UserEnryActivity 1witness= equipment.getTestReference()=" + room.getTestRef());
-        testRefrance.setText("" + room.getTestRef().toString());
-        roomNo.setText(room.getRoomNo().toString());
-        ahuNo.setText(ahuNumber);
+        samplingFlowRateText.setText("Sampling Flow Rate :");
+        samplingTimeText.setText("Sampling Time :");
+        if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
+            roomName.setText(room.getRoomName());
+            testRefrance.setText(mApplicableTestRoom.getTestReference());
+            roomNo.setText(room.getRoomNo().toString());
+            ahuNo.setText(ahuNumber);
+            occupancyState.setText(mApplicableTestRoom.getOccupencyState().toString());
+            String samplingtime = getSamplingTime(mApplicableTestRoom.getTestSpecification(), "");
+            samplingTime.setText("" + samplingtime);
+            samplingFlowRate.setText("under development");
+            cleanRoomClass.setText(" " + mApplicableTestRoom.getTestSpecification());
+        } else if (mTestBasedOn.equalsIgnoreCase("EQUIPMENT")) {
+            equipmentName.setText(equipment.getEquipmentName());
+            equipmentNo.setText(equipment.getEquipmentNo());
+            occupancyState.setText(mApplicableTestEquipment.getOccupencyState());
+            testRefrance.setText(mApplicableTestEquipment.getTestReference());
+            roomName.setText(roomDetails[1]);
+            // room no not needed
+            roomNo.setText(roomDetails[2]);
+            areaOfTest.setText(areaName);
+            String samplingtime = getSamplingTime(mApplicableTestEquipment.getTestSpecification(), "");
+            samplingTime.setText("" + samplingtime);
+            cleanRoomClass.setText("" + mApplicableTestEquipment.getTestSpecification());
+        }
+
+//        testSpecification.setText("" + room.getAcph());
+//                plantName
+
+//        roomName.setText(room.getRoomName());
+//        occupancyState.setText(room.getOccupancyState().toString());
+//        Log.d("valdoc", "RDAV5UserEnryActivity 1witness= equipment.getTestReference()=" + room.getTestRef());
+//        testRefrance.setText("" + room.getTestRef().toString());
+//        roomNo.setText(room.getRoomNo().toString());
+//        ahuNo.setText(ahuNumber);
         testCundoctor.setText(userName);
         if(sharedpreferences.getString("USERTYPE", "").equalsIgnoreCase("CLIENT")){
             testCondoctorOrg.setText("("+sharedpreferences.getString("CLIENTORG", "")+")");
@@ -271,6 +322,24 @@ public class RDRCTUserEntryActivity extends AppCompatActivity {
         testWitness.setText(witness);
     }
 
+    private String getSamplingTime(String testSpecification, String range) {
+        String samplingTime = "";
+        if (testSpecification.contains("5") || testSpecification.contains("6")) {
+            if (range.contains("28.3")) {
+                samplingTime = "36 Minute";
+            } else if (range.contains("50")) {
+                samplingTime = "20 Minute";
+            } else if (range.contains("75")) {
+                samplingTime = "14 Minute";
+            } else if (range.contains("100")) {
+                samplingTime = "10 Minute";
+            }
+        } else {
+            samplingTime = "1 Minute";
+        }
+        return samplingTime;
+    }
+
     private void initTextView() {
         headerText = (TextView) findViewById(R.id.common_header_tv);
         headerText.setText("TEST RAW DATA (RD_RCT)\nAirborne Particle Count Test for Classification of Cleanrooms/zones and Clean Air Devices");
@@ -284,14 +353,19 @@ public class RDRCTUserEntryActivity extends AppCompatActivity {
         testCunductedByTextView = (TextView) findViewById(R.id.testcunducted_by);
 //        testCunductedByTextView.setVisibility(View.GONE);
 
-//        roomNameLable= (TextView) findViewById(R.id.room_name_lable);
-//        roomNameLable.setVisibility(View.GONE);
-//        instrumentNoLable= (TextView) findViewById(R.id.instrument_no_lable);
-//        instrumentNoLable.setVisibility(View.GONE);
-//        roomNameTest= (TextView) findViewById(R.id.room_name);
-//        roomNameTest.setVisibility(View.GONE);
-//        instrument_name= (TextView) findViewById(R.id.instrument_name);
-//        instrument_name.setVisibility(View.GONE);
+        samplingFlowTable = (TableRow) findViewById(R.id.aerosol_generator_table);
+        samplingFlowTable.setVisibility(View.VISIBLE);
+        samplingTimeTable = (TableRow) findViewById(R.id.aerosol_used_table);
+        samplingTimeTable.setVisibility(View.VISIBLE);
+
+        samplingFlowRateText= (TextView) findViewById(R.id.aerosol_generator_type_text);
+        samplingTimeText= (TextView) findViewById(R.id.aerosol_used_text);
+        samplingFlowRate = (TextView) findViewById(R.id.aerosol_generator_type_value);
+        samplingTime = (TextView) findViewById(R.id.aerosol_used);
+
+        testspecificationText=(TextView)findViewById(R.id.testspecification_text);
+        testspecificationText.setText("Cleanroom Class :");
+        cleanRoomClass = (TextView) findViewById(R.id.testspecification);
 
         initialReading = (TextView) findViewById(R.id.initial_reading);
         worstCase = (TextView) findViewById(R.id.worst_case);
@@ -300,15 +374,30 @@ public class RDRCTUserEntryActivity extends AppCompatActivity {
 
         dateTextView = (TextView) findViewById(R.id.datetextview);
         customerName = (TextView) findViewById(R.id.customer_name);
-        certificateNo = (TextView) findViewById(R.id.certificate_no);
+        certificateNo = (TextView) findViewById(R.id.trd_no);
         instrumentUsed = (TextView) findViewById(R.id.instrumentused);
 
-       // samplingTimeLable = (TextView) findViewById(R.id.aerosol_used_lable);
-      //  samplingFlowRateLable = (TextView) findViewById(R.id.aerosol_generator_type_lable);
-//    samplingFlowRateLable.setText(getResources().getString(R.string.sampling_flow_rate_lable));
-       // samplingTimeLable.setText(getResources().getString(R.string.sampling_time_lable));
-       // samplingTime = (TextView) findViewById(R.id.aerosol_used);
-       // samplingFlowRate = (TextView) findViewById(R.id.aerosol_generator_type);
+        if(mTestBasedOn.equalsIgnoreCase("ROOM")){
+            equipmentLable = (TextView) findViewById(R.id.equiment_name_text);
+            equipmentLable.setVisibility(View.INVISIBLE);
+            equipmentNoLable = (TextView) findViewById(R.id.equiment_no_text);
+            equipmentNoLable.setVisibility(View.INVISIBLE);
+            ahuNoText = (TextView) findViewById(R.id.ahu_no_text);
+            ahuNoText.setVisibility(View.VISIBLE);
+            ahuNo = (TextView) findViewById(R.id.ahu_no);
+            ahuNo.setVisibility(View.VISIBLE);
+        }
+
+        if (mTestBasedOn.equalsIgnoreCase("EQUIPMENT")) {
+            equipmentLable = (TextView) findViewById(R.id.equiment_name_text);
+            equipmentLable.setVisibility(View.VISIBLE);
+            equipmentName = (TextView) findViewById(R.id.equiment_name);
+            equipmentName.setVisibility(View.VISIBLE);
+            equipmentNoLable = (TextView) findViewById(R.id.equiment_no_text);
+            equipmentNoLable.setVisibility(View.VISIBLE);
+            equipmentNo = (TextView) findViewById(R.id.equiment_no);
+            equipmentNo.setVisibility(View.VISIBLE);
+        }
 
         instrumentSerialNo = (TextView) findViewById(R.id.instrumentserialno);
         calibrationOn = (TextView) findViewById(R.id.calibratedon);
@@ -350,7 +439,7 @@ public class RDRCTUserEntryActivity extends AppCompatActivity {
                             Toast.makeText(RDRCTUserEntryActivity.this, "Data saved successfully", Toast.LENGTH_LONG).show();
                             Intent intent = new Intent(RDRCTUserEntryActivity.this, TestCreateActivity.class);
                             intent.putExtra(TestCreateActivity.RCT, true);
-                                    startActivity(intent);
+                            startActivity(intent);
                             finish();
                         } else {
                             Toast.makeText(RDRCTUserEntryActivity.this, "Data not saved", Toast.LENGTH_LONG).show();
@@ -504,7 +593,7 @@ public class RDRCTUserEntryActivity extends AppCompatActivity {
                 clientInstrument = null;
                 partnerInstrument = null;
                 ahuNumber = null;
-                grillAndSizeFromGrill = null;
+//                grillAndSizeFromGrill = null;
                 room = null;
                 areaName = null;
                 witnessFirst = null;
@@ -526,9 +615,19 @@ public class RDRCTUserEntryActivity extends AppCompatActivity {
                     partnerInstrument = (PartnerInstrument) extras.getSerializable("PartnerInstrument");
                 }
 
-                room = (Room) extras.getSerializable("Room");
-                ahuNumber = extras.getString("AhuNumber");
-                grillAndSizeFromGrill = (ArrayList<HashMap<String, String>>) extras.getSerializable("GRILLIST");
+                if (mTestBasedOn.equalsIgnoreCase("EQUIPMENT")) {
+                    roomDetails = extras.getStringArray("RoomDetails");
+                    equipment = (Equipment) extras.getSerializable("Equipment");
+                    areaName = extras.getString("AREANAME");
+                    mApplicableTestEquipment = (ApplicableTestEquipment) extras.getSerializable("ApplicableTestEquipment");
+                } else if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
+                    room = (Room) extras.getSerializable("Room");
+                    ahuNumber = extras.getString("AhuNumber");
+                    mApplicableTestRoom = (ApplicableTestRoom) extras.getSerializable("ApplicableTestRoom");
+                }
+//                room = (Room) extras.getSerializable("Room");
+//                ahuNumber = extras.getString("AhuNumber");
+//                grillAndSizeFromGrill = (ArrayList<HashMap<String, String>>) extras.getSerializable("GRILLIST");
 
                 mInitialReading = extras.getString("InitialReading");
                 mWorstReading = extras.getString("WorstCaseReading");

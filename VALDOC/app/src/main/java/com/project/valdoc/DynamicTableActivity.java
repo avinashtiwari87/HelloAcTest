@@ -2459,6 +2459,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             if (TestCreateActivity.FIT.equals(testType)) {
                 Log.d("Avinash", "viewById=" + viewById);
                 if (viewById < 800) {
+
                     for (int i = 0; i < txtSlpDlpList.size(); i++) {
                         //getLeakageValue(tagF);
                         if (txtSlpDlpList.get(i).getTag().equals(tagF)) {
@@ -2531,6 +2532,9 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
 
         }
     }
+
+
+
 
     private long getRoundedAverageValue(int count) {
         long avg = 0;

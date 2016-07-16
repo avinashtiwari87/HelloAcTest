@@ -155,7 +155,7 @@ public class RDPCTUserEntryActivity extends AppCompatActivity {
         mTestCode = getIntent().getStringExtra("testCode");
         mTestBasedOn = getIntent().getStringExtra("testBasedOn");
         testType = getIntent().getStringExtra("testType");
-//dynamic data population
+        //dynamic data population
         getExtraFromTestCreateActivity(savedInstanceState);
         //text view initialization
         initTextView();
@@ -166,7 +166,6 @@ public class RDPCTUserEntryActivity extends AppCompatActivity {
             BuildTableTest5(rows, cols);
 //            BuildTableTest5(7, 3);
         }
-
 
         //Receiving User Input Data from Bundle
         rHashMap = (HashMap<Integer, Integer>) getIntent().getSerializableExtra("InputData");
@@ -367,7 +366,6 @@ public class RDPCTUserEntryActivity extends AppCompatActivity {
         customerName = (TextView) findViewById(R.id.customer_name);
         certificateNo = (TextView) findViewById(R.id.trd_no);
         instrumentUsed = (TextView) findViewById(R.id.instrumentused);
-        ;
         samplingFlowTable = (TableRow) findViewById(R.id.aerosol_generator_table);
         samplingFlowTable.setVisibility(View.VISIBLE);
         samplingTimeTable = (TableRow) findViewById(R.id.aerosol_used_table);
@@ -623,11 +621,13 @@ public class RDPCTUserEntryActivity extends AppCompatActivity {
                 //get area based on room area id
                 areaName = extras.getString("AREANAME");
                 mPartnerName = extras.getString("PRTNERNAME");
+
                 if (loginUserType.equals("CLIENT")) {
                     clientInstrument = (ClientInstrument) extras.getSerializable("ClientInstrument");
                 } else {
                     partnerInstrument = (PartnerInstrument) extras.getSerializable("PartnerInstrument");
                 }
+
                 if (mTestBasedOn.equalsIgnoreCase("EQUIPMENT")) {
                     roomDetails = extras.getStringArray("RoomDetails");
                     equipment = (Equipment) extras.getSerializable("Equipment");
