@@ -42,6 +42,7 @@ import com.project.valdoc.intity.Room;
 import com.project.valdoc.intity.RoomFilter;
 import com.project.valdoc.utility.Utilityies;
 
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -97,7 +98,6 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             totalAirFlowRateIds = 400;
     //Test 4 Ids & variable
     int test4Id = 700;
-    ArrayList<TextView> txtSlpDlpList;
     // Test 5 Variable
     int test5CommonFormulaIds1 = 500, test5CommonFormulaIds2 = 600;
     long meanValue1 = 0l, meanValue2 = 0l;
@@ -107,6 +107,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
 
     ArrayList<String> testReadingEditTextList;
     ArrayList<TextView> txtPassFailList;
+    ArrayList<TextView> txtConcentrationVariationList;
     ArrayList<TextView> txtViewList;
     ArrayList<EditText> editTextList;
     ArrayList<TextView> filterSizeTxtViewList;
@@ -117,6 +118,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
     ArrayList<TextView> RDPC3TxtList, RDPC3TxtList2;
 
     HashMap<Integer, Double> rdFitInputDataHashMap;
+    ArrayList<Double>concentrationVariationListData;
     HashMap<Integer, Integer> inputDataHashMap;
     HashMap<Integer, String> passFailHashMap;
     HashMap<Integer, Long> resultDataHashMap;
@@ -184,6 +186,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
 
         testReadingEditTextList = new ArrayList<String>();
         txtPassFailList = new ArrayList<TextView>();
+        txtConcentrationVariationList = new ArrayList<TextView>();
         txtViewList = new ArrayList<TextView>();
         editTextList = new ArrayList<EditText>();
         filterSizeTxtViewList = new ArrayList<TextView>();
@@ -193,9 +196,9 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         airChangeTxtList = new ArrayList<TextView>();
         RDPC3TxtList = new ArrayList<TextView>();
         RDPC3TxtList2 = new ArrayList<TextView>();
-        txtSlpDlpList = new ArrayList<TextView>();
 
         rdFitInputDataHashMap = new HashMap<Integer, Double>();
+        concentrationVariationListData = new ArrayList<Double>();
         inputDataHashMap = new HashMap<Integer, Integer>();
         resultDataHashMap = new HashMap<Integer, Long>();
         passFailHashMap = new HashMap<Integer, String>();
@@ -999,6 +1002,18 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 startActivity(intent);
             }
             if (TestCreateActivity.FIT.equalsIgnoreCase(testType)) {
+                // adding ConcentrationVariation data
+                if(txtConcentrationVariationList != null && txtConcentrationVariationList.size()>0) {
+                    for (int i = 0; i < txtConcentrationVariationList.size(); i++) {
+                        try {
+                            concentrationVariationListData.add(Double.valueOf
+                                    (txtConcentrationVariationList.get(i).
+                                            getText().toString().replace(" %", "").trim()));
+                        } catch (NumberFormatException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
                 intent = new Intent(DynamicTableActivity.this, RDFITUserEntryActivity.class);
                 // put bundel data
                 intent.putExtra("USERTYPE", loginUserType);
@@ -1049,6 +1064,8 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 intent.putExtra("PassFailData", passFailHashMap);
                 //sending Input Data
                 intent.putExtra("InputData", rdFitInputDataHashMap);
+                //sending ConcentrationVariation data
+                intent.putExtra("InputDataVariation", concentrationVariationListData);
 
                 //TO Do testspesification will be shown from room filter spesification
                 // location will be the size off rommfilter list
@@ -1580,7 +1597,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 if (i == 1 && j == 1) {
                     row.addView(addTextView(" Variation \nin Concentration*"));
                 } else {
-                    row.addView(addTextView(10 + i + "%"));
+                    row.addView(addFITConcentrationVariationTextView("0 %"));
                 }
 
             }
@@ -2081,6 +2098,25 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         return tv;
     }
 
+    private TextView addFITConcentrationVariationTextView(String textValue) {
+        TextView tv = new TextView(this);
+        tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+                TableRow.LayoutParams.WRAP_CONTENT));
+        tv.setBackgroundResource(R.drawable.border1);
+        tv.setGravity(Gravity.CENTER);
+        tv.setPadding(5, 5, 5, 5);
+        tv.setTextColor(getResources().getColor(R.color.black));
+        tv.setTextSize(getResources().getDimension(R.dimen.normal_text_size));
+        tv.setGravity(Gravity.CENTER);
+        //tv.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD);
+        tv.setSingleLine(false);
+        tv.setMaxLines(3);
+        tv.setEllipsize(TextUtils.TruncateAt.END);
+        tv.setText(textValue);
+        txtConcentrationVariationList.add(tv);
+        return tv;
+    }
+
     int idPassFailTv = 300;
 
     private TextView addTextPassFail(String textValue, int tagRows) {
@@ -2457,30 +2493,31 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             }
             //Calculation Test 4 Specific
             if (TestCreateActivity.FIT.equals(testType)) {
-                Log.d("Avinash", "viewById=" + viewById);
-                if (viewById < 800) {
-
-                    for (int i = 0; i < txtSlpDlpList.size(); i++) {
-                        //getLeakageValue(tagF);
-                        if (txtSlpDlpList.get(i).getTag().equals(tagF)) {
-                            if (txtSlpDlpList.get(i).getText().toString().trim() != null
-                                    && !"".equals(txtSlpDlpList.get(i).getText().toString().trim())) {
-                                double slpDlpValue = Double.parseDouble(txtSlpDlpList.get(i).getText().toString().trim().replace("%", "0"));
-                                // Pass Fail Calculation
-                                TextView txtPassFail = txtPassFailList.get(i);
-                                if (txtSlpDlpList.get(i).getTag() == txtPassFail.getTag()) {
-                                    Log.d("Avinash", "getLeakageValue(tagF)=" + getLeakageValue(tagF) + "  =tagF=" + tagF);
-                                    if (slpDlpValue > getLeakageValue(tagF)) {
-                                        txtPassFail.setTextColor(getResources().getColor(R.color.blue));
-                                        txtPassFail.setText(" PASS ");
-                                        passFailHashMap.put(txtPassFail.getId(), " PASS ");
-                                    } else {
-                                        txtPassFail.setTextColor(getResources().getColor(R.color.red));
-                                        txtPassFail.setText(" FAIL ");
-                                        passFailHashMap.put(txtPassFail.getId(), " FAIL ");
-                                    }
-                                }
+                Log.d(TAG, " FIT viewById = " + viewById);
+                double slpDlpValue = 0.0;
+                if (viewById >= 900) {
+                    for (int i = 0; i < editTextList.size(); i++) {
+                        if (editTextList.get(i).getId() == (800 + (viewById - 900))) {
+                            // null check
+                            if (rdFitInputDataHashMap.get((800 + (viewById - 900))) != null
+                                    && rdFitInputDataHashMap.get(viewById) != null) {
+                                slpDlpValue = fitDiffPercent(rdFitInputDataHashMap.get((800 + (viewById - 900))),
+                                        rdFitInputDataHashMap.get(viewById));
                             }
+                            // Pass Fail Calculation
+                            TextView txtPassFail = txtPassFailList.get(i);
+                            Log.d(TAG, "slpDlpValue=" + slpDlpValue);
+                            if (slpDlpValue < 15) {
+                                txtPassFail.setTextColor(getResources().getColor(R.color.blue));
+                                txtPassFail.setText(" PASS ");
+                                passFailHashMap.put(txtPassFail.getId(), " PASS ");
+                            } else if (slpDlpValue > 15) {
+                                txtPassFail.setTextColor(getResources().getColor(R.color.red));
+                                txtPassFail.setText(" FAIL ");
+                                passFailHashMap.put(txtPassFail.getId(), " FAIL ");
+                            }
+                            // adding concentration Variation Data
+                            txtConcentrationVariationList.get(i).setText(slpDlpValue+" %");
 
                         }
                     }
@@ -2532,9 +2569,6 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
 
         }
     }
-
-
-
 
     private long getRoundedAverageValue(int count) {
         long avg = 0;
@@ -2702,6 +2736,22 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         }
         Log.d(TAG, "Leakage Value : " + leakageValue);
         return leakageValue;
+    }
+    private double fitDiffPercent(double beforeScaning,double afterScaning) {
+        Log.d(TAG,"Saurabh beforeScaning "+beforeScaning +" afterScaning "+afterScaning);
+        double diffPercent = 0.00;
+        DecimalFormat df2 = new DecimalFormat(".##");
+        if(beforeScaning>0 && afterScaning>0){
+            double diff = beforeScaning - afterScaning;
+            diffPercent = (diff * 100) / beforeScaning;
+            try {
+                diffPercent = Double.valueOf(df2.format(diffPercent));
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+                diffPercent = 0.00;
+            }
+        }
+        return diffPercent;
     }
 
     private void initRes() {

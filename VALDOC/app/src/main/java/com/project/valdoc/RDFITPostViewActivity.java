@@ -310,4 +310,4 @@ public class RDFITPostViewActivity extends AppCompatActivity {
         findViewById(R.id.test_interference).setVisibility(View.GONE);
     }
 }
->>>>>>> 5b71d7e581846b8d959355daa4c5a9d87ab1adda
+

@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -118,12 +119,14 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
     private TextView equipmentNo;
     ArrayList<TextView> txtViewList;
     ArrayList<TextView> txtPassFailList;
+    ArrayList<TextView> txtConcentrationVariationList;
     private ImageView submit;
     private ImageView clear;
     private ImageView cancel;
     private String mPartnerName;
     HashMap<Integer, Double> likageDataMap;
     HashMap<Integer, Long> PassFailHashMap;
+    ArrayList<Double>concentrationVariationListData;
     ArrayList<TextView> resultTextViewList;
     private ValdocDatabaseHandler mValdocDatabaseHandler = new ValdocDatabaseHandler(RDFITUserEntryActivity.this);
     SharedPreferences sharedpreferences;
@@ -159,6 +162,7 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
         initRes();
 
         txtPassFailList = new ArrayList<TextView>();
+        txtConcentrationVariationList = new ArrayList<TextView>();
         txtViewList = new ArrayList<TextView>();
         sharedpreferences = getSharedPreferences("valdoc", Context.MODE_PRIVATE);
         testDetailsId = (sharedpreferences.getInt("TESTDETAILSID", 0) + 1);
@@ -215,6 +219,16 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
         } else {
             infarance.setText("");
         }
+        // Getting ConcentrationVariation Data
+        concentrationVariationListData = (ArrayList<Double>)getIntent().getSerializableExtra("InputDataVariation");
+        for (int vr = 0; vr <concentrationVariationListData.size() ; vr++) {
+            Log.v(TAG, " InputDataVariation  "+concentrationVariationListData.get(vr).toString());
+        }
+        for (int i = 0; i < txtConcentrationVariationList.size(); i++) {
+            TextView tvl = txtConcentrationVariationList.get(i);
+            tvl.setText(concentrationVariationListData.get(i) + " %");
+        }
+
 
         //Custom Action Bar
         ActionBar mActionBar = getSupportActionBar();
@@ -362,6 +376,8 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
         if (null != witnessThird && witnessThird.length() > 0)
             witness.append("," + witnessThird);
         testWitness.setText(witness);
+
+
     }
 
     private void initTextView() {
@@ -949,7 +965,7 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
                 if (i == 1 && j == 1) {
                     row.addView(addTextView(" Variation \nin Concentration*"));
                 } else {
-                    row.addView(addTextView(10 + i + "%"));
+                    row.addView(addFITConcentrationVariationTextView(10 + i + "%"));
                 }
 
             }
@@ -1010,6 +1026,25 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
         tv.setMaxLines(3);
         tv.setEllipsize(TextUtils.TruncateAt.END);
         tv.setText(textValue);
+        return tv;
+    }
+
+    private TextView addFITConcentrationVariationTextView(String textValue) {
+        TextView tv = new TextView(this);
+        tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+                TableRow.LayoutParams.WRAP_CONTENT));
+        tv.setBackgroundResource(R.drawable.border1);
+        tv.setGravity(Gravity.CENTER);
+        tv.setPadding(5, 5, 5, 5);
+        tv.setTextColor(getResources().getColor(R.color.black));
+        tv.setTextSize(getResources().getDimension(R.dimen.normal_text_size));
+        tv.setGravity(Gravity.CENTER);
+        //tv.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD);
+        tv.setSingleLine(false);
+        tv.setMaxLines(3);
+        tv.setEllipsize(TextUtils.TruncateAt.END);
+        tv.setText(textValue);
+        txtConcentrationVariationList.add(tv);
         return tv;
     }
 
