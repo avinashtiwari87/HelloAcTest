@@ -717,6 +717,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 test_value4.setText("" + room.getRoomNo());
                 test_value6.setText("" + mApplicableTestRoom.getOccupencyState());
             } else if (TestBasedOn.equalsIgnoreCase("EQUIPMENT")) {
+                test_header12.setText("Cleanroom Class :");
                 test_value1.setText("" + equipment.getEquipmentName());
                 test_value4.setText("" + equipment.getEquipmentNo());
                 test_value6.setText("" + mApplicableTestEquipment.getOccupencyState());

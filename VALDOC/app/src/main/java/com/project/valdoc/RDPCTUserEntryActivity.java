@@ -61,7 +61,7 @@ public class RDPCTUserEntryActivity extends AppCompatActivity {
     private PartnerInstrument partnerInstrument;
     private String ahuNumber;
     private Room room;
-//    private ArrayList<HashMap<String, String>> grillAndSizeFromGrill;
+    //    private ArrayList<HashMap<String, String>> grillAndSizeFromGrill;
     private String areaName;
     private String witnessFirst;
     private String witnessSecond;
@@ -70,29 +70,35 @@ public class RDPCTUserEntryActivity extends AppCompatActivity {
 
     //certificate view id creation
     private TextView instrumentUsed;
-    private TextView samplingTimeLable;
-    private TextView samplingFlowRateLable;
+    private TableRow samplingFlowTable;
+    private TableRow samplingTimeTable;
+    private TextView samplingFlowRateText;
+    private TextView samplingTimeText;
     private TextView samplingTime;
     private TextView samplingFlowRate;
     private TextView instrumentSerialNo;
     private TextView calibrationOn;
     private TextView calibrationDueOn;
-    private TextView testSpecification;
+    private TextView cleanRoomClass;
+    private TextView testspecificationText;
     private TextView plantName;
     private TextView areaOfTest;
     private TextView roomName;
     private TextView occupancyState;
     private TextView testRefrance;
-    //    private TextView equipmentNameText;
-//    private TextView equipmentNoText;
+    private TextView equipmentLable;
+    private TextView equipmentName;
+    private TextView equipmentNoLable;
+    private TextView equipmentNo;
     private TextView roomNo;
     private TextView ahuNo;
+    private TextView ahuNoText;
     private TextView infarance;
     private TextView testCundoctor;
     private TextView testWitness;
     private TextView dateTextView;
     private TextView customerName;
-    //private TextView certificateNo;
+    private TextView certificateNo;
     private TextView testWitnessOrg;
     private TextView testCondoctorOrg;
     private TextView instrumentNoTextView;
@@ -273,19 +279,35 @@ public class RDPCTUserEntryActivity extends AppCompatActivity {
 //            samplingFlowRate.setText(partnerInstrument.getSamplingFlowRate());
 //            samplingTime.setText(partnerInstrument.getSamplingTime());
         }
-
-        testSpecification.setText("ISO Class 8 " + room.getAcph());
-//                plantName
-        areaOfTest.setText(areaName);
-        roomName.setText(room.getRoomName());
-        occupancyState.setText(room.getOccupancyState().toString());
-        Log.d("valdoc", "RDAV5UserEnryActivity 1witness= equipment.getTestReference()=" + room.getTestRef());
-        testRefrance.setText("" + room.getTestRef().toString());
-        roomNo.setText(room.getRoomNo().toString());
-        ahuNo.setText(ahuNumber);
-//        equipmentNameText.setText(getResources().getString(R.string.room_no));
-//        equipmentNoText.setText(getResources().getString(R.string.ahu_no));
         testCundoctor.setText(userName);
+        areaOfTest.setText(areaName);
+        samplingFlowRateText.setText("Sampling Flow Rate :");
+        samplingTimeText.setText("Sampling Time :");
+        if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
+            roomName.setText(room.getRoomName());
+            testRefrance.setText(mApplicableTestRoom.getTestReference());
+            roomNo.setText(room.getRoomNo().toString());
+            ahuNo.setText(ahuNumber);
+            occupancyState.setText(mApplicableTestRoom.getOccupencyState().toString());
+            String samplingtime = getSamplingTime(mApplicableTestRoom.getTestSpecification(), "");
+            samplingTime.setText("" + samplingtime);
+            samplingFlowRate.setText("under development");
+            cleanRoomClass.setText(" " + mApplicableTestRoom.getTestSpecification());
+        } else if (mTestBasedOn.equalsIgnoreCase("EQUIPMENT")) {
+            equipmentName.setText(equipment.getEquipmentName());
+            equipmentNo.setText(equipment.getEquipmentNo());
+            occupancyState.setText(mApplicableTestEquipment.getOccupencyState());
+            testRefrance.setText(mApplicableTestEquipment.getTestReference());
+            roomName.setText(roomDetails[1]);
+            // room no not needed
+            roomNo.setText(roomDetails[2]);
+            areaOfTest.setText(areaName);
+
+            String samplingtime = getSamplingTime(mApplicableTestEquipment.getTestSpecification(), "");
+            samplingTime.setText("" + samplingtime);
+            cleanRoomClass.setText("" + mApplicableTestEquipment.getTestSpecification());
+        }
+
         if (sharedpreferences.getString("USERTYPE", "").equalsIgnoreCase("CLIENT")) {
             testCondoctorOrg.setText("(" + sharedpreferences.getString("CLIENTORG", "") + ")");
             testWitnessOrg.setText("(" + sharedpreferences.getString("CLIENTORG", "") + ")");
@@ -301,6 +323,24 @@ public class RDPCTUserEntryActivity extends AppCompatActivity {
         if (null != witnessThird && witnessThird.length() > 0)
             witness.append("," + witnessThird);
         testWitness.setText(witness);
+    }
+
+    private String getSamplingTime(String testSpecification, String range) {
+        String samplingTime = "";
+        if (testSpecification.contains("5") || testSpecification.contains("6")) {
+            if (range.contains("28.3")) {
+                samplingTime = "36 Minute";
+            } else if (range.contains("50")) {
+                samplingTime = "20 Minute";
+            } else if (range.contains("75")) {
+                samplingTime = "14 Minute";
+            } else if (range.contains("100")) {
+                samplingTime = "10 Minute";
+            }
+        } else {
+            samplingTime = "1 Minute";
+        }
+        return samplingTime;
     }
 
     private void initTextView() {
@@ -325,29 +365,55 @@ public class RDPCTUserEntryActivity extends AppCompatActivity {
 
         dateTextView = (TextView) findViewById(R.id.datetextview);
         customerName = (TextView) findViewById(R.id.customer_name);
-        //certificateNo = (TextView) findViewById(R.id.certificate_no);
+        certificateNo = (TextView) findViewById(R.id.trd_no);
         instrumentUsed = (TextView) findViewById(R.id.instrumentused);
+        ;
+        samplingFlowTable = (TableRow) findViewById(R.id.aerosol_generator_table);
+        samplingFlowTable.setVisibility(View.VISIBLE);
+        samplingTimeTable = (TableRow) findViewById(R.id.aerosol_used_table);
+        samplingTimeTable.setVisibility(View.VISIBLE);
 
-        //samplingTimeLable = (TextView) findViewById(R.id.aerosol_used_lable);
-       /// samplingFlowRateLable = (TextView) findViewById(R.id.aerosol_generator_type_lable);
-       // samplingFlowRateLable.setText(getResources().getString(R.string.sampling_flow_rate_lable));
-       // samplingTimeLable.setText(getResources().getString(R.string.sampling_time_lable));
-       // samplingTime = (TextView) findViewById(R.id.aerosol_used);
-       // samplingFlowRate = (TextView) findViewById(R.id.aerosol_generator_type);
+        samplingFlowRateText= (TextView) findViewById(R.id.aerosol_generator_type_text);
+        samplingTimeText= (TextView) findViewById(R.id.aerosol_used_text);
 
+        samplingFlowRate = (TextView) findViewById(R.id.aerosol_generator_type_value);
+        samplingTime = (TextView) findViewById(R.id.aerosol_used);
         instrumentSerialNo = (TextView) findViewById(R.id.instrumentserialno);
         calibrationOn = (TextView) findViewById(R.id.calibratedon);
         calibrationDueOn = (TextView) findViewById(R.id.calibrationdueon);
-        testSpecification = (TextView) findViewById(R.id.testspecification);
+        testspecificationText=(TextView)findViewById(R.id.testspecification_text);
+        testspecificationText.setText("Cleanroom Class :");
+        cleanRoomClass = (TextView) findViewById(R.id.testspecification);
         plantName = (TextView) findViewById(R.id.plantname);
         areaOfTest = (TextView) findViewById(R.id.areaoftest);
         roomName = (TextView) findViewById(R.id.room_name);
         occupancyState = (TextView) findViewById(R.id.ocupancystate);
         testRefrance = (TextView) findViewById(R.id.testrefrence);
+        if(mTestBasedOn.equalsIgnoreCase("ROOM")){
+            equipmentLable = (TextView) findViewById(R.id.equiment_name_text);
+            equipmentLable.setVisibility(View.INVISIBLE);
+            equipmentNoLable = (TextView) findViewById(R.id.equiment_no_text);
+            equipmentNoLable.setVisibility(View.INVISIBLE);
+            ahuNoText = (TextView) findViewById(R.id.ahu_no_text);
+            ahuNoText.setVisibility(View.VISIBLE);
+            ahuNo = (TextView) findViewById(R.id.ahu_no);
+            ahuNo.setVisibility(View.VISIBLE);
+        }
+
+        if (mTestBasedOn.equalsIgnoreCase("EQUIPMENT")) {
+            equipmentLable = (TextView) findViewById(R.id.equiment_name_text);
+            equipmentLable.setVisibility(View.VISIBLE);
+            equipmentName = (TextView) findViewById(R.id.equiment_name);
+            equipmentName.setVisibility(View.VISIBLE);
+            equipmentNoLable = (TextView) findViewById(R.id.equiment_no_text);
+            equipmentNoLable.setVisibility(View.VISIBLE);
+            equipmentNo = (TextView) findViewById(R.id.equiment_no);
+            equipmentNo.setVisibility(View.VISIBLE);
+        }
+
 //        equipmentNameText = (TextView) findViewById(R.id.equipment_name_text);
 //        equipmentNoText = (TextView) findViewById(R.id.equipment_no_text);
         roomNo = (TextView) findViewById(R.id.room_no);
-        ahuNo = (TextView) findViewById(R.id.ahu_no);
         infarance = (TextView) findViewById(R.id.infarance);
         testCundoctor = (TextView) findViewById(R.id.testcunducter);
         testWitness = (TextView) findViewById(R.id.testwitness);
@@ -479,7 +545,7 @@ public class RDPCTUserEntryActivity extends AppCompatActivity {
         int mon = month + 1;
         String date = year + "-" + mon + "-" + day;
         testDetails.setDateOfTest("" + date);
-       // testDetails.setRawDataNo(certificateNo.getText().toString());
+        testDetails.setRawDataNo(certificateNo.getText().toString());
         testDetails.setPartnerName("" + mPartnerName);
         testDetails.setTestName(TestCreateActivity.PCT);
         if (loginUserType.equals("CLIENT")) {
@@ -507,7 +573,7 @@ public class RDPCTUserEntryActivity extends AppCompatActivity {
         }
 
 
-        testDetails.setTestSpecification(testSpecification.getText().toString());
+        testDetails.setTestSpecification(cleanRoomClass.getText().toString());
         testDetails.setBlockName(plantName.getText().toString());
         testDetails.setTestArea(areaOfTest.getText().toString());
         testDetails.setRoomName(roomName.getText().toString());

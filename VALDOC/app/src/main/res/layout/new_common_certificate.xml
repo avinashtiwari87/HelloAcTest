@@ -99,6 +99,7 @@
                 android:paddingTop="5dp">
 
                 <TextView
+                    android:id="@+id/testspecification_text"
                     style="@style/TestHeaderTextViewBold"
                     android:gravity="right"
                     android:text="@string/test_specification" />
