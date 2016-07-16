@@ -42,9 +42,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class RDACPHAVPostViewActivity extends AppCompatActivity {
-
     private static final String TAG = "RDACPHAV";
-    TextView headerText;
     TableLayout test2_table_layout, test2_table_layout2, test2_table_layout3, test2_table_layout4,
             test2_table_layout5, test2_table_layout6, test2_table_layout7, test2_table_layout8;
 
@@ -262,7 +260,7 @@ public class RDACPHAVPostViewActivity extends AppCompatActivity {
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
-                    row.addView(addTextView(" Grille / Filter ID\n "));
+                    row.addView(addTextView(" Grill / Filter No\n "));
                 } else {
 //                    if (mTestBasedOn.equalsIgnoreCase("AHU")) {
                     if (null != testReadingArrayList && testReadingArrayList.size() > 0) {
@@ -310,7 +308,7 @@ public class RDACPHAVPostViewActivity extends AppCompatActivity {
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
-                    row.addView(addTextView(" Grill/Filter Size\n in ft2(A)"));
+                    row.addView(addTextView(" Grill/Filter Area\n in ft2(A)"));
                 } else {
 //                    if (mTestBasedOn.equalsIgnoreCase("AHU")) {
 //                        double filterSize = 0.0f;
@@ -583,8 +581,6 @@ public class RDACPHAVPostViewActivity extends AppCompatActivity {
 
 
     private void initRes() {
-        headerText = (TextView) findViewById(R.id.common_header_tv);
-//        headerText.setText("* Air Flow Velocity, Volume Testing and Determination of Air Changes per Hour Rates  *");
         //Test 2
         test2_table_layout = (TableLayout) findViewById(R.id.test2_tableLayout1);
         test2_table_layout2 = (TableLayout) findViewById(R.id.test2_tableLayout2);
@@ -603,9 +599,10 @@ public class RDACPHAVPostViewActivity extends AppCompatActivity {
         test_table_1_header_l = (LinearLayout) findViewById(R.id.test_table_2_header_l_ll);
         test_table_1_header_2 = (LinearLayout) findViewById(R.id.test_table_2_header_2_ll);
         test_table_1_header_l.setVisibility(View.GONE);
-        test_table_1_header_2.setVisibility(View.GONE);
+        test_table_1_header_2.setVisibility(View.VISIBLE);
         findViewById(R.id.test_interference).setVisibility(View.GONE);
         findViewById(R.id.acph_av_final_calc_ll).setVisibility(View.VISIBLE);
+        findViewById(R.id.test2_reading_header).setVisibility(View.VISIBLE);
         TextView TestHeader = (TextView) findViewById(R.id.common_header_tv);
         TestHeader.setText("TEST RAW DATA (RD_ACPH_AV)\n(Air Flow Velocity, Volume Testing and Determination of Air Changes per Hour Rates)");
     }
