@@ -74,26 +74,7 @@ public class RDFITPostViewActivity extends AppCompatActivity {
                 if (i == 1 && j == 1) {
                     row.addView(addTextView(" Filter No \n         "));
                 } else {
-                    if (mTestBasedOn.equalsIgnoreCase("EQUIPMENT")) {
-                        if (null != mEquipmentFilterArrayList && mEquipmentFilterArrayList.size() > 0) {
-                            EquipmentFilter equipmentFilter = mEquipmentFilterArrayList.get(i - 2);
-                            Log.d("valdoc", "DynamicTableActivity filterArrayList=" + mEquipmentFilterArrayList.size() + "i=" + i);
-                            row.addView(addTextView(equipmentFilter.getFilterCode()));
-                        }
-                    } else if (mTestBasedOn.equalsIgnoreCase("AHU")) {
-                        if (null != mAhuFilterArrayList && mAhuFilterArrayList.size() > 0) {
-                            AhuFilter ahuFilter = mAhuFilterArrayList.get(i - 2);
-                            Log.d("valdoc", "DynamicTableActivity filterArrayList=" + mAhuFilterArrayList.size() + "i=" + i);
-                            row.addView(addTextView(ahuFilter.getFilterCode()));
-                        }
-                    } else if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
-                        if (null != mRoomFilterArrayList && mRoomFilterArrayList.size() > 0) {
-                            RoomFilter roomFilter = mRoomFilterArrayList.get(i - 2);
-                            Log.d("valdoc", "DynamicTableActivity filterArrayList=" + mRoomFilterArrayList.size() + "i=" + i);
-                            row.addView(addTextView(roomFilter.getFilterCode()));
-                        }
-                    }
-//                    row.addView(addTextView("HF -00" + i));
+                    row.addView(addTextView("HF -00" + i));
                 }
 
             }
@@ -242,7 +223,7 @@ public class RDFITPostViewActivity extends AppCompatActivity {
         tv.setMaxLines(3);
         tv.setEllipsize(TextUtils.TruncateAt.END);
         idCountEtvBefore++;
-        txtViewList.add(tv);
+        //txtViewList.add(tv);
         return tv;
     }
 
@@ -264,7 +245,7 @@ public class RDFITPostViewActivity extends AppCompatActivity {
         tv.setMaxLines(3);
         tv.setEllipsize(TextUtils.TruncateAt.END);
         idCountEtvAfter++;
-        txtViewList.add(tv);
+        //txtViewList.add(tv);
         return tv;
     }
 
@@ -285,7 +266,7 @@ public class RDFITPostViewActivity extends AppCompatActivity {
         tv.setMaxLines(3);
         tv.setEllipsize(TextUtils.TruncateAt.END);
         idCountEtv++;
-        txtViewList.add(tv);
+        //txtViewList.add(tv);
         return tv;
     }
 
@@ -307,7 +288,7 @@ public class RDFITPostViewActivity extends AppCompatActivity {
         tv.setEllipsize(TextUtils.TruncateAt.END);
         tv.setText(textValue);
         idPassFailTv++;
-        txtPassFailList.add(tv);
+        //txtPassFailList.add(tv);
         return tv;
     }
 
