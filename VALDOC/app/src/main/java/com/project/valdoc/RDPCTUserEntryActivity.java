@@ -46,6 +46,8 @@ public class RDPCTUserEntryActivity extends AppCompatActivity {
     TableLayout test5_table_layout, test5_table_layout2, test5_table_layout2_1,
             test5_table_layout3, test5_tableLayout2_2, test5_table_layout4, test5_tableLayout4_2, test5_table_layout4_1,
             test5_table_layout5, test5_table_layout5_1, test5_table_layout3_1;
+    // PCT new footer
+    TextView meanValue1_tv, meanValue2_tv, stdDev1_tv, stdDev2_tv, ucl1_tv, ucl2_tv, minimumValue1_tv, minimumValue2_tv, maximumValue1_tv, maximumValue2_tv;
     int rows, cols;
     String mTestType;
     //    ProgressDialog pr;
@@ -195,6 +197,10 @@ public class RDPCTUserEntryActivity extends AppCompatActivity {
 //        txtView3.setText(stdDev1 + "");
 //        TextView txtView4 = RDPC3TxtList2.get(1);
 //        txtView4.setText(stdDev2 + "");
+        meanValue1_tv.setText(meanValue1 + "");
+        meanValue2_tv.setText(meanValue2 + "");
+        stdDev1_tv.setText(stdDev1 + "");
+        stdDev2_tv.setText(stdDev2 + "");
 
 
         //Custom Action Bar
@@ -966,6 +972,18 @@ public class RDPCTUserEntryActivity extends AppCompatActivity {
         findViewById(R.id.test_table_5_header_l_ll).setVisibility(View.GONE);
         findViewById(R.id.test_table_5_header_2_ll).setVisibility(View.VISIBLE);
         findViewById(R.id.test_interference).setVisibility(View.GONE);
+        // PCT new footer
+         meanValue1_tv = (TextView)findViewById(R.id.pct_mean_value1);
+         meanValue2_tv = (TextView)findViewById(R.id.pct_mean_value2);
+         stdDev1_tv = (TextView)findViewById(R.id.pct_std_dev1);
+        stdDev2_tv = (TextView)findViewById(R.id.pct_std_dev2);
+         ucl1_tv = (TextView)findViewById(R.id.pct_95_ucl_1);
+         ucl2_tv= (TextView)findViewById(R.id.pct_95_ucl_2);
+         minimumValue1_tv= (TextView)findViewById(R.id.pct_minimum_value_1);
+         minimumValue2_tv= (TextView)findViewById(R.id.pct_minimum_value_2);
+         maximumValue1_tv= (TextView)findViewById(R.id.pct_maximum_value_1);
+         maximumValue2_tv= (TextView)findViewById(R.id.pct_maximum_value_2);
+
 
     }
 }

@@ -66,6 +66,7 @@
                 android:text="No. of Particles ≥ 0. 5 µm/m³ " />
 
             <TextView
+                android:id="@+id/pct_mean_value1"
                 style="@style/TestHeaderTextViewNormal"
                 android:layout_width="match_parent"
                 android:background="@drawable/border"
@@ -73,6 +74,7 @@
                 android:text="3433556" />
 
             <TextView
+                android:id="@+id/pct_std_dev1"
                 style="@style/TestHeaderTextViewNormal"
                 android:layout_width="match_parent"
                 android:background="@drawable/border"
@@ -80,6 +82,7 @@
                 android:text="656765 " />
 
             <TextView
+                android:id="@+id/pct_95_ucl_1"
                 style="@style/TestHeaderTextViewNormal"
                 android:layout_width="match_parent"
                 android:background="@drawable/border"
@@ -87,6 +90,7 @@
                 android:text="7866786 " />
 
             <TextView
+                android:id="@+id/pct_minimum_value_1"
                 style="@style/TestHeaderTextViewNormal"
                 android:layout_width="match_parent"
                 android:background="@drawable/border"
@@ -94,6 +98,7 @@
                 android:text="6789" />
 
             <TextView
+                android:id="@+id/pct_maximum_value_1"
                 style="@style/TestHeaderTextViewNormal"
                 android:layout_width="match_parent"
                 android:background="@drawable/border"
@@ -114,6 +119,7 @@
                 android:text="No. of Particles ≥ 5 µm/m³" />
 
             <TextView
+                android:id="@+id/pct_mean_value2"
                 style="@style/TestHeaderTextViewNormal"
                 android:layout_width="match_parent"
                 android:background="@drawable/border"
@@ -121,6 +127,7 @@
                 android:text="29876 " />
 
             <TextView
+                android:id="@+id/pct_std_dev2"
                 style="@style/TestHeaderTextViewNormal"
                 android:layout_width="match_parent"
                 android:background="@drawable/border"
@@ -128,6 +135,7 @@
                 android:text="87654" />
 
             <TextView
+                android:id="@+id/pct_95_ucl_2"
                 style="@style/TestHeaderTextViewNormal"
                 android:layout_width="match_parent"
                 android:background="@drawable/border"
@@ -135,6 +143,7 @@
                 android:text="3214" />
 
             <TextView
+                android:id="@+id/pct_minimum_value_2"
                 style="@style/TestHeaderTextViewNormal"
                 android:layout_width="match_parent"
                 android:background="@drawable/border"
@@ -142,6 +151,7 @@
                 android:text="1234" />
 
             <TextView
+                android:id="@+id/pct_maximum_value_2"
                 style="@style/TestHeaderTextViewNormal"
                 android:layout_width="match_parent"
                 android:background="@drawable/border"
