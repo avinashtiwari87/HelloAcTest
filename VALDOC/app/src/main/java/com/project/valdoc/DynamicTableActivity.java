@@ -301,7 +301,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                     ahuNumber = extras.getString("AhuNumber");
                     //get filter list from grill filter
                     if (mGrilFilterType.equalsIgnoreCase("Grill")) {
-                        grillAndSizeFromGrill = (ArrayList<Grill>) extras.getSerializable("GRILLIST");
+                        grillAndSizeFromGrill = (ArrayList<Grill>) extras.getSerializable("GRILLLIST");
                     } else {
                         mRoomFilterArrayList = (ArrayList<RoomFilter>) extras.getSerializable("RoomFilter");
                     }

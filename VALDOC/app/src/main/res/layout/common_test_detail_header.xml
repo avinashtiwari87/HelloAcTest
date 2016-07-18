@@ -147,7 +147,8 @@
             <TableRow
                 android:id="@+id/sampling_time"
                 android:paddingBottom="5dp"
-                android:paddingTop="5dp">
+                android:paddingTop="5dp"
+                android:visibility="gone">
 
                 <TextView
                     android:id="@+id/common_dynamic_test_header11_tv"

@@ -645,7 +645,12 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
         testDetails.setSamplingTime("");
         testDetails.setAerosolGeneratorType("");
         testDetails.setAerosolUsed("");
-        testDetails.setTestItem("" + testItemValue.getText());
+        if(mTestBasedOn.equalsIgnoreCase("ROOM")){
+            testDetails.setTestItem("");
+        }else{
+            testDetails.setTestItem("" + testItemValue.getText());
+        }
+
         testDetails.setRoomVolume("" + roomVolume.getText());
         testDetails.setTestWitnessOrg("" + testWitnessOrg.getText());
         testDetails.setTestCondoctorOrg("" + testCondoctorOrg.getText());
