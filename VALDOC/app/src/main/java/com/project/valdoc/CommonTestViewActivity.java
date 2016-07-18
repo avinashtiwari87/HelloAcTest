@@ -3,6 +3,7 @@ package com.project.valdoc;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -136,6 +137,11 @@ public class CommonTestViewActivity extends AppCompatActivity {
                     gridTextList.get(j).setText(testReadingList.get(j).getEntityName());
                     //Average
                     resultTextViewList.get(j).setText(""+spiltValue[spiltValue.length-2]);
+                    if("PASS".equalsIgnoreCase(spiltValue[spiltValue.length-1])){
+                        resultTextViewList.get(j).setTextColor(ContextCompat.getColor(this, R.color.blue));
+                    }else{
+                        resultTextViewList.get(j).setTextColor(ContextCompat.getColor(this, R.color.red));
+                    }
                     //Results pass/fail
                     //txtPassFailList.get(j).setText(""+spiltValue[spiltValue.length-1]);
                     //V1, V2, v3.. Value..
