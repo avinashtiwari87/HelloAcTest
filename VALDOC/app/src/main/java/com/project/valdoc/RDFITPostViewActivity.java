@@ -15,10 +15,14 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import com.project.valdoc.db.ValdocDatabaseHandler;
 import com.project.valdoc.intity.AhuFilter;
 import com.project.valdoc.intity.EquipmentFilter;
 import com.project.valdoc.intity.RoomFilter;
+import com.project.valdoc.intity.TestReading;
 import com.project.valdoc.utility.Utilityies;
+
+import java.util.ArrayList;
 
 public class RDFITPostViewActivity extends AppCompatActivity {
     private static final String TAG = "RDFITPostViewActivity";
@@ -30,6 +34,8 @@ public class RDFITPostViewActivity extends AppCompatActivity {
     String testType = null;
     private int rows, cols, testDetailId = 1;
     ProgressDialog pr;
+    private ArrayList<TestReading> testReadingList;
+    private ValdocDatabaseHandler mValdocDatabaseHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,9 +46,13 @@ public class RDFITPostViewActivity extends AppCompatActivity {
         pr.setCanceledOnTouchOutside(true);
         pr.setCancelable(true);
 
+        mValdocDatabaseHandler = new ValdocDatabaseHandler(RDFITPostViewActivity.this);
+        testReadingList = new ArrayList<TestReading>();
+
         //init res file from xml
         initRes();
 
+        //Setting User Name
         sharedpreferences = getSharedPreferences("valdoc", Context.MODE_PRIVATE);
         userName = sharedpreferences.getString("USERNAME", "");
         //Custom Action Bar
@@ -50,16 +60,19 @@ public class RDFITPostViewActivity extends AppCompatActivity {
         if (mActionBar != null)
             Utilityies.setCustomActionBar(RDFITPostViewActivity.this, mActionBar, userName);
 
+        //getting Vale for Table
+        String spiltValue[] = null;
         testType = getIntent().getStringExtra("TestType");
         testDetailId = getIntent().getIntExtra("testDetailId", 1);
-        rows = getIntent().getIntExtra("rows", 6);
-        cols = getIntent().getIntExtra("cols", 5);
-        Log.d(TAG, " TestType : " + testType + " testDetailId " + testDetailId);
+        testReadingList = mValdocDatabaseHandler.getTestReadingDataById(testDetailId + "");
+        spiltValue = testReadingList.get(0).getValue().split(",");
+        Log.d(TAG, "CodeFlow : spiltValue length : " + spiltValue.length);
+        rows = testReadingList.size()+1;
+        cols = (spiltValue.length-2);
+        Log.d(TAG, " TestType : " + testType + " testDetailId " + testDetailId+" rows "+rows+" cols "+cols);
 
-
-        if (TestCreateActivity.FIT.equalsIgnoreCase(testType)) {
-            buildTestFour(rows, cols);
-        }
+        //Create Table for FIT PostView
+        buildTestFour(rows, cols);
 
     }
 
