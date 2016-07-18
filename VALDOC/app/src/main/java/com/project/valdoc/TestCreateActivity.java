@@ -657,8 +657,6 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
         }
 
         //get area based on room area id
-
-
         Log.d("valdoc", "TestCreateActivity witness=" + witnessFirst.getText());
         intent.putExtra("WITNESSFIRST", witnessFirst.getText().toString());
         intent.putExtra("WITNESSSECOND", witnessSecond.getText().toString());
