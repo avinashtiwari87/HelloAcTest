@@ -35,6 +35,7 @@ import com.project.valdoc.intity.TestReading;
 import com.project.valdoc.intity.TestSpesificationValue;
 import com.project.valdoc.utility.Utilityies;
 
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -42,13 +43,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class RDACPHAVPostViewActivity extends AppCompatActivity {
-    private static final String TAG = "RDACPHAV";
+    private static final String TAG = "RDACPHAVPostView";
     TableLayout test2_table_layout, test2_table_layout2, test2_table_layout3, test2_table_layout4,
             test2_table_layout5, test2_table_layout6, test2_table_layout7, test2_table_layout8;
 
     int rows, cols;
     String mTestType;
-    ProgressDialog pr;
     LinearLayout test_table_1_footer, test_table_1_header_l, test_table_1_header_2;
     //Test 2 Ids variable
     int filterSizeIds = 100, airFlowRateIds = 300,
@@ -82,8 +82,8 @@ public class RDACPHAVPostViewActivity extends AppCompatActivity {
     private int newCertificateNo = 0;
     //certificate view id creation
     private TextView instrumentUsed;
-    private TextView TFRTxtv;
-    private TextView TFTAVTxtv;
+    private TextView TFRtv;
+    private TextView TFRByRvTv;
     private TextView instrumentSerialNo;
     private TextView calibrationOn;
     private TextView calibrationDueOn;
@@ -127,22 +127,14 @@ public class RDACPHAVPostViewActivity extends AppCompatActivity {
     private TestDetails mTestDetails;
     String spiltValue[] = null;
 
-    //    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_rdacphavpost_view);
-//    }
-//}
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rdacphavuser_entry);
         sharedpreferences = getSharedPreferences("valdoc", Context.MODE_PRIVATE);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-//        pr = ProgressDialog.show(this, "Please Wait", "Loading...");
 
-//        testDetailsId = (sharedpreferences.getInt("TESTDETAILSID", 0) + 1);
-
+        //aRRAYlIST INIT
         txtViewList = new ArrayList<TextView>();
         resultTextViewList = new ArrayList<TextView>();
         airFlowRateTxtViewList = new ArrayList<TextView>();
@@ -154,21 +146,30 @@ public class RDACPHAVPostViewActivity extends AppCompatActivity {
         initTextView();
         mTestType = getIntent().getStringExtra("TestType");
         testDetailId = getIntent().getIntExtra("testDetailId", 1);
+        Log.d(TAG," mTestType "+mTestType+" testDetailId "+testDetailId);
+
         testReadingArrayList = mValdocDatabaseHandler.getTestReadingDataById(testDetailId + "");
         mTestDetails = mValdocDatabaseHandler.getTestDetailById(testDetailId);
         testSpesificationValueArrayList = mValdocDatabaseHandler.getTestSpecificationValueById(testDetailId + "");
         spiltValue = testReadingArrayList.get(0).getValue().split(",");
-//        for (int i = 0; i <spiltValue.length-2; i++) {
-//            txtViewList.get(textId).setText(""+spiltValue[i]);
-//            Log.d(TAG, "CodeFlow : InnerForLoop I: " + i+" textId "+textId);
-//            textId++;
-//
-//        }
+
         textViewValueAssignment();
         initRes();
-//        datePicker();
+
         if (mTestType.contains(TestCreateActivity.ACPHAV)) {
             BuildTableTest2(testReadingArrayList.size() + 1, spiltValue.length - 3);
+        }
+
+        //Setting TFR and TFR*AV/60
+        if(testSpesificationValueArrayList != null && testSpesificationValueArrayList.size()>=3){
+            Log.d(TAG," testSpesificationValueArrayList "+testSpesificationValueArrayList.size());
+            DecimalFormat df2 = new DecimalFormat(".##");
+            try {
+                TFRtv.setText(""+df2.format(Double.valueOf(testSpesificationValueArrayList.get(0).getFieldValue())));
+                TFRByRvTv.setText(""+df2.format(Double.valueOf(testSpesificationValueArrayList.get(2).getFieldValue())));
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+            }
         }
 
         //Custom Action Bar
@@ -593,8 +594,8 @@ public class RDACPHAVPostViewActivity extends AppCompatActivity {
         test2_table_layout7.setVisibility(View.GONE);
         test2_table_layout8 = (TableLayout) findViewById(R.id.test2_tableLayout8);
         test2_table_layout8.setVisibility(View.GONE);
-        TFRTxtv = (TextView) findViewById(R.id.acph_av_tfr_value_tv);
-        TFTAVTxtv = (TextView) findViewById(R.id.acph_av_tfrby_av_value_tv);
+        TFRtv = (TextView) findViewById(R.id.acph_av_tfr_value_tv);
+        TFRByRvTv = (TextView) findViewById(R.id.acph_av_tfrby_av_value_tv);
         //Hide view coming form test tabl 1
         test_table_1_header_l = (LinearLayout) findViewById(R.id.test_table_2_header_l_ll);
         test_table_1_header_2 = (LinearLayout) findViewById(R.id.test_table_2_header_2_ll);
