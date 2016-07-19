@@ -25,6 +25,7 @@ import com.project.valdoc.intity.PartnerInstrumentTest;
 import com.project.valdoc.intity.Partners;
 import com.project.valdoc.intity.Room;
 import com.project.valdoc.intity.RoomFilter;
+import com.project.valdoc.intity.SamplingTime;
 import com.project.valdoc.task.HttpConnection;
 import com.project.valdoc.task.HttpConnectionTask;
 
@@ -218,14 +219,17 @@ public class ValdocControler {
             ArrayList equipmentGrillsList = equipmentGrillsData(jsonRootObject.optJSONArray("equipmentGrills"));
             arrayListHashMap.put(ValdocDatabaseHandler.EQUIPMENTGRILL_TABLE_NAME, equipmentGrillsList);
 
-            //equipmentGrills data parsing
+            //partner instrument data parsing
             ArrayList partnerInstrumentsTestList = partnerInstrumentsTestData(jsonRootObject.optJSONArray("partnerInstrumentTests"));
             arrayListHashMap.put(ValdocDatabaseHandler.PARTNER_INSTRUMENT_TEST_TABLE_NAME, partnerInstrumentsTestList);
 
-            //equipmentGrills data parsing
+            //isoparticle data parsing
             ArrayList isoParticleLimitsList = isoParticleLimitsData(jsonRootObject.optJSONArray("isoParticleLimits"));
             arrayListHashMap.put(ValdocDatabaseHandler.ISOPARTICLELIMITS_TABLE_NAME, isoParticleLimitsList);
 
+            //samplingtime data parsing
+            ArrayList samplingTime = samplingTimeData(jsonRootObject.optJSONArray("sampling_time"));
+            arrayListHashMap.put(ValdocDatabaseHandler.SAMPLINGTIME_TABLE_NAME, samplingTime);
 
             SharedPreferences.Editor editor = sharedpreferences.edit();
             editor.putString("lastSyncDate", jsonRootObject.optString("lastSyncDate"));
@@ -236,6 +240,30 @@ public class ValdocControler {
         return arrayListHashMap;
     }
 
+    private ArrayList samplingTimeData(JSONArray jsonArray) {
+        ArrayList arrayList = new ArrayList();
+        //Iterate the jsonArray and print the info of JSONObjects
+        for (int i = 0; i < jsonArray.length(); i++) {
+            SamplingTime samplingTime = new SamplingTime();
+            try {
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                samplingTime.setSamplingTimeId(jsonObject.optInt("samplingTimeId"));
+                samplingTime.setCleanroomClass(jsonObject.optString("cleanroomClass").toString());
+                samplingTime.setLPM283(jsonObject.optString("LPM283").toString());
+                samplingTime.setLPM50(jsonObject.optString("LPM50").toString());
+                samplingTime.setLPM75(jsonObject.optString("LPM75").toString());
+                samplingTime.setLPM100(jsonObject.optString("LPM100").toString());
+                samplingTime.setLastUpdatedDate(jsonObject.optString("lastUpdatedDate").toString());
+                Log.d("valdoc", "parse isoParticleLimitsData");
+                arrayList.add(samplingTime);
+            } catch (Exception e) {
+
+            }
+        }
+        return arrayList;
+    }
+
+
 
     private ArrayList isoParticleLimitsData(JSONArray jsonArray) {
         ArrayList arrayList = new ArrayList();
@@ -245,11 +273,12 @@ public class ValdocControler {
             try {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                 isoParticleLimits.setLimitId(jsonObject.optInt("limitId"));
-                isoParticleLimits.setIsoClass(jsonObject.optString("class").toString());
+                isoParticleLimits.setParticleClass(jsonObject.optString("particleClass").toString());
                 isoParticleLimits.setRestSmallParticleLimit(jsonObject.optString("restSmallParticleLimit").toString());
                 isoParticleLimits.setRestLargeParticleLimit(jsonObject.optString("restLargeParticleLimit").toString());
                 isoParticleLimits.setOperationSmallParticleLimit(jsonObject.optString("operationSmallParticleLimit").toString());
                 isoParticleLimits.setOperationLargeParticleLimit(jsonObject.optString("operationLargeParticleLimit").toString());
+                isoParticleLimits.setLastUpdatedDate(jsonObject.optString("lastUpdatedDate").toString());
                 Log.d("valdoc", "parse isoParticleLimitsData");
                 arrayList.add(isoParticleLimits);
             } catch (Exception e) {
@@ -271,6 +300,7 @@ public class ValdocControler {
                 partnerInstrumentTest.setPartnerInstrumentTestCode(jsonObject.optString("partner_instrument_test_code").toString());
                 partnerInstrumentTest.setPartnerInstrumentTestName(jsonObject.optString("partner_instrument_test_name").toString());
                 partnerInstrumentTest.setLastUpdatedDate(jsonObject.optString("lastUpdatedDate").toString());
+                partnerInstrumentTest.setRange(jsonObject.optString("range").toString());
                 Log.d("valdoc", "parse partnerInstrumentsTestData");
                 arrayList.add(partnerInstrumentTest);
             } catch (Exception e) {
@@ -412,7 +442,7 @@ public class ValdocControler {
                 clientInstrument.setCertFileName(jsonObject.optString("certFileName").toString());
                 clientInstrument.setStatus(jsonObject.optString("status").toString());
                 clientInstrument.setRemarks(jsonObject.optString("remarks").toString());
-//                clientInstrument.setTestId(jsonObject.optInt("testId"));
+                clientInstrument.setRange(jsonObject.optString("range"));
                 clientInstrument.setLastUpdatedDate(jsonObject.optString("lastUpdatedDate").toString());
 //                clientInstrument.setSamplingFlowRate(jsonObject.optString("samplingFlowRate").toString());
 //                clientInstrument.setSamplingTime(jsonObject.optString("samplingTime").toString());
@@ -464,7 +494,7 @@ public class ValdocControler {
                 partnerInstrument.setModel(jsonObject.optString("model").toString());
                 partnerInstrument.setLastCalibrationDate(jsonObject.optString("lastCalibrationDate").toString());
                 partnerInstrument.setCalibrationDueDate(jsonObject.optString("calibrationDueDate").toString());
-//                partnerInstrument.setCurrentLocation(jsonObject.optString("currentLocation").toString());
+                partnerInstrument.setRange(jsonObject.optString("range").toString());
                 partnerInstrument.setStatus(jsonObject.optString("status").toString());
                 partnerInstrument.setCertFileName(jsonObject.optString("certFileName"));
                 partnerInstrument.setRemarks(jsonObject.optString("remarks"));

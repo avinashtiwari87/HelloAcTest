@@ -17,7 +17,7 @@ public class ClientInstrument implements Serializable{
     private String calibrationDueDate;
     private String certFileName;
     private String remarks;
-//    private String currentLocation;
+    private String range;
     private String status;
 //    private int testId;
     private String lastUpdatedDate;
@@ -128,5 +128,13 @@ public class ClientInstrument implements Serializable{
 
     public void setLastUpdatedDate(String lastUpdatedDate) {
         this.lastUpdatedDate = lastUpdatedDate;
+    }
+
+    public String getRange() {
+        return range;
+    }
+
+    public void setRange(String range) {
+        this.range = range;
     }
 }

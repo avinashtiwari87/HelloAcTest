@@ -28,6 +28,7 @@ import com.project.valdoc.intity.Partners;
 import com.project.valdoc.intity.Plant;
 import com.project.valdoc.intity.Room;
 import com.project.valdoc.intity.RoomFilter;
+import com.project.valdoc.intity.SamplingTime;
 import com.project.valdoc.intity.ServiceReport;
 import com.project.valdoc.intity.ServiceReportDetail;
 import com.project.valdoc.intity.TestDetails;
@@ -265,7 +266,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
     public static final String GRILL_GRILLAREA = "area";
     public static final String GRILL_EFFECTIVEAREA = "effectiveArea";
     public static final String GRILL_ISSUPPLYGRILL = "isSupplyGrill";
-//    public static final String GRILL_ADDITIONALDETAIL = "additionalDetail";
+    //    public static final String GRILL_ADDITIONALDETAIL = "additionalDetail";
     public static final String GRILL_LASTUPDATEDDATE = "lastUpdatedDate";
 
     // gril table create statment
@@ -338,7 +339,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
     public static final String CLIENT_INSTRUMENT_MODEL = "model";
     public static final String CLIENT_INSTRUMENT_LASTCALIBRATED = "lastCalibrationDate";
     public static final String CLIENT_INSTRUMENT_CALIBRATIONDUEDATE = "calibrationDueDate";
-    //    public static final String CLIENT_INSTRUMENT_CURRENTLOCATION = "currentLocation";
+    public static final String CLIENT_INSTRUMENT_RANGE = "range";
     public static final String CLIENT_INSTRUMENT_STATUS = "status";
     //    public static final String CLIENT_INSTRUMENT_TESTID = "testId";
     public static final String CLIENT_INSTRUMENT_CERTFILENAME = "certFileName";
@@ -357,7 +358,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
             + CLIENT_INSTRUMENT_SERIALNO + " TEXT," + CLIENT_INSTRUMENT_CINSTRUMENTNAME + " TEXT, " + CLIENT_INSTRUMENT_MAKE + " TEXT,"
             + CLIENT_INSTRUMENT_MODEL + " TEXT," + CLIENT_INSTRUMENT_LASTCALIBRATED + " TEXT,"
             + CLIENT_INSTRUMENT_CALIBRATIONDUEDATE + " TEXT," + CLIENT_INSTRUMENT_STATUS + " TEXT," + CLIENT_INSTRUMENT_CERTFILENAME + " TEXT,"
-            + CLIENT_INSTRUMENT_REMARKS + " TEXT," + CLIENT_INSTRUMENT_LASTUPDATEDDATE + " TEXT" + ")";
+            + CLIENT_INSTRUMENT_REMARKS + " TEXT," + CLIENT_INSTRUMENT_LASTUPDATEDDATE + " TEXT," + CLIENT_INSTRUMENT_RANGE + " TEXT" + ")";
 //            + CLIENT_INSTRUMENT_CURRENTLOCATION + " TEXT,"+ CLIENT_INSTRUMENT_TESTID
 //            + " INTEGER," + CLIENT_INSTRUMENT_SAMPLINGFLOWRATE + " TEXT,"
 //            + CLIENT_INSTRUMENT_SAMPLINGTIME + " TEXT," + CLIENT_INSTRUMENT_AEROSOLUSED + " TEXT," + CLIENT_INSTRUMENT_AEROSOLGENERATORTYPE + " TEXT " + ")";
@@ -385,11 +386,12 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
     public static final String PARTNER_INSTRUMENT_TEST_CODE = "partner_instrument_test_code";
     public static final String PARTNER_INSTRUMENT_TEST_NAME = "partner_instrument_test_name";
     public static final String PARTNER_INSTRUMENT_TEST_LASTUPDATEDDATE = "lastUpdatedDate";
+    public static final String PARTNER_INSTRUMENT_TEST_RANGE = "range";
 
     private static final String CREATE_TABLE_PARTNER_INSTRUMENT_TEST = "CREATE TABLE " + PARTNER_INSTRUMENT_TEST_TABLE_NAME
             + "(" + PARTNER_INSTRUMENT_TEST_ID + " INTEGER," + PARTNER_INSTRUMENT_ID + " INTEGER,"
             + PARTNER_INSTRUMENT_TEST_CODE + " TEXT," + PARTNER_INSTRUMENT_TEST_NAME + " TEXT,"
-            + PARTNER_INSTRUMENT_TEST_LASTUPDATEDDATE + " TEXT" + ")";
+            + PARTNER_INSTRUMENT_TEST_LASTUPDATEDDATE + " TEXT," + PARTNER_INSTRUMENT_TEST_RANGE + " TEXT" + ")";
 
 
     //roomfilter able details
@@ -592,7 +594,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
             + TEST_DETAILS_TESTERNAME + " TEXT," + TEST_DETAILS_WITNESSNAME + " TEXT," + TEST_DETAILS_PARTNERNAME + " TEXT,"
             + TEST_DETAILS_SAMPLINGFLOWRATE + " TEXT," + TEST_DETAILS_SAMPLINGTIME + " TEXT," + TEST_DETAILS_AEROSOLUSED
             + " TEXT," + TEST_DETAILS_AEROSOLGENERATORTYPE + " TEXT," + TEST_DETAILS_TESTCODE + " TEXT," + TEST_DETAILS_ROOMVOLUME
-            + " TEXT," + TEST_DETAILS_TESTWITNESSORG + " TEXT," + TEST_DETAILS_TESTCONDOCTORORG + " TEXT,"+TEST_DETAILS_TESTITEM+" TEXT" + ")";
+            + " TEXT," + TEST_DETAILS_TESTWITNESSORG + " TEXT," + TEST_DETAILS_TESTCONDOCTORORG + " TEXT," + TEST_DETAILS_TESTITEM + " TEXT" + ")";
 
 
     //test spesification table details
@@ -686,17 +688,37 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
     //isoParticleLimits table creation
     public static final String ISOPARTICLELIMITS_TABLE_NAME = "isoParticleLimits";
     public static final String ISOPARTICLELIMITS_LIMITID = "limitId";
-    public static final String ISOPARTICLELIMITS_CLASS = "class";
+    public static final String ISOPARTICLELIMITS_CLASS = "particleClass";
     public static final String ISOPARTICLELIMITS_RESTSMALLPARTICLELIMIT = "restSmallParticleLimit";
     public static final String ISOPARTICLELIMITS_RESTLARGEPARTICLELIMIT = "restLargeParticleLimit";
     public static final String ISOPARTICLELIMITS_OPERATIONSMALLPARTICLELIMIT = "operationSmallParticleLimit";
     public static final String ISOPARTICLELIMITS_OPERATIONLARGEPARTICLELIMIT = "operationLargeParticleLimit";
+    public static final String ISOPARTICLELIMITS_LASTUPDATEDDATE = "lastUpdatedDate";
 
     // service_report_detail table create statment
     private static final String CREATE_TABLE_ISOPARTICLELIMITS = "CREATE TABLE " + ISOPARTICLELIMITS_TABLE_NAME
             + "(" + ISOPARTICLELIMITS_LIMITID + " INTEGER," + ISOPARTICLELIMITS_CLASS + " TEXT,"
             + ISOPARTICLELIMITS_RESTSMALLPARTICLELIMIT + " TEXT," + ISOPARTICLELIMITS_RESTLARGEPARTICLELIMIT + " TEXT, "
-            + ISOPARTICLELIMITS_OPERATIONSMALLPARTICLELIMIT + ISOPARTICLELIMITS_OPERATIONLARGEPARTICLELIMIT + " TEXT" + ")";
+            + ISOPARTICLELIMITS_OPERATIONSMALLPARTICLELIMIT + "TEXT," + ISOPARTICLELIMITS_OPERATIONLARGEPARTICLELIMIT + " TEXT,"
+            + ISOPARTICLELIMITS_LASTUPDATEDDATE + " TEXT" + ")";
+
+    //SamplingTime table table creation
+    public static final String SAMPLINGTIME_TABLE_NAME = "sampling_time";
+    public static final String SAMPLINGTIME_SAMPLINGTIMEID = "samplingTimeId";
+    public static final String SAMPLINGTIME_CLEANROOMCLASS = "cleanroomClass";
+    public static final String SAMPLINGTIME_LPM283 = "LPM283";
+    public static final String SAMPLINGTIME_LPM50 = "LPM50";
+    public static final String SAMPLINGTIME_LPM75 = "LPM75";
+    public static final String SAMPLINGTIME_LPM100 = "LPM100";
+    public static final String SAMPLINGTIME_LASTUPDATEDDATE = "lastUpdatedDate";
+
+    // service_report_detail table create statment
+    private static final String CREATE_TABLE_SAMPLINGTIME = "CREATE TABLE " + SAMPLINGTIME_TABLE_NAME
+            + "(" + SAMPLINGTIME_SAMPLINGTIMEID + " INTEGER," + SAMPLINGTIME_CLEANROOMCLASS + " TEXT,"
+            + SAMPLINGTIME_LPM283 + " TEXT," + SAMPLINGTIME_LPM50 + " TEXT, "
+            + SAMPLINGTIME_LPM75 + "TEXT," + SAMPLINGTIME_LPM100 + " TEXT,"
+            + SAMPLINGTIME_LASTUPDATEDDATE + " TEXT" + ")";
+
 
     public ValdocDatabaseHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -734,6 +756,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_AHU_FILTER);
         db.execSQL(CREATE_TABLE_EQUIPMENTGRILL);
         db.execSQL(CREATE_TABLE_ISOPARTICLELIMITS);
+        db.execSQL(CREATE_TABLE_SAMPLINGTIME);
         Log.d("valdoc", "table created success fully");
     }
 
@@ -779,6 +802,34 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
         return count;
     }
 
+
+
+    //insert daa in Sampling time table
+    public boolean insertSamplingTime(String tableName, ArrayList<SamplingTime> samplingTimeArrayList) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        if (samplingTimeArrayList.size() != 0) {
+            for (SamplingTime samplingTime : samplingTimeArrayList) {
+                ContentValues contentValues = new ContentValues();
+                contentValues.put(SAMPLINGTIME_SAMPLINGTIMEID, samplingTime.getSamplingTimeId());
+                contentValues.put(SAMPLINGTIME_CLEANROOMCLASS, samplingTime.getCleanroomClass());
+                contentValues.put(SAMPLINGTIME_LPM283, samplingTime.getLPM283());
+                contentValues.put(SAMPLINGTIME_LPM50, samplingTime.getLPM50());
+                contentValues.put(SAMPLINGTIME_LPM75, samplingTime.getLPM75());
+                contentValues.put(SAMPLINGTIME_LPM100, samplingTime.getLPM100());
+                contentValues.put(SAMPLINGTIME_LASTUPDATEDDATE, samplingTime.getLastUpdatedDate());
+                if (getExistingId(tableName, SAMPLINGTIME_SAMPLINGTIMEID, samplingTime.getSamplingTimeId()) > 0) {
+                    db.update(tableName, contentValues, SAMPLINGTIME_SAMPLINGTIMEID + "=" + samplingTime.getSamplingTimeId(), null);
+                } else {
+//                    Log.d("Avinash", "insert applicable partners.getId()=" + partners.getPartnerId() + " partners.getName()=" + partners.getName());
+                    db.insert(tableName, null, contentValues);
+                }
+            }
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     //insert daa in equipment grill filter table
     public boolean insertIsoParticleLimits(String tableName, ArrayList<IsoParticleLimits> isoParticleLimitsArrayList) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -786,11 +837,12 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
             for (IsoParticleLimits isoParticleLimits : isoParticleLimitsArrayList) {
                 ContentValues contentValues = new ContentValues();
                 contentValues.put(ISOPARTICLELIMITS_LIMITID, isoParticleLimits.getLimitId());
-                contentValues.put(ISOPARTICLELIMITS_CLASS, isoParticleLimits.getIsoClass());
+                contentValues.put(ISOPARTICLELIMITS_CLASS, isoParticleLimits.getParticleClass());
                 contentValues.put(ISOPARTICLELIMITS_RESTSMALLPARTICLELIMIT, isoParticleLimits.getRestSmallParticleLimit());
                 contentValues.put(ISOPARTICLELIMITS_RESTLARGEPARTICLELIMIT, isoParticleLimits.getRestLargeParticleLimit());
                 contentValues.put(ISOPARTICLELIMITS_OPERATIONSMALLPARTICLELIMIT, isoParticleLimits.getOperationSmallParticleLimit());
                 contentValues.put(ISOPARTICLELIMITS_OPERATIONLARGEPARTICLELIMIT, isoParticleLimits.getOperationLargeParticleLimit());
+                contentValues.put(ISOPARTICLELIMITS_LASTUPDATEDDATE, isoParticleLimits.getLastUpdatedDate());
                 if (getExistingId(tableName, ISOPARTICLELIMITS_LIMITID, isoParticleLimits.getLimitId()) > 0) {
                     db.update(tableName, contentValues, ISOPARTICLELIMITS_LIMITID + "=" + isoParticleLimits.getLimitId(), null);
                 } else {
@@ -1075,7 +1127,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
         contentValues.put(TEST_DETAILS_ROOMVOLUME, testDetails.getRoomVolume());
         contentValues.put(TEST_DETAILS_TESTWITNESSORG, testDetails.getTestWitnessOrg());
         contentValues.put(TEST_DETAILS_TESTCONDOCTORORG, testDetails.getTestCondoctorOrg());
-        contentValues.put(TEST_DETAILS_TESTITEM,testDetails.getTestItem());
+        contentValues.put(TEST_DETAILS_TESTITEM, testDetails.getTestItem());
 
         db.insert(tableName, null, contentValues);
 //            }
@@ -1366,7 +1418,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 contentValues.put(CLIENT_INSTRUMENT_CALIBRATIONDUEDATE, clientInstrument.getCalibrationDueDate());
 //                contentValues.put(CLIENT_INSTRUMENT_CURRENTLOCATION, clientInstrument.getCurrentLocation());
                 contentValues.put(CLIENT_INSTRUMENT_STATUS, clientInstrument.getStatus());
-//                contentValues.put(CLIENT_INSTRUMENT_TESTID, clientInstrument.getTestId());
+                contentValues.put(CLIENT_INSTRUMENT_RANGE, clientInstrument.getRange());
                 contentValues.put(CLIENT_INSTRUMENT_LASTUPDATEDDATE, clientInstrument.getLastUpdatedDate());
 //                contentValues.put(CLIENT_INSTRUMENT_SAMPLINGFLOWRATE, clientInstrument.getSamplingFlowRate());
 //                contentValues.put(CLIENT_INSTRUMENT_SAMPLINGTIME, clientInstrument.getSamplingTime());
@@ -1450,6 +1502,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 contentValues.put(PARTNER_INSTRUMENT_TEST_CODE, partnerInstrumentTest.getPartnerInstrumentTestCode());
                 contentValues.put(PARTNER_INSTRUMENT_TEST_NAME, partnerInstrumentTest.getPartnerInstrumentTestName());
                 contentValues.put(PARTNER_INSTRUMENT_TEST_LASTUPDATEDDATE, partnerInstrumentTest.getLastUpdatedDate());
+                contentValues.put(PARTNER_INSTRUMENT_TEST_RANGE, partnerInstrumentTest.getRange());
 
                 if (getExistingId(tableName, PARTNER_INSTRUMENT_TEST_ID, partnerInstrumentTest.getPartnerInstrumentTestId()) > 0) {
                     db.update(tableName, contentValues, PARTNER_INSTRUMENT_TEST_ID + "=" + partnerInstrumentTest.getPartnerInstrumentTestId(), null);
@@ -1729,6 +1782,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 clientInstrument.setCertFileName(cursor.getString(9));
                 clientInstrument.setRemarks(cursor.getString(10));
                 clientInstrument.setLastUpdatedDate(cursor.getString(11));
+                clientInstrument.setRange(cursor.getString(12));
 //                clientInstrument.setSamplingFlowRate(cursor.getString(12));
 //                clientInstrument.setSamplingTime(cursor.getString(13));
 //                clientInstrument.setAerosolUsed(cursor.getString(14));
@@ -1767,7 +1821,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 partnerInstrument.setCertFileName(cursor.getString(9));
                 partnerInstrument.setRemarks(cursor.getString(10));
                 partnerInstrument.setLastUpdatedDate(cursor.getString(11));
-//                partnerInstrument.setTestId(cursor.getInt(10));
+                partnerInstrument.setRange(cursor.getString(12));
 
 //                partnerInstrument.setSamplingFlowRate(cursor.getString(12));
 //                partnerInstrument.setSamplingTime(cursor.getString(13));
@@ -2016,7 +2070,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                     jsonObject.put(TEST_DETAILS_ROOMVOLUME, cursor.getString(29).toString());
                     jsonObject.put(TEST_DETAILS_TESTWITNESSORG, cursor.getString(30).toString());
                     jsonObject.put(TEST_DETAILS_TESTCONDOCTORORG, cursor.getString(31).toString());
-                    jsonObject.put(TEST_DETAILS_TESTITEM,cursor.getString(32).toString());
+                    jsonObject.put(TEST_DETAILS_TESTITEM, cursor.getString(32).toString());
 
                     Log.d("testDetailsIdList", "getCertificateData test details=" + jsonObject.toString());
                     testDetailsJsonArray.put(jsonObject);
@@ -2240,7 +2294,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
     }
 
 
-//    // select data from grill table
+    //    // select data from grill table
 //    public ArrayList<String[]> getGrillAndSizeFromGrill(int roomId) {
 //        String selectQuery = " SELECT " + GRILL_GRILLCODE +"," + GRILL_EFFECTIVEAREA + " FROM " + GRILL_TABLE_NAME +
 ////        String selectQuery = " SELECT * FROM " + PARTNERUSER_TABLE_NAME +

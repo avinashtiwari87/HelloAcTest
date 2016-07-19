@@ -597,7 +597,6 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
             testDetails.setCalibratedDueOn("" + clientInstrument.getCalibrationDueDate());
             testDetails.setSamplingFlowRate("");
             testDetails.setSamplingTime("");
-
         } else {
             testDetails.setInstrumentUsed("" + partnerInstrument.getpInstrumentName());
             testDetails.setMake("" + partnerInstrument.getMake());

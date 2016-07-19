@@ -16,7 +16,7 @@ public class PartnerInstrument implements Serializable{
     private String model;
     private String lastCalibrationDate;
     private String calibrationDueDate;
-//    private String currentLocation;
+    private String range;
     private String status;
     private String certFileName;
     private String remarks;
@@ -129,5 +129,13 @@ public class PartnerInstrument implements Serializable{
 
     public void setLastUpdatedDate(String lastUpdatedDate) {
         this.lastUpdatedDate = lastUpdatedDate;
+    }
+
+    public String getRange() {
+        return range;
+    }
+
+    public void setRange(String range) {
+        this.range = range;
     }
 }

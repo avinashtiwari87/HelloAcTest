@@ -6,11 +6,12 @@ package com.project.valdoc.intity;
 public class IsoParticleLimits {
 
     private int limitId;
-    private String isoClass;
+    private String particleClass;
     private String restSmallParticleLimit;
     private String restLargeParticleLimit;
     private String operationSmallParticleLimit;
     private String operationLargeParticleLimit;
+    private String lastUpdatedDate;
 
     public int getLimitId() {
         return limitId;
@@ -20,12 +21,12 @@ public class IsoParticleLimits {
         this.limitId = limitId;
     }
 
-    public String getIsoClass() {
-        return isoClass;
+    public String getParticleClass() {
+        return particleClass;
     }
 
-    public void setIsoClass(String isoClass) {
-        this.isoClass = isoClass;
+    public void setParticleClass(String particleClass) {
+        this.particleClass = particleClass;
     }
 
     public String getRestSmallParticleLimit() {
@@ -58,5 +59,13 @@ public class IsoParticleLimits {
 
     public void setOperationLargeParticleLimit(String operationLargeParticleLimit) {
         this.operationLargeParticleLimit = operationLargeParticleLimit;
+    }
+
+    public String getLastUpdatedDate() {
+        return lastUpdatedDate;
+    }
+
+    public void setLastUpdatedDate(String lastUpdatedDate) {
+        this.lastUpdatedDate = lastUpdatedDate;
     }
 }

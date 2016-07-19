@@ -142,6 +142,7 @@ public class AfterLoginActivity extends AppCompatActivity implements HttpConnect
         imgView.getLayoutParams().width = 60;*/
 
     }
+
     private void copyDb() {
         try {
             File sd = Environment.getExternalStorageDirectory();
@@ -225,7 +226,7 @@ public class AfterLoginActivity extends AppCompatActivity implements HttpConnect
             boolean isertFlag = insertDataInTable(arrayListHashMap);
             Log.d("VALDOC", "controler response data  isertFlag=" + isertFlag);
             if (isertFlag) {
-                aleartDialog(""+message);
+                aleartDialog("" + message);
             } else {
                 aleartDialog("Table is not created successfully,Please sync again !");
             }
@@ -431,6 +432,16 @@ public class AfterLoginActivity extends AppCompatActivity implements HttpConnect
             if (null != isoParticleLimitsArrayList || isoParticleLimitsArrayList.size() > 0) {
                 Log.d("VALDOC", "controler response data  13=partnerInstrumentArrayList=" + isoParticleLimitsArrayList.size());
                 isertFlag = mValdocDatabaseHandler.insertIsoParticleLimits(ValdocDatabaseHandler.ISOPARTICLELIMITS_TABLE_NAME, isoParticleLimitsArrayList);
+            }
+        } catch (Exception e) {
+
+        }
+
+        try {
+            ArrayList samplingTimelist = arrayListHashMap.get(ValdocDatabaseHandler.SAMPLINGTIME_TABLE_NAME);
+            if (null != samplingTimelist || samplingTimelist.size() > 0) {
+                Log.d("VALDOC", "controler response data  13=ISOPARTICLELIMITS_TABLE_NAME=" + isertFlag);
+                isertFlag = mValdocDatabaseHandler.insertSamplingTime(ValdocDatabaseHandler.SAMPLINGTIME_TABLE_NAME, samplingTimelist);
             }
         } catch (Exception e) {
 

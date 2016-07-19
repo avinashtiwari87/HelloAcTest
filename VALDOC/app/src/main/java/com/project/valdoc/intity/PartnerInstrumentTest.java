@@ -10,6 +10,7 @@ public class PartnerInstrumentTest {
     private String partnerInstrumentTestCode;
     private String partnerInstrumentTestName;
     private String lastUpdatedDate;
+    private String range;
 
     public String getPartnerInstrumentTest() {
         return partnerInstrumentTest;
@@ -57,5 +58,13 @@ public class PartnerInstrumentTest {
 
     public void setLastUpdatedDate(String lastUpdatedDate) {
         this.lastUpdatedDate = lastUpdatedDate;
+    }
+
+    public String getRange() {
+        return range;
+    }
+
+    public void setRange(String range) {
+        this.range = range;
     }
 }
