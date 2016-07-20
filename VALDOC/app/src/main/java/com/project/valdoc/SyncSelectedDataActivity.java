@@ -511,6 +511,11 @@ public class SyncSelectedDataActivity extends AppCompatActivity implements HttpP
                 intent.putExtra("testDetailId", testDetailList.get(viewTextId - 2).getTest_detail_id());
                 intent.putExtra("TestType", testType);
                 startActivity(intent);
+            }else if(testType != null && testType.contains("ACPH_H")){
+                Intent intent = new Intent(SyncSelectedDataActivity.this, RDACPHhPostViewActivity.class);
+                intent.putExtra("testDetailId", testDetailList.get(viewTextId - 2).getTest_detail_id());
+                intent.putExtra("TestType", testType);
+                startActivity(intent);
             }else if(testType != null && testType.contains("FIT")){
                 Intent intent = new Intent(SyncSelectedDataActivity.this, RDFITPostViewActivity.class);
                 intent.putExtra("testDetailId", testDetailList.get(viewTextId - 2).getTest_detail_id());

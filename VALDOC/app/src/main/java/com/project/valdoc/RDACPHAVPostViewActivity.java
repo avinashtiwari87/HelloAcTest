@@ -236,18 +236,6 @@ public class RDACPHAVPostViewActivity extends AppCompatActivity {
         testWitness = (TextView) findViewById(R.id.testwitness);
         testCondoctorOrg = (TextView) findViewById(R.id.test_condoctor_org);
         testWitnessOrg = (TextView) findViewById(R.id.testwitness_org);
-//        submit = (ImageView) findViewById(R.id.submit);
-//        clear = (ImageView) findViewById(R.id.clear);
-//        clear.setVisibility(View.INVISIBLE);
-        cancel = (ImageView) findViewById(R.id.cancel);
-        cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                finish();
-            }
-        });
-
     }
 
 
@@ -582,6 +570,16 @@ public class RDACPHAVPostViewActivity extends AppCompatActivity {
 
 
     private void initRes() {
+        findViewById(R.id.submit).setVisibility(View.GONE);
+        findViewById(R.id.clear).setVisibility(View.GONE);
+        cancel = (ImageView) findViewById(R.id.cancel);
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                finish();
+            }
+        });
         //Test 2
         test2_table_layout = (TableLayout) findViewById(R.id.test2_tableLayout1);
         test2_table_layout2 = (TableLayout) findViewById(R.id.test2_tableLayout2);
