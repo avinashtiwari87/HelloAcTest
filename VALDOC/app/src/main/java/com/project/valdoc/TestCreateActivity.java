@@ -289,7 +289,7 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
 //            rdAv5Test(ahuTestCode[testPosition],searchAhuTestCode[testPosition]);
             rdAcphAv(ahuTestCode[testPosition], testBasedOn);
         } else if (FIT.equals(searchAhuTestCode[testPosition])) {
-//            rdFit(ahuTestCode[testPosition],searchAhuTestCode[testPosition]);
+//            rdFit(ahuTestCode[te stPosition],searchAhuTestCode[testPosition]);
             rdFit(ahuTestCode[testPosition], testBasedOn, FIT);
         } else {
             Toast.makeText(TestCreateActivity.this, "Please select the correct test to be performed", Toast.LENGTH_SHORT).show();

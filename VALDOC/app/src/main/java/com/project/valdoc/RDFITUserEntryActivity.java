@@ -536,15 +536,14 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
                 testReadingArrayList.add(testReading);
             }
         } else if (mTestBasedOn.equalsIgnoreCase("AHU")) {
-            for (RoomFilter roomFilter : filterArrayList) {
-
+            for (AhuFilter ahuFilter : mAhuFilterArrayList) {
                 TestReading testReading = new TestReading();
 //            testReading.setTestReadingID(index);
                 testReading.setTest_detail_id(testDetailsId);
-                testReading.setEntityName(roomFilter.getFilterCode());
+                testReading.setEntityName(ahuFilter.getFilterCode());
                 StringBuilder grilList = new StringBuilder();
-                grilList.append(roomFilter.getFilterType()).append(',').append(roomFilter.getEfficiency()).append(",").append(likageDataMap.get(hasStreamBefore)).append(",")
-                        .append(likageDataMap.get(hashstreamAfter)).append(",").append(roomFilter.getSpecification()).append(",")
+                grilList.append(ahuFilter.getFilterCode()).append(',').append(likageDataMap.get(hasStreamBefore)).append(",")
+                        .append(likageDataMap.get(hashstreamAfter)).append(",")
                         .append(likageDataMap.get(hasMapKey)).append(",").append(PassFailHashMap.get(passHasMapKey));
                 hasStreamBefore++;
                 hashstreamAfter++;
@@ -573,7 +572,6 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
                 testReadingArrayList.add(testReading);
             }
         }
-
         return testReadingArrayList;
     }
 

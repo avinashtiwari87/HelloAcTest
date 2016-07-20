@@ -263,8 +263,6 @@ public class ValdocControler {
         return arrayList;
     }
 
-
-
     private ArrayList isoParticleLimitsData(JSONArray jsonArray) {
         ArrayList arrayList = new ArrayList();
         //Iterate the jsonArray and print the info of JSONObjects
