@@ -20,6 +20,7 @@ import com.project.valdoc.db.ValdocDatabaseHandler;
 import com.project.valdoc.intity.AhuFilter;
 import com.project.valdoc.intity.EquipmentFilter;
 import com.project.valdoc.intity.RoomFilter;
+import android.support.v4.content.ContextCompat;
 import com.project.valdoc.intity.TestDetails;
 import com.project.valdoc.intity.TestReading;
 import com.project.valdoc.intity.TestSpesificationValue;
@@ -59,8 +60,15 @@ public class RDFITPostViewActivity extends AppCompatActivity {
 
         mValdocDatabaseHandler = new ValdocDatabaseHandler(RDFITPostViewActivity.this);
 
+        //getting Vale for Table
+        testType = getIntent().getStringExtra("TestType");
+        testDetailId = getIntent().getIntExtra("testDetailId", 1);
+        Log.d(TAG, " TestType " + testType + " testDetailId " + testDetailId);
+
         //init res file from xml
         initRes();
+        //Header text view initialization
+        initTextView();
 
         //Setting User Name
         sharedpreferences = getSharedPreferences("valdoc", Context.MODE_PRIVATE);
@@ -70,14 +78,6 @@ public class RDFITPostViewActivity extends AppCompatActivity {
         if (mActionBar != null)
             Utilityies.setCustomActionBar(RDFITPostViewActivity.this, mActionBar, userName);
 
-        //Header text view initialization
-        initTextView();
-
-        //getting Vale for Table
-        String spiltValue[] = null;
-        testType = getIntent().getStringExtra("TestType");
-        testDetailId = getIntent().getIntExtra("testDetailId", 1);
-
         //Reading Data from DB
         testReadingArrayList = mValdocDatabaseHandler.getTestReadingDataById(testDetailId + "");
         mTestDetails = mValdocDatabaseHandler.getTestDetailById(testDetailId);
@@ -85,7 +85,7 @@ public class RDFITPostViewActivity extends AppCompatActivity {
         spiltValue = testReadingArrayList.get(0).getValue().split(",");
         rows = testReadingArrayList.size()+1;
         cols = (spiltValue.length-2);
-        Log.d(TAG, " TestType : " + testType + " testDetailId " + testDetailId+" rows "+rows+" cols "+cols);
+        Log.d(TAG, " rows "+rows+" cols "+cols);
         // setting teast header value
         textViewValueAssignment();
 
@@ -130,7 +130,8 @@ public class RDFITPostViewActivity extends AppCompatActivity {
                 if (i == 1 && j == 1) {
                     row.addView(addTextView(" Average \nbefore Scanning "));
                 } else {
-                    row.addView(addTextView(""+testReadingArrayList.get(i-2).getValue()));
+                    spiltValue = testReadingArrayList.get(i-2).getValue().split(",");
+                    row.addView(addTextView(""+spiltValue[2]));
                 }
 
             }
@@ -148,7 +149,8 @@ public class RDFITPostViewActivity extends AppCompatActivity {
                 if (i == 1 && j == 1) {
                     row.addView(addTextView(" Average \nAfter Scanning"));
                 } else {
-                    row.addView(addTextView(""+testReadingArrayList.get(i-2).getValue()));;
+                    spiltValue = testReadingArrayList.get(i-2).getValue().split(",");
+                    row.addView(addTextView(""+spiltValue[3]));;
                 }
 
             }
@@ -165,7 +167,8 @@ public class RDFITPostViewActivity extends AppCompatActivity {
                 if (i == 1 && j == 1) {
                     row.addView(addTextView(" Variation \nin Concentration*"));
                 } else {
-                    row.addView(addTextView(10 + i + "%"));
+                    spiltValue = testReadingArrayList.get(i-2).getValue().split(",");
+                    row.addView(addTextView(spiltValue[1]+ "%"));
                 }
 
             }
@@ -182,7 +185,8 @@ public class RDFITPostViewActivity extends AppCompatActivity {
                 if (i == 1 && j == 1) {
                     row.addView(addTextView(" Obtained Leakage \n(% Leakage)"));
                 } else {
-                    row.addView(addInputDataTextView());
+                    spiltValue = testReadingArrayList.get(i-2).getValue().split(",");
+                    row.addView(addTextView(spiltValue[4]+ ""));
                 }
 
             }
@@ -200,8 +204,8 @@ public class RDFITPostViewActivity extends AppCompatActivity {
                 if (i == 1 && j == 1) {
                     row.addView(addTextView(" Test Results\n(Passed / Not Passed)"));
                 } else {
-                    //row.addView(addTextView(" Pass "));
-                    row.addView(addTextPassFail(" ", i));
+                    spiltValue = testReadingArrayList.get(i-2).getValue().split(",");
+                    row.addView(addTextView(spiltValue[5]+""));
                 }
             }
             test4_table_layout8.addView(row);
@@ -226,6 +230,11 @@ public class RDFITPostViewActivity extends AppCompatActivity {
         tv.setMaxLines(3);
         tv.setEllipsize(TextUtils.TruncateAt.END);
         tv.setText(textValue);
+        if("PASS".equalsIgnoreCase(textValue)){
+            tv.setTextColor(ContextCompat.getColor(this, R.color.blue));
+        }else if("FAIL".equalsIgnoreCase(textValue)){
+            tv.setTextColor(ContextCompat.getColor(this, R.color.red));
+        }
         return tv;
     }
 
@@ -241,49 +250,6 @@ public class RDFITPostViewActivity extends AppCompatActivity {
         tv.setSingleLine(true);
         tv.setEllipsize(TextUtils.TruncateAt.END);
         //tv.setText(textValue);
-        return tv;
-    }
-
-    //obtained result
-    int idCountEtv = 200;
-
-    private TextView addInputDataTextView() {
-        TextView tv = new TextView(this);
-        tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
-                TableRow.LayoutParams.WRAP_CONTENT));
-        tv.setBackgroundResource(R.drawable.border1);
-        //tv.setPadding(5, 5, 5, 5);
-        tv.setTextColor(getResources().getColor(R.color.black));
-        tv.setTextSize(getResources().getDimension(R.dimen.normal_text_size));
-        //tv.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD);
-        tv.setId(idCountEtv);
-        tv.setSingleLine(false);
-        tv.setMaxLines(3);
-        tv.setEllipsize(TextUtils.TruncateAt.END);
-        idCountEtv++;
-        //txtViewList.add(tv);
-        return tv;
-    }
-
-    int idPassFailTv = 300;
-
-    private TextView addTextPassFail(String textValue, int tagRows) {
-        TextView tv = new TextView(this);
-        tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
-                TableRow.LayoutParams.WRAP_CONTENT));
-        tv.setBackgroundResource(R.drawable.border1);
-        //tv.setPadding(5, 5, 5, 5);
-        tv.setTextColor(getResources().getColor(R.color.black));
-        tv.setTextSize(getResources().getDimension(R.dimen.normal_text_size));
-        //tv.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD);
-        tv.setSingleLine(false);
-        tv.setTag(tagRows);
-        tv.setId(idPassFailTv);
-        tv.setMaxLines(3);
-        tv.setEllipsize(TextUtils.TruncateAt.END);
-        tv.setText(textValue);
-        idPassFailTv++;
-        //txtPassFailList.add(tv);
         return tv;
     }
 
@@ -350,6 +316,13 @@ public class RDFITPostViewActivity extends AppCompatActivity {
 
     private void initRes() {
         headerText = (TextView) findViewById(R.id.common_header_tv);
+        if(testType.contains("ERD_FIT")){
+            headerText.setText("TEST RAW DATA EQUIPMENT (EFIT)\nInstalled HEPA Filter System Leakage Test by Aerosol Photometer Method");
+        }else if(testType.contains("ARD_FIT_AHU")){
+            headerText.setText("TEST RAW DATA AHU (AFIT)\nInstalled HEPA Filter System Leakage Test by Aerosol Photometer Method");
+        }else{
+            headerText.setText("FORM:TEST RAW DATA (FIT)\nInstalled HEPA Filter System Leakage Test by Aerosol Photometer Method");
+        }
         //Test4
         test4_table_layout = (TableLayout) findViewById(R.id.test4_tableLayout1);
         test4_table_layout2 = (TableLayout) findViewById(R.id.test4_tableLayout2);

@@ -112,9 +112,13 @@ public class SyncSelectedDataActivity extends AppCompatActivity implements HttpP
                 testDetailList = mValdocDatabaseHandler.getTestDetailByTestCode("ACPH_AV");
             } else if (testType.contains("ACPH_H")) {
                 testDetailList = mValdocDatabaseHandler.getTestDetailByTestCode("ACPH_H");
-            } else if (testType.contains("FIT")) {
+            } else if (testType.contains("ERD_FIT")) {
+                testDetailList = mValdocDatabaseHandler.getTestDetailByTestCode("ERD_FIT");
+            }else if (testType.contains("FIT")) {
                 testDetailList = mValdocDatabaseHandler.getTestDetailByTestCode("FIT");
-            } else if (testType.contains("PCT")) {
+            }else if (testType.contains("ARD_FIT_AHU")) {
+                testDetailList = mValdocDatabaseHandler.getTestDetailByTestCode("ARD_FIT_AHU");
+            }else if (testType.contains("PCT")) {
                 testDetailList = mValdocDatabaseHandler.getTestDetailByTestCode("PCT");
             } else if (testType.contains("RCT")) {
                 testDetailList = mValdocDatabaseHandler.getTestDetailByTestCode("RCT");
@@ -521,6 +525,7 @@ public class SyncSelectedDataActivity extends AppCompatActivity implements HttpP
                 intent.putExtra("testDetailId", testDetailList.get(viewTextId - 2).getTest_detail_id());
                 intent.putExtra("TestType", testType);
                 startActivity(intent);
+                Log.d(TAG, " testDetailId : " + testDetailList.get(viewTextId - 2).getTest_detail_id()+" TestType "+testType);
             }else if(testType != null && testType.contains("PCT")){
                 Intent intent = new Intent(SyncSelectedDataActivity.this, RDPCTPostViewActivity.class);
                 intent.putExtra("testDetailId", testDetailList.get(viewTextId - 2).getTest_detail_id());
