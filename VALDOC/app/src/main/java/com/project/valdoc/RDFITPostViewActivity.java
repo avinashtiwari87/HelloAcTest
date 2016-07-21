@@ -11,6 +11,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -19,7 +20,9 @@ import com.project.valdoc.db.ValdocDatabaseHandler;
 import com.project.valdoc.intity.AhuFilter;
 import com.project.valdoc.intity.EquipmentFilter;
 import com.project.valdoc.intity.RoomFilter;
+import com.project.valdoc.intity.TestDetails;
 import com.project.valdoc.intity.TestReading;
+import com.project.valdoc.intity.TestSpesificationValue;
 import com.project.valdoc.utility.Utilityies;
 
 import java.util.ArrayList;
@@ -29,13 +32,21 @@ public class RDFITPostViewActivity extends AppCompatActivity {
     TextView headerText;
     TableLayout test4_table_layout, test4_table_layout2, test4_table_layout3, test4_table_layout4,
             test4_table_layout5, test4_table_layout6, test4_table_layout7, test4_table_layout8;
+    //Header TextView
+    TextView roomVolume, roomVolumeText, ahuNo, ahuNoText, equipmentNameText,equipmentNoText, dateTextView;
+    TextView plantName, areaOfTest, roomName, occupancyState, testRefrance,roomNo, testCundoctor,testWitness,testCondoctorOrg,testWitnessOrg;
+    TextView customerName, certificateNo, instrumentUsed, instrumentSerialNo, calibrationOn,calibrationDueOn, testSpecification;
+    private ImageView cancel;
     SharedPreferences sharedpreferences;
     private String userName = "";
     String testType = null;
     private int rows, cols, testDetailId = 1;
     ProgressDialog pr;
-    private ArrayList<TestReading> testReadingList;
     private ValdocDatabaseHandler mValdocDatabaseHandler;
+    private ArrayList<TestReading> testReadingArrayList;
+    private ArrayList<TestSpesificationValue> testSpecificationValueArrayList;
+    private TestDetails mTestDetails;
+    String spiltValue[] = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +58,6 @@ public class RDFITPostViewActivity extends AppCompatActivity {
         pr.setCancelable(true);
 
         mValdocDatabaseHandler = new ValdocDatabaseHandler(RDFITPostViewActivity.this);
-        testReadingList = new ArrayList<TestReading>();
 
         //init res file from xml
         initRes();
@@ -60,19 +70,29 @@ public class RDFITPostViewActivity extends AppCompatActivity {
         if (mActionBar != null)
             Utilityies.setCustomActionBar(RDFITPostViewActivity.this, mActionBar, userName);
 
+        //Header text view initialization
+        initTextView();
+
         //getting Vale for Table
         String spiltValue[] = null;
         testType = getIntent().getStringExtra("TestType");
         testDetailId = getIntent().getIntExtra("testDetailId", 1);
-        testReadingList = mValdocDatabaseHandler.getTestReadingDataById(testDetailId + "");
-        spiltValue = testReadingList.get(0).getValue().split(",");
-        Log.d(TAG, "CodeFlow : spiltValue length : " + spiltValue.length);
-        rows = testReadingList.size()+1;
+
+        //Reading Data from DB
+        testReadingArrayList = mValdocDatabaseHandler.getTestReadingDataById(testDetailId + "");
+        mTestDetails = mValdocDatabaseHandler.getTestDetailById(testDetailId);
+        testSpecificationValueArrayList = mValdocDatabaseHandler.getTestSpecificationValueById(testDetailId + "");
+        spiltValue = testReadingArrayList.get(0).getValue().split(",");
+        rows = testReadingArrayList.size()+1;
         cols = (spiltValue.length-2);
         Log.d(TAG, " TestType : " + testType + " testDetailId " + testDetailId+" rows "+rows+" cols "+cols);
+        // setting teast header value
+        textViewValueAssignment();
 
         //Create Table for FIT PostView
-        buildTestFour(rows, cols);
+        if (testType.contains(TestCreateActivity.FIT)) {
+            buildTestFour(rows, cols);
+        }
 
     }
 
@@ -88,7 +108,11 @@ public class RDFITPostViewActivity extends AppCompatActivity {
                 if (i == 1 && j == 1) {
                     row.addView(addTextView(" Filter No \n         "));
                 } else {
-                    row.addView(addTextView("HF -00" + i));
+                    if (null != testReadingArrayList && testReadingArrayList.size() > 0) {
+                        row.addView(addTextView(testReadingArrayList.get(i - 2).getEntityName()));
+                    } else {
+                        row.addView(addTextView("HF -00" + i));
+                    }
                 }
 
             }
@@ -106,7 +130,7 @@ public class RDFITPostViewActivity extends AppCompatActivity {
                 if (i == 1 && j == 1) {
                     row.addView(addTextView(" Average \nbefore Scanning "));
                 } else {
-                    row.addView(addInputDataTextViewBeforeStream());
+                    row.addView(addTextView(""+testReadingArrayList.get(i-2).getValue()));
                 }
 
             }
@@ -124,7 +148,7 @@ public class RDFITPostViewActivity extends AppCompatActivity {
                 if (i == 1 && j == 1) {
                     row.addView(addTextView(" Average \nAfter Scanning"));
                 } else {
-                    row.addView(addInputDataTextViewAfterStream());
+                    row.addView(addTextView(""+testReadingArrayList.get(i-2).getValue()));;
                 }
 
             }
@@ -220,49 +244,6 @@ public class RDFITPostViewActivity extends AppCompatActivity {
         return tv;
     }
 
-    // Fit before stream
-    int idCountEtvBefore = 800;
-
-    private TextView addInputDataTextViewBeforeStream() {
-        TextView tv = new TextView(this);
-        tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
-                TableRow.LayoutParams.WRAP_CONTENT));
-        tv.setBackgroundResource(R.drawable.border1);
-        //tv.setPadding(5, 5, 5, 5);
-        tv.setTextColor(getResources().getColor(R.color.black));
-        tv.setTextSize(getResources().getDimension(R.dimen.normal_text_size));
-        //tv.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD);
-        tv.setId(idCountEtvBefore);
-        tv.setSingleLine(false);
-        tv.setMaxLines(3);
-        tv.setEllipsize(TextUtils.TruncateAt.END);
-        idCountEtvBefore++;
-        //txtViewList.add(tv);
-        return tv;
-    }
-
-
-    //Fit After stream
-    int idCountEtvAfter = 900;
-
-    private TextView addInputDataTextViewAfterStream() {
-        TextView tv = new TextView(this);
-        tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
-                TableRow.LayoutParams.WRAP_CONTENT));
-        tv.setBackgroundResource(R.drawable.border1);
-        //tv.setPadding(5, 5, 5, 5);
-        tv.setTextColor(getResources().getColor(R.color.black));
-        tv.setTextSize(getResources().getDimension(R.dimen.normal_text_size));
-        //tv.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD);
-        tv.setId(idCountEtvAfter);
-        tv.setSingleLine(false);
-        tv.setMaxLines(3);
-        tv.setEllipsize(TextUtils.TruncateAt.END);
-        idCountEtvAfter++;
-        //txtViewList.add(tv);
-        return tv;
-    }
-
     //obtained result
     int idCountEtv = 200;
 
@@ -306,6 +287,66 @@ public class RDFITPostViewActivity extends AppCompatActivity {
         return tv;
     }
 
+    private void textViewValueAssignment() {
+        dateTextView.setText("" + mTestDetails.getDateOfTest());
+        instrumentUsed.setText(mTestDetails.getInstrumentUsed());
+//            make.setText(clientInstrument.getMake());
+        instrumentSerialNo.setText("" + mTestDetails.getInstrumentNo());
+        calibrationOn.setText(Utilityies.parseDateToddMMyyyy(mTestDetails.getCalibratedOn()));
+        calibrationDueOn.setText(Utilityies.parseDateToddMMyyyy(mTestDetails.getCalibratedDueOn()));
+        testCundoctor.setText(mTestDetails.getTesterName());
+        testSpecification.setText(mTestDetails.getTestSpecification());
+        occupancyState.setText(mTestDetails.getOccupencyState());
+        testRefrance.setText(mTestDetails.getTestReference());
+        areaOfTest.setText(mTestDetails.getTestArea());
+        roomName.setText(mTestDetails.getRoomName());
+        // room no not needed
+        roomNo.setText(mTestDetails.getRoomNo());
+        ahuNo.setText(mTestDetails.getAhuNo());
+        roomVolume.setText(mTestDetails.getRoomVolume());
+        testCondoctorOrg.setText(mTestDetails.getTestCondoctorOrg());
+        testWitnessOrg.setText(mTestDetails.getTestWitnessOrg());
+        testWitness.setText(mTestDetails.getWitnessName());
+        certificateNo.setText("" + mTestDetails.getRawDataNo());
+    }
+
+
+    private void initTextView() {
+        roomVolumeText = (TextView) findViewById(R.id.room_volume_text);
+        roomVolumeText.setVisibility(View.VISIBLE);
+        roomVolume = (TextView) findViewById(R.id.room_volume);
+        roomVolume.setVisibility(View.VISIBLE);
+        ahuNo = (TextView) findViewById(R.id.ahu_no);
+        ahuNo.setVisibility(View.VISIBLE);
+        ahuNoText = (TextView) findViewById(R.id.ahu_no_text);
+        ahuNoText.setVisibility(View.VISIBLE);
+
+        equipmentNameText = (TextView) findViewById(R.id.equiment_name_text);
+        equipmentNameText.setVisibility(View.INVISIBLE);
+        equipmentNoText = (TextView) findViewById(R.id.equiment_no_text);
+        equipmentNoText.setVisibility(View.INVISIBLE);
+
+        dateTextView = (TextView) findViewById(R.id.datetextview);
+        customerName = (TextView) findViewById(R.id.customer_name);
+        certificateNo = (TextView) findViewById(R.id.trd_no);
+        instrumentUsed = (TextView) findViewById(R.id.instrumentused);
+
+        instrumentSerialNo = (TextView) findViewById(R.id.instrumentserialno);
+        calibrationOn = (TextView) findViewById(R.id.calibratedon);
+        calibrationDueOn = (TextView) findViewById(R.id.calibrationdueon);
+        testSpecification = (TextView) findViewById(R.id.testspecification);
+        plantName = (TextView) findViewById(R.id.plantname);
+        areaOfTest = (TextView) findViewById(R.id.areaoftest);
+        roomName = (TextView) findViewById(R.id.room_name);
+        occupancyState = (TextView) findViewById(R.id.ocupancystate);
+        testRefrance = (TextView) findViewById(R.id.testrefrence);
+        roomNo = (TextView) findViewById(R.id.room_no);
+        ahuNo = (TextView) findViewById(R.id.ahu_no);
+        testCundoctor = (TextView) findViewById(R.id.testcunducter);
+        testWitness = (TextView) findViewById(R.id.testwitness);
+        testCondoctorOrg = (TextView) findViewById(R.id.test_condoctor_org);
+        testWitnessOrg = (TextView) findViewById(R.id.testwitness_org);
+    }
 
     private void initRes() {
         headerText = (TextView) findViewById(R.id.common_header_tv);
