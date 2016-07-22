@@ -205,7 +205,7 @@ public class RDFITPostViewActivity extends AppCompatActivity {
                     row.addView(addTextView(" Test Results\n(Passed / Not Passed)"));
                 } else {
                     spiltValue = testReadingArrayList.get(i-2).getValue().split(",");
-                    row.addView(addTextView(spiltValue[5]+""));
+                    row.addView(addTextView(spiltValue[5].toString().trim()));
                 }
             }
             test4_table_layout8.addView(row);
@@ -323,6 +323,16 @@ public class RDFITPostViewActivity extends AppCompatActivity {
         }else{
             headerText.setText("FORM:TEST RAW DATA (FIT)\nInstalled HEPA Filter System Leakage Test by Aerosol Photometer Method");
         }
+        findViewById(R.id.submit).setVisibility(View.GONE);
+        findViewById(R.id.clear).setVisibility(View.GONE);
+        cancel = (ImageView) findViewById(R.id.cancel);
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                finish();
+            }
+        });
         //Test4
         test4_table_layout = (TableLayout) findViewById(R.id.test4_tableLayout1);
         test4_table_layout2 = (TableLayout) findViewById(R.id.test4_tableLayout2);
