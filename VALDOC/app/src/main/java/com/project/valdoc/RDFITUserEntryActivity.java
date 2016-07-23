@@ -555,7 +555,7 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
                 testReadingArrayList.add(testReading);
             }
         }else if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
-            for (RoomFilter roomFilter : filterArrayList) {
+            for (RoomFilter roomFilter : mRoomFilterArrayList) {
                 TestReading testReading = new TestReading();
 //            testReading.setTestReadingID(index);
                 testReading.setTest_detail_id(testDetailsId);
