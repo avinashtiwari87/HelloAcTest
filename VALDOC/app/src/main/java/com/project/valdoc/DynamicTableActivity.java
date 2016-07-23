@@ -1139,54 +1139,54 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                     if (Double.parseDouble(finalvalue) > inputDataHashMap.get(200)) {
 //                            finalReadingValueTv.setText("");
                         aleartDialog("Final reading should be less than or equal to initial value");
-                    }
-                } else {
+                    }else {
 //                Toast.makeText(DynamicTableActivity.this, "Under development", Toast.LENGTH_LONG).show();
-                    intent = new Intent(DynamicTableActivity.this, RDRCTUserEntryActivity.class);
-                    // put bundel data
-                    intent.putExtra("USERTYPE", loginUserType);
-                    intent.putExtra("USERNAME", userName);
-                    intent.putExtra("PRTNERNAME", mPartnerName);
-                    intent.putExtra("WITNESSFIRST", witnessFirst);
-                    intent.putExtra("WITNESSSECOND", witnessSecond);
-                    intent.putExtra("WITNESSTHIRD", witnessThird);
-                    intent.putExtra("testType", testType);
-                    intent.putExtra("testCode", mTestCode);
-                    intent.putExtra("testBasedOn", mTestBasedOn);
-                    //get area based on room area id
-                    intent.putExtra("AREANAME", areaName);
-
-                    if (loginUserType.equals("CLIENT")) {
-                        intent.putExtra("ClientInstrument", clientInstrument);
-                    } else {
-                        intent.putExtra("PartnerInstrument", partnerInstrument);
-                    }
-
-                    if (mTestBasedOn.equalsIgnoreCase("EQUIPMENT")) {
-                        intent.putExtra("RoomDetails", roomDetails);
-                        intent.putExtra("Equipment", equipment);
+                        intent = new Intent(DynamicTableActivity.this, RDRCTUserEntryActivity.class);
+                        // put bundel data
+                        intent.putExtra("USERTYPE", loginUserType);
+                        intent.putExtra("USERNAME", userName);
+                        intent.putExtra("PRTNERNAME", mPartnerName);
+                        intent.putExtra("WITNESSFIRST", witnessFirst);
+                        intent.putExtra("WITNESSSECOND", witnessSecond);
+                        intent.putExtra("WITNESSTHIRD", witnessThird);
+                        intent.putExtra("testType", testType);
+                        intent.putExtra("testCode", mTestCode);
+                        intent.putExtra("testBasedOn", mTestBasedOn);
+                        //get area based on room area id
                         intent.putExtra("AREANAME", areaName);
+
+                        if (loginUserType.equals("CLIENT")) {
+                            intent.putExtra("ClientInstrument", clientInstrument);
+                        } else {
+                            intent.putExtra("PartnerInstrument", partnerInstrument);
+                        }
+
+                        if (mTestBasedOn.equalsIgnoreCase("EQUIPMENT")) {
+                            intent.putExtra("RoomDetails", roomDetails);
+                            intent.putExtra("Equipment", equipment);
+                            intent.putExtra("AREANAME", areaName);
 //                    intent.putExtra("EquipmentFilter", mEquipmentFilterArrayList);
-                        intent.putExtra("ApplicableTestEquipment", mApplicableTestEquipment);
+                            intent.putExtra("ApplicableTestEquipment", mApplicableTestEquipment);
 //                        intent.putExtra("rows", mEquipmentFilterArrayList.size() + 1);
 //                        intent.putExtra("cols", mApplicableTestEquipment.getLocation());
-                    } else if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
-                        intent.putExtra("Room", room);
-                        intent.putExtra("AhuNumber", ahuNumber);
+                        } else if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
+                            intent.putExtra("Room", room);
+                            intent.putExtra("AhuNumber", ahuNumber);
 //                    intent.putExtra("RoomFilterList", mRoomFilterArrayList);
-                        intent.putExtra("ApplicableTestRoom", mApplicableTestRoom);
+                            intent.putExtra("ApplicableTestRoom", mApplicableTestRoom);
 //                        intent.putExtra("rows", mRoomFilterArrayList.size() + 1);
 //                        intent.putExtra("cols", mApplicableTestRoom.getLocation());
-                    }
-                    intent.putExtra("InitialReading", "" + inputDataHashMap.get(200));
-                    intent.putExtra("WorstCaseReading", "" + inputDataHashMap.get(201));
-                    intent.putExtra("FinalReading", "" + finalReadingValueTv.getText().toString());
-                    intent.putExtra("RecoveryTime", rowsCount);
-                    intent.putExtra("InputData", inputDataHashMap);
-                    intent.putExtra("VALUE", testReadingEditTextList);
+                        }
+                        intent.putExtra("InitialReading", "" + inputDataHashMap.get(200));
+                        intent.putExtra("WorstCaseReading", "" + inputDataHashMap.get(201));
+                        intent.putExtra("FinalReading", "" + finalReadingValueTv.getText().toString());
+                        intent.putExtra("RecoveryTime", rowsCount);
+                        intent.putExtra("InputData", inputDataHashMap);
+                        intent.putExtra("VALUE", testReadingEditTextList);
 //                intent.putExtra("rows", grillAndSizeFromGrill.size() + 1);
 //                intent.putExtra("cols", applicableTestRoomLocation);
-                    startActivity(intent);
+                        startActivity(intent);
+                    }
                 }
             }
         }

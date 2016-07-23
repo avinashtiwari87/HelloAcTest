@@ -604,6 +604,7 @@ public class RDPCTUserEntryActivity extends AppCompatActivity {
         testDetails.setTestItem("");
         testDetails.setTestWitnessOrg("" + testWitnessOrg.getText());
         testDetails.setTestCondoctorOrg("" + testCondoctorOrg.getText());
+        testDetails.setRoomVolume("");
         StringBuilder witness = new StringBuilder();
         witness.append(witnessFirst.toString());
         if (null != witnessSecond && witnessSecond.length() > 0)
@@ -707,7 +708,10 @@ public class RDPCTUserEntryActivity extends AppCompatActivity {
             tvs.setEms(12);
         }
         tvs.setPadding(3, 3, 3, 3);
+        tvs.setEms(12);
+        tvs.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
         row1.addView(tvs);
+
         test5_tableLayout2_2.addView(row1);
 //        test5_table_layout2_1.addView(row1);
 //        }

@@ -243,7 +243,6 @@ public class RDRCTUserEntryActivity extends AppCompatActivity {
     };
 
     private void textViewValueAssignment() {
-
         if (loginUserType.equals("CLIENT")) {
             instrumentUsed.setText(clientInstrument.getcInstrumentName());
             instrumentSerialNo.setText("" + clientInstrument.getSerialNo());
@@ -525,7 +524,6 @@ public class RDRCTUserEntryActivity extends AppCompatActivity {
         sb.append("," + mFinalReading.trim());
         testReading.setValue("" + sb);
         testReadingArrayList.add(testReading);
-
         return testReadingArrayList;
     }
 
@@ -563,7 +561,7 @@ public class RDRCTUserEntryActivity extends AppCompatActivity {
         }
 
         testDetails.setSamplingFlowRate("" + samplingFlowRate.getText().toString());
-         testDetails.setSamplingTime("" + samplingTime.getText().toString());
+        testDetails.setSamplingTime("" + samplingTime.getText().toString());
         testDetails.setTestSpecification(testSpecification.getText().toString());
         testDetails.setBlockName(plantName.getText().toString());
         testDetails.setTestArea(areaOfTest.getText().toString());
@@ -571,20 +569,31 @@ public class RDRCTUserEntryActivity extends AppCompatActivity {
         testDetails.setRoomNo(roomNo.getText().toString());
         testDetails.setOccupencyState(occupancyState.getText().toString());
         testDetails.setTestReference(testRefrance.getText().toString());
-        testDetails.setAhuNo(ahuNo.getText().toString());
+//        testDetails.setAhuNo(ahuNo.getText().toString());
         testDetails.setTesterName(testCundoctor.getText().toString());
         testDetails.setPartnerName("" + mPartnerName);
         testDetails.setTestCode(mTestCode);
+        testDetails.setTestSpecification(""+cleanRoomClass.getText().toString());
         StringBuilder witness = new StringBuilder();
         witness.append(witnessFirst.toString());
         if (null != witnessSecond && witnessSecond.length() > 0)
             witness.append("," + witnessSecond);
         if (null != witnessThird && witnessThird.length() > 0)
             witness.append("," + witnessThird);
-
+        testDetails.setTestItem("");
         testDetails.setWitnessName("" + witness);
-        testDetails.setEquipmentName("");
-        testDetails.setEquipmentNo("");
+        testDetails.setTestWitnessOrg("" + testWitnessOrg.getText());
+        testDetails.setTestCondoctorOrg("" + testCondoctorOrg.getText());
+        testDetails.setRoomVolume("");
+        if (mTestBasedOn.equalsIgnoreCase("EQUIPMENT")) {
+            testDetails.setEquipmentName("" + equipmentName.getText().toString());
+            testDetails.setEquipmentNo("" + equipmentNo.getText().toString());
+            testDetails.setAhuNo("");
+        } else {
+            testDetails.setEquipmentName("");
+            testDetails.setEquipmentNo("");
+            testDetails.setAhuNo(ahuNo.getText().toString());
+        }
         return testDetails;
     }
 

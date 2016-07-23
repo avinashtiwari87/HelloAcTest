@@ -31,7 +31,11 @@ public class ShowSelectedTestActivity extends AppCompatActivity implements Adapt
     String[] roomsValues, AHUValues, equipmentValues;
     ArrayList<String> list = null;
     StableArrayAdapter listViewAdapter = null;
-    String selectedItem="";
+    String selectedItem = "";
+    private String mTestBasedOn;
+    private String[] roomsTestCode = new String[]{"ACPH_AV", "ACPH_H", "FIT", "PCT", "RCT"};
+    private String[] ahuTestCode = new String[]{"ARD_AF_AHU", "ARD_FIT_AHU"};
+    private String[] equipmentTestCode = new String[]{"ERD_AV", "ERD_FIT", "ERD_PCT", "ERD_RCT"};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,12 +49,14 @@ public class ShowSelectedTestActivity extends AppCompatActivity implements Adapt
             @Override
             public void onClick(View view) {
 //                if("Airvelocity Test (ERD_AV)".equals(selectedItem)) {
-                    Intent intent = new Intent(ShowSelectedTestActivity.this, SyncSelectedDataActivity.class);
-                    intent.putExtra("TestType", selectedItem);
-                    intent.putExtra("rows", 11);
-                    intent.putExtra("cols", 11);
-                    startActivity(intent);
-                    Log.d(TAG, "CodeFlow selectedItem " + selectedItem);
+                Intent intent = new Intent(ShowSelectedTestActivity.this, SyncSelectedDataActivity.class);
+                intent.putExtra("TestType", selectedItem);
+                intent.putExtra("rows", 11);
+                intent.putExtra("cols", 11);
+                intent.putExtra("TestBasedOn", mTestBasedOn);
+
+                startActivity(intent);
+                Log.d(TAG, "CodeFlow selectedItem " + selectedItem);
 //                }else {
 //                    //Toast.makeText(ShowSelectedTestActivity.this, "Under Development", Toast.LENGTH_SHORT).show();
 //                    Utilityies.showAlert(ShowSelectedTestActivity.this,"Under Development");
@@ -73,19 +79,19 @@ public class ShowSelectedTestActivity extends AppCompatActivity implements Adapt
 
         //Temporary List View
         listview = listview = (ListView) findViewById(R.id.listView);
-        roomsValues = new String[] {"Airchanges/hr Test (ACPH_AV)",
+        roomsValues = new String[]{"Airchanges/hr Test (ACPH_AV)",
                 "Airchanges/hr Test (ACPH_H)", "Filter Integrity Test (FIT)",
                 "Particle Count Test (PCT)", "Recovery Test (RCT)"};
 
-        AHUValues = new String[] {"Airflow Test (ARD_AF_AHU)" ,
+        AHUValues = new String[]{"Airflow Test (ARD_AF_AHU)",
                 "Filter Integrity Test (ARD_FIT_AHU)"};
 
-        equipmentValues = new String[] {"Airvelocity Test (ERD_AV)",
+        equipmentValues = new String[]{"Airvelocity Test (ERD_AV)",
                 "Filter Integrity Test (ERD_FIT)", "Particle Count Test (ERD_PCT)",
                 "Recovery Test (ERD_RCT)"};
 
         list = new ArrayList<String>();
-        listViewAdapter = new StableArrayAdapter(this,android.R.layout.simple_list_item_single_choice, list);
+        listViewAdapter = new StableArrayAdapter(this, android.R.layout.simple_list_item_single_choice, list);
         listview.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
         listview.setAdapter(listViewAdapter);
 
@@ -94,13 +100,19 @@ public class ShowSelectedTestActivity extends AppCompatActivity implements Adapt
             @Override
             public void onItemClick(AdapterView<?> parent, final View view,
                                     int position, long id) {
-                selectedItem = (String) parent.getItemAtPosition(position);
+//                selectedItem = (String) parent.getItemAtPosition(position);
+                if(mTestBasedOn.equalsIgnoreCase("ROOM")){
+                    selectedItem=roomsTestCode[position];
+                }else if(mTestBasedOn.equalsIgnoreCase("AHU")){
+                    selectedItem=ahuTestCode[position];
+                }else if(mTestBasedOn.equalsIgnoreCase("EQUIPMENT")){
+                    selectedItem=equipmentTestCode[position];
+                }
                 Toast.makeText(ShowSelectedTestActivity.this, selectedItem, Toast.LENGTH_SHORT).show();
 
             }
 
         });
-
 
 
         //Custom Action Bar
@@ -116,11 +128,14 @@ public class ShowSelectedTestActivity extends AppCompatActivity implements Adapt
         // An item was selected. You can retrieve the selected item using
         String selection = parent.getItemAtPosition(position).toString();
         Toast.makeText(ShowSelectedTestActivity.this, selection, Toast.LENGTH_SHORT).show();
-        if("AHU".equals(selection)){
+        if ("AHU".equals(selection)) {
+            mTestBasedOn = "AHU";
             updateListViewOnTestSelection(AHUValues);
-        }else if("Equipment".equals(selection)){
+        } else if ("Equipment".equals(selection)) {
+            mTestBasedOn = "EQUIPMENT";
             updateListViewOnTestSelection(equipmentValues);
-        }else if("Rooms".equals(selection)){
+        } else if ("Rooms".equals(selection)) {
+            mTestBasedOn = "ROOM";
             updateListViewOnTestSelection(roomsValues);
         }
     }
@@ -156,7 +171,7 @@ public class ShowSelectedTestActivity extends AppCompatActivity implements Adapt
 
     }
 
-    private void updateListViewOnTestSelection(String[] values){
+    private void updateListViewOnTestSelection(String[] values) {
         ProgressDialog progress = null;
         progress = ProgressDialog.show(ShowSelectedTestActivity.this, null, "Loading...");
         listViewAdapter.clear();
@@ -164,7 +179,7 @@ public class ShowSelectedTestActivity extends AppCompatActivity implements Adapt
         for (int i = 0; i < values.length; ++i) {
             list.add(values[i]);
         }
-        listViewAdapter = new StableArrayAdapter(this,android.R.layout.simple_list_item_single_choice, list);
+        listViewAdapter = new StableArrayAdapter(this, android.R.layout.simple_list_item_single_choice, list);
         listview.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
         listview.setAdapter(listViewAdapter);
         progress.dismiss();

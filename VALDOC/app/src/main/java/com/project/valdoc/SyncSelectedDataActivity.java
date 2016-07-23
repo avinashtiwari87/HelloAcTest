@@ -36,6 +36,7 @@ public class SyncSelectedDataActivity extends AppCompatActivity implements HttpP
     TableLayout table_layout1, table_layout2, table_layout3, table_layout4, table_layout5,
             table_layout6, table_layout7, table_layout8, table_layout9, table_layout10;
     TextView table_header_tv;
+    private String mTestBasedOn;
     int rows = 5, colos = 5;
     private String userName = "", testType = "";
     SharedPreferences sharedpreferences;
@@ -64,6 +65,7 @@ public class SyncSelectedDataActivity extends AppCompatActivity implements HttpP
             rows = getIntent().getIntExtra("rows", 6);
             colos = getIntent().getIntExtra("cols", 6);
         }
+        mTestBasedOn=getIntent().getStringExtra("TestBasedOn");
         testType = getIntent().getStringExtra("TestType");
         Log.d(TAG, " Code TestType : " + testType);
         table_header_tv.setText(testType);
@@ -108,31 +110,31 @@ public class SyncSelectedDataActivity extends AppCompatActivity implements HttpP
 
     private ArrayList<TestDetails> getTestDataByTestCode(String testType) {
         if (!testType.equals(null) && testType.length() > 0) {
-            if (testType.contains("ACPH_AV")) {
+            if (testType.equalsIgnoreCase("ACPH_AV")) {
                 testDetailList = mValdocDatabaseHandler.getTestDetailByTestCode("ACPH_AV");
-            } else if (testType.contains("ACPH_H")) {
+            } else if (testType.equalsIgnoreCase("ACPH_H")) {
                 testDetailList = mValdocDatabaseHandler.getTestDetailByTestCode("ACPH_H");
-            } else if (testType.contains("ERD_FIT")) {
+            } else if (testType.equalsIgnoreCase("ERD_FIT")) {
                 testDetailList = mValdocDatabaseHandler.getTestDetailByTestCode("ERD_FIT");
-            }else if (testType.contains("FIT")) {
+            }else if (testType.equalsIgnoreCase("FIT")) {
                 testDetailList = mValdocDatabaseHandler.getTestDetailByTestCode("FIT");
-            }else if (testType.contains("ARD_FIT_AHU")) {
+            }else if (testType.equalsIgnoreCase("ARD_FIT_AHU")) {
                 testDetailList = mValdocDatabaseHandler.getTestDetailByTestCode("ARD_FIT_AHU");
-            }else if (testType.contains("PCT")) {
+            }else if (testType.equalsIgnoreCase("PCT")) {
                 testDetailList = mValdocDatabaseHandler.getTestDetailByTestCode("PCT");
-            } else if (testType.contains("RCT")) {
+            } else if (testType.equalsIgnoreCase("RCT")) {
                 testDetailList = mValdocDatabaseHandler.getTestDetailByTestCode("RCT");
-            } else if (testType.contains("ARD_AF_AHU")) {
+            } else if (testType.equalsIgnoreCase("ARD_AF_AHU")) {
                 testDetailList = mValdocDatabaseHandler.getTestDetailByTestCode("ARD_AF_AHU");
-            } else if (testType.contains("ARD_FIT_AHU")) {
+            } else if (testType.equalsIgnoreCase("ARD_FIT_AHU")) {
                 testDetailList = mValdocDatabaseHandler.getTestDetailByTestCode("ARD_FIT_AHU");
-            } else if (testType.contains("ERD_AV")) {
+            } else if (testType.equalsIgnoreCase("ERD_AV")) {
                 testDetailList = mValdocDatabaseHandler.getTestDetailByTestCode("ERD_AV");
-            } else if (testType.contains("ERD_FIT")) {
+            } else if (testType.equalsIgnoreCase("ERD_FIT")) {
                 testDetailList = mValdocDatabaseHandler.getTestDetailByTestCode("ERD_FIT");
-            } else if (testType.contains("ERD_PCT")) {
+            } else if (testType.equalsIgnoreCase("ERD_PCT")) {
                 testDetailList = mValdocDatabaseHandler.getTestDetailByTestCode("ERD_PCT");
-            } else if (testType.contains("ERD_RCT")) {
+            } else if (testType.equalsIgnoreCase("ERD_RCT")) {
                 testDetailList = mValdocDatabaseHandler.getTestDetailByTestCode("ERD_RCT");
             }
         }
@@ -514,22 +516,32 @@ public class SyncSelectedDataActivity extends AppCompatActivity implements HttpP
                 Intent intent = new Intent(SyncSelectedDataActivity.this, RDACPHAVPostViewActivity.class);
                 intent.putExtra("testDetailId", testDetailList.get(viewTextId - 2).getTest_detail_id());
                 intent.putExtra("TestType", testType);
+                intent.putExtra("TestBasedOn", mTestBasedOn);
                 startActivity(intent);
             }else if(testType != null && testType.contains("ACPH_H")){
                 Intent intent = new Intent(SyncSelectedDataActivity.this, RDACPHhPostViewActivity.class);
                 intent.putExtra("testDetailId", testDetailList.get(viewTextId - 2).getTest_detail_id());
                 intent.putExtra("TestType", testType);
+                intent.putExtra("TestBasedOn", mTestBasedOn);
                 startActivity(intent);
             }else if(testType != null && testType.contains("FIT")){
                 Intent intent = new Intent(SyncSelectedDataActivity.this, RDFITPostViewActivity.class);
                 intent.putExtra("testDetailId", testDetailList.get(viewTextId - 2).getTest_detail_id());
                 intent.putExtra("TestType", testType);
+                intent.putExtra("TestBasedOn", mTestBasedOn);
                 startActivity(intent);
                 Log.d(TAG, " testDetailId : " + testDetailList.get(viewTextId - 2).getTest_detail_id()+" TestType "+testType);
             }else if(testType != null && testType.contains("PCT")){
                 Intent intent = new Intent(SyncSelectedDataActivity.this, RDPCTPostViewActivity.class);
                 intent.putExtra("testDetailId", testDetailList.get(viewTextId - 2).getTest_detail_id());
                 intent.putExtra("TestType", testType);
+                intent.putExtra("TestBasedOn", mTestBasedOn);
+                startActivity(intent);
+            }else if(testType != null && testType.contains("RCT")){
+                Intent intent = new Intent(SyncSelectedDataActivity.this, RDRCTPostViewActivity.class);
+                intent.putExtra("testDetailId", testDetailList.get(viewTextId - 2).getTest_detail_id());
+                intent.putExtra("TestType", testType);
+                intent.putExtra("TestBasedOn", mTestBasedOn);
                 startActivity(intent);
             }
             else {
@@ -538,6 +550,7 @@ public class SyncSelectedDataActivity extends AppCompatActivity implements HttpP
                 intent.putExtra("testDetailId", testDetailList.get(viewTextId - 2).getTest_detail_id());
                 intent.putExtra("rows", 6);
                 intent.putExtra("cols", 5);
+                intent.putExtra("TestBasedOn", mTestBasedOn);
                 startActivity(intent);
             }
         }
