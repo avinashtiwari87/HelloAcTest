@@ -299,6 +299,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
 
 
     private void textViewValueAssignment() {
+
         if (loginUserType.equals("CLIENT")) {
             instrumentUsed.setText(clientInstrument.getcInstrumentName());
 //            make.setText(clientInstrument.getMake());
@@ -344,11 +345,13 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
         if (sharedpreferences.getString("USERTYPE", "").equalsIgnoreCase("CLIENT")) {
             testCondoctorOrg.setText("(" + clientOrg + ")");
             testWitnessOrg.setText("(" + clientOrg + ")");
+            customerName.setText(""+clientOrg);
         } else {
             testCondoctorOrg.setText("(" + prtnerOrg + ")");
             testWitnessOrg.setText("(" + clientOrg + ")");
+            customerName.setText(""+prtnerOrg);
         }
-
+        plantName.setText("from cofig screen");
         Log.d("valdoc", "RDAV5UserEnryActivity 1witness=" + witnessFirst);
         StringBuilder witness = new StringBuilder();
         witness.append(witnessFirst.toString());

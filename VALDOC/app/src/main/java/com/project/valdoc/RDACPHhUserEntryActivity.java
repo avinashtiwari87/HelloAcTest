@@ -301,10 +301,13 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
         if (sharedpreferences.getString("USERTYPE", "").equalsIgnoreCase("CLIENT")) {
             testCondoctorOrg.setText("(" + sharedpreferences.getString("CLIENTORG", "") + ")");
             testWitnessOrg.setText("(" + sharedpreferences.getString("CLIENTORG", "") + ")");
+            customerName.setText(""+ sharedpreferences.getString("CLIENTORG", ""));
         } else {
             testCondoctorOrg.setText("(" + sharedpreferences.getString("PARTNERORG", "") + ")");
             testWitnessOrg.setText("(" + sharedpreferences.getString("CLIENTORG", "") + ")");
+            customerName.setText(""+ sharedpreferences.getString("PARTNERORG", ""));
         }
+         plantName.setText("from config screen");
         Log.d("valdoc", "RDAV5UserEnryActivity 1witness=" + witnessFirst);
         StringBuilder witness = new StringBuilder();
         witness.append(witnessFirst.toString());

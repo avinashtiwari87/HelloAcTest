@@ -361,10 +361,13 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
         if (sharedpreferences.getString("USERTYPE", "").equalsIgnoreCase("CLIENT")) {
             testCondoctorOrg.setText("(" + sharedpreferences.getString("CLIENTORG", "") + ")");
             testWitnessOrg.setText("(" + sharedpreferences.getString("CLIENTORG", "") + ")");
+            customerName.setText(""+ sharedpreferences.getString("CLIENTORG", ""));
         } else {
             testCondoctorOrg.setText("(" + sharedpreferences.getString("PARTNERORG", "") + ")");
             testWitnessOrg.setText("(" + sharedpreferences.getString("CLIENTORG", "") + ")");
+            customerName.setText(""+ sharedpreferences.getString("PARTNERORG", ""));
         }
+        plantName.setText("from config screen");
 
 //        testSpecification.setText("Required Air Velocity " + equipment.getMinVelocity() + "-" + equipment.getMaxVelocity() + "fpm");
         if (mTestBasedOn.equalsIgnoreCase("EQUIPMENT")) {
