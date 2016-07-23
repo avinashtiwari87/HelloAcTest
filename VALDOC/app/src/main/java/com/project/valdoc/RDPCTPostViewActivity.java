@@ -12,6 +12,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -37,6 +38,7 @@ public class RDPCTPostViewActivity extends AppCompatActivity {
     TextView roomVolume, roomVolumeText, ahuNo, ahuNoText, equipmentNameText,equipmentNoText, dateTextView;
     TextView plantName, areaOfTest, roomName, occupancyState, testRefrance,roomNo, testCundoctor,testWitness,testCondoctorOrg,testWitnessOrg;
     TextView customerName, certificateNo, instrumentUsed, instrumentSerialNo, calibrationOn,calibrationDueOn, testSpecification;
+    private ImageView cancel;
     SharedPreferences sharedpreferences;
     private String userName = "";
     private int rows, cols, testDetailId = 1, est5CommonFormulaIds2 = 600;
@@ -92,7 +94,7 @@ public class RDPCTPostViewActivity extends AppCompatActivity {
         mTestDetails = mValdocDatabaseHandler.getTestDetailById(testDetailId);
         testSpecificationValueArrayList = mValdocDatabaseHandler.getTestSpecificationValueById(testDetailId + "");
         spiltValue = testReadingArrayList.get(0).getValue().split(",");
-        rows = testReadingArrayList.size()+1;
+        rows = testReadingArrayList.size()/2+1;
         cols = (spiltValue.length-1);
         Log.d(TAG, " rows "+rows+" cols "+cols);
         // setting teast header value
@@ -102,6 +104,14 @@ public class RDPCTPostViewActivity extends AppCompatActivity {
         if (mTestType.contains(TestCreateActivity.PCT)) {
             BuildTableTest5(rows, cols);
 //            BuildTableTest5(7, 3);
+        }
+
+        // Setting calculation value in PCT
+        if(testSpecificationValueArrayList!= null && testSpecificationValueArrayList.size()>=4){
+            meanValue1_tv.setText(testSpecificationValueArrayList.get(0).getFieldValue().toString());
+            meanValue2_tv.setText(testSpecificationValueArrayList.get(01).getFieldValue().toString());
+            stdDev1_tv.setText(testSpecificationValueArrayList.get(2).getFieldValue().toString());
+            stdDev2_tv.setText(testSpecificationValueArrayList.get(3).getFieldValue().toString());
         }
 
     }
@@ -145,7 +155,7 @@ public class RDPCTPostViewActivity extends AppCompatActivity {
         row1.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
                 TableRow.LayoutParams.MATCH_PARENT));
         TextView tvs = addTextView(" No. of Particles >= 5 µm/m³  ");
-        tvs.setEms(12);
+        tvs.setEms(5*cols);
         row1.addView(tvs);
         test5_tableLayout2_2.addView(row1);
 //        test5_table_layout2_1.addView(row1);
@@ -158,14 +168,13 @@ public class RDPCTPostViewActivity extends AppCompatActivity {
             TableRow row = new TableRow(this);
             row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
                     TableRow.LayoutParams.WRAP_CONTENT));
-
             // inner for loop 1
             for (int j = 1; j <= cols; j++) {
                 if (i == 1 && j <= cols) {
                     row.addView(addTextView(" R " + j));
                 } else {
                     spiltValue = testReadingArrayList.get(i-2).getValue().split(",");
-                    row.addView(addTextView(""+spiltValue[0]));
+                    row.addView(addTextView(""+spiltValue[j-1]));
                 }
             }
             test5_table_layout2_1.addView(row);
@@ -201,7 +210,8 @@ public class RDPCTPostViewActivity extends AppCompatActivity {
                     textView.setLayoutParams(params);
                     row.addView(textView);
                 } else {
-                    row.addView(addResultTextView(i));
+                    spiltValue = testReadingArrayList.get(i-2).getValue().split(",");
+                    row.addView(addTextView(""+spiltValue[spiltValue.length-1]));
                 }
 
             }
@@ -222,7 +232,7 @@ public class RDPCTPostViewActivity extends AppCompatActivity {
         row2.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
                 TableRow.LayoutParams.MATCH_PARENT));
         TextView tvs1 = addTextView(" No. of Particles >= 5 µm/m³  ");
-        tvs1.setEms(12);
+        tvs1.setEms(5*cols);
         row2.addView(tvs1);
         test5_tableLayout4_2.addView(row2);
 
@@ -237,8 +247,8 @@ public class RDPCTPostViewActivity extends AppCompatActivity {
                 if (i == 1 && j <= cols) {
                     row.addView(addTextView(" R " + j));
                 } else {
-                    spiltValue = testReadingArrayList.get(i-2).getValue().split(",");
-                    row.addView(addTextView(""+spiltValue[1]));
+                    spiltValue = testReadingArrayList.get(((rows+i)-3)).getValue().split(",");
+                    row.addView(addTextView(""+spiltValue[j-1]));
                 }
 
             }
@@ -277,7 +287,8 @@ public class RDPCTPostViewActivity extends AppCompatActivity {
                     textView.setLayoutParams(params);
                     row.addView(textView);
                 } else {
-                    row.addView(addResultTextView(rows + i));
+                    spiltValue = testReadingArrayList.get(((rows+i)-3)).getValue().split(",");
+                    row.addView(addTextView(""+spiltValue[spiltValue.length-1]));
                 }
 
             }
@@ -321,6 +332,7 @@ public class RDPCTPostViewActivity extends AppCompatActivity {
         //tv.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD);
         tv.setSingleLine(false);
         tv.setMaxLines(3);
+        tv.setEms(5);
         tv.setEllipsize(TextUtils.TruncateAt.END);
         tv.setText(textValue);
         return tv;
@@ -364,28 +376,6 @@ public class RDPCTPostViewActivity extends AppCompatActivity {
         tv.setTag(Tag);
         Ids++;
         txtViewList.add(tv);
-        return tv;
-    }
-
-    int idCountTv = 1;
-
-    private TextView addResultTextView(int rowsNo) {
-        TextView tv = new TextView(this);
-        tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
-                TableRow.LayoutParams.WRAP_CONTENT));
-        tv.setBackgroundResource(R.drawable.border);
-        tv.setPadding(5, 19, 5, 0);
-        tv.setTextColor(getResources().getColor(R.color.black));
-        tv.setTextSize(getResources().getDimension(R.dimen.normal_text_size));
-        //tv.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD);
-        tv.setEms(4);
-        tv.setSingleLine(true);
-        tv.setEllipsize(TextUtils.TruncateAt.END);
-        Log.d(TAG, "ResultS idCountTv " + idCountTv);
-        tv.setId(idCountTv);
-        tv.setTag(rowsNo);
-        idCountTv++;
-        resultTextViewList.add(tv);
         return tv;
     }
 
@@ -452,6 +442,16 @@ public class RDPCTPostViewActivity extends AppCompatActivity {
     private void initRes() {
         headerText = (TextView) findViewById(R.id.common_header_tv);
         headerText.setText("TEST RAW DATA (RD_PCT)\nAirborne Particle Count Test for Classification of Cleanrooms/zones and Clean Air Devices");
+        findViewById(R.id.submit).setVisibility(View.GONE);
+        findViewById(R.id.clear).setVisibility(View.GONE);
+        cancel = (ImageView) findViewById(R.id.cancel);
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                finish();
+            }
+        });
         //Test5
         test5_table_layout = (TableLayout) findViewById(R.id.test5_tableLayout1);
         test5_table_layout2 = (TableLayout) findViewById(R.id.test5_tableLayout2);
