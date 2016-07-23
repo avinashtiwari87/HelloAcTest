@@ -376,8 +376,6 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
         if (null != witnessThird && witnessThird.length() > 0)
             witness.append("," + witnessThird);
         testWitness.setText(witness);
-
-
     }
 
     private void initTextView() {
@@ -593,8 +591,6 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
             testDetails.setInstrumentNo("" + instrumentSerialNo.getText());
             testDetails.setCalibratedOn("" + clientInstrument.getLastCalibrated());
             testDetails.setCalibratedDueOn("" + clientInstrument.getCalibrationDueDate());
-            testDetails.setSamplingFlowRate("");
-            testDetails.setSamplingTime("");
         } else {
             testDetails.setInstrumentUsed("" + partnerInstrument.getpInstrumentName());
             testDetails.setMake("" + partnerInstrument.getMake());
@@ -602,9 +598,10 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
             testDetails.setInstrumentNo("" + partnerInstrument.getpInstrumentId());
             testDetails.setCalibratedOn("" + partnerInstrument.getLastCalibrationDate());
             testDetails.setCalibratedDueOn("" + partnerInstrument.getCalibrationDueDate());
-            testDetails.setSamplingFlowRate("");
-            testDetails.setSamplingTime("");
+
         }
+        testDetails.setSamplingFlowRate("");
+        testDetails.setSamplingTime("");
         testDetails.setAerosolUsed("" + aerosolUsed.getText());
         testDetails.setAerosolGeneratorType("" + aerosolGeneratorType.getText());
 

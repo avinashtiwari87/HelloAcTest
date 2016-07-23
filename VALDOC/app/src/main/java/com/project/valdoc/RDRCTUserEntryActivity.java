@@ -558,7 +558,8 @@ public class RDRCTUserEntryActivity extends AppCompatActivity {
            // testDetails.setSamplingTime("" + samplingTime.getText().toString());
         }
 
-
+        testDetails.setSamplingFlowRate("" + samplingFlowRate.getText().toString());
+         testDetails.setSamplingTime("" + samplingTime.getText().toString());
         testDetails.setTestSpecification(testSpecification.getText().toString());
         testDetails.setBlockName(plantName.getText().toString());
         testDetails.setTestArea(areaOfTest.getText().toString());

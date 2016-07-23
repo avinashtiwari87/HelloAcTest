@@ -377,15 +377,15 @@ public class RDPCTUserEntryActivity extends AppCompatActivity {
         samplingTimeTable = (TableRow) findViewById(R.id.aerosol_used_table);
         samplingTimeTable.setVisibility(View.VISIBLE);
 
-        samplingFlowRateText= (TextView) findViewById(R.id.aerosol_generator_type_text);
-        samplingTimeText= (TextView) findViewById(R.id.aerosol_used_text);
+        samplingFlowRateText = (TextView) findViewById(R.id.aerosol_generator_type_text);
+        samplingTimeText = (TextView) findViewById(R.id.aerosol_used_text);
 
         samplingFlowRate = (TextView) findViewById(R.id.aerosol_generator_type_value);
         samplingTime = (TextView) findViewById(R.id.aerosol_used);
         instrumentSerialNo = (TextView) findViewById(R.id.instrumentserialno);
         calibrationOn = (TextView) findViewById(R.id.calibratedon);
         calibrationDueOn = (TextView) findViewById(R.id.calibrationdueon);
-        testspecificationText=(TextView)findViewById(R.id.testspecification_text);
+        testspecificationText = (TextView) findViewById(R.id.testspecification_text);
         testspecificationText.setText("Cleanroom Class :");
         cleanRoomClass = (TextView) findViewById(R.id.testspecification);
         plantName = (TextView) findViewById(R.id.plantname);
@@ -393,7 +393,7 @@ public class RDPCTUserEntryActivity extends AppCompatActivity {
         roomName = (TextView) findViewById(R.id.room_name);
         occupancyState = (TextView) findViewById(R.id.ocupancystate);
         testRefrance = (TextView) findViewById(R.id.testrefrence);
-        if(mTestBasedOn.equalsIgnoreCase("ROOM")){
+        if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
             equipmentLable = (TextView) findViewById(R.id.equiment_name_text);
             equipmentLable.setVisibility(View.INVISIBLE);
             equipmentNoLable = (TextView) findViewById(R.id.equiment_no_text);
@@ -575,7 +575,15 @@ public class RDPCTUserEntryActivity extends AppCompatActivity {
             testDetails.setSamplingFlowRate("" + samplingFlowRate.getText().toString());
             testDetails.setSamplingTime("" + samplingTime.getText().toString());
         }
-
+        if (mTestBasedOn.equalsIgnoreCase("EQUIPMENT")) {
+            testDetails.setEquipmentName("" + equipmentName.getText().toString());
+            testDetails.setEquipmentNo("" + equipmentNo.getText().toString());
+            testDetails.setAhuNo("");
+        } else {
+            testDetails.setEquipmentName("");
+            testDetails.setEquipmentNo("");
+            testDetails.setAhuNo(ahuNo.getText().toString());
+        }
 
         testDetails.setTestSpecification(cleanRoomClass.getText().toString());
         testDetails.setBlockName(plantName.getText().toString());
@@ -584,11 +592,15 @@ public class RDPCTUserEntryActivity extends AppCompatActivity {
         testDetails.setRoomNo(roomNo.getText().toString());
         testDetails.setOccupencyState(occupancyState.getText().toString());
         testDetails.setTestReference(testRefrance.getText().toString());
-        testDetails.setAhuNo(ahuNo.getText().toString());
+//        testDetails.setAhuNo(ahuNo.getText().toString());
         testDetails.setTesterName(testCundoctor.getText().toString());
         testDetails.setPartnerName("" + mPartnerName);
         testDetails.setTestCode(mTestCode);
-
+        testDetails.setAerosolGeneratorType("");
+        testDetails.setAerosolUsed("");
+        testDetails.setTestItem("");
+        testDetails.setTestWitnessOrg("" + testWitnessOrg.getText());
+        testDetails.setTestCondoctorOrg("" + testCondoctorOrg.getText());
         StringBuilder witness = new StringBuilder();
         witness.append(witnessFirst.toString());
         if (null != witnessSecond && witnessSecond.length() > 0)
@@ -596,8 +608,6 @@ public class RDPCTUserEntryActivity extends AppCompatActivity {
         if (null != witnessThird && witnessThird.length() > 0)
             witness.append("," + witnessThird);
         testDetails.setWitnessName("" + witness);
-        testDetails.setEquipmentName("");
-        testDetails.setEquipmentNo("");
         return testDetails;
     }
 
@@ -973,16 +983,16 @@ public class RDPCTUserEntryActivity extends AppCompatActivity {
         findViewById(R.id.test_table_5_header_2_ll).setVisibility(View.VISIBLE);
         findViewById(R.id.test_interference).setVisibility(View.GONE);
         // PCT new footer
-         meanValue1_tv = (TextView)findViewById(R.id.pct_mean_value1);
-         meanValue2_tv = (TextView)findViewById(R.id.pct_mean_value2);
-         stdDev1_tv = (TextView)findViewById(R.id.pct_std_dev1);
-        stdDev2_tv = (TextView)findViewById(R.id.pct_std_dev2);
-         ucl1_tv = (TextView)findViewById(R.id.pct_95_ucl_1);
-         ucl2_tv= (TextView)findViewById(R.id.pct_95_ucl_2);
-         minimumValue1_tv= (TextView)findViewById(R.id.pct_minimum_value_1);
-         minimumValue2_tv= (TextView)findViewById(R.id.pct_minimum_value_2);
-         maximumValue1_tv= (TextView)findViewById(R.id.pct_maximum_value_1);
-         maximumValue2_tv= (TextView)findViewById(R.id.pct_maximum_value_2);
+        meanValue1_tv = (TextView) findViewById(R.id.pct_mean_value1);
+        meanValue2_tv = (TextView) findViewById(R.id.pct_mean_value2);
+        stdDev1_tv = (TextView) findViewById(R.id.pct_std_dev1);
+        stdDev2_tv = (TextView) findViewById(R.id.pct_std_dev2);
+        ucl1_tv = (TextView) findViewById(R.id.pct_95_ucl_1);
+        ucl2_tv = (TextView) findViewById(R.id.pct_95_ucl_2);
+        minimumValue1_tv = (TextView) findViewById(R.id.pct_minimum_value_1);
+        minimumValue2_tv = (TextView) findViewById(R.id.pct_minimum_value_2);
+        maximumValue1_tv = (TextView) findViewById(R.id.pct_maximum_value_1);
+        maximumValue2_tv = (TextView) findViewById(R.id.pct_maximum_value_2);
 
 
     }
