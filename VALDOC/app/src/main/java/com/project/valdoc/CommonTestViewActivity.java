@@ -64,6 +64,7 @@ public class CommonTestViewActivity extends AppCompatActivity {
     SharedPreferences sharedpreferences;
     private ValdocDatabaseHandler mValdocDatabaseHandler;
     private int rows, cols, testDetailId = 1;
+    private String mTestBasedOn;
     private ArrayList<TestReading> testReadingList;
     //certificate view id creation
     private TextView instrumentUsed;
@@ -118,6 +119,7 @@ public class CommonTestViewActivity extends AppCompatActivity {
         testDetailId = getIntent().getIntExtra("testDetailId", 1);
         rows = getIntent().getIntExtra("rows", 6);
         cols = getIntent().getIntExtra("cols", 5);
+        mTestBasedOn=getIntent().getStringExtra("TestBasedOn");
         Log.d(TAG, " TestType : " + testType + " testDetailId " + testDetailId);
 
         initRes();
