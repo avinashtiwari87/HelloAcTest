@@ -80,9 +80,15 @@
         <activity
             android:name=".RDACPHAVPostViewActivity"
             android:screenOrientation="landscape" />
-        <activity android:name=".RDACPHhPostViewActivity" />
-        <activity android:name=".RDFITPostViewActivity" />
-        <activity android:name=".RDPCTPostViewActivity">
+        <activity
+            android:name=".RDACPHhPostViewActivity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".RDFITPostViewActivity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".RDPCTPostViewActivity"
+            android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

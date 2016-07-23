@@ -2569,10 +2569,10 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 TestDetails.setAerosolUsed(cursor.getString(26));//TEST_DETAILS_AEROSOLUSED
                 TestDetails.setAerosolGeneratorType(cursor.getString(27));//TEST_DETAILS_AEROSOLGENERATORTYPE
                 TestDetails.setTestCode(cursor.getString(28));//TEST_DETAILS_TESTCODE
-                TestDetails.setRoomVolume(cursor.getString(29).toString());
-                TestDetails.setTestWitnessOrg(cursor.getString(30).toString());
-                TestDetails.setTestCondoctorOrg(cursor.getString(31).toString());
-                TestDetails.setTestItem(cursor.getString(32).toString());
+                TestDetails.setRoomVolume(cursor.getString(29));
+                TestDetails.setTestWitnessOrg(cursor.getString(30));
+                TestDetails.setTestCondoctorOrg(cursor.getString(31));
+                TestDetails.setTestItem(cursor.getString(32));
 //                testDetailList.add(TestDetails);
             } while (cursor.moveToNext());
         }
@@ -2679,6 +2679,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 testReadingList.add(testReading);
             } while (cursor.moveToNext());
         }
+        Log.d(TAG, "getTestReadingDataById "+testReadingList.size());
         return testReadingList;
     }
 
