@@ -67,7 +67,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@+id/witness1"
-                    android:hint="@string/test_witness_hint"
                     android:layout_alignParentTop="true"
                     android:imeOptions="actionNext"
                     android:nextFocusDown="@+id/witnesssecond">
@@ -97,7 +96,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@+id/witness2"
-                    android:hint="@string/test_witness_hint"
                     android:imeOptions="actionNext"
                     android:nextFocusDown="@+id/witnessthird" />
             </RelativeLayout>
@@ -126,7 +124,6 @@
                     android:layout_toRightOf="@+id/witness3"
                     android:focusable="true"
                     android:focusableInTouchMode="true"
-                    android:hint="@string/test_witness_hint"
                     android:imeOptions="actionDone"></EditText>
             </RelativeLayout>
 
