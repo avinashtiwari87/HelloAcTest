@@ -24,7 +24,7 @@
             android:layout_marginTop="20dp"
             android:paddingRight="65dp"
             android:text="current date"
-            android:textColor="@android:color/holo_red_light"
+            android:textColor="@android:color/black"
             android:textSize="16sp" />
 
         <TextView
