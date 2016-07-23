@@ -718,6 +718,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
             + SAMPLINGTIME_LPM283 + " TEXT," + SAMPLINGTIME_LPM50 + " TEXT, "
             + SAMPLINGTIME_LPM75 + "TEXT," + SAMPLINGTIME_LPM100 + " TEXT,"
             + SAMPLINGTIME_LASTUPDATEDDATE + " TEXT" + ")";
+    private static final String TAG = "ValdocDatabaseHandler";
 
 
     public ValdocDatabaseHandler(Context context) {
@@ -2524,7 +2525,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
     // Select data from Test Detail table based on testdetails id
 
     public TestDetails getTestDetailById(int id) {
-        Log.d("Saurabh", " TestCode " + id);
+        Log.d(TAG, "getTestDetailById TestCode " + id);
 //        ArrayList<TestDetails> testDetailList = new ArrayList<TestDetails>();
         TestDetails TestDetails = new TestDetails();
         String selectQuery = "SELECT * FROM " + TEST_DETAILS_TABLE_NAME +
@@ -2582,7 +2583,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
     // Select data from Test Detail table
 
     public ArrayList<TestDetails> getTestDetailByTestCode(String testCode) {
-        Log.d("Saurabh", " TestCode " + testCode);
+        Log.d(TAG, "getTestDetailByTestCode TestCode " + testCode);
         ArrayList<TestDetails> testDetailList = new ArrayList<TestDetails>();
         String selectQuery = "SELECT * FROM " + TEST_DETAILS_TABLE_NAME +
                 " WHERE " + ValdocDatabaseHandler.TEST_DETAILS_TESTCODE + " = " + '"' + testCode + '"';
