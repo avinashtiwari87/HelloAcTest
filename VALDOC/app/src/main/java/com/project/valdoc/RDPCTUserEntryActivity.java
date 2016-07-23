@@ -702,6 +702,12 @@ public class RDPCTUserEntryActivity extends AppCompatActivity {
         row1.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
                 TableRow.LayoutParams.MATCH_PARENT));
         TextView tvs = addTextView(" No. of Particles >= 5 µm/m³  ");
+        if(4*cols>12){
+            tvs.setEms(4*cols);
+        }else{
+            tvs.setEms(12);
+        }
+        tvs.setPadding(3, 3, 3, 3);
         tvs.setEms(12);
         tvs.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
         row1.addView(tvs);
@@ -781,7 +787,12 @@ public class RDPCTUserEntryActivity extends AppCompatActivity {
         row2.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
                 TableRow.LayoutParams.MATCH_PARENT));
         TextView tvs1 = addTextView(" No. of Particles >= 5 µm/m³  ");
-        tvs1.setEms(12);
+        if(4*cols>12){
+            tvs1.setEms(4*cols);
+        }else{
+            tvs1.setEms(12);
+        }
+        tvs1.setPadding(3, 3, 3, 3);
         row2.addView(tvs1);
         test5_tableLayout4_2.addView(row2);
 
@@ -877,6 +888,7 @@ public class RDPCTUserEntryActivity extends AppCompatActivity {
         //tv.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD);
         tv.setSingleLine(false);
         tv.setMaxLines(3);
+        tv.setEms(4);
         tv.setEllipsize(TextUtils.TruncateAt.END);
         tv.setText(textValue);
         return tv;
@@ -929,8 +941,8 @@ public class RDPCTUserEntryActivity extends AppCompatActivity {
         TextView tv = new TextView(this);
         tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
                 TableRow.LayoutParams.WRAP_CONTENT));
-        tv.setBackgroundResource(R.drawable.border);
-        tv.setPadding(5, 19, 5, 0);
+        tv.setBackgroundResource(R.drawable.border1);
+        tv.setPadding(3, 3, 3, 3);
         tv.setTextColor(getResources().getColor(R.color.black));
         tv.setTextSize(getResources().getDimension(R.dimen.normal_text_size));
         //tv.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD);
@@ -952,7 +964,7 @@ public class RDPCTUserEntryActivity extends AppCompatActivity {
         tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
                 TableRow.LayoutParams.WRAP_CONTENT));
         tv.setBackgroundResource(R.drawable.border1);
-        tv.setPadding(5, 5, 5, 5);
+        tv.setPadding(3, 3, 3, 3);
         tv.setTextColor(getResources().getColor(R.color.black));
         tv.setTextSize(getResources().getDimension(R.dimen.normal_text_size));
         //tv.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD);

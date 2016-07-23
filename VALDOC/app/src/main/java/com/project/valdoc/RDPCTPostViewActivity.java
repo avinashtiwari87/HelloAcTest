@@ -155,7 +155,11 @@ public class RDPCTPostViewActivity extends AppCompatActivity {
         row1.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
                 TableRow.LayoutParams.MATCH_PARENT));
         TextView tvs = addTextView(" No. of Particles >= 5 µm/m³  ");
-        tvs.setEms(5*cols);
+        if(5*cols>13){
+            tvs.setEms(5*cols);
+        }else{
+            tvs.setEms(13);
+        }
         row1.addView(tvs);
         test5_tableLayout2_2.addView(row1);
 //        test5_table_layout2_1.addView(row1);
@@ -232,7 +236,11 @@ public class RDPCTPostViewActivity extends AppCompatActivity {
         row2.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
                 TableRow.LayoutParams.MATCH_PARENT));
         TextView tvs1 = addTextView(" No. of Particles >= 5 µm/m³  ");
-        tvs1.setEms(5*cols);
+        if(5*cols>13){
+            tvs1.setEms(5*cols);
+        }else{
+            tvs1.setEms(13);
+        }
         row2.addView(tvs1);
         test5_tableLayout4_2.addView(row2);
 
