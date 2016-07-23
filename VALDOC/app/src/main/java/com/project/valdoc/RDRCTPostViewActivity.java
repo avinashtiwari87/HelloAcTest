@@ -361,8 +361,9 @@ public class RDRCTPostViewActivity extends AppCompatActivity {
         testCondoctorOrg = (TextView) findViewById(R.id.test_condoctor_org);
         testWitnessOrg = (TextView) findViewById(R.id.testwitness_org);
         submit = (ImageView) findViewById(R.id.submit);
+        submit.setVisibility(View.GONE);
         clear = (ImageView) findViewById(R.id.clear);
-        clear.setVisibility(View.INVISIBLE);
+        clear.setVisibility(View.GONE);
         cancel = (ImageView) findViewById(R.id.cancel);
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
