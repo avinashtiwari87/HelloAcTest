@@ -85,12 +85,11 @@ public class SyncSelectedDataActivity extends AppCompatActivity implements HttpP
 
     private void syncTestData() {
         mValdocControler.httpCertificatePostSyncData(SyncSelectedDataActivity.this, "POST", getTestDetailsIdList());
-//        if(selectePosition.size()>0) {
-//            for (Integer value : selectePosition.values()) {
-//                mValdocDatabaseHandler.deleteTestTableRow(testDetailList.get(value).getTest_detail_id());
-//            }
-//        }
-//
+        if(selectePosition.size()>0) {
+            for (Integer value : selectePosition.values()) {
+                mValdocDatabaseHandler.deleteTestTableRow(testDetailList.get(value).getTest_detail_id());
+            }
+        }
     }
 
     private String getTestDetailsIdList() {
