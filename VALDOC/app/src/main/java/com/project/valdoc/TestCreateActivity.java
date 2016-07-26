@@ -93,6 +93,7 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
     private EditText witnessFirst;
     private EditText witnessSecond;
     private EditText witnessThird;
+    ImageView hideWitness_iv, showWitness_iv;
     private String userName = "";
     private String loginUserType = "";
     private String loginUserPartnerId = "";
@@ -134,7 +135,6 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
     int instrumentSpinerPos = 0, equipmentOrAhuSpinnerPos = 0,
             equipmentSpinnerPos = 0, ahuSpinnerPos = 0,
             roomSpinnerPos = 0, testSpinnerPos = 0;
-    String witness1, witness2, witness3;
     SharedPreferences sharedpreferences;
 
     @Override
@@ -198,6 +198,7 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
     }
 
     private void initButton() {
+        int witnessCount = 0;
         submit = (ImageView) findViewById(R.id.submit);
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -223,6 +224,32 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
 
                 } else {
                     Toast.makeText(TestCreateActivity.this, "Please select the test to be performed", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+      hideWitness_iv.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+              if(witnessSecond.isShown()){
+                  findViewById(R.id.witnesslayout2).setVisibility(View.GONE);
+              }else if(witnessThird.isShown()){
+                  findViewById(R.id.witnesslayout3).setVisibility(View.GONE);
+              }else{
+                  Toast.makeText(TestCreateActivity.this, "One witness is mandatory.", Toast.LENGTH_SHORT).show();
+              }
+          }
+      });
+
+        showWitness_iv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(witnessSecond.isShown()){
+                    findViewById(R.id.witnesslayout3).setVisibility(View.VISIBLE);
+                }else if(!witnessSecond.isShown()){
+                    findViewById(R.id.witnesslayout2).setVisibility(View.VISIBLE);
+                }else if(witnessThird.isShown()){
+                    Toast.makeText(TestCreateActivity.this, "Not more than 3 witness allowed.", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -824,6 +851,8 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
         witnessFirst = (EditText) findViewById(R.id.witnessfirst);
         witnessSecond = (EditText) findViewById(R.id.witnesssecond);
         witnessThird = (EditText) findViewById(R.id.witnessthird);
+        hideWitness_iv = (ImageView)findViewById(R.id.hide_witness_iv);
+        showWitness_iv = (ImageView)findViewById(R.id.show_witness_iv);
 
     }
 
