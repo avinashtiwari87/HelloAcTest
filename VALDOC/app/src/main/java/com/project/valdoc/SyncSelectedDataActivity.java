@@ -85,11 +85,11 @@ public class SyncSelectedDataActivity extends AppCompatActivity implements HttpP
 
     private void syncTestData() {
         mValdocControler.httpCertificatePostSyncData(SyncSelectedDataActivity.this, "POST", getTestDetailsIdList());
-        if(selectePosition.size()>0) {
-            for (Integer value : selectePosition.values()) {
-                mValdocDatabaseHandler.deleteTestTableRow(testDetailList.get(value).getTest_detail_id());
-            }
-        }
+//        if(selectePosition.size()>0) {
+//            for (Integer value : selectePosition.values()) {
+//                mValdocDatabaseHandler.deleteTestTableRow(testDetailList.get(value).getTest_detail_id());
+//            }
+//        }
     }
 
     private String getTestDetailsIdList() {
@@ -370,6 +370,7 @@ public class SyncSelectedDataActivity extends AppCompatActivity implements HttpP
             @Override
             public void onClick(View view) {
                 syncTestData();
+//                finish();
             }
         });
 
@@ -421,7 +422,6 @@ public class SyncSelectedDataActivity extends AppCompatActivity implements HttpP
         return cb;
     }
 
-
     @Override
     public void httpPostResponceResult(String resultData, int statusCode) {
 
@@ -434,7 +434,7 @@ public class SyncSelectedDataActivity extends AppCompatActivity implements HttpP
                 if (statuscode == HttpURLConnection.HTTP_OK) {
                     if (selectePosition.size() > 0) {
                         for (Integer value : selectePosition.values()) {
-//                            mValdocDatabaseHandler.deleteTestTableRow(testDetailList.get(value).getTest_detail_id());
+                            mValdocDatabaseHandler.deleteTestTableRow(testDetailList.get(value).getTest_detail_id());
                         }
                     }
                     aleartDialog("Data synced successfully");

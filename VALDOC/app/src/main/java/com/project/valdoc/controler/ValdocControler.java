@@ -77,6 +77,8 @@ public class ValdocControler {
         JSONArray testDetailsJsonArray = null;
         JSONArray testReadingJsonArray = null;
         JSONArray testSpecificationValueJsonArray = null;
+        JSONArray serviceReportJsonArray=null;
+        JSONArray serviceReportDetailsJsonArray = null;
 
 //        jsonObject = new JSONObject();
         try {
@@ -84,12 +86,13 @@ public class ValdocControler {
             testDetailsJsonArray = mValdocDatabaseHandler.getTestDetailsInfo(testDetailsIdList);
             testReadingJsonArray = mValdocDatabaseHandler.getTestReadingInfo(testDetailsIdList);
             testSpecificationValueJsonArray = mValdocDatabaseHandler.getTestSpecificationValueInfo(testDetailsIdList);
-
+            serviceReportJsonArray = new JSONArray();
+            serviceReportDetailsJsonArray = new JSONArray();
             jsonObject.put("testDetailDTOs", testDetailsJsonArray);
             jsonObject.put("testReadingDTOs", testReadingJsonArray);
             jsonObject.put("testSpecificValueDTOs", testSpecificationValueJsonArray);
-            jsonObject.put("serviceReportDTOs", "[]");
-            jsonObject.put("serviceReportDetailDTOs", "[]");
+            jsonObject.put("serviceReportDTOs", serviceReportJsonArray);
+            jsonObject.put("serviceReportDetailDTOs", serviceReportDetailsJsonArray);
         } catch (Exception e) {
             Log.d("getCertificateData", "certificate json exception=" + e.getMessage());
         }
@@ -101,13 +104,19 @@ public class ValdocControler {
         JSONObject jsonObject = null;
         JSONArray serviceReportJsonArray = null;
         JSONArray serviceReportDetailsJsonArray = null;
+        JSONArray testDetailsJsonArray = null;
+        JSONArray testReadingJsonArray = null;
+        JSONArray testSpecificationValueJsonArray = null;
         jsonObject = new JSONObject();
         try {
+            testDetailsJsonArray = new JSONArray();
+            testReadingJsonArray = new JSONArray();
+            testSpecificationValueJsonArray = new JSONArray();
             serviceReportJsonArray = mValdocDatabaseHandler.getServiceReport();
             serviceReportDetailsJsonArray = mValdocDatabaseHandler.getServiceReportDetailsInfo();
-            jsonObject.put("testDetailDTOs", "[]");
-            jsonObject.put("testReadingDTOs", "[]");
-            jsonObject.put("testSpecificValueDTOs", "[]");
+            jsonObject.put("testDetailDTOs", testDetailsJsonArray);
+            jsonObject.put("testReadingDTOs", testReadingJsonArray);
+            jsonObject.put("testSpecificValueDTOs", testSpecificationValueJsonArray);
             jsonObject.put("serviceReportDTOs", serviceReportJsonArray);
             jsonObject.put("serviceReportDetailDTOs", serviceReportDetailsJsonArray);
         } catch (Exception e) {
@@ -118,6 +127,7 @@ public class ValdocControler {
     }
 
     private void postConnection(String method, JSONObject jsonDATA) {
+        Log.d("valdocControler", "post data json=" + jsonDATA.toString());
         HttpConnectionTask httpConnectionTask = new HttpConnectionTask(mContext, method, jsonDATA);
 //        lastSyncDate = sharedpreferences.getString("lastSyncDate", "");
         httpConnectionTask.execute(postUrl);
@@ -249,10 +259,10 @@ public class ValdocControler {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                 samplingTime.setSamplingTimeId(jsonObject.optInt("samplingTimeId"));
                 samplingTime.setCleanroomClass(jsonObject.optString("cleanroomClass").toString());
-                samplingTime.setLPM283(jsonObject.optString("LPM283").toString());
-                samplingTime.setLPM50(jsonObject.optString("LPM50").toString());
-                samplingTime.setLPM75(jsonObject.optString("LPM75").toString());
-                samplingTime.setLPM100(jsonObject.optString("LPM100").toString());
+                samplingTime.setLPM283(jsonObject.optString("lpm283").toString());
+                samplingTime.setLPM50(jsonObject.optString("lpm50").toString());
+                samplingTime.setLPM75(jsonObject.optString("lpm75").toString());
+                samplingTime.setLPM100(jsonObject.optString("lpm100").toString());
                 samplingTime.setLastUpdatedDate(jsonObject.optString("lastUpdatedDate").toString());
                 Log.d("valdoc", "parse isoParticleLimitsData");
                 arrayList.add(samplingTime);

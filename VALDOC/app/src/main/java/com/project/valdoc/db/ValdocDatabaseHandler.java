@@ -706,10 +706,10 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
     public static final String SAMPLINGTIME_TABLE_NAME = "sampling_time";
     public static final String SAMPLINGTIME_SAMPLINGTIMEID = "samplingTimeId";
     public static final String SAMPLINGTIME_CLEANROOMCLASS = "cleanroomClass";
-    public static final String SAMPLINGTIME_LPM283 = "LPM283";
-    public static final String SAMPLINGTIME_LPM50 = "LPM50";
-    public static final String SAMPLINGTIME_LPM75 = "LPM75";
-    public static final String SAMPLINGTIME_LPM100 = "LPM100";
+    public static final String SAMPLINGTIME_LPM283 = "lpm283";
+    public static final String SAMPLINGTIME_LPM50 = "lpm50";
+    public static final String SAMPLINGTIME_LPM75 = "lpm75";
+    public static final String SAMPLINGTIME_LPM100 = "lpm100";
     public static final String SAMPLINGTIME_LASTUPDATEDDATE = "lastUpdatedDate";
 
     // service_report_detail table create statment
