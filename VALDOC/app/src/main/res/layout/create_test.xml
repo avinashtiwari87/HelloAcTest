@@ -89,6 +89,7 @@
                     android:layout_alignParentTop="true"
                     android:layout_marginTop="10dp"
                     android:paddingLeft="10dp"
+                    android:visibility="gone"
                     android:text="@string/witness"
                     android:textColor="@android:color/black"
                     android:textSize="18sp" />
@@ -98,6 +99,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@+id/witness2"
+                    android:hint="@string/test_witness_hint"
                     android:imeOptions="actionNext"
                     android:nextFocusDown="@+id/witnessthird" />
             </RelativeLayout>
@@ -116,6 +118,7 @@
                     android:layout_alignParentTop="true"
                     android:layout_marginTop="10dp"
                     android:paddingLeft="10dp"
+                    android:visibility="gone"
                     android:text="@string/witness"
                     android:textColor="@android:color/black"
                     android:textSize="18sp" />
@@ -126,6 +129,7 @@
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@+id/witness3"
                     android:focusable="true"
+                    android:hint="@string/test_witness_hint"
                     android:focusableInTouchMode="true"
                     android:imeOptions="actionDone"></EditText>
             </RelativeLayout>
