@@ -837,53 +837,54 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
     public void onClick(View view) {
         if (view == verify_btn) {
             Intent intent = null;
-//            int rowSize = 0;
-            if (TestCreateActivity.AV.equalsIgnoreCase(testType)) {
+            if(validateEditTextList()){
+                Toast.makeText(DynamicTableActivity.this, "All Edit fields are mandatory.", Toast.LENGTH_SHORT).show();
+            }else{
+                if (TestCreateActivity.AV.equalsIgnoreCase(testType)) {
+                    intent = new Intent(DynamicTableActivity.this, RDAV5UserEntryActivity.class);
+                    // put bundel data
+                    intent.putExtra("USERTYPE", loginUserType);
+                    if (loginUserType.equals("CLIENT")) {
+                        intent.putExtra("ClientInstrument", clientInstrument);
+                    } else {
+                        intent.putExtra("PartnerInstrument", partnerInstrument);
+                    }
+                    intent.putExtra("USERNAME", userName);
+                    intent.putExtra("PRTNERNAME", mPartnerName);
+                    intent.putExtra("WITNESSFIRST", witnessFirst);
+                    intent.putExtra("WITNESSSECOND", witnessSecond);
+                    intent.putExtra("WITNESSTHIRD", witnessThird);
+                    //get area based on room area id
+                    intent.putExtra("AREANAME", areaName);
 
-                intent = new Intent(DynamicTableActivity.this, RDAV5UserEntryActivity.class);
-                // put bundel data
-                intent.putExtra("USERTYPE", loginUserType);
-                if (loginUserType.equals("CLIENT")) {
-                    intent.putExtra("ClientInstrument", clientInstrument);
-                } else {
-                    intent.putExtra("PartnerInstrument", partnerInstrument);
-                }
-                intent.putExtra("USERNAME", userName);
-                intent.putExtra("PRTNERNAME", mPartnerName);
-                intent.putExtra("WITNESSFIRST", witnessFirst);
-                intent.putExtra("WITNESSSECOND", witnessSecond);
-                intent.putExtra("WITNESSTHIRD", witnessThird);
-                //get area based on room area id
-                intent.putExtra("AREANAME", areaName);
+                    intent.putExtra("testType", testType);
+                    intent.putExtra("testCode", mTestCode);
+                    intent.putExtra("testBasedOn", mTestBasedOn);
+                    if (mTestBasedOn.equalsIgnoreCase("EQUIPMENT")) {
+                        //get room name,roomNo,and area id
+                        intent.putExtra("RoomDetails", roomDetails);
+                        intent.putExtra("Equipment", equipment);
 
-                intent.putExtra("testType", testType);
-                intent.putExtra("testCode", mTestCode);
-                intent.putExtra("testBasedOn", mTestBasedOn);
-                if (mTestBasedOn.equalsIgnoreCase("EQUIPMENT")) {
-                    //get room name,roomNo,and area id
-                    intent.putExtra("RoomDetails", roomDetails);
-                    intent.putExtra("Equipment", equipment);
-
-                    if (mGrilFilterType.equalsIgnoreCase("Grill")) {
-                        intent.putExtra("GrilFilterType", "Grill");
-                        intent.putExtra("GRILLLIST", mEquipmentGrillArrayList);
-                        if (null != mEquipmentGrillArrayList && mEquipmentGrillArrayList.size() > 0) {
+                        if (mGrilFilterType.equalsIgnoreCase("Grill")) {
+                            intent.putExtra("GrilFilterType", "Grill");
+                            intent.putExtra("GRILLLIST", mEquipmentGrillArrayList);
+                            if (null != mEquipmentGrillArrayList && mEquipmentGrillArrayList.size() > 0) {
 //                            rowSize = mEquipmentGrillArrayList.size() + 1;
 //                            intent.putExtra("rows", rowSize);
-                            intent.putExtra("rows", mEquipmentGrillArrayList.size() + 1);
-                        }
+                                intent.putExtra("rows", mEquipmentGrillArrayList.size() + 1);
+                            }
 
-                    } else {
-                        intent.putExtra("GrilFilterType", "Filter");
-                        intent.putExtra("GRILLLIST", mEquipmentFilterArrayList);
+                        } else {
+                            intent.putExtra("GrilFilterType", "Filter");
+                            intent.putExtra("GRILLLIST", mEquipmentFilterArrayList);
 //                        rowSize = mEquipmentFilterArrayList.size() + 1;
-                        intent.putExtra("rows", mEquipmentFilterArrayList.size() + 1);
-                    }
+                            intent.putExtra("rows", mEquipmentFilterArrayList.size() + 1);
+                        }
 //                    ApplicableTestEquipment
-                    intent.putExtra("ApplicableTestEquipment", mApplicableTestEquipment);
+                        intent.putExtra("ApplicableTestEquipment", mApplicableTestEquipment);
 
-                    intent.putExtra("cols", mApplicableTestEquipment.getLocation());
-                }
+                        intent.putExtra("cols", mApplicableTestEquipment.getLocation());
+                    }
 //                } else if (mTestBasedOn.equalsIgnoreCase("AHU")) {
 //                    intent.putExtra("Ahu", ahu);
 //                    intent.putExtra("RoomDetails", roomDetails);
@@ -894,46 +895,90 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
 //                    intent.putExtra("cols", mApplicableTestAhu.getLocation());
 //                }
 
-                //sending Result Data over Bundle
-                intent.putExtra("ResultData", resultDataHashMap);
-                intent.putExtra("PassFailData", passFailHashMap);
-                //sending Input Data
-                intent.putExtra("InputData", inputDataHashMap);
-                startActivity(intent);
+                    //sending Result Data over Bundle
+                    intent.putExtra("ResultData", resultDataHashMap);
+                    intent.putExtra("PassFailData", passFailHashMap);
+                    //sending Input Data
+                    intent.putExtra("InputData", inputDataHashMap);
+                    startActivity(intent);
 //                Log.d(TAG, "CodeFlow rowSize " + rowSize);
-            }
-            if (TestCreateActivity.ACPHAV.equalsIgnoreCase(testType)) {
-                intent = new Intent(DynamicTableActivity.this, RDACPHAVUserEntryActivity.class);
-                // put bundel data
-                intent.putExtra("USERTYPE", loginUserType);
-                intent.putExtra("USERNAME", userName);
-                intent.putExtra("PRTNERNAME", mPartnerName);
-                intent.putExtra("WITNESSFIRST", witnessFirst);
-                intent.putExtra("WITNESSSECOND", witnessSecond);
-                intent.putExtra("WITNESSTHIRD", witnessThird);
-                intent.putExtra("testType", testType);
-                intent.putExtra("testCode", mTestCode);
-                intent.putExtra("testBasedOn", mTestBasedOn);
-                //get area based on room area id
-                intent.putExtra("AREANAME", areaName);
-
-                if (loginUserType.equals("CLIENT")) {
-                    intent.putExtra("ClientInstrument", clientInstrument);
-                } else {
-                    intent.putExtra("PartnerInstrument", partnerInstrument);
                 }
-                if (mTestBasedOn.equalsIgnoreCase("AHU")) {
-                    intent.putExtra("AhuNumber", ahuNumber);
-                    intent.putExtra("RoomDetails", roomDetails);
-                    intent.putExtra("AhuFilter", mAhuFilterArrayList);
-                    intent.putExtra("ApplicableTestAhu", mApplicableTestAhu);
-                    intent.putExtra("rows", mAhuFilterArrayList.size() + 1);
-                    intent.putExtra("cols", mApplicableTestAhu.getLocation());
-                } else if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
-                    //get room name,roomNo,and area id
-                    intent.putExtra("Room", room);
-                    intent.putExtra("AhuNumber", ahuNumber);
+                if (TestCreateActivity.ACPHAV.equalsIgnoreCase(testType)) {
+                    intent = new Intent(DynamicTableActivity.this, RDACPHAVUserEntryActivity.class);
+                    // put bundel data
+                    intent.putExtra("USERTYPE", loginUserType);
+                    intent.putExtra("USERNAME", userName);
+                    intent.putExtra("PRTNERNAME", mPartnerName);
+                    intent.putExtra("WITNESSFIRST", witnessFirst);
+                    intent.putExtra("WITNESSSECOND", witnessSecond);
+                    intent.putExtra("WITNESSTHIRD", witnessThird);
+                    intent.putExtra("testType", testType);
+                    intent.putExtra("testCode", mTestCode);
+                    intent.putExtra("testBasedOn", mTestBasedOn);
+                    //get area based on room area id
+                    intent.putExtra("AREANAME", areaName);
 
+                    if (loginUserType.equals("CLIENT")) {
+                        intent.putExtra("ClientInstrument", clientInstrument);
+                    } else {
+                        intent.putExtra("PartnerInstrument", partnerInstrument);
+                    }
+                    if (mTestBasedOn.equalsIgnoreCase("AHU")) {
+                        intent.putExtra("AhuNumber", ahuNumber);
+                        intent.putExtra("RoomDetails", roomDetails);
+                        intent.putExtra("AhuFilter", mAhuFilterArrayList);
+                        intent.putExtra("ApplicableTestAhu", mApplicableTestAhu);
+                        intent.putExtra("rows", mAhuFilterArrayList.size() + 1);
+                        intent.putExtra("cols", mApplicableTestAhu.getLocation());
+                    } else if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
+                        //get room name,roomNo,and area id
+                        intent.putExtra("Room", room);
+                        intent.putExtra("AhuNumber", ahuNumber);
+
+                        if (mGrilFilterType.equalsIgnoreCase("Grill")) {
+                            intent.putExtra("GrilFilterType", "Grill");
+                            intent.putExtra("GRILLLIST", grillAndSizeFromGrill);
+                            if (null != grillAndSizeFromGrill && grillAndSizeFromGrill.size() > 0) {
+                                intent.putExtra("rows", grillAndSizeFromGrill.size() + 1);
+                            }
+                        } else {
+                            intent.putExtra("GrilFilterType", "Filter");
+                            intent.putExtra("RoomFilter", mRoomFilterArrayList);
+                            intent.putExtra("rows", mRoomFilterArrayList.size() + 1);
+                        }
+                        intent.putExtra("ApplicableTestRoom", mApplicableTestRoom);
+                        intent.putExtra("cols", mApplicableTestRoom.getLocation());
+                    }
+
+                    //sending Result Data over Bundle
+                    intent.putExtra("ResultData", resultDataHashMap);
+                    intent.putExtra("ResultData2", resultDataHashMap2);
+                    intent.putExtra("totalAirFlowRate", totalAirFlowRate);
+                    intent.putExtra("AirChangeValue", AirChangeValue);
+                    //sending Input Data
+                    intent.putExtra("InputData", inputDataHashMap);
+                    startActivity(intent);
+
+                }
+                if (TestCreateActivity.ACPHH.equalsIgnoreCase(testType)) {
+                    intent = new Intent(DynamicTableActivity.this, RDACPHhUserEntryActivity.class);
+                    // put bundel data
+                    intent.putExtra("USERTYPE", loginUserType);
+                    intent.putExtra("USERNAME", userName);
+                    intent.putExtra("PRTNERNAME", mPartnerName);
+                    intent.putExtra("WITNESSFIRST", witnessFirst);
+                    intent.putExtra("WITNESSSECOND", witnessSecond);
+                    intent.putExtra("WITNESSTHIRD", witnessThird);
+                    intent.putExtra("testType", testType);
+                    intent.putExtra("testCode", mTestCode);
+                    //get area based on room area id
+                    intent.putExtra("AREANAME", areaName);
+
+                    if (loginUserType.equals("CLIENT")) {
+                        intent.putExtra("ClientInstrument", clientInstrument);
+                    } else {
+                        intent.putExtra("PartnerInstrument", partnerInstrument);
+                    }
                     if (mGrilFilterType.equalsIgnoreCase("Grill")) {
                         intent.putExtra("GrilFilterType", "Grill");
                         intent.putExtra("GRILLLIST", grillAndSizeFromGrill);
@@ -945,170 +990,126 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                         intent.putExtra("RoomFilter", mRoomFilterArrayList);
                         intent.putExtra("rows", mRoomFilterArrayList.size() + 1);
                     }
+
                     intent.putExtra("ApplicableTestRoom", mApplicableTestRoom);
                     intent.putExtra("cols", mApplicableTestRoom.getLocation());
+                    intent.putExtra("Room", room);
+                    intent.putExtra("AhuNumber", ahuNumber);
+                    //sending Result Data over Bundle
+                    intent.putExtra("totalAirFlowRate", totalAirFlowRate);
+                    intent.putExtra("AirChangeValue", AirChangeValue);
+                    //sending Input Data
+                    intent.putExtra("InputData", inputDataHashMap);
+
+                    startActivity(intent);
                 }
-
-                //sending Result Data over Bundle
-                intent.putExtra("ResultData", resultDataHashMap);
-                intent.putExtra("ResultData2", resultDataHashMap2);
-                intent.putExtra("totalAirFlowRate", totalAirFlowRate);
-                intent.putExtra("AirChangeValue", AirChangeValue);
-                //sending Input Data
-                intent.putExtra("InputData", inputDataHashMap);
-                startActivity(intent);
-
-            }
-            if (TestCreateActivity.ACPHH.equalsIgnoreCase(testType)) {
-                intent = new Intent(DynamicTableActivity.this, RDACPHhUserEntryActivity.class);
-                // put bundel data
-                intent.putExtra("USERTYPE", loginUserType);
-                intent.putExtra("USERNAME", userName);
-                intent.putExtra("PRTNERNAME", mPartnerName);
-                intent.putExtra("WITNESSFIRST", witnessFirst);
-                intent.putExtra("WITNESSSECOND", witnessSecond);
-                intent.putExtra("WITNESSTHIRD", witnessThird);
-                intent.putExtra("testType", testType);
-                intent.putExtra("testCode", mTestCode);
-                //get area based on room area id
-                intent.putExtra("AREANAME", areaName);
-
-                if (loginUserType.equals("CLIENT")) {
-                    intent.putExtra("ClientInstrument", clientInstrument);
-                } else {
-                    intent.putExtra("PartnerInstrument", partnerInstrument);
-                }
-                if (mGrilFilterType.equalsIgnoreCase("Grill")) {
-                    intent.putExtra("GrilFilterType", "Grill");
-                    intent.putExtra("GRILLLIST", grillAndSizeFromGrill);
-                    if (null != grillAndSizeFromGrill && grillAndSizeFromGrill.size() > 0) {
-                        intent.putExtra("rows", grillAndSizeFromGrill.size() + 1);
-                    }
-                } else {
-                    intent.putExtra("GrilFilterType", "Filter");
-                    intent.putExtra("RoomFilter", mRoomFilterArrayList);
-                    intent.putExtra("rows", mRoomFilterArrayList.size() + 1);
-                }
-
-                intent.putExtra("ApplicableTestRoom", mApplicableTestRoom);
-                intent.putExtra("cols", mApplicableTestRoom.getLocation());
-                intent.putExtra("Room", room);
-                intent.putExtra("AhuNumber", ahuNumber);
-                //sending Result Data over Bundle
-                intent.putExtra("totalAirFlowRate", totalAirFlowRate);
-                intent.putExtra("AirChangeValue", AirChangeValue);
-                //sending Input Data
-                intent.putExtra("InputData", inputDataHashMap);
-
-                startActivity(intent);
-            }
-            if (TestCreateActivity.FIT.equalsIgnoreCase(testType)) {
-                // adding ConcentrationVariation data
-                if(txtConcentrationVariationList != null && txtConcentrationVariationList.size()>0) {
-                    for (int i = 0; i < txtConcentrationVariationList.size(); i++) {
-                        try {
-                            concentrationVariationListData.add(Double.valueOf
-                                    (txtConcentrationVariationList.get(i).
-                                            getText().toString().replace(" %", "").trim()));
-                        } catch (NumberFormatException e) {
-                            e.printStackTrace();
+                if (TestCreateActivity.FIT.equalsIgnoreCase(testType)) {
+                    // adding ConcentrationVariation data
+                    if(txtConcentrationVariationList != null && txtConcentrationVariationList.size()>0) {
+                        for (int i = 0; i < txtConcentrationVariationList.size(); i++) {
+                            try {
+                                concentrationVariationListData.add(Double.valueOf
+                                        (txtConcentrationVariationList.get(i).
+                                                getText().toString().replace(" %", "").trim()));
+                            } catch (NumberFormatException e) {
+                                e.printStackTrace();
+                            }
                         }
                     }
-                }
-                intent = new Intent(DynamicTableActivity.this, RDFITUserEntryActivity.class);
-                // put bundel data
-                intent.putExtra("USERTYPE", loginUserType);
-                intent.putExtra("USERNAME", userName);
-                intent.putExtra("PRTNERNAME", mPartnerName);
-                intent.putExtra("WITNESSFIRST", witnessFirst);
-                intent.putExtra("WITNESSSECOND", witnessSecond);
-                intent.putExtra("WITNESSTHIRD", witnessThird);
-                intent.putExtra("testBasedOn", mTestBasedOn);
-                intent.putExtra("testType", testType);
-                intent.putExtra("testCode", mTestCode);
-                //get area based on room area id
-                intent.putExtra("AREANAME", areaName);
-
-                if (loginUserType.equals("CLIENT")) {
-                    intent.putExtra("ClientInstrument", clientInstrument);
-                } else {
-                    intent.putExtra("PartnerInstrument", partnerInstrument);
-                }
-
-                if (mTestBasedOn.equalsIgnoreCase("EQUIPMENT")) {
-                    intent.putExtra("RoomDetails", roomDetails);
-                    intent.putExtra("Equipment", equipment);
+                    intent = new Intent(DynamicTableActivity.this, RDFITUserEntryActivity.class);
+                    // put bundel data
+                    intent.putExtra("USERTYPE", loginUserType);
+                    intent.putExtra("USERNAME", userName);
+                    intent.putExtra("PRTNERNAME", mPartnerName);
+                    intent.putExtra("WITNESSFIRST", witnessFirst);
+                    intent.putExtra("WITNESSSECOND", witnessSecond);
+                    intent.putExtra("WITNESSTHIRD", witnessThird);
+                    intent.putExtra("testBasedOn", mTestBasedOn);
+                    intent.putExtra("testType", testType);
+                    intent.putExtra("testCode", mTestCode);
+                    //get area based on room area id
                     intent.putExtra("AREANAME", areaName);
-                    intent.putExtra("EquipmentFilter", mEquipmentFilterArrayList);
-                    intent.putExtra("ApplicableTestEquipment", mApplicableTestEquipment);
-                    intent.putExtra("rows", mEquipmentFilterArrayList.size() + 1);
-                    intent.putExtra("cols", mApplicableTestEquipment.getLocation());
-                } else if (mTestBasedOn.equalsIgnoreCase("AHU")) {
-                    intent.putExtra("AhuNumber", ahuNumber);
-                    intent.putExtra("testItem", mTestItem);
-                    intent.putExtra("RoomDetails", roomDetails);
-                    intent.putExtra("AREANAME", areaName);
-                    intent.putExtra("AhuFilter", mAhuFilterArrayList);
-                    intent.putExtra("ApplicableTestAhu", mApplicableTestAhu);
-                    intent.putExtra("rows", mAhuFilterArrayList.size() + 1);
-                    intent.putExtra("cols", mApplicableTestAhu.getLocation());
-                } else if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
-                    intent.putExtra("Room", room);
-                    intent.putExtra("AhuNumber", ahuNumber);
-                    intent.putExtra("RoomFilterList", mRoomFilterArrayList);
-                    intent.putExtra("ApplicableTestRoom", mApplicableTestRoom);
-                    intent.putExtra("rows", mRoomFilterArrayList.size() + 1);
-                    intent.putExtra("cols", mApplicableTestRoom.getLocation());
+
+                    if (loginUserType.equals("CLIENT")) {
+                        intent.putExtra("ClientInstrument", clientInstrument);
+                    } else {
+                        intent.putExtra("PartnerInstrument", partnerInstrument);
+                    }
+
+                    if (mTestBasedOn.equalsIgnoreCase("EQUIPMENT")) {
+                        intent.putExtra("RoomDetails", roomDetails);
+                        intent.putExtra("Equipment", equipment);
+                        intent.putExtra("AREANAME", areaName);
+                        intent.putExtra("EquipmentFilter", mEquipmentFilterArrayList);
+                        intent.putExtra("ApplicableTestEquipment", mApplicableTestEquipment);
+                        intent.putExtra("rows", mEquipmentFilterArrayList.size() + 1);
+                        intent.putExtra("cols", mApplicableTestEquipment.getLocation());
+                    } else if (mTestBasedOn.equalsIgnoreCase("AHU")) {
+                        intent.putExtra("AhuNumber", ahuNumber);
+                        intent.putExtra("testItem", mTestItem);
+                        intent.putExtra("RoomDetails", roomDetails);
+                        intent.putExtra("AREANAME", areaName);
+                        intent.putExtra("AhuFilter", mAhuFilterArrayList);
+                        intent.putExtra("ApplicableTestAhu", mApplicableTestAhu);
+                        intent.putExtra("rows", mAhuFilterArrayList.size() + 1);
+                        intent.putExtra("cols", mApplicableTestAhu.getLocation());
+                    } else if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
+                        intent.putExtra("Room", room);
+                        intent.putExtra("AhuNumber", ahuNumber);
+                        intent.putExtra("RoomFilterList", mRoomFilterArrayList);
+                        intent.putExtra("ApplicableTestRoom", mApplicableTestRoom);
+                        intent.putExtra("rows", mRoomFilterArrayList.size() + 1);
+                        intent.putExtra("cols", mApplicableTestRoom.getLocation());
+                    }
+
+                    //sending Result Data over Bundle
+                    intent.putExtra("PassFailData", passFailHashMap);
+                    //sending Input Data
+                    intent.putExtra("InputData", rdFitInputDataHashMap);
+                    //sending ConcentrationVariation data
+                    intent.putExtra("InputDataVariation", concentrationVariationListData);
+
+                    //TO Do testspesification will be shown from room filter spesification
+                    // location will be the size off rommfilter list
+                    startActivity(intent);
                 }
-
-                //sending Result Data over Bundle
-                intent.putExtra("PassFailData", passFailHashMap);
-                //sending Input Data
-                intent.putExtra("InputData", rdFitInputDataHashMap);
-                //sending ConcentrationVariation data
-                intent.putExtra("InputDataVariation", concentrationVariationListData);
-
-                //TO Do testspesification will be shown from room filter spesification
-                // location will be the size off rommfilter list
-                startActivity(intent);
-            }
-            if (TestCreateActivity.PCT.equalsIgnoreCase(testType)) {
-                intent = new Intent(DynamicTableActivity.this, RDPCTUserEntryActivity.class);
-                // put bundel data
-                intent.putExtra("USERTYPE", loginUserType);
-                intent.putExtra("USERNAME", userName);
-                intent.putExtra("PRTNERNAME", mPartnerName);
-                intent.putExtra("WITNESSFIRST", witnessFirst);
-                intent.putExtra("WITNESSSECOND", witnessSecond);
-                intent.putExtra("WITNESSTHIRD", witnessThird);
-                intent.putExtra("testType", testType);
-                intent.putExtra("testCode", mTestCode);
-                intent.putExtra("testBasedOn", mTestBasedOn);
-                //get area based on room area id
-                intent.putExtra("AREANAME", areaName);
-
-                if (loginUserType.equals("CLIENT")) {
-                    intent.putExtra("ClientInstrument", clientInstrument);
-                } else {
-                    intent.putExtra("PartnerInstrument", partnerInstrument);
-                }
-
-                if (mTestBasedOn.equalsIgnoreCase("EQUIPMENT")) {
-                    intent.putExtra("RoomDetails", roomDetails);
-                    intent.putExtra("Equipment", equipment);
+                if (TestCreateActivity.PCT.equalsIgnoreCase(testType)) {
+                    intent = new Intent(DynamicTableActivity.this, RDPCTUserEntryActivity.class);
+                    // put bundel data
+                    intent.putExtra("USERTYPE", loginUserType);
+                    intent.putExtra("USERNAME", userName);
+                    intent.putExtra("PRTNERNAME", mPartnerName);
+                    intent.putExtra("WITNESSFIRST", witnessFirst);
+                    intent.putExtra("WITNESSSECOND", witnessSecond);
+                    intent.putExtra("WITNESSTHIRD", witnessThird);
+                    intent.putExtra("testType", testType);
+                    intent.putExtra("testCode", mTestCode);
+                    intent.putExtra("testBasedOn", mTestBasedOn);
+                    //get area based on room area id
                     intent.putExtra("AREANAME", areaName);
+
+                    if (loginUserType.equals("CLIENT")) {
+                        intent.putExtra("ClientInstrument", clientInstrument);
+                    } else {
+                        intent.putExtra("PartnerInstrument", partnerInstrument);
+                    }
+
+                    if (mTestBasedOn.equalsIgnoreCase("EQUIPMENT")) {
+                        intent.putExtra("RoomDetails", roomDetails);
+                        intent.putExtra("Equipment", equipment);
+                        intent.putExtra("AREANAME", areaName);
 //                    intent.putExtra("EquipmentFilter", mEquipmentFilterArrayList);
-                    intent.putExtra("ApplicableTestEquipment", mApplicableTestEquipment);
-                    intent.putExtra("rows", mApplicableTestEquipment.getLocation() + 1);
-                    intent.putExtra("cols", mApplicableTestEquipment.getNoOfCycle());
-                } else if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
-                    intent.putExtra("Room", room);
-                    intent.putExtra("AhuNumber", ahuNumber);
+                        intent.putExtra("ApplicableTestEquipment", mApplicableTestEquipment);
+                        intent.putExtra("rows", mApplicableTestEquipment.getLocation() + 1);
+                        intent.putExtra("cols", mApplicableTestEquipment.getNoOfCycle());
+                    } else if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
+                        intent.putExtra("Room", room);
+                        intent.putExtra("AhuNumber", ahuNumber);
 //                    intent.putExtra("RoomFilterList", mRoomFilterArrayList);
-                    intent.putExtra("ApplicableTestRoom", mApplicableTestRoom);
-                    intent.putExtra("rows", mApplicableTestRoom.getLocation() + 1);
-                    intent.putExtra("cols", mApplicableTestRoom.getNoOfCycle());
-                }
+                        intent.putExtra("ApplicableTestRoom", mApplicableTestRoom);
+                        intent.putExtra("rows", mApplicableTestRoom.getLocation() + 1);
+                        intent.putExtra("cols", mApplicableTestRoom.getNoOfCycle());
+                    }
 
 //                intent.putExtra("Room", room);
 //                intent.putExtra("AhuNumber", ahuNumber);
@@ -1116,76 +1117,77 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
 //                intent.putExtra("NOOFCYCLE", noOfCycle);
 //                intent.putExtra("rows", applicableTestRoomLocation + 1);
 //                intent.putExtra("cols", noOfCycle);
-                //sending Input Data
-                intent.putExtra("InputData", inputDataHashMap);
-                //sending Result Data over Bundle
-                intent.putExtra("ResultData", resultDataHashMap);
-                intent.putExtra("meanValue1", meanValue1);
-                intent.putExtra("meanValue2", meanValue2);
-                intent.putExtra("stdDev1", stdDev1);
-                intent.putExtra("stdDev2", stdDev2);
+                    //sending Input Data
+                    intent.putExtra("InputData", inputDataHashMap);
+                    //sending Result Data over Bundle
+                    intent.putExtra("ResultData", resultDataHashMap);
+                    intent.putExtra("meanValue1", meanValue1);
+                    intent.putExtra("meanValue2", meanValue2);
+                    intent.putExtra("stdDev1", stdDev1);
+                    intent.putExtra("stdDev2", stdDev2);
 //                intent.putExtra("RDPC3TxtList", RDPC3TxtList);
 //                intent.putExtra("RDPC3TxtList2", RDPC3TxtList2);
 
 
-                startActivity(intent);
-            }
-            if (TestCreateActivity.RCT.equalsIgnoreCase(testType)) {
+                    startActivity(intent);
+                }
+                if (TestCreateActivity.RCT.equalsIgnoreCase(testType)) {
 
-                String finalvalue = finalReadingValueTv.getText().toString();
-                Log.d("Avinash", "finalvalue=" + finalvalue);
-                if (!"".equalsIgnoreCase(finalvalue) && null != finalvalue && !finalvalue.isEmpty() && null != inputDataHashMap && null != inputDataHashMap.get(200)) {
-                    Log.d("Avinash", "finalvalue1=" + finalvalue);
-                    if (Double.parseDouble(finalvalue) > inputDataHashMap.get(200)) {
+                    String finalvalue = finalReadingValueTv.getText().toString();
+                    Log.d("Avinash", "finalvalue=" + finalvalue);
+                    if (!"".equalsIgnoreCase(finalvalue) && null != finalvalue && !finalvalue.isEmpty() && null != inputDataHashMap && null != inputDataHashMap.get(200)) {
+                        Log.d("Avinash", "finalvalue1=" + finalvalue);
+                        if (Double.parseDouble(finalvalue) > inputDataHashMap.get(200)) {
 //                            finalReadingValueTv.setText("");
-                        aleartDialog("Final reading should be less than or equal to initial value");
-                    }else {
+                            aleartDialog("Final reading should be less than or equal to initial value");
+                        }else {
 //                Toast.makeText(DynamicTableActivity.this, "Under development", Toast.LENGTH_LONG).show();
-                        intent = new Intent(DynamicTableActivity.this, RDRCTUserEntryActivity.class);
-                        // put bundel data
-                        intent.putExtra("USERTYPE", loginUserType);
-                        intent.putExtra("USERNAME", userName);
-                        intent.putExtra("PRTNERNAME", mPartnerName);
-                        intent.putExtra("WITNESSFIRST", witnessFirst);
-                        intent.putExtra("WITNESSSECOND", witnessSecond);
-                        intent.putExtra("WITNESSTHIRD", witnessThird);
-                        intent.putExtra("testType", testType);
-                        intent.putExtra("testCode", mTestCode);
-                        intent.putExtra("testBasedOn", mTestBasedOn);
-                        //get area based on room area id
-                        intent.putExtra("AREANAME", areaName);
-
-                        if (loginUserType.equals("CLIENT")) {
-                            intent.putExtra("ClientInstrument", clientInstrument);
-                        } else {
-                            intent.putExtra("PartnerInstrument", partnerInstrument);
-                        }
-
-                        if (mTestBasedOn.equalsIgnoreCase("EQUIPMENT")) {
-                            intent.putExtra("RoomDetails", roomDetails);
-                            intent.putExtra("Equipment", equipment);
+                            intent = new Intent(DynamicTableActivity.this, RDRCTUserEntryActivity.class);
+                            // put bundel data
+                            intent.putExtra("USERTYPE", loginUserType);
+                            intent.putExtra("USERNAME", userName);
+                            intent.putExtra("PRTNERNAME", mPartnerName);
+                            intent.putExtra("WITNESSFIRST", witnessFirst);
+                            intent.putExtra("WITNESSSECOND", witnessSecond);
+                            intent.putExtra("WITNESSTHIRD", witnessThird);
+                            intent.putExtra("testType", testType);
+                            intent.putExtra("testCode", mTestCode);
+                            intent.putExtra("testBasedOn", mTestBasedOn);
+                            //get area based on room area id
                             intent.putExtra("AREANAME", areaName);
+
+                            if (loginUserType.equals("CLIENT")) {
+                                intent.putExtra("ClientInstrument", clientInstrument);
+                            } else {
+                                intent.putExtra("PartnerInstrument", partnerInstrument);
+                            }
+
+                            if (mTestBasedOn.equalsIgnoreCase("EQUIPMENT")) {
+                                intent.putExtra("RoomDetails", roomDetails);
+                                intent.putExtra("Equipment", equipment);
+                                intent.putExtra("AREANAME", areaName);
 //                    intent.putExtra("EquipmentFilter", mEquipmentFilterArrayList);
-                            intent.putExtra("ApplicableTestEquipment", mApplicableTestEquipment);
+                                intent.putExtra("ApplicableTestEquipment", mApplicableTestEquipment);
 //                        intent.putExtra("rows", mEquipmentFilterArrayList.size() + 1);
 //                        intent.putExtra("cols", mApplicableTestEquipment.getLocation());
-                        } else if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
-                            intent.putExtra("Room", room);
-                            intent.putExtra("AhuNumber", ahuNumber);
+                            } else if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
+                                intent.putExtra("Room", room);
+                                intent.putExtra("AhuNumber", ahuNumber);
 //                    intent.putExtra("RoomFilterList", mRoomFilterArrayList);
-                            intent.putExtra("ApplicableTestRoom", mApplicableTestRoom);
+                                intent.putExtra("ApplicableTestRoom", mApplicableTestRoom);
 //                        intent.putExtra("rows", mRoomFilterArrayList.size() + 1);
 //                        intent.putExtra("cols", mApplicableTestRoom.getLocation());
-                        }
-                        intent.putExtra("InitialReading", "" + inputDataHashMap.get(200));
-                        intent.putExtra("WorstCaseReading", "" + inputDataHashMap.get(201));
-                        intent.putExtra("FinalReading", "" + finalReadingValueTv.getText().toString());
-                        intent.putExtra("RecoveryTime", rowsCount);
-                        intent.putExtra("InputData", inputDataHashMap);
-                        intent.putExtra("VALUE", testReadingEditTextList);
+                            }
+                            intent.putExtra("InitialReading", "" + inputDataHashMap.get(200));
+                            intent.putExtra("WorstCaseReading", "" + inputDataHashMap.get(201));
+                            intent.putExtra("FinalReading", "" + finalReadingValueTv.getText().toString());
+                            intent.putExtra("RecoveryTime", rowsCount);
+                            intent.putExtra("InputData", inputDataHashMap);
+                            intent.putExtra("VALUE", testReadingEditTextList);
 //                intent.putExtra("rows", grillAndSizeFromGrill.size() + 1);
 //                intent.putExtra("cols", applicableTestRoomLocation);
-                        startActivity(intent);
+                            startActivity(intent);
+                        }
                     }
                 }
             }
@@ -1234,6 +1236,26 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         }
 
 
+    }
+
+    private boolean validateEditTextList() {
+        ArrayList<Boolean>validate = new ArrayList<>();
+        for (int i = 0; i < editTextList.size(); i++) {
+            Log.d(TAG, "Validate "+editTextList.get(i).getText().toString());
+            if(editTextList.get(i).getText().toString().trim() != null
+                    && editTextList.get(i).getText().toString().trim().equals("")){
+                validate.add(true);
+            }
+            else{
+                validate.add(false);
+            }
+        }
+        Log.d(TAG, "validate.contains "+validate.contains(true));
+        if(validate.contains(true)){
+            return true;
+        }else{
+            return false;
+        }
     }
 
     private void BuildTableTest6(int rows, int cols) {
