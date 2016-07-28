@@ -26,6 +26,7 @@ import com.project.valdoc.intity.ApplicableTestEquipment;
 import com.project.valdoc.intity.ApplicableTestRoom;
 import com.project.valdoc.intity.ClientInstrument;
 import com.project.valdoc.intity.Equipment;
+import com.project.valdoc.intity.IsoParticleLimits;
 import com.project.valdoc.intity.PartnerInstrument;
 import com.project.valdoc.intity.Room;
 import com.project.valdoc.intity.RoomFilter;
@@ -33,6 +34,8 @@ import com.project.valdoc.intity.TestDetails;
 import com.project.valdoc.intity.TestReading;
 import com.project.valdoc.intity.TestSpesificationValue;
 import com.project.valdoc.utility.Utilityies;
+
+import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -47,7 +50,7 @@ public class RDPCTUserEntryActivity extends AppCompatActivity {
             test5_table_layout3, test5_tableLayout2_2, test5_table_layout4, test5_tableLayout4_2, test5_table_layout4_1,
             test5_table_layout5, test5_table_layout5_1, test5_table_layout3_1;
     // PCT new footer
-    TextView meanValue1_tv, meanValue2_tv, stdDev1_tv, stdDev2_tv, ucl1_tv, ucl2_tv, minimumValue1_tv, minimumValue2_tv, maximumValue1_tv, maximumValue2_tv;
+    TextView meanValue1_tv,small_particle,iso_class, large_particle,uclId,standerdeviationText,meanValue2_tv, stdDev1_tv, stdDev2_tv, ucl1_tv, ucl2_tv, minimumValue1_tv, minimumValue2_tv, maximumValue1_tv, maximumValue2_tv;
     int rows, cols;
     String mTestType;
     //    ProgressDialog pr;
@@ -298,6 +301,38 @@ public class RDPCTUserEntryActivity extends AppCompatActivity {
             samplingTime.setText("" + samplingtime);
             samplingFlowRate.setText("under development");
             cleanRoomClass.setText(" " + mApplicableTestRoom.getTestSpecification());
+            iso_class.setText("" + mApplicableTestRoom.getTestSpecification());
+            ///////////////
+            IsoParticleLimits isoParticleLimits=mValdocDatabaseHandler.getIsoParticle(mApplicableTestRoom.getTestSpecification());
+            if(mApplicableTestEquipment.getOccupencyState().equalsIgnoreCase("at-rest")) {
+                small_particle.setText(""+isoParticleLimits.getRestSmallParticleLimit());
+                large_particle.setText(""+isoParticleLimits.getRestLargeParticleLimit());
+            }else if(mApplicableTestEquipment.getOccupencyState().equalsIgnoreCase("in-operation")){
+                small_particle.setText(""+isoParticleLimits.getOperationSmallParticleLimit());
+                large_particle.setText(""+isoParticleLimits.getOperationLargeParticleLimit());
+            }
+            ///UCL
+            JSONObject jsonObject = null;
+            try {
+                jsonObject = new JSONObject(mApplicableTestEquipment.getTestProp());
+                if (jsonObject.optString("UCL95").equalsIgnoreCase("Applicable")) {
+                    uclId.setVisibility(View.VISIBLE);
+                    standerdeviationText.setVisibility(View.VISIBLE);
+                    stdDev1_tv.setVisibility(View.VISIBLE);
+                    stdDev2_tv.setVisibility(View.VISIBLE);
+                    ucl1_tv.setVisibility(View.VISIBLE);
+                    ucl2_tv.setVisibility(View.VISIBLE);
+                } else {
+                    uclId.setVisibility(View.GONE);
+                    standerdeviationText.setVisibility(View.GONE);
+                    stdDev1_tv.setVisibility(View.GONE);
+                    stdDev2_tv.setVisibility(View.GONE);
+                    ucl1_tv.setVisibility(View.GONE);
+                    ucl2_tv.setVisibility(View.GONE);
+                }
+            } catch (Exception e) {
+
+            }
         } else if (mTestBasedOn.equalsIgnoreCase("EQUIPMENT")) {
             equipmentName.setText(equipment.getEquipmentName());
             equipmentNo.setText(equipment.getEquipmentNo());
@@ -311,16 +346,49 @@ public class RDPCTUserEntryActivity extends AppCompatActivity {
             String samplingtime = getSamplingTime(mApplicableTestEquipment.getTestSpecification(), "");
             samplingTime.setText("" + samplingtime);
             cleanRoomClass.setText("" + mApplicableTestEquipment.getTestSpecification());
+            iso_class.setText("" + mApplicableTestEquipment.getTestSpecification());
+            ////////////////////////
+            IsoParticleLimits isoParticleLimits=mValdocDatabaseHandler.getIsoParticle(mApplicableTestEquipment.getTestSpecification());
+            if(mApplicableTestEquipment.getOccupencyState().equalsIgnoreCase("at-rest")) {
+                small_particle.setText(""+isoParticleLimits.getRestSmallParticleLimit());
+                large_particle.setText(""+isoParticleLimits.getRestLargeParticleLimit());
+            }else if(mApplicableTestEquipment.getOccupencyState().equalsIgnoreCase("in-operation")){
+                small_particle.setText(""+isoParticleLimits.getOperationSmallParticleLimit());
+                large_particle.setText(""+isoParticleLimits.getOperationLargeParticleLimit());
+            }
+
+            ///UCL
+            JSONObject jsonObject = null;
+            try {
+                jsonObject = new JSONObject(mApplicableTestEquipment.getTestProp());
+                if (jsonObject.optString("UCL95").equalsIgnoreCase("Applicable")) {
+                    uclId.setVisibility(View.VISIBLE);
+                    standerdeviationText.setVisibility(View.VISIBLE);
+                    stdDev1_tv.setVisibility(View.VISIBLE);
+                    stdDev2_tv.setVisibility(View.VISIBLE);
+                    ucl1_tv.setVisibility(View.VISIBLE);
+                    ucl2_tv.setVisibility(View.VISIBLE);
+                } else {
+                    uclId.setVisibility(View.GONE);
+                    standerdeviationText.setVisibility(View.GONE);
+                    stdDev1_tv.setVisibility(View.GONE);
+                    stdDev2_tv.setVisibility(View.GONE);
+                    ucl1_tv.setVisibility(View.GONE);
+                    ucl2_tv.setVisibility(View.GONE);
+                }
+            } catch (Exception e) {
+
+            }
         }
 
         if (sharedpreferences.getString("USERTYPE", "").equalsIgnoreCase("CLIENT")) {
             testCondoctorOrg.setText("(" + sharedpreferences.getString("CLIENTORG", "") + ")");
             testWitnessOrg.setText("(" + sharedpreferences.getString("CLIENTORG", "") + ")");
-            customerName.setText(""+ sharedpreferences.getString("CLIENTORG", ""));
+            customerName.setText("" + sharedpreferences.getString("CLIENTORG", ""));
         } else {
             testCondoctorOrg.setText("(" + sharedpreferences.getString("PARTNERORG", "") + ")");
             testWitnessOrg.setText("(" + sharedpreferences.getString("CLIENTORG", "") + ")");
-            customerName.setText(""+ sharedpreferences.getString("PARTNERORG", ""));
+            customerName.setText("" + sharedpreferences.getString("PARTNERORG", ""));
         }
         plantName.setText("from config screen");
         Log.d("valdoc", "RDAV5UserEnryActivity 1witness=" + witnessFirst);
@@ -702,9 +770,9 @@ public class RDPCTUserEntryActivity extends AppCompatActivity {
         row1.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
                 TableRow.LayoutParams.MATCH_PARENT));
         TextView tvs = addTextView(" No. of Particles >= 5 µm/m³  ");
-        if(4*cols>12){
-            tvs.setEms(4*cols);
-        }else{
+        if (4 * cols > 12) {
+            tvs.setEms(4 * cols);
+        } else {
             tvs.setEms(12);
         }
         tvs.setPadding(3, 3, 3, 3);
@@ -787,9 +855,9 @@ public class RDPCTUserEntryActivity extends AppCompatActivity {
         row2.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
                 TableRow.LayoutParams.MATCH_PARENT));
         TextView tvs1 = addTextView(" No. of Particles >= 5 µm/m³  ");
-        if(4*cols>12){
-            tvs1.setEms(4*cols);
-        }else{
+        if (4 * cols > 12) {
+            tvs1.setEms(4 * cols);
+        } else {
             tvs1.setEms(12);
         }
         tvs1.setPadding(3, 3, 3, 3);
@@ -1003,15 +1071,18 @@ public class RDPCTUserEntryActivity extends AppCompatActivity {
         // PCT new footer
         meanValue1_tv = (TextView) findViewById(R.id.pct_mean_value1);
         meanValue2_tv = (TextView) findViewById(R.id.pct_mean_value2);
+        uclId = (TextView) findViewById(R.id.ucl_id);
+        standerdeviationText = (TextView) findViewById(R.id.standerdeviation_text);
         stdDev1_tv = (TextView) findViewById(R.id.pct_std_dev1);
         stdDev2_tv = (TextView) findViewById(R.id.pct_std_dev2);
         ucl1_tv = (TextView) findViewById(R.id.pct_95_ucl_1);
         ucl2_tv = (TextView) findViewById(R.id.pct_95_ucl_2);
+        small_particle= (TextView) findViewById(R.id.small_particle);
+        large_particle= (TextView) findViewById(R.id.large_particle);
+        iso_class= (TextView) findViewById(R.id.iso_class);
         minimumValue1_tv = (TextView) findViewById(R.id.pct_minimum_value_1);
         minimumValue2_tv = (TextView) findViewById(R.id.pct_minimum_value_2);
         maximumValue1_tv = (TextView) findViewById(R.id.pct_maximum_value_1);
         maximumValue2_tv = (TextView) findViewById(R.id.pct_maximum_value_2);
-
-
     }
 }

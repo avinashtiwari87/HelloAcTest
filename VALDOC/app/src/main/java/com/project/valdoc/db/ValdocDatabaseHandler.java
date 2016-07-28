@@ -804,7 +804,6 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
     }
 
 
-
     //insert daa in Sampling time table
     public boolean insertSamplingTime(String tableName, ArrayList<SamplingTime> samplingTimeArrayList) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -1722,6 +1721,26 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
         }
     }
 
+// isoparticle
+    public IsoParticleLimits getIsoParticle(String className) {
+        IsoParticleLimits isoParticleLimits = new IsoParticleLimits();
+        String selectQuery = "SELECT * FROM " + ISOPARTICLELIMITS_TABLE_NAME + " WHERE " + ValdocDatabaseHandler.ISOPARTICLELIMITS_CLASS + " = " + '"' + className + '"';
+        SQLiteDatabase database = this.getWritableDatabase();
+        Cursor cursor = database.rawQuery(selectQuery, null);
+        Log.d("valdoc", "Login method :");
+        if (cursor.moveToFirst()) {
+            do {
+                isoParticleLimits.setLimitId(cursor.getInt(0));
+                isoParticleLimits.setParticleClass(cursor.getString(1));
+                isoParticleLimits.setRestSmallParticleLimit(cursor.getString(2));
+                isoParticleLimits.setRestLargeParticleLimit(cursor.getString(3));
+                isoParticleLimits.setOperationSmallParticleLimit(cursor.getString(4));
+                isoParticleLimits.setOperationLargeParticleLimit(cursor.getString(5));
+                isoParticleLimits.setLastUpdatedDate(cursor.getString(6));
+            } while (cursor.moveToNext());
+        } // return contact list return wordList; }
+        return isoParticleLimits;
+    }
 
     // select data from user table
     public ArrayList<AppUser> getUserInfo() {
@@ -2679,7 +2698,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 testReadingList.add(testReading);
             } while (cursor.moveToNext());
         }
-        Log.d(TAG, "getTestReadingDataById "+testReadingList.size());
+        Log.d(TAG, "getTestReadingDataById " + testReadingList.size());
         return testReadingList;
     }
 

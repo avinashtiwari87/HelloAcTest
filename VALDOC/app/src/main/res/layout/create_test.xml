@@ -60,6 +60,7 @@
                     android:layout_marginTop="10dp"
                     android:paddingLeft="10dp"
                     android:text="@string/witness"
+                    android:visibility="gone"
                     android:textColor="@android:color/black"
                     android:textSize="18sp" />
 
@@ -69,6 +70,7 @@
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@+id/witness1"
                     android:layout_alignParentTop="true"
+                    android:hint="@string/test_witness_hint"
                     android:imeOptions="actionNext"
                     android:nextFocusDown="@+id/witnesssecond">
                 </EditText>
