@@ -1015,7 +1015,7 @@ public class CommonTestViewActivity extends AppCompatActivity {
         if (testType != null && (testType.contains("AV") || testType.contains("AF"))) {
             findViewById(R.id.test_table_1_header_l_ll).setVisibility(View.GONE);
             TextView TestHeader = (TextView) findViewById(R.id.common_header_tv);
-            TestHeader.setText("TEST RAW DATA EQUIPMENT (ERD_AV)\n(Average Air Flow Velocity Testing)");
+            TestHeader.setText("TEST RAW DATA EQUIPMENT\n(Average Air Flow Velocity Testing)");
             findViewById(R.id.test_interference).setVisibility(View.GONE);
             findViewById(R.id.test1_reading_header).setVisibility(View.VISIBLE);
             findViewById(R.id.common_header_test1).setVisibility(View.GONE);

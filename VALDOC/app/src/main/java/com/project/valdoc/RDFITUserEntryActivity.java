@@ -706,7 +706,7 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-       headerText.setText("TEST RAW DATA (FIT)\nInstalled HEPA Filter System Leakage Test by Aerosol Photometer Method");
+       headerText.setText("TEST RAW DATA\nInstalled HEPA Filter System Leakage Test by Aerosol Photometer Method");
     }
 
     private void BuildTableTest4(int rows, int cols) {

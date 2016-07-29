@@ -317,11 +317,11 @@ public class RDFITPostViewActivity extends AppCompatActivity {
     private void initRes() {
         headerText = (TextView) findViewById(R.id.common_header_tv);
         if(testType.contains("ERD_FIT")){
-            headerText.setText("TEST RAW DATA EQUIPMENT (EFIT)\nInstalled HEPA Filter System Leakage Test by Aerosol Photometer Method");
+            headerText.setText("TEST RAW DATA EQUIPMENT\nInstalled HEPA Filter System Leakage Test by Aerosol Photometer Method");
         }else if(testType.contains("ARD_FIT_AHU")){
-            headerText.setText("TEST RAW DATA AHU (AFIT)\nInstalled HEPA Filter System Leakage Test by Aerosol Photometer Method");
+            headerText.setText("TEST RAW DATA AHU\nInstalled HEPA Filter System Leakage Test by Aerosol Photometer Method");
         }else{
-            headerText.setText("FORM:TEST RAW DATA (FIT)\nInstalled HEPA Filter System Leakage Test by Aerosol Photometer Method");
+            headerText.setText("TEST RAW DATA\nInstalled HEPA Filter System Leakage Test by Aerosol Photometer Method");
         }
         findViewById(R.id.submit).setVisibility(View.GONE);
         findViewById(R.id.clear).setVisibility(View.GONE);

@@ -603,6 +603,6 @@ public class RDACPHAVPostViewActivity extends AppCompatActivity {
         findViewById(R.id.acph_av_final_calc_ll).setVisibility(View.VISIBLE);
         findViewById(R.id.test2_reading_header).setVisibility(View.VISIBLE);
         TextView TestHeader = (TextView) findViewById(R.id.common_header_tv);
-        TestHeader.setText("TEST RAW DATA (RD_ACPH_AV)\n(Air Flow Velocity, Volume Testing and Determination of Air Changes per Hour Rates)");
+        TestHeader.setText("TEST RAW DATA\n(Air Flow Velocity, Volume Testing and Determination of Air Changes per Hour Rates)");
     }
 }
