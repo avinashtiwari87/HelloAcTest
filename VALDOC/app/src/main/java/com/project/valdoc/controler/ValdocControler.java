@@ -287,7 +287,7 @@ public class ValdocControler {
                 isoParticleLimits.setOperationSmallParticleLimit(jsonObject.optString("operationSmallParticleLimit").toString());
                 isoParticleLimits.setOperationLargeParticleLimit(jsonObject.optString("operationLargeParticleLimit").toString());
                 isoParticleLimits.setLastUpdatedDate(jsonObject.optString("lastUpdatedDate").toString());
-                Log.d("valdoc", "parse isoParticleLimitsData");
+                Log.d("6", "parse isoParticleLimitsData");
                 arrayList.add(isoParticleLimits);
             } catch (Exception e) {
 

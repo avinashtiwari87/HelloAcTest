@@ -164,8 +164,8 @@ public class RDPCTUserEntryActivity extends AppCompatActivity {
         getExtraFromTestCreateActivity(savedInstanceState);
         //text view initialization
         initTextView();
-        textViewValueAssignment();
         initRes();
+        textViewValueAssignment();
         datePicker();
         if (TestCreateActivity.PCT.equalsIgnoreCase(mTestType)) {
             BuildTableTest5(rows, cols);
@@ -299,15 +299,15 @@ public class RDPCTUserEntryActivity extends AppCompatActivity {
             occupancyState.setText(mApplicableTestRoom.getOccupencyState().toString());
             String samplingtime = getSamplingTime(mApplicableTestRoom.getTestSpecification(), "");
             samplingTime.setText("" + samplingtime);
-            samplingFlowRate.setText("under development");
+
             cleanRoomClass.setText(" " + mApplicableTestRoom.getTestSpecification());
             iso_class.setText("" + mApplicableTestRoom.getTestSpecification());
             ///////////////
             IsoParticleLimits isoParticleLimits=mValdocDatabaseHandler.getIsoParticle(mApplicableTestRoom.getTestSpecification());
-            if(mApplicableTestEquipment.getOccupencyState().equalsIgnoreCase("at-rest")) {
+            if(mApplicableTestRoom.getOccupencyState().equalsIgnoreCase("at-rest")) {
                 small_particle.setText(""+isoParticleLimits.getRestSmallParticleLimit());
                 large_particle.setText(""+isoParticleLimits.getRestLargeParticleLimit());
-            }else if(mApplicableTestEquipment.getOccupencyState().equalsIgnoreCase("in-operation")){
+            }else if(mApplicableTestRoom.getOccupencyState().equalsIgnoreCase("in-operation")){
                 small_particle.setText(""+isoParticleLimits.getOperationSmallParticleLimit());
                 large_particle.setText(""+isoParticleLimits.getOperationLargeParticleLimit());
             }
