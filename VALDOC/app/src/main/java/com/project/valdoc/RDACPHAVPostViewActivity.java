@@ -200,6 +200,19 @@ public class RDACPHAVPostViewActivity extends AppCompatActivity {
         testWitnessOrg.setText(mTestDetails.getTestWitnessOrg());
         testWitness.setText(mTestDetails.getWitnessName());
         certificateNo.setText("" + mTestDetails.getRawDataNo());
+
+        String clientOrg = sharedpreferences.getString("CLIENTORG", "");
+        String prtnerOrg = sharedpreferences.getString("PARTNERORG", "");
+        if (sharedpreferences.getString("USERTYPE", "").equalsIgnoreCase("CLIENT")) {
+            testCondoctorOrg.setText("(" + clientOrg + ")");
+            testWitnessOrg.setText("(" + clientOrg + ")");
+            customerName.setText(""+clientOrg);
+        } else {
+            testCondoctorOrg.setText("(" + prtnerOrg + ")");
+            testWitnessOrg.setText("(" + clientOrg + ")");
+            customerName.setText(""+prtnerOrg);
+        }
+        plantName.setText("from cofig screen");
     }
 
     private void initTextView() {
@@ -603,6 +616,6 @@ public class RDACPHAVPostViewActivity extends AppCompatActivity {
         findViewById(R.id.acph_av_final_calc_ll).setVisibility(View.VISIBLE);
         findViewById(R.id.test2_reading_header).setVisibility(View.VISIBLE);
         TextView TestHeader = (TextView) findViewById(R.id.common_header_tv);
-        TestHeader.setText("TEST RAW DATA (RD_ACPH_AV)\n(Air Flow Velocity, Volume Testing and Determination of Air Changes per Hour Rates)");
+        TestHeader.setText("TEST RAW DATA\n(Air Flow Velocity, Volume Testing and Determination of Air Changes per Hour Rates)");
     }
 }

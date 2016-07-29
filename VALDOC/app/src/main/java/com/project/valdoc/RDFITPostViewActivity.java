@@ -186,7 +186,7 @@ public class RDFITPostViewActivity extends AppCompatActivity {
                     row.addView(addTextView(" Obtained Leakage \n(% Leakage)"));
                 } else {
                     spiltValue = testReadingArrayList.get(i-2).getValue().split(",");
-                    row.addView(addTextView(spiltValue[4]+ ""));
+                    row.addView(addTextView(spiltValue[spiltValue.length-2]+ ""));
                 }
 
             }
@@ -205,7 +205,7 @@ public class RDFITPostViewActivity extends AppCompatActivity {
                     row.addView(addTextView(" Test Results\n(Passed / Not Passed)"));
                 } else {
                     spiltValue = testReadingArrayList.get(i-2).getValue().split(",");
-                    row.addView(addTextView(spiltValue[5].toString().trim()));
+                    row.addView(addTextView(spiltValue[spiltValue.length-1].toString().trim()));
                 }
             }
             test4_table_layout8.addView(row);
@@ -274,6 +274,19 @@ public class RDFITPostViewActivity extends AppCompatActivity {
         testWitnessOrg.setText(mTestDetails.getTestWitnessOrg());
         testWitness.setText(mTestDetails.getWitnessName());
         certificateNo.setText("" + mTestDetails.getRawDataNo());
+
+        String clientOrg = sharedpreferences.getString("CLIENTORG", "");
+        String prtnerOrg = sharedpreferences.getString("PARTNERORG", "");
+        if (sharedpreferences.getString("USERTYPE", "").equalsIgnoreCase("CLIENT")) {
+            testCondoctorOrg.setText("(" + clientOrg + ")");
+            testWitnessOrg.setText("(" + clientOrg + ")");
+            customerName.setText(""+clientOrg);
+        } else {
+            testCondoctorOrg.setText("(" + prtnerOrg + ")");
+            testWitnessOrg.setText("(" + clientOrg + ")");
+            customerName.setText(""+prtnerOrg);
+        }
+        plantName.setText("from cofig screen");
     }
 
 
@@ -317,11 +330,11 @@ public class RDFITPostViewActivity extends AppCompatActivity {
     private void initRes() {
         headerText = (TextView) findViewById(R.id.common_header_tv);
         if(testType.contains("ERD_FIT")){
-            headerText.setText("TEST RAW DATA EQUIPMENT (EFIT)\nInstalled HEPA Filter System Leakage Test by Aerosol Photometer Method");
+            headerText.setText("TEST RAW DATA EQUIPMENT\nInstalled HEPA Filter System Leakage Test by Aerosol Photometer Method");
         }else if(testType.contains("ARD_FIT_AHU")){
-            headerText.setText("TEST RAW DATA AHU (AFIT)\nInstalled HEPA Filter System Leakage Test by Aerosol Photometer Method");
+            headerText.setText("TEST RAW DATA AHU\nInstalled HEPA Filter System Leakage Test by Aerosol Photometer Method");
         }else{
-            headerText.setText("FORM:TEST RAW DATA (FIT)\nInstalled HEPA Filter System Leakage Test by Aerosol Photometer Method");
+            headerText.setText("TEST RAW DATA\nInstalled HEPA Filter System Leakage Test by Aerosol Photometer Method");
         }
         findViewById(R.id.submit).setVisibility(View.GONE);
         findViewById(R.id.clear).setVisibility(View.GONE);

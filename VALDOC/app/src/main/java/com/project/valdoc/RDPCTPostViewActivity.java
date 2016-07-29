@@ -408,6 +408,19 @@ public class RDPCTPostViewActivity extends AppCompatActivity {
         testWitnessOrg.setText(mTestDetails.getTestWitnessOrg());
         testWitness.setText(mTestDetails.getWitnessName());
         certificateNo.setText("" + mTestDetails.getRawDataNo());
+
+        String clientOrg = sharedpreferences.getString("CLIENTORG", "");
+        String prtnerOrg = sharedpreferences.getString("PARTNERORG", "");
+        if (sharedpreferences.getString("USERTYPE", "").equalsIgnoreCase("CLIENT")) {
+            testCondoctorOrg.setText("(" + clientOrg + ")");
+            testWitnessOrg.setText("(" + clientOrg + ")");
+            customerName.setText(""+clientOrg);
+        } else {
+            testCondoctorOrg.setText("(" + prtnerOrg + ")");
+            testWitnessOrg.setText("(" + clientOrg + ")");
+            customerName.setText(""+prtnerOrg);
+        }
+        plantName.setText("from cofig screen");
     }
 
     private void initTextView() {
@@ -449,7 +462,7 @@ public class RDPCTPostViewActivity extends AppCompatActivity {
 
     private void initRes() {
         headerText = (TextView) findViewById(R.id.common_header_tv);
-        headerText.setText("TEST RAW DATA (RD_PCT)\nAirborne Particle Count Test for Classification of Cleanrooms/zones and Clean Air Devices");
+        headerText.setText("TEST RAW DATA\nAirborne Particle Count Test for Classification of Cleanrooms/zones and Clean Air Devices");
         findViewById(R.id.submit).setVisibility(View.GONE);
         findViewById(R.id.clear).setVisibility(View.GONE);
         cancel = (ImageView) findViewById(R.id.cancel);

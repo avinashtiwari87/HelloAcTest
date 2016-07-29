@@ -212,6 +212,19 @@ public class CommonTestViewActivity extends AppCompatActivity {
         testCondoctorOrg.setText(""+mTestDetails.getTestCondoctorOrg());
         testWitnessOrg.setText(""+mTestDetails.getTestWitnessOrg());
         testWitness.setText(""+mTestDetails.getWitnessName());
+
+        String clientOrg = sharedpreferences.getString("CLIENTORG", "");
+        String prtnerOrg = sharedpreferences.getString("PARTNERORG", "");
+        if (sharedpreferences.getString("USERTYPE", "").equalsIgnoreCase("CLIENT")) {
+            testCondoctorOrg.setText("(" + clientOrg + ")");
+            testWitnessOrg.setText("(" + clientOrg + ")");
+            customerName.setText(""+clientOrg);
+        } else {
+            testCondoctorOrg.setText("(" + prtnerOrg + ")");
+            testWitnessOrg.setText("(" + clientOrg + ")");
+            customerName.setText(""+prtnerOrg);
+        }
+        plantName.setText("from cofig screen");
     }
 
     private void initTextView() {
@@ -1015,7 +1028,7 @@ public class CommonTestViewActivity extends AppCompatActivity {
         if (testType != null && (testType.contains("AV") || testType.contains("AF"))) {
             findViewById(R.id.test_table_1_header_l_ll).setVisibility(View.GONE);
             TextView TestHeader = (TextView) findViewById(R.id.common_header_tv);
-            TestHeader.setText("TEST RAW DATA EQUIPMENT (ERD_AV)\n(Average Air Flow Velocity Testing)");
+            TestHeader.setText("TEST RAW DATA EQUIPMENT\n(Average Air Flow Velocity Testing)");
             findViewById(R.id.test_interference).setVisibility(View.GONE);
             findViewById(R.id.test1_reading_header).setVisibility(View.VISIBLE);
             findViewById(R.id.common_header_test1).setVisibility(View.GONE);

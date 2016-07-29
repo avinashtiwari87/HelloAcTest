@@ -373,6 +373,8 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
     }
 
     public void aleartDialog(String message) {
+        verify_btn.setEnabled(false);
+        clear.setEnabled(false);
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder.setMessage(message);
 
@@ -510,18 +512,18 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             test_header5.setText("Instrument Sr. No:");
             test_header6.setText("Occupancy State :");
             test_header7.setText("Date of Test :");
-            test_header8.setText("Due :");
-            test_header9.setText("Calibrated on :");
+            test_header9.setText("Due :");
+            test_header8.setText("Calibrated on :");
             if (loginUserType.equals("CLIENT")) {
                 test_value2.setText(clientInstrument.getcInstrumentName());
                 test_value5.setText("" + clientInstrument.getSerialNo());
-                test_value9.setText("" + clientInstrument.getLastCalibrated());
-                test_value8.setText("" + clientInstrument.getCalibrationDueDate());
+                test_value8.setText("" + clientInstrument.getLastCalibrated());
+                test_value9.setText("" + clientInstrument.getCalibrationDueDate());
             } else {
                 test_value2.setText(partnerInstrument.getpInstrumentName());
                 test_value5.setText("" + partnerInstrument.getSerialNo());
-                test_value9.setText("" + partnerInstrument.getLastCalibrationDate());
-                test_value8.setText("" + partnerInstrument.getCalibrationDueDate());
+                test_value8.setText("" + partnerInstrument.getLastCalibrationDate());
+                test_value9.setText("" + partnerInstrument.getCalibrationDueDate());
             }
 
             test_value1.setText("" + equipment.getEquipmentName());
@@ -538,18 +540,18 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             test_header5.setText("Instrument Sr. No:");
             test_header6.setText("Occupancy State :");
             test_header7.setText("Date of Test :");
-            test_header8.setText("Due :");
-            test_header9.setText("Calibrated on :");
+            test_header9.setText("Due :");
+            test_header8.setText("Calibrated on :");
             if (loginUserType.equals("CLIENT")) {
                 test_value2.setText(clientInstrument.getcInstrumentName());
                 test_value5.setText("" + clientInstrument.getSerialNo());
-                test_value9.setText("" + clientInstrument.getLastCalibrated());
-                test_value8.setText("" + clientInstrument.getCalibrationDueDate());
+                test_value8.setText("" + clientInstrument.getLastCalibrated());
+                test_value9.setText("" + clientInstrument.getCalibrationDueDate());
             } else {
                 test_value2.setText(partnerInstrument.getpInstrumentName());
                 test_value5.setText("" + partnerInstrument.getSerialNo());
-                test_value9.setText("" + partnerInstrument.getLastCalibrationDate());
-                test_value8.setText("" + partnerInstrument.getCalibrationDueDate());
+                test_value8.setText("" + partnerInstrument.getLastCalibrationDate());
+                test_value9.setText("" + partnerInstrument.getCalibrationDueDate());
             }
             test_value3.setText(userName);
             if (TestBasedOn.equalsIgnoreCase("AHU")) {
@@ -571,18 +573,18 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             test_header5.setText("Instrument Sr. No:");
             test_header6.setText("Occupancy State :");
             test_header7.setText("Date of Test :");
-            test_header8.setText("Due :");
-            test_header9.setText("Calibrated on :");
+            test_header9.setText("Due :");
+            test_header8.setText("Calibrated on :");
             if (loginUserType.equals("CLIENT")) {
                 test_value2.setText(clientInstrument.getcInstrumentName());
                 test_value5.setText("" + clientInstrument.getSerialNo());
-                test_value9.setText("" + clientInstrument.getLastCalibrated());
-                test_value8.setText("" + clientInstrument.getCalibrationDueDate());
+                test_value8.setText("" + clientInstrument.getLastCalibrated());
+                test_value9.setText("" + clientInstrument.getCalibrationDueDate());
             } else {
                 test_value2.setText(partnerInstrument.getpInstrumentName());
                 test_value5.setText("" + partnerInstrument.getSerialNo());
-                test_value9.setText("" + partnerInstrument.getLastCalibrationDate());
-                test_value8.setText("" + partnerInstrument.getCalibrationDueDate());
+                test_value8.setText("" + partnerInstrument.getLastCalibrationDate());
+                test_value9.setText("" + partnerInstrument.getCalibrationDueDate());
             }
             test_value3.setText(userName);
 
@@ -606,18 +608,18 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             test_header5.setText("Instrument Sr. No :");
             test_header6.setText("Occupancy State :");
             test_header7.setText("Date of Test :");
-            test_header8.setText("Due :");
-            test_header9.setText("Calibrated on :");
+            test_header9.setText("Due :");
+            test_header8.setText("Calibrated on :");
             if (loginUserType.equals("CLIENT")) {
                 test_value2.setText(clientInstrument.getcInstrumentName());
                 test_value5.setText("" + clientInstrument.getSerialNo());
-                test_value9.setText("" + clientInstrument.getLastCalibrated());
-                test_value8.setText("" + clientInstrument.getCalibrationDueDate());
+                test_value8.setText("" + clientInstrument.getLastCalibrated());
+                test_value9.setText("" + clientInstrument.getCalibrationDueDate());
             } else {
                 test_value2.setText(partnerInstrument.getpInstrumentName());
                 test_value5.setText("" + partnerInstrument.getSerialNo());
-                test_value9.setText("" + partnerInstrument.getLastCalibrationDate());
-                test_value8.setText("" + partnerInstrument.getCalibrationDueDate());
+                test_value8.setText("" + partnerInstrument.getLastCalibrationDate());
+                test_value9.setText("" + partnerInstrument.getCalibrationDueDate());
             }
             test_value3.setText(userName);
 
@@ -648,20 +650,20 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             test_header5.setText("Instrument Sr. No:");
             test_header6.setText("Occupancy State :");
             test_header7.setText("Date of Test :");
-            test_header8.setText("Due :");
-            test_header9.setText("Calibrated on :");
+            test_header9.setText("Due :");
+            test_header8.setText("Calibrated on :");
             test_header10.setText("Sampling Flow Rate :");
             test_header11.setText("Sampling Time :");
             if (loginUserType.equals("CLIENT")) {
                 test_value2.setText(clientInstrument.getcInstrumentName());
                 test_value5.setText("" + clientInstrument.getSerialNo());
-                test_value9.setText("" + clientInstrument.getLastCalibrated());
-                test_value8.setText("" + clientInstrument.getCalibrationDueDate());
+                test_value8.setText("" + clientInstrument.getLastCalibrated());
+                test_value9.setText("" + clientInstrument.getCalibrationDueDate());
             } else {
                 test_value2.setText(partnerInstrument.getpInstrumentName());
                 test_value5.setText("" + partnerInstrument.getSerialNo());
-                test_value9.setText("" + partnerInstrument.getLastCalibrationDate());
-                test_value8.setText("" + partnerInstrument.getCalibrationDueDate());
+                test_value8.setText("" + partnerInstrument.getLastCalibrationDate());
+                test_value9.setText("" + partnerInstrument.getCalibrationDueDate());
             }
             test_value3.setText(userName);
 
@@ -697,20 +699,20 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             test_header5.setText("Instrument Sr. No:");
             test_header6.setText("Occupancy State :");
             test_header7.setText("Date of Test :");
-            test_header8.setText("Due :");
-            test_header9.setText("Calibrated on :");
+            test_header9.setText("Due :");
+            test_header8.setText("Calibrated on :");
             test_header10.setText("Sampling Flow Rate :");
             test_header11.setText("Sampling Time :");
             if (loginUserType.equals("CLIENT")) {
                 test_value2.setText(clientInstrument.getcInstrumentName());
                 test_value5.setText("" + clientInstrument.getSerialNo());
-                test_value9.setText("" + clientInstrument.getLastCalibrated());
-                test_value8.setText("" + clientInstrument.getCalibrationDueDate());
+                test_value8.setText("" + clientInstrument.getLastCalibrated());
+                test_value9.setText("" + clientInstrument.getCalibrationDueDate());
             } else {
                 test_value2.setText(partnerInstrument.getpInstrumentName());
                 test_value5.setText("" + partnerInstrument.getSerialNo());
-                test_value9.setText("" + partnerInstrument.getLastCalibrationDate());
-                test_value8.setText("" + partnerInstrument.getCalibrationDueDate());
+                test_value8.setText("" + partnerInstrument.getLastCalibrationDate());
+                test_value9.setText("" + partnerInstrument.getCalibrationDueDate());
             }
             test_value3.setText(userName);
             test_value11.setText("1 Minute");
@@ -2791,6 +2793,8 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             @Override
             public void onClick(View v) {
                 finish();
+                verify_btn.setEnabled(true);
+                clear.setEnabled(true);
             }
         });
 

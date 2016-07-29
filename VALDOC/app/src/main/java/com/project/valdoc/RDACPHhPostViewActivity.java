@@ -260,6 +260,19 @@ public class RDACPHhPostViewActivity extends AppCompatActivity {
         testWitnessOrg.setText(mTestDetails.getTestWitnessOrg());
         testWitness.setText(mTestDetails.getWitnessName());
         certificateNo.setText("" + mTestDetails.getRawDataNo());
+
+        String clientOrg = sharedpreferences.getString("CLIENTORG", "");
+        String prtnerOrg = sharedpreferences.getString("PARTNERORG", "");
+        if (sharedpreferences.getString("USERTYPE", "").equalsIgnoreCase("CLIENT")) {
+            testCondoctorOrg.setText("(" + clientOrg + ")");
+            testWitnessOrg.setText("(" + clientOrg + ")");
+            customerName.setText(""+clientOrg);
+        } else {
+            testCondoctorOrg.setText("(" + prtnerOrg + ")");
+            testWitnessOrg.setText("(" + clientOrg + ")");
+            customerName.setText(""+prtnerOrg);
+        }
+        plantName.setText("from cofig screen");
     }
 
 
@@ -327,6 +340,6 @@ public class RDACPHhPostViewActivity extends AppCompatActivity {
         findViewById(R.id.test_interference).setVisibility(View.GONE);
         findViewById(R.id.acph_h_final_calc_ll).setVisibility(View.VISIBLE);
         TextView TestHeader = (TextView)findViewById(R.id.common_header_tv);
-        TestHeader.setText("TEST RAW DATA (ACPH_H)\n(Air Flow Velocity, Volume Testing and Determination of Air Changes per Hour Rates)");
+        TestHeader.setText("TEST RAW DATA\n(Air Flow Velocity, Volume Testing and Determination of Air Changes per Hour Rates)");
     }
 }

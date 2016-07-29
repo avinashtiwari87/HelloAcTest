@@ -274,6 +274,19 @@ public class RDRCTPostViewActivity extends AppCompatActivity {
             samplingTime.setText("" + mTestDetails.getSamplingTime());
             samplingFlowRate.setText("" + mTestDetails.getSamplingFlowRate());
             cleanRoomClass.setText(" " + mTestDetails.getTestSpecification());
+
+            String clientOrg = sharedpreferences.getString("CLIENTORG", "");
+            String prtnerOrg = sharedpreferences.getString("PARTNERORG", "");
+            if (sharedpreferences.getString("USERTYPE", "").equalsIgnoreCase("CLIENT")) {
+                testCondoctorOrg.setText("(" + clientOrg + ")");
+                testWitnessOrg.setText("(" + clientOrg + ")");
+                customerName.setText(""+clientOrg);
+            } else {
+                testCondoctorOrg.setText("(" + prtnerOrg + ")");
+                testWitnessOrg.setText("(" + clientOrg + ")");
+                customerName.setText(""+prtnerOrg);
+            }
+            plantName.setText("from cofig screen");
         }
 
 
@@ -288,7 +301,7 @@ public class RDRCTPostViewActivity extends AppCompatActivity {
 
     private void initTextView() {
         headerText = (TextView) findViewById(R.id.common_header_tv);
-        headerText.setText("TEST RAW DATA (RD_RCT)\nAirborne Particle Count Test for Classification of Cleanrooms/zones and Clean Air Devices");
+        headerText.setText("TEST RAW DATA\nAirborne Particle Count Test for Classification of Cleanrooms/zones and Clean Air Devices");
         // layout data which is not in use
         instrumentNoTextView = (TextView) findViewById(R.id.instrument_no6);
 //        instrumentNoTextView.setVisibility(View.GONE);

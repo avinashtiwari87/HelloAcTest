@@ -345,7 +345,7 @@ public class RDRCTUserEntryActivity extends AppCompatActivity {
 
     private void initTextView() {
         headerText = (TextView) findViewById(R.id.common_header_tv);
-        headerText.setText("TEST RAW DATA (RD_RCT)\nAirborne Particle Count Test for Classification of Cleanrooms/zones and Clean Air Devices");
+        headerText.setText("TEST RAW DATA\nAirborne Particle Count Test for Classification of Cleanrooms/zones and Clean Air Devices");
         // layout data which is not in use
         instrumentNoTextView = (TextView) findViewById(R.id.instrument_no6);
 //        instrumentNoTextView.setVisibility(View.GONE);
