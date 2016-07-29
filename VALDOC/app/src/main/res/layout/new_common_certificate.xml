@@ -335,17 +335,6 @@
                     android:text="" />
             </TableRow>
 
-            <TableRow>
-                <TextView
-                    style="@style/TestHeaderTextViewBold"
-                    android:gravity="right"
-                    android:text="@string/calibration_due" />
-
-                <TextView
-                    android:id="@+id/calibrationdueon"
-                    style="@style/TestHeaderTextViewNormal"
-                    android:text="@string/calibration_due_on_date" />
-            </TableRow>
             <TableRow
                 android:paddingBottom="5dp"
                 android:paddingTop="5dp">
@@ -360,6 +349,19 @@
                     style="@style/TestHeaderTextViewNormal"
                     android:text="" />
             </TableRow>
+
+            <TableRow>
+                <TextView
+                    style="@style/TestHeaderTextViewBold"
+                    android:gravity="right"
+                    android:text="@string/calibration_due" />
+
+                <TextView
+                    android:id="@+id/calibrationdueon"
+                    style="@style/TestHeaderTextViewNormal"
+                    android:text="@string/calibration_due_on_date" />
+            </TableRow>
+
             <TableRow
                 android:paddingBottom="5dp"
                 android:paddingTop="5dp">

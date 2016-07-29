@@ -186,7 +186,7 @@ public class RDFITPostViewActivity extends AppCompatActivity {
                     row.addView(addTextView(" Obtained Leakage \n(% Leakage)"));
                 } else {
                     spiltValue = testReadingArrayList.get(i-2).getValue().split(",");
-                    row.addView(addTextView(spiltValue[4]+ ""));
+                    row.addView(addTextView(spiltValue[spiltValue.length-2]+ ""));
                 }
 
             }
@@ -205,7 +205,7 @@ public class RDFITPostViewActivity extends AppCompatActivity {
                     row.addView(addTextView(" Test Results\n(Passed / Not Passed)"));
                 } else {
                     spiltValue = testReadingArrayList.get(i-2).getValue().split(",");
-                    row.addView(addTextView(spiltValue[5].toString().trim()));
+                    row.addView(addTextView(spiltValue[spiltValue.length-1].toString().trim()));
                 }
             }
             test4_table_layout8.addView(row);
