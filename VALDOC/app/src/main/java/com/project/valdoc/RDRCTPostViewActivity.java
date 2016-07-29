@@ -274,6 +274,19 @@ public class RDRCTPostViewActivity extends AppCompatActivity {
             samplingTime.setText("" + mTestDetails.getSamplingTime());
             samplingFlowRate.setText("" + mTestDetails.getSamplingFlowRate());
             cleanRoomClass.setText(" " + mTestDetails.getTestSpecification());
+
+            String clientOrg = sharedpreferences.getString("CLIENTORG", "");
+            String prtnerOrg = sharedpreferences.getString("PARTNERORG", "");
+            if (sharedpreferences.getString("USERTYPE", "").equalsIgnoreCase("CLIENT")) {
+                testCondoctorOrg.setText("(" + clientOrg + ")");
+                testWitnessOrg.setText("(" + clientOrg + ")");
+                customerName.setText(""+clientOrg);
+            } else {
+                testCondoctorOrg.setText("(" + prtnerOrg + ")");
+                testWitnessOrg.setText("(" + clientOrg + ")");
+                customerName.setText(""+prtnerOrg);
+            }
+            plantName.setText("from cofig screen");
         }
 
 
