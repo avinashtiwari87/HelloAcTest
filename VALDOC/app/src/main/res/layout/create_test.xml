@@ -167,7 +167,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:background="@drawable/spinner_bg"
+                    android:background="@android:drawable/spinner_dropdown_background"
                     android:popupBackground="@android:color/holo_green_dark"
                     android:spinnerMode="dropdown" />
             </RelativeLayout>
@@ -183,7 +183,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:background="@drawable/spinner_bg"
+                    android:background="@android:drawable/spinner_dropdown_background"
                     android:popupBackground="@android:color/holo_green_dark"
                     android:spinnerMode="dropdown"
                     android:visibility="visible" />
@@ -199,7 +199,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
-                    android:background="@drawable/spinner_bg"
+                    android:background="@android:drawable/spinner_dropdown_background"
                     android:popupBackground="@android:color/holo_green_dark"
                     android:spinnerMode="dropdown" />
             </RelativeLayout>
@@ -214,7 +214,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:background="@drawable/spinner_bg"
+                    android:background="@android:drawable/spinner_dropdown_background"
                     android:popupBackground="@android:color/holo_green_dark"
                     android:spinnerMode="dropdown"
                     android:visibility="gone" />
@@ -230,7 +230,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:background="@drawable/spinner_bg"
+                    android:background="@android:drawable/spinner_dropdown_background"
                     android:popupBackground="@android:color/holo_green_dark"
                     android:spinnerMode="dropdown"
                     android:visibility="gone" />
@@ -246,7 +246,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:background="@drawable/spinner_bg"
+                    android:background="@android:drawable/spinner_dropdown_background"
                     android:popupBackground="@android:color/holo_green_dark"
                     android:spinnerMode="dropdown"
                     android:visibility="gone" />
