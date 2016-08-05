@@ -46,8 +46,11 @@ public class ValdocControler {
     SharedPreferences sharedpreferences;
     private String lastSyncDate;
     private ValdocDatabaseHandler mValdocDatabaseHandler;
-    private String url = "http://valdoc.in:8080/valdoc/sync/getTableData?date=";  //2015-11-12
-    private String postUrl = "http://valdoc.in:8080/valdoc/sync/postTableData";
+    //    private String url = "http://valdoc.in:8080/valdoc/sync/getTableData?date=";  //2015-11-12
+//    private String postUrl = "http://valdoc.in:8080/valdoc/sync/postTableData";
+    private String url = "http://valdoc.in:8080/valdoctest/sync/getTableData?date=";  //2015-11-12
+    private String postUrl = "http://valdoc.in:8080/valdoctest/sync/postTableData";
+
 
     public void getHttpConectionforSync(Context context, String method) {
         mContext = context;
@@ -59,7 +62,7 @@ public class ValdocControler {
     public void httpCertificatePostSyncData(Context context, String method, String testDetailsIdList) {
         mContext = context;
         mValdocDatabaseHandler = new ValdocDatabaseHandler(mContext);
-        Log.d("Avinash","testDetailsIdList="+testDetailsIdList);
+        Log.d("Avinash", "testDetailsIdList=" + testDetailsIdList);
         JSONObject jsonObject = getCertificateData(testDetailsIdList);
         postConnection(method, jsonObject);
     }
@@ -77,12 +80,12 @@ public class ValdocControler {
         JSONArray testDetailsJsonArray = null;
         JSONArray testReadingJsonArray = null;
         JSONArray testSpecificationValueJsonArray = null;
-        JSONArray serviceReportJsonArray=null;
+        JSONArray serviceReportJsonArray = null;
         JSONArray serviceReportDetailsJsonArray = null;
 
 //        jsonObject = new JSONObject();
         try {
-            Log.d("Avinash","testDetailsIdList2="+testDetailsIdList);
+            Log.d("Avinash", "testDetailsIdList2=" + testDetailsIdList);
             testDetailsJsonArray = mValdocDatabaseHandler.getTestDetailsInfo(testDetailsIdList);
             testReadingJsonArray = mValdocDatabaseHandler.getTestReadingInfo(testDetailsIdList);
             testSpecificationValueJsonArray = mValdocDatabaseHandler.getTestSpecificationValueInfo(testDetailsIdList);
