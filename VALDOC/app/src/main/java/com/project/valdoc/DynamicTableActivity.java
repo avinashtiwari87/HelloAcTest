@@ -659,11 +659,13 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 test_value5.setText("" + clientInstrument.getSerialNo());
                 test_value8.setText("" + clientInstrument.getLastCalibrated());
                 test_value9.setText("" + clientInstrument.getCalibrationDueDate());
+                test_value10.setText(""+clientInstrument.getRange());
             } else {
                 test_value2.setText(partnerInstrument.getpInstrumentName());
                 test_value5.setText("" + partnerInstrument.getSerialNo());
                 test_value8.setText("" + partnerInstrument.getLastCalibrationDate());
                 test_value9.setText("" + partnerInstrument.getCalibrationDueDate());
+                test_value10.setText(""+partnerInstrument.getRange());
             }
             test_value3.setText(userName);
 
@@ -672,7 +674,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 test_value1.setText("" + room.getRoomName());
                 test_value4.setText("" + room.getRoomNo());
                 test_value6.setText("" + mApplicableTestRoom.getOccupencyState());
-                test_value10.setText("under discussion");
+
                 String samplingTime = getSamplingTime(mApplicableTestRoom.getTestSpecification(),"");
                 test_value11.setText(""+samplingTime);
                 test_value12.setText("" + mApplicableTestRoom.getTestSpecification());
@@ -680,7 +682,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 test_value1.setText("" + equipment.getEquipmentName());
                 test_value4.setText("" + equipment.getEquipmentNo());
                 test_value6.setText("" + mApplicableTestEquipment.getOccupencyState());
-                test_value10.setText("under discussion");
+
                 String samplingTime = getSamplingTime(mApplicableTestEquipment.getTestSpecification(),"");
                 test_value11.setText(""+samplingTime);
                 test_value12.setText("" + mApplicableTestEquipment.getTestSpecification());
@@ -2535,11 +2537,11 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                             if (slpDlpValue < 15) {
                                 txtPassFail.setTextColor(getResources().getColor(R.color.blue));
                                 txtPassFail.setText(" PASS ");
-                                passFailHashMap.put(txtPassFail.getId(), " PASS ");
+//                                passFailHashMap.put(txtPassFail.getId(), " PASS ");
                             } else if (slpDlpValue > 15) {
                                 txtPassFail.setTextColor(getResources().getColor(R.color.red));
                                 txtPassFail.setText(" FAIL ");
-                                passFailHashMap.put(txtPassFail.getId(), " FAIL ");
+//                                passFailHashMap.put(txtPassFail.getId(), " FAIL ");
                             }
                             // adding concentration Variation Data
                             txtConcentrationVariationList.get(i).setText(slpDlpValue+" %");

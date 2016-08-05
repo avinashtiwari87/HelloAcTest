@@ -40,6 +40,7 @@ import org.json.JSONObject;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.HashMap;
 
 public class RDPCTUserEntryActivity extends AppCompatActivity {
@@ -178,7 +179,32 @@ public class RDPCTUserEntryActivity extends AppCompatActivity {
             TextView tvl = txtViewList.get(i);
             tvl.setText(rHashMap.get(tvl.getId()) + "");
         }
-        //Receiving Result Data from Bundle
+
+        //Finding mean and max value
+        ArrayList<Integer> arrayList1=new ArrayList<Integer>();
+        ArrayList<Integer> arrayList2=new ArrayList<Integer>();
+        int size=rHashMap.size()/2;
+        int k=200;
+        for(int i=0;i<size;i++) {
+            int j=rHashMap.get(k);
+            arrayList1.add(j);
+            k++;
+        }
+       int l=200+size;
+        for(int i=0;i<size;i++) {
+            int j=rHashMap.get(l);
+            arrayList2.add(j);
+            l++;
+        }
+        Collections.sort(arrayList1);
+        Collections.sort(arrayList2);
+
+        minimumValue1_tv.setText(""+arrayList1.get(0));
+        minimumValue2_tv.setText(""+arrayList2.get(0));
+        maximumValue1_tv.setText(""+arrayList1.get(arrayList1.size()-1));
+        maximumValue2_tv.setText(""+arrayList2.get(arrayList2.size()-1));
+
+                //Receiving Result Data from Bundle
         averageResultHashMap = (HashMap<Integer, Long>) getIntent().getSerializableExtra("ResultData");
         for (int i = 0; i < resultTextViewList.size(); i++) {
             TextView tvl = resultTextViewList.get(i);
