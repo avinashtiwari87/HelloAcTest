@@ -416,7 +416,7 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
                 k++;
             }
             sb.append("," + resultTextViewList.get(i).getText());
-            sb.append("," + txtPassFailList.get(i).getText());
+//            sb.append("," + txtPassFailList.get(i).getText());
             testReading.setValue(sb.toString());
             readingArrayList.add(testReading);
         }
@@ -430,7 +430,8 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
         testDetails.setTest_detail_id(testDetailsId);
         testDetails.setCustomer(customerName.getText().toString());
         int newmonth = month + 1;
-        testDetails.setDateOfTest("" + year + "-" + newmonth + "-" + day);
+//        testDetails.setDateOfTest("" + year + "-" + newmonth + "-" + day);
+        testDetails.setDateOfTest("" + dateTextView.getText());
         testDetails.setRawDataNo(certificateNo.getText().toString());
         testDetails.setPartnerName("" + mPartnerName);
         testDetails.setTestName(TestCreateActivity.AV);

@@ -646,7 +646,7 @@ public class RDPCTUserEntryActivity extends AppCompatActivity {
         testDetails.setCustomer(customerName.getText().toString());
         int mon = month + 1;
         String date = year + "-" + mon + "-" + day;
-        testDetails.setDateOfTest("" + date);
+        testDetails.setDateOfTest("" + dateTextView.getText());
         testDetails.setRawDataNo(certificateNo.getText().toString());
         testDetails.setPartnerName("" + mPartnerName);
         testDetails.setTestName(TestCreateActivity.PCT);
