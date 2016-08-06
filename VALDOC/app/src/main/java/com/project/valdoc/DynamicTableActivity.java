@@ -1284,7 +1284,14 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                     tv.setEms(10);
                     row.addView(tv);
                 } else if (i > 1 && i < 4) {
-                    row.addView(addEditTextView(i));
+                    if (i == 2) {
+                        EditText etv = addEditTextView(i);
+                        etv.setFocusable(true);
+                        etv.requestFocus();
+                        row.addView(etv);
+                    }else{
+                        row.addView(addEditTextView(i));
+                    }
                 }
             }
             test6A_table_layout2.addView(row);

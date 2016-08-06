@@ -231,8 +231,6 @@
                                 android:textSize="20sp"
                                 android:background="@drawable/border"
                                 android:textColor="@color/black"
-                                android:focusable="false"
-                                android:focusableInTouchMode="false"
                                 android:ems="9"/>
 
                         </LinearLayout>
