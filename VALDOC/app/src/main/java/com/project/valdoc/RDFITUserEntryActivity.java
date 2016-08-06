@@ -525,9 +525,12 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
                 testReading.setTest_detail_id(testDetailsId);
                 testReading.setEntityName(equipmentFilter.getFilterCode());
                 StringBuilder grilList = new StringBuilder();
-                grilList.append(equipmentFilter.getFilterType()).append(',').append(equipmentFilter.getEfficiency()).append(",").append(likageDataMap.get(hasStreamBefore)).append(",")
+                grilList.append(equipmentFilter.getFilterCode()).append(",").append(likageDataMap.get(hasStreamBefore)).append(",")
                         .append(likageDataMap.get(hashstreamAfter)).append(",")//.append(equipmentFilter.getSpecification()).append(",")
                         .append(likageDataMap.get(hasMapKey)).append(",").append(PassFailHashMap.get(passHasMapKey));
+//                grilList.append(equipmentFilter.getFilterType()).append(',').append(equipmentFilter.getEfficiency()).append(",").append(likageDataMap.get(hasStreamBefore)).append(",")
+//                        .append(likageDataMap.get(hashstreamAfter)).append(",")//.append(equipmentFilter.getSpecification()).append(",")
+//                        .append(likageDataMap.get(hasMapKey)).append(",").append(PassFailHashMap.get(passHasMapKey));
                 hasStreamBefore++;
                 hashstreamAfter++;
                 passHasMapKey++;
@@ -561,9 +564,14 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
                 testReading.setTest_detail_id(testDetailsId);
                 testReading.setEntityName(roomFilter.getFilterCode());
                 StringBuilder grilList = new StringBuilder();
-                grilList.append(roomFilter.getFilterType()).append(',').append(roomFilter.getEfficiency()).append(",").append(likageDataMap.get(hasStreamBefore)).append(",")
+                grilList.append(roomFilter.getFilterType()).append(',').append(",").append(likageDataMap.get(hasStreamBefore)).append(",")
                         .append(likageDataMap.get(hashstreamAfter)).append(",").append(roomFilter.getSpecification()).append(",")
                         .append(likageDataMap.get(hasMapKey)).append(",").append(PassFailHashMap.get(passHasMapKey));
+
+//                grilList.append(roomFilter.getFilterType()).append(',').append(roomFilter.getEfficiency()).append(",").append(likageDataMap.get(hasStreamBefore)).append(",")
+//                        .append(likageDataMap.get(hashstreamAfter)).append(",").append(roomFilter.getSpecification()).append(",")
+//                        .append(likageDataMap.get(hasMapKey)).append(",").append(PassFailHashMap.get(passHasMapKey));
+
                 hasStreamBefore++;
                 hashstreamAfter++;
                 passHasMapKey++;
@@ -583,7 +591,8 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
         testDetails.setTest_detail_id(testDetailsId);
         testDetails.setCustomer(customerName.getText().toString());
         String date = year + "-" + (month + 1) + "-" + day + " ";
-        testDetails.setDateOfTest(date);
+//        testDetails.setDateOfTest(date);
+        testDetails.setDateOfTest("" + dateTextView.getText());
         testDetails.setPartnerName("" + mPartnerName);
         testDetails.setRawDataNo(certificateNo.getText().toString());
         testDetails.setTestName(mTestCode);

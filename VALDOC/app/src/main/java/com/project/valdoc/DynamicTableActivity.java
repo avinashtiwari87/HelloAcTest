@@ -2537,11 +2537,11 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                             if (slpDlpValue < 15) {
                                 txtPassFail.setTextColor(getResources().getColor(R.color.blue));
                                 txtPassFail.setText(" PASS ");
-//                                passFailHashMap.put(txtPassFail.getId(), " PASS ");
+                                passFailHashMap.put(txtPassFail.getId(), " PASS ");
                             } else if (slpDlpValue > 15) {
                                 txtPassFail.setTextColor(getResources().getColor(R.color.red));
                                 txtPassFail.setText(" FAIL ");
-//                                passFailHashMap.put(txtPassFail.getId(), " FAIL ");
+                                passFailHashMap.put(txtPassFail.getId(), " FAIL ");
                             }
                             // adding concentration Variation Data
                             txtConcentrationVariationList.get(i).setText(slpDlpValue+" %");

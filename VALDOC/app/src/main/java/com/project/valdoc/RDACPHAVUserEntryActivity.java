@@ -598,7 +598,8 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
         testDetails.setCustomer(customerName.getText().toString());
         String date = new StringBuilder().append(day).append("-").append(month + 1).append("-").append(year).append(" ").toString();
 //        String date = String.valueOf(year) + "-" + (String.valueOf(month + 1)) + "-" + (String.valueOf(day)) + " ";
-        testDetails.setDateOfTest(new String(new StringBuilder().append(day).append("-").append(month + 1).append("-").append(year).append(" ").toString()));
+//        testDetails.setDateOfTest(new String(new StringBuilder().append(day).append("-").append(month + 1).append("-").append(year).append(" ").toString()));
+        testDetails.setDateOfTest("" + dateTextView.getText());
         testDetails.setRawDataNo(certificateNo.getText().toString());
         testDetails.setPartnerName("" + mPartnerName);
         testDetails.setTestName(mTestCode);

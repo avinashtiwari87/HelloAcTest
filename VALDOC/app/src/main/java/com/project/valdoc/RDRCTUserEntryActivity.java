@@ -533,7 +533,8 @@ public class RDRCTUserEntryActivity extends AppCompatActivity {
         testDetails.setTest_detail_id(testDetailsId);
         testDetails.setCustomer(customerName.getText().toString());
         String date = year+"-"+(month + 1)+"-"+day+" ";
-        testDetails.setDateOfTest(""+date);
+//        testDetails.setDateOfTest(""+date);
+        testDetails.setDateOfTest("" + dateTextView.getText());
         testDetails.setRawDataNo(certificateNo.getText().toString());
         testDetails.setTestName(TestCreateActivity.RCT);
         if (loginUserType.equals("CLIENT")) {
