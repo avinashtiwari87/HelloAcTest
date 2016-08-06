@@ -100,7 +100,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
     int test4Id = 700;
     // Test 5 Variable
     int test5CommonFormulaIds1 = 500, test5CommonFormulaIds2 = 600;
-    long meanValue1 = 0l, meanValue2 = 0l;
+    long meanValue1 = 0L, meanValue2 = 0L;
     double stdDev1 = 0.0, stdDev2 = 0.0;
     //Test 6 Variable
     int rowsCount = 0;
@@ -153,7 +153,6 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
     private TextView instrumentNo;
     private TextView testerName;
     private int noOfCycle;
-    private double mean;
     private String mPartnerName;
     private String mTestBasedOn;
     private String mGrilFilterType;
@@ -889,23 +888,12 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
 
                         intent.putExtra("cols", mApplicableTestEquipment.getLocation());
                     }
-//                } else if (mTestBasedOn.equalsIgnoreCase("AHU")) {
-//                    intent.putExtra("Ahu", ahu);
-//                    intent.putExtra("RoomDetails", roomDetails);
-//                    intent.putExtra("FILTERLIST", mAhuFilterArrayList);
-//                    intent.putExtra("ApplicableTestAhu", mApplicableTestAhu);
-//                    rowSize = mAhuFilterArrayList.size() + 1;
-//                    intent.putExtra("rows", rowSize);
-//                    intent.putExtra("cols", mApplicableTestAhu.getLocation());
-//                }
-
                     //sending Result Data over Bundle
                     intent.putExtra("ResultData", resultDataHashMap);
                     intent.putExtra("PassFailData", passFailHashMap);
                     //sending Input Data
                     intent.putExtra("InputData", inputDataHashMap);
                     startActivity(intent);
-//                Log.d(TAG, "CodeFlow rowSize " + rowSize);
                 }
                 if (TestCreateActivity.ACPHAV.equalsIgnoreCase(testType)) {
                     intent = new Intent(DynamicTableActivity.this, RDACPHAVUserEntryActivity.class);
@@ -1065,14 +1053,12 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                         intent.putExtra("rows", mRoomFilterArrayList.size() + 1);
                         intent.putExtra("cols", mApplicableTestRoom.getLocation());
                     }
-
                     //sending Result Data over Bundle
                     intent.putExtra("PassFailData", passFailHashMap);
                     //sending Input Data
                     intent.putExtra("InputData", rdFitInputDataHashMap);
                     //sending ConcentrationVariation data
                     intent.putExtra("InputDataVariation", concentrationVariationListData);
-
                     //TO Do testspesification will be shown from room filter spesification
                     // location will be the size off rommfilter list
                     startActivity(intent);
@@ -1114,13 +1100,6 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                         intent.putExtra("rows", mApplicableTestRoom.getLocation() + 1);
                         intent.putExtra("cols", mApplicableTestRoom.getNoOfCycle());
                     }
-
-//                intent.putExtra("Room", room);
-//                intent.putExtra("AhuNumber", ahuNumber);
-//                intent.putExtra("LOCATION", applicableTestRoomLocation);
-//                intent.putExtra("NOOFCYCLE", noOfCycle);
-//                intent.putExtra("rows", applicableTestRoomLocation + 1);
-//                intent.putExtra("cols", noOfCycle);
                     //sending Input Data
                     intent.putExtra("InputData", inputDataHashMap);
                     //sending Result Data over Bundle
@@ -2557,28 +2536,28 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 for (int i = 0; i < txtViewList.size(); i++) {
                     Log.d(TAG, " TextView : Tag " + txtViewList.get(i).getTag() + " tagF " + tagF);
                     if (txtViewList.get(i).getTag().equals(tagF)) {
+                        long roundedAvg = getRoundedAverageValue(tagF);
                         TextView tvl = txtViewList.get(i);
-                        tvl.setText(getRoundedAverageValue(tagF) + "");
+                        tvl.setText(roundedAvg+ "");
 
-                        resultDataHashMap.put(tvl.getId(), getRoundedAverageValue(tagF));
-                        setMean(getRoundedAverageValue(tagF));
-
+                        resultDataHashMap.put(tvl.getId(),roundedAvg);
+                        //setMean(getRoundedAverageValue(tagF));
                         Log.d(TAG, "TagF : " + tagF + " rows : " + rows);
                         if (tagF <= rows) {
                             meanValue1 = getMeanAverageValue(resultDataHashMap, tagF);
                             TextView txtView = RDPC3TxtList.get(0);
                             txtView.setText(meanValue1 + "");
 
-                            stdDev1 = getStdDev(resultDataHashMap, tagF);
-                            TextView txtView2 = RDPC3TxtList.get(1);
+                           stdDev1 = getStdDev(roundedAvg, inputValue, tagF);
+                           TextView txtView2 = RDPC3TxtList.get(1);
                             txtView2.setText(stdDev1 + "");
                         } else {
                             meanValue2 = getMeanAverageValue(resultDataHashMap, tagF);
                             TextView txtView = RDPC3TxtList2.get(0);
                             txtView.setText(meanValue2 + "");
 
-                            stdDev2 = getStdDev(resultDataHashMap, tagF);
-                            TextView txtView2 = RDPC3TxtList2.get(1);
+                           stdDev2 = getStdDev(roundedAvg, inputValue,tagF);
+                           TextView txtView2 = RDPC3TxtList2.get(1);
                             txtView2.setText(stdDev2 + "");
                         }
                     }
@@ -2624,6 +2603,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         Log.d(TAG, "Float Value :" + abc);
         avg = Math.round(abc);
         Log.d(TAG, "Avg: Method Avg: " + avg);
+
         return avg;
     }
 
@@ -2683,7 +2663,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         int tagCount = 0;
         for (Map.Entry m : meanAverageList2.entrySet()) {
             if (meanAverageList2.get(m.getKey()) != null && !"".equals(meanAverageList2.get(m.getKey()))) {
-                if ((int) m.getKey() <= rows && tagF < rows) {
+                if ((int) m.getKey() <= rows && tagF <= rows) {
                     meanAvg = meanAvg + meanAverageList2.get(m.getKey());
                     if (meanAverageList2.get(m.getKey()) > 0)
                         tagCount = tagCount + 1;
@@ -2705,16 +2685,19 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         return meanAvg;
     }
 
-    private double getVariance(HashMap<Integer, Long> meanAverageList2, int tagF) {
-        double mean = getMean();
+    private double getVariance(long meanAverageList2, int inputValue, int tagF) {
         double temp = 0;
         int tagCount = 0;
+
         try {
             for (Map.Entry m : rowTagHashMap.entrySet()) {
+                Log.d(TAG, "m.getValue(): " + m.getValue()+" tagF "+tagF);
+                System.out.println(" mean getMean() " + meanAverageList2);
                 if (m.getValue().equals(tagF)) {
+                    Log.d(TAG, "inputDataHashMap.get(m.getKey()): " +inputDataHashMap.get(m.getKey()));
                     if (inputDataHashMap.get(m.getKey()) != null &&
                             !"".equals(inputDataHashMap.get(m.getKey()))) {
-                        temp += (mean - inputDataHashMap.get(m.getKey())) * (mean - inputDataHashMap.get(m.getKey()));
+                        temp += ( meanAverageList2 - inputValue) * ( meanAverageList2 - inputValue);
                         if (inputDataHashMap.get(m.getKey()) > 0)
                             tagCount = tagCount + 1;
                     }
@@ -2737,8 +2720,8 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         return Math.round(resultVariance);
     }
 
-    private double getStdDev(HashMap<Integer, Long> meanAverageList2, int tagF) {
-        double stdDev = Math.sqrt(getVariance(meanAverageList2, tagF));
+    private double getStdDev(long meanAverageList2, int inputValue, int tagF) {
+        double stdDev = Math.sqrt(getVariance(meanAverageList2,inputValue, tagF));
         System.out.println(" getStdDev Result " + stdDev + " rounded StdValue " + Math.round(stdDev));
         return Math.round(stdDev);
     }
@@ -3029,13 +3012,5 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             test3_table_layout5.removeAllViews();
         }
 
-    }
-
-    public double getMean() {
-        return mean;
-    }
-
-    public void setMean(double mean) {
-        this.mean = mean;
     }
 }
