@@ -79,6 +79,8 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
     private TableRow aerosolGeneratorTable;
     private TableRow aerosolUsedTable;
     private TextView testSpecification;
+    private String mTestSpecification;
+    private String mshowSpesification;
     private TextView aerosolGeneratorType;
     private TextView aerosolUsed;
     private TextView plantName;
@@ -188,9 +190,30 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
 
         //Receiving User Input Data from Bundle
         likageDataMap = (HashMap<Integer, Double>) getIntent().getSerializableExtra("InputData");
+        int k=0;
+        int count=0;
+        int constVal=((likageDataMap.size()/3)*2);
+        int kk=200;
         for (Map.Entry m : likageDataMap.entrySet()) {
+            if(count>=constVal){
+                TextView tvl = txtPassFailList.get(k);
+                Double spesification = Double.parseDouble(mshowSpesification);
+                if (spesification > Double.parseDouble(likageDataMap.get(kk).toString())) {
+                    tvl.setText("PASS");
+                } else {
+                    tvl.setText("FAIL");
+                }
+                k++;
+                kk++;
+            }
+            count++;
             Log.v(TAG, " InputData " + m.getKey() + " " + m.getValue());
         }
+        int size=(likageDataMap.size()/3);
+//        int kk=200;
+//        for(int i=0;i<size;i++){
+//            Log.d("avinash","hellodata"+likageDataMap.get(kk));
+//        }
         for (int i = 0; i < txtViewList.size(); i++) {
             TextView tvl = txtViewList.get(i);
             tvl.setText(likageDataMap.get(tvl.getId()) + "");
@@ -203,7 +226,7 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
         int passFlag = 1;
         for (int i = 0; i < txtPassFailList.size(); i++) {
             TextView tvl = txtPassFailList.get(i);
-            tvl.setText(PassFailHashMap.get(tvl.getId()) + "");
+//            tvl.setText(PassFailHashMap.get(tvl.getId()) + "");
             if ("PASS".equalsIgnoreCase(tvl.getText().toString().trim())) {
                 tvl.setTextColor(getResources().getColor(R.color.blue));
             } else {
@@ -236,6 +259,12 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
             Utilityies.setCustomActionBar(RDFITUserEntryActivity.this, mActionBar, userName);
     }
 
+    private void calSpesifiCation() {
+        int len = mTestSpecification.length();
+        mshowSpesification = (String) mTestSpecification.toString().subSequence(28, (len - 1));
+    }
+
+
     private void datePicker() {
         // Get current date by calender
         final Calendar c = Calendar.getInstance();
@@ -249,7 +278,7 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
 // Now formattedDate have current date/time
         Toast.makeText(this, formattedDate, Toast.LENGTH_SHORT).show();
         int mon = month + 1;
-        //certificateNo.setText("IT/" + mon + "/" + year + "/" + formattedDate);
+        certificateNo.setText("IT/" + mon + "/" + year + "/" + formattedDate);
 
         // Show current date
         String date = new StringBuilder().append(day).append("-").append(month + 1).append("-").append(year).append(" ").toString();
@@ -314,10 +343,12 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
             } catch (Exception e) {
 
             }
-//            filtertypeEficiancy.setText(mEquipmentFilterArrayList.);
+            filtertypeEficiancy.setText(mEquipmentFilterArrayList.get(0).getFilterType()+" "+mEquipmentFilterArrayList.get(0).getEfficiency());
             equipmentName.setText(equipment.getEquipmentName());
             equipmentNo.setText(equipment.getEquipmentNo());
-            testSpecification.setText(mApplicableTestEquipment.getTestSpecification());
+            mTestSpecification=mApplicableTestEquipment.getTestSpecification();
+            calSpesifiCation();
+            testSpecification.setText("Max "+mshowSpesification);
             occupancyState.setText(mApplicableTestEquipment.getOccupencyState());
             testRefrance.setText(mApplicableTestEquipment.getTestReference());
             roomName.setText(roomDetails[1]);
@@ -330,10 +361,14 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
                 jsonObject = new JSONObject(mApplicableTestAhu.getTestProp());
                 aerosolUsed.setText(jsonObject.optString("AEROSOL_USED"));
                 aerosolGeneratorType.setText(jsonObject.optString("AEROSOL_GENERATOR_TYPE"));
+                filtertypeEficiancy.setText(jsonObject.optString("Filter_Type")+""+jsonObject.optString("Filter_Efficiency"));
             } catch (Exception e) {
 
             }
-            testSpecification.setText(mApplicableTestAhu.getTestSpecification());
+
+            mTestSpecification=mApplicableTestAhu.getTestSpecification();
+            calSpesifiCation();
+            testSpecification.setText("Max "+mshowSpesification);
             occupancyState.setText(mApplicableTestAhu.getOccupencyState());
             testRefrance.setText(mApplicableTestAhu.getTestReference());
             areaOfTest.setText(areaName);
@@ -350,7 +385,10 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
             } catch (Exception e) {
 
             }
-            testSpecification.setText(mApplicableTestRoom.getTestSpecification());
+            filtertypeEficiancy.setText(mRoomFilterArrayList.get(0).getFilterType()+""+mRoomFilterArrayList.get(0).getEfficiency());
+            mTestSpecification=mApplicableTestRoom.getTestSpecification();
+            calSpesifiCation();
+            testSpecification.setText("Max "+mshowSpesification);
             occupancyState.setText(mApplicableTestRoom.getOccupencyState());
             testRefrance.setText(mApplicableTestRoom.getTestReference());
             areaOfTest.setText(areaName);
@@ -519,6 +557,7 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
         int hashstreamAfter = 900;
         int passHasMapKey = 300;
         if (mTestBasedOn.equalsIgnoreCase("EQUIPMENT")) {
+
             for (EquipmentFilter equipmentFilter : mEquipmentFilterArrayList) {
                 TestReading testReading = new TestReading();
 //            testReading.setTestReadingID(index);
@@ -526,8 +565,8 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
                 testReading.setEntityName(equipmentFilter.getFilterCode());
                 StringBuilder grilList = new StringBuilder();
                 grilList.append(equipmentFilter.getFilterCode()).append(",").append(likageDataMap.get(hasStreamBefore)).append(",")
-                        .append(likageDataMap.get(hashstreamAfter)).append(",")//.append(equipmentFilter.getSpecification()).append(",")
-                        .append(likageDataMap.get(hasMapKey)).append(",").append(PassFailHashMap.get(passHasMapKey));
+                        .append(likageDataMap.get(hashstreamAfter)).append(",").append(""+concentrationVariationListData.get(index).toString()).append(",")
+                        .append(likageDataMap.get(hasMapKey)).append(",").append(txtPassFailList.get(index).getText().toString());
 //                grilList.append(equipmentFilter.getFilterType()).append(',').append(equipmentFilter.getEfficiency()).append(",").append(likageDataMap.get(hasStreamBefore)).append(",")
 //                        .append(likageDataMap.get(hashstreamAfter)).append(",")//.append(equipmentFilter.getSpecification()).append(",")
 //                        .append(likageDataMap.get(hasMapKey)).append(",").append(PassFailHashMap.get(passHasMapKey));
@@ -547,8 +586,8 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
                 testReading.setEntityName(ahuFilter.getFilterCode());
                 StringBuilder grilList = new StringBuilder();
                 grilList.append(ahuFilter.getFilterCode()).append(',').append(likageDataMap.get(hasStreamBefore)).append(",")
-                        .append(likageDataMap.get(hashstreamAfter)).append(",")
-                        .append(likageDataMap.get(hasMapKey)).append(",").append(PassFailHashMap.get(passHasMapKey));
+                        .append(likageDataMap.get(hashstreamAfter)).append(",").append(""+concentrationVariationListData.get(index).toString()).append(",")
+                        .append(likageDataMap.get(hasMapKey)).append(",").append(txtPassFailList.get(index).getText().toString());
                 hasStreamBefore++;
                 hashstreamAfter++;
                 passHasMapKey++;
@@ -565,8 +604,8 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
                 testReading.setEntityName(roomFilter.getFilterCode());
                 StringBuilder grilList = new StringBuilder();
                 grilList.append(roomFilter.getFilterType()).append(',').append(",").append(likageDataMap.get(hasStreamBefore)).append(",")
-                        .append(likageDataMap.get(hashstreamAfter)).append(",").append(roomFilter.getSpecification()).append(",")
-                        .append(likageDataMap.get(hasMapKey)).append(",").append(PassFailHashMap.get(passHasMapKey));
+                        .append(likageDataMap.get(hashstreamAfter)).append(",").append(""+concentrationVariationListData.get(index).toString()).append(",")
+                        .append(likageDataMap.get(hasMapKey)).append(",").append(txtPassFailList.get(index).getText().toString());
 
 //                grilList.append(roomFilter.getFilterType()).append(',').append(roomFilter.getEfficiency()).append(",").append(likageDataMap.get(hasStreamBefore)).append(",")
 //                        .append(likageDataMap.get(hashstreamAfter)).append(",").append(roomFilter.getSpecification()).append(",")
