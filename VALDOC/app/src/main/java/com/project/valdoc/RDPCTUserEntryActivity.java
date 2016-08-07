@@ -29,7 +29,6 @@ import com.project.valdoc.intity.Equipment;
 import com.project.valdoc.intity.IsoParticleLimits;
 import com.project.valdoc.intity.PartnerInstrument;
 import com.project.valdoc.intity.Room;
-import com.project.valdoc.intity.RoomFilter;
 import com.project.valdoc.intity.TestDetails;
 import com.project.valdoc.intity.TestReading;
 import com.project.valdoc.intity.TestSpesificationValue;
@@ -57,7 +56,7 @@ public class RDPCTUserEntryActivity extends AppCompatActivity {
     //    ProgressDialog pr;
     //Test 5 Variable
     int test5CommonFormulaIds1 = 500, test5CommonFormulaIds2 = 600;
-    long meanValue1 = 0l, meanValue2 = 0l;
+    long meanValue1 = 0L, meanValue2 = 0L;
     double stdDev1 = 0.0, stdDev2 = 0.0;
     ArrayList<TextView> RDPC3TxtList, RDPC3TxtList2;
 
@@ -144,7 +143,7 @@ public class RDPCTUserEntryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rdpc3_user_entry);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-//        pr = ProgressDialog.show(this, "Please Wait", "Loading...");
+
         sharedpreferences = getSharedPreferences("valdoc", Context.MODE_PRIVATE);
         testDetailsId = (sharedpreferences.getInt("TESTDETAILSID", 0) + 1);
         txtViewList = new ArrayList<TextView>();
@@ -156,11 +155,13 @@ public class RDPCTUserEntryActivity extends AppCompatActivity {
             rows = getIntent().getIntExtra("rows", 0);
             cols = getIntent().getIntExtra("cols", 0);
             mTestType = getIntent().getStringExtra("testType");
-            Log.d(TAG, " TestType : " + mTestType);
+            Log.d(TAG, " TestType : " + mTestType+" rows "+rows+" cols "+cols);
         }
         mTestCode = getIntent().getStringExtra("testCode");
         mTestBasedOn = getIntent().getStringExtra("testBasedOn");
         testType = getIntent().getStringExtra("testType");
+        Log.d(TAG, " mTestCode : " + mTestCode+" mTestBasedOn "+mTestBasedOn+" cols "+testType);
+
         //dynamic data population
         getExtraFromTestCreateActivity(savedInstanceState);
         //text view initialization
