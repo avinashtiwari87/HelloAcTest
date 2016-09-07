@@ -41,6 +41,28 @@
         android:layout_below="@+id/service_url_text"
         android:layout_marginRight="20dip" />
 
+
+    <TextView
+        android:id="@+id/service_plant_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/service_url_edt_text"
+        android:layout_marginTop="15dip"
+        android:text="Bloack/Plant Name:"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:textColor="@color/black"
+        android:textSize="@dimen/header_normal_text_size"/>
+
+    <EditText
+        android:id="@+id/service_plant_edt_text"
+        style="@style/EditStyleText5"
+        android:layout_width="fill_parent"
+        android:layout_height="40dip"
+        android:layout_alignLeft="@+id/service_plant_text"
+        android:layout_below="@+id/service_plant_text"
+        android:layout_marginRight="20dip" />
+
     <TextView
         android:id="@+id/service_save_button"
         android:layout_width="wrap_content"

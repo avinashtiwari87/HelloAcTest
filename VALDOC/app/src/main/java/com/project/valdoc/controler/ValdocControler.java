@@ -45,12 +45,15 @@ public class ValdocControler {
     ControlerResponse controlerResponse;
     SharedPreferences sharedpreferences;
     private String lastSyncDate;
+    private String baseUrl;
     private ValdocDatabaseHandler mValdocDatabaseHandler;
     //    private String url = "http://valdoc.in:8080/valdoc/sync/getTableData?date=";  //2015-11-12
 //    private String postUrl = "http://valdoc.in:8080/valdoc/sync/postTableData";
     private String url = "http://valdoc.in:8080/valdoctest/sync/getTableData?date=";  //2015-11-12
     private String postUrl = "http://valdoc.in:8080/valdoctest/sync/postTableData";
 
+//    private String url = "/sync/getTableData?date=";  //2015-11-12
+//    private String postUrl = "/sync/postTableData";
 
     public void getHttpConectionforSync(Context context, String method) {
         mContext = context;
@@ -132,18 +135,20 @@ public class ValdocControler {
     private void postConnection(String method, JSONObject jsonDATA) {
         Log.d("valdocControler", "post data json=" + jsonDATA.toString());
         HttpConnectionTask httpConnectionTask = new HttpConnectionTask(mContext, method, jsonDATA);
-//        lastSyncDate = sharedpreferences.getString("lastSyncDate", "");
+        baseUrl = sharedpreferences.getString("URL", "");
         httpConnectionTask.execute(postUrl);
+//        httpConnectionTask.execute(baseUrl+postUrl);
     }
 
     private void getConection(String method) {
         sharedpreferences = mContext.getSharedPreferences("valdoc", Context.MODE_PRIVATE);
         HttpConnectionTask httpConnectionTask = new HttpConnectionTask(mContext, method, new JSONObject());
         lastSyncDate = sharedpreferences.getString("lastSyncDate", "");
+        baseUrl = sharedpreferences.getString("URL", "");
         String query = "";
         query = lastSyncDate.replace(" ", "%20");
         httpConnectionTask.execute(url + query);
-
+//        httpConnectionTask.execute(baseUrl+url + query);
     }
 
     public void getAllDb(int statusCode, String resultData) {

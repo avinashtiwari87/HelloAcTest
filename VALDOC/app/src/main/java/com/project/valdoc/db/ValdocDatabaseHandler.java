@@ -1721,7 +1721,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
         }
     }
 
-// isoparticle
+    // isoparticle
     public IsoParticleLimits getIsoParticle(String className) {
         IsoParticleLimits isoParticleLimits = new IsoParticleLimits();
         String selectQuery = "SELECT * FROM " + ISOPARTICLELIMITS_TABLE_NAME + " WHERE " + ValdocDatabaseHandler.ISOPARTICLELIMITS_CLASS + " = " + '"' + className + '"';
@@ -2490,6 +2490,40 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
         return ahuFilterArrayList;
     }
 
+    // select data from ahu filter table
+    public ArrayList<AhuFilter> getAhuFitFilterFromAhuFilter(int ahuId,String testItem) {
+        ArrayList<AhuFilter> ahuFilterArrayList;
+        ahuFilterArrayList = new ArrayList<AhuFilter>();
+        String selectQuery = " SELECT * FROM " + AHU_FILTER_TABLE_NAME +
+//        String selectQuery = " SELECT * FROM " + PARTNERUSER_TABLE_NAME +
+                " WHERE " + ValdocDatabaseHandler.AHU_FILTER_AHUID + " = " + ahuId + " AND " + ValdocDatabaseHandler.AHU_FILTER_FILTERCATEGORY + "=" + '"' + testItem + '"';
+        ;
+        SQLiteDatabase database = this.getWritableDatabase();
+        Cursor cursor = database.rawQuery(selectQuery, null);
+        Log.d("valdoc", "ValdocDatabaseHelper :grill code equipment1:=" + cursor.getCount());
+//        String[] strings = new String[cursor.getCount()];
+        int i = 0;
+        if (cursor.moveToFirst()) {
+            do {
+                AhuFilter ahuFilter = new AhuFilter();
+                ahuFilter.setFilterId(cursor.getInt(0));
+                ahuFilter.setAhuId(cursor.getInt(1));
+                ahuFilter.setFilterCategory(cursor.getString(2));
+                ahuFilter.setFilterCode(cursor.getString(3));
+                ahuFilter.setWidth(cursor.getDouble(4));
+                ahuFilter.setLength(cursor.getDouble(5));
+                ahuFilter.setDepthArea(cursor.getDouble(6));
+                ahuFilter.setArea(cursor.getDouble(7));
+                ahuFilter.setEffectiveArea(cursor.getDouble(8));
+//                Log.d("valdoc", "ValdocDatabaseHelper :filter code equipment1:=" + cursor.getColumnIndex(EQUIPMENTFILTER_FILTERCODE));
+//                strings[i] = cursor.getString(cursor.getColumnIndex(EQUIPMENTGRILL_GRILLCODE));
+//                Log.d("valdoc", "ValdocDatabaseHelper :equipment1:=" + strings[i] + "i=" + i);
+//                i++;
+                ahuFilterArrayList.add(ahuFilter);
+            } while (cursor.moveToNext());
+        } // return contact list return wordList; }
+        return ahuFilterArrayList;
+    }
 
     // select data from Room info table
     public ArrayList<Room> getRoomInfoByAhu(int ahuNo) {

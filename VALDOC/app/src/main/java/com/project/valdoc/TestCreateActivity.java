@@ -356,7 +356,8 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
 
             String areaName = mValdocDatabaseHandler.getAreaByRoomAreaId(roomDetails[2]);
             intent.putExtra("AREANAME", areaName);
-            mAhuFilterArrayList = mValdocDatabaseHandler.getFilterFromAhuFilter(ahu.getAhuId());
+            mAhuFilterArrayList = getAhuACPHAVFilterList(ahu,roomSpinner.getSelectedItem().toString());
+//            mValdocDatabaseHandler.getFilterFromAhuFilter(ahu.getAhuId());
             intent.putExtra("AhuFilter", mAhuFilterArrayList);
             ApplicableTestAhu applicableTestAhu = createApplicableTestAhuList(ahu.getAhuId(),ACPHAV);
             intent.putExtra("ApplicableTestAhu", applicableTestAhu);
@@ -389,6 +390,31 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
             }
         }
         startActivity(intent);
+    }
+
+
+    public ArrayList<AhuFilter> getAhuACPHAVFilterList(Ahu ahu,String testItem) {
+        ArrayList<AhuFilter> ahuFilterList=null;
+
+        if(testItem.equalsIgnoreCase("Fresh Air Filter"))
+        {
+//            if(ahu.getFreshFilterType().equalsIgnoreCase("HEPA")){
+                ahuFilterList=mValdocDatabaseHandler.getAhuFitFilterFromAhuFilter(ahu.getAhuId(),"Fresh Air Filter");
+//                        getFilterFromAhuFilter(ahu.getAhuId());
+//            }
+        }else if(testItem.equalsIgnoreCase("Bleed HEPA Filter")){
+//            if(ahu.getBleedFilterType().equalsIgnoreCase("HEPA")){
+                ahuFilterList=mValdocDatabaseHandler.getAhuFitFilterFromAhuFilter(ahu.getAhuId(),"Bleed Air Filter");
+//                        getFilterFromAhuFilter(ahu.getAhuId());
+//            }
+        }else if(testItem.equalsIgnoreCase("Final Filter")){
+//            if(ahu.getFinalFilterType().equalsIgnoreCase("HEPA")){
+                ahuFilterList=mValdocDatabaseHandler.getAhuFitFilterFromAhuFilter(ahu.getAhuId(),"Final Air Filter");
+//                        getFilterFromAhuFilter(ahu.getAhuId());
+//            }
+        }
+
+        return ahuFilterList;
     }
 
     private void rdAcphH(String testCode, String testBasedOn) {
@@ -493,7 +519,7 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
             String areaName = mValdocDatabaseHandler.getAreaByRoomAreaId(roomDetails[2]);
             Log.d("valdoc", "TestCreateActivity areaName=" + areaName);
             intent.putExtra("AREANAME", areaName);
-            mAhuFilterArrayList = mValdocDatabaseHandler.getFilterFromAhuFilter(ahu.getAhuId());
+            mAhuFilterArrayList = getAhuFilterList(ahu,roomSpinner.getSelectedItem().toString());
             intent.putExtra("AhuFilter", mAhuFilterArrayList);
             ApplicableTestAhu applicableTestAhu = createApplicableTestAhuList(ahu.getAhuId(),testType);
             intent.putExtra("ApplicableTestAhu", applicableTestAhu);
@@ -523,7 +549,29 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
         // location will be the size off rommfilter list
         startActivity(intent);
     }
+    public ArrayList<AhuFilter> getAhuFilterList(Ahu ahu,String testItem) {
+        ArrayList<AhuFilter> ahuFilterList=null;
 
+        if(testItem.equalsIgnoreCase("Fresh Air Filter"))
+        {
+            if(ahu.getFreshFilterType().equalsIgnoreCase("HEPA")){
+                ahuFilterList=mValdocDatabaseHandler.getAhuFitFilterFromAhuFilter(ahu.getAhuId(),"Fresh Air Filter");
+//                        getFilterFromAhuFilter(ahu.getAhuId());
+            }
+        }else if(testItem.equalsIgnoreCase("Bleed HEPA Filter")){
+            if(ahu.getBleedFilterType().equalsIgnoreCase("HEPA")){
+                ahuFilterList=mValdocDatabaseHandler.getAhuFitFilterFromAhuFilter(ahu.getAhuId(),"Bleed Air Filter");
+//                        getFilterFromAhuFilter(ahu.getAhuId());
+            }
+        }else if(testItem.equalsIgnoreCase("Final Filter")){
+            if(ahu.getFinalFilterType().equalsIgnoreCase("HEPA")){
+                ahuFilterList=mValdocDatabaseHandler.getAhuFitFilterFromAhuFilter(ahu.getAhuId(),"Final Air Filter");
+//                        getFilterFromAhuFilter(ahu.getAhuId());
+            }
+        }
+
+        return ahuFilterList;
+    }
     private void rdPcT(String testCode, String testBasedOn) {
         Intent intent = new Intent(TestCreateActivity.this, DynamicTableActivity.class);
         intent.putExtra("USERTYPE", loginUserType);
@@ -1532,4 +1580,6 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
     }
+
+
 }
