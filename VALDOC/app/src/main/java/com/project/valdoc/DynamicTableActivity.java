@@ -2555,7 +2555,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                             TextView txtView = RDPC3TxtList.get(0);
                             txtView.setText(meanValue1 + "");
 
-                           stdDev1 = getStdDev(roundedAvg, inputValue, tagF);
+                           stdDev1 = getStdDev(resultDataHashMap, inputValue, tagF);
                            TextView txtView2 = RDPC3TxtList.get(1);
                             txtView2.setText(stdDev1 + "");
                         } else {
@@ -2563,7 +2563,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                             TextView txtView = RDPC3TxtList2.get(0);
                             txtView.setText(meanValue2 + "");
 
-                           stdDev2 = getStdDev(roundedAvg, inputValue,tagF);
+                           stdDev2 = getStdDev(resultDataHashMap, inputValue,tagF);
                            TextView txtView2 = RDPC3TxtList2.get(1);
                             txtView2.setText(stdDev2 + "");
                         }
@@ -2692,33 +2692,27 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         return meanAvg;
     }
 
-    private double getVariance(long meanAverageList2, int inputValue, int tagF) {
+    private double getVariance(HashMap<Integer, Long> meanAverageList2, int inputValue, int tagF) {
         double temp = 0;
         int tagCount = 0;
-
-        try {
-            for (Map.Entry m : rowTagHashMap.entrySet()) {
-                Log.d(TAG, "m.getValue(): " + m.getValue()+" tagF "+tagF);
-                System.out.println(" mean getMean() " + meanAverageList2);
-                if (m.getValue().equals(tagF)) {
-                    Log.d(TAG, "inputDataHashMap.get(m.getKey()): " +inputDataHashMap.get(m.getKey()));
-                    if (inputDataHashMap.get(m.getKey()) != null &&
-                            !"".equals(inputDataHashMap.get(m.getKey()))) {
-                        temp += ( meanAverageList2 - inputValue) * ( meanAverageList2 - inputValue);
-                        if (inputDataHashMap.get(m.getKey()) > 0)
-                            tagCount = tagCount + 1;
-                    }
+        for (Map.Entry m : meanAverageList2.entrySet()) {
+            if (meanAverageList2.get(m.getKey()) != null && !"".equals(meanAverageList2.get(m.getKey()))) {
+                if ((int) m.getKey() <= rows && tagF <= rows) {
+                    temp += (meanAverageList2.get(m.getKey()) - inputValue) * (meanAverageList2.get(m.getKey()) - inputValue);
+                    if (meanAverageList2.get(m.getKey()) > 0)
+                        tagCount = tagCount + 1;
+                } else if ((int) m.getKey() >= rows && tagF > rows) {
+                    temp += (meanAverageList2.get(m.getKey()) - inputValue) * (meanAverageList2.get(m.getKey()) - inputValue);
+                    if (meanAverageList2.get(m.getKey()) > 0)
+                        tagCount = tagCount + 1;
                 }
-                System.out.println(" Variance Add " + temp);
+                System.out.println(" Variance temp " + temp);
+                System.out.println(" Variance Key " + m.getKey() + " Variance Value " + m.getValue());
             }
-        } catch (Exception e) {
-            e.printStackTrace();
         }
-        System.out.println("Tag Count .. " + tagCount);
-
         double resultVariance = 0;
         if (tagCount > 1) {
-            resultVariance = temp / (tagCount - 1);
+            resultVariance = temp / (double) (tagCount - 1);
         } else {
             resultVariance = temp / tagCount;
         }
@@ -2727,7 +2721,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         return Math.round(resultVariance);
     }
 
-    private double getStdDev(long meanAverageList2, int inputValue, int tagF) {
+    private double getStdDev(HashMap<Integer, Long> meanAverageList2, int inputValue, int tagF) {
         double stdDev = Math.sqrt(getVariance(meanAverageList2,inputValue, tagF));
         System.out.println(" getStdDev Result " + stdDev + " rounded StdValue " + Math.round(stdDev));
         return Math.round(stdDev);
