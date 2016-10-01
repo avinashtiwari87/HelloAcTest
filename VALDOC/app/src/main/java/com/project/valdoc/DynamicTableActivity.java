@@ -1108,9 +1108,10 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                     intent.putExtra("meanValue2", meanValue2);
                     intent.putExtra("stdDev1", stdDev1);
                     intent.putExtra("stdDev2", stdDev2);
-//                intent.putExtra("RDPC3TxtList", RDPC3TxtList);
-//                intent.putExtra("RDPC3TxtList2", RDPC3TxtList2);
-
+                    long ucl1 = getUCLValues(meanValue1,rows, stdDev1);
+                    long ucl2 = getUCLValues(meanValue2,rows, stdDev2);
+                    intent.putExtra("UCL_V1", ucl1);
+                    intent.putExtra("UCL_V2", ucl2);
 
                     startActivity(intent);
                 }
@@ -2763,6 +2764,32 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             }
         }
         return diffPercent;
+    }
+
+    private long getUCLValues(long meanAverage, int noOfLocation, double stdDeviation){
+        long ucl = 0;
+        double multiplier = 1;
+        Log.d(TAG, "meanAverage: " + meanAverage+" noOfLocation: "+noOfLocation+" stdDeviation: "+stdDeviation);
+        if(noOfLocation == 2)
+            multiplier = 6.3;
+        else if(noOfLocation == 3)
+            multiplier = 2.9;
+        else if(noOfLocation == 4)
+            multiplier = 2.4;
+        else if(noOfLocation == 5)
+            multiplier = 2.1;
+        else if(noOfLocation == 6)
+            multiplier = 2;
+        else if(noOfLocation == 7)
+            multiplier = 1.9;
+        else if(noOfLocation == 8)
+            multiplier = 1.9;
+        else if(noOfLocation == 9)
+            multiplier = 1.9;
+
+        ucl = Math.round(meanAverage + (multiplier * (stdDeviation/Math.sqrt(noOfLocation))));
+        Log.d(TAG, " UCL : " + ucl);
+        return ucl;
     }
 
     private void initRes() {
