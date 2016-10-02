@@ -1108,9 +1108,10 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                     intent.putExtra("meanValue2", meanValue2);
                     intent.putExtra("stdDev1", stdDev1);
                     intent.putExtra("stdDev2", stdDev2);
-//                intent.putExtra("RDPC3TxtList", RDPC3TxtList);
-//                intent.putExtra("RDPC3TxtList2", RDPC3TxtList2);
-
+                    long ucl1 = getUCLValues(meanValue1,rows, stdDev1);
+                    long ucl2 = getUCLValues(meanValue2,rows, stdDev2);
+                    intent.putExtra("UCL_V1", ucl1);
+                    intent.putExtra("UCL_V2", ucl2);
 
                     startActivity(intent);
                 }
@@ -2555,7 +2556,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                             TextView txtView = RDPC3TxtList.get(0);
                             txtView.setText(meanValue1 + "");
 
-                           stdDev1 = getStdDev(roundedAvg, inputValue, tagF);
+                           stdDev1 = getStdDev(resultDataHashMap, inputValue, tagF);
                            TextView txtView2 = RDPC3TxtList.get(1);
                             txtView2.setText(stdDev1 + "");
                         } else {
@@ -2563,7 +2564,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                             TextView txtView = RDPC3TxtList2.get(0);
                             txtView.setText(meanValue2 + "");
 
-                           stdDev2 = getStdDev(roundedAvg, inputValue,tagF);
+                           stdDev2 = getStdDev(resultDataHashMap, inputValue,tagF);
                            TextView txtView2 = RDPC3TxtList2.get(1);
                             txtView2.setText(stdDev2 + "");
                         }
@@ -2692,33 +2693,27 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         return meanAvg;
     }
 
-    private double getVariance(long meanAverageList2, int inputValue, int tagF) {
+    private double getVariance(HashMap<Integer, Long> meanAverageList2, int inputValue, int tagF) {
         double temp = 0;
         int tagCount = 0;
-
-        try {
-            for (Map.Entry m : rowTagHashMap.entrySet()) {
-                Log.d(TAG, "m.getValue(): " + m.getValue()+" tagF "+tagF);
-                System.out.println(" mean getMean() " + meanAverageList2);
-                if (m.getValue().equals(tagF)) {
-                    Log.d(TAG, "inputDataHashMap.get(m.getKey()): " +inputDataHashMap.get(m.getKey()));
-                    if (inputDataHashMap.get(m.getKey()) != null &&
-                            !"".equals(inputDataHashMap.get(m.getKey()))) {
-                        temp += ( meanAverageList2 - inputValue) * ( meanAverageList2 - inputValue);
-                        if (inputDataHashMap.get(m.getKey()) > 0)
-                            tagCount = tagCount + 1;
-                    }
+        for (Map.Entry m : meanAverageList2.entrySet()) {
+            if (meanAverageList2.get(m.getKey()) != null && !"".equals(meanAverageList2.get(m.getKey()))) {
+                if ((int) m.getKey() <= rows && tagF <= rows) {
+                    temp += (meanAverageList2.get(m.getKey()) - inputValue) * (meanAverageList2.get(m.getKey()) - inputValue);
+                    if (meanAverageList2.get(m.getKey()) > 0)
+                        tagCount = tagCount + 1;
+                } else if ((int) m.getKey() >= rows && tagF > rows) {
+                    temp += (meanAverageList2.get(m.getKey()) - inputValue) * (meanAverageList2.get(m.getKey()) - inputValue);
+                    if (meanAverageList2.get(m.getKey()) > 0)
+                        tagCount = tagCount + 1;
                 }
-                System.out.println(" Variance Add " + temp);
+                System.out.println(" Variance temp " + temp);
+                System.out.println(" Variance Key " + m.getKey() + " Variance Value " + m.getValue());
             }
-        } catch (Exception e) {
-            e.printStackTrace();
         }
-        System.out.println("Tag Count .. " + tagCount);
-
         double resultVariance = 0;
         if (tagCount > 1) {
-            resultVariance = temp / (tagCount - 1);
+            resultVariance = temp / (double) (tagCount - 1);
         } else {
             resultVariance = temp / tagCount;
         }
@@ -2727,7 +2722,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         return Math.round(resultVariance);
     }
 
-    private double getStdDev(long meanAverageList2, int inputValue, int tagF) {
+    private double getStdDev(HashMap<Integer, Long> meanAverageList2, int inputValue, int tagF) {
         double stdDev = Math.sqrt(getVariance(meanAverageList2,inputValue, tagF));
         System.out.println(" getStdDev Result " + stdDev + " rounded StdValue " + Math.round(stdDev));
         return Math.round(stdDev);
@@ -2769,6 +2764,32 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             }
         }
         return diffPercent;
+    }
+
+    private long getUCLValues(long meanAverage, int noOfLocation, double stdDeviation){
+        long ucl = 0;
+        double multiplier = 1;
+        Log.d(TAG, "meanAverage: " + meanAverage+" noOfLocation: "+noOfLocation+" stdDeviation: "+stdDeviation);
+        if(noOfLocation == 2)
+            multiplier = 6.3;
+        else if(noOfLocation == 3)
+            multiplier = 2.9;
+        else if(noOfLocation == 4)
+            multiplier = 2.4;
+        else if(noOfLocation == 5)
+            multiplier = 2.1;
+        else if(noOfLocation == 6)
+            multiplier = 2;
+        else if(noOfLocation == 7)
+            multiplier = 1.9;
+        else if(noOfLocation == 8)
+            multiplier = 1.9;
+        else if(noOfLocation == 9)
+            multiplier = 1.9;
+
+        ucl = Math.round(meanAverage + (multiplier * (stdDeviation/Math.sqrt(noOfLocation))));
+        Log.d(TAG, " UCL : " + ucl);
+        return ucl;
     }
 
     private void initRes() {

@@ -57,6 +57,7 @@ public class RDPCTUserEntryActivity extends AppCompatActivity {
     //Test 5 Variable
     int test5CommonFormulaIds1 = 500, test5CommonFormulaIds2 = 600;
     long meanValue1 = 0L, meanValue2 = 0L;
+    long ucl1 = 0l, ucl2 = 0l;
     double stdDev1 = 0.0, stdDev2 = 0.0;
     ArrayList<TextView> RDPC3TxtList, RDPC3TxtList2;
 
@@ -217,6 +218,8 @@ public class RDPCTUserEntryActivity extends AppCompatActivity {
         meanValue2 = getIntent().getLongExtra("meanValue2", 0l);
         stdDev1 = getIntent().getDoubleExtra("stdDev1", 0.0);
         stdDev2 = getIntent().getDoubleExtra("stdDev2", 0.0);
+        ucl1 = getIntent().getLongExtra("UCL_V1", 0l);
+        ucl2 = getIntent().getLongExtra("UCL_V2", 0l);
 
 //        TextView txtView = RDPC3TxtList.get(0);
 //        txtView.setText(meanValue1 + "");
@@ -231,6 +234,8 @@ public class RDPCTUserEntryActivity extends AppCompatActivity {
         meanValue2_tv.setText(meanValue2 + "");
         stdDev1_tv.setText(stdDev1 + "");
         stdDev2_tv.setText(stdDev2 + "");
+        ucl1_tv.setText(ucl1 + "");
+        ucl2_tv.setText(ucl2 + "");
 
 
         //Custom Action Bar
