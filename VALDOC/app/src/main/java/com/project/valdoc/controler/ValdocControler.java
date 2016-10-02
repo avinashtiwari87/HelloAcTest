@@ -49,9 +49,10 @@ public class ValdocControler {
     private ValdocDatabaseHandler mValdocDatabaseHandler;
     //    private String url = "http://valdoc.in:8080/valdoc/sync/getTableData?date=";  //2015-11-12
 //    private String postUrl = "http://valdoc.in:8080/valdoc/sync/postTableData";
-    private String url = "http://valdoc.in:8080/valdoctest/sync/getTableData?date=";  //2015-11-12
-    private String postUrl = "http://valdoc.in:8080/valdoctest/sync/postTableData";
-
+//    private String url = "http://valdoc.in:8080/valdoctest/sync/getTableData?date=";  //2015-11-12
+//    private String postUrl = "http://valdoc.in:8080/valdoctest/sync/postTableData";
+    private String url = "http://192.169.143.229:8080/valdoctest/sync/getTableData?date=";
+    private String postUrl = "http://192.169.143.229:8080/valdoctest/sync/postTableData";
 //    private String url = "/sync/getTableData?date=";  //2015-11-12
 //    private String postUrl = "/sync/postTableData";
 
@@ -135,7 +136,7 @@ public class ValdocControler {
     private void postConnection(String method, JSONObject jsonDATA) {
         Log.d("valdocControler", "post data json=" + jsonDATA.toString());
         HttpConnectionTask httpConnectionTask = new HttpConnectionTask(mContext, method, jsonDATA);
-        baseUrl = sharedpreferences.getString("URL", "");
+//        baseUrl = sharedpreferences.getString("URL", "");
         httpConnectionTask.execute(postUrl);
 //        httpConnectionTask.execute(baseUrl+postUrl);
     }
