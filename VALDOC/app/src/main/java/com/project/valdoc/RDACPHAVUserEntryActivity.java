@@ -132,7 +132,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
     private int month;
     private int day;
     static final int DATE_PICKER_ID = 1111;
-
+    private ArrayList<Double>arrayList_totalAirFlowRate = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -205,20 +205,44 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
         for (int i = 0; i < resultTextViewList.size(); i++) {
             TextView tvl = resultTextViewList.get(i);
             tvl.setText(airFlowRateMap.get(tvl.getId()) + "");
+            if (mTestBasedOn.equalsIgnoreCase("AHU")) {
+                if (!mAhuFilterArrayList.isEmpty()) {
+                    //Air Flow Rate(AxAv)
+                    TextView tv2 = airFlowRateTxtViewList.get(i);
+                    double AxAv = 0.0f;
+                    try {
+
+                        AxAv = Double.valueOf(mAhuFilterArrayList.get(i).getEffectiveArea())*airFlowRateMap.get(tvl.getId());
+                    } catch (NumberFormatException e) {
+                        e.printStackTrace();
+                    }
+                    tv2.setText(Math.round(AxAv)+ "");
+                    arrayList_totalAirFlowRate.add(AxAv);
+                }
+            }
         }
+
         //Air Flow Rate(AxAv)
-        totalAirFlowRateMap = (HashMap<Integer, Float>) getIntent().getSerializableExtra("ResultData2");
+/*        totalAirFlowRateMap = (HashMap<Integer, Float>) getIntent().getSerializableExtra("ResultData2");
         for (int i = 0; i < airFlowRateTxtViewList.size(); i++) {
             TextView tvl = airFlowRateTxtViewList.get(i);
             Log.v(TAG, " totalAirFlowRateMap: " + tvl.getId());
             tvl.setText(totalAirFlowRateMap.get(tvl.getId()) + "");
-        }
+        }*/
         //Total AirFlow Rate (sum of AirFlow Rate)
+        double totalAirFlowRateValue = 0.0f;
         if (totalAirFlowRateTxtList != null && totalAirFlowRateTxtList.size() > 0) {
             int middleTxt = totalAirFlowRateTxtList.size() / 2;
             TextView mtvl = totalAirFlowRateTxtList.get(middleTxt);
             totalAirFlowRate = getIntent().getFloatExtra("totalAirFlowRate", 0f);
-            mtvl.setText(totalAirFlowRate + "");
+            if (mTestBasedOn.equalsIgnoreCase("AHU")) {
+                if(!arrayList_totalAirFlowRate.isEmpty()&& arrayList_totalAirFlowRate.size()>0){
+                    for (int i = 0; i < arrayList_totalAirFlowRate.size(); i++) {
+                        totalAirFlowRateValue += arrayList_totalAirFlowRate.get(i);
+                    }
+                }
+                mtvl.setText(Math.round(totalAirFlowRateValue/arrayList_totalAirFlowRate.size())+ "");
+            }
             TFRtv.setText(totalAirFlowRate + "");
         }
         //AirFlow Change
@@ -1095,7 +1119,6 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
         test2_table_layout4 = (TableLayout) findViewById(R.id.test2_tableLayout4);
         test2_table_layout5 = (TableLayout) findViewById(R.id.test2_tableLayout5);
         test2_table_layout6 = (TableLayout) findViewById(R.id.test2_tableLayout6);
-        test2_table_layout6.setVisibility(View.GONE);
         test2_table_layout7 = (TableLayout) findViewById(R.id.test2_tableLayout7);
         test2_table_layout7.setVisibility(View.GONE);
         test2_table_layout8 = (TableLayout) findViewById(R.id.test2_tableLayout8);
@@ -1108,7 +1131,10 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
         test_table_1_header_l.setVisibility(View.GONE);
         test_table_1_header_2.setVisibility(View.VISIBLE);
         findViewById(R.id.test_interference).setVisibility(View.GONE);
-        findViewById(R.id.acph_av_final_calc_ll).setVisibility(View.VISIBLE);
+        if(!"AHU".equalsIgnoreCase(mTestBasedOn)){
+            findViewById(R.id.acph_av_final_calc_ll).setVisibility(View.VISIBLE);
+            test2_table_layout6.setVisibility(View.GONE);
+        }
         findViewById(R.id.test2_reading_header).setVisibility(View.VISIBLE);
         TextView TestHeader = (TextView) findViewById(R.id.common_header_tv);
         TestHeader.setText("TEST RAW DATA\n(Air Flow Velocity, Volume Testing and Determination of Air Changes per Hour Rates)");
