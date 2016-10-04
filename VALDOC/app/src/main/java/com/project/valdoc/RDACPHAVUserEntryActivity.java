@@ -128,6 +128,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
     private ValdocDatabaseHandler mValdocDatabaseHandler = new ValdocDatabaseHandler(RDACPHAVUserEntryActivity.this);
     int testDetailsId = 0;
     private HashMap<Integer, Integer> userEnterdValue;
+    double AxAv = 0.0f;
     private int year;
     private int month;
     private int day;
@@ -209,7 +210,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
                 if (!mAhuFilterArrayList.isEmpty()) {
                     //Air Flow Rate(AxAv)
                     TextView tv2 = airFlowRateTxtViewList.get(i);
-                    double AxAv = 0.0f;
+
                     try {
 
                         AxAv = Double.valueOf(mAhuFilterArrayList.get(i).getEffectiveArea())*airFlowRateMap.get(tvl.getId());
@@ -545,7 +546,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
                         }
                     }
                 }
-                grilList.append("" + ahuFilter.getEffectiveArea()).append(',').append(sb).append(",").append(airFlowRateMap.get(index + 1)).append(",").append(totalAirFlowRateMap.get(avindex));
+                grilList.append("" + ahuFilter.getEffectiveArea()).append(',').append(sb).append(",").append(airFlowRateMap.get(index + 1)).append(",").append(AxAv);
                 index++;
                 avindex++;
                 testReading.setValue(grilList.toString());
@@ -573,7 +574,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
                         }
                     }
 
-                    grilList.append("" + grill.getEffectiveArea()).append(',').append(sb).append(",").append(airFlowRateMap.get(index + 1)).append(",").append(totalAirFlowRateMap.get(avindex));
+                    grilList.append("" + grill.getEffectiveArea()).append(',').append(sb).append(",").append(airFlowRateMap.get(index + 1)).append(",").append(AxAv);
                     index++;
                     avindex++;
                     testReading.setValue(grilList.toString());
@@ -602,7 +603,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
                         }
                     }
 
-                    grilList.append("" + roomFilter.getEffectiveFilterArea()).append(',').append(sb).append(",").append(airFlowRateMap.get(index + 1)).append(",").append(totalAirFlowRateMap.get(avindex));
+                    grilList.append("" + roomFilter.getEffectiveFilterArea()).append(',').append(sb).append(",").append(airFlowRateMap.get(index + 1)).append(",").append(AxAv);
                     index++;
                     avindex++;
                     testReading.setValue(grilList.toString());

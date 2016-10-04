@@ -345,6 +345,7 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
             String[] roomDetails = null;
             //TO Do testspesification will be shown from room filter spesification
             intent.putExtra("AhuNumber", ahuSpinner.getSelectedItem().toString());
+            intent.putExtra("testItem", roomSpinner.getSelectedItem().toString());
             int ahuIndex = ahuSpinner.getSelectedItemPosition();
             Ahu ahu = null;
             if (ahuIndex > 0) {
@@ -560,13 +561,21 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
 //            }
 //        }else
         if (testItem.equalsIgnoreCase("Bleed HEPA Filter")) {
-            if (ahu.getBleedFilterType().equalsIgnoreCase("F5||F6||F7||F8||F9||H10||H11||H12||H13||H14||U15||U16||U17")) {
-                ahuFilterList = mValdocDatabaseHandler.getAhuFitFilterFromAhuFilter(ahu.getAhuId(), "Bleed Filter");
+            if (ahu.getBleedFilterType().equalsIgnoreCase("F5")|| ahu.getBleedFilterType().equalsIgnoreCase("F6")||ahu.getBleedFilterType().equalsIgnoreCase("F7")
+                    ||ahu.getBleedFilterType().equalsIgnoreCase("F8")||ahu.getBleedFilterType().equalsIgnoreCase("F9")||ahu.getBleedFilterType().equalsIgnoreCase("H1")
+            ||ahu.getBleedFilterType().equalsIgnoreCase("H11")||ahu.getBleedFilterType().equalsIgnoreCase("H12")||ahu.getBleedFilterType().equalsIgnoreCase("H13")
+                    ||ahu.getBleedFilterType().equalsIgnoreCase("H14")||ahu.getBleedFilterType().equalsIgnoreCase("U15")||ahu.getBleedFilterType().equalsIgnoreCase("U16")
+                    ||ahu.getBleedFilterType().equalsIgnoreCase("U17")) {
+                ahuFilterList = mValdocDatabaseHandler.getAhuFitFilterFromAhuFilter(ahu.getAhuId(), "Bleed Air Filter");
 //                        getFilterFromAhuFilter(ahu.getAhuId());
             }
         } else if (testItem.equalsIgnoreCase("Final Filter")) {
-            if (ahu.getFinalFilterType().equalsIgnoreCase("F5||F6||F7||F8||F9||H10||H11||H12||H13||H14||U15||U16||U17")) {
-                ahuFilterList = mValdocDatabaseHandler.getAhuFitFilterFromAhuFilter(ahu.getAhuId(), "Final Filter");
+            if (ahu.getBleedFilterType().equalsIgnoreCase("F5")|| ahu.getBleedFilterType().equalsIgnoreCase("F6")||ahu.getBleedFilterType().equalsIgnoreCase("F7")
+                    ||ahu.getBleedFilterType().equalsIgnoreCase("F8")||ahu.getBleedFilterType().equalsIgnoreCase("F9")||ahu.getBleedFilterType().equalsIgnoreCase("H1")
+                    ||ahu.getBleedFilterType().equalsIgnoreCase("H11")||ahu.getBleedFilterType().equalsIgnoreCase("H12")||ahu.getBleedFilterType().equalsIgnoreCase("H13")
+                    ||ahu.getBleedFilterType().equalsIgnoreCase("H14")||ahu.getBleedFilterType().equalsIgnoreCase("U15")||ahu.getBleedFilterType().equalsIgnoreCase("U16")
+                    ||ahu.getBleedFilterType().equalsIgnoreCase("U17")) {
+                ahuFilterList = mValdocDatabaseHandler.getAhuFitFilterFromAhuFilter(ahu.getAhuId(), "Final Air Filter");
 //                        getFilterFromAhuFilter(ahu.getAhuId());
             }
         }

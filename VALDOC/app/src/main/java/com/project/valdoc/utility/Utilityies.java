@@ -30,7 +30,7 @@ public class Utilityies {
         Date date = null;
         if (null != time && time.length() > 0) {
             String inputPattern = "yyyy-MM-dd";
-            String outputPattern = "dd-MMM-yyyy";
+            String outputPattern = "dd-MM-yyyy";
             SimpleDateFormat inputFormat = new SimpleDateFormat(inputPattern);
             SimpleDateFormat outputFormat = new SimpleDateFormat(outputPattern);
 
