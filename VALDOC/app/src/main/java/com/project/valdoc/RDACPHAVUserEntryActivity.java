@@ -223,13 +223,6 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
             }
         }
 
-        //Air Flow Rate(AxAv)
-/*        totalAirFlowRateMap = (HashMap<Integer, Float>) getIntent().getSerializableExtra("ResultData2");
-        for (int i = 0; i < airFlowRateTxtViewList.size(); i++) {
-            TextView tvl = airFlowRateTxtViewList.get(i);
-            Log.v(TAG, " totalAirFlowRateMap: " + tvl.getId());
-            tvl.setText(totalAirFlowRateMap.get(tvl.getId()) + "");
-        }*/
         //Total AirFlow Rate (sum of AirFlow Rate)
         double totalAirFlowRateValue = 0.0f;
         if (totalAirFlowRateTxtList != null && totalAirFlowRateTxtList.size() > 0) {
@@ -243,6 +236,14 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
                     }
                 }
                 mtvl.setText(Math.round(totalAirFlowRateValue/arrayList_totalAirFlowRate.size())+ "");
+            }else{
+                //Air Flow Rate(AxAv)
+                totalAirFlowRateMap = (HashMap<Integer, Float>) getIntent().getSerializableExtra("ResultData2");
+                for (int i = 0; i < airFlowRateTxtViewList.size(); i++) {
+                    TextView tvl = airFlowRateTxtViewList.get(i);
+                    Log.v(TAG, " totalAirFlowRateMap: " + tvl.getId());
+                    tvl.setText(totalAirFlowRateMap.get(tvl.getId()) + "");
+                }
             }
             TFRtv.setText(totalAirFlowRate + "");
         }
