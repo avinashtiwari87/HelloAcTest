@@ -587,29 +587,36 @@ public class RDPCTUserEntryActivity extends AppCompatActivity {
         testSpesificationValue.setFieldValue("" + meanValue1);
         spesificationValueArrayList.add(testSpesificationValue);
 
-        stdDev1 = getIntent().getDoubleExtra("stdDev1", 0.0);
-        stdDev2 = getIntent().getDoubleExtra("stdDev2", 0.0);
 
         TestSpesificationValue testSpesificationValue1 = new TestSpesificationValue();
-//        testSpesificationValue1.setTest_specific_id(1);
         testSpesificationValue1.setTest_detail_id("" + testDetailsId);
         testSpesificationValue1.setFieldName("Mean Average2");
         testSpesificationValue1.setFieldValue("" + meanValue2);
         spesificationValueArrayList.add(testSpesificationValue1);
 
         TestSpesificationValue testSpesificationValue2 = new TestSpesificationValue();
-//        testSpesificationValue2.setTest_specific_id(1);
         testSpesificationValue2.setTest_detail_id("" + testDetailsId);
         testSpesificationValue2.setFieldName("Standard Deviation1");
         testSpesificationValue2.setFieldValue("" + stdDev1);
         spesificationValueArrayList.add(testSpesificationValue2);
 
         TestSpesificationValue testSpesificationValue3 = new TestSpesificationValue();
-//        testSpesificationValue3.setTest_specific_id(1);
         testSpesificationValue3.setTest_detail_id("" + testDetailsId);
         testSpesificationValue3.setFieldName("Standard Deviation2");
-        testSpesificationValue3.setFieldValue("" + stdDev1);
+        testSpesificationValue3.setFieldValue("" + stdDev2);
         spesificationValueArrayList.add(testSpesificationValue3);
+
+        TestSpesificationValue testSpesificationValue4 = new TestSpesificationValue();
+        testSpesificationValue4.setTest_detail_id("" + testDetailsId);
+        testSpesificationValue4.setFieldName("UCL Value1");
+        testSpesificationValue4.setFieldValue("" + ucl1);
+        spesificationValueArrayList.add(testSpesificationValue4);
+
+        TestSpesificationValue testSpesificationValue5 = new TestSpesificationValue();
+        testSpesificationValue5.setTest_detail_id("" + testDetailsId);
+        testSpesificationValue5.setFieldName("UCL Value2");
+        testSpesificationValue5.setFieldValue("" + ucl2);
+        spesificationValueArrayList.add(testSpesificationValue5);
 
         return spesificationValueArrayList;
     }

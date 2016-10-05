@@ -106,6 +106,8 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
     double stdDev1 = 0.0, stdDev2 = 0.0;
     //Test 6 Variable
     int rowsCount = 0;
+    //Validate boolean array...
+    ArrayList<Boolean>validate = new ArrayList<>();
 
     ArrayList<String> testReadingEditTextList;
     ArrayList<TextView> txtPassFailList;
@@ -381,8 +383,11 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
 
         alertDialogBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(DialogInterface arg0, int arg1) {
-//                finish();
+            public void onClick(DialogInterface dialog, int arg1) {
+                dialog.cancel();
+                verify_btn.setEnabled(true);
+                clear.setEnabled(true);
+
             }
         });
 
@@ -1139,14 +1144,10 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 if (TestCreateActivity.RCT.equalsIgnoreCase(testType)) {
 
                     String finalvalue = finalReadingValueTv.getText().toString();
-                    Log.d("Avinash", "finalvalue=" + finalvalue);
                     if (!"".equalsIgnoreCase(finalvalue) && null != finalvalue && !finalvalue.isEmpty() && null != inputDataHashMap && null != inputDataHashMap.get(200)) {
-                        Log.d("Avinash", "finalvalue1=" + finalvalue);
                         if (Double.parseDouble(finalvalue) > inputDataHashMap.get(200)) {
-//                            finalReadingValueTv.setText("");
                             aleartDialog("Final reading should be less than or equal to initial value");
                         }else {
-//                Toast.makeText(DynamicTableActivity.this, "Under development", Toast.LENGTH_LONG).show();
                             intent = new Intent(DynamicTableActivity.this, RDRCTUserEntryActivity.class);
                             // put bundel data
                             intent.putExtra("USERTYPE", loginUserType);
@@ -1244,15 +1245,16 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
     }
 
     private boolean validateEditTextList() {
-        ArrayList<Boolean>validate = new ArrayList<>();
+        validate.clear();
+        Log.d(TAG, "Validate editTextList "+editTextList.size()+" validate size "+validate.size());
         for (int i = 0; i < editTextList.size(); i++) {
             Log.d(TAG, "Validate "+editTextList.get(i).getText().toString());
-            if(editTextList.get(i).getText().toString().trim() != null
+            if(editTextList.get(i).getText().toString().trim() == null
                     && editTextList.get(i).getText().toString().trim().equals("")){
-                validate.add(true);
+                validate.add(i,true);
             }
             else{
-                validate.add(false);
+                validate.add(i,false);
             }
         }
         Log.d(TAG, "validate.contains "+validate.contains(true));
@@ -1351,6 +1353,10 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
     private void deleteRowButtonClick(int rows) {
         test6A_table_layout3.removeViewAt((rows - 1));
         test6A_table_layout4.removeViewAt((rows - 1));
+        Log.d(TAG,"Delete Before editTextList size "+editTextList.size());
+        editTextList.remove(editTextList.size()-1);
+        validate.remove(validate.size()-1);
+        Log.d(TAG,"Delete After editTextList size "+editTextList.size());
         int totalReading = rows - 1;
         finalReadingTv.setText("Final Reading" + totalReading);
     }
