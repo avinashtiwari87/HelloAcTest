@@ -98,7 +98,7 @@
     <string name="title_activity_main">MainActivity</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
-    <string name="header_title">FORM :TEST RAW DATA EQUIPMENT (ERD_AV)\n(Average Air Flow Velocity Testing)</string>
+    <string name="header_title">FORM :TEST RAW DATA EQUIPMENT</string>
     <string name="verify_test_header">Measured Test Value</string>
     <string name="header2_title">Details of Instruments Used for testing</string>
     <string name="header3_title">Details of Specification and Area</string>
@@ -125,7 +125,7 @@
 
 
     <!-- Air Flow Velocity, Volume Testing and Determination of Air Changes per Hour Rate  -->
-    <string name="header_title1">FORM: TEST RAW DATA (ACPH_AV)\nAir Flow Velocity, Volume Testing and Determination of Air Changes per Hour Rate</string>
+    <string name="header_title1">FORM: TEST RAW DATA AHU/ Equipment\n(Airflow Testing by Air Velocity Method)</string>
 
 
     <!--Installed HEPA Filter System Leakage Test -->

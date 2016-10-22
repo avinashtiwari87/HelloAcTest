@@ -7,12 +7,18 @@
     <LinearLayout
         android:id="@+id/test_table_1_header_l_ll"
         style="@style/TextAppearance.AppCompat.header_top"
-        android:background="@color/black_overlay">
+        android:background="@color/white">
 
         <TextView
             android:id="@+id/test_type_header_AVTest"
             style="@style/TextAppearance.AppCompat.header_text"
             android:text="@string/header_title" />
+        <TextView
+            android:id="@+id/test_type_header_AVTest_2"
+            style="@style/TextAppearance.AppCompat.header_text"
+
+            android:textStyle="normal"
+            android:text="(Average Air Flow Velocity Testing)" />
     </LinearLayout>
 
     <include layout="@layout/common_test_detail_header"
@@ -21,8 +27,7 @@
     <LinearLayout
         android:id="@+id/test_table_1_header_2_ll"
         style="@style/TextAppearance.AppCompat.header_top"
-        android:layout_marginTop="10dp"
-        android:background="@color/black_overlay">
+        android:layout_marginTop="10dp">
 
         <TextView
             style="@style/TextAppearance.AppCompat.header_text"

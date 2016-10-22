@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:id="@+id/common_test_header"
+    android:background="@drawable/border_new"
     android:weightSum="3">
 
     <LinearLayout

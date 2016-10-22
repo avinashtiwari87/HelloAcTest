@@ -134,12 +134,13 @@
         android:visibility="gone"
         android:id="@+id/test_table_4_header_2_ll"
         style="@style/TextAppearance.AppCompat.header_top"
-        android:layout_marginTop="10dp"
-        android:background="@color/black_overlay">
+        android:layout_marginTop="5dp">
 
         <TextView
             style="@style/TextAppearance.AppCompat.header_text"
-            android:text="@string/header_title_result" />
+            android:textStyle="normal"
+            android:textSize="15sp"
+            android:text="Measured Upstream Aerosol Concentration (%)" />
     </LinearLayout>
 
     <ScrollView

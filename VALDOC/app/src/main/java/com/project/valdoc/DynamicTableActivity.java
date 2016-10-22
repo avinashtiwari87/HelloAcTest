@@ -1250,7 +1250,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         for (int i = 0; i < editTextList.size(); i++) {
             Log.d(TAG, "Validate "+editTextList.get(i).getText().toString());
             if(editTextList.get(i).getText().toString().trim() == null
-                    && editTextList.get(i).getText().toString().trim().equals("")){
+                    || editTextList.get(i).getText().toString().trim().equals("")){
                 validate.add(i,true);
             }
             else{
@@ -2884,6 +2884,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         table_layout4 = (TableLayout) findViewById(R.id.tableLayout4);
         table_layout4.setVisibility(View.GONE);
         TextView testHeaderAv = (TextView) findViewById(R.id.test_type_header_AVTest);
+        TextView testHeaderAv2 = (TextView) findViewById(R.id.test_type_header_AVTest_2);
         if (TestCreateActivity.AV.equalsIgnoreCase(testType)) {
             findViewById(R.id.test1_dynamic_table_ll).setVisibility(View.VISIBLE);
             findViewById(R.id.test1_reading_header).setVisibility(View.VISIBLE);
@@ -2906,7 +2907,13 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         if (TestCreateActivity.ACPHAV.equalsIgnoreCase(testType)) {
 //            LinearLayout linearLayout=(LinearLayout)findViewById(R.id.test_table2);
 //            linearLayout.setVisibility(View.VISIBLE);
-            testHeaderAv.setText(R.string.header_title1);
+            if(mTestBasedOn.equalsIgnoreCase("ROOM")){
+                testHeaderAv.setText("FORM: TEST RAW DATA");
+                testHeaderAv2.setText("(Air Flow Velocity, Volume Testing and Determination of Air Changes per Hour Rates by Anemometer)");
+            }else{
+                testHeaderAv.setText(R.string.header_title1);
+                testHeaderAv2.setVisibility(View.GONE);
+            }
             findViewById(R.id.test2_reading_header).setVisibility(View.VISIBLE);
         }
 
@@ -2920,7 +2927,8 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         test3_table_layout5 = (TableLayout) findViewById(R.id.test3_tableLayout5);
         test3_table_layout5.setVisibility(View.GONE);
         if (TestCreateActivity.ACPHH.equalsIgnoreCase(testType)) {
-            testHeaderAv.setText("FORM: TEST RAW DATA (RD_ACPH_H)\n(Air Flow Velocity, Volume Testing and Determination of Air Changes per Hour Rates)");
+            testHeaderAv.setText("FORM: TEST RAW DATA");
+            testHeaderAv2.setText("(Air Flow Velocity, Volume Testing and Determination of Air Changes per Hour Rates by Hood)");
             findViewById(R.id.test3_dynamic_table_ll).setVisibility(View.VISIBLE);
 
         }
@@ -2952,15 +2960,22 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
 //            test_header10.setVisibility(View.GONE);
 //            test_header11.setVisibility(View.GONE);
 //            test_header12.setVisibility(View.GONE);
-            testHeaderAv.setText("FORM:TEST RAW DATA (FIT)\nInstalled HEPA Filter System Leakage Test by Aerosol Photometer Method");
             findViewById(R.id.test4_dynamic_table_ll).setVisibility(View.VISIBLE);
-//            if (mTestBasedOn.equalsIgnoreCase("EQUIPMENT")) {
-//                roomName.setText("" + roomDetails[1]);
-//            } else if (mTestBasedOn.equalsIgnoreCase("AHU")) {
-//                roomName.setText("dfd"+roomDetails[1]);
-//            } else if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
-//                roomName.setText("" + room.getRoomName());
-//            }
+            findViewById(R.id.test_table_4_header_2_ll).setVisibility(View.VISIBLE);
+
+            if (mTestBasedOn.equalsIgnoreCase("EQUIPMENT")) {
+                //roomName.setText("" + roomDetails[1]);
+                testHeaderAv.setText("FORM:TEST RAW DATA EQUIPMENT");
+                testHeaderAv2.setText("Installed HEPA Filter System Leakage Test by Aerosol Photometer Method");
+            } else if (mTestBasedOn.equalsIgnoreCase("AHU")) {
+                //roomName.setText("dfd"+roomDetails[1]);
+                testHeaderAv.setText("FORM:TEST RAW DATA AHU/EQUIPMENT");
+                testHeaderAv2.setText("(Installed HEPA Filter System Leakage Test by Aerosol Photometer Method)");
+            } else if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
+                //roomName.setText("" + room.getRoomName());
+                testHeaderAv.setText("FORM:TEST RAW DATA");
+                testHeaderAv2.setText("Installed HEPA Filter System Leakage Test by Aerosol Photometer Method");
+            }
 
         }
 
@@ -2997,8 +3012,13 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
 //                instrumentName.setText(partnerInstrument.getpInstrumentName());
 //                instrumentNo.setText("" + partnerInstrument.getSerialNo());
 //            }
-
-            testHeaderAv.setText("FORM:TEST RAW DATA (RD_PCT)\nAirborne Particle Count Test for Classification of Cleanrooms/zones and Clean Air Devices");
+            if (mTestBasedOn.equalsIgnoreCase("EQUIPMENT")) {
+                testHeaderAv.setText("FORM:TEST RAW DATA EQUIPMENT");
+                testHeaderAv2.setText("Airborne Particle Count Test for Classification of Cleanrooms/zones and Clean Air Devices");
+            }else{
+                testHeaderAv.setText("FORM:TEST RAW DATA");
+                testHeaderAv2.setText("Airborne Particle Count Test for Classification of Cleanrooms/zones and Clean Air Devices");
+            }
             findViewById(R.id.test5_dynamic_table_ll).setVisibility(View.VISIBLE);
             sampling_flow_rate.setVisibility(View.VISIBLE);
             sampling_time.setVisibility(View.VISIBLE);
@@ -3032,7 +3052,13 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             sampling_time.setVisibility(View.VISIBLE);
 //            clean_room_class.setVisibility(View.VISIBLE);
             findViewById(R.id.test6A_dynamic_table_ll).setVisibility(View.VISIBLE);
-            testHeaderAv.setText("FORM :TEST RAW DATA (RD_RCT)\nAirborne Particle Count Test for Classification of Cleanrooms/zones and Clean Air Devices");
+            if (mTestBasedOn.equalsIgnoreCase("EQUIPMENT")) {
+                testHeaderAv.setText("FORM :TEST RAW DATA EQUIPMENT");
+                testHeaderAv2.setText("Recovery Performance Test");
+            }else{
+                testHeaderAv.setText("FORM :TEST RAW DATA");
+                testHeaderAv2.setText("Recovery Performance Test");
+            }
 
         }
     }
