@@ -563,7 +563,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             test_header5.setText("Instrument Sr. No:");
             test_header6.setText("Occupancy State :");
             test_header7.setText("Date of Test :");
-            test_header9.setText("Due :");
+            test_header9.setText("Calibration Due :");
             test_header8.setText("Calibrated on :");
             if (loginUserType.equals("CLIENT")) {
                 test_value2.setText(clientInstrument.getcInstrumentName());
@@ -578,7 +578,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             }
             test_value3.setText(userName);
             if (TestBasedOn.equalsIgnoreCase("AHU")) {
-                test_header1.setText("AHU :");
+                test_header1.setText("AHU/Equipment No :");
                 test_header4.setText("Test Item :");
                 test_value1.setText("" + ahuNumber);
                 test_value4.setText("" + mTestItem);
@@ -598,7 +598,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             test_header5.setText("Instrument Sr. No:");
             test_header6.setText("Occupancy State :");
             test_header7.setText("Date of Test :");
-            test_header9.setText("Due :");
+            test_header9.setText("Calibration Due :");
             test_header8.setText("Calibrated on :");
             if (loginUserType.equals("CLIENT")) {
                 test_value2.setText(clientInstrument.getcInstrumentName());
@@ -625,7 +625,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 test_header1.setText("Room Name :");
                 test_header4.setText("Room No :");
             } else {
-                test_header1.setText("AHU :");
+                test_header1.setText("AHU/ Equipment Name :");
                 test_header4.setText("Test Item :");
             }
             test_header2.setText("Instrument Used :");
