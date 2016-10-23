@@ -531,11 +531,11 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             test_header1.setText("Equipment Name :");
             test_header2.setText("Instrument Used :");
             test_header3.setText("Test Conducted By:");
-            test_header4.setText("Eqipment No:");
+            test_header4.setText("Eqipment ID:");
             test_header5.setText("Instrument Sr. No:");
             test_header6.setText("Occupancy State :");
             test_header7.setText("Date of Test :");
-            test_header9.setText("Due :");
+            test_header9.setText("Calinration Due :");
             test_header8.setText("Calibrated on :");
             if (loginUserType.equals("CLIENT")) {
                 test_value2.setText(clientInstrument.getcInstrumentName());
@@ -633,7 +633,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             test_header5.setText("Instrument Sr. No :");
             test_header6.setText("Occupancy State :");
             test_header7.setText("Date of Test :");
-            test_header9.setText("Due :");
+            test_header9.setText("Calinration Due :");
             test_header8.setText("Calibrated on :");
             if (loginUserType.equals("CLIENT")) {
                 test_value2.setText(clientInstrument.getcInstrumentName());
@@ -675,7 +675,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             test_header5.setText("Instrument Sr. No:");
             test_header6.setText("Occupancy State :");
             test_header7.setText("Date of Test :");
-            test_header9.setText("Due :");
+            test_header9.setText("Calibration Due :");
             test_header8.setText("Calibrated on :");
             test_header10.setText("Sampling Flow Rate :");
             test_header11.setText("Sampling Time :");
@@ -711,6 +711,8 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 String samplingTime = getSamplingTime(mApplicableTestEquipment.getTestSpecification(),"");
                 test_value11.setText(""+samplingTime);
                 test_value12.setText("" + mApplicableTestEquipment.getTestSpecification());
+                test_header12.setVisibility(View.GONE);
+                test_value12.setVisibility(View.GONE);
             }
             datePicker();
         } else if (TestCreateActivity.RCT.equalsIgnoreCase(testType)) {
@@ -726,7 +728,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             test_header5.setText("Instrument Sr. No:");
             test_header6.setText("Occupancy State :");
             test_header7.setText("Date of Test :");
-            test_header9.setText("Due :");
+            test_header9.setText("Calibration Due :");
             test_header8.setText("Calibrated on :");
             test_header10.setText("Sampling Flow Rate :");
             test_header11.setText("Sampling Time :");
