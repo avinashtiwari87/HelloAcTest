@@ -7,8 +7,7 @@
 
     <LinearLayout
         android:id="@+id/header_linear_layout"
-        style="@style/TextAppearance.AppCompat.header_top"
-        android:background="@color/black_overlay">
+        style="@style/TextAppearance.AppCompat.header_top">
 
         <TextView
             android:id="@+id/common_header_tv"
@@ -20,6 +19,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
+
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -75,6 +75,7 @@
                     style="@style/TestHeaderTextViewNormal"
                     android:text="" />
             </TableRow>
+
             <TableRow
                 android:id="@+id/aerosol_generator_table"
                 android:paddingBottom="5dp"
@@ -110,7 +111,6 @@
                     android:text="" />
             </TableRow>
 
-
             <TableRow
                 android:paddingBottom="5dp"
                 android:paddingTop="5dp">
@@ -125,6 +125,7 @@
                     android:id="@+id/areaoftest"
                     android:text="" />
             </TableRow>
+
             <TableRow
                 android:paddingBottom="5dp"
                 android:paddingTop="5dp">
@@ -140,6 +141,7 @@
                     android:id="@+id/room_name"
                     android:text="" />
             </TableRow>
+
             <TableRow
                 android:paddingBottom="5dp"
                 android:paddingTop="5dp">
@@ -155,19 +157,6 @@
                     android:id="@+id/room_no"
                     android:text=""  />
             </TableRow>
-        </TableLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:orientation="vertical"
-        android:paddingLeft="5dp">
-
-        <TableLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
 
             <TableRow
                 android:visibility="invisible"
@@ -213,6 +202,7 @@
                     style="@style/TestHeaderTextViewNormal"
                     android:text="" />
             </TableRow>
+
             <TableRow
                 android:id="@+id/aerosol_used_table"
                 android:paddingBottom="5dp"
@@ -230,68 +220,19 @@
                     android:id="@+id/aerosol_used"
                     android:text=""/>
             </TableRow>
-            <TableRow
-                android:paddingBottom="5dp"
-                android:paddingTop="5dp">
 
-                <TextView
-                    android:id="@+id/common_test_header3_tv"
-                    style="@style/TestHeaderTextViewBold"
-                    android:gravity="right"
-                    android:text="@string/ocupancy_state" />
-
-                <TextView
-                    style="@style/TestHeaderTextViewNormal"
-                    android:id="@+id/ocupancystate"
-                    android:text=""/>
-            </TableRow>
-            <TableRow
-                android:visibility="invisible"
-                android:paddingBottom="5dp"
-                android:paddingTop="5dp">
-
-                <TextView
-                    style="@style/TestHeaderTextViewBold"
-                    android:gravity="right"
-                    android:text="Test Conduted By :" />
-
-                <TextView
-                    style="@style/TestHeaderTextViewNormal"
-                    android:text="" />
-            </TableRow>
-            <TableRow
-                android:paddingBottom="5dp"
-                android:paddingTop="5dp">
-
-                <TextView
-                    android:id="@+id/equiment_name_text"
-                    android:gravity="right"
-                    style="@style/TestHeaderTextViewBold"
-                    android:text="Equipment Name : " />
-
-                <TextView
-                    style="@style/TestHeaderTextViewNormal"
-                    android:id="@+id/equiment_name"
-                    android:text="" />
-            </TableRow>
-            <TableRow
-                android:paddingBottom="5dp"
-                android:paddingTop="5dp">
-
-                <TextView
-                    android:id="@+id/equiment_no_text"
-                    android:gravity="right"
-                    style="@style/TestHeaderTextViewBold"
-                    android:text="Equipment No :" />
-
-                <TextView
-                    style="@style/TestHeaderTextViewNormal"
-                    android:id="@+id/equiment_no"
-                    android:text="" />
-            </TableRow>
         </TableLayout>
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:paddingLeft="5dp">
+
+    </LinearLayout>
+s
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -376,6 +317,7 @@
                     android:id="@+id/testrefrence"
                     android:text="" />
             </TableRow>
+
             <TableRow
                 android:paddingBottom="5dp"
                 android:paddingTop="5dp">
@@ -393,6 +335,7 @@
                     style="@style/TestHeaderTextViewNormal"
                     android:text="" />
             </TableRow>
+
             <TableRow
                 android:paddingBottom="5dp"
                 android:paddingTop="5dp">
@@ -410,6 +353,7 @@
                     style="@style/TestHeaderTextViewNormal"
                     android:text="" />
             </TableRow>
+
             <TableRow
                 android:paddingBottom="5dp"
                 android:paddingTop="5dp">
@@ -427,7 +371,72 @@
                     style="@style/TestHeaderTextViewNormal"
                     android:text="" />
             </TableRow>
+
+            <TableRow
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp">
+
+                <TextView
+                    android:id="@+id/common_test_header3_tv"
+                    style="@style/TestHeaderTextViewBold"
+                    android:gravity="right"
+                    android:text="@string/ocupancy_state" />
+
+                <TextView
+                    style="@style/TestHeaderTextViewNormal"
+                    android:id="@+id/ocupancystate"
+                    android:text=""/>
+            </TableRow>
+
+            <TableRow
+                android:visibility="invisible"
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp">
+
+                <TextView
+                    style="@style/TestHeaderTextViewBold"
+                    android:gravity="right"
+                    android:text="Test Conduted By :" />
+
+                <TextView
+                    style="@style/TestHeaderTextViewNormal"
+                    android:text="" />
+            </TableRow>
+
+            <TableRow
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp">
+
+                <TextView
+                    android:id="@+id/equiment_name_text"
+                    android:gravity="right"
+                    style="@style/TestHeaderTextViewBold"
+                    android:text="Equipment Name : " />
+
+                <TextView
+                    style="@style/TestHeaderTextViewNormal"
+                    android:id="@+id/equiment_name"
+                    android:text="" />
+            </TableRow>
+
+            <TableRow
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp">
+
+                <TextView
+                    android:id="@+id/equiment_no_text"
+                    android:gravity="right"
+                    style="@style/TestHeaderTextViewBold"
+                    android:text="Equipment No :" />
+
+                <TextView
+                    style="@style/TestHeaderTextViewNormal"
+                    android:id="@+id/equiment_no"
+                    android:text="" />
+            </TableRow>
+
         </TableLayout>
+
     </LinearLayout>
 
 </LinearLayout>
@@ -436,8 +445,7 @@
         android:visibility="gone"
         android:id="@+id/test_table_6b_header_2_ll"
         style="@style/TextAppearance.AppCompat.header_top"
-        android:layout_marginTop="10dp"
-        android:background="@color/black_overlay">
+        android:layout_marginTop="10dp">
 
         <TextView
             style="@style/TextAppearance.AppCompat.header_text"
