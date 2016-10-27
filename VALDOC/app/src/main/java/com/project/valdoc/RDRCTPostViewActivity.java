@@ -3,7 +3,6 @@ package com.project.valdoc;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -424,7 +423,7 @@ public class RDRCTPostViewActivity extends AppCompatActivity {
 //            }
 //        });
         findViewById(R.id.test_interference).setVisibility(View.GONE);
-        findViewById(R.id.test_table_6b_header_2_ll).setVisibility(View.VISIBLE);
+        findViewById(R.id.common_certificate_header_ll).setVisibility(View.VISIBLE);
     }
 
 //            private ArrayList<TestSpesificationValue> testSpesificationValue() {

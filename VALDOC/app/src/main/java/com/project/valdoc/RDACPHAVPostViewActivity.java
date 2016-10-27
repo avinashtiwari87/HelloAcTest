@@ -49,7 +49,6 @@ public class RDACPHAVPostViewActivity extends AppCompatActivity {
 
     int rows, cols;
     String mTestType;
-    LinearLayout test_table_1_footer, test_table_1_header_l, test_table_1_header_2;
     //Test 2 Ids variable
     int filterSizeIds = 100, airFlowRateIds = 300,
             totalAirFlowRateIds = 400;
@@ -607,11 +606,7 @@ public class RDACPHAVPostViewActivity extends AppCompatActivity {
         test2_table_layout8.setVisibility(View.GONE);
         TFRtv = (TextView) findViewById(R.id.acph_av_tfr_value_tv);
         TFRByRvTv = (TextView) findViewById(R.id.acph_av_tfrby_av_value_tv);
-        //Hide view coming form test tabl 1
-        test_table_1_header_l = (LinearLayout) findViewById(R.id.test_table_2_header_l_ll);
-        test_table_1_header_2 = (LinearLayout) findViewById(R.id.test_table_2_header_2_ll);
-        test_table_1_header_l.setVisibility(View.GONE);
-        test_table_1_header_2.setVisibility(View.VISIBLE);
+
         findViewById(R.id.test_interference).setVisibility(View.GONE);
         findViewById(R.id.acph_av_final_calc_ll).setVisibility(View.VISIBLE);
         findViewById(R.id.test2_reading_header).setVisibility(View.VISIBLE);

@@ -2,7 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/border"
     android:orientation="vertical">
 
     <LinearLayout
@@ -13,11 +12,19 @@
             android:id="@+id/common_header_tv"
             style="@style/TextAppearance.AppCompat.header_text"
             android:text="@string/verify_test_header" />
+
+        <TextView
+            android:id="@+id/common_header_2_tv"
+            style="@style/TextAppearance.AppCompat.header_text"
+            android:textStyle="normal"
+            android:visibility="gone"
+            android:text="@string/verify_test_header" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/border_new"
         android:orientation="horizontal">
 
     <LinearLayout
@@ -72,6 +79,21 @@
 
                 <TextView
                     android:id="@+id/instrumentused"
+                    style="@style/TestHeaderTextViewNormal"
+                    android:text="" />
+            </TableRow>
+
+            <TableRow
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp">
+
+                <TextView
+                    style="@style/TestHeaderTextViewBold"
+                    android:gravity="right"
+                    android:text="@string/instrument_serial_no" />
+
+                <TextView
+                    android:id="@+id/instrumentserialno"
                     style="@style/TestHeaderTextViewNormal"
                     android:text="" />
             </TableRow>
@@ -159,7 +181,7 @@
             </TableRow>
 
             <TableRow
-                android:visibility="invisible"
+                android:visibility="gone"
                 android:paddingBottom="5dp"
                 android:paddingTop="5dp">
 
@@ -174,7 +196,7 @@
             </TableRow>
 
             <TableRow
-                android:visibility="invisible"
+                android:visibility="gone"
                 android:paddingBottom="5dp"
                 android:paddingTop="5dp">
 
@@ -184,21 +206,6 @@
                     android:text="Instrument Used :" />
 
                 <TextView
-                    style="@style/TestHeaderTextViewNormal"
-                    android:text="" />
-            </TableRow>
-
-            <TableRow
-                android:paddingBottom="5dp"
-                android:paddingTop="5dp">
-
-                <TextView
-                    style="@style/TestHeaderTextViewBold"
-                    android:gravity="right"
-                    android:text="@string/instrument_serial_no" />
-
-                <TextView
-                    android:id="@+id/instrumentserialno"
                     style="@style/TestHeaderTextViewNormal"
                     android:text="" />
             </TableRow>
@@ -222,6 +229,7 @@
             </TableRow>
 
         </TableLayout>
+
     </LinearLayout>
 
     <LinearLayout
@@ -232,7 +240,7 @@
         android:paddingLeft="5dp">
 
     </LinearLayout>
-s
+
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -305,32 +313,18 @@ s
 
             <TableRow
                 android:paddingBottom="5dp"
+                android:visibility="gone"
                 android:paddingTop="5dp">
 
                 <TextView
-                    style="@style/TestHeaderTextViewBold"
-                    android:gravity="right"
-                    android:text="@string/test_refrence" />
-
-                <TextView
-                    style="@style/TestHeaderTextViewNormal"
-                    android:id="@+id/testrefrence"
-                    android:text="" />
-            </TableRow>
-
-            <TableRow
-                android:paddingBottom="5dp"
-                android:paddingTop="5dp">
-
-                <TextView
-                    android:visibility="invisible"
+                    android:visibility="gone"
                     android:id="@+id/ahu_no_text"
                     android:gravity="right"
                     style="@style/TestHeaderTextViewBold"
                     android:text="AHU Number : " />
 
                 <TextView
-                    android:visibility="invisible"
+                    android:visibility="gone"
                     android:id="@+id/ahu_no"
                     style="@style/TestHeaderTextViewNormal"
                     android:text="" />
@@ -338,36 +332,38 @@ s
 
             <TableRow
                 android:paddingBottom="5dp"
+                android:visibility="gone"
                 android:paddingTop="5dp">
 
                 <TextView
                     android:id="@+id/room_volume_text"
-                    android:visibility="invisible"
+                    android:visibility="gone"
                     android:gravity="right"
                     style="@style/TestHeaderTextViewBold"
                     android:text="Room Volume (ft3) :" />
 
                 <TextView
                     android:id="@+id/room_volume"
-                    android:visibility="invisible"
+                    android:visibility="gone"
                     style="@style/TestHeaderTextViewNormal"
                     android:text="" />
             </TableRow>
 
             <TableRow
                 android:paddingBottom="5dp"
+                android:visibility="gone"
                 android:paddingTop="5dp">
 
                 <TextView
                     android:id="@+id/test_item_text"
-                    android:visibility="invisible"
+                    android:visibility="gone"
                     android:gravity="right"
                     style="@style/TestHeaderTextViewBold"
                     android:text="Test Item :" />
 
                 <TextView
                     android:id="@+id/test_item_value"
-                    android:visibility="invisible"
+                    android:visibility="gone"
                     style="@style/TestHeaderTextViewNormal"
                     android:text="" />
             </TableRow>
@@ -389,7 +385,22 @@ s
             </TableRow>
 
             <TableRow
-                android:visibility="invisible"
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp">
+
+                <TextView
+                    style="@style/TestHeaderTextViewBold"
+                    android:gravity="right"
+                    android:text="@string/test_refrence" />
+
+                <TextView
+                    style="@style/TestHeaderTextViewNormal"
+                    android:id="@+id/testrefrence"
+                    android:text="" />
+            </TableRow>
+
+            <TableRow
+                android:visibility="gone"
                 android:paddingBottom="5dp"
                 android:paddingTop="5dp">
 
@@ -443,12 +454,15 @@ s
 
     <LinearLayout
         android:visibility="gone"
-        android:id="@+id/test_table_6b_header_2_ll"
+        android:id="@+id/common_certificate_header_ll"
         style="@style/TextAppearance.AppCompat.header_top"
+        android:background="@drawable/border"
         android:layout_marginTop="10dp">
 
         <TextView
             style="@style/TextAppearance.AppCompat.header_text"
             android:text="@string/header_title_result" />
-    </LinearLayout>
+
+        </LinearLayout>
+
 </LinearLayout>

@@ -18,6 +18,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -49,9 +50,10 @@ import java.util.Map;
 
 public class RDFITUserEntryActivity extends AppCompatActivity {
     private static final String TAG = "RDFITUser";
-    TextView headerText;
+    TextView headerText,headerText_2;
     TableLayout test4_table_layout, test4_table_layout2, test4_table_layout3, test4_table_layout4,
             test4_table_layout5, test4_table_layout6, test4_table_layout7, test4_table_layout8;
+    LinearLayout common_certificate_header;
 
     int rows, cols;
     String mTestType;
@@ -754,7 +756,8 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-       headerText.setText("TEST RAW DATA\nInstalled HEPA Filter System Leakage Test by Aerosol Photometer Method");
+       headerText.setText("TEST RAW DATA EQUIPMENT");
+        headerText_2.setText("Installed HEPA Filter System Leakage Test by Aerosol Photometer Method");
     }
 
     private void BuildTableTest4(int rows, int cols) {
@@ -1193,6 +1196,11 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
 
     private void initRes() {
         headerText = (TextView) findViewById(R.id.common_header_tv);
+        headerText_2 = (TextView) findViewById(R.id.common_header_2_tv);
+        headerText_2.setVisibility(View.VISIBLE);
+        common_certificate_header = (LinearLayout)findViewById(R.id.common_certificate_header_ll);
+        common_certificate_header.setVisibility(View.VISIBLE);
+
         //Test4
         test4_table_layout = (TableLayout) findViewById(R.id.test4_tableLayout1);
         test4_table_layout2 = (TableLayout) findViewById(R.id.test4_tableLayout2);

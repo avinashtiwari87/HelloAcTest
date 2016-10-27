@@ -11,11 +11,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -467,7 +464,7 @@ public class RDRCTUserEntryActivity extends AppCompatActivity {
 //            }
 //        });
         findViewById(R.id.test_interference).setVisibility(View.GONE);
-        findViewById(R.id.test_table_6b_header_2_ll).setVisibility(View.VISIBLE);
+        findViewById(R.id.common_certificate_header_ll).setVisibility(View.VISIBLE);
     }
 
     private ArrayList<TestSpesificationValue> testSpesificationValue() {

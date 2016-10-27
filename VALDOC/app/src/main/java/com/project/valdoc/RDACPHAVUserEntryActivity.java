@@ -51,7 +51,6 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
     int rows, cols;
     String mTestType;
     ProgressDialog pr;
-    LinearLayout test_table_1_footer, test_table_1_header_l, test_table_1_header_2;
     //Test 2 Ids variable
     int filterSizeIds = 100, airFlowRateIds = 300,
             totalAirFlowRateIds = 400;
@@ -1127,11 +1126,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
         test2_table_layout8.setVisibility(View.GONE);
         TFRtv = (TextView) findViewById(R.id.acph_av_tfr_value_tv);
         TFTByRvTv = (TextView) findViewById(R.id.acph_av_tfrby_av_value_tv);
-        //Hide view coming form test tabl 1
-        test_table_1_header_l = (LinearLayout) findViewById(R.id.test_table_2_header_l_ll);
-        test_table_1_header_2 = (LinearLayout) findViewById(R.id.test_table_2_header_2_ll);
-        test_table_1_header_l.setVisibility(View.GONE);
-        test_table_1_header_2.setVisibility(View.VISIBLE);
+
         findViewById(R.id.test_interference).setVisibility(View.GONE);
         if(!"AHU".equalsIgnoreCase(mTestBasedOn)){
             findViewById(R.id.acph_av_final_calc_ll).setVisibility(View.VISIBLE);
@@ -1139,6 +1134,9 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
         }
         findViewById(R.id.test2_reading_header).setVisibility(View.VISIBLE);
         TextView TestHeader = (TextView) findViewById(R.id.common_header_tv);
-        TestHeader.setText("TEST RAW DATA\n(Air Flow Velocity, Volume Testing and Determination of Air Changes per Hour Rates)");
+        TextView TestHeader2 = (TextView) findViewById(R.id.common_header_2_tv);
+        TestHeader.setText("TEST RAW DATA EQUIPMENT");
+        TestHeader2.setVisibility(View.VISIBLE);
+        TestHeader2.setText("(Air Flow Velocity, Volume Testing and Determination of Air Changes per Hour Rates)");
     }
 }
