@@ -521,6 +521,8 @@ public class RDPCTUserEntryActivity extends AppCompatActivity {
 //        equipmentNameText = (TextView) findViewById(R.id.equipment_name_text);
 //        equipmentNoText = (TextView) findViewById(R.id.equipment_no_text);
         roomNo = (TextView) findViewById(R.id.room_no);
+        roomNo.setVisibility(View.GONE);
+        findViewById(R.id.room_no_lable).setVisibility(View.GONE);
         infarance = (TextView) findViewById(R.id.infarance);
         testCundoctor = (TextView) findViewById(R.id.testcunducter);
         testWitness = (TextView) findViewById(R.id.testwitness);

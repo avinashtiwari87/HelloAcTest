@@ -756,8 +756,17 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-       headerText.setText("TEST RAW DATA EQUIPMENT");
-        headerText_2.setText("Installed HEPA Filter System Leakage Test by Aerosol Photometer Method");
+        if("AHU".equalsIgnoreCase(mTestBasedOn)){
+            headerText.setText("TEST RAW DATA AHU/EQUIPMENT");
+            headerText_2.setText("Installed HEPA Filter System Leakage Test by Aerosol Photometer Method");
+        }else if("ROOM".equalsIgnoreCase(mTestBasedOn)){
+            headerText.setText("TEST RAW DATA");
+            headerText_2.setText("Installed HEPA Filter System Leakage Test by Aerosol Photometer Method");
+        }else{
+            headerText.setText("TEST RAW DATA EQUIPMENT");
+            headerText_2.setText("Installed HEPA Filter System Leakage Test by Aerosol Photometer Method");
+        }
+
     }
 
     private void BuildTableTest4(int rows, int cols) {

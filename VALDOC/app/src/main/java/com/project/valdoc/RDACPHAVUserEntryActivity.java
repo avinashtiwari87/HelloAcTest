@@ -97,6 +97,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
     private TextView testRefrance;
     private TextView equipmentNameText;
     private TextView equipmentNoText;
+    private TextView equiment_no;
     private TextView roomNo;
     private TextView ahuNo;
     private TextView ahuNoText;
@@ -397,12 +398,6 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
         ahuNo.setVisibility(View.VISIBLE);
         ahuNoText = (TextView) findViewById(R.id.ahu_no_text);
         ahuNoText.setVisibility(View.VISIBLE);
-        if (mTestBasedOn.equalsIgnoreCase("AHU")) {
-            testItemText = (TextView) findViewById(R.id.test_item_text);
-            testItemText.setVisibility(View.VISIBLE);
-            testItemValue = (TextView) findViewById(R.id.test_item_value);
-            testItemValue.setVisibility(View.VISIBLE);
-        }
 //        roomNameLable = (TextView) findViewById(R.id.room_name_lable2);
 //        roomNameLable.setVisibility(View.GONE);
 //        instrumentNoLable = (TextView) findViewById(R.id.instrument_no_lable);
@@ -430,7 +425,9 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
         equipmentNameText = (TextView) findViewById(R.id.equiment_name_text);
         equipmentNameText.setVisibility(View.INVISIBLE);
         equipmentNoText = (TextView) findViewById(R.id.equiment_no_text);
+        equiment_no = (TextView) findViewById(R.id.equiment_no);
         equipmentNoText.setVisibility(View.INVISIBLE);
+        equiment_no.setVisibility(View.INVISIBLE);
         roomName = (TextView) findViewById(R.id.room_name);
         roomNo = (TextView) findViewById(R.id.room_no);
         infarance = (TextView) findViewById(R.id.infarance);
@@ -441,6 +438,8 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
         submit = (ImageView) findViewById(R.id.submit);
         clear = (ImageView) findViewById(R.id.clear);
         clear.setVisibility(View.INVISIBLE);
+
+
         cancel = (ImageView) findViewById(R.id.cancel);
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -449,6 +448,21 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+        if (mTestBasedOn.equalsIgnoreCase("AHU")) {
+            findViewById(R.id.test_item_table).setVisibility(View.VISIBLE);
+            testItemText = (TextView) findViewById(R.id.test_item_text);
+            testItemText.setVisibility(View.VISIBLE);
+            testItemValue = (TextView) findViewById(R.id.test_item_value);
+            testItemValue.setVisibility(View.VISIBLE);
+            findViewById(R.id.room_name_lable).setVisibility(View.GONE);
+            findViewById(R.id.room_no_lable).setVisibility(View.GONE);
+            roomName.setVisibility(View.GONE);
+            roomNo.setVisibility(View.GONE);
+            equipmentNoText.setVisibility(View.VISIBLE);
+            equiment_no.setVisibility(View.VISIBLE);
+            equiment_no.setText(" AHU 06");
+        }
 
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -1128,15 +1142,19 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
         TFTByRvTv = (TextView) findViewById(R.id.acph_av_tfrby_av_value_tv);
 
         findViewById(R.id.test_interference).setVisibility(View.GONE);
-        if(!"AHU".equalsIgnoreCase(mTestBasedOn)){
-            findViewById(R.id.acph_av_final_calc_ll).setVisibility(View.VISIBLE);
-            test2_table_layout6.setVisibility(View.GONE);
-        }
         findViewById(R.id.test2_reading_header).setVisibility(View.VISIBLE);
         TextView TestHeader = (TextView) findViewById(R.id.common_header_tv);
         TextView TestHeader2 = (TextView) findViewById(R.id.common_header_2_tv);
         TestHeader.setText("TEST RAW DATA EQUIPMENT");
         TestHeader2.setVisibility(View.VISIBLE);
         TestHeader2.setText("(Air Flow Velocity, Volume Testing and Determination of Air Changes per Hour Rates)");
+        if("AHU".equalsIgnoreCase(mTestBasedOn)){
+            findViewById(R.id.acph_av_final_calc_ll).setVisibility(View.VISIBLE);
+            test2_table_layout6.setVisibility(View.GONE);
+            findViewById(R.id.acph_av_final_calc_ll).setVisibility(View.GONE);
+            findViewById(R.id.common_certificate_header_ll).setVisibility(View.VISIBLE);
+            TestHeader.setText(" TEST RAW DATA AHU/EQUIPMENT ");
+            TestHeader2.setText("(Air Flow Velocity/ Volume Testing)");
+        }
     }
 }

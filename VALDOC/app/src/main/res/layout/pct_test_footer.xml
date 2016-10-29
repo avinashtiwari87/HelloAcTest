@@ -19,7 +19,8 @@
             <TextView
                 style="@style/TestHeaderTextViewBold"
                 android:layout_width="match_parent"
-                android:background="@drawable/border"
+                android:gravity="center"
+                android:background="@drawable/border_black_overlay"
                 android:text="Test Results " />
 
             <TextView
@@ -64,7 +65,8 @@
             <TextView
                 style="@style/TestHeaderTextViewBold"
                 android:layout_width="match_parent"
-                android:background="@drawable/border"
+                android:gravity="center"
+                android:background="@drawable/border_black_overlay"
                 android:text="No. of Particles ≥ 0. 5 µm/m³ " />
 
             <TextView
@@ -117,7 +119,8 @@
             <TextView
                 style="@style/TestHeaderTextViewBold"
                 android:layout_width="match_parent"
-                android:background="@drawable/border"
+                android:gravity="center"
+                android:background="@drawable/border_black_overlay"
                 android:text="No. of Particles ≥ 5 µm/m³" />
 
             <TextView

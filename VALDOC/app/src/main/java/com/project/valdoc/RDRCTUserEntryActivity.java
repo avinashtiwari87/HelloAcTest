@@ -35,7 +35,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 
 public class RDRCTUserEntryActivity extends AppCompatActivity {
-    TextView headerText;
+    TextView headerText,headerText_2;
     int rows, cols;
     String mTestType;
     private static final String TAG = "RDRCT";
@@ -75,12 +75,16 @@ public class RDRCTUserEntryActivity extends AppCompatActivity {
     private TextView dateTextView;
     private TextView customerName;
     private TextView certificateNo;
-    private TextView samplingTimeLable;
-    private TextView samplingFlowRateLable;
+    private TextView aerosol_gen_rct;
+    private TextView recovery_time_tv;
+    private TextView aerosol_used_rct_tv;
     //private TextView samplingTime;
     private TextView samplingFlowRate;
     private TableRow samplingFlowTable;
     private TableRow samplingTimeTable;
+    private TableRow aerosolGenTable;
+    private TableRow recovery_time_rct;
+    private TableRow aerosol_used_rct;
     private TextView samplingFlowRateText;
     private TextView samplingTimeText;
     private TextView samplingTime;
@@ -324,6 +328,7 @@ public class RDRCTUserEntryActivity extends AppCompatActivity {
 
     private String getSamplingTime(String testSpecification, String range) {
         String samplingTime = "";
+        testSpecification = " ";
         if (testSpecification.contains("5") || testSpecification.contains("6")) {
             if (range.contains("28.3")) {
                 samplingTime = "36 Minute";
@@ -342,7 +347,10 @@ public class RDRCTUserEntryActivity extends AppCompatActivity {
 
     private void initTextView() {
         headerText = (TextView) findViewById(R.id.common_header_tv);
-        headerText.setText("TEST RAW DATA\nAirborne Particle Count Test for Classification of Cleanrooms/zones and Clean Air Devices");
+        headerText_2 = (TextView) findViewById(R.id.common_header_2_tv);
+        headerText_2.setVisibility(View.VISIBLE);
+        headerText.setText("TEST RAW DATA EQUIPMENT");
+        headerText_2.setText("Recovery Performance Test");
         // layout data which is not in use
         instrumentNoTextView = (TextView) findViewById(R.id.instrument_no6);
 //        instrumentNoTextView.setVisibility(View.GONE);
@@ -357,6 +365,18 @@ public class RDRCTUserEntryActivity extends AppCompatActivity {
         samplingFlowTable.setVisibility(View.VISIBLE);
         samplingTimeTable = (TableRow) findViewById(R.id.aerosol_used_table);
         samplingTimeTable.setVisibility(View.VISIBLE);
+
+        aerosolGenTable = (TableRow)findViewById(R.id.aerosol_gen_table_rct);
+        aerosolGenTable.setVisibility(View.VISIBLE);
+        aerosol_gen_rct = (TextView) findViewById(R.id.aerosol_gen_rct);
+
+        recovery_time_rct = (TableRow)findViewById(R.id.recovery_time_rct);
+        recovery_time_rct.setVisibility(View.VISIBLE);
+        recovery_time_tv = (TextView) findViewById(R.id.recovery_time_tv);
+
+        aerosol_used_rct = (TableRow)findViewById(R.id.aerosol_used_rct);
+        aerosol_used_rct.setVisibility(View.VISIBLE);
+        aerosol_used_rct_tv = (TextView) findViewById(R.id.aerosol_used_rct_tv);
 
         samplingFlowRateText= (TextView) findViewById(R.id.aerosol_generator_type_text);
         samplingTimeText= (TextView) findViewById(R.id.aerosol_used_text);

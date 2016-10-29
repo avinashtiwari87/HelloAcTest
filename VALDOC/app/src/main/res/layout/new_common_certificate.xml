@@ -118,6 +118,42 @@
             </TableRow>
 
             <TableRow
+                android:id="@+id/aerosol_used_table"
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/aerosol_used_text"
+                    style="@style/TestHeaderTextViewBold"
+                    android:gravity="right"
+                    android:text="Aerosol Used :" />
+
+                <TextView
+                    style="@style/TestHeaderTextViewNormal"
+                    android:id="@+id/aerosol_used"
+                    android:text=""/>
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/aerosol_gen_table_rct"
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/aerosol_gen_text_rct"
+                    style="@style/TestHeaderTextViewBold"
+                    android:gravity="right"
+                    android:text="Aerosol Generator Type :" />
+
+                <TextView
+                    style="@style/TestHeaderTextViewNormal"
+                    android:id="@+id/aerosol_gen_rct"
+                    android:text="Poly dispersed Aerosol"/>
+            </TableRow>
+
+            <TableRow
                 android:paddingBottom="5dp"
                 android:paddingTop="5dp">
 
@@ -208,24 +244,6 @@
                 <TextView
                     style="@style/TestHeaderTextViewNormal"
                     android:text="" />
-            </TableRow>
-
-            <TableRow
-                android:id="@+id/aerosol_used_table"
-                android:paddingBottom="5dp"
-                android:paddingTop="5dp"
-                android:visibility="gone">
-
-                <TextView
-                    android:id="@+id/aerosol_used_text"
-                    style="@style/TestHeaderTextViewBold"
-                    android:gravity="right"
-                    android:text="Aerosol Used :" />
-
-                <TextView
-                    style="@style/TestHeaderTextViewNormal"
-                    android:id="@+id/aerosol_used"
-                    android:text=""/>
             </TableRow>
 
         </TableLayout>
@@ -350,6 +368,7 @@
             </TableRow>
 
             <TableRow
+                android:id="@+id/test_item_table"
                 android:paddingBottom="5dp"
                 android:visibility="gone"
                 android:paddingTop="5dp">
@@ -382,6 +401,42 @@
                     style="@style/TestHeaderTextViewNormal"
                     android:id="@+id/ocupancystate"
                     android:text=""/>
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/recovery_time_rct"
+                android:paddingBottom="5dp"
+                android:visibility="gone"
+                android:paddingTop="5dp">
+
+                <TextView
+                    android:id="@+id/recovery_time_header_tv"
+                    style="@style/TestHeaderTextViewBold"
+                    android:gravity="right"
+                    android:text="Required Recovery Time :" />
+
+                <TextView
+                    style="@style/TestHeaderTextViewNormal"
+                    android:id="@+id/recovery_time_tv"
+                    android:text=" ≤ 20  min"/>
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/aerosol_used_rct"
+                android:paddingBottom="5dp"
+                android:visibility="gone"
+                android:paddingTop="5dp">
+
+                <TextView
+                    android:id="@+id/aerosol_used_rct_header_tv"
+                    style="@style/TestHeaderTextViewBold"
+                    android:gravity="right"
+                    android:text="Aerosol Used :" />
+
+                <TextView
+                    style="@style/TestHeaderTextViewNormal"
+                    android:id="@+id/aerosol_used_rct_tv"
+                    android:text=" PAO"/>
             </TableRow>
 
             <TableRow
