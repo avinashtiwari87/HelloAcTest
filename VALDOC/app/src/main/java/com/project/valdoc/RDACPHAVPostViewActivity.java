@@ -608,9 +608,25 @@ public class RDACPHAVPostViewActivity extends AppCompatActivity {
         TFRByRvTv = (TextView) findViewById(R.id.acph_av_tfrby_av_value_tv);
 
         findViewById(R.id.test_interference).setVisibility(View.GONE);
-        findViewById(R.id.acph_av_final_calc_ll).setVisibility(View.VISIBLE);
         findViewById(R.id.test2_reading_header).setVisibility(View.VISIBLE);
         TextView TestHeader = (TextView) findViewById(R.id.common_header_tv);
-        TestHeader.setText("TEST RAW DATA\n(Air Flow Velocity, Volume Testing and Determination of Air Changes per Hour Rates)");
+        TextView TestHeader2 = (TextView) findViewById(R.id.common_header_2_tv);
+        TestHeader.setText("TEST RAW DATA EQUIPMENT");
+        TestHeader2.setVisibility(View.VISIBLE);
+        TestHeader2.setText("(Air Flow Velocity, Volume Testing and Determination of Air Changes per Hour Rates)");
+        if("AHU".equalsIgnoreCase(mTestBasedOn)){
+            findViewById(R.id.acph_av_final_calc_ll).setVisibility(View.VISIBLE);
+            test2_table_layout6.setVisibility(View.GONE);
+            findViewById(R.id.acph_av_final_calc_ll).setVisibility(View.GONE);
+            findViewById(R.id.common_certificate_header_ll).setVisibility(View.VISIBLE);
+            TestHeader.setText(" TEST RAW DATA AHU/EQUIPMENT ");
+            TestHeader2.setText("(Air Flow Velocity/ Volume Testing)");
+        }else if("ROOM".equalsIgnoreCase(mTestBasedOn)){
+            TestHeader.setText("TEST RAW DATA ");
+            findViewById(R.id.acph_av_final_calc_ll).setVisibility(View.VISIBLE);
+            findViewById(R.id.common_certificate_header_ll).setVisibility(View.VISIBLE);
+            findViewById(R.id.ahu_no_lable).setVisibility(View.VISIBLE);
+            findViewById(R.id.room_volume_table).setVisibility(View.VISIBLE);
+        }
     }
 }

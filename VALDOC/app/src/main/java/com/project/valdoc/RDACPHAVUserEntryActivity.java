@@ -451,6 +451,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
             roomNo.setVisibility(View.GONE);
             equipmentNoText.setVisibility(View.VISIBLE);
             equiment_no.setVisibility(View.VISIBLE);
+            equipmentNoText.setText("AHU/Equipment No: ");
             equiment_no.setText(" AHU 06");
         }
 
@@ -1133,7 +1134,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
         TestHeader2.setText("(Air Flow Velocity, Volume Testing and Determination of Air Changes per Hour Rates)");
         if("AHU".equalsIgnoreCase(mTestBasedOn)){
             findViewById(R.id.acph_av_final_calc_ll).setVisibility(View.VISIBLE);
-            test2_table_layout6.setVisibility(View.GONE);
+            test2_table_layout6.setVisibility(View.VISIBLE);
             findViewById(R.id.acph_av_final_calc_ll).setVisibility(View.GONE);
             findViewById(R.id.common_certificate_header_ll).setVisibility(View.VISIBLE);
             TestHeader.setText(" TEST RAW DATA AHU/EQUIPMENT ");
