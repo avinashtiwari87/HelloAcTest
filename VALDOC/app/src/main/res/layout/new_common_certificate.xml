@@ -329,63 +329,6 @@
                     android:text="@string/calibration_due_on_date" />
             </TableRow>
 
-            <TableRow
-                android:paddingBottom="5dp"
-                android:visibility="gone"
-                android:paddingTop="5dp">
-
-                <TextView
-                    android:visibility="gone"
-                    android:id="@+id/ahu_no_text"
-                    android:gravity="right"
-                    style="@style/TestHeaderTextViewBold"
-                    android:text="AHU Number : " />
-
-                <TextView
-                    android:visibility="gone"
-                    android:id="@+id/ahu_no"
-                    style="@style/TestHeaderTextViewNormal"
-                    android:text="" />
-            </TableRow>
-
-            <TableRow
-                android:paddingBottom="5dp"
-                android:visibility="gone"
-                android:paddingTop="5dp">
-
-                <TextView
-                    android:id="@+id/room_volume_text"
-                    android:visibility="gone"
-                    android:gravity="right"
-                    style="@style/TestHeaderTextViewBold"
-                    android:text="Room Volume (ft3) :" />
-
-                <TextView
-                    android:id="@+id/room_volume"
-                    android:visibility="gone"
-                    style="@style/TestHeaderTextViewNormal"
-                    android:text="" />
-            </TableRow>
-
-            <TableRow
-                android:id="@+id/test_item_table"
-                android:paddingBottom="5dp"
-                android:visibility="gone"
-                android:paddingTop="5dp">
-
-                <TextView
-                    android:id="@+id/test_item_text"
-                    android:visibility="gone"
-                    android:gravity="right"
-                    style="@style/TestHeaderTextViewBold"
-                    android:text="Test Item :" />
-
-                <TextView
-                    android:id="@+id/test_item_value"
-                    android:visibility="gone"
-                    style="@style/TestHeaderTextViewNormal"
-                    android:text="" />
-            </TableRow>
 
             <TableRow
                 android:paddingBottom="5dp"
@@ -451,6 +394,62 @@
                 <TextView
                     style="@style/TestHeaderTextViewNormal"
                     android:id="@+id/testrefrence"
+                    android:text="" />
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/test_item_table"
+                android:paddingBottom="5dp"
+                android:visibility="gone"
+                android:paddingTop="5dp">
+
+                <TextView
+                    android:id="@+id/test_item_text"
+                    android:visibility="gone"
+                    android:gravity="right"
+                    style="@style/TestHeaderTextViewBold"
+                    android:text="Test Item :" />
+
+                <TextView
+                    android:id="@+id/test_item_value"
+                    android:visibility="gone"
+                    style="@style/TestHeaderTextViewNormal"
+                    android:text="" />
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/ahu_no_lable"
+                android:paddingBottom="5dp"
+                android:visibility="gone"
+                android:paddingTop="5dp">
+
+                <TextView
+                    android:id="@+id/ahu_no_text"
+                    android:gravity="right"
+                    style="@style/TestHeaderTextViewBold"
+                    android:text="AHU Number : " />
+
+                <TextView
+                    android:id="@+id/ahu_no"
+                    style="@style/TestHeaderTextViewNormal"
+                    android:text="" />
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/room_volume_table"
+                android:paddingBottom="5dp"
+                android:visibility="gone"
+                android:paddingTop="5dp">
+
+                <TextView
+                    android:id="@+id/room_volume_text"
+                    android:gravity="right"
+                    style="@style/TestHeaderTextViewBold"
+                    android:text="Room Volume (ft3) :" />
+
+                <TextView
+                    android:id="@+id/room_volume"
+                    style="@style/TestHeaderTextViewNormal"
                     android:text="" />
             </TableRow>
 

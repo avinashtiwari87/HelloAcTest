@@ -1044,7 +1044,6 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                     intent.putExtra("WITNESSFIRST", witnessFirst);
                     intent.putExtra("WITNESSSECOND", witnessSecond);
                     intent.putExtra("WITNESSTHIRD", witnessThird);
-                    intent.putExtra("testBasedOn", mTestBasedOn);
                     intent.putExtra("testType", testType);
                     intent.putExtra("testCode", mTestCode);
                     //get area based on room area id
@@ -1081,6 +1080,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                         intent.putExtra("rows", mRoomFilterArrayList.size() + 1);
                         intent.putExtra("cols", mApplicableTestRoom.getLocation());
                     }
+                    intent.putExtra("testBasedOn", mTestBasedOn);
                     //sending Result Data over Bundle
                     intent.putExtra("PassFailData", passFailHashMap);
                     //sending Input Data
@@ -2965,16 +2965,13 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             findViewById(R.id.test4_dynamic_table_ll).setVisibility(View.VISIBLE);
             findViewById(R.id.test_table_4_header_2_ll).setVisibility(View.VISIBLE);
 
-            if (mTestBasedOn.equalsIgnoreCase("EQUIPMENT")) {
-                //roomName.setText("" + roomDetails[1]);
+            if ("EQUIPMENT".equalsIgnoreCase(mTestBasedOn)) {
                 testHeaderAv.setText("FORM:TEST RAW DATA EQUIPMENT");
                 testHeaderAv2.setText("Installed HEPA Filter System Leakage Test by Aerosol Photometer Method");
-            } else if (mTestBasedOn.equalsIgnoreCase("AHU")) {
-                //roomName.setText("dfd"+roomDetails[1]);
+            } else if ("AHU".equalsIgnoreCase(mTestBasedOn)) {
                 testHeaderAv.setText("FORM:TEST RAW DATA AHU/EQUIPMENT");
                 testHeaderAv2.setText("(Installed HEPA Filter System Leakage Test by Aerosol Photometer Method)");
-            } else if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
-                //roomName.setText("" + room.getRoomName());
+            } else if ("ROOM".equalsIgnoreCase(mTestBasedOn)) {
                 testHeaderAv.setText("FORM:TEST RAW DATA");
                 testHeaderAv2.setText("Installed HEPA Filter System Leakage Test by Aerosol Photometer Method");
             }
