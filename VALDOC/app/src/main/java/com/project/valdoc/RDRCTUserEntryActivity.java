@@ -141,8 +141,7 @@ public class RDRCTUserEntryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rdrctuser_entry);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-        headerText = (TextView) findViewById(R.id.common_header_tv);
-//        headerText.setText(" * Recovery Test for Non-Unidirectional Airflow Installations * ");
+
         mInputValue = new HashMap<Integer, Integer>();
         sharedpreferences = getSharedPreferences("valdoc", Context.MODE_PRIVATE);
         testDetailsId = (sharedpreferences.getInt("TESTDETAILSID", 0)+1);
@@ -351,6 +350,8 @@ public class RDRCTUserEntryActivity extends AppCompatActivity {
         headerText_2.setVisibility(View.VISIBLE);
         headerText.setText("TEST RAW DATA EQUIPMENT");
         headerText_2.setText("Recovery Performance Test");
+        if("ROOM".equalsIgnoreCase(mTestBasedOn))
+            headerText.setText("TEST RAW DATA ");
         // layout data which is not in use
         instrumentNoTextView = (TextView) findViewById(R.id.instrument_no6);
 //        instrumentNoTextView.setVisibility(View.GONE);
@@ -402,10 +403,7 @@ public class RDRCTUserEntryActivity extends AppCompatActivity {
             equipmentLable.setVisibility(View.INVISIBLE);
             equipmentNoLable = (TextView) findViewById(R.id.equiment_no_text);
             equipmentNoLable.setVisibility(View.INVISIBLE);
-            ahuNoText = (TextView) findViewById(R.id.ahu_no_text);
-            ahuNoText.setVisibility(View.VISIBLE);
-            ahuNo = (TextView) findViewById(R.id.ahu_no);
-            ahuNo.setVisibility(View.VISIBLE);
+            findViewById(R.id.ahu_no_lable).setVisibility(View.VISIBLE);
         }
 
         if (mTestBasedOn.equalsIgnoreCase("EQUIPMENT")) {

@@ -41,7 +41,6 @@ import java.util.Map;
 
 public class RDACPHhUserEntryActivity extends AppCompatActivity {
     private static final String TAG = "RDACPHhUser";
-    TextView headerText;
     TableLayout test3_table_layout, test3_table_layout2, test3_table_layout3, test3_table_layout4,
             test3_table_layout5;
 
@@ -782,8 +781,6 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
     }
 
     private void initRes() {
-        headerText = (TextView) findViewById(R.id.common_header_tv);
-//        headerText.setText("* Air Flow Velocity, Volume Testing and Determination of Air Changes per Hour Rates *");
         //Test3
         test3_table_layout = (TableLayout) findViewById(R.id.test3_tableLayout1);
         test3_table_layout2 = (TableLayout) findViewById(R.id.test3_tableLayout2);
@@ -798,7 +795,12 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
         findViewById(R.id.test_table_3_header_2_ll).setVisibility(View.VISIBLE);
         findViewById(R.id.test_interference).setVisibility(View.GONE);
         findViewById(R.id.acph_h_final_calc_ll).setVisibility(View.VISIBLE);
+        findViewById(R.id.ahu_no_lable).setVisibility(View.VISIBLE);
+        findViewById(R.id.room_volume_table).setVisibility(View.VISIBLE);
         TextView TestHeader = (TextView) findViewById(R.id.common_header_tv);
-        TestHeader.setText("TEST RAW DATA\n(Air Flow Velocity, Volume Testing and Determination of Air Changes per Hour Rates)");
+        TextView TestHeader2 = (TextView) findViewById(R.id.common_header_2_tv);
+        TestHeader2.setVisibility(View.VISIBLE);
+        TestHeader.setText("TEST RAW DATA");
+        TestHeader2.setText("(Air Flow Velocity, Volume Testing and Determination of Air Changes per Hour Rates by Hood)");
     }
 }

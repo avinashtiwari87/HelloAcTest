@@ -398,21 +398,11 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
         ahuNo.setVisibility(View.VISIBLE);
         ahuNoText = (TextView) findViewById(R.id.ahu_no_text);
         ahuNoText.setVisibility(View.VISIBLE);
-//        roomNameLable = (TextView) findViewById(R.id.room_name_lable2);
-//        roomNameLable.setVisibility(View.GONE);
-//        instrumentNoLable = (TextView) findViewById(R.id.instrument_no_lable);
-//        instrumentNoLable.setVisibility(View.GONE);
-//        roomNameTest = (TextView) findViewById(R.id.room_name2);
-//        roomNameTest.setVisibility(View.GONE);
-//        instrument_name = (TextView) findViewById(R.id.instrument_name2);
-//        instrument_name.setVisibility(View.GONE);
 
         dateTextView = (TextView) findViewById(R.id.datetextview);
         customerName = (TextView) findViewById(R.id.customer_name);
         certificateNo = (TextView) findViewById(R.id.trd_no);
         instrumentUsed = (TextView) findViewById(R.id.instrumentused);
-//        make = (TextView) findViewById(R.id.make);
-//        model = (TextView) findViewById(R.id.modle);
 
         instrumentSerialNo = (TextView) findViewById(R.id.instrumentserialno);
         calibrationOn = (TextView) findViewById(R.id.calibratedon);
@@ -461,6 +451,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
             roomNo.setVisibility(View.GONE);
             equipmentNoText.setVisibility(View.VISIBLE);
             equiment_no.setVisibility(View.VISIBLE);
+            equipmentNoText.setText("AHU/Equipment No: ");
             equiment_no.setText(" AHU 06");
         }
 
@@ -493,13 +484,6 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
             }
         });
 
-//        dateTextView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                // On button click show datepicker dialog
-//                showDialog(DATE_PICKER_ID);
-//            }
-//        });
     }
 
 
@@ -1150,11 +1134,17 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
         TestHeader2.setText("(Air Flow Velocity, Volume Testing and Determination of Air Changes per Hour Rates)");
         if("AHU".equalsIgnoreCase(mTestBasedOn)){
             findViewById(R.id.acph_av_final_calc_ll).setVisibility(View.VISIBLE);
-            test2_table_layout6.setVisibility(View.GONE);
+            test2_table_layout6.setVisibility(View.VISIBLE);
             findViewById(R.id.acph_av_final_calc_ll).setVisibility(View.GONE);
             findViewById(R.id.common_certificate_header_ll).setVisibility(View.VISIBLE);
             TestHeader.setText(" TEST RAW DATA AHU/EQUIPMENT ");
             TestHeader2.setText("(Air Flow Velocity/ Volume Testing)");
+        }else if("ROOM".equalsIgnoreCase(mTestBasedOn)){
+            TestHeader.setText("TEST RAW DATA ");
+            findViewById(R.id.acph_av_final_calc_ll).setVisibility(View.VISIBLE);
+            findViewById(R.id.common_certificate_header_ll).setVisibility(View.VISIBLE);
+            findViewById(R.id.ahu_no_lable).setVisibility(View.VISIBLE);
+            findViewById(R.id.room_volume_table).setVisibility(View.VISIBLE);
         }
     }
 }

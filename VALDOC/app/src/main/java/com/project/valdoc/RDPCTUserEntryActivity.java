@@ -1125,5 +1125,11 @@ public class RDPCTUserEntryActivity extends AppCompatActivity {
         minimumValue2_tv = (TextView) findViewById(R.id.pct_minimum_value_2);
         maximumValue1_tv = (TextView) findViewById(R.id.pct_maximum_value_1);
         maximumValue2_tv = (TextView) findViewById(R.id.pct_maximum_value_2);
+        if(getIntent().hasExtra("testBasedOn") && "ROOM".equalsIgnoreCase(getIntent().getStringExtra("testBasedOn"))){
+            findViewById(R.id.ahu_no_lable).setVisibility(View.VISIBLE);
+            roomNo.setVisibility(View.VISIBLE);
+            findViewById(R.id.room_no_lable).setVisibility(View.VISIBLE);
+        }
+
     }
 }

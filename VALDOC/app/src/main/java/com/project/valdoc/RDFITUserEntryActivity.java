@@ -1222,5 +1222,11 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
         findViewById(R.id.test_table_4_header_l_ll).setVisibility(View.GONE);
         findViewById(R.id.test_table_4_header_2_ll).setVisibility(View.VISIBLE);
         findViewById(R.id.test_interference).setVisibility(View.GONE);
+        if(getIntent().hasExtra("testBasedOn") && "ROOM".equalsIgnoreCase(getIntent().getStringExtra("testBasedOn"))){
+            findViewById(R.id.room_volume_table).setVisibility(View.VISIBLE);
+            findViewById(R.id.ahu_no_lable).setVisibility(View.VISIBLE);
+            findViewById(R.id.test_item_table).setVisibility(View.VISIBLE);
+
+        }
     }
 }

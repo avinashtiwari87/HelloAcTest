@@ -1028,12 +1028,28 @@ public class CommonTestViewActivity extends AppCompatActivity {
         if (testType != null && (testType.contains("AV") || testType.contains("AF"))) {
             findViewById(R.id.test_table_1_header_l_ll).setVisibility(View.GONE);
             TextView TestHeader = (TextView) findViewById(R.id.common_header_tv);
-            TestHeader.setText("TEST RAW DATA EQUIPMENT\n(Average Air Flow Velocity Testing)");
             findViewById(R.id.test_interference).setVisibility(View.GONE);
             findViewById(R.id.test1_reading_header).setVisibility(View.VISIBLE);
             findViewById(R.id.common_header_test1).setVisibility(View.GONE);
         }
-
+        TextView TestHeader = (TextView) findViewById(R.id.common_header_tv);
+        TextView TestHeader2 = (TextView) findViewById(R.id.common_header_2_tv);
+        TestHeader.setText("TEST RAW DATA EQUIPMENT");
+        TestHeader2.setVisibility(View.VISIBLE);
+        TestHeader2.setText("(Air Flow Velocity, Volume Testing and Determination of Air Changes per Hour Rates)");
+        if(testType != null && testType.contains("AF")){
+            findViewById(R.id.acph_av_final_calc_ll).setVisibility(View.VISIBLE);
+            findViewById(R.id.acph_av_final_calc_ll).setVisibility(View.GONE);
+            findViewById(R.id.common_certificate_header_ll).setVisibility(View.VISIBLE);
+            TestHeader.setText(" TEST RAW DATA AHU/EQUIPMENT ");
+            TestHeader2.setText("(Air Flow Velocity/ Volume Testing)");
+        }else if(testType != null && testType.contains("AV")){
+            TestHeader.setText("TEST RAW DATA ");
+            findViewById(R.id.acph_av_final_calc_ll).setVisibility(View.VISIBLE);
+            findViewById(R.id.common_certificate_header_ll).setVisibility(View.VISIBLE);
+            findViewById(R.id.ahu_no_lable).setVisibility(View.VISIBLE);
+            findViewById(R.id.room_volume_table).setVisibility(View.VISIBLE);
+        }
 
         //Test 2
         test2_table_layout = (TableLayout) findViewById(R.id.test2_tableLayout1);
