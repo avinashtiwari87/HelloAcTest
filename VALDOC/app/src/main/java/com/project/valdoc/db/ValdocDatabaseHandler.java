@@ -2789,16 +2789,17 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
 
 
     // select data from applicable test room table
-    public ApplicableTestRoom getApplicableTestRoomInfo(int roomId, String testCode) {
+    public  ArrayList<ApplicableTestRoom> getApplicableTestRoomInfo(int roomId, String testCode) {
+        ArrayList<ApplicableTestRoom> applicableTestRoomArrayList= new ArrayList<ApplicableTestRoom>();
         String selectQuery = "SELECT * FROM " + APLICABLE_TEST_ROOM_TABLE_NAME +
                 " WHERE " + ValdocDatabaseHandler.APLICABLE_TEST_ROOM_TESTCODE + " = " + '"' + testCode + '"' + " AND "
                 + ValdocDatabaseHandler.APLICABLE_TEST_ROOM_ROOMID + " = " + roomId;
         SQLiteDatabase database = this.getWritableDatabase();
         Cursor cursor = database.rawQuery(selectQuery, null);
-        ApplicableTestRoom applicableTestRoom = new ApplicableTestRoom();
+
         if (cursor.moveToFirst()) {
             do {
-
+                ApplicableTestRoom applicableTestRoom = new ApplicableTestRoom();
                 applicableTestRoom.setAplicable_testId(cursor.getInt(0));
                 applicableTestRoom.setRoomId(cursor.getInt(1));
                 applicableTestRoom.setTestName(cursor.getString(2));
@@ -2813,24 +2814,26 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 applicableTestRoom.setLocation(cursor.getInt(10));
                 applicableTestRoom.setNoOfCycle(cursor.getInt(11));
                 applicableTestRoom.setLastUpdatedDate(cursor.getString(12));
+                applicableTestRoomArrayList.add(applicableTestRoom);
                 Log.d("Avinash", "applicableTestRoom=" + applicableTestRoom.getTestName());
             } while (cursor.moveToNext());
         } // return contact list return wordList; }
-        return applicableTestRoom;
+        return applicableTestRoomArrayList;
     }
 
 
     // select data from applicable test ahu table
-    public ApplicableTestAhu getApplicableTestAhuInfo(int ahuId, String testCode) {
+    public ArrayList<ApplicableTestAhu> getApplicableTestAhuInfo(int ahuId, String testCode) {
+        ArrayList<ApplicableTestAhu> applicableTestAhuArrayList=new ArrayList<ApplicableTestAhu>();
         String selectQuery = "SELECT * FROM " + APLICABLE_TEST_AHU_TABLE_NAME +
                 " WHERE " + ValdocDatabaseHandler.APLICABLE_TEST_AHU_TESTCODE + " = " + '"' + testCode + '"' + " AND "
                 + ValdocDatabaseHandler.APLICABLE_TEST_AHU_AHUID + " = " + ahuId;
         SQLiteDatabase database = this.getWritableDatabase();
         Cursor cursor = database.rawQuery(selectQuery, null);
-        ApplicableTestAhu applicableTestAhu = new ApplicableTestAhu();
+
         if (cursor.moveToFirst()) {
             do {
-
+                ApplicableTestAhu applicableTestAhu = new ApplicableTestAhu();
                 applicableTestAhu.setAplicable_testId(cursor.getInt(0));
                 applicableTestAhu.setAhuId(cursor.getInt(1));
                 applicableTestAhu.setTestName(cursor.getString(2));
@@ -2845,23 +2848,26 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 applicableTestAhu.setLocation(cursor.getInt(11));
                 applicableTestAhu.setNoOfCycle(cursor.getInt(12));
                 applicableTestAhu.setLastUpdatedDate(cursor.getString(13));
+                applicableTestAhuArrayList.add(applicableTestAhu);
             } while (cursor.moveToNext());
         } // return contact list return wordList; }
-        return applicableTestAhu;
+        return applicableTestAhuArrayList;
     }
 
     // select data from applicable test room table
-    public ApplicableTestEquipment getApplicableTestEquipmentInfo(int equipmentId, String testCode) {
+    public ArrayList<ApplicableTestEquipment> getApplicableTestEquipmentInfo(int equipmentId, String testCode) {
+        ArrayList<ApplicableTestEquipment> applicableTestEquipmentArrayList= new ArrayList<ApplicableTestEquipment>();
         String selectQuery = "SELECT * FROM " + APLICABLE_TEST_EQUIPMENT_TABLE_NAME +
                 " WHERE " + ValdocDatabaseHandler.APLICABLE_TEST_EQUIPMENT_TESTCODE + " = " + '"' + testCode + '"' + " AND "
                 + ValdocDatabaseHandler.APLICABLE_TEST_EQUIPMENT_EQUIPMENTID + " = " + equipmentId;
         SQLiteDatabase database = this.getWritableDatabase();
         Cursor cursor = database.rawQuery(selectQuery, null);
         Log.d("Avinash", "applicableTestEquipment selectQuery=" + selectQuery);
-        ApplicableTestEquipment applicableTestEquipment = new ApplicableTestEquipment();
+
         Log.d("Avinash", "applicableTestEquipment before=" + cursor.getCount());
         if (cursor.moveToFirst()) {
             do {
+                ApplicableTestEquipment applicableTestEquipment = new ApplicableTestEquipment();
                 applicableTestEquipment.setAplicable_testId(cursor.getInt(0));
                 applicableTestEquipment.setEquipmentId(cursor.getInt(1));
                 applicableTestEquipment.setTestName(cursor.getString(2));
@@ -2875,10 +2881,11 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 applicableTestEquipment.setLocation(cursor.getInt(10));
                 applicableTestEquipment.setNoOfCycle(cursor.getInt(11));
                 applicableTestEquipment.setLastUpdatedDate(cursor.getString(12));
+                applicableTestEquipmentArrayList.add(applicableTestEquipment);
                 Log.d("Avinash", "applicableTestEquipment.setAplicable_testId(cursor.getInt(0));=" + applicableTestEquipment.getAplicable_testId());
             } while (cursor.moveToNext());
         } // return contact list return wordList; }
-        return applicableTestEquipment;
+        return applicableTestEquipmentArrayList;
     }
 
     // select name data from partners table

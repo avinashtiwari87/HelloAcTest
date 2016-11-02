@@ -253,6 +253,22 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:id="@+id/select_occupancy_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <Spinner
+                    android:id="@+id/select_occupancy_spinner"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@android:drawable/spinner_dropdown_background"
+                    android:popupBackground="@android:color/holo_green_dark"
+                    android:spinnerMode="dropdown"
+                    android:visibility="gone" />
+            </RelativeLayout>
+
+            <RelativeLayout
                 android:id="@+id/submitbuttonlayout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -267,7 +283,7 @@
                     android:src="@drawable/go_btn"
                     android:textColor="@color/white" />
             </RelativeLayout>
-        </LinearLayout>
 
+        </LinearLayout>
     </RelativeLayout>
 </ScrollView>
