@@ -42,6 +42,8 @@ import com.project.valdoc.intity.Room;
 import com.project.valdoc.intity.RoomFilter;
 import com.project.valdoc.utility.Utilityies;
 
+import org.json.JSONObject;
+
 import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -272,9 +274,9 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
                 }
                 int testPosition = applicableTestSpinner.getSelectedItemPosition();
                 if (ACPHAV.equals(searchAhuTestCode[testPosition])) {
-                    createApplicableTestAhuList(ahu.getAhuId(), searchAhuTestCode[testPosition]);
+                    createApplicableTestAhuList(ahu.getAhuId(), searchAhuTestCode[testPosition], roomSpinner.getSelectedItem().toString());
                 } else if (FIT.equals(searchAhuTestCode[testPosition])) {
-                    createApplicableTestAhuList(ahu.getAhuId(), searchAhuTestCode[testPosition]);
+                    createApplicableTestAhuList(ahu.getAhuId(), searchAhuTestCode[testPosition], roomSpinner.getSelectedItem().toString());
                 }
                 createOccupancySpinner("AHU");
 
@@ -319,27 +321,39 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
                 occupancySpiner.setVisibility(View.VISIBLE);
                 for (ApplicableTestAhu applicableTestAhu : mApplicableTestAhuList)
                     occupancyList.add(applicableTestAhu.getOccupencyState().toString());
-            }else{
-                occupancySpiner.setVisibility(View.GONE);
-                mApplicableTestAhu = mApplicableTestAhuList.get(0);
+            } else {
+                if (null != mApplicableTestAhuList && mApplicableTestAhuList.size() != 0) {
+                    occupancySpiner.setVisibility(View.GONE);
+                    mApplicableTestAhu = mApplicableTestAhuList.get(0);
+                } else {
+                    occupancySpiner.setVisibility(View.VISIBLE);
+                }
             }
         } else if (testBasedOn.equalsIgnoreCase("ROOM")) {
             if (mApplicableTestRoomList.size() > 1) {
                 occupancySpiner.setVisibility(View.VISIBLE);
                 for (ApplicableTestRoom applicableTestRoom : mApplicableTestRoomList)
                     occupancyList.add(applicableTestRoom.getOccupencyState().toString());
-            }else{
-                occupancySpiner.setVisibility(View.GONE);
-                mApplicableTestRoom = mApplicableTestRoomList.get(0);
+            } else {
+                if (null != mApplicableTestAhuList && mApplicableTestAhuList.size() != 0) {
+                    occupancySpiner.setVisibility(View.GONE);
+                    mApplicableTestRoom = mApplicableTestRoomList.get(0);
+                } else {
+                    occupancySpiner.setVisibility(View.VISIBLE);
+                }
             }
         } else if (testBasedOn.equalsIgnoreCase("EQUIPMENT")) {
             if (mApplicableTestRoomList.size() > 1) {
                 occupancySpiner.setVisibility(View.VISIBLE);
                 for (ApplicableTestEquipment applicableTestEquipment : mApplicableTestEquipmentList)
                     occupancyList.add(applicableTestEquipment.getOccupencyState().toString());
-            }else{
-                occupancySpiner.setVisibility(View.GONE);
-                mApplicableTestEquipment = mApplicableTestEquipmentList.get(0);
+            } else {
+                if (null != mApplicableTestAhuList && mApplicableTestAhuList.size() != 0) {
+                    occupancySpiner.setVisibility(View.GONE);
+                    mApplicableTestEquipment = mApplicableTestEquipmentList.get(0);
+                } else {
+                    occupancySpiner.setVisibility(View.VISIBLE);
+                }
             }
         }
 
@@ -398,11 +412,11 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
         mApplicableTestEquipmentList = mValdocDatabaseHandler.getApplicableTestEquipmentInfo(equipmentId, testcode);
     }
 
-    private void createApplicableTestAhuList(int ahuId, String testCode) {
+    private void createApplicableTestAhuList(int ahuId, String testCode, String testItem) {
         if (null != mApplicableTestAhuList && mApplicableTestAhuList.size() > 0) {
             mApplicableTestAhuList.clear();
         }
-        mApplicableTestAhuList = mValdocDatabaseHandler.getApplicableTestAhuInfo(ahuId, testCode);
+        mApplicableTestAhuList = mValdocDatabaseHandler.getApplicableTestAhuInfo(ahuId, testCode, testItem);
 //        applicableTestEquipmentList.add("Select Test Type");
     }
 
@@ -505,7 +519,8 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
             roomDetails = mValdocDatabaseHandler.getRoomByAhu(ahu.getAhuId());
             intent.putExtra("RoomDetails", roomDetails);
 
-            String areaName = mValdocDatabaseHandler.getAreaByRoomAreaId(roomDetails[2]);
+            String areaName = getAhuArea(ahu.getAreId());
+//                    mValdocDatabaseHandler.getAreaByRoomAreaId(roomDetails[2]);
             intent.putExtra("AREANAME", areaName);
             mAhuFilterArrayList = getAhuACPHAVFilterList(ahu, roomSpinner.getSelectedItem().toString());
 //            mValdocDatabaseHandler.getFilterFromAhuFilter(ahu.getAhuId());
@@ -543,6 +558,17 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
         startActivity(intent);
     }
 
+    private String getAhuArea(String area) {
+        Log.d("ahuArea", "area=" + area);
+        String ahuArea = "NA";
+        try {
+            JSONObject jsonObject = new JSONObject(area);
+            ahuArea = jsonObject.getString("areaName");
+        } catch (Exception e) {
+
+        }
+        return ahuArea;
+    }
 
     public ArrayList<AhuFilter> getAhuACPHAVFilterList(Ahu ahu, String testItem) {
         ArrayList<AhuFilter> ahuFilterList = null;
@@ -666,7 +692,8 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
             roomDetails = mValdocDatabaseHandler.getRoomByAhu(ahu.getAhuId());
             intent.putExtra("RoomDetails", roomDetails);
             Log.d("valdoc", "TestCreateActivity roomDetails[2]=" + roomDetails[2]);
-            String areaName = mValdocDatabaseHandler.getAreaByRoomAreaId(roomDetails[2]);
+//            String areaName = mValdocDatabaseHandler.getAreaByRoomAreaId(roomDetails[2]);
+            String areaName = getAhuArea(ahu.getAreId());
             Log.d("valdoc", "TestCreateActivity areaName=" + areaName);
             intent.putExtra("AREANAME", areaName);
             mAhuFilterArrayList = getAhuFilterList(ahu, roomSpinner.getSelectedItem().toString());
@@ -961,33 +988,39 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
 //        if (equipmentAhuOrRoomSpinner.getSelectedItemPosition() > 0) {
             if (equipmentAhuOrRoomTestCodeList[pos - 1].toString().equals("AHU")) {
                 if (equipmentAhuOrRoomSpinner.getSelectedItemPosition() > 0 && applicableTestSpinner.getSelectedItemPosition() > 0 && instrumentSpiner.getSelectedItemPosition() > 0
-                        && ahuSpinner.getSelectedItemPosition() > 0 && roomSpinner.getSelectedItemPosition() > 0 && witnessFirst.getText().length() > 0){
-                    if(mApplicableTestAhuList.size()>1){
-                        if(occupancySpiner.getSelectedItemPosition()>0)
+                        && ahuSpinner.getSelectedItemPosition() > 0 && roomSpinner.getSelectedItemPosition() > 0 && witnessFirst.getText().length() > 0) {
+                    if (mApplicableTestAhuList.size() > 1) {
+                        if (occupancySpiner.getSelectedItemPosition() > 0)
                             flag = true;
-                    }else{
+                    } else if (null != mApplicableTestAhuList && mApplicableTestAhuList.size() != 0) {
                         flag = true;
+                    } else {
+                        flag = false;
                     }
                 }
 
             } else if (equipmentAhuOrRoomTestCodeList[pos - 1].toString().equals("EQUIPMENT")) {
                 if (equipmentAhuOrRoomSpinner.getSelectedItemPosition() > 0 && applicableTestSpinner.getSelectedItemPosition() > 0 && instrumentSpiner.getSelectedItemPosition() > 0
-                        && ahuSpinner.getSelectedItemPosition() > 0 && roomSpinner.getSelectedItemPosition() > 0 && witnessFirst.getText().length() > 0){
-                    if(mApplicableTestEquipmentList.size()>1){
-                        if(occupancySpiner.getSelectedItemPosition()>0)
+                        && ahuSpinner.getSelectedItemPosition() > 0 && roomSpinner.getSelectedItemPosition() > 0 && witnessFirst.getText().length() > 0) {
+                    if (mApplicableTestEquipmentList.size() > 1) {
+                        if (occupancySpiner.getSelectedItemPosition() > 0)
                             flag = true;
-                    }else{
+                    } else if (null != mApplicableTestEquipmentList && mApplicableTestEquipmentList.size() != 0) {
                         flag = true;
+                    } else {
+                        flag = false;
                     }
                 }
             } else if (equipmentAhuOrRoomTestCodeList[pos - 1].toString().equals("ROOM")) {
                 if (equipmentAhuOrRoomSpinner.getSelectedItemPosition() > 0 && applicableTestSpinner.getSelectedItemPosition() > 0 && instrumentSpiner.getSelectedItemPosition() > 0
-                        && ahuSpinner.getSelectedItemPosition() > 0 && roomSpinner.getSelectedItemPosition() > 0 && roomNoSpinner.getSelectedItemPosition() > 0 && witnessFirst.getText().length() > 0){
-                    if(mApplicableTestRoomList.size()>1){
-                        if(occupancySpiner.getSelectedItemPosition()>0)
+                        && ahuSpinner.getSelectedItemPosition() > 0 && roomSpinner.getSelectedItemPosition() > 0 && roomNoSpinner.getSelectedItemPosition() > 0 && witnessFirst.getText().length() > 0) {
+                    if (mApplicableTestRoomList.size() > 1) {
+                        if (occupancySpiner.getSelectedItemPosition() > 0)
                             flag = true;
-                    }else{
+                    } else if (null != mApplicableTestRoomList && mApplicableTestRoomList.size() != 0) {
                         flag = true;
+                    } else {
+                        flag = false;
                     }
                 }
             } else {

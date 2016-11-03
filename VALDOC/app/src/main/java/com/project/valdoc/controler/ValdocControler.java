@@ -805,6 +805,7 @@ public class ValdocControler {
                 ahu.setAhuId(jsonObject.optInt("ahuId"));
                 ahu.setAhuNo(jsonObject.optString("ahuNo").toString());
                 ahu.setAhuType(jsonObject.optString("ahuType").toString());
+                ahu.setAreId(jsonObject.optString("areaId").toString());
                 ahu.setCapacity(jsonObject.optDouble("capacity"));
                 ahu.setReturnAirCFM(jsonObject.optDouble("returnAirCFM"));
                 ahu.setExhaustAirCFM(jsonObject.optDouble("exhaustAirCFM"));

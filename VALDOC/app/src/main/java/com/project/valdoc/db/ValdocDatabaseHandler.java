@@ -58,6 +58,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
     public static final String AHU_AHUID = "ahuId";
     public static final String AHU_AHUNO = "ahuNo";
     public static final String AHU_AHUTYPE = "ahuType";
+    public static final String AHU_AREAID = "areaId";
     public static final String AHU_CAPACITY = "capacity";
     public static final String AHU_RETURNAIRCFM = "returnAirCFM";
     public static final String AHU_EXHAUSTAIRCFM = "exhaustAirCFM";
@@ -83,7 +84,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
 
     // ahu table create statment
     private static final String CREATE_TABLE_AHU = "CREATE TABLE " + AHU_TABLE_NAME
-            + "(" + AHU_AHUID + " INTEGER," + AHU_AHUNO + " TEXT," + AHU_AHUTYPE + " TEXT,"
+            + "(" + AHU_AHUID + " INTEGER," + AHU_AHUNO + " TEXT," + AHU_AHUTYPE + " TEXT," + AHU_AREAID + " TEXT,"
             + AHU_CAPACITY + " REAL," + AHU_RETURNAIRCFM + " REAL," + AHU_EXHAUSTAIRCFM + " REAL," + AHU_BLEEDFILTERTYPE + " TEXT,"
             + AHU_BLEEDFILTEREFFICIENCY + " REAL," + AHU_BLEEDAIRCFM + " REAL," + AHU_BLEEDFILTERQTY + " INTEGER,"
             + AHU_BLEEDFILTERLEAK + " REAL," + AHU_FRESHFILTERTYPE + " TEXT," + AHU_FRESHAIRCFM + " REAL," + AHU_FRESHFILTERQTY
@@ -1164,6 +1165,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 contentValues.put(AHU_AHUID, ahu.getAhuId());
                 contentValues.put(AHU_AHUNO, ahu.getAhuNo());
                 contentValues.put(AHU_AHUTYPE, ahu.getAhuType());
+                contentValues.put(AHU_AREAID, ahu.getAreId());
                 contentValues.put(AHU_CAPACITY, ahu.getCapacity());
                 contentValues.put(AHU_RETURNAIRCFM, ahu.getReturnAirCFM());
                 contentValues.put(AHU_EXHAUSTAIRCFM, ahu.getExhaustAirCFM());
@@ -1883,28 +1885,29 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 ahu.setAhuId(cursor.getInt(0));
                 ahu.setAhuNo(cursor.getString(1));
                 ahu.setAhuType(cursor.getString(2));
-                ahu.setCapacity(cursor.getDouble(3));
-                ahu.setReturnAirCFM(cursor.getDouble(4));
-                ahu.setExhaustAirCFM(cursor.getDouble(5));
-                ahu.setBleedFilterType(cursor.getString(6));
-                ahu.setBleedFilterEfficiency(cursor.getDouble(7));
-                ahu.setBleedAirCFM(cursor.getDouble(8));
-                ahu.setBleedFilterQty(cursor.getInt(9));
-                ahu.setBleedFilterLeak(cursor.getInt(10));
-                ahu.setFreshFilterType(cursor.getString(11));
-                ahu.setFreshAirCFM(cursor.getDouble(12));
-                ahu.setFreshFilterQty(cursor.getInt(13));
-                ahu.setFreshFilterEfficiency(cursor.getString(14));
-                ahu.setFinalFilterAirFlow(cursor.getInt(15));
-                ahu.setFinalFilterQty(cursor.getInt(16));
-                ahu.setFinalFilterType(cursor.getString(17));
-                ahu.setFinalFilterEfficiency(cursor.getString(18));
-                ahu.setFinalFilterLeak(cursor.getString(19));
-                ahu.setRemarks(cursor.getString(20));
-                ahu.setLastUpdatedDate(cursor.getString(21));
-                ahu.setFreshParticleSize(cursor.getDouble(22));
-                ahu.setBleedParticleSize(cursor.getDouble(23));
-                ahu.setFinalParticleSize(cursor.getDouble(24));
+                ahu.setAreId(cursor.getString(3));
+                ahu.setCapacity(cursor.getDouble(4));
+                ahu.setReturnAirCFM(cursor.getDouble(5));
+                ahu.setExhaustAirCFM(cursor.getDouble(6));
+                ahu.setBleedFilterType(cursor.getString(7));
+                ahu.setBleedFilterEfficiency(cursor.getDouble(8));
+                ahu.setBleedAirCFM(cursor.getDouble(9));
+                ahu.setBleedFilterQty(cursor.getInt(10));
+                ahu.setBleedFilterLeak(cursor.getInt(11));
+                ahu.setFreshFilterType(cursor.getString(12));
+                ahu.setFreshAirCFM(cursor.getDouble(13));
+                ahu.setFreshFilterQty(cursor.getInt(14));
+                ahu.setFreshFilterEfficiency(cursor.getString(15));
+                ahu.setFinalFilterAirFlow(cursor.getInt(16));
+                ahu.setFinalFilterQty(cursor.getInt(17));
+                ahu.setFinalFilterType(cursor.getString(18));
+                ahu.setFinalFilterEfficiency(cursor.getString(19));
+                ahu.setFinalFilterLeak(cursor.getString(20));
+                ahu.setRemarks(cursor.getString(21));
+                ahu.setLastUpdatedDate(cursor.getString(22));
+                ahu.setFreshParticleSize(cursor.getDouble(23));
+                ahu.setBleedParticleSize(cursor.getDouble(24));
+                ahu.setFinalParticleSize(cursor.getDouble(25));
                 Log.d("valdoc", "TestCreateActivity : ahu1");
                 ahuArrayList.add(ahu);
             } while (cursor.moveToNext());
@@ -2491,7 +2494,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
     }
 
     // select data from ahu filter table
-    public ArrayList<AhuFilter> getAhuFitFilterFromAhuFilter(int ahuId,String testItem) {
+    public ArrayList<AhuFilter> getAhuFitFilterFromAhuFilter(int ahuId, String testItem) {
         ArrayList<AhuFilter> ahuFilterArrayList;
         ahuFilterArrayList = new ArrayList<AhuFilter>();
         String selectQuery = " SELECT * FROM " + AHU_FILTER_TABLE_NAME +
@@ -2789,8 +2792,8 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
 
 
     // select data from applicable test room table
-    public  ArrayList<ApplicableTestRoom> getApplicableTestRoomInfo(int roomId, String testCode) {
-        ArrayList<ApplicableTestRoom> applicableTestRoomArrayList= new ArrayList<ApplicableTestRoom>();
+    public ArrayList<ApplicableTestRoom> getApplicableTestRoomInfo(int roomId, String testCode) {
+        ArrayList<ApplicableTestRoom> applicableTestRoomArrayList = new ArrayList<ApplicableTestRoom>();
         String selectQuery = "SELECT * FROM " + APLICABLE_TEST_ROOM_TABLE_NAME +
                 " WHERE " + ValdocDatabaseHandler.APLICABLE_TEST_ROOM_TESTCODE + " = " + '"' + testCode + '"' + " AND "
                 + ValdocDatabaseHandler.APLICABLE_TEST_ROOM_ROOMID + " = " + roomId;
@@ -2823,14 +2826,17 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
 
 
     // select data from applicable test ahu table
-    public ArrayList<ApplicableTestAhu> getApplicableTestAhuInfo(int ahuId, String testCode) {
-        ArrayList<ApplicableTestAhu> applicableTestAhuArrayList=new ArrayList<ApplicableTestAhu>();
+    public ArrayList<ApplicableTestAhu> getApplicableTestAhuInfo(int ahuId, String testCode, String testItem) {
+        ArrayList<ApplicableTestAhu> applicableTestAhuArrayList = new ArrayList<ApplicableTestAhu>();
         String selectQuery = "SELECT * FROM " + APLICABLE_TEST_AHU_TABLE_NAME +
                 " WHERE " + ValdocDatabaseHandler.APLICABLE_TEST_AHU_TESTCODE + " = " + '"' + testCode + '"' + " AND "
-                + ValdocDatabaseHandler.APLICABLE_TEST_AHU_AHUID + " = " + ahuId;
+                + ValdocDatabaseHandler.APLICABLE_TEST_AHU_AHUID + " = " + ahuId + " AND " +
+                ValdocDatabaseHandler.APLICABLE_TEST_AHU_TESTITEM + " = " + '"' + testItem + '"';
+
         SQLiteDatabase database = this.getWritableDatabase();
         Cursor cursor = database.rawQuery(selectQuery, null);
-
+        Log.d("Avinash", "applicableTestahu selectQuery=" + selectQuery);
+        Log.d("Avinash", "applicableTestahu before=" + cursor.getCount()+" testItem="+testItem);
         if (cursor.moveToFirst()) {
             do {
                 ApplicableTestAhu applicableTestAhu = new ApplicableTestAhu();
@@ -2856,7 +2862,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
 
     // select data from applicable test room table
     public ArrayList<ApplicableTestEquipment> getApplicableTestEquipmentInfo(int equipmentId, String testCode) {
-        ArrayList<ApplicableTestEquipment> applicableTestEquipmentArrayList= new ArrayList<ApplicableTestEquipment>();
+        ArrayList<ApplicableTestEquipment> applicableTestEquipmentArrayList = new ArrayList<ApplicableTestEquipment>();
         String selectQuery = "SELECT * FROM " + APLICABLE_TEST_EQUIPMENT_TABLE_NAME +
                 " WHERE " + ValdocDatabaseHandler.APLICABLE_TEST_EQUIPMENT_TESTCODE + " = " + '"' + testCode + '"' + " AND "
                 + ValdocDatabaseHandler.APLICABLE_TEST_EQUIPMENT_EQUIPMENTID + " = " + equipmentId;

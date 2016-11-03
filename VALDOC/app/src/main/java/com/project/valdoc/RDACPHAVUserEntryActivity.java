@@ -344,7 +344,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
         testCundoctor.setText(userName);
 
         if (mTestBasedOn.equalsIgnoreCase("AHU")) {
-            testSpecification.setText(mApplicableTestAhu.getTestSpecification());
+            testSpecification.setText(mApplicableTestAhu.getTestSpecification()+" Cfm");
             occupancyState.setText(mApplicableTestAhu.getOccupencyState());
             testRefrance.setText(mApplicableTestAhu.getTestReference());
             areaOfTest.setText(areaName);
@@ -355,7 +355,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
             roomVolume.setText("" + roomDetails[4]);
             testItemValue.setText("" + mApplicableTestAhu.getTestItem());
         } else if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
-            testSpecification.setText(mApplicableTestRoom.getTestSpecification());
+            testSpecification.setText(mApplicableTestRoom.getTestSpecification()+" Cfm");
             occupancyState.setText(mApplicableTestRoom.getOccupencyState());
             testRefrance.setText(mApplicableTestRoom.getTestReference());
             areaOfTest.setText(areaName);

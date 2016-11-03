@@ -12,6 +12,7 @@ public class Ahu implements Serializable{
     private int ahuId;
     private String ahuNo;
     private String ahuType;
+    private String areId;
     private double capacity;
     private double returnAirCFM;
     private double exhaustAirCFM;
@@ -65,6 +66,14 @@ public class Ahu implements Serializable{
 
     public void setAhuType(String ahuType) {
         this.ahuType = ahuType;
+    }
+
+    public String getAreId() {
+        return areId;
+    }
+
+    public void setAreId(String areId) {
+        this.areId = areId;
     }
 
     public double getCapacity() {
