@@ -42,6 +42,8 @@ import com.project.valdoc.intity.Room;
 import com.project.valdoc.intity.RoomFilter;
 import com.project.valdoc.utility.Utilityies;
 
+import org.json.JSONObject;
+
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -107,7 +109,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
     //Test 6 Variable
     int rowsCount = 0;
     //Validate boolean array...
-    ArrayList<Boolean>validate = new ArrayList<>();
+    ArrayList<Boolean> validate = new ArrayList<>();
 
     ArrayList<String> testReadingEditTextList;
     ArrayList<TextView> txtPassFailList;
@@ -122,7 +124,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
     ArrayList<TextView> RDPC3TxtList, RDPC3TxtList2;
 
     HashMap<Integer, Double> rdFitInputDataHashMap;
-    ArrayList<Double>concentrationVariationListData;
+    ArrayList<Double> concentrationVariationListData;
     HashMap<Integer, Integer> inputDataHashMap;
     HashMap<Integer, String> passFailHashMap;
     HashMap<Integer, Long> resultDataHashMap;
@@ -525,6 +527,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         }
         return str;
     }
+
     private void setCommonTestHeader(String testType, String TestBasedOn) {
         test_value3.setText(userName);
         if (TestCreateActivity.AV.equalsIgnoreCase(testType) && TestBasedOn.equalsIgnoreCase("EQUIPMENT")) {
@@ -540,13 +543,13 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             if (loginUserType.equals("CLIENT")) {
                 test_value2.setText(clientInstrument.getcInstrumentName());
                 test_value5.setText("" + clientInstrument.getSerialNo());
-                test_value8.setText("" + parseDateToddMMyyyy(""+clientInstrument.getLastCalibrated()));
-                test_value9.setText("" + parseDateToddMMyyyy(""+clientInstrument.getCalibrationDueDate()));
+                test_value8.setText("" + parseDateToddMMyyyy("" + clientInstrument.getLastCalibrated()));
+                test_value9.setText("" + parseDateToddMMyyyy("" + clientInstrument.getCalibrationDueDate()));
             } else {
                 test_value2.setText(partnerInstrument.getpInstrumentName());
                 test_value5.setText("" + partnerInstrument.getSerialNo());
-                test_value8.setText("" + parseDateToddMMyyyy(""+partnerInstrument.getLastCalibrationDate()));
-                test_value9.setText("" + parseDateToddMMyyyy(""+partnerInstrument.getCalibrationDueDate()));
+                test_value8.setText("" + parseDateToddMMyyyy("" + partnerInstrument.getLastCalibrationDate()));
+                test_value9.setText("" + parseDateToddMMyyyy("" + partnerInstrument.getCalibrationDueDate()));
             }
 
             test_value1.setText("" + equipment.getEquipmentName());
@@ -568,13 +571,13 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             if (loginUserType.equals("CLIENT")) {
                 test_value2.setText(clientInstrument.getcInstrumentName());
                 test_value5.setText("" + clientInstrument.getSerialNo());
-                test_value8.setText("" + parseDateToddMMyyyy(""+clientInstrument.getLastCalibrated()));
-                test_value9.setText("" + parseDateToddMMyyyy(""+clientInstrument.getCalibrationDueDate()));
+                test_value8.setText("" + parseDateToddMMyyyy("" + clientInstrument.getLastCalibrated()));
+                test_value9.setText("" + parseDateToddMMyyyy("" + clientInstrument.getCalibrationDueDate()));
             } else {
                 test_value2.setText(partnerInstrument.getpInstrumentName());
                 test_value5.setText("" + partnerInstrument.getSerialNo());
-                test_value8.setText("" + parseDateToddMMyyyy(""+partnerInstrument.getLastCalibrationDate()));
-                test_value9.setText("" + parseDateToddMMyyyy(""+ partnerInstrument.getCalibrationDueDate()));
+                test_value8.setText("" + parseDateToddMMyyyy("" + partnerInstrument.getLastCalibrationDate()));
+                test_value9.setText("" + parseDateToddMMyyyy("" + partnerInstrument.getCalibrationDueDate()));
             }
             test_value3.setText(userName);
             if (TestBasedOn.equalsIgnoreCase("AHU")) {
@@ -603,13 +606,13 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             if (loginUserType.equals("CLIENT")) {
                 test_value2.setText(clientInstrument.getcInstrumentName());
                 test_value5.setText("" + clientInstrument.getSerialNo());
-                test_value8.setText("" + parseDateToddMMyyyy(""+clientInstrument.getLastCalibrated()));
-                test_value9.setText("" + parseDateToddMMyyyy(""+clientInstrument.getCalibrationDueDate()));
+                test_value8.setText("" + parseDateToddMMyyyy("" + clientInstrument.getLastCalibrated()));
+                test_value9.setText("" + parseDateToddMMyyyy("" + clientInstrument.getCalibrationDueDate()));
             } else {
                 test_value2.setText(partnerInstrument.getpInstrumentName());
                 test_value5.setText("" + partnerInstrument.getSerialNo());
-                test_value8.setText("" + parseDateToddMMyyyy(""+partnerInstrument.getLastCalibrationDate()));
-                test_value9.setText("" + parseDateToddMMyyyy(""+partnerInstrument.getCalibrationDueDate()));
+                test_value8.setText("" + parseDateToddMMyyyy("" + partnerInstrument.getLastCalibrationDate()));
+                test_value9.setText("" + parseDateToddMMyyyy("" + partnerInstrument.getCalibrationDueDate()));
             }
             test_value3.setText(userName);
 
@@ -638,13 +641,13 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             if (loginUserType.equals("CLIENT")) {
                 test_value2.setText(clientInstrument.getcInstrumentName());
                 test_value5.setText("" + clientInstrument.getSerialNo());
-                test_value8.setText("" + parseDateToddMMyyyy(""+clientInstrument.getLastCalibrated()));
-                test_value9.setText("" + parseDateToddMMyyyy(""+clientInstrument.getCalibrationDueDate()));
+                test_value8.setText("" + parseDateToddMMyyyy("" + clientInstrument.getLastCalibrated()));
+                test_value9.setText("" + parseDateToddMMyyyy("" + clientInstrument.getCalibrationDueDate()));
             } else {
                 test_value2.setText(partnerInstrument.getpInstrumentName());
                 test_value5.setText("" + partnerInstrument.getSerialNo());
-                test_value8.setText("" + parseDateToddMMyyyy(""+partnerInstrument.getLastCalibrationDate()));
-                test_value9.setText("" + parseDateToddMMyyyy(""+partnerInstrument.getCalibrationDueDate()));
+                test_value8.setText("" + parseDateToddMMyyyy("" + partnerInstrument.getLastCalibrationDate()));
+                test_value9.setText("" + parseDateToddMMyyyy("" + partnerInstrument.getCalibrationDueDate()));
             }
             test_value3.setText(userName);
 
@@ -682,15 +685,15 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             if (loginUserType.equals("CLIENT")) {
                 test_value2.setText(clientInstrument.getcInstrumentName());
                 test_value5.setText("" + clientInstrument.getSerialNo());
-                test_value8.setText("" + parseDateToddMMyyyy(""+clientInstrument.getLastCalibrated()));
-                test_value9.setText("" + parseDateToddMMyyyy(""+clientInstrument.getCalibrationDueDate()));
-                test_value10.setText(""+clientInstrument.getRange());
+                test_value8.setText("" + parseDateToddMMyyyy("" + clientInstrument.getLastCalibrated()));
+                test_value9.setText("" + parseDateToddMMyyyy("" + clientInstrument.getCalibrationDueDate()));
+                test_value10.setText("" + clientInstrument.getRange());
             } else {
                 test_value2.setText(partnerInstrument.getpInstrumentName());
                 test_value5.setText("" + partnerInstrument.getSerialNo());
-                test_value8.setText("" + parseDateToddMMyyyy(""+partnerInstrument.getLastCalibrationDate()));
-                test_value9.setText("" + parseDateToddMMyyyy(""+partnerInstrument.getCalibrationDueDate()));
-                test_value10.setText(""+partnerInstrument.getRange());
+                test_value8.setText("" + parseDateToddMMyyyy("" + partnerInstrument.getLastCalibrationDate()));
+                test_value9.setText("" + parseDateToddMMyyyy("" + partnerInstrument.getCalibrationDueDate()));
+                test_value10.setText("" + partnerInstrument.getRange());
             }
             test_value3.setText(userName);
 
@@ -700,16 +703,16 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 test_value4.setText("" + room.getRoomNo());
                 test_value6.setText("" + mApplicableTestRoom.getOccupencyState());
 
-                String samplingTime = getSamplingTime(mApplicableTestRoom.getTestSpecification(),"");
-                test_value11.setText(""+samplingTime);
+                String samplingTime = getSamplingTime(mApplicableTestRoom.getTestSpecification(), "");
+                test_value11.setText("" + samplingTime);
                 test_value12.setText("" + mApplicableTestRoom.getTestSpecification());
             } else if (TestBasedOn.equalsIgnoreCase("EQUIPMENT")) {
                 test_value1.setText("" + equipment.getEquipmentName());
                 test_value4.setText("" + equipment.getEquipmentNo());
                 test_value6.setText("" + mApplicableTestEquipment.getOccupencyState());
 
-                String samplingTime = getSamplingTime(mApplicableTestEquipment.getTestSpecification(),"");
-                test_value11.setText(""+samplingTime);
+                String samplingTime = getSamplingTime(mApplicableTestEquipment.getTestSpecification(), "");
+                test_value11.setText("" + samplingTime);
                 test_value12.setText("" + mApplicableTestEquipment.getTestSpecification());
                 test_header12.setVisibility(View.GONE);
                 test_value12.setVisibility(View.GONE);
@@ -735,13 +738,13 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             if (loginUserType.equals("CLIENT")) {
                 test_value2.setText(clientInstrument.getcInstrumentName());
                 test_value5.setText("" + clientInstrument.getSerialNo());
-                test_value8.setText("" + parseDateToddMMyyyy(""+clientInstrument.getLastCalibrated()));
-                test_value9.setText("" + parseDateToddMMyyyy(""+clientInstrument.getCalibrationDueDate()));
+                test_value8.setText("" + parseDateToddMMyyyy("" + clientInstrument.getLastCalibrated()));
+                test_value9.setText("" + parseDateToddMMyyyy("" + clientInstrument.getCalibrationDueDate()));
             } else {
                 test_value2.setText(partnerInstrument.getpInstrumentName());
                 test_value5.setText("" + partnerInstrument.getSerialNo());
-                test_value8.setText("" + parseDateToddMMyyyy(""+partnerInstrument.getLastCalibrationDate()));
-                test_value9.setText("" + parseDateToddMMyyyy(""+partnerInstrument.getCalibrationDueDate()));
+                test_value8.setText("" + parseDateToddMMyyyy("" + partnerInstrument.getLastCalibrationDate()));
+                test_value9.setText("" + parseDateToddMMyyyy("" + partnerInstrument.getCalibrationDueDate()));
             }
             test_value3.setText(userName);
             test_value11.setText("1 Minute");
@@ -765,11 +768,11 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         if (testSpecification.contains("5") || testSpecification.contains("6")) {
             if (range.contains("28.3")) {
                 samplingTime = "36 Minute";
-            }else if(range.contains("50")){
+            } else if (range.contains("50")) {
                 samplingTime = "20 Minute";
-            }else if(range.contains("75")){
+            } else if (range.contains("75")) {
                 samplingTime = "14 Minute";
-            }else if(range.contains("100")){
+            } else if (range.contains("100")) {
                 samplingTime = "10 Minute";
             }
         } else {
@@ -868,9 +871,9 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
     public void onClick(View view) {
         if (view == verify_btn) {
             Intent intent = null;
-            if(validateEditTextList()){
+            if (validateEditTextList()) {
                 Toast.makeText(DynamicTableActivity.this, "All Edit fields are mandatory.", Toast.LENGTH_SHORT).show();
-            }else{
+            } else {
                 if (TestCreateActivity.AV.equalsIgnoreCase(testType)) {
                     intent = new Intent(DynamicTableActivity.this, RDAV5UserEntryActivity.class);
                     // put bundel data
@@ -1025,7 +1028,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 }
                 if (TestCreateActivity.FIT.equalsIgnoreCase(testType)) {
                     // adding ConcentrationVariation data
-                    if(txtConcentrationVariationList != null && txtConcentrationVariationList.size()>0) {
+                    if (txtConcentrationVariationList != null && txtConcentrationVariationList.size() > 0) {
                         for (int i = 0; i < txtConcentrationVariationList.size(); i++) {
                             try {
                                 concentrationVariationListData.add(Double.valueOf
@@ -1136,8 +1139,8 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                     intent.putExtra("meanValue2", meanValue2);
                     intent.putExtra("stdDev1", stdDev1);
                     intent.putExtra("stdDev2", stdDev2);
-                    long ucl1 = getUCLValues(meanValue1,rows, stdDev1);
-                    long ucl2 = getUCLValues(meanValue2,rows, stdDev2);
+                    long ucl1 = getUCLValues(meanValue1, rows, stdDev1);
+                    long ucl2 = getUCLValues(meanValue2, rows, stdDev2);
                     intent.putExtra("UCL_V1", ucl1);
                     intent.putExtra("UCL_V2", ucl2);
 
@@ -1149,7 +1152,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                     if (!"".equalsIgnoreCase(finalvalue) && null != finalvalue && !finalvalue.isEmpty() && null != inputDataHashMap && null != inputDataHashMap.get(200)) {
                         if (Double.parseDouble(finalvalue) > inputDataHashMap.get(200)) {
                             aleartDialog("Final reading should be less than or equal to initial value");
-                        }else {
+                        } else {
                             intent = new Intent(DynamicTableActivity.this, RDRCTUserEntryActivity.class);
                             // put bundel data
                             intent.putExtra("USERTYPE", loginUserType);
@@ -1248,21 +1251,20 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
 
     private boolean validateEditTextList() {
         validate.clear();
-        Log.d(TAG, "Validate editTextList "+editTextList.size()+" validate size "+validate.size());
+        Log.d(TAG, "Validate editTextList " + editTextList.size() + " validate size " + validate.size());
         for (int i = 0; i < editTextList.size(); i++) {
-            Log.d(TAG, "Validate "+editTextList.get(i).getText().toString());
-            if(editTextList.get(i).getText().toString().trim() == null
-                    || editTextList.get(i).getText().toString().trim().equals("")){
-                validate.add(i,true);
-            }
-            else{
-                validate.add(i,false);
+            Log.d(TAG, "Validate " + editTextList.get(i).getText().toString());
+            if (editTextList.get(i).getText().toString().trim() == null
+                    || editTextList.get(i).getText().toString().trim().equals("")) {
+                validate.add(i, true);
+            } else {
+                validate.add(i, false);
             }
         }
-        Log.d(TAG, "validate.contains "+validate.contains(true));
-        if(validate.contains(true)){
+        Log.d(TAG, "validate.contains " + validate.contains(true));
+        if (validate.contains(true)) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }
@@ -1315,7 +1317,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                         etv.setFocusable(true);
                         etv.requestFocus();
                         row.addView(etv);
-                    }else{
+                    } else {
                         row.addView(addEditTextView(i));
                     }
                 }
@@ -1355,10 +1357,10 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
     private void deleteRowButtonClick(int rows) {
         test6A_table_layout3.removeViewAt((rows - 1));
         test6A_table_layout4.removeViewAt((rows - 1));
-        Log.d(TAG,"Delete Before editTextList size "+editTextList.size());
-        editTextList.remove(editTextList.size()-1);
-        validate.remove(validate.size()-1);
-        Log.d(TAG,"Delete After editTextList size "+editTextList.size());
+        Log.d(TAG, "Delete Before editTextList size " + editTextList.size());
+        editTextList.remove(editTextList.size() - 1);
+        validate.remove(validate.size() - 1);
+        Log.d(TAG, "Delete After editTextList size " + editTextList.size());
         int totalReading = rows - 1;
         finalReadingTv.setText("Final Reading" + totalReading);
     }
@@ -1553,6 +1555,17 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             pr.dismiss();
     }
 
+    private String getAvgUpStrm(String testProp) {
+        String avgUpStrm = "";
+        try {
+            JSONObject jsonObject = new JSONObject(testProp);
+            avgUpStrm = jsonObject.getString("AVERAGE_UPSTREEM_CONCENTRATION_BEFORE");
+        } catch (Exception e) {
+
+        }
+        return avgUpStrm;
+    }
+
     private void BuildTableTest4(int rows, int cols) {
         //first section
         // outer for loop
@@ -1602,7 +1615,21 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 if (i == 1 && j == 1) {
                     row.addView(addTextView("Average\nbefore Scanning(%) "));
                 } else {
-                    row.addView(addEditTextViewbeforestream(i));
+                    if (mTestBasedOn.equalsIgnoreCase("EQUIPMENT")) {
+                        String avgUpStrm = getAvgUpStrm(mApplicableTestEquipment.getTestProp());
+
+                        row.addView(addEditTextViewbeforestream(i, avgUpStrm));
+//
+                    } else if (mTestBasedOn.equalsIgnoreCase("AHU")) {
+                        String avgUpStrm = getAvgUpStrm(mApplicableTestAhu.getTestProp());
+                        row.addView(addEditTextViewbeforestream(i, avgUpStrm));
+//
+                    } else if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
+                        String avgUpStrm = getAvgUpStrm(mApplicableTestRoom.getTestProp());
+                        row.addView(addEditTextViewbeforestream(i, avgUpStrm));
+//
+                    }
+
                     //row.addView(addEditTextView(i));
                 }
 
@@ -2311,7 +2338,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
     }
 
     //Fit upstream before
-    private EditText addEditTextViewbeforestream(int rowNo) {
+    private EditText addEditTextViewbeforestream(int rowNo, String avgUpStrm) {
         EditText editTv = new EditText(this);
         editTv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
                 TableRow.LayoutParams.WRAP_CONTENT));
@@ -2319,6 +2346,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         editTv.setPadding(8, 6, 8, 6);
         editTv.setTextColor(getResources().getColor(R.color.black));
         editTv.setTextSize(getResources().getDimension(R.dimen.normal_text_size));
+        editTv.setText(avgUpStrm);
         editTv.setGravity(Gravity.CENTER);
         //editTv.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD);
         editTv.setEms(4);
@@ -2330,6 +2358,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         editTv.setTag(rowNo);
         editTv.addTextChangedListener((new TextValidator(
                 DynamicTableActivity.this, idCountFitStrm)));
+        fitInputValue = Double.parseDouble(editTv.getText().toString());
         editTextList.add(editTv);
         testReadingEditTextList.add(editTv.getText().toString());
         idCountFitStrm++;
@@ -2383,7 +2412,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                     } else {
                         inputValue = inputValue - Integer.parseInt(charSequence.toString());
                     }
-                Log.d(TAG, " Removed inputValue " + inputValue);
+                Log.d(TAG, " Removed inputValue " + inputValue+" fitInputValue="+fitInputValue);
             } catch (NumberFormatException e) {
                 e.printStackTrace();
             }
@@ -2406,7 +2435,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             } catch (NumberFormatException e) {
                 e.printStackTrace();
             }
-            Log.d(TAG, " Added inputValue " + inputValue);
+            Log.d(TAG, " Added inputValue " + inputValue+" fitInputValue="+fitInputValue);
 
             //Add EditText value in ArrayList with position
             for (int i = 0; i < editTextList.size(); i++) {
@@ -2550,17 +2579,19 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                             // Pass Fail Calculation
                             TextView txtPassFail = txtPassFailList.get(i);
                             Log.d(TAG, "slpDlpValue=" + slpDlpValue);
-                            if (slpDlpValue < 15) {
+                            if (Math.abs(slpDlpValue) <= 15) {
+                                txtConcentrationVariationList.get(i).setTextColor(getResources().getColor(R.color.black));
                                 txtPassFail.setTextColor(getResources().getColor(R.color.blue));
                                 txtPassFail.setText(" PASS ");
                                 passFailHashMap.put(txtPassFail.getId(), " PASS ");
-                            } else if (slpDlpValue > 15) {
+                            } else if (Math.abs(slpDlpValue) > 15) {
+                                txtConcentrationVariationList.get(i).setTextColor(getResources().getColor(R.color.red));
                                 txtPassFail.setTextColor(getResources().getColor(R.color.red));
                                 txtPassFail.setText(" FAIL ");
                                 passFailHashMap.put(txtPassFail.getId(), " FAIL ");
                             }
                             // adding concentration Variation Data
-                            txtConcentrationVariationList.get(i).setText(slpDlpValue+" %");
+                            txtConcentrationVariationList.get(i).setText(slpDlpValue + " %");
 
                         }
                     }
@@ -2575,9 +2606,9 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                     if (txtViewList.get(i).getTag().equals(tagF)) {
                         long roundedAvg = getRoundedAverageValue(tagF);
                         TextView tvl = txtViewList.get(i);
-                        tvl.setText(roundedAvg+ "");
+                        tvl.setText(roundedAvg + "");
 
-                        resultDataHashMap.put(tvl.getId(),roundedAvg);
+                        resultDataHashMap.put(tvl.getId(), roundedAvg);
                         //setMean(getRoundedAverageValue(tagF));
                         Log.d(TAG, "TagF : " + tagF + " rows : " + rows);
                         if (tagF <= rows) {
@@ -2585,16 +2616,16 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                             TextView txtView = RDPC3TxtList.get(0);
                             txtView.setText(meanValue1 + "");
 
-                           stdDev1 = getStdDev(resultDataHashMap, inputValue, tagF);
-                           TextView txtView2 = RDPC3TxtList.get(1);
+                            stdDev1 = getStdDev(resultDataHashMap, inputValue, tagF);
+                            TextView txtView2 = RDPC3TxtList.get(1);
                             txtView2.setText(stdDev1 + "");
                         } else {
                             meanValue2 = getMeanAverageValue(resultDataHashMap, tagF);
                             TextView txtView = RDPC3TxtList2.get(0);
                             txtView.setText(meanValue2 + "");
 
-                           stdDev2 = getStdDev(resultDataHashMap, inputValue,tagF);
-                           TextView txtView2 = RDPC3TxtList2.get(1);
+                            stdDev2 = getStdDev(resultDataHashMap, inputValue, tagF);
+                            TextView txtView2 = RDPC3TxtList2.get(1);
                             txtView2.setText(stdDev2 + "");
                         }
                     }
@@ -2752,7 +2783,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
     }
 
     private double getStdDev(HashMap<Integer, Long> meanAverageList2, int inputValue, int tagF) {
-        double stdDev = Math.sqrt(getVariance(meanAverageList2,inputValue, tagF));
+        double stdDev = Math.sqrt(getVariance(meanAverageList2, inputValue, tagF));
         System.out.println(" getStdDev Result " + stdDev + " rounded StdValue " + Math.round(stdDev));
         return Math.round(stdDev);
     }
@@ -2778,12 +2809,13 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         Log.d(TAG, "Leakage Value : " + leakageValue);
         return leakageValue;
     }
-    private double fitDiffPercent(double beforeScaning,double afterScaning) {
-        Log.d(TAG,"Saurabh beforeScaning "+beforeScaning +" afterScaning "+afterScaning);
+
+    private double fitDiffPercent(double beforeScaning, double afterScaning) {
+        Log.d(TAG, "Saurabh beforeScaning " + beforeScaning + " afterScaning " + afterScaning);
         double diffPercent = 0.00;
         DecimalFormat df2 = new DecimalFormat(".##");
-        if(beforeScaning>0 && afterScaning>0){
-            double diff = beforeScaning - afterScaning;
+        if (beforeScaning > 0 && afterScaning > 0) {
+            double diff = afterScaning - beforeScaning;
             diffPercent = (diff * 100) / beforeScaning;
             try {
                 diffPercent = Double.valueOf(df2.format(diffPercent));
@@ -2795,28 +2827,28 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         return diffPercent;
     }
 
-    private long getUCLValues(long meanAverage, int noOfLocation, double stdDeviation){
+    private long getUCLValues(long meanAverage, int noOfLocation, double stdDeviation) {
         long ucl = 0;
         double multiplier = 1;
-        Log.d(TAG, "meanAverage: " + meanAverage+" noOfLocation: "+noOfLocation+" stdDeviation: "+stdDeviation);
-        if(noOfLocation == 2)
+        Log.d(TAG, "meanAverage: " + meanAverage + " noOfLocation: " + noOfLocation + " stdDeviation: " + stdDeviation);
+        if (noOfLocation == 2)
             multiplier = 6.3;
-        else if(noOfLocation == 3)
+        else if (noOfLocation == 3)
             multiplier = 2.9;
-        else if(noOfLocation == 4)
+        else if (noOfLocation == 4)
             multiplier = 2.4;
-        else if(noOfLocation == 5)
+        else if (noOfLocation == 5)
             multiplier = 2.1;
-        else if(noOfLocation == 6)
+        else if (noOfLocation == 6)
             multiplier = 2;
-        else if(noOfLocation == 7)
+        else if (noOfLocation == 7)
             multiplier = 1.9;
-        else if(noOfLocation == 8)
+        else if (noOfLocation == 8)
             multiplier = 1.9;
-        else if(noOfLocation == 9)
+        else if (noOfLocation == 9)
             multiplier = 1.9;
 
-        ucl = Math.round(meanAverage + (multiplier * (stdDeviation/Math.sqrt(noOfLocation))));
+        ucl = Math.round(meanAverage + (multiplier * (stdDeviation / Math.sqrt(noOfLocation))));
         Log.d(TAG, " UCL : " + ucl);
         return ucl;
     }
@@ -2909,10 +2941,10 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         if (TestCreateActivity.ACPHAV.equalsIgnoreCase(testType)) {
 //            LinearLayout linearLayout=(LinearLayout)findViewById(R.id.test_table2);
 //            linearLayout.setVisibility(View.VISIBLE);
-            if(mTestBasedOn.equalsIgnoreCase("ROOM")){
+            if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
                 testHeaderAv.setText("FORM: TEST RAW DATA");
                 testHeaderAv2.setText("(Air Flow Velocity, Volume Testing and Determination of Air Changes per Hour Rates by Anemometer)");
-            }else{
+            } else {
                 testHeaderAv.setText(R.string.header_title1);
                 testHeaderAv2.setVisibility(View.GONE);
             }
@@ -3014,7 +3046,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             if (mTestBasedOn.equalsIgnoreCase("EQUIPMENT")) {
                 testHeaderAv.setText("FORM:TEST RAW DATA EQUIPMENT");
                 testHeaderAv2.setText("Airborne Particle Count Test for Classification of Cleanrooms/zones and Clean Air Devices");
-            }else{
+            } else {
                 testHeaderAv.setText("FORM:TEST RAW DATA");
                 testHeaderAv2.setText("Airborne Particle Count Test for Classification of Cleanrooms/zones and Clean Air Devices");
             }
@@ -3054,7 +3086,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             if (mTestBasedOn.equalsIgnoreCase("EQUIPMENT")) {
                 testHeaderAv.setText("FORM :TEST RAW DATA EQUIPMENT");
                 testHeaderAv2.setText("Recovery Performance Test");
-            }else{
+            } else {
                 testHeaderAv.setText("FORM :TEST RAW DATA");
                 testHeaderAv2.setText("Recovery Performance Test");
             }
