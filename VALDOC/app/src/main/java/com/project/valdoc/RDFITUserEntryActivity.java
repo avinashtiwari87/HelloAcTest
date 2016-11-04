@@ -270,7 +270,8 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
 
     private void calSpesifiCation() {
         int len = mTestSpecification.length();
-        mshowSpesification = (String) mTestSpecification.toString().subSequence(28, (len - 1));
+        mshowSpesification = (String) mTestSpecification.toString();
+                //.subSequence(28, (len - 1));
     }
 
 
