@@ -1029,6 +1029,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                     startActivity(intent);
                 }
                 if (TestCreateActivity.FIT.equalsIgnoreCase(testType)) {
+                    concentrationVariationListData.clear();
                     // adding ConcentrationVariation data
                     if (txtConcentrationVariationList != null && txtConcentrationVariationList.size() > 0) {
                         for (int i = 0; i < txtConcentrationVariationList.size(); i++) {

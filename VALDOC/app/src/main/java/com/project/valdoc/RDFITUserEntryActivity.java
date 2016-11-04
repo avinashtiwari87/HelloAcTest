@@ -252,6 +252,12 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
         for (int i = 0; i < txtConcentrationVariationList.size(); i++) {
             TextView tvl = txtConcentrationVariationList.get(i);
             tvl.setText(concentrationVariationListData.get(i) + " %");
+            Log.d(TAG, "Saurabh PassRedBlack "+PassFailHashMap.get(300+i));
+            if("PASS".equalsIgnoreCase(String.valueOf(PassFailHashMap.get(300+i)))){
+                tvl.setTextColor(getResources().getColor(R.color.black));
+            }else{
+                tvl.setTextColor(getResources().getColor(R.color.red));
+            }
         }
 
 
