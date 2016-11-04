@@ -34,6 +34,7 @@
             </TableRow>
 
             <TableRow
+                android:id="@+id/room_header_table"
                 android:paddingBottom="5dp"
                 android:paddingTop="5dp">
 
@@ -99,6 +100,25 @@
                     android:text="" />
             </TableRow>
 
+
+            <TableRow
+                android:id="@+id/ahu_af_table"
+                android:paddingBottom="5dp"
+                android:visibility="gone"
+                android:paddingTop="5dp">
+
+                <TextView
+                    android:id="@+id/ahu_af_test_item_header_tv"
+                    style="@style/TestHeaderTextViewBold"
+                    android:gravity="right"
+                    android:text="Test Item :" />
+
+                <TextView
+                    android:id="@+id/ahu_af_test_item_value_tv"
+                    style="@style/TestHeaderTextViewNormal"
+                    android:text="" />
+            </TableRow>
+
             <TableRow
                 android:paddingBottom="5dp"
                 android:paddingTop="5dp">
@@ -114,7 +134,6 @@
                     style="@style/TestHeaderTextViewNormal"
                     android:text="Pradeep" />
             </TableRow>
-
 
         </TableLayout>
     </LinearLayout>

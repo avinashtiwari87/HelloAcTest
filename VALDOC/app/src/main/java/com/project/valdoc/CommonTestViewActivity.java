@@ -125,7 +125,7 @@ public class CommonTestViewActivity extends AppCompatActivity {
         initRes();
         initTextView();
         String spiltValue[] = null;
-        if (testType != null && (testType.contains("AV") || testType.contains("AF"))) {
+        if (testType != null && testType.contains("AV")) {
             findViewById(R.id.test1_table_ll).setVisibility(View.VISIBLE);
             testReadingList = mValdocDatabaseHandler.getTestReadingDataById(testDetailId + "");
             spiltValue = testReadingList.get(0).getValue().split(",");
@@ -157,7 +157,7 @@ public class CommonTestViewActivity extends AppCompatActivity {
 
                 }
 
-        } else if (testType != null && testType.contains("ACPH_AV")) {
+        } else if (testType != null && testType.contains("AF")) {
             findViewById(R.id.test2_table_ll).setVisibility(View.VISIBLE);
             BuildTableTest2(rows, cols);
         } else if (testType != null && testType.contains("ACPH_H")) {

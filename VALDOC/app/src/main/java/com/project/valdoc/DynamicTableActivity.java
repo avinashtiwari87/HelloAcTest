@@ -73,7 +73,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             test6A_table_layout4;
     //Common Test Header
     TextView test_header1, test_header2, test_header3, test_header4, test_header5, test_header6, test_header7, test_header8, test_header9, test_header10, test_header11, test_header12;
-    TextView test_value1, test_value2, test_value3, test_value4, test_value5, test_value6, test_value7, test_value8, test_value9, test_value10, test_value11, test_value12;
+    TextView test_value1, test_value2, test_value3, test_value4, test_value4_1, test_value5, test_value6, test_value7, test_value8, test_value9, test_value10, test_value11, test_value12;
     TextView finalReadingTv;
     EditText finalReadingValueTv;
     private TableRow sampling_flow_rate;
@@ -620,13 +620,13 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         } else if (TestCreateActivity.FIT.equalsIgnoreCase(testType)) {
             if (TestBasedOn.equalsIgnoreCase("EQUIPMENT")) {
                 test_header1.setText("Equipment Name :");
-                test_header4.setText("Eqipment No :");
+                test_header4.setText("Eqipment ID :");
             } else if (TestBasedOn.equalsIgnoreCase("ROOM")) {
                 test_header1.setText("Room Name :");
                 test_header4.setText("Room No :");
             } else {
                 test_header1.setText("AHU/ Equipment Name :");
-                test_header4.setText("Test Item :");
+                //test_header4.setText("Test Item :");
             }
             test_header2.setText("Instrument Used :");
             test_header3.setText("Test Conducted By :");
@@ -650,7 +650,9 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
 
             if (TestBasedOn.equalsIgnoreCase("AHU")) {
                 test_value1.setText("" + ahuNumber);
-                test_value4.setText("" + mTestItem);
+                //test_value4.setText("" + mTestItem);
+                Log.d("saurabh ", " mTestItem "+mTestItem);
+                test_value4_1.setText("" + mTestItem);
                 test_value6.setText("" + mApplicableTestAhu.getOccupencyState());
             } else if (TestBasedOn.equalsIgnoreCase("ROOM")) {
                 test_value1.setText("" + room.getRoomName());
@@ -2846,6 +2848,8 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
 
 
         //Common Test Header and Value;
+        findViewById(R.id.room_header_table).setVisibility(View.GONE);
+        findViewById(R.id.ahu_af_table).setVisibility(View.VISIBLE);
         test_header1 = (TextView) findViewById(R.id.common_dynamic_test_header1_tv);
         test_header2 = (TextView) findViewById(R.id.common_dynamic_test_header2_tv);
         test_header3 = (TextView) findViewById(R.id.common_dynamic_test_header3_tv);
@@ -2861,6 +2865,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         test_value1 = (TextView) findViewById(R.id.common_dynamic_test_value1_tv);
         test_value2 = (TextView) findViewById(R.id.common_dynamic_test_value2tv);
         test_value3 = (TextView) findViewById(R.id.common_dynamic_test_value3_tv);
+        test_value4_1 = (TextView)findViewById(R.id.ahu_af_test_item_value_tv);
         test_value4 = (TextView) findViewById(R.id.common_dynamic_test_value4_tv);
         test_value5 = (TextView) findViewById(R.id.common_dynamic_test_value5_tv);
         test_value6 = (TextView) findViewById(R.id.common_dynamic_test_value6_tv);
