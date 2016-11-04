@@ -2360,7 +2360,8 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         editTv.setTag(rowNo);
         editTv.addTextChangedListener((new TextValidator(
                 DynamicTableActivity.this, idCountFitStrm)));
-        fitInputValue = Double.parseDouble(editTv.getText().toString());
+        fitInputValue = Double.parseDouble(avgUpStrm);
+        rdFitInputDataHashMap.put(idCountFitStrm,fitInputValue);
         editTextList.add(editTv);
         testReadingEditTextList.add(editTv.getText().toString());
         idCountFitStrm++;
