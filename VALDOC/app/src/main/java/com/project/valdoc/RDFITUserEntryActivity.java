@@ -252,8 +252,9 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
         for (int i = 0; i < txtConcentrationVariationList.size(); i++) {
             TextView tvl = txtConcentrationVariationList.get(i);
             tvl.setText(concentrationVariationListData.get(i) + " %");
-            Log.d(TAG, "Saurabh PassRedBlack "+PassFailHashMap.get(300+i));
-            if("PASS".equalsIgnoreCase(String.valueOf(PassFailHashMap.get(300+i)))){
+            String pasFailCheck = String.valueOf(PassFailHashMap.get(300+i));
+            Log.d(TAG, "Saurabh PassRedBlack "+pasFailCheck);
+            if("PASS".equalsIgnoreCase(pasFailCheck.trim())){
                 tvl.setTextColor(getResources().getColor(R.color.black));
             }else{
                 tvl.setTextColor(getResources().getColor(R.color.red));
@@ -479,7 +480,6 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
         roomName = (TextView) findViewById(R.id.room_name);
         roomNo = (TextView) findViewById(R.id.room_no);
         if(mTestBasedOn.equalsIgnoreCase("AHU")){
-            roomName.setText("Test Item :");
             roomNo.setVisibility(View.INVISIBLE);
         }
         occupancyState = (TextView) findViewById(R.id.ocupancystate);
@@ -1228,11 +1228,22 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
         findViewById(R.id.test_table_4_header_l_ll).setVisibility(View.GONE);
         findViewById(R.id.test_table_4_header_2_ll).setVisibility(View.VISIBLE);
         findViewById(R.id.test_interference).setVisibility(View.GONE);
+        Log.d("Saurabh", " testbased on "+getIntent().getStringExtra("testBasedOn"));
         if(getIntent().hasExtra("testBasedOn") && "ROOM".equalsIgnoreCase(getIntent().getStringExtra("testBasedOn"))){
             findViewById(R.id.room_volume_table).setVisibility(View.VISIBLE);
             findViewById(R.id.ahu_no_lable).setVisibility(View.VISIBLE);
             findViewById(R.id.test_item_table).setVisibility(View.VISIBLE);
 
+        }else if(getIntent().hasExtra("testBasedOn") && "AHU".equalsIgnoreCase(getIntent().getStringExtra("testBasedOn"))){
+            findViewById(R.id.room_volume_table).setVisibility(View.VISIBLE);
+            findViewById(R.id.test_item_table).setVisibility(View.VISIBLE);
+            findViewById(R.id.room_no_ahu_fit).setVisibility(View.GONE);
+            findViewById(R.id.room_name_ahu_fit).setVisibility(View.VISIBLE);
+            findViewById(R.id.ahu_no_lable).setVisibility(View.VISIBLE);
+            TextView ahuNumber = (TextView) findViewById(R.id.ahu_no_text);
+            TextView roomName = (TextView) findViewById(R.id.room_name_lable);
+            ahuNumber.setText("AHU/Equipment No :");
+            roomName.setText("Test Item :");
         }
     }
 }

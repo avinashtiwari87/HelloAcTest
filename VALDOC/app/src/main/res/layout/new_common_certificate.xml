@@ -185,6 +185,7 @@
             </TableRow>
 
             <TableRow
+                android:id="@+id/room_name_ahu_fit"
                 android:paddingBottom="5dp"
                 android:paddingTop="5dp">
 
@@ -201,6 +202,7 @@
             </TableRow>
 
             <TableRow
+                android:id="@+id/room_no_ahu_fit"
                 android:paddingBottom="5dp"
                 android:paddingTop="5dp">
 
