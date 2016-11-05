@@ -449,10 +449,15 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
             findViewById(R.id.room_no_lable).setVisibility(View.GONE);
             roomName.setVisibility(View.GONE);
             roomNo.setVisibility(View.GONE);
-            equipmentNoText.setVisibility(View.VISIBLE);
-            equiment_no.setVisibility(View.VISIBLE);
+
+            equipmentNoText.setVisibility(View.GONE);
+            equiment_no.setVisibility(View.GONE);
             equipmentNoText.setText("AHU/Equipment No: ");
             equiment_no.setText(" AHU 06");
+            findViewById(R.id.ahu_af_equpmentNo_table).setVisibility(View.VISIBLE);
+            TextView ahu_equip_value = (TextView) findViewById(R.id.ahu_equipment_value_tv);
+            ahu_equip_value.setText(" AHU 06");
+
         }
 
         submit.setOnClickListener(new View.OnClickListener() {
@@ -841,7 +846,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
-                    row.addView(addTextView(" Grill / Filter Area\n in ft2(A)"));
+                    row.addView(addTextView(" Grill/Filter Area(ft2)\n  A"));
                 } else {
                     if (mTestBasedOn.equalsIgnoreCase("AHU")) {
                         double filterSize = 0.0f;
@@ -905,7 +910,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
-                    row.addView(addTextView(" Avg Velocity in\n fpm(AV)"));
+                    row.addView(addTextView("Average Air Velocity\n fpm(AV)"));
                 } else {
                     //result data  set
                     row.addView(addResultTextView(i));
@@ -923,7 +928,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
-                    row.addView(addTextView(" Air Flow Rate\n in cfm(AxAv)"));
+                    row.addView(addTextView(" Air Flow Rate\n cfm(AxAv)"));
                 } else {
                     //row.addView(addTextView("490"));
                     row.addView(addTextViewWithTagIds(i, airFlowRateIds, airFlowRateTxtViewList, 0));
@@ -943,7 +948,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
-                    row.addView(addTextView(" Total Air Flow Rate\n in cfm (TFR)"));
+                    row.addView(addTextView("Air Flow Rate\n (cfm)"));
                 } else {
                     //row.addView(addTextViewWithoutBorder("490"));
                     row.addView(addTextViewWithIdsNoBorder(i, totalAirFlowRateIds, totalAirFlowRateTxtList));

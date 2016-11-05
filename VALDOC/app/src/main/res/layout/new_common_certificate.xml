@@ -170,6 +170,24 @@
             </TableRow>
 
             <TableRow
+                android:id="@+id/ahu_af_equpmentNo_table"
+                android:paddingBottom="5dp"
+                android:visibility="gone"
+                android:paddingTop="5dp">
+
+                <TextView
+                    android:id="@+id/ahu_equipment_text"
+                    style="@style/TestHeaderTextViewBold"
+                    android:gravity="right"
+                    android:text="AHU/Equipment No :" />
+
+                <TextView
+                    style="@style/TestHeaderTextViewNormal"
+                    android:id="@+id/ahu_equipment_value_tv"
+                    android:text="" />
+            </TableRow>
+
+            <TableRow
                 android:paddingBottom="5dp"
                 android:paddingTop="5dp">
 
