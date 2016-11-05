@@ -47,6 +47,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class RDFITUserEntryActivity extends AppCompatActivity {
     private static final String TAG = "RDFITUser";
@@ -199,7 +201,7 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
         for (Map.Entry m : likageDataMap.entrySet()) {
             if(count>=constVal){
                 TextView tvl = txtPassFailList.get(k);
-                Double spesification = Double.parseDouble(mshowSpesification);
+                Double spesification = getSpecification(mshowSpesification);
                 if (spesification > Double.parseDouble(likageDataMap.get(kk).toString())) {
                     tvl.setText("PASS");
                 } else {
@@ -266,6 +268,21 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
         ActionBar mActionBar = getSupportActionBar();
         if (mActionBar != null)
             Utilityies.setCustomActionBar(RDFITUserEntryActivity.this, mActionBar, userName);
+    }
+
+    private double getSpecification(String valueFromDB) {
+        double returnValue = 0.1;
+        try {
+            Pattern regex = Pattern.compile("(\\d+(?:\\.\\d+)?)");
+            Matcher matcher = regex.matcher(valueFromDB);
+            while(matcher.find()){
+                System.out.println("Specific Value... "+matcher.group(1));
+                returnValue = Double.valueOf(matcher.group(1));
+            }
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
+        return returnValue;
     }
 
     private void calSpesifiCation() {
