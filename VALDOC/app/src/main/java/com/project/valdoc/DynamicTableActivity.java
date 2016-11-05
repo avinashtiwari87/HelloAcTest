@@ -74,8 +74,10 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
     TableLayout test6A_table_layout, test6A_table_layout2, test6A_table_layout3,
             test6A_table_layout4;
     //Common Test Header
-    TextView test_header1, test_header2, test_header3, test_header4, test_header5, test_header6, test_header7, test_header8, test_header9, test_header10, test_header11, test_header12;
-    TextView test_value1, test_value2, test_value3, test_value4, test_value4_1, test_value5, test_value6, test_value7, test_value8, test_value9, test_value10, test_value11, test_value12;
+    TextView test_header1, test_header2, test_header3, test_header4, test_header5, test_header6, test_header7, test_header8, test_header9,
+            test_header10, test_header11, test_header12,mAhu_af_test_item_header_tv;
+    TextView test_value1, test_value2, test_value3, test_value4, test_value4_1, test_value5, test_value6, test_value7, test_value8,
+            test_value9, test_value10, test_value11, test_value12,mAhu_af_test_item_value_tv;
     TextView finalReadingTv;
     EditText finalReadingValueTv;
     private TableRow sampling_flow_rate;
@@ -584,12 +586,15 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 test_header1.setText("AHU/Equipment No :");
                 test_header4.setText("Test Item :");
                 test_value1.setText("" + ahuNumber);
+                mAhu_af_test_item_value_tv.setText("" + mTestItem);
                 test_value4.setText("" + mTestItem);
                 test_value6.setText("" + mApplicableTestAhu.getOccupencyState());
             } else if (TestBasedOn.equalsIgnoreCase("ROOM")) {
                 test_value1.setText("" + room.getRoomName());
                 test_value4.setText("" + room.getRoomNo());
                 test_value6.setText("" + mApplicableTestRoom.getOccupencyState());
+                mAhu_af_test_item_value_tv.setVisibility(View.GONE);
+                mAhu_af_test_item_header_tv.setVisibility(View.GONE);
             }
 //
             datePicker();
@@ -2896,6 +2901,8 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         test_header10 = (TextView) findViewById(R.id.common_dynamic_test_header10_tv);
         test_header11 = (TextView) findViewById(R.id.common_dynamic_test_header11_tv);
         test_header12 = (TextView) findViewById(R.id.common_dynamic_test_header12_tv);
+        mAhu_af_test_item_header_tv =(TextView)findViewById(R.id.ahu_af_test_item_header_tv);
+        mAhu_af_test_item_value_tv=(TextView)findViewById(R.id.ahu_af_test_item_value_tv);
         test_value1 = (TextView) findViewById(R.id.common_dynamic_test_value1_tv);
         test_value2 = (TextView) findViewById(R.id.common_dynamic_test_value2tv);
         test_value3 = (TextView) findViewById(R.id.common_dynamic_test_value3_tv);

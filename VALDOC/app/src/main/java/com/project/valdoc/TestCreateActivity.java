@@ -335,7 +335,7 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
                 for (ApplicableTestRoom applicableTestRoom : mApplicableTestRoomList)
                     occupancyList.add(applicableTestRoom.getOccupencyState().toString());
             } else {
-                if (null != mApplicableTestAhuList && mApplicableTestAhuList.size() != 0) {
+                if (null != mApplicableTestRoomList && mApplicableTestRoomList.size() != 0) {
                     occupancySpiner.setVisibility(View.GONE);
                     mApplicableTestRoom = mApplicableTestRoomList.get(0);
                 } else {
@@ -343,12 +343,12 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
                 }
             }
         } else if (testBasedOn.equalsIgnoreCase("EQUIPMENT")) {
-            if (mApplicableTestRoomList.size() > 1) {
+            if (mApplicableTestEquipmentList.size() > 1) {
                 occupancySpiner.setVisibility(View.VISIBLE);
                 for (ApplicableTestEquipment applicableTestEquipment : mApplicableTestEquipmentList)
                     occupancyList.add(applicableTestEquipment.getOccupencyState().toString());
             } else {
-                if (null != mApplicableTestAhuList && mApplicableTestAhuList.size() != 0) {
+                if (null != mApplicableTestEquipmentList && mApplicableTestEquipmentList.size() != 0) {
                     occupancySpiner.setVisibility(View.GONE);
                     mApplicableTestEquipment = mApplicableTestEquipmentList.get(0);
                 } else {
