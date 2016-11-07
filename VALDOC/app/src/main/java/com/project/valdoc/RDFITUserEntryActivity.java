@@ -480,7 +480,9 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
         aerosolUsedTable.setVisibility(View.VISIBLE);
         aerosolGeneratorType= (TextView) findViewById(R.id.aerosol_generator_type_value);
         aerosolUsed= (TextView) findViewById(R.id.aerosol_used);
-
+        testLocationText=(TextView) findViewById(R.id.room_volume_text);
+        testLocationText.setText("Test Location :");
+        testLocation=(TextView) findViewById(R.id.room_volume);
         if(mTestBasedOn.equalsIgnoreCase("ROOM")||mTestBasedOn.equalsIgnoreCase("AHU")){
             equipmentNameText = (TextView) findViewById(R.id.equiment_name_text);
             equipmentNameText.setVisibility(View.INVISIBLE);
@@ -499,10 +501,18 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
         roomNo = (TextView) findViewById(R.id.room_no);
         if(mTestBasedOn.equalsIgnoreCase("AHU")){
             roomNo.setVisibility(View.INVISIBLE);
+            testLocationText.setVisibility(View.GONE);
+            testLocation.setVisibility(View.GONE);
+        }
+        if(mTestBasedOn.equalsIgnoreCase("ROOM")){
+            testLocationText.setVisibility(View.VISIBLE);
+            testLocation.setVisibility(View.VISIBLE);
         }
         occupancyState = (TextView) findViewById(R.id.ocupancystate);
         testRefrance = (TextView) findViewById(R.id.testrefrence);
         if (mTestBasedOn.equalsIgnoreCase("EQUIPMENT")) {
+            testLocationText.setVisibility(View.VISIBLE);
+            testLocation.setVisibility(View.VISIBLE);
             equipmentLable = (TextView) findViewById(R.id.equiment_name_text);
             equipmentLable.setVisibility(View.VISIBLE);
             equipmentName = (TextView) findViewById(R.id.equiment_name);
@@ -512,11 +522,7 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
             equipmentNo = (TextView) findViewById(R.id.equiment_no);
             equipmentNo.setVisibility(View.VISIBLE);
         }
-        testLocationText=(TextView) findViewById(R.id.room_volume_text);
-        testLocationText.setVisibility(View.VISIBLE);
-        testLocationText.setText("Test Location :");
-        testLocation=(TextView) findViewById(R.id.room_volume);
-        testLocation.setVisibility(View.VISIBLE);
+
         filterTypeEficiancyText=(TextView) findViewById(R.id.test_item_text);
         filterTypeEficiancyText.setVisibility(View.VISIBLE);
         filterTypeEficiancyText.setText("Filter Type & Efficiency :");

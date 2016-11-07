@@ -97,7 +97,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
     private TextView testRefrance;
     private TextView equipmentNameText;
     private TextView equipmentNoText;
-    private TextView equiment_no;
+    private TextView equiment_no,ahu_equip_value;
     private TextView roomNo;
     private TextView ahuNo;
     private TextView ahuNoText;
@@ -351,7 +351,8 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
             roomName.setText(roomDetails[1]);
             // room no not needed
             roomNo.setText(roomDetails[2]);
-            ahuNo.setText(ahuNumber);
+            ahu_equip_value.setText(ahuNumber);
+            ahuNo.setText("hello"+ahuNumber);
             roomVolume.setText("" + roomDetails[4]);
             testItemValue.setText("" + mApplicableTestAhu.getTestItem());
         } else if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
@@ -453,10 +454,10 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
             equipmentNoText.setVisibility(View.GONE);
             equiment_no.setVisibility(View.GONE);
             equipmentNoText.setText("AHU/Equipment No: ");
-            equiment_no.setText(" AHU 06");
+            equiment_no.setText("");
             findViewById(R.id.ahu_af_equpmentNo_table).setVisibility(View.VISIBLE);
-            TextView ahu_equip_value = (TextView) findViewById(R.id.ahu_equipment_value_tv);
-            ahu_equip_value.setText(" AHU 06");
+            ahu_equip_value = (TextView) findViewById(R.id.ahu_equipment_value_tv);
+            ahu_equip_value.setText("AHU 06");
 
         }
 
@@ -658,7 +659,11 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
         testDetails.setRoomNo(roomNo.getText().toString());
         testDetails.setOccupencyState(occupancyState.getText().toString());
         testDetails.setTestReference(testRefrance.getText().toString());
-        testDetails.setAhuNo(ahuNo.getText().toString());
+        if(mTestBasedOn.equalsIgnoreCase("AHU")){
+            testDetails.setAhuNo(ahu_equip_value.getText().toString());
+        }else {
+            testDetails.setAhuNo(ahuNo.getText().toString());
+        }
         testDetails.setTesterName(testCundoctor.getText().toString());
         testDetails.setTestCode(mTestCode);
 
