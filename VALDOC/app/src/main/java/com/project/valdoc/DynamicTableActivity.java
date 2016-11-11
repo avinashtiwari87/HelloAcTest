@@ -560,7 +560,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             test_value6.setText("" + mApplicableTestEquipment.getOccupencyState());
             datePicker();
         } else if (TestCreateActivity.ACPHAV.equalsIgnoreCase(testType)) {
-            Log.d("Saurabh", "CodeFlow TestBasedOn" + TestBasedOn);
+            Log.d("Saurabh", "CodeFlow TestBasedOn " + TestBasedOn);
             test_header1.setText("Room Name :");
             test_header2.setText("Instrument Used :");
             test_header3.setText("Test Conducted By:");
@@ -2956,6 +2956,9 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
 //            LinearLayout linearLayout=(LinearLayout)findViewById(R.id.test_table2);
 //            linearLayout.setVisibility(View.VISIBLE);
             if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
+                findViewById(R.id.room_header_table).setVisibility(View.VISIBLE);
+                TextView measerdTv = (TextView)findViewById(R.id.measerd_av_tv);
+                measerdTv.setText("Measured Air Velocity(fpm)");
                 testHeaderAv.setText("FORM: TEST RAW DATA");
                 testHeaderAv2.setText("(Air Flow Velocity, Volume Testing and Determination of Air Changes per Hour Rates by Anemometer)");
             } else {
