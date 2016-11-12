@@ -1770,7 +1770,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
-                    row.addView(addTextView("Measured Airflow Qty\n(in cfm) "));
+                    row.addView(addTextView("Measured Airflow Qty\n(scfm) "));
                 } else {
                     row.addView(addEditTextView(i));
                 }
@@ -2981,6 +2981,9 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             testHeaderAv.setText("FORM: TEST RAW DATA");
             testHeaderAv2.setText("(Air Flow Velocity, Volume Testing and Determination of Air Changes per Hour Rates by Hood)");
             findViewById(R.id.test3_dynamic_table_ll).setVisibility(View.VISIBLE);
+            findViewById(R.id.room_header_table).setVisibility(View.VISIBLE);
+            findViewById(R.id.ahu_af_table).setVisibility(View.GONE);
+
 
         }
 
@@ -3023,6 +3026,8 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             } else if ("ROOM".equalsIgnoreCase(mTestBasedOn)) {
                 testHeaderAv.setText("FORM:TEST RAW DATA");
                 testHeaderAv2.setText("Installed HEPA Filter System Leakage Test by Aerosol Photometer Method");
+                findViewById(R.id.room_header_table).setVisibility(View.VISIBLE);
+                findViewById(R.id.ahu_af_table).setVisibility(View.GONE);
             }
 
         }

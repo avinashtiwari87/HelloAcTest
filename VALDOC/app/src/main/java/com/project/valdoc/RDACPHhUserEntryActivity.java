@@ -632,7 +632,7 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
-                    row.addView(addTextView("Measured Air Flow Quantity\n Q1 (in cfm) "));
+                    row.addView(addTextView("Measured Air Flow Quantity\n(cfm) Q1"));
                 } else {
                     //row.addView(addTextView(" "));
                     row.addView(addInputDataTextView());
@@ -650,7 +650,7 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
-                    row.addView(addTextView("Air Flow Rate\n(Average) cfm "));
+                    row.addView(addTextView("Air Flow Rate (cfm)\n(Average)"));
                 } else {
                     //row.addView(addTextViewWithoutBorder("0"));
                     //row.addView(addTextViewWithIdsNoBorder(i, totalAirFlowRateIds, totalAirFlowRateTxtList));
