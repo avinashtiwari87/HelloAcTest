@@ -1287,7 +1287,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
-                    TextView tv = addTextView("");
+                    TextView tv = addTextView("Test Parameter");
                     tv.setEms(10);
                     row.addView(tv);
                 }
@@ -1316,8 +1316,8 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
-                    TextView tv = addTextView(" 0.5 µm/m³ ");
-                    tv.setEms(10);
+                    TextView tv = addTextView("No. of Particles ≥ 0. 5 µm/m³");
+                    tv.setEms(13);
                     row.addView(tv);
                 } else if (i > 1 && i < 4) {
                     if (i == 2) {
@@ -1353,7 +1353,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         row2.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
                 TableRow.LayoutParams.WRAP_CONTENT));
         EditText et = addEditTextView(rows);
-        et.setEms(10);
+        et.setEms(13);
         row2.addView(et);
         testReadingEditTextList.add(et.getText().toString());
         test6A_table_layout4.addView(row2, rows);
@@ -1367,6 +1367,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         test6A_table_layout4.removeViewAt((rows - 1));
         Log.d(TAG, "Delete Before editTextList size " + editTextList.size());
         editTextList.remove(editTextList.size() - 1);
+        if(validate.size()>1)
         validate.remove(validate.size() - 1);
         Log.d(TAG, "Delete After editTextList size " + editTextList.size());
         int totalReading = rows - 1;
@@ -3071,6 +3072,8 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             } else {
                 testHeaderAv.setText("FORM:TEST RAW DATA");
                 testHeaderAv2.setText("Airborne Particle Count Test for Classification of Cleanrooms/zones and Clean Air Devices");
+                findViewById(R.id.room_header_table).setVisibility(View.VISIBLE);
+                findViewById(R.id.ahu_af_table).setVisibility(View.GONE);
             }
             findViewById(R.id.test5_dynamic_table_ll).setVisibility(View.VISIBLE);
             sampling_flow_rate.setVisibility(View.VISIBLE);
@@ -3111,6 +3114,8 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             } else {
                 testHeaderAv.setText("FORM :TEST RAW DATA");
                 testHeaderAv2.setText("Recovery Performance Test");
+                findViewById(R.id.room_header_table).setVisibility(View.VISIBLE);
+                findViewById(R.id.ahu_af_table).setVisibility(View.GONE);
             }
 
         }
