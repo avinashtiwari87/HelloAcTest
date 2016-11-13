@@ -41,7 +41,7 @@
         android:layout_height="wrap_content">
         <TextView
             style="@style/TextAppearance.AppCompat.header_text"
-            android:text="Airflow Velocity " />
+            android:text="Airflow Velocity(fpm)" />
     </LinearLayout>
 
     <ScrollView

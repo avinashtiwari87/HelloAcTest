@@ -500,9 +500,8 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
         roomName = (TextView) findViewById(R.id.room_name);
         roomNo = (TextView) findViewById(R.id.room_no);
         if(mTestBasedOn.equalsIgnoreCase("AHU")){
+            findViewById(R.id.room_volume_table).setVisibility(View.VISIBLE);
             roomNo.setVisibility(View.INVISIBLE);
-            testLocationText.setVisibility(View.GONE);
-            testLocation.setVisibility(View.GONE);
         }
         if(mTestBasedOn.equalsIgnoreCase("ROOM")){
             testLocationText.setVisibility(View.VISIBLE);
@@ -511,8 +510,8 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
         occupancyState = (TextView) findViewById(R.id.ocupancystate);
         testRefrance = (TextView) findViewById(R.id.testrefrence);
         if (mTestBasedOn.equalsIgnoreCase("EQUIPMENT")) {
-            testLocationText.setVisibility(View.VISIBLE);
-            testLocation.setVisibility(View.VISIBLE);
+            findViewById(R.id.room_volume_table).setVisibility(View.VISIBLE);
+            findViewById(R.id.test_item_table).setVisibility(View.VISIBLE);
             equipmentLable = (TextView) findViewById(R.id.equiment_name_text);
             equipmentLable.setVisibility(View.VISIBLE);
             equipmentName = (TextView) findViewById(R.id.equiment_name);

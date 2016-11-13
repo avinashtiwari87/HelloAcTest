@@ -1411,7 +1411,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         TableRow row1 = new TableRow(this);
         row1.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
                 TableRow.LayoutParams.MATCH_PARENT));
-        TextView tvs = addTextView(" No. of Particles >= 5 µm/m³  ");
+        TextView tvs = addTextView("No. of Particles ≥ 0. 5 µm/m³ ");
         tvs.setEms(12);
         row1.addView(tvs);
         test5_tableLayout2_2.addView(row1);
@@ -1487,7 +1487,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         TableRow row2 = new TableRow(this);
         row2.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
                 TableRow.LayoutParams.MATCH_PARENT));
-        TextView tvs1 = addTextView(" No. of Particles >= 5 µm/m³  ");
+        TextView tvs1 = addTextView("No. of Particles ≥ 5 µm/m³ ");
         tvs1.setEms(12);
         row2.addView(tvs1);
         test5_tableLayout4_2.addView(row2);
@@ -2367,7 +2367,12 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         editTv.setTag(rowNo);
         editTv.addTextChangedListener((new TextValidator(
                 DynamicTableActivity.this, idCountFitStrm)));
-        fitInputValue = Double.parseDouble(avgUpStrm);
+        try {
+            fitInputValue = Double.parseDouble(avgUpStrm);
+        } catch (NumberFormatException e) {
+            fitInputValue = 100;
+            e.printStackTrace();
+        }
         rdFitInputDataHashMap.put(idCountFitStrm,fitInputValue);
         editTextList.add(editTv);
         testReadingEditTextList.add(editTv.getText().toString());
@@ -2937,6 +2942,8 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         if (TestCreateActivity.AV.equalsIgnoreCase(testType)) {
             findViewById(R.id.test1_dynamic_table_ll).setVisibility(View.VISIBLE);
             findViewById(R.id.test1_reading_header).setVisibility(View.VISIBLE);
+            findViewById(R.id.room_header_table).setVisibility(View.VISIBLE);
+            findViewById(R.id.ahu_af_table).setVisibility(View.GONE);
         }
         //Test 2
         test2_table_layout = (TableLayout) findViewById(R.id.test2_tableLayout1);
@@ -3021,6 +3028,8 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             if ("EQUIPMENT".equalsIgnoreCase(mTestBasedOn)) {
                 testHeaderAv.setText("FORM:TEST RAW DATA EQUIPMENT");
                 testHeaderAv2.setText("Installed HEPA Filter System Leakage Test by Aerosol Photometer Method");
+                findViewById(R.id.room_header_table).setVisibility(View.VISIBLE);
+                findViewById(R.id.ahu_af_table).setVisibility(View.GONE);
             } else if ("AHU".equalsIgnoreCase(mTestBasedOn)) {
                 testHeaderAv.setText("FORM:TEST RAW DATA AHU/EQUIPMENT");
                 testHeaderAv2.setText("(Installed HEPA Filter System Leakage Test by Aerosol Photometer Method)");
@@ -3067,6 +3076,8 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
 //                instrumentNo.setText("" + partnerInstrument.getSerialNo());
 //            }
             if (mTestBasedOn.equalsIgnoreCase("EQUIPMENT")) {
+                findViewById(R.id.room_header_table).setVisibility(View.VISIBLE);
+                findViewById(R.id.ahu_af_table).setVisibility(View.GONE);
                 testHeaderAv.setText("FORM:TEST RAW DATA EQUIPMENT");
                 testHeaderAv2.setText("Airborne Particle Count Test for Classification of Cleanrooms/zones and Clean Air Devices");
             } else {
@@ -3111,6 +3122,8 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             if (mTestBasedOn.equalsIgnoreCase("EQUIPMENT")) {
                 testHeaderAv.setText("FORM :TEST RAW DATA EQUIPMENT");
                 testHeaderAv2.setText("Recovery Performance Test");
+                findViewById(R.id.room_header_table).setVisibility(View.VISIBLE);
+                findViewById(R.id.ahu_af_table).setVisibility(View.GONE);
             } else {
                 testHeaderAv.setText("FORM :TEST RAW DATA");
                 testHeaderAv2.setText("Recovery Performance Test");
