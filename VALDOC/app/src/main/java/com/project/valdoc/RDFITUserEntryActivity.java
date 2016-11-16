@@ -220,7 +220,12 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
 //        }
         for (int i = 0; i < txtViewList.size(); i++) {
             TextView tvl = txtViewList.get(i);
-            tvl.setText(likageDataMap.get(tvl.getId()) + "");
+            Log.d("Saurabh", "Saurabh likageValue : "+likageDataMap.get(tvl.getId()) );
+            if(tvl.getId() >= 800){
+                tvl.setText(likageDataMap.get(tvl.getId()) + "");
+            }else{
+                tvl.setText(String.format("%.7f",likageDataMap.get(tvl.getId())) + "");
+            }
         }
         //Receiving Pass Fail Data from Bundle
         PassFailHashMap = (HashMap<Integer, Long>) getIntent().getSerializableExtra("PassFailData");
@@ -253,7 +258,7 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
         }
         for (int i = 0; i < txtConcentrationVariationList.size(); i++) {
             TextView tvl = txtConcentrationVariationList.get(i);
-            tvl.setText(concentrationVariationListData.get(i) + " %");
+            tvl.setText(concentrationVariationListData.get(i)+ " %");
             String pasFailCheck = String.valueOf(PassFailHashMap.get(300+i));
             Log.d(TAG, "Saurabh PassRedBlack "+pasFailCheck);
             if("PASS".equalsIgnoreCase(pasFailCheck.trim())){
