@@ -684,6 +684,8 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
         }
         testDetails.setSamplingFlowRate("");
         testDetails.setSamplingTime("");
+        Log.d("setAerosolUsed",""+ aerosolUsed.getText());
+        Log.d("setAerosolUsed","aerosolGeneratorType"+""+ aerosolGeneratorType.getText());
         testDetails.setAerosolUsed("" + aerosolUsed.getText());
         testDetails.setAerosolGeneratorType("" + aerosolGeneratorType.getText());
 
