@@ -1039,9 +1039,9 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                     if (txtConcentrationVariationList != null && txtConcentrationVariationList.size() > 0) {
                         for (int i = 0; i < txtConcentrationVariationList.size(); i++) {
                             try {
-                                concentrationVariationListData.add(Double.valueOf
+                                concentrationVariationListData.add(Double.parseDouble(
                                         (txtConcentrationVariationList.get(i).
-                                                getText().toString().replace(" %", "").trim()));
+                                                getText().toString().replace(" %", "").trim())));
                             } catch (NumberFormatException e) {
                                 e.printStackTrace();
                             }
@@ -1735,7 +1735,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
-                    row.addView(addTextView(" Grille/Filter ID No\n "));
+                    row.addView(addTextView(" Grille/Filter No\n "));
                 } else {
 
                     if (mGrilFilterType.equalsIgnoreCase("Grill")) {
@@ -1771,7 +1771,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
-                    row.addView(addTextView("Measured Airflow Qty\n(scfm) "));
+                    row.addView(addTextView("Measured Airflow Qty\n(cfm) "));
                 } else {
                     row.addView(addEditTextView(i));
                 }
@@ -1850,7 +1850,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
-                    row.addView(addTextView(" Grille / Filter ID\n "));
+                    row.addView(addTextView(" Grille / Filter No\n "));
                 } else {
                     if (mTestBasedOn.equalsIgnoreCase("AHU")) {
                         if (null != mAhuFilterArrayList && mAhuFilterArrayList.size() > 0) {
@@ -2091,7 +2091,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
-                    row.addView(addTextView("Grille / Filter ID"));
+                    row.addView(addTextView("Grille / Filter No"));
                 } else {
                     //becouse i starts with 1 so that i-2
                     if (mTestBasedOn.equalsIgnoreCase("AHU")) {
