@@ -279,7 +279,7 @@ public class RDRCTUserEntryActivity extends AppCompatActivity {
             occupancyState.setText(mApplicableTestRoom.getOccupencyState().toString());
             String samplingtime = getSamplingTime(mApplicableTestRoom.getTestSpecification(), "");
             samplingTime.setText("" + samplingtime);
-            samplingFlowRate.setText("under development");
+//            samplingFlowRate.setText("under development");
             cleanRoomClass.setText(" " + mApplicableTestRoom.getTestSpecification());
         } else if (mTestBasedOn.equalsIgnoreCase("EQUIPMENT")) {
             equipmentName.setText(equipment.getEquipmentName());

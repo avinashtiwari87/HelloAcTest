@@ -560,7 +560,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             test_value6.setText("" + mApplicableTestEquipment.getOccupencyState());
             datePicker();
         } else if (TestCreateActivity.ACPHAV.equalsIgnoreCase(testType)) {
-            Log.d("Saurabh", "CodeFlow TestBasedOn" + TestBasedOn);
+            Log.d("Saurabh", "CodeFlow TestBasedOn " + TestBasedOn);
             test_header1.setText("Room Name :");
             test_header2.setText("Instrument Used :");
             test_header3.setText("Test Conducted By:");
@@ -623,7 +623,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
 
             test_value1.setText("" + room.getRoomName());
             test_value4.setText("" + room.getRoomNo());
-//            test_value6.setText("" + mApplicableTestRoom.getOccupencyState());
+            test_value6.setText("" + mApplicableTestRoom.getOccupencyState());
             datePicker();
         } else if (TestCreateActivity.FIT.equalsIgnoreCase(testType)) {
             if (TestBasedOn.equalsIgnoreCase("EQUIPMENT")) {
@@ -747,11 +747,13 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 test_value5.setText("" + clientInstrument.getSerialNo());
                 test_value8.setText("" + parseDateToddMMyyyy("" + clientInstrument.getLastCalibrated()));
                 test_value9.setText("" + parseDateToddMMyyyy("" + clientInstrument.getCalibrationDueDate()));
+                test_value10.setText("" + clientInstrument.getRange());
             } else {
                 test_value2.setText(partnerInstrument.getpInstrumentName());
                 test_value5.setText("" + partnerInstrument.getSerialNo());
                 test_value8.setText("" + parseDateToddMMyyyy("" + partnerInstrument.getLastCalibrationDate()));
                 test_value9.setText("" + parseDateToddMMyyyy("" + partnerInstrument.getCalibrationDueDate()));
+                test_value10.setText("" + partnerInstrument.getRange());
             }
             test_value3.setText(userName);
             test_value11.setText("1 Minute");
@@ -1039,9 +1041,9 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                     if (txtConcentrationVariationList != null && txtConcentrationVariationList.size() > 0) {
                         for (int i = 0; i < txtConcentrationVariationList.size(); i++) {
                             try {
-                                concentrationVariationListData.add(Double.valueOf
+                                concentrationVariationListData.add(Double.parseDouble(
                                         (txtConcentrationVariationList.get(i).
-                                                getText().toString().replace(" %", "").trim()));
+                                                getText().toString().replace(" %", "").trim())));
                             } catch (NumberFormatException e) {
                                 e.printStackTrace();
                             }
@@ -1287,7 +1289,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
-                    TextView tv = addTextView("");
+                    TextView tv = addTextView("Test Parameter");
                     tv.setEms(10);
                     row.addView(tv);
                 }
@@ -1316,8 +1318,8 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
-                    TextView tv = addTextView(" 0.5 µm/m³ ");
-                    tv.setEms(10);
+                    TextView tv = addTextView("No. of Particles ≥ 0. 5 µm/m³");
+                    tv.setEms(13);
                     row.addView(tv);
                 } else if (i > 1 && i < 4) {
                     if (i == 2) {
@@ -1353,7 +1355,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         row2.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
                 TableRow.LayoutParams.WRAP_CONTENT));
         EditText et = addEditTextView(rows);
-        et.setEms(10);
+        et.setEms(13);
         row2.addView(et);
         testReadingEditTextList.add(et.getText().toString());
         test6A_table_layout4.addView(row2, rows);
@@ -1367,6 +1369,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         test6A_table_layout4.removeViewAt((rows - 1));
         Log.d(TAG, "Delete Before editTextList size " + editTextList.size());
         editTextList.remove(editTextList.size() - 1);
+        if(validate.size()>1)
         validate.remove(validate.size() - 1);
         Log.d(TAG, "Delete After editTextList size " + editTextList.size());
         int totalReading = rows - 1;
@@ -1410,7 +1413,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         TableRow row1 = new TableRow(this);
         row1.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
                 TableRow.LayoutParams.MATCH_PARENT));
-        TextView tvs = addTextView(" No. of Particles >= 5 µm/m³  ");
+        TextView tvs = addTextView("No. of Particles ≥ 0. 5 µm/m³ ");
         tvs.setEms(12);
         row1.addView(tvs);
         test5_tableLayout2_2.addView(row1);
@@ -1486,7 +1489,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         TableRow row2 = new TableRow(this);
         row2.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
                 TableRow.LayoutParams.MATCH_PARENT));
-        TextView tvs1 = addTextView(" No. of Particles >= 5 µm/m³  ");
+        TextView tvs1 = addTextView("No. of Particles ≥ 5 µm/m³ ");
         tvs1.setEms(12);
         row2.addView(tvs1);
         test5_tableLayout4_2.addView(row2);
@@ -1734,7 +1737,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
-                    row.addView(addTextView(" Grille/Filter ID No\n "));
+                    row.addView(addTextView(" Grille/Filter No\n "));
                 } else {
 
                     if (mGrilFilterType.equalsIgnoreCase("Grill")) {
@@ -1770,7 +1773,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
-                    row.addView(addTextView("Measured Airflow Qty\n(in cfm) "));
+                    row.addView(addTextView("Measured Airflow Qty\n(cfm) "));
                 } else {
                     row.addView(addEditTextView(i));
                 }
@@ -1849,7 +1852,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
-                    row.addView(addTextView(" Grille / Filter ID\n "));
+                    row.addView(addTextView(" Grille / Filter No\n "));
                 } else {
                     if (mTestBasedOn.equalsIgnoreCase("AHU")) {
                         if (null != mAhuFilterArrayList && mAhuFilterArrayList.size() > 0) {
@@ -2090,7 +2093,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
-                    row.addView(addTextView("Grille / Filter ID"));
+                    row.addView(addTextView("Grille / Filter No"));
                 } else {
                     //becouse i starts with 1 so that i-2
                     if (mTestBasedOn.equalsIgnoreCase("AHU")) {
@@ -2366,7 +2369,12 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         editTv.setTag(rowNo);
         editTv.addTextChangedListener((new TextValidator(
                 DynamicTableActivity.this, idCountFitStrm)));
-        fitInputValue = Double.parseDouble(avgUpStrm);
+        try {
+            fitInputValue = Double.parseDouble(avgUpStrm);
+        } catch (NumberFormatException e) {
+            fitInputValue = 100;
+            e.printStackTrace();
+        }
         rdFitInputDataHashMap.put(idCountFitStrm,fitInputValue);
         editTextList.add(editTv);
         testReadingEditTextList.add(editTv.getText().toString());
@@ -2936,6 +2944,8 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         if (TestCreateActivity.AV.equalsIgnoreCase(testType)) {
             findViewById(R.id.test1_dynamic_table_ll).setVisibility(View.VISIBLE);
             findViewById(R.id.test1_reading_header).setVisibility(View.VISIBLE);
+            findViewById(R.id.room_header_table).setVisibility(View.VISIBLE);
+            findViewById(R.id.ahu_af_table).setVisibility(View.GONE);
         }
         //Test 2
         test2_table_layout = (TableLayout) findViewById(R.id.test2_tableLayout1);
@@ -2956,6 +2966,9 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
 //            LinearLayout linearLayout=(LinearLayout)findViewById(R.id.test_table2);
 //            linearLayout.setVisibility(View.VISIBLE);
             if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
+                findViewById(R.id.room_header_table).setVisibility(View.VISIBLE);
+                TextView measerdTv = (TextView)findViewById(R.id.measerd_av_tv);
+                measerdTv.setText("Measured Air Velocity(fpm)");
                 testHeaderAv.setText("FORM: TEST RAW DATA");
                 testHeaderAv2.setText("(Air Flow Velocity, Volume Testing and Determination of Air Changes per Hour Rates by Anemometer)");
             } else {
@@ -2978,6 +2991,9 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             testHeaderAv.setText("FORM: TEST RAW DATA");
             testHeaderAv2.setText("(Air Flow Velocity, Volume Testing and Determination of Air Changes per Hour Rates by Hood)");
             findViewById(R.id.test3_dynamic_table_ll).setVisibility(View.VISIBLE);
+            findViewById(R.id.room_header_table).setVisibility(View.VISIBLE);
+            findViewById(R.id.ahu_af_table).setVisibility(View.GONE);
+
 
         }
 
@@ -3014,12 +3030,16 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             if ("EQUIPMENT".equalsIgnoreCase(mTestBasedOn)) {
                 testHeaderAv.setText("FORM:TEST RAW DATA EQUIPMENT");
                 testHeaderAv2.setText("Installed HEPA Filter System Leakage Test by Aerosol Photometer Method");
+                findViewById(R.id.room_header_table).setVisibility(View.VISIBLE);
+                findViewById(R.id.ahu_af_table).setVisibility(View.GONE);
             } else if ("AHU".equalsIgnoreCase(mTestBasedOn)) {
                 testHeaderAv.setText("FORM:TEST RAW DATA AHU/EQUIPMENT");
                 testHeaderAv2.setText("(Installed HEPA Filter System Leakage Test by Aerosol Photometer Method)");
             } else if ("ROOM".equalsIgnoreCase(mTestBasedOn)) {
                 testHeaderAv.setText("FORM:TEST RAW DATA");
                 testHeaderAv2.setText("Installed HEPA Filter System Leakage Test by Aerosol Photometer Method");
+                findViewById(R.id.room_header_table).setVisibility(View.VISIBLE);
+                findViewById(R.id.ahu_af_table).setVisibility(View.GONE);
             }
 
         }
@@ -3058,11 +3078,15 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
 //                instrumentNo.setText("" + partnerInstrument.getSerialNo());
 //            }
             if (mTestBasedOn.equalsIgnoreCase("EQUIPMENT")) {
+                findViewById(R.id.room_header_table).setVisibility(View.VISIBLE);
+                findViewById(R.id.ahu_af_table).setVisibility(View.GONE);
                 testHeaderAv.setText("FORM:TEST RAW DATA EQUIPMENT");
                 testHeaderAv2.setText("Airborne Particle Count Test for Classification of Cleanrooms/zones and Clean Air Devices");
             } else {
                 testHeaderAv.setText("FORM:TEST RAW DATA");
                 testHeaderAv2.setText("Airborne Particle Count Test for Classification of Cleanrooms/zones and Clean Air Devices");
+                findViewById(R.id.room_header_table).setVisibility(View.VISIBLE);
+                findViewById(R.id.ahu_af_table).setVisibility(View.GONE);
             }
             findViewById(R.id.test5_dynamic_table_ll).setVisibility(View.VISIBLE);
             sampling_flow_rate.setVisibility(View.VISIBLE);
@@ -3100,9 +3124,13 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             if (mTestBasedOn.equalsIgnoreCase("EQUIPMENT")) {
                 testHeaderAv.setText("FORM :TEST RAW DATA EQUIPMENT");
                 testHeaderAv2.setText("Recovery Performance Test");
+                findViewById(R.id.room_header_table).setVisibility(View.VISIBLE);
+                findViewById(R.id.ahu_af_table).setVisibility(View.GONE);
             } else {
                 testHeaderAv.setText("FORM :TEST RAW DATA");
                 testHeaderAv2.setText("Recovery Performance Test");
+                findViewById(R.id.room_header_table).setVisibility(View.VISIBLE);
+                findViewById(R.id.ahu_af_table).setVisibility(View.GONE);
             }
 
         }

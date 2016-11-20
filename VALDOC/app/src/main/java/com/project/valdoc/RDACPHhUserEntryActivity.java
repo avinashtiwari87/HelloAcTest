@@ -285,9 +285,9 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
 //                plantName
         areaOfTest.setText(areaName);
         roomName.setText(room.getRoomName());
-        occupancyState.setText(room.getOccupancyState().toString());
+        occupancyState.setText(mApplicableTestRoom.getOccupencyState().toString());
         Log.d("valdoc", "RDAV5UserEnryActivity 1witness= equipment.getTestReference()=" + room.getTestRef());
-        testRefrance.setText("" + room.getTestRef().toString());
+        testRefrance.setText("" + mApplicableTestRoom.getTestReference().toString());
 //        equipmentNo.setText(room.getRoomNo().toString());
         roomNo.setText(room.getRoomNo().toString());
         roomVolume.setText("" + room.getVolume());
@@ -597,7 +597,7 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
-                    row.addView(addTextView(" Grille/Filter No\n "));
+                    row.addView(addTextView(" Grill/Filter No\n "));
                 } else {
 
                     if (mGrilFilterType.equalsIgnoreCase("Grill")) {
@@ -632,7 +632,7 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
-                    row.addView(addTextView("Measured Air Flow Quantity\n Q1 (in cfm) "));
+                    row.addView(addTextView("Measured Air Flow Quantity\n(cfm) Q1"));
                 } else {
                     //row.addView(addTextView(" "));
                     row.addView(addInputDataTextView());
@@ -650,7 +650,7 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
-                    row.addView(addTextView("Air Flow Rate\n(Average) cfm "));
+                    row.addView(addTextView("Air Flow Rate (cfm)\n(Average)"));
                 } else {
                     //row.addView(addTextViewWithoutBorder("0"));
                     //row.addView(addTextViewWithIdsNoBorder(i, totalAirFlowRateIds, totalAirFlowRateTxtList));

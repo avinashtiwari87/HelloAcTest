@@ -220,7 +220,12 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
 //        }
         for (int i = 0; i < txtViewList.size(); i++) {
             TextView tvl = txtViewList.get(i);
-            tvl.setText(likageDataMap.get(tvl.getId()) + "");
+            Log.d("Saurabh", "Saurabh likageValue : "+likageDataMap.get(tvl.getId()) );
+            if(tvl.getId() >= 800){
+                tvl.setText(likageDataMap.get(tvl.getId()) + "");
+            }else{
+                tvl.setText(String.format("%.7f",likageDataMap.get(tvl.getId())) + "");
+            }
         }
         //Receiving Pass Fail Data from Bundle
         PassFailHashMap = (HashMap<Integer, Long>) getIntent().getSerializableExtra("PassFailData");
@@ -253,7 +258,7 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
         }
         for (int i = 0; i < txtConcentrationVariationList.size(); i++) {
             TextView tvl = txtConcentrationVariationList.get(i);
-            tvl.setText(concentrationVariationListData.get(i) + " %");
+            tvl.setText(concentrationVariationListData.get(i)+ " %");
             String pasFailCheck = String.valueOf(PassFailHashMap.get(300+i));
             Log.d(TAG, "Saurabh PassRedBlack "+pasFailCheck);
             if("PASS".equalsIgnoreCase(pasFailCheck.trim())){
@@ -371,6 +376,7 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
 
             }
             filtertypeEficiancy.setText(mEquipmentFilterArrayList.get(0).getFilterType()+" "+mEquipmentFilterArrayList.get(0).getEfficiency());
+//            testLocationText.setText(mEquipmentFilterArrayList.get(0).getf());
             equipmentName.setText(equipment.getEquipmentName());
             equipmentNo.setText(equipment.getEquipmentNo());
             mTestSpecification=mApplicableTestEquipment.getTestSpecification();
@@ -413,6 +419,7 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
 
             }
             filtertypeEficiancy.setText(mRoomFilterArrayList.get(0).getFilterType()+""+mRoomFilterArrayList.get(0).getEfficiency());
+            testLocationText.setText(mRoomFilterArrayList.get(0).getFilterLocation());
             mTestSpecification=mApplicableTestRoom.getTestSpecification();
             calSpesifiCation();
             testSpecification.setText("Max "+mshowSpesification);
@@ -480,7 +487,9 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
         aerosolUsedTable.setVisibility(View.VISIBLE);
         aerosolGeneratorType= (TextView) findViewById(R.id.aerosol_generator_type_value);
         aerosolUsed= (TextView) findViewById(R.id.aerosol_used);
-
+        testLocationText=(TextView) findViewById(R.id.room_volume_text);
+        testLocationText.setText("Test Location :");
+        testLocation=(TextView) findViewById(R.id.room_volume);
         if(mTestBasedOn.equalsIgnoreCase("ROOM")||mTestBasedOn.equalsIgnoreCase("AHU")){
             equipmentNameText = (TextView) findViewById(R.id.equiment_name_text);
             equipmentNameText.setVisibility(View.INVISIBLE);
@@ -498,11 +507,18 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
         roomName = (TextView) findViewById(R.id.room_name);
         roomNo = (TextView) findViewById(R.id.room_no);
         if(mTestBasedOn.equalsIgnoreCase("AHU")){
+            findViewById(R.id.room_volume_table).setVisibility(View.VISIBLE);
             roomNo.setVisibility(View.INVISIBLE);
+        }
+        if(mTestBasedOn.equalsIgnoreCase("ROOM")){
+            testLocationText.setVisibility(View.VISIBLE);
+            testLocation.setVisibility(View.VISIBLE);
         }
         occupancyState = (TextView) findViewById(R.id.ocupancystate);
         testRefrance = (TextView) findViewById(R.id.testrefrence);
         if (mTestBasedOn.equalsIgnoreCase("EQUIPMENT")) {
+            findViewById(R.id.room_volume_table).setVisibility(View.VISIBLE);
+            findViewById(R.id.test_item_table).setVisibility(View.VISIBLE);
             equipmentLable = (TextView) findViewById(R.id.equiment_name_text);
             equipmentLable.setVisibility(View.VISIBLE);
             equipmentName = (TextView) findViewById(R.id.equiment_name);
@@ -511,12 +527,10 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
             equipmentNoLable.setVisibility(View.VISIBLE);
             equipmentNo = (TextView) findViewById(R.id.equiment_no);
             equipmentNo.setVisibility(View.VISIBLE);
+            testLocationText.setVisibility(View.GONE);
+            testLocation.setVisibility(View.GONE);
         }
-        testLocationText=(TextView) findViewById(R.id.room_volume_text);
-        testLocationText.setVisibility(View.VISIBLE);
-        testLocationText.setText("Test Location :");
-        testLocation=(TextView) findViewById(R.id.room_volume);
-        testLocation.setVisibility(View.VISIBLE);
+
         filterTypeEficiancyText=(TextView) findViewById(R.id.test_item_text);
         filterTypeEficiancyText.setVisibility(View.VISIBLE);
         filterTypeEficiancyText.setText("Filter Type & Efficiency :");
@@ -679,6 +693,8 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
         }
         testDetails.setSamplingFlowRate("");
         testDetails.setSamplingTime("");
+        Log.d("setAerosolUsed",""+ aerosolUsed.getText());
+        Log.d("setAerosolUsed","aerosolGeneratorType"+""+ aerosolGeneratorType.getText());
         testDetails.setAerosolUsed("" + aerosolUsed.getText());
         testDetails.setAerosolGeneratorType("" + aerosolGeneratorType.getText());
 

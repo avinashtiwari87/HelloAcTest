@@ -21,16 +21,16 @@
             android:text="@string/verify_test_header" />
     </LinearLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/border_new"
         android:orientation="horizontal">
 
     <LinearLayout
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
+        android:layout_alignParentLeft="true"
         android:orientation="vertical"
         android:paddingLeft="5dp">
 
@@ -271,20 +271,11 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
+        android:layout_alignParentEnd="true"
         android:orientation="vertical"
-        android:paddingLeft="5dp">
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:orientation="vertical"
-        android:paddingLeft="5dp">
+        android:paddingRight="25dp">
 
         <TableLayout
             android:layout_width="match_parent"
@@ -524,7 +515,7 @@
 
     </LinearLayout>
 
-</LinearLayout>
+</RelativeLayout>
 
     <LinearLayout
         android:visibility="gone"

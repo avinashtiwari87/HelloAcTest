@@ -1121,10 +1121,9 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
         contentValues.put(TEST_DETAILS_PARTNERNAME, testDetails.getPartnerName());
         contentValues.put(TEST_DETAILS_SAMPLINGFLOWRATE, testDetails.getSamplingFlowRate());
         contentValues.put(TEST_DETAILS_SAMPLINGTIME, testDetails.getSamplingTime());
-        contentValues.put(TEST_DETAILS_AEROSOLGENERATORTYPE, testDetails.getAerosolGeneratorType());
         contentValues.put(TEST_DETAILS_AEROSOLUSED, testDetails.getAerosolUsed());
+        contentValues.put(TEST_DETAILS_AEROSOLGENERATORTYPE, testDetails.getAerosolGeneratorType());
         contentValues.put(TEST_DETAILS_TESTCODE, testDetails.getTestCode());
-
         contentValues.put(TEST_DETAILS_ROOMVOLUME, testDetails.getRoomVolume());
         contentValues.put(TEST_DETAILS_TESTWITNESSORG, testDetails.getTestWitnessOrg());
         contentValues.put(TEST_DETAILS_TESTCONDOCTORORG, testDetails.getTestCondoctorOrg());
@@ -2086,8 +2085,8 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                     jsonObject.put(TEST_DETAILS_PARTNERNAME, cursor.getString(23).toString());
                     jsonObject.put(TEST_DETAILS_SAMPLINGFLOWRATE, cursor.getString(24).toString());
                     jsonObject.put(TEST_DETAILS_SAMPLINGTIME, cursor.getString(25).toString());
-                    jsonObject.put(TEST_DETAILS_AEROSOLGENERATORTYPE, cursor.getString(26).toString());
-                    jsonObject.put(TEST_DETAILS_AEROSOLUSED, cursor.getString(27).toString());
+                    jsonObject.put(TEST_DETAILS_AEROSOLUSED, cursor.getString(26).toString());
+                    jsonObject.put(TEST_DETAILS_AEROSOLGENERATORTYPE, cursor.getString(27).toString());
                     jsonObject.put(TEST_DETAILS_TESTCODE, cursor.getString(28).toString());
 
                     jsonObject.put(TEST_DETAILS_ROOMVOLUME, cursor.getString(29).toString());

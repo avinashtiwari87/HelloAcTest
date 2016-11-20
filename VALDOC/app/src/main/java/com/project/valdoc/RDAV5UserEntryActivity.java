@@ -606,7 +606,7 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
-                    row.addView(addTextView(" Average(V) "));
+                    row.addView(addTextView("Avg. Airflow Velocity(fpm)"));
                 } else {
                     //result data  set
                     row.addView(addResultTextView(i));

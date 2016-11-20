@@ -315,7 +315,7 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
 
     private void createOccupancySpinner(final String testBasedOn) {
         occupancyList = new ArrayList<String>();
-        occupancyList.add("Select OccupancyState");
+        occupancyList.add("Select Occupancy State");
         if (testBasedOn.equalsIgnoreCase("AHU")) {
             if (mApplicableTestAhuList.size() > 1) {
                 occupancySpiner.setVisibility(View.VISIBLE);
@@ -1218,7 +1218,7 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
         testItemList = new ArrayList<String>();
         testItemList.add("Select Test Item");
         testItemList.add("Fresh Air Filter");
-        testItemList.add("Bleed HEPA Filter");
+        testItemList.add("Bleed Filter");
         testItemList.add("Final Filter");
     }
 

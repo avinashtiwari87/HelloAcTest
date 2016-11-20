@@ -97,7 +97,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
     private TextView testRefrance;
     private TextView equipmentNameText;
     private TextView equipmentNoText;
-    private TextView equiment_no;
+    private TextView equiment_no,ahu_equip_value;
     private TextView roomNo;
     private TextView ahuNo;
     private TextView ahuNoText;
@@ -134,6 +134,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
     private int day;
     static final int DATE_PICKER_ID = 1111;
     private ArrayList<Double>arrayList_totalAirFlowRate = new ArrayList<>();
+    double mTotalAirFlowRateValue = 0.0f;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -224,7 +225,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
         }
 
         //Total AirFlow Rate (sum of AirFlow Rate)
-        double totalAirFlowRateValue = 0.0f;
+
         if (totalAirFlowRateTxtList != null && totalAirFlowRateTxtList.size() > 0) {
             int middleTxt = totalAirFlowRateTxtList.size() / 2;
             TextView mtvl = totalAirFlowRateTxtList.get(middleTxt);
@@ -232,10 +233,10 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
             if (mTestBasedOn.equalsIgnoreCase("AHU")) {
                 if(!arrayList_totalAirFlowRate.isEmpty()&& arrayList_totalAirFlowRate.size()>0){
                     for (int i = 0; i < arrayList_totalAirFlowRate.size(); i++) {
-                        totalAirFlowRateValue += arrayList_totalAirFlowRate.get(i);
+                        mTotalAirFlowRateValue += arrayList_totalAirFlowRate.get(i);
                     }
                 }
-                mtvl.setText(Math.round(totalAirFlowRateValue/arrayList_totalAirFlowRate.size())+ "");
+                mtvl.setText(mTotalAirFlowRateValue+ "");
             }else{
                 //Air Flow Rate(AxAv)
                 totalAirFlowRateMap = (HashMap<Integer, Float>) getIntent().getSerializableExtra("ResultData2");
@@ -351,7 +352,8 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
             roomName.setText(roomDetails[1]);
             // room no not needed
             roomNo.setText(roomDetails[2]);
-            ahuNo.setText(ahuNumber);
+            ahu_equip_value.setText(ahuNumber);
+            ahuNo.setText("hello"+ahuNumber);
             roomVolume.setText("" + roomDetails[4]);
             testItemValue.setText("" + mApplicableTestAhu.getTestItem());
         } else if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
@@ -453,10 +455,10 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
             equipmentNoText.setVisibility(View.GONE);
             equiment_no.setVisibility(View.GONE);
             equipmentNoText.setText("AHU/Equipment No: ");
-            equiment_no.setText(" AHU 06");
+            equiment_no.setText("");
             findViewById(R.id.ahu_af_equpmentNo_table).setVisibility(View.VISIBLE);
-            TextView ahu_equip_value = (TextView) findViewById(R.id.ahu_equipment_value_tv);
-            ahu_equip_value.setText(" AHU 06");
+            ahu_equip_value = (TextView) findViewById(R.id.ahu_equipment_value_tv);
+            ahu_equip_value.setText("AHU 06");
 
         }
 
@@ -504,22 +506,22 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
         TestSpesificationValue testSpesificationValue1 = new TestSpesificationValue();
 //        testSpesificationValue1.setTest_specific_id(1);
         testSpesificationValue1.setTest_detail_id("" + testDetailsId);
-        testSpesificationValue1.setFieldName("RV");
+
         if (mTestBasedOn.equalsIgnoreCase("AHU")) {
-            testSpesificationValue1.setFieldValue("" + roomDetails[4]);
+            testSpesificationValue1.setFieldName("Air Flow Rate");;
+            testSpesificationValue1.setFieldValue("" + mTotalAirFlowRateValue);
+            spesificationValueArrayList.add(testSpesificationValue1);
         } else if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
+            testSpesificationValue1.setFieldName("RV");
             testSpesificationValue1.setFieldValue("" + room.getVolume());
-        }
-
         spesificationValueArrayList.add(testSpesificationValue1);
-
         TestSpesificationValue testSpesificationValue2 = new TestSpesificationValue();
 //        testSpesificationValue2.setTest_specific_id(1);
         testSpesificationValue2.setTest_detail_id("" + testDetailsId);
         testSpesificationValue2.setFieldName("((TFR/RV)x60))");
         testSpesificationValue2.setFieldValue("" + airChangeValue);
         spesificationValueArrayList.add(testSpesificationValue2);
-
+        }
         return spesificationValueArrayList;
     }
 
@@ -658,7 +660,11 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
         testDetails.setRoomNo(roomNo.getText().toString());
         testDetails.setOccupencyState(occupancyState.getText().toString());
         testDetails.setTestReference(testRefrance.getText().toString());
-        testDetails.setAhuNo(ahuNo.getText().toString());
+        if(mTestBasedOn.equalsIgnoreCase("AHU")){
+            testDetails.setAhuNo(ahu_equip_value.getText().toString());
+        }else {
+            testDetails.setAhuNo(ahuNo.getText().toString());
+        }
         testDetails.setTesterName(testCundoctor.getText().toString());
         testDetails.setTestCode(mTestCode);
 
@@ -798,7 +804,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
-                    row.addView(addTextView(" Grille / Filter No\n "));
+                    row.addView(addTextView(" Grill / Filter No\n "));
                 } else {
                     if (mTestBasedOn.equalsIgnoreCase("AHU")) {
                         if (null != mAhuFilterArrayList && mAhuFilterArrayList.size() > 0) {
@@ -1146,10 +1152,14 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
             TestHeader2.setText("(Air Flow Velocity/ Volume Testing)");
         }else if("ROOM".equalsIgnoreCase(mTestBasedOn)){
             TestHeader.setText("TEST RAW DATA ");
+            TestHeader2.setText("(Air Flow Velocity, Volume Testing and Determination of Air Changes per Hour Rates by Amnemoter)");
             findViewById(R.id.acph_av_final_calc_ll).setVisibility(View.VISIBLE);
             findViewById(R.id.common_certificate_header_ll).setVisibility(View.VISIBLE);
             findViewById(R.id.ahu_no_lable).setVisibility(View.VISIBLE);
             findViewById(R.id.room_volume_table).setVisibility(View.VISIBLE);
+            test2_table_layout6.setVisibility(View.GONE);
+            TextView measerdTv = (TextView)findViewById(R.id.measerd_av_tv);
+            measerdTv.setText("Measured Air Velocity(fpm)");
         }
     }
 }

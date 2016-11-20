@@ -258,7 +258,7 @@ public class RDPCTUserEntryActivity extends AppCompatActivity {
 // Now formattedDate have current date/time
         Toast.makeText(this, formattedDate, Toast.LENGTH_SHORT).show();
         int mon = month + 1;
-        //certificateNo.setText("C3/" + mon + "/" + year + "/" + formattedDate);
+        certificateNo.setText("C3/" + mon + "/" + year + "/" + formattedDate);
 
         // Show current date
         String date = new StringBuilder().append(day).append("-").append(month + 1).append("-").append(year).append(" ").toString();
