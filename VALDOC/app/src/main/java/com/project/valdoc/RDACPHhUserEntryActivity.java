@@ -285,9 +285,9 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
 //                plantName
         areaOfTest.setText(areaName);
         roomName.setText(room.getRoomName());
-        occupancyState.setText(room.getOccupancyState().toString());
+        occupancyState.setText(mApplicableTestRoom.getOccupencyState().toString());
         Log.d("valdoc", "RDAV5UserEnryActivity 1witness= equipment.getTestReference()=" + room.getTestRef());
-        testRefrance.setText("" + room.getTestRef().toString());
+        testRefrance.setText("" + mApplicableTestRoom.getTestReference().toString());
 //        equipmentNo.setText(room.getRoomNo().toString());
         roomNo.setText(room.getRoomNo().toString());
         roomVolume.setText("" + room.getVolume());

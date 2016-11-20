@@ -376,6 +376,7 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
 
             }
             filtertypeEficiancy.setText(mEquipmentFilterArrayList.get(0).getFilterType()+" "+mEquipmentFilterArrayList.get(0).getEfficiency());
+//            testLocationText.setText(mEquipmentFilterArrayList.get(0).getf());
             equipmentName.setText(equipment.getEquipmentName());
             equipmentNo.setText(equipment.getEquipmentNo());
             mTestSpecification=mApplicableTestEquipment.getTestSpecification();
@@ -418,6 +419,7 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
 
             }
             filtertypeEficiancy.setText(mRoomFilterArrayList.get(0).getFilterType()+""+mRoomFilterArrayList.get(0).getEfficiency());
+            testLocationText.setText(mRoomFilterArrayList.get(0).getFilterLocation());
             mTestSpecification=mApplicableTestRoom.getTestSpecification();
             calSpesifiCation();
             testSpecification.setText("Max "+mshowSpesification);
@@ -525,6 +527,8 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
             equipmentNoLable.setVisibility(View.VISIBLE);
             equipmentNo = (TextView) findViewById(R.id.equiment_no);
             equipmentNo.setVisibility(View.VISIBLE);
+            testLocationText.setVisibility(View.GONE);
+            testLocation.setVisibility(View.GONE);
         }
 
         filterTypeEficiancyText=(TextView) findViewById(R.id.test_item_text);

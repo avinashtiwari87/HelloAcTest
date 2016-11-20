@@ -623,7 +623,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
 
             test_value1.setText("" + room.getRoomName());
             test_value4.setText("" + room.getRoomNo());
-//            test_value6.setText("" + mApplicableTestRoom.getOccupencyState());
+            test_value6.setText("" + mApplicableTestRoom.getOccupencyState());
             datePicker();
         } else if (TestCreateActivity.FIT.equalsIgnoreCase(testType)) {
             if (TestBasedOn.equalsIgnoreCase("EQUIPMENT")) {
@@ -747,11 +747,13 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 test_value5.setText("" + clientInstrument.getSerialNo());
                 test_value8.setText("" + parseDateToddMMyyyy("" + clientInstrument.getLastCalibrated()));
                 test_value9.setText("" + parseDateToddMMyyyy("" + clientInstrument.getCalibrationDueDate()));
+                test_value10.setText("" + clientInstrument.getRange());
             } else {
                 test_value2.setText(partnerInstrument.getpInstrumentName());
                 test_value5.setText("" + partnerInstrument.getSerialNo());
                 test_value8.setText("" + parseDateToddMMyyyy("" + partnerInstrument.getLastCalibrationDate()));
                 test_value9.setText("" + parseDateToddMMyyyy("" + partnerInstrument.getCalibrationDueDate()));
+                test_value10.setText("" + partnerInstrument.getRange());
             }
             test_value3.setText(userName);
             test_value11.setText("1 Minute");
