@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="false"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp">
+
+    <RelativeLayout
+        android:id="@+id/heading"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#e6eeff"
+        tools:context=".TestCreateActivity"
+        tools:showIn="@layout/activity_test">
+
+        <TextView
+            android:id="@+id/test_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="20dp"
+            android:paddingRight="65dp"
+            android:text="current date"
+            android:textColor="@android:color/black"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/testdata"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="18dp"
+            android:text="@string/test_data_sheet"
+            android:textColor="@android:color/black"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/testdata"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:id="@+id/witnesslayout1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp">
+
+                <TextView
+                    android:id="@+id/witness1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginTop="10dp"
+                    android:paddingLeft="10dp"
+                    android:text="@string/witness"
+                    android:visibility="gone"
+                    android:textColor="@android:color/black"
+                    android:textSize="18sp" />
+
+                <EditText
+                    android:id="@+id/witnessfirst"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:hint="@string/test_witness_hint"
+                    android:layout_toRightOf="@+id/witness1"
+                    android:imeOptions="actionNext"
+                    android:nextFocusDown="@+id/witnesssecond"></EditText>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/witnesslayout2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/witness2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginTop="10dp"
+                    android:paddingLeft="10dp"
+                    android:visibility="gone"
+                    android:text="@string/witness"
+                    android:textColor="@android:color/black"
+                    android:textSize="18sp" />
+
+                <EditText
+                    android:id="@+id/witnesssecond"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/witness2"
+                    android:hint="@string/test_witness_hint"
+                    android:imeOptions="actionNext"
+                    android:nextFocusDown="@+id/witnessthird" />
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:id="@+id/witnesslayout3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/witness3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginTop="10dp"
+                    android:paddingLeft="10dp"
+                    android:visibility="gone"
+                    android:text="@string/witness"
+                    android:textColor="@android:color/black"
+                    android:textSize="18sp" />
+
+                <EditText
+                    android:id="@+id/witnessthird"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/witness3"
+                    android:focusable="true"
+                    android:hint="@string/test_witness_hint"
+                    android:focusableInTouchMode="true"
+                    android:imeOptions="actionDone"></EditText>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/show_witness_iv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:src="@drawable/row_plus" />
+
+                <ImageView
+                    android:id="@+id/hide_witness_iv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginLeft="20dp"
+                    android:layout_toRightOf="@+id/show_witness_iv"
+                    android:src="@drawable/row_minus" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/equipment_ahu_roomlayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <Spinner
+                    android:id="@+id/equipment_ahu_room_spinner"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@android:drawable/spinner_dropdown_background"
+                    android:popupBackground="@android:color/holo_green_dark"
+                    android:spinnerMode="dropdown" />
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:id="@+id/select_test_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <Spinner
+                    android:id="@+id/select_test_spinner"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@android:drawable/spinner_dropdown_background"
+                    android:popupBackground="@android:color/holo_green_dark"
+                    android:spinnerMode="dropdown"
+                    android:visibility="visible" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/instrumentlayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <Spinner
+                    android:id="@+id/instrumentspiner"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:background="@android:drawable/spinner_dropdown_background"
+                    android:popupBackground="@android:color/holo_green_dark"
+                    android:spinnerMode="dropdown" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/ahulayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <Spinner
+                    android:id="@+id/ahuspinner"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@android:drawable/spinner_dropdown_background"
+                    android:popupBackground="@android:color/holo_green_dark"
+                    android:spinnerMode="dropdown"
+                    android:visibility="gone" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/roomlayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <Spinner
+                    android:id="@+id/roomspinner"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@android:drawable/spinner_dropdown_background"
+                    android:popupBackground="@android:color/holo_green_dark"
+                    android:spinnerMode="dropdown"
+                    android:visibility="gone" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/room_no_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <Spinner
+                    android:id="@+id/room_no_spinner"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@android:drawable/spinner_dropdown_background"
+                    android:popupBackground="@android:color/holo_green_dark"
+                    android:spinnerMode="dropdown"
+                    android:visibility="gone" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/select_occupancy_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <Spinner
+                    android:id="@+id/select_occupancy_spinner"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@android:drawable/spinner_dropdown_background"
+                    android:popupBackground="@android:color/holo_green_dark"
+                    android:spinnerMode="dropdown"
+                    android:visibility="gone" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/submitbuttonlayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp">
+
+                <ImageView
+                    android:id="@+id/submit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:src="@drawable/go_btn"
+                    android:textColor="@color/white" />
+            </RelativeLayout>
+
+        </LinearLayout>
+    </RelativeLayout>
+</ScrollView>

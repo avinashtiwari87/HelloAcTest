@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/common_test_header"
+    android:background="@drawable/border_new">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:orientation="vertical"
+        android:paddingLeft="5dp">
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TableRow
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp">
+
+                <TextView
+                    android:id="@+id/common_dynamic_test_header1_tv"
+                    style="@style/TestHeaderTextViewBold"
+                    android:gravity="right"
+                    android:text="Equipment Name:" />
+
+                <TextView
+                    android:id="@+id/common_dynamic_test_value1_tv"
+                    style="@style/TestHeaderTextViewNormal"
+                    android:text="Filtration Room " />
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/room_header_table"
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp">
+
+                <TextView
+                    android:id="@+id/common_dynamic_test_header4_tv"
+                    style="@style/TestHeaderTextViewBold"
+                    android:gravity="right"
+                    android:text="Room Name" />
+
+                <TextView
+                    android:id="@+id/common_dynamic_test_value4_tv"
+                    style="@style/TestHeaderTextViewNormal"
+                    android:text="Filtration Room" />
+            </TableRow>
+
+            <TableRow
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp">
+
+                <TextView
+                    android:id="@+id/common_dynamic_test_header2_tv"
+                    style="@style/TestHeaderTextViewBold"
+                    android:gravity="right"
+                    android:text="Instrument Used :" />
+
+                <TextView
+                    android:id="@+id/common_dynamic_test_value2tv"
+                    style="@style/TestHeaderTextViewNormal"
+                    android:text="Aerosol Photometer" />
+            </TableRow>
+
+            <TableRow
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp">
+
+                <TextView
+                    android:id="@+id/common_dynamic_test_header5_tv"
+                    style="@style/TestHeaderTextViewBold"
+                    android:gravity="right"
+                    android:text="Instrument Used :" />
+
+                <TextView
+                    android:id="@+id/common_dynamic_test_value5_tv"
+                    style="@style/TestHeaderTextViewNormal"
+                    android:text="" />
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/sampling_flow_rate"
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/common_dynamic_test_header10_tv"
+                    style="@style/TestHeaderTextViewBold"
+                    android:gravity="right"
+                    android:text="Sampling Flow Rate :" />
+
+                <TextView
+                    android:id="@+id/common_dynamic_test_value10_tv"
+                    style="@style/TestHeaderTextViewNormal"
+                    android:text="" />
+            </TableRow>
+
+
+            <TableRow
+                android:id="@+id/ahu_af_table"
+                android:paddingBottom="5dp"
+                android:visibility="gone"
+                android:paddingTop="5dp">
+
+                <TextView
+                    android:id="@+id/ahu_af_test_item_header_tv"
+                    style="@style/TestHeaderTextViewBold"
+                    android:gravity="right"
+                    android:text="Test Item :" />
+
+                <TextView
+                    android:id="@+id/ahu_af_test_item_value_tv"
+                    style="@style/TestHeaderTextViewNormal"
+                    android:text="" />
+            </TableRow>
+
+            <TableRow
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp">
+
+                <TextView
+                    android:id="@+id/common_dynamic_test_header3_tv"
+                    style="@style/TestHeaderTextViewBold"
+                    android:gravity="right"
+                    android:text="Test Conduted By :" />
+
+                <TextView
+                    android:id="@+id/common_dynamic_test_value3_tv"
+                    style="@style/TestHeaderTextViewNormal"
+                    android:text="Pradeep" />
+            </TableRow>
+
+        </TableLayout>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:orientation="vertical"
+        android:paddingRight="50dp">
+
+        <TableLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <TableRow
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp">
+
+                <TextView
+                    android:id="@+id/common_dynamic_test_header7_tv"
+                    style="@style/TestHeaderTextViewBold"
+                    android:gravity="right"
+                    android:text="Room Name" />
+
+                <TextView
+                    android:id="@+id/common_dynamic_test_value7_tv"
+                    style="@style/TestHeaderTextViewNormal"
+                    android:text="" />
+            </TableRow>
+
+            <TableRow
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp">
+
+                <TextView
+                    android:id="@+id/common_dynamic_test_header8_tv"
+                    style="@style/TestHeaderTextViewBold"
+                    android:gravity="right"
+                    android:text="Instrument Used :" />
+
+                <TextView
+                    android:id="@+id/common_dynamic_test_value8_tv"
+                    style="@style/TestHeaderTextViewNormal"
+                    android:text="" />
+            </TableRow>
+
+            <TableRow
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp">
+
+                <TextView
+                    android:id="@+id/common_dynamic_test_header9_tv"
+                    style="@style/TestHeaderTextViewBold"
+                    android:gravity="right"
+                    android:text="Test Conduted By :" />
+
+                <TextView
+                    android:id="@+id/common_dynamic_test_value9_tv"
+                    style="@style/TestHeaderTextViewNormal"
+                    android:text="" />
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/clean_room_class"
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/common_dynamic_test_header12_tv"
+                    style="@style/TestHeaderTextViewBold"
+                    android:gravity="right"
+                    android:text="Cleanroom Class :" />
+
+                <TextView
+                    android:id="@+id/common_dynamic_test_value12_tv"
+                    style="@style/TestHeaderTextViewNormal"
+                    android:text="" />
+            </TableRow>
+
+            <TableRow
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp">
+
+                <TextView
+                    android:id="@+id/common_dynamic_test_header6_tv"
+                    style="@style/TestHeaderTextViewBold"
+                    android:gravity="right"
+                    android:text="Test Conduted By :" />
+
+                <TextView
+                    android:id="@+id/common_dynamic_test_value6_tv"
+                    style="@style/TestHeaderTextViewNormal"
+                    android:text="" />
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/sampling_time"
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/common_dynamic_test_header11_tv"
+                    style="@style/TestHeaderTextViewBold"
+                    android:gravity="right"
+                    android:text="Sampling Time :" />
+
+                <TextView
+                    android:id="@+id/common_dynamic_test_value11_tv"
+                    style="@style/TestHeaderTextViewNormal"
+                    android:text="" />
+            </TableRow>
+
+        </TableLayout>
+    </LinearLayout>
+
+
+</RelativeLayout>

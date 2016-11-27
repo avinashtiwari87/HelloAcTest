@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="150dp"
+        android:layout_weight="1"
+        android:background="@drawable/border"
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/TextAppearance.AppCompat.header_left"
+            android:layout_weight="1"
+            android:text=" Location No " />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text=" 1 " />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="150dp"
+        android:layout_weight="2"
+        android:background="@drawable/border"
+        android:orientation="vertical"
+        android:padding="0dp">
+
+        <TextView
+            style="@style/TextAppearance.AppCompat.header_left"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@drawable/border2"
+            android:text=" Test Parameter " />
+
+        <TextView
+            style="@style/TextAppearance.AppCompat.header_right"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:background="@drawable/border2"
+            android:text=" Intial Reading " />
+
+        <TextView
+            style="@style/TextAppearance.AppCompat.header_right"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:background="@drawable/border2"
+            android:text=" Worst Case Reading " />
+
+        <TextView
+            style="@style/TextAppearance.AppCompat.header_right"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@drawable/border2"
+            android:text=" Final Reading " />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="150dp"
+        android:layout_weight="2"
+        android:background="@drawable/border"
+        android:orientation="vertical"
+        android:padding="0dp">
+
+        <TextView
+            style="@style/TextAppearance.AppCompat.header_left"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@drawable/border2"
+            android:text=" No. of Particles ≥ 0. 5 µm/m³ " />
+
+        <TextView
+            android:id="@+id/initial_reading"
+            style="@style/TextAppearance.AppCompat.header_right"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:background="@drawable/border2"
+            android:text=" 88269 " />
+
+        <TextView
+            android:id="@+id/worst_case"
+            style="@style/TextAppearance.AppCompat.header_right"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:background="@drawable/border2"
+            android:text=" 2455378 " />
+
+        <TextView
+            android:id="@+id/final_reading"
+            style="@style/TextAppearance.AppCompat.header_right"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@drawable/border2"
+            android:text=" 242000" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="150dp"
+        android:layout_weight="1"
+        android:background="@drawable/border"
+        android:orientation="vertical"
+        android:padding="0dp">
+
+        <TextView
+            style="@style/TextAppearance.AppCompat.header_left"
+            android:layout_weight="3"
+            android:text=" Recovery Time\n  (minutes)" />
+
+        <TextView
+            android:id="@+id/recovery_time"
+            style="@style/TextAppearance.AppCompat.header_right"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text=" " />
+    </LinearLayout>
+
+
+</LinearLayout>

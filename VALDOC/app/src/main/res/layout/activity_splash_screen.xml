@@ -1,0 +1,22 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.project.valdoc.SplashScreen">
+
+<ImageView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:scaleType="fitXY"
+    android:drawingCacheQuality="auto"
+    android:contentDescription="@string/app_name"
+    android:src="@drawable/splash"/>
+
+
+    <ImageView
+        android:layout_width="400dp"
+        android:layout_height="500dp"
+        android:layout_centerInParent="true"
+        android:src="@drawable/logo"/>
+
+</RelativeLayout>
