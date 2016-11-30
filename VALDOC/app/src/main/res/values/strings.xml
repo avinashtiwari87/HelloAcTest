@@ -1,0 +1,195 @@
+<resources>
+    <string name="name">Name</string>
+    <string name="designation">Designation</string>
+    <string name="contact_no">Contact No</string>
+    <string name="email_id">Email Id</string>
+    <string name="app_name">VALDOC</string>
+    <string name="action_settings">Settings</string>
+    <!--Login screen-->
+    <string name="user_id_text">User ID</string>
+    <string name="user_id_sugesion_text">Please enter your user id</string>
+    <string name="passwor_text">Password</string>
+    <string name="password_sugetion">Please enter your password</string>
+    <string name="login_button_text">Login</string>
+    <!--main activity-->
+    <string name="user_name">User Name</string>
+    <string name="test_data_sheet">TEST DATA ENTRY</string>
+    <string name="update_serial_no">Update Serial No :</string>
+    <string name="witness">Witness :</string>
+    <string name="update_service_engg">Update Service Engineer :</string>
+    <string name="test_witness_hint">Enter Test Witness Name</string>
+    <string name="area_of_test">Area Of Test</string>
+    <string name="select_equipment">Select Equipment</string>
+    <string name="select_ahu">Select AHU</string>
+    <string name="select_room">Select Room</string>
+    <string name="select_filling_room">Select Filling Room</string>
+    <string name="test_selection_submit">SUBMIT</string>
+    <string name="test_selection_clear">CLEAR</string>
+    <string name="test_selection_exit">CANCEL</string>
+
+    <!--test Raw data-->
+    <string name="certificate_name"> Average Air Flow Velocity Testing</string>
+    <string name="customer">Customer  :</string>
+    <string name="customer_address">M/s Kem Well Biopharma Private Limited 34th KM,Tumkur Rood,T-Begur Nelamangala, Bangalore Rural-562123</string>
+    <string name="raw_data_no">Raw Data No  :</string>
+    <string name="raw_data_details">AV/13-14/1094</string>
+    <string name="date_of_test">Date of Testing :</string>
+    <string name="dae_of_test_details">12.09.2013</string>
+    <string name="instrument_details">Details of Instruments Used for testing</string>
+    <string name="instrument_used">Instrument Used :</string>
+    <string name="instrument_used_test1">Instrument Used :</string>
+    <string name="instrument_used_details">HOT WIRE ANEMOMETER</string>
+    <string name="make">Make</string>
+    <string name="make_details">LUTRON</string>
+    <string name="modle">Model</string>
+    <string name="Aerosol_generator_type_lable">Aerosol Generator Type</string>
+    <string name="aerosol_used_lable">Aerosol Used</string>
+    <string name="sampling_flow_rate_lable">Sampling Flow Rate</string>
+    <string name="sampling_time_lable">Sampling Time</string>
+    <string name="modle_details">AM-2024</string>
+    <string name="instrument_serial_no">Instrument Serial No :</string>
+    <string name="instrument_serial_no_details">Q625150</string>
+    <string name="calibrated">Calibrated On :</string>
+    <string name="calibrated_date">29.07.2013</string>
+    <string name="calibration_due">Calibration Due On :</string>
+    <string name="calibration_due_on_date">29.07.2014</string>
+    <string name="details_of_specification_area">Details Of Specification And Area</string>
+    <string name="test_specification">Test Spesification :</string>
+    <string name="test_specification_details">Required Air Velocity 90 fpm +/- 20%</string>
+    <string name="block_plant_name">Block/Plant Name :</string>
+    <string name="block_plant_details">FTO3</string>
+    <string name="area_of_test_label">Area Of Test :</string>
+    <string name="area_of_test_label_details">Micro Bialogy Area</string>
+    <string name="room_name">Room Name :</string>
+    <string name="room_name_details">Cell Culture</string>
+    <string name="ocupancy_state">Occupancy State :</string>
+    <string name="ocupancy_state_details">At Rest</string>
+    <string name="test_refrence">Test Referance :</string>
+    <string name="test_refrence_details">ISO 14644</string>
+    <string name="equipment_name">Equipment Name</string>
+    <string name="ahu_no">AHU Number</string>
+    <string name="room_no">Room No :</string>
+    <string name="equipment_name_details">Dynamic Garment Qubical</string>
+    <string name="equipment_no">Equipment No</string>
+    <string name="equipment_no_details">QC/DGC/01</string>
+
+    <!--average air velocity test result-->
+    <string name="obtained_test_result">Obtained Test Result</string>
+    <string name="gril_filter_id">Gril/Filter Id</string>
+    <string name="airflow_input_type">Air Flow Velocity in fpm</string>
+    <string name="averge_airflow">Average Air Fllow Velocity In fpm</string>
+    <string name="velocity">V</string>
+    <string name="velocity_label">QC/DGC/01/HF/01</string>
+    <string name="velocity_average">Value</string>
+    <string name="result">Result</string>
+    <string name="result_value">Pass</string>
+    <string name="inference">INFERENCE</string>
+    <string name="meet_infrance_value">The above Airflow Velocity Test value meets the specified Requirement</string>
+    <string name="dont_meet_infrance_value">The above Airflow Velocity Test value do not meets the specified Requirement</string>
+    <string name="tes_cunducted_buy">Test Cunducted By</string>
+    <string name="tes_cunducted_buy_test1">Test Cunducted By :</string>
+    <string name="instrument_no_lable">Instrument No</string>
+    <string name="room_name_lable">Room name</string>
+    <string name="tewst_witness_by">Test Witness By</string>
+    <string name="test_cunduct_org">(for Castor Engineering Pvt Ltd)</string>
+    <string name="test_cunducter_name">TestCundoctorName</string>
+    <string name="test_witness_name">TestWitnessName</string>
+    <string name="test_witness_org">Biopharma Private Ltd</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="header_title">FORM :TEST RAW DATA EQUIPMENT</string>
+    <string name="verify_test_header">Measured Test Value</string>
+    <string name="header2_title">Details of Instruments Used for testing</string>
+    <string name="header3_title">Details of Specification and Area</string>
+    <string name="header_title_result">Obtained Test  Values</string>
+    <string name="test_create_activity">TestCreateActivity</string>
+    <string name="title_activity_login">Sign in</string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="error_invalid_password">This password is too short</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_field_required">This field is required</string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email
+        completions."
+    </string>
+
+    <string name="title_activity_fullscreen">FullscreenActivity</string>
+
+    <string name="title_activity_splash_screen">SplashScreen</string>
+
+
+    <!-- Air Flow Velocity, Volume Testing and Determination of Air Changes per Hour Rate  -->
+    <string name="header_title1">FORM: TEST RAW DATA AHU/ Equipment\n(Airflow Testing by Air Velocity Method)</string>
+
+
+    <!--Installed HEPA Filter System Leakage Test -->
+    <string name="header_title4">* Installed HEPA Filter System Leakage Test *</string>
+
+
+    <!--Airborne Particle Count Test for Classification of Cleanrooms/zones and Clean Air Devices -->
+    <string name="header_title5">Airborne Particle Count Test for Classification of Cleanrooms/zones and Clean Air Devices</string>
+    <string name="test_entry_header">SERVICE REPORT</string>
+    <string name="test_entry">(Cleanroom HVAC Validation)</string>
+
+    <!--  Service Report Entry  -->
+    <string name="service_engineer">Service Engineer:</string>
+    <string name="time_in">Time in :</string>
+    <string name="time_out">Time out :</string>
+    <string name="sr_no">SR No :</string>
+    <string name="date">Date :</string>
+    <string name="customer_po">Customer PO :</string>
+    <string name="work_order">Work Order #</string>
+    <string name="test_details">Test Details</string>
+    <string name="sr_nl">Sl #\n  \n</string>
+    <string name="type_of_test">Type of Test\n  \n</string>
+    <string name="area_of_test_entry_page">Area Of Test\n  \n</string>
+    <string name="equipment_type_no"> Equipment\n /AHU No\n</string>
+    <string name="no_of_location"> No. of\n Location\n </string>
+    <string name="no_of_days_hrs"> No. of\n Days/Hrs\n </string>
+    <string name="avt_ach">Air Flow Test with Air Capture Hood</string>
+    <string name="work_status">Work Status :</string>
+    <string name="customer_remarks">Customer Remarks (if Any):</string>
+    <string name="name_sign_team">Name &amp; Signature (Team)</string>
+    <string name="notes">Note: Per day Charges is for 8 hrs only, beyound which next day charges will be applicable.</string>
+    <string name="header_title6">*Recovery Test for Non-Unidirectional Airflow Installations*</string>
+    <string name="title_activity_service_report">ServiceReportActivity</string>
+
+
+    <!--Service report Data details-->
+    <string name="air_velocity">Air Velocity Test with Anemometer</string>
+    <string name="air_flow">Air Flow Test with Air Capture Hood</string>
+    <string name="hepa_filter">HEPA Filter Integrity Test (PAO/DOP)</string>
+    <string name="hepa_integrity">HEPA Filter Integrity Test with Thermal Generator</string>
+    <string name="non_viable_28">Non Viable Particle Coun Test (28.3 LPM)</string>
+    <string name="non_viable_50">Non Viable Particle Coun Test (50 LPM)</string>
+    <string name="non_viable_75">Non Viable Particle Coun Test (75 LPM)</string>
+    <string name="non_viable_100">Non Viable Particle Coun Test (100 LPM)</string>
+    <string name="area_recovery">Area Recovery Test</string>
+    <string name="air_visualization">Air Flow Visualization Test</string>
+    <string name="pressure">Pressure Differential Test</string>
+    <string name="air_pressure">Area Pressure Balancing</string>
+    <string name="temprature">Temperature &amp; RH Test</string>
+    <string name="light">Light Level Test</string>
+    <string name="sound">Sound Level Test</string>
+    <string name="forget_password">Forgot Password</string>
+    <string name="test_data_sync">TEST DATA SYNC</string>
+    <string name="select_room_equipment_ahu">Select Rooms, AHU or Equipment</string>
+    <string name="server_setting_text">Before changing the service url make sure to backup or sync your database. Otherwise you will lose all your data exist in this device and if not synchronized with the server.For dedicated server please contact\\nsupport@abc.com</string>
+
+    <string-array name="select_test_option">
+        <item>Rooms</item>
+        <item>AHU</item>
+        <item>Equipment</item>
+    </string-array>
+
+</resources>
+
+
+
+

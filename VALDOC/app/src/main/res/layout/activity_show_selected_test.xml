@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context="com.project.valdoc.ShowSelectedTestActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <TextView
+            android:id="@+id/test_data_sync_tv"
+            style="@style/TextAppearance.AppCompat.header_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:text="@string/test_data_sync" />
+
+        <TextView
+            android:id="@+id/select_room_equipment_ahu_tv"
+            style="@style/TextAppearance.AppCompat.header_left"
+            android:layout_below="@+id/test_data_sync_tv"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="30dp"
+            android:text="@string/select_room_equipment_ahu"
+            android:textSize="18sp" />
+
+        <Spinner
+            android:id="@+id/spinner_select_test"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_below="@+id/select_room_equipment_ahu_tv"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="10dp" />
+
+        <ListView
+            android:id="@+id/listView"
+            android:layout_width="wrap_content"
+            android:layout_height="300dp"
+            android:layout_below="@+id/spinner_select_test"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="10dp" />
+
+        <Button
+            android:id="@+id/go_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/listView"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/go_btn" />
+
+
+    </RelativeLayout>
+</ScrollView>

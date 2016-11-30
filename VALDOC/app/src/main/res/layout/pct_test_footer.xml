@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="5">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.3"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/TestHeaderTextViewBold"
+                android:layout_width="match_parent"
+                android:gravity="center"
+                android:background="@drawable/border_black_overlay"
+                android:text="Test Results " />
+
+            <TextView
+                style="@style/TestHeaderTextViewBold"
+                android:layout_width="match_parent"
+                android:background="@drawable/border"
+                android:text="Mean Average " />
+
+            <TextView
+                android:id="@+id/standerdeviation_text"
+                style="@style/TestHeaderTextViewBold"
+                android:layout_width="match_parent"
+                android:background="@drawable/border"
+                android:text="Standard Deviation " />
+
+            <TextView
+                android:id="@+id/ucl_id"
+                style="@style/TestHeaderTextViewBold"
+                android:layout_width="match_parent"
+                android:background="@drawable/border"
+                android:text="95% UCL " />
+
+            <TextView
+                style="@style/TestHeaderTextViewBold"
+                android:layout_width="match_parent"
+                android:background="@drawable/border"
+                android:text="MinImum Value " />
+
+            <TextView
+                style="@style/TestHeaderTextViewBold"
+                android:layout_width="match_parent"
+                android:background="@drawable/border"
+                android:text="Maximum Value" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/TestHeaderTextViewBold"
+                android:layout_width="match_parent"
+                android:gravity="center"
+                android:background="@drawable/border_black_overlay"
+                android:text="No. of Particles ≥ 0. 5 µm/m³ " />
+
+            <TextView
+                android:id="@+id/pct_mean_value1"
+                style="@style/TestHeaderTextViewNormal"
+                android:layout_width="match_parent"
+                android:background="@drawable/border"
+                android:gravity="center"
+                android:text="" />
+
+            <TextView
+                android:id="@+id/pct_std_dev1"
+                style="@style/TestHeaderTextViewNormal"
+                android:layout_width="match_parent"
+                android:background="@drawable/border"
+                android:gravity="center"
+                android:text=" " />
+
+            <TextView
+                android:id="@+id/pct_95_ucl_1"
+                style="@style/TestHeaderTextViewNormal"
+                android:layout_width="match_parent"
+                android:background="@drawable/border"
+                android:gravity="center"
+                android:text=" " />
+
+            <TextView
+                android:id="@+id/pct_minimum_value_1"
+                style="@style/TestHeaderTextViewNormal"
+                android:layout_width="match_parent"
+                android:background="@drawable/border"
+                android:gravity="center"
+                android:text="" />
+
+            <TextView
+                android:id="@+id/pct_maximum_value_1"
+                style="@style/TestHeaderTextViewNormal"
+                android:layout_width="match_parent"
+                android:background="@drawable/border"
+                android:gravity="center"
+                android:text="" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/TestHeaderTextViewBold"
+                android:layout_width="match_parent"
+                android:gravity="center"
+                android:background="@drawable/border_black_overlay"
+                android:text="No. of Particles ≥ 5 µm/m³" />
+
+            <TextView
+                android:id="@+id/pct_mean_value2"
+                style="@style/TestHeaderTextViewNormal"
+                android:layout_width="match_parent"
+                android:background="@drawable/border"
+                android:gravity="center"
+                android:text=" " />
+
+            <TextView
+                android:id="@+id/pct_std_dev2"
+                style="@style/TestHeaderTextViewNormal"
+                android:layout_width="match_parent"
+                android:background="@drawable/border"
+                android:gravity="center"
+                android:text="" />
+
+            <TextView
+                android:id="@+id/pct_95_ucl_2"
+                style="@style/TestHeaderTextViewNormal"
+                android:layout_width="match_parent"
+                android:background="@drawable/border"
+                android:gravity="center"
+                android:text="" />
+
+            <TextView
+                android:id="@+id/pct_minimum_value_2"
+                style="@style/TestHeaderTextViewNormal"
+                android:layout_width="match_parent"
+                android:background="@drawable/border"
+                android:gravity="center"
+                android:text="" />
+
+            <TextView
+                android:id="@+id/pct_maximum_value_2"
+                style="@style/TestHeaderTextViewNormal"
+                android:layout_width="match_parent"
+                android:background="@drawable/border"
+                android:gravity="center"
+                android:text="" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:text="(Maximum concentration limits (particles/m³ of air) for particles equal to and larger than the considered sizes)"
+        android:textColor="@color/black" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="5">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.3"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/TestHeaderTextViewBold"
+                android:layout_width="match_parent"
+                android:background="@drawable/border" />
+
+            <TextView
+                style="@style/TestHeaderTextViewBold"
+                android:layout_width="match_parent"
+                android:background="@drawable/border"
+                android:gravity="center"
+                android:text="Class" />
+
+            <TextView
+                android:id="@+id/iso_class"
+                style="@style/TestHeaderTextViewBold"
+                android:layout_width="match_parent"
+                android:background="@drawable/border"
+                android:gravity="center"
+                android:text="" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/atrest_one"
+                style="@style/TestHeaderTextViewBold"
+                android:layout_width="match_parent"
+                android:background="@drawable/border"
+                android:gravity="center"
+                android:text="At Rest" />
+
+            <TextView
+                style="@style/TestHeaderTextViewNormal"
+                android:layout_width="match_parent"
+                android:background="@drawable/border"
+                android:gravity="center"
+                android:text="0.5 µm particles/m3" />
+
+            <TextView
+                android:id="@+id/small_particle"
+                style="@style/TestHeaderTextViewNormal"
+                android:layout_width="match_parent"
+                android:background="@drawable/border"
+                android:gravity="center"
+                android:text="" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/atrest_two"
+                style="@style/TestHeaderTextViewBold"
+                android:layout_width="match_parent"
+                android:background="@drawable/border"
+                android:gravity="center"
+                android:text="At Rest" />
+
+            <TextView
+                style="@style/TestHeaderTextViewNormal"
+                android:layout_width="match_parent"
+                android:background="@drawable/border"
+                android:gravity="center"
+                android:text="5 µm particles/m3" />
+
+            <TextView
+                android:id="@+id/large_particle"
+                style="@style/TestHeaderTextViewNormal"
+                android:layout_width="match_parent"
+                android:background="@drawable/border"
+                android:gravity="center"
+                android:text="" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</LinearLayout>
