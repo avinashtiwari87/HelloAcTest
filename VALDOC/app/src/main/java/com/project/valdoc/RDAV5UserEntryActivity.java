@@ -435,6 +435,8 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
         testDetails.setRawDataNo(certificateNo.getText().toString());
         testDetails.setPartnerName("" + mPartnerName);
         testDetails.setTestName(TestCreateActivity.AV);
+        testDetails.setFilterTypeEficiancy("");
+        testDetails.setTestLocation("");
         if (loginUserType.equals("CLIENT")) {
             Log.d("getCertificateData", "client instrumentUsed.getText()=" + instrumentUsed.getText());
             testDetails.setInstrumentUsed("" + instrumentUsed.getText());

@@ -697,6 +697,8 @@ public class RDPCTUserEntryActivity extends AppCompatActivity {
         testDetails.setRawDataNo(certificateNo.getText().toString());
         testDetails.setPartnerName("" + mPartnerName);
         testDetails.setTestName(TestCreateActivity.PCT);
+        testDetails.setFilterTypeEficiancy("");
+        testDetails.setTestLocation("");
         if (loginUserType.equals("CLIENT")) {
             testDetails.setInstrumentUsed(clientInstrument.getcInstrumentName());
             testDetails.setMake(clientInstrument.getMake());

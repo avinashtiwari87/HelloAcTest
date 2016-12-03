@@ -532,9 +532,9 @@ public class RDRCTUserEntryActivity extends AppCompatActivity {
         StringBuilder grilList = new StringBuilder();
         //v1,v2....value cration
         StringBuilder sb = new StringBuilder();
-        int k = 200;
-        for (int j = 0; j < mInputValue.size(); j++) {
-            if (j != 0)
+        int k = 202;
+        for (int j = 2; j < mInputValue.size(); j++) {
+            if (j != 2)
                 sb.append(',');
             sb.append(mInputValue.get(k).toString());
             k++;
@@ -579,7 +579,8 @@ public class RDRCTUserEntryActivity extends AppCompatActivity {
             //testDetails.setSamplingFlowRate("" + samplingFlowRate.getText().toString());
            // testDetails.setSamplingTime("" + samplingTime.getText().toString());
         }
-
+        testDetails.setFilterTypeEficiancy("");
+        testDetails.setTestLocation("");
         testDetails.setSamplingFlowRate("" + samplingFlowRate.getText().toString());
         testDetails.setSamplingTime("" + samplingTime.getText().toString());
         testDetails.setTestSpecification(testSpecification.getText().toString());

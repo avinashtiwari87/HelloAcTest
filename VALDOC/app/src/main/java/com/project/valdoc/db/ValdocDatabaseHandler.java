@@ -2313,10 +2313,10 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 roomFilter.setWidth(cursor.getDouble(7));
                 roomFilter.setLength(cursor.getDouble(8));
                 roomFilter.setArea(cursor.getDouble(9));
-                roomFilter.setEffectiveFilterArea(cursor.getDouble(9));
-                roomFilter.setFilterLocation(cursor.getString(9));
-                roomFilter.setIsSupplyFilter(cursor.getInt(10));
-                roomFilter.setLastUpdatedDate(cursor.getString(11));
+                roomFilter.setEffectiveFilterArea(cursor.getDouble(10));
+                roomFilter.setFilterLocation(cursor.getString(11));
+                roomFilter.setIsSupplyFilter(cursor.getInt(12));
+                roomFilter.setLastUpdatedDate(cursor.getString(13));
                 filterArrayList.add(roomFilter);
             } while (cursor.moveToNext());
         } // return contact list return wordList; }

@@ -164,7 +164,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
     private String mPartnerName;
     private String mTestBasedOn;
     private String mGrilFilterType;
-    private boolean mFitPassFailFlag = true;
+    private ArrayList mFitPassFailFlagList = new ArrayList();
     private ArrayList<EquipmentGrill> mEquipmentGrillArrayList = null;
     private Ahu ahu = null;
     private ArrayList<AhuFilter> mAhuFilterArrayList = null;
@@ -1274,16 +1274,29 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 validate.add(i, false);
             }
         }
-        Log.d(TAG, "validate.contains " + validate.contains(true));
-        Log.d(TAG, "validate.contains " + "=" + mFitPassFailFlag);
         if (validate.contains(true)) {
             return true;
-        } else if(!mFitPassFailFlag){
+        } else if (!passfail()) {
+            Log.d("flag", "flag=1");
             return true;
-        }else{
+        } else {
+            Log.d("flag", "flag=2");
             return false;
         }
 
+    }
+
+    private boolean passfail() {
+        boolean flag = true;
+        for (int i = 0; i < mFitPassFailFlagList.size(); i++) {
+            Log.d("flag", "flag=" + i + mFitPassFailFlagList.get(i).toString() + " size=" + mFitPassFailFlagList.size());
+            if (mFitPassFailFlagList.get(i).equals(false)) {
+                flag = false;
+                break;
+            }
+        }
+        Log.d("flag", "flag=" + flag);
+        return flag;
     }
 
     private void BuildTableTest6(int rows, int cols) {
@@ -1367,7 +1380,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         testReadingEditTextList.add(et.getText().toString());
         test6A_table_layout4.addView(row2, rows);
         int totalReading = rows + 2;
-        finalReadingTv.setText("Final Reading" + totalReading);
+        finalReadingTv.setText("Final Reading");
     }
 
 
@@ -1380,7 +1393,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             validate.remove(validate.size() - 1);
         Log.d(TAG, "Delete After editTextList size " + editTextList.size());
         int totalReading = rows - 1;
-        finalReadingTv.setText("Final Reading" + totalReading);
+        finalReadingTv.setText("Final Reading");
     }
 
     private void BuildTableTest5(int rows, int cols) {
@@ -2607,10 +2620,18 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                                 txtConcentrationVariationList.get(i).setTextColor(getResources().getColor(R.color.black));
                                 txtPassFail.setTextColor(getResources().getColor(R.color.blue));
                                 txtPassFail.setText(" PASS ");
-                                mFitPassFailFlag = true;
+                                if (null != mFitPassFailFlagList && i >= mFitPassFailFlagList.size()) {
+                                    mFitPassFailFlagList.add(i, true);
+                                } else {
+                                    mFitPassFailFlagList.set(i, true);
+                                }
                                 passFailHashMap.put(txtPassFail.getId(), " PASS ");
                             } else if (Math.abs(slpDlpValue) > 15) {
-                                mFitPassFailFlag = false;
+                                if (null != mFitPassFailFlagList && i >= mFitPassFailFlagList.size()) {
+                                    mFitPassFailFlagList.add(i, false);
+                                } else {
+                                    mFitPassFailFlagList.set(i, false);
+                                }
                                 txtConcentrationVariationList.get(i).setTextColor(getResources().getColor(R.color.red));
                                 txtPassFail.setTextColor(getResources().getColor(R.color.red));
                                 txtPassFail.setText(" FAIL ");

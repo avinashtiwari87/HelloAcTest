@@ -485,6 +485,8 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
         testDetails.setRawDataNo(certificateNo.getText().toString());
         testDetails.setPartnerName("" + mPartnerName);
         testDetails.setTestName(mTestCode);
+        testDetails.setFilterTypeEficiancy("");
+        testDetails.setTestLocation("");
         if (loginUserType.equals("CLIENT")) {
             testDetails.setInstrumentUsed(clientInstrument.getcInstrumentName());
             testDetails.setMake(clientInstrument.getMake());

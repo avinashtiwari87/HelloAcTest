@@ -323,7 +323,7 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
         String entered_dob = dateFormatter.format(d);
         // Show current date
          mDate = new StringBuilder().append(day).append("-").append(month + 1).append("-").append(year).append(" ").toString();
-        dateTextView.setText(""+entered_dob);
+        dateTextView.setText(""+mDate);
 //        new StringBuilder()
 //                // Month is 0 based, just add 1
 //                .append(year).append("-").append(month + 1).append("-")
@@ -358,7 +358,7 @@ Date d;
             String entered_dob = dateFormatter.format(d);
             // Show selected date
              mDate = new StringBuilder().append(day).append("-").append(month + 1).append("-").append(year).append(" ").toString();
-            dateTextView.setText(""+entered_dob);
+            dateTextView.setText(""+mDate);
 //            new StringBuilder().append(year)
 //                    .append("-").append(month + 1).append("-").append(day)
 //                    .append(" "));
@@ -694,8 +694,8 @@ Date d;
         testDetails.setCustomer(customerName.getText().toString());
         String date = Integer.toString(year) + "-" + Integer.toString((month + 1)) + "-" + Integer.toString(day) + " ";
 //        testDetails.setDateOfTest(date);
-//        testDetails.setDateOfTest("" + dateTextView.getText().toString());
-        testDetails.setDateOfTest("" + date);
+        testDetails.setDateOfTest("" + dateTextView.getText().toString());
+//        testDetails.setDateOfTest("" + date);
         testDetails.setPartnerName("" + mPartnerName);
         testDetails.setRawDataNo(certificateNo.getText().toString());
         testDetails.setTestName(mTestCode);

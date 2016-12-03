@@ -23,7 +23,7 @@
         android:maxLines="3"
         android:textColor="@color/white"
         android:textSize="@dimen/header_text_size"
-        android:text="Hi Abhishek"
+        android:text=""
         android:typeface="serif"
         android:ellipsize="end"/>
 
