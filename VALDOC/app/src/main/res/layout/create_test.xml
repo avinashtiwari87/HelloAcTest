@@ -71,6 +71,7 @@
                     android:layout_alignParentTop="true"
                     android:hint="@string/test_witness_hint"
                     android:layout_toRightOf="@+id/witness1"
+                    android:inputType="textCapWords"
                     android:imeOptions="actionNext"
                     android:nextFocusDown="@+id/witnesssecond"></EditText>
 
