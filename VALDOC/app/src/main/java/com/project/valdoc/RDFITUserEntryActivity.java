@@ -699,6 +699,7 @@ Date d;
         testDetails.setPartnerName("" + mPartnerName);
         testDetails.setRawDataNo(certificateNo.getText().toString());
         testDetails.setTestName(mTestCode);
+        testDetails.setAcceptableRecoveryTime("");
         if (loginUserType.equals("CLIENT")) {
             testDetails.setInstrumentUsed(instrumentUsed.getText().toString());
             testDetails.setMake("" + clientInstrument.getMake().toString());

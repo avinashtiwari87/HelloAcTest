@@ -699,6 +699,7 @@ public class RDPCTUserEntryActivity extends AppCompatActivity {
         testDetails.setTestName(TestCreateActivity.PCT);
         testDetails.setFilterTypeEficiancy("");
         testDetails.setTestLocation("");
+        testDetails.setAcceptableRecoveryTime("");
         if (loginUserType.equals("CLIENT")) {
             testDetails.setInstrumentUsed(clientInstrument.getcInstrumentName());
             testDetails.setMake(clientInstrument.getMake());

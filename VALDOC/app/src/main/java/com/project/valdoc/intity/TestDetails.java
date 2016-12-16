@@ -44,6 +44,16 @@ public class TestDetails {
     private String testItem;
     private String filterTypeEficiancy;
     private String testLocation;
+    private String acceptableRecoveryTime;
+
+    public String getAcceptableRecoveryTime() {
+        return acceptableRecoveryTime;
+    }
+
+    public void setAcceptableRecoveryTime(String acceptableRecoveryTime) {
+        this.acceptableRecoveryTime = acceptableRecoveryTime;
+    }
+
     public String getTest_details() {
         return test_details;
     }

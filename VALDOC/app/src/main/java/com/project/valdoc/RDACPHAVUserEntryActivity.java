@@ -683,6 +683,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
         testDetails.setRawDataNo(certificateNo.getText().toString());
         testDetails.setPartnerName("" + mPartnerName);
         testDetails.setTestName(mTestCode);
+        testDetails.setAcceptableRecoveryTime("");
         if (loginUserType.equals("CLIENT")) {
             testDetails.setInstrumentUsed(clientInstrument.getcInstrumentName());
             testDetails.setMake(clientInstrument.getMake());

@@ -29,6 +29,8 @@ import com.project.valdoc.intity.TestReading;
 import com.project.valdoc.intity.TestSpesificationValue;
 import com.project.valdoc.utility.Utilityies;
 
+import org.json.JSONObject;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -280,6 +282,13 @@ public class RDRCTUserEntryActivity extends AppCompatActivity {
             occupancyState.setText(mApplicableTestRoom.getOccupencyState().toString());
             String samplingtime = getSamplingTime(mApplicableTestRoom.getTestSpecification(), "");
             samplingTime.setText("" + samplingtime);
+            JSONObject jsonObject = null;
+            try {
+                jsonObject = new JSONObject(mApplicableTestRoom.getTestProp());
+                    recovery_time_tv.setText("<= "+jsonObject.optString("ACCEPTABLE_RECOVERY_TIME")+" min");
+                }catch(Exception e){
+                recovery_time_tv.setText("");
+                }
 //            samplingFlowRate.setText("under development");
             cleanRoomClass.setText(" " + mApplicableTestRoom.getTestSpecification());
         } else if (mTestBasedOn.equalsIgnoreCase("EQUIPMENT")) {
@@ -294,6 +303,13 @@ public class RDRCTUserEntryActivity extends AppCompatActivity {
             String samplingtime = getSamplingTime(mApplicableTestEquipment.getTestSpecification(), "");
             samplingTime.setText("" + samplingtime);
             cleanRoomClass.setText("" + mApplicableTestEquipment.getTestSpecification());
+            JSONObject jsonObject = null;
+            try {
+                jsonObject = new JSONObject(mApplicableTestEquipment.getTestProp());
+                recovery_time_tv.setText("<= "+jsonObject.optString("ACCEPTABLE_RECOVERY_TIME")+" min");
+            }catch(Exception e){
+                recovery_time_tv.setText("");
+            }
         }
 
 //        testSpecification.setText("" + room.getAcph());
@@ -606,6 +622,7 @@ public class RDRCTUserEntryActivity extends AppCompatActivity {
         testDetails.setTestWitnessOrg("" + testWitnessOrg.getText());
         testDetails.setTestCondoctorOrg("" + testCondoctorOrg.getText());
         testDetails.setRoomVolume("");
+        testDetails.setAcceptableRecoveryTime(""+recovery_time_tv.getText().toString()+"");
         if (mTestBasedOn.equalsIgnoreCase("EQUIPMENT")) {
             testDetails.setEquipmentName("" + equipmentName.getText().toString());
             testDetails.setEquipmentNo("" + equipmentNo.getText().toString());
