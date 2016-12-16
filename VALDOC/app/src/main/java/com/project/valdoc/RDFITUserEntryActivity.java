@@ -206,7 +206,7 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
             if(count>=constVal){
                 TextView tvl = txtPassFailList.get(k);
                 Double spesification = getSpecification(mshowSpesification);
-                if (spesification > Double.parseDouble(likageDataMap.get(kk).toString())) {
+                if (spesification >= Double.parseDouble(likageDataMap.get(kk).toString())) {
                     tvl.setText("PASS");
                 } else {
                     tvl.setText("FAIL");
@@ -387,13 +387,13 @@ Date d;
             } catch (Exception e) {
 
             }
-            filtertypeEficiancy.setText(mEquipmentFilterArrayList.get(0).getFilterType()+" & "+mEquipmentFilterArrayList.get(0).getEfficiency());
+            filtertypeEficiancy.setText(mEquipmentFilterArrayList.get(0).getFilterType()+" & "+mEquipmentFilterArrayList.get(0).getEfficiency()+"%");
 //            testLocationText.setText(mEquipmentFilterArrayList.get(0).getf());
             equipmentName.setText(equipment.getEquipmentName());
             equipmentNo.setText(equipment.getEquipmentNo());
             mTestSpecification=mApplicableTestEquipment.getTestSpecification();
             calSpesifiCation();
-            testSpecification.setText("Max "+mshowSpesification);
+            testSpecification.setText("Max "+mshowSpesification+"%");
             occupancyState.setText(mApplicableTestEquipment.getOccupencyState());
             testRefrance.setText(mApplicableTestEquipment.getTestReference());
             roomName.setText(roomDetails[1]);
