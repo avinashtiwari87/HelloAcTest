@@ -1648,15 +1648,23 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 } else {
                     if (mTestBasedOn.equalsIgnoreCase("EQUIPMENT")) {
                         String avgUpStrm = getAvgUpStrm(mApplicableTestEquipment.getTestProp());
+                        if(avgUpStrm == null || avgUpStrm.equals(""))
+                            avgUpStrm = "100";
 
                         row.addView(addEditTextViewbeforestream(i, avgUpStrm));
 //
                     } else if (mTestBasedOn.equalsIgnoreCase("AHU")) {
                         String avgUpStrm = getAvgUpStrm(mApplicableTestAhu.getTestProp());
+                        if(avgUpStrm == null || avgUpStrm.equals(""))
+                            avgUpStrm = "100";
+
                         row.addView(addEditTextViewbeforestream(i, avgUpStrm));
 //
                     } else if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
                         String avgUpStrm = getAvgUpStrm(mApplicableTestRoom.getTestProp());
+                        if(avgUpStrm == null || avgUpStrm.equals(""))
+                            avgUpStrm = "100";
+
                         row.addView(addEditTextViewbeforestream(i, avgUpStrm));
 //
                     }
