@@ -269,7 +269,7 @@ public class CommonTestViewActivity extends AppCompatActivity {
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
-                    row.addView(addTextView("Grille / Filter ID"));
+                    row.addView(addTextView("Grill/Filter ID"));
                 } else {
                     row.addView(addGridTextView(""));
                 }
@@ -309,7 +309,7 @@ public class CommonTestViewActivity extends AppCompatActivity {
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
-                    row.addView(addTextView(" Average(V) "));
+                    row.addView(addTextView("Avg. Airflow Velocity(fpm)"));
                 } else {
                     //result data  set
                     row.addView(addResultTextView(i));
@@ -1029,14 +1029,9 @@ public class CommonTestViewActivity extends AppCompatActivity {
             findViewById(R.id.test_table_1_header_l_ll).setVisibility(View.GONE);
             TextView TestHeader = (TextView) findViewById(R.id.common_header_tv);
             findViewById(R.id.test_interference).setVisibility(View.GONE);
-            findViewById(R.id.test1_reading_header).setVisibility(View.VISIBLE);
-            findViewById(R.id.common_header_test1).setVisibility(View.GONE);
         }
         TextView TestHeader = (TextView) findViewById(R.id.common_header_tv);
         TextView TestHeader2 = (TextView) findViewById(R.id.common_header_2_tv);
-        TestHeader.setText("TEST RAW DATA EQUIPMENT");
-        TestHeader2.setVisibility(View.VISIBLE);
-        TestHeader2.setText("(Air Flow Velocity, Volume Testing and Determination of Air Changes per Hour Rates)");
         if(testType != null && testType.contains("AF")){
             findViewById(R.id.acph_av_final_calc_ll).setVisibility(View.VISIBLE);
             findViewById(R.id.acph_av_final_calc_ll).setVisibility(View.GONE);
@@ -1044,11 +1039,12 @@ public class CommonTestViewActivity extends AppCompatActivity {
             TestHeader.setText(" TEST RAW DATA AHU/EQUIPMENT ");
             TestHeader2.setText("(Air Flow Velocity/ Volume Testing)");
         }else if(testType != null && testType.contains("AV")){
-            TestHeader.setText("TEST RAW DATA ");
-            findViewById(R.id.acph_av_final_calc_ll).setVisibility(View.VISIBLE);
+            findViewById(R.id.test_table_1_header_2_ll).setVisibility(View.GONE);
+            findViewById(R.id.common_header_test1).setVisibility(View.GONE);
+            TestHeader.setText("TEST RAW DATA EQUIPMENT");
+            TestHeader2.setVisibility(View.VISIBLE);
+            TestHeader2.setText("(Air Flow Velocity, Volume Testing and Determination of Air Changes per Hour Rates)");
             findViewById(R.id.common_certificate_header_ll).setVisibility(View.VISIBLE);
-            findViewById(R.id.ahu_no_lable).setVisibility(View.VISIBLE);
-            findViewById(R.id.room_volume_table).setVisibility(View.VISIBLE);
         }
 
         //Test 2
