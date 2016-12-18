@@ -26,6 +26,7 @@ import com.project.valdoc.db.ValdocDatabaseHandler;
 import com.project.valdoc.intity.RoomFilter;
 import com.project.valdoc.intity.TestDetails;
 import com.project.valdoc.intity.TestReading;
+import com.project.valdoc.intity.TestSpesificationValue;
 import com.project.valdoc.utility.Utilityies;
 
 import java.util.ArrayList;
@@ -56,7 +57,10 @@ public class CommonTestViewActivity extends AppCompatActivity {
     ArrayList<TextView> txtViewList;
     ArrayList<TextView> txtPassFailList;
     ArrayList<TextView> resultTextViewList;
+    ArrayList<TextView> avgresultTextViewList;
+    ArrayList<TextView> axvresultTextViewList;
     ArrayList<TextView> gridTextList;
+    ArrayList<TextView> txtViewWithoutBorderList;
     TestDetails mTestDetails;
     ProgressDialog pr;
     private String userName = "";
@@ -66,6 +70,7 @@ public class CommonTestViewActivity extends AppCompatActivity {
     private int rows, cols, testDetailId = 1;
     private String mTestBasedOn;
     private ArrayList<TestReading> testReadingList;
+    private ArrayList<TestSpesificationValue>testSpesificationValues;
     //certificate view id creation
     private TextView instrumentUsed;
     private TextView equipmentName;
@@ -88,6 +93,9 @@ public class CommonTestViewActivity extends AppCompatActivity {
     private TextView dateTextView;
     private TextView customerName;
     private TextView certificateNo;
+    private TextView testItemText;
+    private TextView testItemValue;
+    private TextView ahuEqValue;
 
 
     @Override
@@ -101,11 +109,15 @@ public class CommonTestViewActivity extends AppCompatActivity {
 
         mValdocDatabaseHandler = new ValdocDatabaseHandler(CommonTestViewActivity.this);
         testReadingList = new ArrayList<TestReading>();
+        testSpesificationValues = new ArrayList<TestSpesificationValue>();
 
         txtViewList = new ArrayList<TextView>();
         txtPassFailList = new ArrayList<TextView>();
         resultTextViewList = new ArrayList<TextView>();
+        avgresultTextViewList = new ArrayList<TextView>();
+        axvresultTextViewList = new ArrayList<TextView>();
         gridTextList = new ArrayList<TextView>();
+        txtViewWithoutBorderList = new ArrayList<TextView>();
 
         sharedpreferences = getSharedPreferences("valdoc", Context.MODE_PRIVATE);
         userName = sharedpreferences.getString("USERNAME", "");
@@ -120,7 +132,7 @@ public class CommonTestViewActivity extends AppCompatActivity {
         rows = getIntent().getIntExtra("rows", 6);
         cols = getIntent().getIntExtra("cols", 5);
         mTestBasedOn=getIntent().getStringExtra("TestBasedOn");
-        Log.d(TAG, " TestType : " + testType + " testDetailId " + testDetailId);
+        Log.d(TAG, "CodeFlow TestType : " + testType + " testDetailId " + testDetailId+" mTestBasedOn "+mTestBasedOn);
 
         initRes();
         initTextView();
@@ -158,8 +170,37 @@ public class CommonTestViewActivity extends AppCompatActivity {
                 }
 
         } else if (testType != null && testType.contains("AF")) {
+            findViewById(R.id.test1_table_ll).setVisibility(View.GONE);
             findViewById(R.id.test2_table_ll).setVisibility(View.VISIBLE);
-            BuildTableTest2(rows, cols);
+            testReadingList = mValdocDatabaseHandler.getTestReadingDataById(testDetailId + "");
+            spiltValue = testReadingList.get(0).getValue().split(",");
+            Log.d(TAG, "CodeFlow : spiltValue length : " + spiltValue.length);
+            BuildTableTest2(testReadingList.size()+1,(spiltValue.length-2));
+            int textId =0;
+            for (int j = 0; j < testReadingList.size(); j++) {
+                //filter
+                gridTextList.get(j).setText(testReadingList.get(j).getEntityName());
+                spiltValue =testReadingList.get(j).getValue().split(",");
+                for (int i = 0; i < resultTextViewList.size() ; i++) {
+                    resultTextViewList.get(i).setText(""+spiltValue[0]);
+                    axvresultTextViewList.get(i).setText(""+Math.round(Double.parseDouble(spiltValue[0])*
+                            Double.parseDouble(spiltValue[spiltValue.length-1])));
+                }
+
+                for (int i = 1; i <spiltValue.length-1; i++) {
+                    txtViewList.get(textId).setText(""+spiltValue[i]);
+                    textId++;
+                }
+
+                for (int i = 0; i < avgresultTextViewList.size() ; i++) {
+                    avgresultTextViewList.get(i).setText(""+spiltValue[spiltValue.length-1]);
+                }
+            }
+            testSpesificationValues = mValdocDatabaseHandler.getTestSpecificationValueById(testDetailId+"");
+            int kk = testSpesificationValues.size()/2;
+            txtViewWithoutBorderList.get(kk).
+                    setText(" "+testSpesificationValues.get(testSpesificationValues.size()-1).getFieldValue());
+
         } else if (testType != null && testType.contains("ACPH_H")) {
             findViewById(R.id.test3_table_ll).setVisibility(View.VISIBLE);
             BuildTableTest3(rows, cols);
@@ -185,13 +226,17 @@ public class CommonTestViewActivity extends AppCompatActivity {
     }
 
     private void textViewValueAsignment() {
+        if (mTestBasedOn.equalsIgnoreCase("AHU")) {
+            testItemValue.setText(""+mTestDetails.getTestItem());
+            String ahu_no = mTestDetails.getAhuNo();
+            ahu_no = " AHU 06";
+            ahuEqValue.setText(""+ahu_no);
+        }
         dateTextView.setText(""+mTestDetails.getDateOfTest());
         customerName.setText(""+mTestDetails.getCustomer());
         certificateNo.setText(""+mTestDetails.getRawDataNo());
         instrumentUsed.setText(""+mTestDetails.getInstrumentUsed());
 
-//        make = (TextView) findViewById(R.id.make);
-//        model = (TextView) findViewById(R.id.modle);
         instrumentSerialNo.setText(""+mTestDetails.getInstrumentNo());
         calibrationOn.setText(""+mTestDetails.getCalibratedOn());
         calibrationDueOn.setText(""+mTestDetails.getCalibratedDueOn());
@@ -199,8 +244,6 @@ public class CommonTestViewActivity extends AppCompatActivity {
         plantName.setText(""+mTestDetails.getBlockName());
         areaOfTest.setText(""+mTestDetails.getTestArea());
 
-//        roomNameLable = (TextView) findViewById(R.id.ahu_no_lable);
-//        roomNameLable.setText(getResources().getString(R.string.room_name));
         roomName.setText(""+mTestDetails.getRoomName());
         roomNo.setText(""+mTestDetails.getRoomNo());
         equipmentName.setText(""+mTestDetails.getEquipmentName());
@@ -233,8 +276,6 @@ public class CommonTestViewActivity extends AppCompatActivity {
         certificateNo = (TextView) findViewById(R.id.trd_no);
         instrumentUsed = (TextView) findViewById(R.id.instrumentused);
 
-//        make = (TextView) findViewById(R.id.make);
-//        model = (TextView) findViewById(R.id.modle);
         instrumentSerialNo = (TextView) findViewById(R.id.instrumentserialno);
         calibrationOn = (TextView) findViewById(R.id.calibratedon);
         calibrationDueOn = (TextView) findViewById(R.id.calibrationdueon);
@@ -242,8 +283,6 @@ public class CommonTestViewActivity extends AppCompatActivity {
         plantName = (TextView) findViewById(R.id.plantname);
         areaOfTest = (TextView) findViewById(R.id.areaoftest);
 
-//        roomNameLable = (TextView) findViewById(R.id.ahu_no_lable);
-//        roomNameLable.setText(getResources().getString(R.string.room_name));
         roomName = (TextView) findViewById(R.id.room_name);
         roomNo = (TextView) findViewById(R.id.room_no);
         equipmentName = (TextView) findViewById(R.id.equiment_name);
@@ -255,6 +294,26 @@ public class CommonTestViewActivity extends AppCompatActivity {
         testCondoctorOrg = (TextView) findViewById(R.id.test_condoctor_org);
         testWitnessOrg = (TextView) findViewById(R.id.testwitness_org);
         testWitness = (TextView) findViewById(R.id.testwitness);
+
+        if (mTestBasedOn.equalsIgnoreCase("AHU")) {
+            findViewById(R.id.test_item_table).setVisibility(View.VISIBLE);
+            findViewById(R.id.room_name_lable).setVisibility(View.GONE);
+            findViewById(R.id.room_no_lable).setVisibility(View.GONE);
+            roomName.setVisibility(View.GONE);
+            roomNo.setVisibility(View.GONE);
+            findViewById(R.id.ahu_af_equpmentNo_table).setVisibility(View.VISIBLE);
+            findViewById(R.id.equiment_no_text).setVisibility(View.GONE);
+            findViewById(R.id.equiment_no).setVisibility(View.GONE);
+            findViewById(R.id.equiment_name_text).setVisibility(View.GONE);
+            findViewById(R.id.equiment_name).setVisibility(View.GONE);
+            testItemText = (TextView) findViewById(R.id.test_item_text);
+            testItemText.setVisibility(View.VISIBLE);
+            testItemValue = (TextView) findViewById(R.id.test_item_value);
+            testItemValue.setVisibility(View.VISIBLE);
+            findViewById(R.id.test_item_table).setVisibility(View.VISIBLE);
+            ahuEqValue = (TextView)findViewById(R.id.ahu_equipment_value_tv);
+
+        }
 
     }
 
@@ -352,9 +411,9 @@ public class CommonTestViewActivity extends AppCompatActivity {
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
-                    row.addView(addTextView(" Grille / Filter ID\n "));
+                    row.addView(addTextView(" Grill / Filter ID "));
                 } else {
-                    row.addView(addTextView("grillAndSizeFromGrill"));
+                    row.addView(addGridTextView(""));
 //                    row.addView(addTextView("AHU 2031/0.3MICRON/" + i));
                 }
 
@@ -372,7 +431,7 @@ public class CommonTestViewActivity extends AppCompatActivity {
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
-                    row.addView(addTextView(" Grill/Filter Size\n in ft2(A)"));
+                    row.addView(addTextView(" Grill / Filter Area(ft2)\n A "));
                 } else {
                     row.addView(addResultTextView(i));
                 }
@@ -409,10 +468,10 @@ public class CommonTestViewActivity extends AppCompatActivity {
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
-                    row.addView(addTextView(" Avg Velocity in\n fpm(AV)"));
+                    row.addView(addTextView(" Average Air Velocity\n (fpm) "));
                 } else {
                     //result data  set
-                    row.addView(addResultTextView(i));
+                    row.addView(addAverageResultTextView(i));
                 }
             }
             test2_table_layout4.addView(row);
@@ -427,9 +486,9 @@ public class CommonTestViewActivity extends AppCompatActivity {
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
-                    row.addView(addTextView(" Air Flow Rate\n in cfm(AxAv)"));
+                    row.addView(addTextView(" Air Flow Rate\n cfm(AxAv) "));
                 } else {
-                    row.addView(addTextView("490"));
+                    row.addView(axvResultTextView(i));
                 }
             }
             test2_table_layout5.addView(row);
@@ -445,9 +504,9 @@ public class CommonTestViewActivity extends AppCompatActivity {
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
-                    row.addView(addTextView(" Total Air Flow Rate\n in cfm (TFR)"));
+                    row.addView(addTextView(" Total Air Flow Rate\n (cfm) "));
                 } else {
-                    row.addView(addTextViewWithoutBorder("490"));
+                    row.addView(addTextViewWithoutBorder(""));
                 }
             }
             test2_table_layout6.addView(row);
@@ -883,7 +942,7 @@ public class CommonTestViewActivity extends AppCompatActivity {
         //tv.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD);
         tv.setSingleLine(true);
         tv.setEllipsize(TextUtils.TruncateAt.END);
-        txtViewList.add(tv);
+        txtViewWithoutBorderList.add(tv);
         tv.setText(s);
         return tv;
     }
@@ -996,6 +1055,50 @@ public class CommonTestViewActivity extends AppCompatActivity {
         return tv;
     }
 
+    private TextView addAverageResultTextView(int rowsNo) {
+        TextView tv = new TextView(this);
+        tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+                TableRow.LayoutParams.WRAP_CONTENT));
+        tv.setBackgroundResource(R.drawable.border);
+        tv.setPadding(5, 6, 5, 6);
+        tv.setTextColor(getResources().getColor(R.color.black));
+        tv.setTextSize(getResources().getDimension(R.dimen.normal_text_size));
+        tv.setGravity(Gravity.CENTER);
+        tv.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
+        //tv.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD);
+        tv.setEms(4);
+        tv.setSingleLine(true);
+        tv.setEllipsize(TextUtils.TruncateAt.END);
+        Log.d(TAG, " idCountTv " + idCountTv);
+        tv.setId(idCountTv);
+        tv.setTag(rowsNo);
+        idCountTv++;
+        avgresultTextViewList.add(tv);
+        return tv;
+    }
+
+    private TextView axvResultTextView(int rowsNo) {
+        TextView tv = new TextView(this);
+        tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+                TableRow.LayoutParams.WRAP_CONTENT));
+        tv.setBackgroundResource(R.drawable.border);
+        tv.setPadding(5, 6, 5, 6);
+        tv.setTextColor(getResources().getColor(R.color.black));
+        tv.setTextSize(getResources().getDimension(R.dimen.normal_text_size));
+        tv.setGravity(Gravity.CENTER);
+        tv.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
+        //tv.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD);
+        tv.setEms(4);
+        tv.setSingleLine(true);
+        tv.setEllipsize(TextUtils.TruncateAt.END);
+        Log.d(TAG, " idCountTv " + idCountTv);
+        tv.setId(idCountTv);
+        tv.setTag(rowsNo);
+        idCountTv++;
+        axvresultTextViewList.add(tv);
+        return tv;
+    }
+
     private TextView addStretchedTextView(String textValue) {
         TextView tv = new TextView(this);
         tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
@@ -1036,8 +1139,13 @@ public class CommonTestViewActivity extends AppCompatActivity {
             findViewById(R.id.acph_av_final_calc_ll).setVisibility(View.VISIBLE);
             findViewById(R.id.acph_av_final_calc_ll).setVisibility(View.GONE);
             findViewById(R.id.common_certificate_header_ll).setVisibility(View.VISIBLE);
-            TestHeader.setText(" TEST RAW DATA AHU/EQUIPMENT ");
-            TestHeader2.setText("(Air Flow Velocity/ Volume Testing)");
+            if (mTestBasedOn.equalsIgnoreCase("AHU")) {
+                TestHeader.setText(" TEST RAW DATA AHU/EQUIPMENT ");
+                TestHeader2.setVisibility(View.VISIBLE);
+                TestHeader2.setText("(Air Flow Velocity/ Volume Testing)");
+                findViewById(R.id.test2_reading_header).setVisibility(View.VISIBLE);
+            }
+
         }else if(testType != null && testType.contains("AV")){
             findViewById(R.id.test_table_1_header_2_ll).setVisibility(View.GONE);
             findViewById(R.id.common_header_test1).setVisibility(View.GONE);
@@ -1055,7 +1163,9 @@ public class CommonTestViewActivity extends AppCompatActivity {
         test2_table_layout5 = (TableLayout) findViewById(R.id.test2_tableLayout5);
         test2_table_layout6 = (TableLayout) findViewById(R.id.test2_tableLayout6);
         test2_table_layout7 = (TableLayout) findViewById(R.id.test2_tableLayout7);
+        test2_table_layout7.setVisibility(View.GONE);
         test2_table_layout8 = (TableLayout) findViewById(R.id.test2_tableLayout8);
+        test2_table_layout8.setVisibility(View.GONE);
         //Test3
         test3_table_layout = (TableLayout) findViewById(R.id.test3_tableLayout1);
         test3_table_layout2 = (TableLayout) findViewById(R.id.test3_tableLayout2);

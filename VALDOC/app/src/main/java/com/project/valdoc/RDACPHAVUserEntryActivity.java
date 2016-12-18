@@ -969,7 +969,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
-                    row.addView(addTextView("Average Air Velocity\n fpm(AV)"));
+                    row.addView(addTextView("Average Air Velocity\n  (fpm)"));
                 } else {
                     //result data  set
                     row.addView(addResultTextView(i));
