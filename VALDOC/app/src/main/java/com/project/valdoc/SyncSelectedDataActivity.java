@@ -45,12 +45,17 @@ public class SyncSelectedDataActivity extends AppCompatActivity implements HttpP
     private HashMap<Integer, Integer> selectePosition = new HashMap<Integer, Integer>();
     Button syncSelectedButton;
     ValdocControler mValdocControler;
+    CheckBox selectAll_cb;
+    private ArrayList<CheckBox>checkBoxArrayList;
 //    private ValdocDatabaseHandler mValdocDatabaseHandler = new ValdocDatabaseHandler(TestCreateActivity.this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sync_selected_data);
+
+        checkBoxArrayList = new ArrayList<CheckBox>();
+
         //Init Layout res
         initRes();
 
@@ -366,6 +371,26 @@ public class SyncSelectedDataActivity extends AppCompatActivity implements HttpP
         table_layout9 = (TableLayout) findViewById(R.id.syncData_tableLayout9);
         table_layout10 = (TableLayout) findViewById(R.id.syncData_tableLayout10);
 
+        selectAll_cb = (CheckBox) findViewById(R.id.select_all_checkbox);
+        selectAll_cb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                if(isChecked){
+
+                    for (int i = 0; i < checkBoxArrayList.size(); i++) {
+                       checkBoxArrayList.get(i).setChecked(true);
+                    }
+
+                }else{
+                    for (int i = 0; i < checkBoxArrayList.size(); i++) {
+                        checkBoxArrayList.get(i).setChecked(false);
+                    }
+                }
+
+            }
+        });
+
+
         syncSelectedButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -419,6 +444,7 @@ public class SyncSelectedDataActivity extends AppCompatActivity implements HttpP
         cb.setId(row);
         cb.setTag(row + 1);
         cb.setOnCheckedChangeListener(new CheckedValidator(SyncSelectedDataActivity.this, row));
+        checkBoxArrayList.add(cb);
         return cb;
     }
 

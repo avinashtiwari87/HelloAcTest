@@ -19,7 +19,7 @@
 
     <ScrollView
         android:layout_below="@+id/header_sunc_data"
-        android:layout_above="@+id/sync_selected_button"
+        android:layout_above="@+id/select_all_checkbox"
         android:layout_width="wrap_content"
         android:scrollbars="vertical"
         android:scrollbarStyle="insideOverlay"
@@ -113,6 +113,15 @@
         android:background="@drawable/sync_selected_record"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true" />
+
+    <CheckBox
+        android:text="Select all"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:layout_above="@+id/sync_selected_button"
+        android:layout_alignStart="@+id/header_sunc_data"
+        android:id="@+id/select_all_checkbox" />
 
 
 </RelativeLayout>
