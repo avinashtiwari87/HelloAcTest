@@ -137,7 +137,15 @@ public class CommonTestViewActivity extends AppCompatActivity {
         initRes();
         initTextView();
         String spiltValue[] = null;
-        if (testType != null && testType.contains("AV")) {
+        if(testType != null && testType.contains("ACPH_AV")){
+            findViewById(R.id.test1_table_ll).setVisibility(View.GONE);
+            findViewById(R.id.test2_table_ll).setVisibility(View.VISIBLE);
+            testReadingList = mValdocDatabaseHandler.getTestReadingDataById(testDetailId + "");
+            spiltValue = testReadingList.get(0).getValue().split(",");
+            Log.d(TAG, "CodeFlow : spiltValue length : " + spiltValue.length);
+            BuildTableTest2(testReadingList.size()+1,(spiltValue.length-2));
+
+        }else if (testType != null && testType.contains("AV")) {
             findViewById(R.id.test1_table_ll).setVisibility(View.VISIBLE);
             testReadingList = mValdocDatabaseHandler.getTestReadingDataById(testDetailId + "");
             spiltValue = testReadingList.get(0).getValue().split(",");
@@ -1136,7 +1144,6 @@ public class CommonTestViewActivity extends AppCompatActivity {
         TextView TestHeader = (TextView) findViewById(R.id.common_header_tv);
         TextView TestHeader2 = (TextView) findViewById(R.id.common_header_2_tv);
         if(testType != null && testType.contains("AF")){
-            findViewById(R.id.acph_av_final_calc_ll).setVisibility(View.VISIBLE);
             findViewById(R.id.acph_av_final_calc_ll).setVisibility(View.GONE);
             findViewById(R.id.common_certificate_header_ll).setVisibility(View.VISIBLE);
             if (mTestBasedOn.equalsIgnoreCase("AHU")) {
@@ -1146,7 +1153,16 @@ public class CommonTestViewActivity extends AppCompatActivity {
                 findViewById(R.id.test2_reading_header).setVisibility(View.VISIBLE);
             }
 
-        }else if(testType != null && testType.contains("AV")){
+        }else if(testType != null && testType.contains("ACPH_AV")){
+            findViewById(R.id.acph_av_final_calc_ll).setVisibility(View.VISIBLE);
+            findViewById(R.id.common_certificate_header_ll).setVisibility(View.VISIBLE);
+            findViewById(R.id.test_table_1_header_2_ll).setVisibility(View.GONE);
+            findViewById(R.id.common_header_test1).setVisibility(View.GONE);
+            TestHeader.setText("TEST RAW DATA ");
+            TestHeader2.setVisibility(View.VISIBLE);
+            TestHeader2.setText("(Air Flow Velocity, Volume Testing and Determination of Air Changes per Hour Rates by Amnemoter)");
+        }
+        else{
             findViewById(R.id.test_table_1_header_2_ll).setVisibility(View.GONE);
             findViewById(R.id.common_header_test1).setVisibility(View.GONE);
             TestHeader.setText("TEST RAW DATA EQUIPMENT");
