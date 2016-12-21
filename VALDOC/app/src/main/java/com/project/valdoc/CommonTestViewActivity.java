@@ -96,6 +96,7 @@ public class CommonTestViewActivity extends AppCompatActivity {
     private TextView testItemText;
     private TextView testItemValue;
     private TextView ahuEqValue;
+    private TextView room_volume;
 
 
     @Override
@@ -237,8 +238,11 @@ public class CommonTestViewActivity extends AppCompatActivity {
         if (mTestBasedOn.equalsIgnoreCase("AHU")) {
             testItemValue.setText(""+mTestDetails.getTestItem());
             String ahu_no = mTestDetails.getAhuNo();
-            ahu_no = " AHU 06";
             ahuEqValue.setText(""+ahu_no);
+        }else if (mTestBasedOn.equalsIgnoreCase("ROOM")){
+            String ahu_no = mTestDetails.getAhuNo();
+            ahuEqValue.setText(""+ahu_no);
+            room_volume.setText(""+mTestDetails.getRoomVolume());
         }
         dateTextView.setText(""+mTestDetails.getDateOfTest());
         customerName.setText(""+mTestDetails.getCustomer());
@@ -320,7 +324,13 @@ public class CommonTestViewActivity extends AppCompatActivity {
             testItemValue.setVisibility(View.VISIBLE);
             findViewById(R.id.test_item_table).setVisibility(View.VISIBLE);
             ahuEqValue = (TextView)findViewById(R.id.ahu_equipment_value_tv);
-
+        }else if (mTestBasedOn.equalsIgnoreCase("ROOM")){
+            findViewById(R.id.equiment_no_text).setVisibility(View.GONE);
+            findViewById(R.id.equiment_no).setVisibility(View.GONE);
+            findViewById(R.id.equiment_name_text).setVisibility(View.GONE);
+            findViewById(R.id.equiment_name).setVisibility(View.GONE);
+            ahuEqValue = (TextView)findViewById(R.id.ahu_no);
+            room_volume = (TextView)findViewById(R.id.room_volume);
         }
 
     }
@@ -1161,6 +1171,11 @@ public class CommonTestViewActivity extends AppCompatActivity {
             TestHeader.setText("TEST RAW DATA ");
             TestHeader2.setVisibility(View.VISIBLE);
             TestHeader2.setText("(Air Flow Velocity, Volume Testing and Determination of Air Changes per Hour Rates by Amnemoter)");
+            findViewById(R.id.ahu_no_lable).setVisibility(View.VISIBLE);
+            findViewById(R.id.room_volume_table).setVisibility(View.VISIBLE);
+            findViewById(R.id.test2_tableLayout6).setVisibility(View.GONE);
+            TextView measerdTv = (TextView) findViewById(R.id.measerd_av_tv);
+            measerdTv.setText("Measured Air Velocity(fpm)");
         }
         else{
             findViewById(R.id.test_table_1_header_2_ll).setVisibility(View.GONE);
