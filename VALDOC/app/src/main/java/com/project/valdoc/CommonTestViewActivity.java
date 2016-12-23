@@ -97,6 +97,8 @@ public class CommonTestViewActivity extends AppCompatActivity {
     private TextView testItemValue;
     private TextView ahuEqValue;
     private TextView room_volume;
+    private TextView TFRtv;
+    private TextView TFTByRvTv;
 
 
     @Override
@@ -150,19 +152,30 @@ public class CommonTestViewActivity extends AppCompatActivity {
                 //filter
                 gridTextList.get(j).setText(testReadingList.get(j).getEntityName());
                 spiltValue =testReadingList.get(j).getValue().split(",");
-                for (int i = 0; i < resultTextViewList.size() ; i++) {
-                    resultTextViewList.get(i).setText(""+spiltValue[0]);
-                }
 
+                //Filter Area(A)
+                resultTextViewList.get(j).setText(""+spiltValue[0]);
+                //Air Flow rate (AxAv)
+                axvresultTextViewList.get(j).setText(""+Math.round(Double.parseDouble(spiltValue[0])*
+                        Double.parseDouble(spiltValue[spiltValue.length-2])));
+
+                // V1, v2, v3, v4 value....
                 for (int i = 1; i <spiltValue.length-2; i++) {
                     txtViewList.get(textId).setText(""+spiltValue[i]);
                     textId++;
                 }
-
-                for (int i = 0; i < avgresultTextViewList.size() ; i++) {
-                    avgresultTextViewList.get(i).setText(""+spiltValue[spiltValue.length-1]);
+                //Average Air Velocity(FPM)
+                avgresultTextViewList.get(j).setText(""+spiltValue[spiltValue.length-2]);
+            }
+            testSpesificationValues = mValdocDatabaseHandler.getTestSpecificationValueById(testDetailId+"");
+            for (int i = 0; i <testSpesificationValues.size() ; i++) {
+                if("TFR".equalsIgnoreCase(testSpesificationValues.get(i).getFieldName())){
+                    TFRtv.setText(""+Math.round(Double.parseDouble(testSpesificationValues.get(i).getFieldValue())));
+                }else if("((TFR/RV)x60))".equalsIgnoreCase(testSpesificationValues.get(i).getFieldName())){
+                    TFTByRvTv.setText(""+Math.round(Double.parseDouble(testSpesificationValues.get(i).getFieldValue())));
                 }
             }
+
 
         }else if (testType != null && testType.contains("AV")) {
             findViewById(R.id.test1_table_ll).setVisibility(View.VISIBLE);
@@ -1183,6 +1196,8 @@ public class CommonTestViewActivity extends AppCompatActivity {
 
         }else if(testType != null && testType.contains("ACPH_AV")){
             findViewById(R.id.acph_av_final_calc_ll).setVisibility(View.VISIBLE);
+            TFRtv = (TextView) findViewById(R.id.acph_av_tfr_value_tv);
+            TFTByRvTv = (TextView) findViewById(R.id.acph_av_tfrby_av_value_tv);
             findViewById(R.id.common_certificate_header_ll).setVisibility(View.VISIBLE);
             findViewById(R.id.test_table_1_header_2_ll).setVisibility(View.GONE);
             findViewById(R.id.common_header_test1).setVisibility(View.GONE);
