@@ -144,7 +144,25 @@ public class CommonTestViewActivity extends AppCompatActivity {
             testReadingList = mValdocDatabaseHandler.getTestReadingDataById(testDetailId + "");
             spiltValue = testReadingList.get(0).getValue().split(",");
             Log.d(TAG, "CodeFlow : spiltValue length : " + spiltValue.length);
-            BuildTableTest2(testReadingList.size()+1,(spiltValue.length-2));
+            BuildTableTest2(testReadingList.size()+1,(spiltValue.length-3));
+            int textId =0;
+            for (int j = 0; j < testReadingList.size(); j++) {
+                //filter
+                gridTextList.get(j).setText(testReadingList.get(j).getEntityName());
+                spiltValue =testReadingList.get(j).getValue().split(",");
+                for (int i = 0; i < resultTextViewList.size() ; i++) {
+                    resultTextViewList.get(i).setText(""+spiltValue[0]);
+                }
+
+                for (int i = 1; i <spiltValue.length-2; i++) {
+                    txtViewList.get(textId).setText(""+spiltValue[i]);
+                    textId++;
+                }
+
+                for (int i = 0; i < avgresultTextViewList.size() ; i++) {
+                    avgresultTextViewList.get(i).setText(""+spiltValue[spiltValue.length-1]);
+                }
+            }
 
         }else if (testType != null && testType.contains("AV")) {
             findViewById(R.id.test1_table_ll).setVisibility(View.VISIBLE);
