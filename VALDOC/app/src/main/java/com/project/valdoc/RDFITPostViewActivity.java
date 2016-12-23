@@ -30,9 +30,11 @@ import java.util.ArrayList;
 
 public class RDFITPostViewActivity extends AppCompatActivity {
     private static final String TAG = "RDFITPostViewActivity";
-    TextView headerText;
+    TextView headerText,headerText_2;
     TableLayout test4_table_layout, test4_table_layout2, test4_table_layout3, test4_table_layout4,
             test4_table_layout5, test4_table_layout6, test4_table_layout7, test4_table_layout8;
+    private TableRow aerosolGeneratorTable;
+    private TableRow aerosolUsedTable;
     //Header TextView
     TextView roomVolume, roomVolumeText, ahuNo, ahuNoText, equipmentNameText,equipmentNoText, dateTextView;
     TextView plantName, areaOfTest, roomName, occupancyState, testRefrance,roomNo, testCundoctor,testWitness,testCondoctorOrg,testWitnessOrg;
@@ -42,12 +44,24 @@ public class RDFITPostViewActivity extends AppCompatActivity {
     private String userName = "";
     String testType = null;
     private int rows, cols, testDetailId = 1;
+    private String mTestBasedOn;
     ProgressDialog pr;
     private ValdocDatabaseHandler mValdocDatabaseHandler;
     private ArrayList<TestReading> testReadingArrayList;
     private ArrayList<TestSpesificationValue> testSpecificationValueArrayList;
     private TestDetails mTestDetails;
     String spiltValue[] = null;
+    private TextView filterTypeEficiancyText,room_no_lable,testLocation,testLocationText,equipmentNo
+            ,equipmentNoLable, equipmentName, equipmentLable;
+    private TextView instrumentNoTextView;
+    private TextView testerNameTextView;
+    private TextView instrumentUsedTextView;
+    private TextView testCunductedByTextView;
+    private TextView roomNameLable;
+    private TextView instrumentNoLable;
+    private TextView roomNameTest;
+    private TextView instrument_name;
+    private TextView aerosolGeneratorType, aerosolUsed;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +77,8 @@ public class RDFITPostViewActivity extends AppCompatActivity {
         //getting Vale for Table
         testType = getIntent().getStringExtra("TestType");
         testDetailId = getIntent().getIntExtra("testDetailId", 1);
-        Log.d(TAG, " TestType " + testType + " testDetailId " + testDetailId);
+        mTestBasedOn = getIntent().getStringExtra("TestBasedOn");
+        Log.d(TAG, "Saurabh TestType " + testType + " testDetailId " + testDetailId +" mTestBasedOn "+mTestBasedOn);
 
         //init res file from xml
         initRes();
@@ -94,6 +109,21 @@ public class RDFITPostViewActivity extends AppCompatActivity {
             buildTestFour(rows, cols);
         }
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(testType.contains("ARD_FIT_AHU")){
+            headerText.setText("TEST RAW DATA AHU/EQUIPMENT");
+            headerText_2.setText("Installed HEPA Filter System Leakage Test by Aerosol Photometer Method");
+        }else if(testType.contains("ERD_FIT")){
+            headerText.setText("TEST RAW DATA EQUIPMENT");
+            headerText_2.setText("Installed HEPA Filter System Leakage Test by Aerosol Photometer Method");
+        }else{
+            headerText.setText("TEST RAW DATA");
+            headerText_2.setText("Installed HEPA Filter System Leakage Test by Aerosol Photometer Method");
+        }
     }
 
     private void buildTestFour(int rows, int column) {
@@ -269,7 +299,7 @@ public class RDFITPostViewActivity extends AppCompatActivity {
         // room no not needed
         roomNo.setText(mTestDetails.getRoomNo());
         ahuNo.setText(mTestDetails.getAhuNo());
-        roomVolume.setText(mTestDetails.getRoomVolume());
+        //roomVolume.setText(mTestDetails.getRoomVolume());
         testCondoctorOrg.setText(mTestDetails.getTestCondoctorOrg());
         testWitnessOrg.setText(mTestDetails.getTestWitnessOrg());
         testWitness.setText(mTestDetails.getWitnessName());
@@ -291,36 +321,94 @@ public class RDFITPostViewActivity extends AppCompatActivity {
 
 
     private void initTextView() {
-        roomVolumeText = (TextView) findViewById(R.id.room_volume_text);
-        roomVolumeText.setVisibility(View.VISIBLE);
-        roomVolume = (TextView) findViewById(R.id.room_volume);
-        roomVolume.setVisibility(View.VISIBLE);
-        ahuNo = (TextView) findViewById(R.id.ahu_no);
-        ahuNo.setVisibility(View.VISIBLE);
-        ahuNoText = (TextView) findViewById(R.id.ahu_no_text);
-        ahuNoText.setVisibility(View.VISIBLE);
-
-        equipmentNameText = (TextView) findViewById(R.id.equiment_name_text);
-        equipmentNameText.setVisibility(View.INVISIBLE);
-        equipmentNoText = (TextView) findViewById(R.id.equiment_no_text);
-        equipmentNoText.setVisibility(View.INVISIBLE);
+        // layout data which is not in use
+        instrumentNoTextView = (TextView) findViewById(R.id.instrument_no4);
+        instrumentNoTextView.setVisibility(View.GONE);
+        testerNameTextView = (TextView) findViewById(R.id.tester_name_test4);
+        testerNameTextView.setVisibility(View.GONE);
+        instrumentUsedTextView = (TextView) findViewById(R.id.instrument_used);
+        instrumentUsedTextView.setVisibility(View.GONE);
+        testCunductedByTextView = (TextView) findViewById(R.id.testcunducted_by);
+        testCunductedByTextView.setVisibility(View.GONE);
+        testerNameTextView = (TextView) findViewById(R.id.tester_name_test4);
+        testerNameTextView.setVisibility(View.GONE);
+        roomNameLable = (TextView) findViewById(R.id.room_name_lable4);
+        roomNameLable.setVisibility(View.GONE);
+        instrumentNoLable = (TextView) findViewById(R.id.instrument_no_lable);
+        instrumentNoLable.setVisibility(View.GONE);
+        roomNameTest = (TextView) findViewById(R.id.room_name4);
+        roomNameTest.setVisibility(View.GONE);
+        instrument_name = (TextView) findViewById(R.id.instrument_name4);
+        instrument_name.setVisibility(View.GONE);
 
         dateTextView = (TextView) findViewById(R.id.datetextview);
         customerName = (TextView) findViewById(R.id.customer_name);
         certificateNo = (TextView) findViewById(R.id.trd_no);
         instrumentUsed = (TextView) findViewById(R.id.instrumentused);
-
         instrumentSerialNo = (TextView) findViewById(R.id.instrumentserialno);
         calibrationOn = (TextView) findViewById(R.id.calibratedon);
         calibrationDueOn = (TextView) findViewById(R.id.calibrationdueon);
+        aerosolGeneratorTable= (TableRow) findViewById(R.id.aerosol_generator_table);
+        aerosolGeneratorTable.setVisibility(View.VISIBLE);
+        aerosolUsedTable= (TableRow) findViewById(R.id.aerosol_used_table);
+        aerosolUsedTable.setVisibility(View.VISIBLE);
+        aerosolGeneratorType= (TextView) findViewById(R.id.aerosol_generator_type_value);
+        aerosolUsed= (TextView) findViewById(R.id.aerosol_used);
+        testLocationText=(TextView) findViewById(R.id.room_volume_text);
+        testLocationText.setText("Test Location :");
+        testLocation=(TextView) findViewById(R.id.room_volume);
+        if(mTestBasedOn.equalsIgnoreCase("ROOM")||mTestBasedOn.equalsIgnoreCase("AHU")){
+            equipmentNameText = (TextView) findViewById(R.id.equiment_name_text);
+            equipmentNameText.setVisibility(View.INVISIBLE);
+            equipmentNoText = (TextView) findViewById(R.id.equiment_no_text);
+            equipmentNoText.setVisibility(View.INVISIBLE);
+            ahuNoText = (TextView) findViewById(R.id.ahu_no_text);
+            ahuNoText.setVisibility(View.VISIBLE);
+            ahuNo = (TextView) findViewById(R.id.ahu_no);
+            ahuNo.setVisibility(View.VISIBLE);
+        }
+
         testSpecification = (TextView) findViewById(R.id.testspecification);
         plantName = (TextView) findViewById(R.id.plantname);
         areaOfTest = (TextView) findViewById(R.id.areaoftest);
         roomName = (TextView) findViewById(R.id.room_name);
+        room_no_lable=(TextView)findViewById(R.id.room_no_lable);
+        roomNo = (TextView) findViewById(R.id.room_no);
+        if(mTestBasedOn.equalsIgnoreCase("AHU")){
+            findViewById(R.id.room_volume_table).setVisibility(View.VISIBLE);
+            roomNo.setVisibility(View.INVISIBLE);
+            testLocationText.setVisibility(View.GONE);
+            testLocation.setVisibility(View.GONE);
+        }
+        if(mTestBasedOn.equalsIgnoreCase("ROOM")){
+            testLocationText.setVisibility(View.VISIBLE);
+            testLocation.setVisibility(View.VISIBLE);
+        }
         occupancyState = (TextView) findViewById(R.id.ocupancystate);
         testRefrance = (TextView) findViewById(R.id.testrefrence);
-        roomNo = (TextView) findViewById(R.id.room_no);
-        ahuNo = (TextView) findViewById(R.id.ahu_no);
+        if (mTestBasedOn.equalsIgnoreCase("EQUIPMENT")) {
+            findViewById(R.id.room_volume_table).setVisibility(View.VISIBLE);
+            findViewById(R.id.test_item_table).setVisibility(View.VISIBLE);
+            equipmentLable = (TextView) findViewById(R.id.equiment_name_text);
+            equipmentLable.setVisibility(View.VISIBLE);
+            equipmentName = (TextView) findViewById(R.id.equiment_name);
+            equipmentName.setVisibility(View.VISIBLE);
+            equipmentNoLable = (TextView) findViewById(R.id.equiment_no_text);
+            equipmentNoLable.setVisibility(View.VISIBLE);
+            equipmentNo = (TextView) findViewById(R.id.equiment_no);
+            equipmentNo.setVisibility(View.VISIBLE);
+            testLocationText.setVisibility(View.GONE);
+            testLocation.setVisibility(View.GONE);
+            roomNo.setVisibility(View.GONE);
+            room_no_lable.setVisibility(View.GONE);
+        }
+
+        filterTypeEficiancyText=(TextView) findViewById(R.id.test_item_text);
+        filterTypeEficiancyText.setVisibility(View.VISIBLE);
+        filterTypeEficiancyText.setText("Filter Type & Efficiency :");
+        //filtertypeEficiancy=(TextView) findViewById(R.id.test_item_value);
+        findViewById(R.id.test_item_value).setVisibility(View.VISIBLE);
+
         testCundoctor = (TextView) findViewById(R.id.testcunducter);
         testWitness = (TextView) findViewById(R.id.testwitness);
         testCondoctorOrg = (TextView) findViewById(R.id.test_condoctor_org);
@@ -329,13 +417,8 @@ public class RDFITPostViewActivity extends AppCompatActivity {
 
     private void initRes() {
         headerText = (TextView) findViewById(R.id.common_header_tv);
-        if(testType.contains("ERD_FIT")){
-            headerText.setText("TEST RAW DATA EQUIPMENT\nInstalled HEPA Filter System Leakage Test by Aerosol Photometer Method");
-        }else if(testType.contains("ARD_FIT_AHU")){
-            headerText.setText("TEST RAW DATA AHU\nInstalled HEPA Filter System Leakage Test by Aerosol Photometer Method");
-        }else{
-            headerText.setText("TEST RAW DATA\nInstalled HEPA Filter System Leakage Test by Aerosol Photometer Method");
-        }
+        headerText_2 = (TextView) findViewById(R.id.common_header_2_tv);
+        headerText_2.setVisibility(View.VISIBLE);
         findViewById(R.id.submit).setVisibility(View.GONE);
         findViewById(R.id.clear).setVisibility(View.GONE);
         cancel = (ImageView) findViewById(R.id.cancel);
@@ -358,5 +441,21 @@ public class RDFITPostViewActivity extends AppCompatActivity {
         findViewById(R.id.test_table_4_header_l_ll).setVisibility(View.GONE);
         findViewById(R.id.test_table_4_header_2_ll).setVisibility(View.VISIBLE);
         findViewById(R.id.test_interference).setVisibility(View.GONE);
+        if("ROOM".equalsIgnoreCase(mTestBasedOn)){
+            findViewById(R.id.room_volume_table).setVisibility(View.VISIBLE);
+            findViewById(R.id.ahu_no_lable).setVisibility(View.VISIBLE);
+            findViewById(R.id.test_item_table).setVisibility(View.VISIBLE);
+
+        }else if("AHU".equalsIgnoreCase(mTestBasedOn)){
+            findViewById(R.id.room_volume_table).setVisibility(View.VISIBLE);
+            findViewById(R.id.test_item_table).setVisibility(View.VISIBLE);
+            findViewById(R.id.room_no_ahu_fit).setVisibility(View.GONE);
+            findViewById(R.id.room_name_ahu_fit).setVisibility(View.VISIBLE);
+            findViewById(R.id.ahu_no_lable).setVisibility(View.VISIBLE);
+            TextView ahuNumber = (TextView) findViewById(R.id.ahu_no_text);
+            TextView roomName = (TextView) findViewById(R.id.room_name_lable);
+            ahuNumber.setText("AHU/Equipment No :");
+            roomName.setText("Test Item :");
+        }
     }
 }
