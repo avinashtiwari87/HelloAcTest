@@ -221,20 +221,19 @@ public class CommonTestViewActivity extends AppCompatActivity {
                 //filter
                 gridTextList.get(j).setText(testReadingList.get(j).getEntityName());
                 spiltValue =testReadingList.get(j).getValue().split(",");
-                for (int i = 0; i < resultTextViewList.size() ; i++) {
-                    resultTextViewList.get(i).setText(""+spiltValue[0]);
-                    axvresultTextViewList.get(i).setText(""+Math.round(Double.parseDouble(spiltValue[0])*
-                            Double.parseDouble(spiltValue[spiltValue.length-1])));
-                }
 
+                //fmgmgmgmg
+                resultTextViewList.get(j).setText(""+spiltValue[0]);
+                axvresultTextViewList.get(j).setText(""+Math.round(Double.parseDouble(spiltValue[0])*
+                        Double.parseDouble(spiltValue[spiltValue.length-1])));
+
+                // V1, v2, v3, value setup
                 for (int i = 1; i <spiltValue.length-1; i++) {
                     txtViewList.get(textId).setText(""+spiltValue[i]);
                     textId++;
                 }
 
-                for (int i = 0; i < avgresultTextViewList.size() ; i++) {
-                    avgresultTextViewList.get(i).setText(""+spiltValue[spiltValue.length-1]);
-                }
+                avgresultTextViewList.get(j).setText(""+spiltValue[spiltValue.length-1]);
             }
             testSpesificationValues = mValdocDatabaseHandler.getTestSpecificationValueById(testDetailId+"");
             int kk = testSpesificationValues.size()/2;
