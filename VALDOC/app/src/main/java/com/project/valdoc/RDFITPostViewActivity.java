@@ -52,7 +52,7 @@ public class RDFITPostViewActivity extends AppCompatActivity {
     private TestDetails mTestDetails;
     String spiltValue[] = null;
     private TextView filterTypeEficiancyText,room_no_lable,testLocation,testLocationText,equipmentNo
-            ,equipmentNoLable, equipmentName, equipmentLable;
+            ,equipmentNoLable, equipmentName, equipmentLable,filtertypeEficiancy;
     private TextView instrumentNoTextView;
     private TextView testerNameTextView;
     private TextView instrumentUsedTextView;
@@ -161,7 +161,7 @@ public class RDFITPostViewActivity extends AppCompatActivity {
                     row.addView(addTextView(" Average \nbefore Scanning "));
                 } else {
                     spiltValue = testReadingArrayList.get(i-2).getValue().split(",");
-                    row.addView(addTextView(""+spiltValue[2]));
+                    row.addView(addTextView(""+spiltValue[1]));
                 }
 
             }
@@ -180,7 +180,7 @@ public class RDFITPostViewActivity extends AppCompatActivity {
                     row.addView(addTextView(" Average \nAfter Scanning"));
                 } else {
                     spiltValue = testReadingArrayList.get(i-2).getValue().split(",");
-                    row.addView(addTextView(""+spiltValue[3]));;
+                    row.addView(addTextView(""+spiltValue[2]));;
                 }
 
             }
@@ -198,7 +198,7 @@ public class RDFITPostViewActivity extends AppCompatActivity {
                     row.addView(addTextView(" Variation \nin Concentration*"));
                 } else {
                     spiltValue = testReadingArrayList.get(i-2).getValue().split(",");
-                    row.addView(addTextView(spiltValue[1]+ "%"));
+                    row.addView(addTextView(spiltValue[3]+ "%"));
                 }
 
             }
@@ -284,9 +284,12 @@ public class RDFITPostViewActivity extends AppCompatActivity {
     }
 
     private void textViewValueAssignment() {
+        roomName.setText(""+mTestDetails.getRoomName());
+        if("AHU".equalsIgnoreCase(mTestBasedOn)){
+            roomName.setText(""+mTestDetails.getTestItem());
+        }
         dateTextView.setText("" + mTestDetails.getDateOfTest());
         instrumentUsed.setText(mTestDetails.getInstrumentUsed());
-//            make.setText(clientInstrument.getMake());
         instrumentSerialNo.setText("" + mTestDetails.getInstrumentNo());
         calibrationOn.setText(Utilityies.parseDateToddMMyyyy(mTestDetails.getCalibratedOn()));
         calibrationDueOn.setText(Utilityies.parseDateToddMMyyyy(mTestDetails.getCalibratedDueOn()));
@@ -295,7 +298,10 @@ public class RDFITPostViewActivity extends AppCompatActivity {
         occupancyState.setText(mTestDetails.getOccupencyState());
         testRefrance.setText(mTestDetails.getTestReference());
         areaOfTest.setText(mTestDetails.getTestArea());
-        roomName.setText(mTestDetails.getRoomName());
+        aerosolUsed.setText(""+mTestDetails.getAerosolUsed());
+        aerosolGeneratorType.setText(""+mTestDetails.getAerosolGeneratorType());
+        filtertypeEficiancy.setText(""+mTestDetails.getFilterTypeEficiancy());
+
         // room no not needed
         roomNo.setText(mTestDetails.getRoomNo());
         ahuNo.setText(mTestDetails.getAhuNo());
@@ -406,8 +412,8 @@ public class RDFITPostViewActivity extends AppCompatActivity {
         filterTypeEficiancyText=(TextView) findViewById(R.id.test_item_text);
         filterTypeEficiancyText.setVisibility(View.VISIBLE);
         filterTypeEficiancyText.setText("Filter Type & Efficiency :");
-        //filtertypeEficiancy=(TextView) findViewById(R.id.test_item_value);
-        findViewById(R.id.test_item_value).setVisibility(View.VISIBLE);
+        filtertypeEficiancy=(TextView) findViewById(R.id.test_item_value);
+        filtertypeEficiancy.setVisibility(View.VISIBLE);
 
         testCundoctor = (TextView) findViewById(R.id.testcunducter);
         testWitness = (TextView) findViewById(R.id.testwitness);
@@ -453,9 +459,9 @@ public class RDFITPostViewActivity extends AppCompatActivity {
             findViewById(R.id.room_name_ahu_fit).setVisibility(View.VISIBLE);
             findViewById(R.id.ahu_no_lable).setVisibility(View.VISIBLE);
             TextView ahuNumber = (TextView) findViewById(R.id.ahu_no_text);
-            TextView roomName = (TextView) findViewById(R.id.room_name_lable);
+            TextView roomNameLable = (TextView) findViewById(R.id.room_name_lable);
             ahuNumber.setText("AHU/Equipment No :");
-            roomName.setText("Test Item :");
+            roomNameLable.setText("Test Item :");
         }
     }
 }
