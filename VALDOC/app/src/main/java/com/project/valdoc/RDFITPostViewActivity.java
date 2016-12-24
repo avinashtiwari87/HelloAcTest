@@ -290,6 +290,7 @@ public class RDFITPostViewActivity extends AppCompatActivity {
             ahuNo.setText(mTestDetails.getAhuNo());
         }else if("ROOM".equalsIgnoreCase(mTestBasedOn)){
             ahuNo.setText(mTestDetails.getAhuNo());
+            testLocation.setText(""+mTestDetails.getTestLocation());
         }else{
             equipmentName.setText(""+mTestDetails.getEquipmentName());
             equipmentNo.setText(""+mTestDetails.getEquipmentNo());
