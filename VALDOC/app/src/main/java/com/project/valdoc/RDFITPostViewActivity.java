@@ -287,6 +287,12 @@ public class RDFITPostViewActivity extends AppCompatActivity {
         roomName.setText(""+mTestDetails.getRoomName());
         if("AHU".equalsIgnoreCase(mTestBasedOn)){
             roomName.setText(""+mTestDetails.getTestItem());
+            ahuNo.setText(mTestDetails.getAhuNo());
+        }else if("ROOM".equalsIgnoreCase(mTestBasedOn)){
+            ahuNo.setText(mTestDetails.getAhuNo());
+        }else{
+            equipmentName.setText(""+mTestDetails.getEquipmentName());
+            equipmentNo.setText(""+mTestDetails.getEquipmentNo());
         }
         dateTextView.setText("" + mTestDetails.getDateOfTest());
         instrumentUsed.setText(mTestDetails.getInstrumentUsed());
@@ -304,7 +310,7 @@ public class RDFITPostViewActivity extends AppCompatActivity {
 
         // room no not needed
         roomNo.setText(mTestDetails.getRoomNo());
-        ahuNo.setText(mTestDetails.getAhuNo());
+
         //roomVolume.setText(mTestDetails.getRoomVolume());
         testCondoctorOrg.setText(mTestDetails.getTestCondoctorOrg());
         testWitnessOrg.setText(mTestDetails.getTestWitnessOrg());
