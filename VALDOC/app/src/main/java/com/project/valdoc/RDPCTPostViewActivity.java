@@ -83,15 +83,15 @@ public class RDPCTPostViewActivity extends AppCompatActivity {
         RDPC3TxtList = new ArrayList<TextView>();
         RDPC3TxtList2 = new ArrayList<TextView>();
 
-        // init view
-        initRes();
-        //Header text view initialization
-        initTextView();
-
         mTestType = getIntent().getStringExtra("TestType");
         testDetailId = getIntent().getIntExtra("testDetailId", 1);
         mTestBasedOn = getIntent().getStringExtra("TestBasedOn");
         Log.d(TAG, " TestType : " + mTestType+" testDetailId "+testDetailId+" mTestBasedOn "+mTestBasedOn);
+
+        // init view
+        initRes();
+        //Header text view initialization
+        initTextView();
 
         //Reading Data from DB
         testReadingArrayList = mValdocDatabaseHandler.getTestReadingDataById(testDetailId + "");
@@ -399,13 +399,17 @@ public class RDPCTPostViewActivity extends AppCompatActivity {
 
     private void textViewValueAssignment() {
         if ("ROOM".equalsIgnoreCase(mTestBasedOn)) {
-
+            findViewById(R.id.aerosol_used_table).setVisibility(View.VISIBLE);
+            equipmentNo.setVisibility(View.GONE);
+            equipmentName.setVisibility(View.GONE);
+            findViewById(R.id.equiment_no_text).setVisibility(View.GONE);
+            findViewById(R.id.equiment_name_text).setVisibility(View.GONE);
         }else{
             equipmentNo.setText(""+mTestDetails.getEquipmentNo());
             equipmentName.setText(""+mTestDetails.getEquipmentName());
-            samplingFlowRate.setText(""+mTestDetails.getSamplingFlowRate());
-            samplingTime.setText(""+mTestDetails.getSamplingTime());
         }
+        samplingFlowRate.setText(""+mTestDetails.getSamplingFlowRate());
+        samplingTime.setText(""+mTestDetails.getSamplingTime());
         dateTextView.setText("" + mTestDetails.getDateOfTest());
         instrumentUsed.setText(mTestDetails.getInstrumentUsed());
         instrumentSerialNo.setText("" + mTestDetails.getInstrumentNo());
@@ -475,23 +479,23 @@ public class RDPCTPostViewActivity extends AppCompatActivity {
         testWitness = (TextView) findViewById(R.id.testwitness);
         testCondoctorOrg = (TextView) findViewById(R.id.test_condoctor_org);
         testWitnessOrg = (TextView) findViewById(R.id.testwitness_org);
+        equipmentNoLable = (TextView) findViewById(R.id.equiment_no_text);
+        equipmentNo = (TextView) findViewById(R.id.equiment_no);
+        equipmentName = (TextView) findViewById(R.id.equiment_name);
+        equipmentLable = (TextView) findViewById(R.id.equiment_name_text);
         if ("ROOM".equalsIgnoreCase(mTestBasedOn)) {
-            equipmentLable = (TextView) findViewById(R.id.equiment_name_text);
-            equipmentLable.setVisibility(View.INVISIBLE);
-            equipmentNoLable = (TextView) findViewById(R.id.equiment_no_text);
-            equipmentNoLable.setVisibility(View.INVISIBLE);
+            equipmentLable.setVisibility(View.GONE);
+            equipmentNoLable.setVisibility(View.GONE);
+            equipmentName.setVisibility(View.GONE);
+            equipmentNo.setVisibility(View.GONE);
             ahuNoText = (TextView) findViewById(R.id.ahu_no_text);
             ahuNoText.setVisibility(View.VISIBLE);
             ahuNo = (TextView) findViewById(R.id.ahu_no);
             ahuNo.setVisibility(View.VISIBLE);
         }else{
-            equipmentLable = (TextView) findViewById(R.id.equiment_name_text);
             equipmentLable.setVisibility(View.VISIBLE);
-            equipmentName = (TextView) findViewById(R.id.equiment_name);
             equipmentName.setVisibility(View.VISIBLE);
-            equipmentNoLable = (TextView) findViewById(R.id.equiment_no_text);
             equipmentNoLable.setVisibility(View.VISIBLE);
-            equipmentNo = (TextView) findViewById(R.id.equiment_no);
             equipmentNo.setVisibility(View.VISIBLE);
         }
     }
@@ -504,9 +508,11 @@ public class RDPCTPostViewActivity extends AppCompatActivity {
             headerText.setText("TEST RAW DATA ");
             headerText2.setText("Airborne Particle Count Test for Classification of Cleanrooms/zones and Clean Air Devices");
             findViewById(R.id.ahu_no_lable).setVisibility(View.VISIBLE);
-            roomNo.setVisibility(View.VISIBLE);
+            findViewById(R.id.room_no).setVisibility(View.VISIBLE);
             findViewById(R.id.room_no_lable).setVisibility(View.VISIBLE);
+            findViewById(R.id.room_no_ahu_fit).setVisibility(View.VISIBLE);
         }else{
+            findViewById(R.id.room_no_ahu_fit).setVisibility(View.GONE);
             headerText2.setVisibility(View.VISIBLE);
             headerText.setText("TEST RAW DATA EQUIPMENT");
             headerText2.setText("Airborne Particle Count Test for Classification of Cleanrooms/zones and Clean Air Devices");
@@ -561,7 +567,6 @@ public class RDPCTPostViewActivity extends AppCompatActivity {
         samplingTime = (TextView) findViewById(R.id.aerosol_used);
         testspecificationText = (TextView) findViewById(R.id.testspecification_text);
         testspecificationText.setText("Cleanroom Class :");
-        findViewById(R.id.room_no_ahu_fit).setVisibility(View.GONE);
     }
 
 }
