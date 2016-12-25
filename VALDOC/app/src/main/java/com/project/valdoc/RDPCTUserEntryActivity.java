@@ -44,7 +44,7 @@ import java.util.HashMap;
 
 public class RDPCTUserEntryActivity extends AppCompatActivity {
     private static final String TAG = "RDPC3";
-    TextView headerText;
+    TextView headerText,headerText2;
     //Test 5 View ...
     TableLayout test5_table_layout, test5_table_layout2, test5_table_layout2_1,
             test5_table_layout3, test5_tableLayout2_2, test5_table_layout4, test5_tableLayout4_2, test5_table_layout4_1,
@@ -1125,7 +1125,16 @@ public class RDPCTUserEntryActivity extends AppCompatActivity {
 
     private void initRes() {
         headerText = (TextView) findViewById(R.id.common_header_tv);
-        headerText.setText("TEST RAW DATA\nAirborne Particle Count Test for Classification of Cleanrooms/zones and Clean Air Devices");
+        headerText2 = (TextView) findViewById(R.id.common_header_2_tv);
+        if("ROOM".equalsIgnoreCase(mTestBasedOn)){
+            headerText2.setVisibility(View.VISIBLE);
+            headerText.setText("TEST RAW DATA ");
+            headerText2.setText("Airborne Particle Count Test for Classification of Cleanrooms/zones and Clean Air Devices");
+        }else{
+            headerText2.setVisibility(View.VISIBLE);
+            headerText.setText("TEST RAW DATA EQUIPMENT");
+            headerText2.setText("Airborne Particle Count Test for Classification of Cleanrooms/zones and Clean Air Devices");
+        }
         //Test5
         test5_table_layout = (TableLayout) findViewById(R.id.test5_tableLayout1);
         test5_table_layout2 = (TableLayout) findViewById(R.id.test5_tableLayout2);

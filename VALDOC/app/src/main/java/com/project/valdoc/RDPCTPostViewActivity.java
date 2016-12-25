@@ -27,7 +27,7 @@ import java.util.ArrayList;
 
 public class RDPCTPostViewActivity extends AppCompatActivity {
     private static final String TAG = "RDPCT_Post_View";
-    TextView headerText;
+    TextView headerText,headerText2;
     //Test 5 View ...
     TableLayout test5_table_layout, test5_table_layout2, test5_table_layout2_1,
             test5_table_layout3, test5_tableLayout2_2, test5_table_layout4, test5_tableLayout4_2, test5_table_layout4_1,
@@ -55,6 +55,9 @@ public class RDPCTPostViewActivity extends AppCompatActivity {
     private ArrayList<TestSpesificationValue> testSpecificationValueArrayList;
     private TestDetails mTestDetails;
     String spiltValue[] = null;
+    private String mTestBasedOn;
+    private TextView equipmentLable,equipmentName,equipmentNoLable,equipmentNo;
+    private TextView testspecificationText,samplingFlowRateText,samplingTimeText,samplingFlowRate,samplingTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,7 +90,8 @@ public class RDPCTPostViewActivity extends AppCompatActivity {
 
         mTestType = getIntent().getStringExtra("TestType");
         testDetailId = getIntent().getIntExtra("testDetailId", 1);
-        Log.d(TAG, " TestType : " + mTestType+" testDetailId "+testDetailId);
+        mTestBasedOn = getIntent().getStringExtra("TestBasedOn");
+        Log.d(TAG, " TestType : " + mTestType+" testDetailId "+testDetailId+" mTestBasedOn "+mTestBasedOn);
 
         //Reading Data from DB
         testReadingArrayList = mValdocDatabaseHandler.getTestReadingDataById(testDetailId + "");
@@ -97,21 +101,27 @@ public class RDPCTPostViewActivity extends AppCompatActivity {
         rows = testReadingArrayList.size()/2+1;
         cols = (spiltValue.length-1);
         Log.d(TAG, " rows "+rows+" cols "+cols);
+
         // setting teast header value
         textViewValueAssignment();
 
-
         if (mTestType.contains(TestCreateActivity.PCT)) {
             BuildTableTest5(rows, cols);
-//            BuildTableTest5(7, 3);
         }
 
         // Setting calculation value in PCT
         if(testSpecificationValueArrayList!= null && testSpecificationValueArrayList.size()>=4){
             meanValue1_tv.setText(testSpecificationValueArrayList.get(0).getFieldValue().toString());
-            meanValue2_tv.setText(testSpecificationValueArrayList.get(01).getFieldValue().toString());
+            meanValue2_tv.setText(testSpecificationValueArrayList.get(1).getFieldValue().toString());
             stdDev1_tv.setText(testSpecificationValueArrayList.get(2).getFieldValue().toString());
             stdDev2_tv.setText(testSpecificationValueArrayList.get(3).getFieldValue().toString());
+            ucl1_tv.setText(testSpecificationValueArrayList.get(4).getFieldValue().toString());
+            ucl2_tv.setText(testSpecificationValueArrayList.get(5).getFieldValue().toString());
+            minimumValue1_tv.setText(testSpecificationValueArrayList.get(6).getFieldValue().toString());
+            minimumValue2_tv.setText(testSpecificationValueArrayList.get(7).getFieldValue().toString());
+            maximumValue1_tv.setText(testSpecificationValueArrayList.get(8).getFieldValue().toString());
+            maximumValue2_tv.setText(testSpecificationValueArrayList.get(9).getFieldValue().toString());
+
         }
 
     }
@@ -154,7 +164,7 @@ public class RDPCTPostViewActivity extends AppCompatActivity {
         TableRow row1 = new TableRow(this);
         row1.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
                 TableRow.LayoutParams.MATCH_PARENT));
-        TextView tvs = addTextView(" No. of Particles >= 5 µm/m³  ");
+        TextView tvs = addTextView(" No. of Particles ≥ 0. 5 µm/m³ ");
         if(5*cols>13){
             tvs.setEms(5*cols);
         }else{
@@ -235,7 +245,7 @@ public class RDPCTPostViewActivity extends AppCompatActivity {
         TableRow row2 = new TableRow(this);
         row2.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
                 TableRow.LayoutParams.MATCH_PARENT));
-        TextView tvs1 = addTextView(" No. of Particles >= 5 µm/m³  ");
+        TextView tvs1 = addTextView(" No. of Particles ≥ 5 µm/m³ ");
         if(5*cols>13){
             tvs1.setEms(5*cols);
         }else{
@@ -388,9 +398,16 @@ public class RDPCTPostViewActivity extends AppCompatActivity {
     }
 
     private void textViewValueAssignment() {
+        if ("ROOM".equalsIgnoreCase(mTestBasedOn)) {
+
+        }else{
+            equipmentNo.setText(""+mTestDetails.getEquipmentNo());
+            equipmentName.setText(""+mTestDetails.getEquipmentName());
+            samplingFlowRate.setText(""+mTestDetails.getSamplingFlowRate());
+            samplingTime.setText(""+mTestDetails.getSamplingTime());
+        }
         dateTextView.setText("" + mTestDetails.getDateOfTest());
         instrumentUsed.setText(mTestDetails.getInstrumentUsed());
-//            make.setText(clientInstrument.getMake());
         instrumentSerialNo.setText("" + mTestDetails.getInstrumentNo());
         calibrationOn.setText(Utilityies.parseDateToddMMyyyy(mTestDetails.getCalibratedOn()));
         calibrationDueOn.setText(Utilityies.parseDateToddMMyyyy(mTestDetails.getCalibratedDueOn()));
@@ -458,11 +475,42 @@ public class RDPCTPostViewActivity extends AppCompatActivity {
         testWitness = (TextView) findViewById(R.id.testwitness);
         testCondoctorOrg = (TextView) findViewById(R.id.test_condoctor_org);
         testWitnessOrg = (TextView) findViewById(R.id.testwitness_org);
+        if ("ROOM".equalsIgnoreCase(mTestBasedOn)) {
+            equipmentLable = (TextView) findViewById(R.id.equiment_name_text);
+            equipmentLable.setVisibility(View.INVISIBLE);
+            equipmentNoLable = (TextView) findViewById(R.id.equiment_no_text);
+            equipmentNoLable.setVisibility(View.INVISIBLE);
+            ahuNoText = (TextView) findViewById(R.id.ahu_no_text);
+            ahuNoText.setVisibility(View.VISIBLE);
+            ahuNo = (TextView) findViewById(R.id.ahu_no);
+            ahuNo.setVisibility(View.VISIBLE);
+        }else{
+            equipmentLable = (TextView) findViewById(R.id.equiment_name_text);
+            equipmentLable.setVisibility(View.VISIBLE);
+            equipmentName = (TextView) findViewById(R.id.equiment_name);
+            equipmentName.setVisibility(View.VISIBLE);
+            equipmentNoLable = (TextView) findViewById(R.id.equiment_no_text);
+            equipmentNoLable.setVisibility(View.VISIBLE);
+            equipmentNo = (TextView) findViewById(R.id.equiment_no);
+            equipmentNo.setVisibility(View.VISIBLE);
+        }
     }
 
     private void initRes() {
         headerText = (TextView) findViewById(R.id.common_header_tv);
-        headerText.setText("TEST RAW DATA\nAirborne Particle Count Test for Classification of Cleanrooms/zones and Clean Air Devices");
+        headerText2 = (TextView) findViewById(R.id.common_header_2_tv);
+        if("ROOM".equalsIgnoreCase(mTestBasedOn)){
+            headerText2.setVisibility(View.VISIBLE);
+            headerText.setText("TEST RAW DATA ");
+            headerText2.setText("Airborne Particle Count Test for Classification of Cleanrooms/zones and Clean Air Devices");
+            findViewById(R.id.ahu_no_lable).setVisibility(View.VISIBLE);
+            roomNo.setVisibility(View.VISIBLE);
+            findViewById(R.id.room_no_lable).setVisibility(View.VISIBLE);
+        }else{
+            headerText2.setVisibility(View.VISIBLE);
+            headerText.setText("TEST RAW DATA EQUIPMENT");
+            headerText2.setText("Airborne Particle Count Test for Classification of Cleanrooms/zones and Clean Air Devices");
+        }
         findViewById(R.id.submit).setVisibility(View.GONE);
         findViewById(R.id.clear).setVisibility(View.GONE);
         cancel = (ImageView) findViewById(R.id.cancel);
@@ -503,6 +551,17 @@ public class RDPCTPostViewActivity extends AppCompatActivity {
         minimumValue2_tv= (TextView)findViewById(R.id.pct_minimum_value_2);
         maximumValue1_tv= (TextView)findViewById(R.id.pct_maximum_value_1);
         maximumValue2_tv= (TextView)findViewById(R.id.pct_maximum_value_2);
+
+        findViewById(R.id.aerosol_generator_table).setVisibility(View.VISIBLE);
+        samplingFlowRateText = (TextView) findViewById(R.id.aerosol_generator_type_text);
+        samplingFlowRateText.setText("Sampling Flow Rate: ");
+        samplingTimeText = (TextView) findViewById(R.id.aerosol_used_text);
+        samplingTimeText.setText("Sampling Time: ");
+        samplingFlowRate = (TextView) findViewById(R.id.aerosol_generator_type_value);
+        samplingTime = (TextView) findViewById(R.id.aerosol_used);
+        testspecificationText = (TextView) findViewById(R.id.testspecification_text);
+        testspecificationText.setText("Cleanroom Class :");
+        findViewById(R.id.room_no_ahu_fit).setVisibility(View.GONE);
     }
 
 }
