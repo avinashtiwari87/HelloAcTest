@@ -337,7 +337,6 @@ public class RDRCTPostViewActivity extends AppCompatActivity {
         occupancyState = (TextView) findViewById(R.id.ocupancystate);
         testRefrance = (TextView) findViewById(R.id.testrefrence);
         roomNo = (TextView) findViewById(R.id.room_no);
-        ahuNo = (TextView) findViewById(R.id.ahu_no);
         testCundoctor = (TextView) findViewById(R.id.testcunducter);
         testWitness = (TextView) findViewById(R.id.testwitness);
         testCondoctorOrg = (TextView) findViewById(R.id.test_condoctor_org);
@@ -368,14 +367,15 @@ public class RDRCTPostViewActivity extends AppCompatActivity {
         recovery_time_tv = (TextView) findViewById(R.id.recovery_time_tv);
         aerosol_used_rct_tv = (TextView) findViewById(R.id.aerosol_used_rct_tv);
         aerosol_gen_rct = (TextView) findViewById(R.id.aerosol_gen_rct);
+        equipmentLable = (TextView) findViewById(R.id.equiment_name_text);
+        equipmentNoLable = (TextView) findViewById(R.id.equiment_no_text);
         if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
             headerText2.setVisibility(View.VISIBLE);
             headerText.setText("TEST RAW DATA (RD_RCT)");
             headerText2.setText("Recovery Performance Test");
-            equipmentLable = (TextView) findViewById(R.id.equiment_name_text);
-            equipmentLable.setVisibility(View.INVISIBLE);
-            equipmentNoLable = (TextView) findViewById(R.id.equiment_no_text);
-            equipmentNoLable.setVisibility(View.INVISIBLE);
+            equipmentLable.setVisibility(View.GONE);
+            equipmentNoLable.setVisibility(View.GONE);
+            findViewById(R.id.ahu_no_lable).setVisibility(View.VISIBLE);
             ahuNoText = (TextView) findViewById(R.id.ahu_no_text);
             ahuNoText.setVisibility(View.VISIBLE);
             ahuNo = (TextView) findViewById(R.id.ahu_no);
@@ -384,11 +384,9 @@ public class RDRCTPostViewActivity extends AppCompatActivity {
             headerText2.setVisibility(View.VISIBLE);
             headerText.setText("TEST RAW DATA EQUIPMENT");
             headerText2.setText("Recovery Performance Test");
-            equipmentLable = (TextView) findViewById(R.id.equiment_name_text);
             equipmentLable.setVisibility(View.VISIBLE);
             equipmentName = (TextView) findViewById(R.id.equiment_name);
             equipmentName.setVisibility(View.VISIBLE);
-            equipmentNoLable = (TextView) findViewById(R.id.equiment_no_text);
             equipmentNoLable.setVisibility(View.VISIBLE);
             equipmentNo = (TextView) findViewById(R.id.equiment_no);
             equipmentNo.setVisibility(View.VISIBLE);
