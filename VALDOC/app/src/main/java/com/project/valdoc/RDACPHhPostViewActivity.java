@@ -141,7 +141,7 @@ public class RDACPHhPostViewActivity extends AppCompatActivity {
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
-                    row.addView(addTextView("Measured Air Flow Quantity\n Q1 (in cfm) "));
+                    row.addView(addTextView("Measured Air Flow Quantity(cfm)\n    Q1"));
                 } else {
                     row.addView(addTextView(""+testReadingArrayList.get(i-2).getValue()));
                 }
@@ -158,7 +158,7 @@ public class RDACPHhPostViewActivity extends AppCompatActivity {
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
-                    row.addView(addTextView("Air Flow Rate\n(Average) cfm "));
+                    row.addView(addTextView("Air Flow Rate(cfm)\n    (Average)"));
                 } else {
                     row.addView(addTextView(""+testReadingArrayList.get(i-2).getValue()));
                 }
@@ -315,6 +315,8 @@ public class RDACPHhPostViewActivity extends AppCompatActivity {
     }
 
     private void initRes() {
+        findViewById(R.id.ahu_no_lable).setVisibility(View.VISIBLE);
+        findViewById(R.id.room_volume_table).setVisibility(View.VISIBLE);
         findViewById(R.id.submit).setVisibility(View.GONE);
         findViewById(R.id.clear).setVisibility(View.GONE);
         cancel = (ImageView) findViewById(R.id.cancel);
@@ -340,6 +342,9 @@ public class RDACPHhPostViewActivity extends AppCompatActivity {
         findViewById(R.id.test_interference).setVisibility(View.GONE);
         findViewById(R.id.acph_h_final_calc_ll).setVisibility(View.VISIBLE);
         TextView TestHeader = (TextView)findViewById(R.id.common_header_tv);
-        TestHeader.setText("TEST RAW DATA\n(Air Flow Velocity, Volume Testing and Determination of Air Changes per Hour Rates)");
+        TextView TestHeader2 = (TextView)findViewById(R.id.common_header_2_tv);
+        TestHeader2.setVisibility(View.VISIBLE);
+        TestHeader.setText("TEST RAW DATA");
+        TestHeader2.setText("(Air Flow Velocity, Volume Testing and Determination of Air Changes per Hour Rates by Hood)");
     }
 }
