@@ -50,7 +50,7 @@ public class Utilityies {
         LayoutInflater mInflater = LayoutInflater.from(ctx);
 
         View mCustomView = mInflater.inflate(R.layout.custom_actionbar, null);
-        TextView mUserName = (TextView) mCustomView.findViewById(R.id.user_name_tv);
+        TextView mUserName = (TextView) mCustomView.findViewById(R.id.logout);
         mUserName.setText(userName);
 
         mActionBar.setCustomView(mCustomView);

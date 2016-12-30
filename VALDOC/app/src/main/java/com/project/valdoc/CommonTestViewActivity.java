@@ -233,7 +233,7 @@ public class CommonTestViewActivity extends AppCompatActivity {
                     textId++;
                 }
 
-                avgresultTextViewList.get(j).setText(""+spiltValue[spiltValue.length-1]);
+                avgresultTextViewList.get(j).setText(""+Math.round(Double.parseDouble(spiltValue[spiltValue.length-1])));
             }
             testSpesificationValues = mValdocDatabaseHandler.getTestSpecificationValueById(testDetailId+"");
             int kk = testSpesificationValues.size()/2;

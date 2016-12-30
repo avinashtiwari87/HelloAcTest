@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
 import com.project.valdoc.controler.ValdocControler;
 import com.project.valdoc.db.ValdocDatabaseHandler;
@@ -56,7 +57,15 @@ public class AfterLoginActivity extends AppCompatActivity implements HttpConnect
             loginUserType = extras.getString("USERTYPE");
             appUserId = extras.getInt("APPUSERID");
         }
-
+        //Custom Action Bar
+        ActionBar mActionBar = getSupportActionBar();
+        if (mActionBar != null)
+            Utilityies.setCustomActionBar(AfterLoginActivity.this, mActionBar, "");
+        TextView logout_tv = (TextView)findViewById(R.id.logout);
+        logout_tv.setBackgroundResource(R.drawable.logout_icon);
+/*        ImageView imgView = (ImageView)findViewById(R.id.imageView1);
+        imgView.requestLayout();
+        imgView.getLayoutParams().width = 60;*/
         if (getIntent().hasExtra("serviceReport")) {
 //            getSupportActionBar().hide();
 //            getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
@@ -92,7 +101,7 @@ public class AfterLoginActivity extends AppCompatActivity implements HttpConnect
                 }
             });
 
-            findViewById(R.id.logout).setOnClickListener(new View.OnClickListener() {
+            logout_tv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     SharedPreferences.Editor editor = sharedpreferences.edit();
@@ -130,14 +139,6 @@ public class AfterLoginActivity extends AppCompatActivity implements HttpConnect
             });
 
         }
-
-        //Custom Action Bar
-        ActionBar mActionBar = getSupportActionBar();
-        if (mActionBar != null)
-            Utilityies.setCustomActionBar(AfterLoginActivity.this, mActionBar, userName);
-/*        ImageView imgView = (ImageView)findViewById(R.id.imageView1);
-        imgView.requestLayout();
-        imgView.getLayoutParams().width = 60;*/
 
     }
 

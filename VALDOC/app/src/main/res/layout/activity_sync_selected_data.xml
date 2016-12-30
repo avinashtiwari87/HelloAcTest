@@ -110,7 +110,7 @@
         android:layout_height="80dp"
         android:id="@+id/sync_selected_button"
         android:layout_marginBottom="10dp"
-        android:background="@drawable/sync_selected_record"
+        android:background="@drawable/sync_test"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true" />
 
