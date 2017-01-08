@@ -667,7 +667,7 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
         tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
                 TableRow.LayoutParams.WRAP_CONTENT));
         tv.setBackgroundResource(R.drawable.border1);
-        //tv.setPadding(5, 5, 5, 5);
+        tv.setGravity(Gravity.CENTER);
         tv.setTextColor(getResources().getColor(R.color.black));
         tv.setTextSize(getResources().getDimension(R.dimen.normal_text_size));
         tv.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
@@ -746,7 +746,7 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
         tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
                 TableRow.LayoutParams.WRAP_CONTENT));
         tv.setBackgroundResource(R.drawable.border1);
-        //tv.setPadding(5, 5, 5, 5);
+        tv.setGravity(Gravity.CENTER);
         tv.setTextColor(getResources().getColor(R.color.black));
         tv.setTextSize(getResources().getDimension(R.dimen.normal_text_size));
         //tv.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD);

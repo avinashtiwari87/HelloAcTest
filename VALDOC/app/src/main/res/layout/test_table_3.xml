@@ -142,6 +142,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/black"
+                android:gravity="center"
                 android:textSize="@dimen/normal_text_size"
                 android:background="@drawable/border"
                 android:text="267"/>
@@ -170,6 +171,7 @@
                 android:id="@+id/acph_h_tfrby_av_value_tv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="center"
                 android:background="@drawable/border"
                 android:text="13"/>
         </LinearLayout>

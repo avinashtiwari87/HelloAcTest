@@ -13,6 +13,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.DatePicker;
@@ -1063,7 +1064,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
         tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
                 TableRow.LayoutParams.WRAP_CONTENT));
         tv.setBackgroundResource(R.drawable.border1);
-        //tv.setPadding(5, 5, 5, 5);
+        tv.setGravity(Gravity.CENTER);
         tv.setTextColor(getResources().getColor(R.color.black));
         tv.setTextSize(getResources().getDimension(R.dimen.normal_text_size));
         //tv.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD);
@@ -1081,7 +1082,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
         tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
                 TableRow.LayoutParams.WRAP_CONTENT));
         tv.setBackgroundResource(R.drawable.border1);
-        //tv.setPadding(5, 5, 5, 5);
+        tv.setGravity(Gravity.CENTER);
         tv.setTextColor(getResources().getColor(R.color.black));
         tv.setTextSize(getResources().getDimension(R.dimen.normal_text_size));
         //tv.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD);
@@ -1105,7 +1106,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
         tv.setPadding(5, 6, 5, 6);
         tv.setTextColor(getResources().getColor(R.color.black));
         tv.setTextSize(getResources().getDimension(R.dimen.normal_text_size));
-        //tv.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD);
+        tv.setGravity(Gravity.CENTER);
         tv.setEms(4);
         tv.setSingleLine(true);
         tv.setEllipsize(TextUtils.TruncateAt.END);
@@ -1125,6 +1126,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
         tv.setBackgroundResource(R.drawable.border);
         tv.setPadding(5, 5, 5, 5);
         tv.setTextColor(getResources().getColor(R.color.black));
+        tv.setGravity(Gravity.CENTER);
         tv.setTextSize(getResources().getDimension(R.dimen.normal_text_size));
         tv.setEms(4);
         tv.setSingleLine(true);
@@ -1142,7 +1144,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
         TextView tv = new TextView(this);
         tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
                 TableRow.LayoutParams.WRAP_CONTENT));
-        //tv.setBackgroundResource(R.drawable.border);
+        tv.setGravity(Gravity.CENTER);
         tv.setPadding(5, 5, 5, 5);
         tv.setTextColor(getResources().getColor(R.color.black));
         tv.setTextSize(getResources().getDimension(R.dimen.normal_text_size));
@@ -1165,6 +1167,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
         editTv.setBackgroundResource(R.drawable.border);
         editTv.setPadding(5, 5, 5, 5);
         editTv.setTextColor(getResources().getColor(R.color.black));
+        editTv.setGravity(Gravity.CENTER);
         // editTv.setTextSize(getResources().getDimension(R.dimen.normal_text_size));
         //editTv.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD);
         editTv.setEms(3);
