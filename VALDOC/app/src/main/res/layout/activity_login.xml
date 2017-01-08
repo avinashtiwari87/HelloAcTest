@@ -33,11 +33,13 @@
             android:orientation="vertical">
             <ImageView
                 android:id="@+id/sync_btn"
-                android:layout_width="500dp"
-                android:layout_height="100dp"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:layout_marginBottom="20dp"
-                android:src="@drawable/sync_db" />
+                android:src="@drawable/sync_db"
+                android:cropToPadding="false"
+                android:adjustViewBounds="false" />
             <RelativeLayout
                 android:layout_width="500dp"
                 android:layout_height="100dp"
@@ -45,7 +47,7 @@
 
                 <ImageView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:src="@drawable/input_username" />
 
                 <!--<android.support.design.widget.TextInputLayout-->
@@ -73,7 +75,7 @@
 
                 <ImageView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:src="@drawable/input_pwd1" />
 
                 <!--<android.support.design.widget.TextInputLayout-->
@@ -104,7 +106,9 @@
                 android:layout_height="100dp"
                 android:layout_gravity="center"
                 android:src="@drawable/login_btn"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:cropToPadding="false"
+                android:adjustViewBounds="false" />
 
             <TextView
                 android:layout_width="wrap_content"
