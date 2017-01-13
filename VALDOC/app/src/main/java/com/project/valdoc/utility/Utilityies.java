@@ -2,6 +2,7 @@ package com.project.valdoc.utility;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.v7.app.ActionBar;
@@ -55,6 +56,8 @@ public class Utilityies {
 
         mActionBar.setCustomView(mCustomView);
         mActionBar.setDisplayShowCustomEnabled(true);
+        Drawable d=ctx.getResources().getDrawable(R.drawable.header);
+        mActionBar.setBackgroundDrawable(d);
 
     }
 

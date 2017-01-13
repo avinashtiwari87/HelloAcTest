@@ -37,7 +37,7 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:layout_marginBottom="20dp"
-                android:src="@drawable/sync_db"
+                android:src="@drawable/sync_db_btn"
                 android:cropToPadding="false"
                 android:adjustViewBounds="false" />
             <RelativeLayout

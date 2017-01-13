@@ -1,5 +1,6 @@
 <resources>
 
+
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
@@ -124,5 +125,10 @@
         <item name="android:maxLines">3</item>
         <item name="android:textColor">@color/black</item>
     </style>
+
+    <!--&lt;!&ndash; style for the action bar background which is named as "MyActionBar. The same name is being used in the above style." &ndash;&gt;-->
+    <!--<style name="MyActionBar" parent="@android:style/Widget.Holo.ActionBar">-->
+        <!--<item name="android:background">@drawable/header</item>-->
+    <!--</style>-->
 
 </resources>
