@@ -2348,6 +2348,42 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
 //        } // return contact list return wordList; }
 //        return grillList;
 //    }
+
+    // select data from equipment Grill table
+    public ArrayList<Grill> getRoomAvGrill(int roomId) {
+        ArrayList<Grill> grillArrayList;
+        grillArrayList = new ArrayList<Grill>();
+        int id=1;
+        String selectQuery = " SELECT * FROM " + GRILL_TABLE_NAME +
+//        String selectQuery = " SELECT * FROM " + PARTNERUSER_TABLE_NAME +
+                " WHERE " + ValdocDatabaseHandler.GRILL_ROOMID + " = " + roomId + " AND "+ ValdocDatabaseHandler.GRILL_ISSUPPLYGRILL + " = " + id ;
+        SQLiteDatabase database = this.getWritableDatabase();
+        Cursor cursor = database.rawQuery(selectQuery, null);
+        Log.d("valdoc", "ValdocDatabaseHelper :Equipment grill code equipment1:=" + cursor.getCount());
+//        String[] strings = new String[cursor.getCount()];
+        int i = 0;
+        if (cursor.moveToFirst()) {
+            do {
+                Grill grill = new Grill();
+                grill.setGrillId(cursor.getInt(0));
+                grill.setRoomId(cursor.getInt(1));
+                grill.setGrillCode(cursor.getString(2).toString());
+                grill.setLength(cursor.getDouble(3));
+                grill.setWidh(cursor.getDouble(4));
+                grill.setGrillArea(cursor.getDouble(5));
+                grill.setEffectiveArea(cursor.getDouble(6));
+                grill.setIsSupplyGrill(cursor.getInt(7));
+                grill.setLastUpdatedDate(cursor.getString(8).toString());
+//                Log.d("valdoc", "ValdocDatabaseHelper :filter code equipment1:=" + cursor.getColumnIndex(EQUIPMENTFILTER_FILTERCODE));
+//                strings[i] = cursor.getString(cursor.getColumnIndex(EQUIPMENTGRILL_GRILLCODE));
+//                Log.d("valdoc", "ValdocDatabaseHelper :equipment1:=" + strings[i] + "i=" + i);
+//                i++;
+                grillArrayList.add(grill);
+            } while (cursor.moveToNext());
+        } // return contact list return wordList; }
+        return grillArrayList;
+    }
+
     // select data from equipment Grill table
     public ArrayList<Grill> getGrill(int roomId) {
         ArrayList<Grill> grillArrayList;

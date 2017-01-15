@@ -667,7 +667,7 @@ public class ValdocControler {
                 grill.setGrillArea(jsonObject.optDouble("area"));
                 grill.setEffectiveArea(jsonObject.optDouble("effectiveArea"));
 
-                if (jsonObject.optBoolean("isSupplyGrill")) {
+                if (jsonObject.optBoolean("supplyGrill")) {
                     grill.setIsSupplyGrill(1);
                 } else {
                     grill.setIsSupplyGrill(0);
