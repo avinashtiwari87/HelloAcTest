@@ -11,6 +11,8 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -1119,6 +1121,10 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
         hideWitness_iv = (ImageView) findViewById(R.id.hide_witness_iv);
         showWitness_iv = (ImageView) findViewById(R.id.show_witness_iv);
 
+        witnessFirst.addTextChangedListener(new WitnessNameWatcher(this));
+        witnessSecond.addTextChangedListener(new WitnessNameWatcher(this));
+        witnessThird.addTextChangedListener(new WitnessNameWatcher(this));
+
     }
 
     @Override
@@ -1862,5 +1868,57 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
         alertDialog.show();
     }
 
+    private boolean mWasEdited = false;
+    public class WitnessNameWatcher implements TextWatcher {
+
+        private Context mContext;
+
+        public WitnessNameWatcher(Context context){
+
+            this.mContext = context;
+
+        }
+
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) {
+            if (mWasEdited){
+                mWasEdited = false;
+                return;
+            }
+            // get entered value (if required)
+            String enteredValue  = editable.toString();
+            if(enteredValue != null && !enteredValue.trim().equals("")){
+                // just replace entered value with whatever you want
+                // don't get trap into infinite loop
+                mWasEdited = true;
+                // just replace entered value with whatever you want
+                editable.replace(0, editable.length(), firstLetterCaps(enteredValue));
+            }
+        }
+    }
+
+    public String firstLetterCaps (String data )
+    {
+        String firstLetter = "";
+        String restLetters = "";
+/*        if(data.contains(" ")){
+            firstLetter = data.substring(0,data.indexOf(" ")+1).toUpperCase();
+            restLetters = data.substring(2).toLowerCase();
+        }else{*/
+            firstLetter = data.substring(0,1).toUpperCase();
+            restLetters = data.substring(1).toLowerCase();
+        //}
+        return firstLetter + restLetters;
+    }
 
 }
