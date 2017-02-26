@@ -101,6 +101,7 @@
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@+id/witness2"
                     android:hint="@string/test_witness_hint"
+                    android:inputType="textCapWords"
                     android:imeOptions="actionNext"
                     android:nextFocusDown="@+id/witnessthird" />
             </RelativeLayout>
@@ -131,6 +132,7 @@
                     android:layout_toRightOf="@+id/witness3"
                     android:focusable="true"
                     android:hint="@string/test_witness_hint"
+                    android:inputType="textCapWords"
                     android:focusableInTouchMode="true"
                     android:imeOptions="actionDone"></EditText>
             </RelativeLayout>
@@ -169,7 +171,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:background="@android:drawable/spinner_dropdown_background"
-                    android:popupBackground="@android:color/holo_green_dark"
+                    android:popupBackground="@color/yellow_dropdown"
                     android:spinnerMode="dropdown" />
             </RelativeLayout>
 
@@ -185,7 +187,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:background="@android:drawable/spinner_dropdown_background"
-                    android:popupBackground="@android:color/holo_green_dark"
+                    android:popupBackground="@color/yellow_dropdown"
                     android:spinnerMode="dropdown"
                     android:visibility="visible" />
             </RelativeLayout>
@@ -201,7 +203,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
                     android:background="@android:drawable/spinner_dropdown_background"
-                    android:popupBackground="@android:color/holo_green_dark"
+                    android:popupBackground="@color/yellow_dropdown"
                     android:spinnerMode="dropdown" />
             </RelativeLayout>
 
@@ -216,7 +218,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:background="@android:drawable/spinner_dropdown_background"
-                    android:popupBackground="@android:color/holo_green_dark"
+                    android:popupBackground="@color/yellow_dropdown"
                     android:spinnerMode="dropdown"
                     android:visibility="gone" />
             </RelativeLayout>
@@ -232,7 +234,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:background="@android:drawable/spinner_dropdown_background"
-                    android:popupBackground="@android:color/holo_green_dark"
+                    android:popupBackground="@color/yellow_dropdown"
                     android:spinnerMode="dropdown"
                     android:visibility="gone" />
             </RelativeLayout>
@@ -248,7 +250,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:background="@android:drawable/spinner_dropdown_background"
-                    android:popupBackground="@android:color/holo_green_dark"
+                    android:popupBackground="@color/yellow_dropdown"
                     android:spinnerMode="dropdown"
                     android:visibility="gone" />
             </RelativeLayout>
@@ -264,7 +266,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:background="@android:drawable/spinner_dropdown_background"
-                    android:popupBackground="@android:color/holo_green_dark"
+                    android:popupBackground="@color/yellow_dropdown"
                     android:spinnerMode="dropdown"
                     android:visibility="gone" />
             </RelativeLayout>

@@ -1118,9 +1118,9 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
         hideWitness_iv = (ImageView) findViewById(R.id.hide_witness_iv);
         showWitness_iv = (ImageView) findViewById(R.id.show_witness_iv);
 
-        witnessFirst.addTextChangedListener(new WitnessNameWatcher(this));
-        witnessSecond.addTextChangedListener(new WitnessNameWatcher(this));
-        witnessThird.addTextChangedListener(new WitnessNameWatcher(this));
+        //witnessFirst.addTextChangedListener(new WitnessNameWatcher(this));
+        //witnessSecond.addTextChangedListener(new WitnessNameWatcher(this));
+        //witnessThird.addTextChangedListener(new WitnessNameWatcher(this));
 
     }
 
@@ -1906,16 +1906,11 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
 
     public String firstLetterCaps (String data )
     {
-        String firstLetter = "";
-        String restLetters = "";
-/*        if(data.contains(" ")){
-            firstLetter = data.substring(0,data.indexOf(" ")+1).toUpperCase();
-            restLetters = data.substring(2).toLowerCase();
-        }else{*/
+            String firstLetter = "";
+            String restLetters = "";
             firstLetter = data.substring(0,1).toUpperCase();
             restLetters = data.substring(1).toLowerCase();
-        //}
-        return firstLetter + restLetters;
+            return firstLetter + restLetters;
     }
 
 }

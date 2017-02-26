@@ -22,4 +22,6 @@
     <color name="blue">#0000FF</color>
     <color name="gold">#FDD017</color>
     <color name="border_solid">#aaaaaa</color>
+    <color name="yellow_dropdown">#FFEF9C19</color>
+
 </resources>
