@@ -217,18 +217,14 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
             count++;
             Log.v(TAG, " InputData " + m.getKey() + " " + m.getValue());
         }
-        int size=(likageDataMap.size()/3);
-//        int kk=200;
-//        for(int i=0;i<size;i++){
-//            Log.d("avinash","hellodata"+likageDataMap.get(kk));
-//        }
+
         for (int i = 0; i < txtViewList.size(); i++) {
             TextView tvl = txtViewList.get(i);
             Log.d("Saurabh", "Saurabh likageValue : "+likageDataMap.get(tvl.getId()) );
             if(tvl.getId() >= 800){
                 tvl.setText(likageDataMap.get(tvl.getId()) + "");
             }else{
-//                tvl.setText(String.format("%.7f",BigDecimal.valueOf(likageDataMap.get(tvl.getId())).toPlainString()) + "");
+//                tvl.setText(likageDataMap.get(tvl.getId())) + "");
                 tvl.setText(""+BigDecimal.valueOf(likageDataMap.get(tvl.getId())).stripTrailingZeros().toPlainString());
             }
 
@@ -241,7 +237,6 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
         int passFlag = 1;
         for (int i = 0; i < txtPassFailList.size(); i++) {
             TextView tvl = txtPassFailList.get(i);
-//            tvl.setText(PassFailHashMap.get(tvl.getId()) + "");
             if ("PASS".equalsIgnoreCase(tvl.getText().toString().trim())) {
                 tvl.setTextColor(getResources().getColor(R.color.blue));
             } else {
@@ -1127,7 +1122,7 @@ Date d;
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
-                    row.addView(addTextView(" Test Results\n(Passed / Not Passed)"));
+                    row.addView(addTextView(" Test Results\n(Pass/Fail)"));
                 } else {
                     //row.addView(addTextView(" Pass "));
                     row.addView(addTextPassFail(" ", i));
