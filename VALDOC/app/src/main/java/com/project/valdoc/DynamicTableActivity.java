@@ -154,6 +154,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
     private String witnessFirst;
     private String witnessSecond;
     private String witnessThird;
+    private double mTolarence;
     private int applicableTestEquipmentLocation;
     //    private int applicableTestRoomLocation;
     private TextView roomName;
@@ -275,6 +276,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                         ahu = (Ahu) extras.getSerializable("Ahu");
                         mAhuFilterArrayList = (ArrayList<AhuFilter>) extras.getSerializable("AhuFilter");
                         mApplicableTestAhu = (ApplicableTestAhu) extras.getSerializable("ApplicableTestAhu");
+
                     }
                 }
 
@@ -286,6 +288,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                         ahuNumber = extras.getString("AhuNumber");
                         mAhuFilterArrayList = (ArrayList<AhuFilter>) extras.getSerializable("AhuFilter");
                         mApplicableTestAhu = (ApplicableTestAhu) extras.getSerializable("ApplicableTestAhu");
+                        mTolarence=extras.getDouble("TOLARENCE");
 
                     } else if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
                         mGrilFilterType = extras.getString("GrilFilterType");
@@ -329,6 +332,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                         Log.d("Dynamictest", "roomDetails=" + roomDetails[1]);
                         mAhuFilterArrayList = (ArrayList<AhuFilter>) extras.getSerializable("AhuFilter");
                         mApplicableTestAhu = (ApplicableTestAhu) extras.getSerializable("ApplicableTestAhu");
+                        mTolarence=extras.getDouble("TOLARENCE");
                     } else if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
                         room = (Room) extras.getSerializable("Room");
                         ahuNumber = extras.getString("AhuNumber");
@@ -965,6 +969,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                         intent.putExtra("ApplicableTestAhu", mApplicableTestAhu);
                         intent.putExtra("rows", mAhuFilterArrayList.size() + 1);
                         intent.putExtra("cols", mApplicableTestAhu.getLocation());
+                        intent.putExtra("TOLARENCE", mTolarence);
                     } else if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
                         //get room name,roomNo,and area id
                         intent.putExtra("Room", room);
@@ -1088,6 +1093,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                         intent.putExtra("ApplicableTestAhu", mApplicableTestAhu);
                         intent.putExtra("rows", mAhuFilterArrayList.size() + 1);
                         intent.putExtra("cols", mApplicableTestAhu.getLocation());
+                        intent.putExtra("TOLARENCE", mTolarence);
                     } else if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
                         intent.putExtra("Room", room);
                         intent.putExtra("AhuNumber", ahuNumber);
@@ -2619,8 +2625,8 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                             }
                             // Pass Fail Calculation
                             TextView txtPassFail = txtPassFailList.get(i);
-                            Log.d(TAG, "slpDlpValue=" + slpDlpValue);
-                            if (Math.abs(slpDlpValue) <= 15) {
+                            Log.d(TAG, "slpDlpValue=" + slpDlpValue+" mTolarence="+mTolarence);
+                            if (Math.abs(slpDlpValue) <= mTolarence) {
                                 txtConcentrationVariationList.get(i).setTextColor(getResources().getColor(R.color.black));
                                 txtPassFail.setTextColor(getResources().getColor(R.color.blue));
                                 txtPassFail.setText(" PASS ");
@@ -2630,7 +2636,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                                     mFitPassFailFlagList.set(i, true);
                                 }
                                 passFailHashMap.put(txtPassFail.getId(), " PASS ");
-                            } else if (Math.abs(slpDlpValue) > 15) {
+                            } else if (Math.abs(slpDlpValue) > mTolarence) {
                                 if (null != mFitPassFailFlagList && i >= mFitPassFailFlagList.size()) {
                                     mFitPassFailFlagList.add(i, false);
                                 } else {

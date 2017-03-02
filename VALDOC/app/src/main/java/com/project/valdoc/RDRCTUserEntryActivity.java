@@ -549,14 +549,15 @@ public class RDRCTUserEntryActivity extends AppCompatActivity {
         //v1,v2....value cration
         StringBuilder sb = new StringBuilder();
         int k = 202;
-        for (int j = 2; j < mInputValue.size(); j++) {
+        int size=mInputValue.size();
+        for (int j = 2; j < size; j++) {
             if (j != 2)
                 sb.append(',');
             sb.append(mInputValue.get(k).toString());
             k++;
 
         }
-        sb.append("," + mFinalReading.trim());
+//        sb.append("," + mFinalReading.trim());
         testReading.setValue("" + sb);
         testReadingArrayList.add(testReading);
         return testReadingArrayList;

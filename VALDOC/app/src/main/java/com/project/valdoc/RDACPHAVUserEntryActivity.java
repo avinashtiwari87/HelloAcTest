@@ -117,6 +117,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
     ArrayList<TextView> txtViewList;
     private double totalAirFlowRate = 0d;
     private double airChangeValue;
+    private double mTolarence;
     HashMap<Integer, Long> airFlowRateMap;
     HashMap<Integer, Float> totalAirFlowRateMap;
     private ImageView submit;
@@ -240,13 +241,13 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
                 }
                 mtvl.setText(Math.round(mTotalAirFlowRateValue) + "");
                 if (mTestBasedOn.equalsIgnoreCase("AHU")) {
-                    if (colorPicker(Double.parseDouble(mApplicableTestAhu.getTestSpecification()), mTotalAirFlowRateValue)) {
+                    if (colorPicker(Double.parseDouble(mApplicableTestAhu.getTestSpecification()), mTotalAirFlowRateValue, mTestBasedOn)) {
                         mtvl.setTextColor(Color.RED);
                     } else {
                         mtvl.setTextColor(Color.BLACK);
                     }
                 } else if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
-                    if (colorPicker(Double.parseDouble(mApplicableTestRoom.getTestSpecification()), mTotalAirFlowRateValue)) {
+                    if (colorPicker(Double.parseDouble(mApplicableTestRoom.getTestSpecification()), mTotalAirFlowRateValue, mTestBasedOn)) {
                         mtvl.setTextColor(Color.RED);
                     } else {
                         mtvl.setTextColor(Color.BLACK);
@@ -260,13 +261,13 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
                     Log.v(TAG, " totalAirFlowRateMap: " + tvl.getId());
                     tvl.setText(Math.round(totalAirFlowRateMap.get(tvl.getId())) + "");
                     if (mTestBasedOn.equalsIgnoreCase("AHU")) {
-                        if (colorPicker(Double.parseDouble(mApplicableTestAhu.getTestSpecification()), (double) totalAirFlowRateMap.get(tvl.getId()))) {
+                        if (colorPicker(Double.parseDouble(mApplicableTestAhu.getTestSpecification()), (double) totalAirFlowRateMap.get(tvl.getId()), mTestBasedOn)) {
                             tvl.setTextColor(Color.RED);
                         } else {
                             tvl.setTextColor(Color.BLACK);
                         }
                     } else if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
-                        if (colorPicker(Double.parseDouble(mApplicableTestRoom.getTestSpecification()), (double) totalAirFlowRateMap.get(tvl.getId()))) {
+                        if (colorPicker(Double.parseDouble(mApplicableTestRoom.getTestSpecification()), (double) totalAirFlowRateMap.get(tvl.getId()), mTestBasedOn)) {
                             tvl.setTextColor(Color.RED);
                         } else {
                             tvl.setTextColor(Color.BLACK);
@@ -276,13 +277,13 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
             }
             TFRtv.setText(Math.round(totalAirFlowRate) + "");
             if (mTestBasedOn.equalsIgnoreCase("AHU")) {
-                if (colorPicker(Double.parseDouble(mApplicableTestAhu.getTestSpecification()), totalAirFlowRate)) {
+                if (colorPicker(Double.parseDouble(mApplicableTestAhu.getTestSpecification()), totalAirFlowRate, mTestBasedOn)) {
                     TFRtv.setTextColor(Color.RED);
                 } else {
                     TFRtv.setTextColor(Color.BLACK);
                 }
             } else if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
-                if (colorPicker(Double.parseDouble(mApplicableTestRoom.getTestSpecification()), totalAirFlowRate)) {
+                if (colorPicker(Double.parseDouble(mApplicableTestRoom.getTestSpecification()), totalAirFlowRate, mTestBasedOn)) {
                     TFRtv.setTextColor(Color.RED);
                 } else {
                     TFRtv.setTextColor(Color.BLACK);
@@ -327,15 +328,19 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
                 Utilityies.setCustomActionBar(RDACPHAVUserEntryActivity.this, mActionBar, userName);
         }
     }
-    private boolean colorPicker(double testSpesification, double totalairflowrate) {
-        testSpesification += (testSpesification / 4);
+
+    private boolean colorPicker(double testSpesification, double totalairflowrate, String testBasedOn) {
+        if (testBasedOn.equalsIgnoreCase("AHU")) {
+            testSpesification += (testSpesification * mTolarence) / 100;
+        } else {
+            testSpesification += (testSpesification / 4);
+        }
         if (totalairflowrate > testSpesification) {
             return true;
         } else {
             return false;
         }
     }
-
 
 
     private void datePicker() {
@@ -582,6 +587,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
         int avindex = 300;
         int hasMapKey = 200;
         if (mTestBasedOn.equalsIgnoreCase("AHU")) {
+            int airflowrateIndex = 0;
             for (AhuFilter ahuFilter : mAhuFilterArrayList) {
                 TestReading testReading = new TestReading();
 //            testReading.setTestReadingID(index);
@@ -602,7 +608,11 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
                         }
                     }
                 }
-                grilList.append("" + ahuFilter.getEffectiveArea()).append(',').append(sb).append(",").append(airFlowRateMap.get(index + 1)).append(",").append(AxAv);
+//                AxAv
+                grilList.append("" + ahuFilter.getEffectiveArea()).append(',').append(sb).append(",").append(airFlowRateMap.get(index + 1)).append(",")
+                        .append(arrayList_totalAirFlowRate.get(airflowrateIndex));
+//                    Log.d("ACPH_AV","arrayList_totalAirFlowRate="+arrayList_totalAirFlowRate.size()+"val="+arrayList_totalAirFlowRate.get(airflowrateIndex));
+                airflowrateIndex++;
                 index++;
                 avindex++;
                 testReading.setValue(grilList.toString());
@@ -611,6 +621,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
         } else if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
             if (mGrilFilterType.equalsIgnoreCase("Grill")) {
                 for (Grill grill : grillAndSizeFromGrill) {
+                    int airflowrateIndex = 0;
                     TestReading testReading = new TestReading();
 //        TO DO test details id is id of test details table
                     testReading.setTest_detail_id(testDetailsId);
@@ -630,7 +641,8 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
                         }
                     }
 
-                    grilList.append("" + grill.getEffectiveArea()).append(',').append(sb).append(",").append(airFlowRateMap.get(index + 1)).append(",").append(AxAv);
+                    grilList.append("" + grill.getEffectiveArea()).append(',').append(sb).append(",").append(airFlowRateMap.get(index + 1)).append(",").append(arrayList_totalAirFlowRate.get(airflowrateIndex));
+                    airflowrateIndex++;
                     index++;
                     avindex++;
                     testReading.setValue(grilList.toString());
@@ -640,6 +652,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
 
             } else {
                 for (RoomFilter roomFilter : mRoomFilterArrayList) {
+                    int airflowrateIndex = 0;
                     TestReading testReading = new TestReading();
 //        TO DO test details id is id of test details table
                     testReading.setTest_detail_id(testDetailsId);
@@ -659,7 +672,8 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
                         }
                     }
 
-                    grilList.append("" + roomFilter.getEffectiveFilterArea()).append(',').append(sb).append(",").append(airFlowRateMap.get(index + 1)).append(",").append(AxAv);
+                    grilList.append("" + roomFilter.getEffectiveFilterArea()).append(',').append(sb).append(",").append(airFlowRateMap.get(index + 1)).append(",").append(arrayList_totalAirFlowRate.get(airflowrateIndex));
+                    airflowrateIndex++;
                     index++;
                     avindex++;
                     testReading.setValue(grilList.toString());
@@ -830,6 +844,8 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
                     ahuNumber = extras.getString("AhuNumber");
                     mAhuFilterArrayList = (ArrayList<AhuFilter>) extras.getSerializable("AhuFilter");
                     mApplicableTestAhu = (ApplicableTestAhu) extras.getSerializable("ApplicableTestAhu");
+                    mTolarence = extras.getDouble("TOLARENCE");
+//                    intent.putExtra("TOLARENCE", mTolarence);
 
                 } else if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
                     room = (Room) extras.getSerializable("Room");

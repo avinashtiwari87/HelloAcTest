@@ -136,6 +136,7 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
     private static String spinerTestType;
     private static int spinerEquipment;
     private String mPartnerName;
+    private String mTodaysDate;
     private int year;
     private int month;
     private int day;
@@ -528,6 +529,7 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
             intent.putExtra("AhuFilter", mAhuFilterArrayList);
 //            ApplicableTestAhu applicableTestAhu = createApplicableTestAhuList(ahu.getAhuId(), ACPHAV);
             intent.putExtra("ApplicableTestAhu", mApplicableTestAhu);
+            intent.putExtra("TOLARENCE", getTolarance(ahu,roomSpinner.getSelectedItem().toString()));
         } else if (testBasedOn.equalsIgnoreCase("ROOM")) {
             ArrayList<RoomFilter> roomFilterList = null;
             ArrayList<Grill> grillAndSizeFromGrill = null;
@@ -557,6 +559,18 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
             }
         }
         startActivity(intent);
+    }
+
+    private double getTolarance(Ahu ahu, String testItem) {
+        double tolarence=0.0;
+        if(testItem.equalsIgnoreCase("Fresh Air Filter")){
+            tolarence=ahu.getFreshAirflowTolerance();
+        }else if(testItem.equalsIgnoreCase("Bleed Filter")){
+            tolarence=ahu.getBleedAirflowTolerance();
+        }else if(testItem.equalsIgnoreCase("Final Filter")){
+            tolarence=ahu.getFinalAirflowTolerance();
+        }
+        return tolarence;
     }
 
     private String getAhuArea(String area) {
@@ -698,7 +712,7 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
             intent.putExtra("AhuFilter", mAhuFilterArrayList);
 //            ApplicableTestAhu applicableTestAhu = createApplicableTestAhuList(ahu.getAhuId(), testType);
             intent.putExtra("ApplicableTestAhu", mApplicableTestAhu);
-
+            intent.putExtra("TOLARENCE", getTolarance(ahu,roomSpinner.getSelectedItem().toString()));
         } else if (testBasedOn.equalsIgnoreCase("ROOM")) {
             //get room name,roomNo,and area id
             Log.d(TAG, "TestCreateActivity :roomNoSpinner:=" + roomNoSpinner.getSelectedItemPosition());
@@ -1051,7 +1065,7 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
             year = selectedYear;
             month = selectedMonth;
             day = selectedDay;
-
+            mTodaysDate=year+"-"+(month+1)+"-"+day;
             // Show selected date
             String date = new StringBuilder().append(day).append("-").append(month + 1).append("-").append(year).append(" ").toString();
             test_date.setText(date);
@@ -1073,7 +1087,7 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
         //raw data no
         SimpleDateFormat df = new SimpleDateFormat("HH:mm:ss");
         String formattedDate = df.format(c.getTime());
-
+        mTodaysDate=year+"-"+(month+1)+"-"+day;
         // Show current date
         String date = new StringBuilder().append(day).append("-").append(month + 1).append("-").append(year).append(" ").toString();
         test_date.setText(date);
@@ -1149,8 +1163,7 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
         instrumentList.add("Select Instrument");
         Log.d(TAG, "TestCreateActivity : client usertype" + userType + " testCode=" + testCode);
         if (null != userType && userType.equalsIgnoreCase("CLIENT")) {
-            clientInstrumentArrayList = mValdocDatabaseHandler.getClientInstrumentInfo(testCode);
-
+            clientInstrumentArrayList = mValdocDatabaseHandler.getClientInstrumentInfo(testCode,mTodaysDate);
             for (ClientInstrument clientInstrument : clientInstrumentArrayList) {
                 instrumentList.add(clientInstrument.getSerialNo());
                 Log.d(TAG, "TestCreateActivity : client instrument list" + clientInstrument.getcInstrumentName());
@@ -1161,7 +1174,7 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
             Log.d(TAG, "TestCreateActivity :vendor" + userPartnerId);
 //            loginUserPartnerId = mValdocDatabaseHandler.getPartnerIdFromPartnerUser(appUserId);
 //            Log.d("valdoc", "TestCreateActivity :vendor loginUserPartnerId=" + loginUserPartnerId);
-            partnerInstrumentArrayList = mValdocDatabaseHandler.getPartnerInstrumentInfo(userPartnerId, testCode);
+            partnerInstrumentArrayList = mValdocDatabaseHandler.getPartnerInstrumentInfo(userPartnerId, testCode,mTodaysDate);
             Log.d(TAG, "TestCreateActivity :vendor partnerInstrumentArrayList" + partnerInstrumentArrayList.size());
             for (PartnerInstrument partnerInstrument : partnerInstrumentArrayList) {
                 instrumentList.add(partnerInstrument.getSerialNo());

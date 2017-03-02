@@ -302,7 +302,6 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
                 //.subSequence(28, (len - 1));
     }
 
-
     private void datePicker() {
         // Get current date by calender
         final Calendar c = Calendar.getInstance();

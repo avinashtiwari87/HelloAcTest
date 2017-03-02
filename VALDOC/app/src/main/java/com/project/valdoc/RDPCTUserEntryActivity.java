@@ -653,6 +653,25 @@ public class RDPCTUserEntryActivity extends AppCompatActivity {
         testSpesificationValue9.setFieldValue("" + maximumValue2_tv.getText().toString());
         spesificationValueArrayList.add(testSpesificationValue9);
 
+        //class value
+        TestSpesificationValue testSpesificationValue10 = new TestSpesificationValue();
+        testSpesificationValue7.setTest_detail_id("" + testDetailsId);
+        testSpesificationValue7.setFieldName("Class");
+        testSpesificationValue7.setFieldValue("" + iso_class.getText().toString());
+        spesificationValueArrayList.add(testSpesificationValue10);
+
+        TestSpesificationValue testSpesificationValue11 = new TestSpesificationValue();
+        testSpesificationValue8.setTest_detail_id("" + testDetailsId);
+        testSpesificationValue8.setFieldName("SmallParticle");
+        testSpesificationValue8.setFieldValue("" + small_particle.getText().toString());
+        spesificationValueArrayList.add(testSpesificationValue11);
+
+        TestSpesificationValue testSpesificationValue12 = new TestSpesificationValue();
+        testSpesificationValue9.setTest_detail_id("" + testDetailsId);
+        testSpesificationValue9.setFieldName("LargeParticle");
+        testSpesificationValue9.setFieldValue("" + large_particle.getText().toString());
+        spesificationValueArrayList.add(testSpesificationValue12);
+
         return spesificationValueArrayList;
     }
 

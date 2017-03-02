@@ -35,6 +35,9 @@ public class Ahu implements Serializable{
     private double freshParticleSize;
     private double bleedParticleSize;
     private double finalParticleSize;
+    private double freshAirflowTolerance;
+    private double bleedAirflowTolerance;
+    private double finalAirflowTolerance;
 
     public String getAhu() {
         return ahu;
@@ -250,5 +253,29 @@ public class Ahu implements Serializable{
 
     public void setFinalParticleSize(double finalParticleSize) {
         this.finalParticleSize = finalParticleSize;
+    }
+
+    public double getFreshAirflowTolerance() {
+        return freshAirflowTolerance;
+    }
+
+    public void setFreshAirflowTolerance(double freshAirflowTolerance) {
+        this.freshAirflowTolerance = freshAirflowTolerance;
+    }
+
+    public double getBleedAirflowTolerance() {
+        return bleedAirflowTolerance;
+    }
+
+    public void setBleedAirflowTolerance(double bleedAirflowTolerance) {
+        this.bleedAirflowTolerance = bleedAirflowTolerance;
+    }
+
+    public double getFinalAirflowTolerance() {
+        return finalAirflowTolerance;
+    }
+
+    public void setFinalAirflowTolerance(double finalAirflowTolerance) {
+        this.finalAirflowTolerance = finalAirflowTolerance;
     }
 }

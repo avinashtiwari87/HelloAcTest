@@ -829,6 +829,9 @@ public class ValdocControler {
                 ahu.setFreshParticleSize(jsonObject.optDouble("freshParticleSize"));
                 ahu.setBleedParticleSize(jsonObject.optDouble("bleedParticleSize"));
                 ahu.setFinalParticleSize(jsonObject.optDouble("finalParticleSize"));
+                ahu.setFreshAirflowTolerance(jsonObject.optDouble("freshAirflowTolerance"));
+                ahu.setBleedAirflowTolerance(jsonObject.optDouble("bleedAirflowTolerance"));
+                ahu.setFinalAirflowTolerance(jsonObject.optDouble("finalAirflowTolerance"));
                 arrayList.add(ahu);
                 Log.d("valdoc", "parse ahu");
             } catch (Exception e) {
