@@ -76,7 +76,6 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
 
     //    private int applicableTestRoomLocation;
     private String areaName;
-    private TextView infarance;
     private String witnessFirst;
     private String witnessSecond;
     private String witnessThird;
@@ -301,23 +300,17 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
                         value = 0;
                     }
                     if (airChangeValue > value) {
-                        infarance.setText("The above Airflow Volume Test and Derived No.of Air chanages per hour meets the specificed requirement");
                         TFTByRvTv.setTextColor(ContextCompat.getColor(this, R.color.blue));
                     } else {
-                        infarance.setText("The above Airflow Volume Test and Derived No.of Air chanages per hour do not meets the specificed requirement");
                         TFTByRvTv.setTextColor(ContextCompat.getColor(this, R.color.red));
                     }
                 } else if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
                     if (airChangeValue > room.getAcph()) {
-                        infarance.setText("The above Airflow Volume Test and Derived No.of Air chanages per hour meets the specificed requirement");
                         TFTByRvTv.setTextColor(ContextCompat.getColor(this, R.color.blue));
                     } else {
-                        infarance.setText("The above Airflow Volume Test and Derived No.of Air chanages per hour do not meets the specificed requirement");
                         TFTByRvTv.setTextColor(ContextCompat.getColor(this, R.color.red));
                     }
                 }
-
-//            infarance.setText("Obtained Test Result");
                 airChangeTxt.setText("" + airChangeValue);
                 TFTByRvTv.setText("" + airChangeValue);
             }
@@ -477,7 +470,6 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
         equiment_no.setVisibility(View.INVISIBLE);
         roomName = (TextView) findViewById(R.id.room_name);
         roomNo = (TextView) findViewById(R.id.room_no);
-        infarance = (TextView) findViewById(R.id.infarance);
         testCundoctor = (TextView) findViewById(R.id.testcunducter);
         testWitness = (TextView) findViewById(R.id.testwitness);
         testCondoctorOrg = (TextView) findViewById(R.id.test_condoctor_org);
@@ -1208,7 +1200,6 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
         TFRtv = (TextView) findViewById(R.id.acph_av_tfr_value_tv);
         TFTByRvTv = (TextView) findViewById(R.id.acph_av_tfrby_av_value_tv);
 
-        findViewById(R.id.test_interference).setVisibility(View.GONE);
         findViewById(R.id.test2_reading_header).setVisibility(View.VISIBLE);
         TextView TestHeader = (TextView) findViewById(R.id.common_header_tv);
         TextView TestHeader2 = (TextView) findViewById(R.id.common_header_2_tv);

@@ -105,7 +105,6 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
     private TextView filterTypeEficiancyText;
     private TextView filtertypeEficiancy;
     private TextView ahuNoText;
-    private TextView infarance;
     private TextView testCundoctor;
     private TextView testWitness;
     private TextView dateTextView;
@@ -245,13 +244,6 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
             }
         }
 
-        if (passFlag == 0) {
-            infarance.setText("The HEPA Filter System do not Qualifies for the above leak test.");
-        } else if (passFlag == 1) {
-            infarance.setText("The HEPA Filter System Qualifies for the above leak test.");
-        } else {
-            infarance.setText("");
-        }
         // Getting ConcentrationVariation Data
         concentrationVariationListData = (ArrayList<Double>)getIntent().getSerializableExtra("InputDataVariation");
         for (int vr = 0; vr <concentrationVariationListData.size() ; vr++) {
@@ -548,7 +540,6 @@ Date d;
         filtertypeEficiancy=(TextView) findViewById(R.id.test_item_value);
         filtertypeEficiancy.setVisibility(View.VISIBLE);
 
-        infarance = (TextView) findViewById(R.id.infarance);
         testCundoctor = (TextView) findViewById(R.id.testcunducter);
         testWitness = (TextView) findViewById(R.id.testwitness);
         testCondoctorOrg = (TextView) findViewById(R.id.test_condoctor_org);
@@ -1289,7 +1280,6 @@ Date d;
         test4_table_layout8 = (TableLayout) findViewById(R.id.test4_tableLayout8);
         findViewById(R.id.test_table_4_header_l_ll).setVisibility(View.GONE);
         findViewById(R.id.test_table_4_header_2_ll).setVisibility(View.VISIBLE);
-        findViewById(R.id.test_interference).setVisibility(View.GONE);
         Log.d("Saurabh", " testbased on "+getIntent().getStringExtra("testBasedOn"));
         if(getIntent().hasExtra("testBasedOn") && "ROOM".equalsIgnoreCase(getIntent().getStringExtra("testBasedOn"))){
             findViewById(R.id.room_volume_table).setVisibility(View.VISIBLE);
