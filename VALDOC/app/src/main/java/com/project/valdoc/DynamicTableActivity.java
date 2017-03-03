@@ -44,6 +44,7 @@ import com.project.valdoc.utility.Utilityies;
 
 import org.json.JSONObject;
 
+import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -126,6 +127,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
     ArrayList<TextView> RDPC3TxtList, RDPC3TxtList2;
 
     HashMap<Integer, Double> rdFitInputDataHashMap;
+    HashMap<Integer, BigDecimal> showFitInputDataHashMap;
     ArrayList<Double> concentrationVariationListData;
     HashMap<Integer, Integer> inputDataHashMap;
     HashMap<Integer, String> passFailHashMap;
@@ -134,6 +136,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
     HashMap<Integer, Integer> rowTagHashMap;
     int inputValue = 0, AirChangeValue = 0;
     double fitInputValue = 0.0;
+    BigDecimal show_FitInputValue;
     float totalAirFlowRate = 0f;
     private boolean isClearClicked = false;
 
@@ -207,6 +210,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         RDPC3TxtList2 = new ArrayList<TextView>();
 
         rdFitInputDataHashMap = new HashMap<Integer, Double>();
+        showFitInputDataHashMap = new HashMap<Integer, BigDecimal>();
         concentrationVariationListData = new ArrayList<Double>();
         inputDataHashMap = new HashMap<Integer, Integer>();
         resultDataHashMap = new HashMap<Integer, Long>();
@@ -1107,6 +1111,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                     intent.putExtra("PassFailData", passFailHashMap);
                     //sending Input Data
                     intent.putExtra("InputData", rdFitInputDataHashMap);
+                    intent.putExtra("ShowInputData", showFitInputDataHashMap);
                     //sending ConcentrationVariation data
                     intent.putExtra("InputDataVariation", concentrationVariationListData);
                     //TO Do testspesification will be shown from room filter spesification
@@ -1282,7 +1287,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         }
         if (validate.contains(true)) {
             return true;
-        } else if (!passfail()) {
+        } else if (passfail()) {
             Log.d("flag", "flag=1");
             return true;
         } else {
@@ -2401,8 +2406,10 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 DynamicTableActivity.this, idCountFitStrm)));
         try {
             fitInputValue = Double.parseDouble(avgUpStrm);
+            showFitInputDataHashMap.put(idCountFitStrm, new BigDecimal(avgUpStrm));
         } catch (NumberFormatException e) {
             fitInputValue = 100;
+            showFitInputDataHashMap.put(idCountFitStrm, new BigDecimal("100"));
             e.printStackTrace();
         }
         rdFitInputDataHashMap.put(idCountFitStrm, fitInputValue);
@@ -2455,6 +2462,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             try {
                 if (!"".equals(charSequence.toString()))
                     if (TestCreateActivity.FIT.equals(testType)) {
+                        show_FitInputValue = new BigDecimal(charSequence.toString());
                         fitInputValue = fitInputValue - Double.parseDouble(charSequence.toString());
                     } else {
                         inputValue = inputValue - Integer.parseInt(charSequence.toString());
@@ -2475,6 +2483,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             try {
                 if (!"".equals(editable.toString()))
                     if (TestCreateActivity.FIT.equals(testType)) {
+                        show_FitInputValue = new BigDecimal(editable.toString());
                         fitInputValue = Double.parseDouble(editable.toString());
                     } else {
                         inputValue = Integer.parseInt(editable.toString());
@@ -2490,6 +2499,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                     rowTagHashMap.put(editTextList.get(i).getId(), (int) editTextList.get(i).getTag());
                     if (TestCreateActivity.FIT.equals(testType)) {
                         rdFitInputDataHashMap.put(editTextList.get(i).getId(), fitInputValue);
+                        showFitInputDataHashMap.put(editTextList.get(i).getId(), show_FitInputValue);
                     } else {
                         inputDataHashMap.put(editTextList.get(i).getId(), inputValue);
                     }

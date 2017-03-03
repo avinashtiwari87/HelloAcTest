@@ -133,6 +133,7 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
     private ImageView cancel;
     private String mPartnerName;
     HashMap<Integer, Double> likageDataMap;
+    HashMap<Integer, BigDecimal> showFitInputDataHashMap;
     HashMap<Integer, Long> PassFailHashMap;
     ArrayList<Double>concentrationVariationListData;
     ArrayList<TextView> resultTextViewList;
@@ -217,14 +218,15 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
             Log.v(TAG, " InputData " + m.getKey() + " " + m.getValue());
         }
 
+        showFitInputDataHashMap = (HashMap<Integer, BigDecimal>) getIntent().getSerializableExtra("ShowInputData");
         for (int i = 0; i < txtViewList.size(); i++) {
             TextView tvl = txtViewList.get(i);
-            Log.d("Saurabh", "Saurabh likageValue : "+likageDataMap.get(tvl.getId()) );
+            Log.d("Saurabh", "Saurabh likageValue : "+showFitInputDataHashMap.get(tvl.getId()) );
             if(tvl.getId() >= 800){
-                tvl.setText(likageDataMap.get(tvl.getId()) + "");
+                tvl.setText(showFitInputDataHashMap.get(tvl.getId()) + "");
             }else{
 //                tvl.setText(likageDataMap.get(tvl.getId())) + "");
-                tvl.setText(""+BigDecimal.valueOf(likageDataMap.get(tvl.getId())).stripTrailingZeros().toPlainString());
+                tvl.setText(""+showFitInputDataHashMap.get(tvl.getId()));
             }
 
         }
