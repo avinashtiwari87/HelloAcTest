@@ -161,8 +161,13 @@ public class RDFITPostViewActivity extends AppCompatActivity {
                 if (i == 1 && j == 1) {
                     row.addView(addTextView(" Average \nbefore Scanning "));
                 } else {
-                    spiltValue = testReadingArrayList.get(i-2).getValue().split(",");
-                    row.addView(addTextView(""+spiltValue[1]));
+                    if("ROOM".equalsIgnoreCase(mTestBasedOn)){
+                        spiltValue = testReadingArrayList.get(i-2).getValue().split(",");
+                        row.addView(addTextView(""+spiltValue[2]));
+                    }else{
+                        spiltValue = testReadingArrayList.get(i-2).getValue().split(",");
+                        row.addView(addTextView(""+spiltValue[1]));
+                    }
                 }
 
             }
@@ -180,8 +185,13 @@ public class RDFITPostViewActivity extends AppCompatActivity {
                 if (i == 1 && j == 1) {
                     row.addView(addTextView(" Average \nAfter Scanning"));
                 } else {
-                    spiltValue = testReadingArrayList.get(i-2).getValue().split(",");
-                    row.addView(addTextView(""+spiltValue[2]));;
+                    if("ROOM".equalsIgnoreCase(mTestBasedOn)){
+                        spiltValue = testReadingArrayList.get(i - 2).getValue().split(",");
+                        row.addView(addTextView("" + spiltValue[3]));
+                    }else {
+                        spiltValue = testReadingArrayList.get(i - 2).getValue().split(",");
+                        row.addView(addTextView("" + spiltValue[2]));
+                    }
                 }
 
             }
@@ -198,8 +208,13 @@ public class RDFITPostViewActivity extends AppCompatActivity {
                 if (i == 1 && j == 1) {
                     row.addView(addTextView(" Variation \nin Concentration*"));
                 } else {
-                    spiltValue = testReadingArrayList.get(i-2).getValue().split(",");
-                    row.addView(addTextView(spiltValue[3]+ "%"));
+                    if("ROOM".equalsIgnoreCase(mTestBasedOn)){
+                        spiltValue = testReadingArrayList.get(i-2).getValue().split(",");
+                        row.addView(addTextView(spiltValue[4]+ "%"));
+                    }else{
+                        spiltValue = testReadingArrayList.get(i-2).getValue().split(",");
+                        row.addView(addTextView(spiltValue[3]+ "%"));
+                    }
                 }
 
             }

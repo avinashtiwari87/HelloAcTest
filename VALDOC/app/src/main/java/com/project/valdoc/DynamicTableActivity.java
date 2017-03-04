@@ -1299,12 +1299,16 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
 
     private boolean passfail() {
         boolean flag = true;
-        for (int i = 0; i < mFitPassFailFlagList.size(); i++) {
-            Log.d("flag", "flag=" + i + mFitPassFailFlagList.get(i).toString() + " size=" + mFitPassFailFlagList.size());
-            if (mFitPassFailFlagList.get(i).equals(false)) {
-                flag = false;
-                break;
+        if(mFitPassFailFlagList.size()>0){
+            for (int i = 0; i < mFitPassFailFlagList.size(); i++) {
+                Log.d("flag", "flag= " + i + mFitPassFailFlagList.get(i).toString() + " size=" + mFitPassFailFlagList.size());
+                if (mFitPassFailFlagList.get(i).equals(false)) {
+                    flag = false;
+                    break;
+                }
             }
+        }else{
+            flag = false;
         }
         Log.d("flag", "flag=" + flag);
         return flag;

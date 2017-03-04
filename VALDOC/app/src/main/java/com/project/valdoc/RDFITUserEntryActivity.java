@@ -607,11 +607,12 @@ Date d;
 //            testReading.setTestReadingID(index);
                 testReading.setTest_detail_id(testDetailsId);
                 testReading.setEntityName(equipmentFilter.getFilterCode());
-                String likage=BigDecimal.valueOf(likageDataMap.get(hasMapKey)).toPlainString();
+                //String likage=BigDecimal.valueOf(likageDataMap.get(hasMapKey)).toPlainString();
+                String likage=showFitInputDataHashMap.get(hasMapKey).toPlainString();
                 Log.d("likage","likage="+likage);
                 StringBuilder grilList = new StringBuilder();
-                grilList.append(equipmentFilter.getFilterCode()).append(",").append(likageDataMap.get(hasStreamBefore)).append(",")
-                        .append(likageDataMap.get(hashstreamAfter)).append(",").append(""+concentrationVariationListData.get(index).toString()).append(",")
+                grilList.append(equipmentFilter.getFilterCode()).append(",").append(showFitInputDataHashMap.get(hasStreamBefore)).append(",")
+                        .append(showFitInputDataHashMap.get(hashstreamAfter)).append(",").append(""+concentrationVariationListData.get(index).toString()).append(",")
                         .append(likage).append(",").append(txtPassFailList.get(index).getText().toString());
 //                grilList.append(equipmentFilter.getFilterType()).append(',').append(equipmentFilter.getEfficiency()).append(",").append(likageDataMap.get(hasStreamBefore)).append(",")
 //                        .append(likageDataMap.get(hashstreamAfter)).append(",")//.append(equipmentFilter.getSpecification()).append(",")
@@ -630,11 +631,12 @@ Date d;
 //            testReading.setTestReadingID(index);
                 testReading.setTest_detail_id(testDetailsId);
                 testReading.setEntityName(ahuFilter.getFilterCode());
-                String likage=BigDecimal.valueOf(likageDataMap.get(hasMapKey)).toPlainString();
+                //String likage=BigDecimal.valueOf(likageDataMap.get(hasMapKey)).toPlainString();
+                String likage=showFitInputDataHashMap.get(hasMapKey).toPlainString();
                 Log.d("likage","likage="+likage);
                 StringBuilder grilList = new StringBuilder();
-                grilList.append(ahuFilter.getFilterCode()).append(',').append(likageDataMap.get(hasStreamBefore)).append(",")
-                        .append(likageDataMap.get(hashstreamAfter)).append(",").append(""+concentrationVariationListData.get(index).toString()).append(",")
+                grilList.append(ahuFilter.getFilterCode()).append(',').append(showFitInputDataHashMap.get(hasStreamBefore)).append(",")
+                        .append(showFitInputDataHashMap.get(hashstreamAfter)).append(",").append(""+concentrationVariationListData.get(index).toString()).append(",")
                         .append(likage).append(",").append(txtPassFailList.get(index).getText().toString());
                 hasStreamBefore++;
                 hashstreamAfter++;
@@ -650,11 +652,15 @@ Date d;
 //            testReading.setTestReadingID(index);
                 testReading.setTest_detail_id(testDetailsId);
                 testReading.setEntityName(roomFilter.getFilterCode());
-                String likage=BigDecimal.valueOf(likageDataMap.get(hasMapKey)).toPlainString();
+                //String likage=BigDecimal.valueOf(likageDataMap.get(hasMapKey)).toPlainString();
+                String likage=showFitInputDataHashMap.get(hasMapKey).toPlainString();
                 Log.d("likage","likage="+likage);
                 StringBuilder grilList = new StringBuilder();
-                grilList.append(roomFilter.getFilterType()).append(',').append(",").append(likageDataMap.get(hasStreamBefore)).append(",")
-                        .append(likageDataMap.get(hashstreamAfter)).append(",").append(""+concentrationVariationListData.get(index).toString()).append(",")
+                Log.d("Saurabh", " getFilterType "+roomFilter.getFilterType());
+                Log.d("Saurabh", " Before "+showFitInputDataHashMap.get(hasStreamBefore));
+                Log.d("Saurabh", " After "+showFitInputDataHashMap.get(hashstreamAfter));
+                grilList.append(roomFilter.getFilterType()).append(',').append(",").append(showFitInputDataHashMap.get(hasStreamBefore)).append(",")
+                        .append(showFitInputDataHashMap.get(hashstreamAfter)).append(",").append(""+concentrationVariationListData.get(index).toString()).append(",")
                         .append(likage).append(",").append(txtPassFailList.get(index).getText().toString());
 
 //                grilList.append(roomFilter.getFilterType()).append(',').append(roomFilter.getEfficiency()).append(",").append(likageDataMap.get(hasStreamBefore)).append(",")

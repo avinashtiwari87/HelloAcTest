@@ -1798,8 +1798,8 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
         String selectQuery = "SELECT * FROM " + CLIENT_INSTRUMENT_TABLE_NAME + "," + CLIENT_INSTRUMENT_TEST_TABLE_NAME + " WHERE " + CLIENT_INSTRUMENT_TABLE_NAME
                 + "." + CLIENT_INSTRUMENT_CINSTRUMENTID + "=" + CLIENT_INSTRUMENT_TEST_TABLE_NAME + "." + CLIENT_INSTRUMENT_TEST_CLIENT_INSTRUMENT_ID
                 + " AND " + CLIENT_INSTRUMENT_TEST_TABLE_NAME + "." + CLIENT_INSTRUMENT_TEST_CLIENT_INSTRUMENT_TEST_CODE + "=" +
-                '"' + testCode + '"'
-                +" AND "+ CLIENT_INSTRUMENT_TABLE_NAME + "." + CLIENT_INSTRUMENT_CALIBRATIONDUEDATE + ">" + '"' + todaysDate + '"';
+                '"' + testCode + '"';// final buils
+                //+" AND "+ CLIENT_INSTRUMENT_TABLE_NAME + "." + CLIENT_INSTRUMENT_CALIBRATIONDUEDATE + ">" + '"' + todaysDate + '"';
 //        String selectQuery1 = "SELECT * FROM " + CLIENT_INSTRUMENT_TABLE_NAME;
         SQLiteDatabase database = this.getWritableDatabase();
         Log.d("Avinash", "db clientInstrument selectQuery=" + selectQuery);
