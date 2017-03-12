@@ -191,7 +191,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
 
         testType = getIntent().getStringExtra("testType");
         mTestCode = getIntent().getStringExtra("testCode");
-        Log.d(TAG, " TestType : " + testType);
+        Log.d(TAG, " TestType : " + testType +" mTestCode "+mTestCode);
         getExtraFromTestCreateActivity(savedInstanceState);
 
         initRes();
@@ -255,6 +255,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 mPartnerName = extras.getString("PRTNERNAME");
                 mTestBasedOn = extras.getString("testBasedOn");
                 mTestCode = extras.getString("testCode");
+                Log.d(TAG, " mTestBasedOn : " + mTestBasedOn +" mTestCode "+mTestCode);
 
                 if (loginUserType.equals("CLIENT")) {
                     clientInstrument = (ClientInstrument) extras.getSerializable("ClientInstrument");
@@ -262,7 +263,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                     partnerInstrument = (PartnerInstrument) extras.getSerializable("PartnerInstrument");
                 }
                 if (TestCreateActivity.AV.equals(testType)) {
-                    if (mTestBasedOn.equalsIgnoreCase("EQUIPMENT")) {
+                    if ("EQUIPMENT".equalsIgnoreCase(mTestBasedOn)) {
                         roomDetails = extras.getStringArray("RoomDetails");
                         equipment = (Equipment) extras.getSerializable("Equipment");
                         mGrilFilterType = extras.getString("GrilFilterType");
@@ -275,7 +276,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                             mEquipmentFilterArrayList = (ArrayList<EquipmentFilter>) extras.getSerializable("GRILLLIST");
                         }
                         mApplicableTestEquipment = (ApplicableTestEquipment) extras.getSerializable("ApplicableTestEquipment");
-                    } else if (mTestBasedOn.equalsIgnoreCase("AHU")) {
+                    } else if ("AHU".equalsIgnoreCase(mTestBasedOn)) {
                         roomDetails = extras.getStringArray("RoomDetails");
                         ahu = (Ahu) extras.getSerializable("Ahu");
                         mAhuFilterArrayList = (ArrayList<AhuFilter>) extras.getSerializable("AhuFilter");
@@ -285,7 +286,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 }
 
                 if (TestCreateActivity.ACPHAV.equals(testType)) {
-                    if (mTestBasedOn.equalsIgnoreCase("AHU")) {
+                    if ("AHU".equalsIgnoreCase(mTestBasedOn)) {
                         roomDetails = extras.getStringArray("RoomDetails");
 //                        ahu = (Ahu) extras.getSerializable("Ahu");
                         mTestItem = extras.getString("testItem");
@@ -294,7 +295,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                         mApplicableTestAhu = (ApplicableTestAhu) extras.getSerializable("ApplicableTestAhu");
                         mTolarence=extras.getDouble("TOLARENCE");
 
-                    } else if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
+                    } else if ("ROOM".equalsIgnoreCase(mTestBasedOn)) {
                         mGrilFilterType = extras.getString("GrilFilterType");
                         room = (Room) extras.getSerializable("Room");
                         ahuNumber = extras.getString("AhuNumber");
@@ -324,12 +325,12 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
 //                    grillAndSizeFromGrill = (ArrayList<HashMap<String, String>>) extras.getSerializable("GRILLIST");
                 }
                 if (TestCreateActivity.FIT.equals(testType)) {
-                    if (mTestBasedOn.equalsIgnoreCase("EQUIPMENT")) {
+                    if ("EQUIPMENT".equalsIgnoreCase(mTestBasedOn)) {
                         mEquipmentFilterArrayList = (ArrayList<EquipmentFilter>) extras.getSerializable("EquipmentFilter");
                         roomDetails = extras.getStringArray("RoomDetails");
                         equipment = (Equipment) extras.getSerializable("Equipment");
                         mApplicableTestEquipment = (ApplicableTestEquipment) extras.getSerializable("ApplicableTestEquipment");
-                    } else if (mTestBasedOn.equalsIgnoreCase("AHU")) {
+                    } else if ("AHU".equalsIgnoreCase(mTestBasedOn)) {
                         mTestItem = extras.getString("testItem");
                         ahuNumber = extras.getString("AhuNumber");
                         roomDetails = extras.getStringArray("RoomDetails");
@@ -337,7 +338,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                         mAhuFilterArrayList = (ArrayList<AhuFilter>) extras.getSerializable("AhuFilter");
                         mApplicableTestAhu = (ApplicableTestAhu) extras.getSerializable("ApplicableTestAhu");
                         mTolarence=extras.getDouble("TOLARENCE");
-                    } else if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
+                    } else if ("ROOM".equalsIgnoreCase(mTestBasedOn)) {
                         room = (Room) extras.getSerializable("Room");
                         ahuNumber = extras.getString("AhuNumber");
                         mRoomFilterArrayList = (ArrayList<RoomFilter>) extras.getSerializable("RoomFilter");
@@ -349,12 +350,12 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                     //TO Do testspesification will be shown from room filter spesification
                 }
                 if (TestCreateActivity.PCT.equals(testType)) {
-                    if (mTestBasedOn.equalsIgnoreCase("EQUIPMENT")) {
+                    if ("EQUIPMENT".equalsIgnoreCase(mTestBasedOn)) {
 //                        mEquipmentFilterArrayList = (ArrayList<EquipmentFilter>) extras.getSerializable("EquipmentFilter");
                         roomDetails = extras.getStringArray("RoomDetails");
                         equipment = (Equipment) extras.getSerializable("Equipment");
                         mApplicableTestEquipment = (ApplicableTestEquipment) extras.getSerializable("ApplicableTestEquipment");
-                    } else if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
+                    } else if ("ROOM".equalsIgnoreCase(mTestBasedOn)) {
                         room = (Room) extras.getSerializable("Room");
                         ahuNumber = extras.getString("AhuNumber");
 //                        mRoomFilterArrayList = (ArrayList<RoomFilter>) extras.getSerializable("RoomFilter");
@@ -367,12 +368,12 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
 //                    Log.d("valdoc", "DynamicTableActivity" + "NOOFCYCLE NOOFCYCLE=" + noOfCycle + "location=" + applicableTestRoomLocation);
                 }
                 if (TestCreateActivity.RCT.equals(testType)) {
-                    if (mTestBasedOn.equalsIgnoreCase("EQUIPMENT")) {
+                    if ("EQUIPMENT".equalsIgnoreCase(mTestBasedOn)) {
 //                        mEquipmentFilterArrayList = (ArrayList<EquipmentFilter>) extras.getSerializable("EquipmentFilter");
                         roomDetails = extras.getStringArray("RoomDetails");
                         equipment = (Equipment) extras.getSerializable("Equipment");
                         mApplicableTestEquipment = (ApplicableTestEquipment) extras.getSerializable("ApplicableTestEquipment");
-                    } else if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
+                    } else if ("ROOM".equalsIgnoreCase(mTestBasedOn)) {
                         room = (Room) extras.getSerializable("Room");
                         ahuNumber = extras.getString("AhuNumber");
 //                        mRoomFilterArrayList = (ArrayList<RoomFilter>) extras.getSerializable("RoomFilter");
@@ -410,12 +411,12 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
 
     private void createTableRowColum() {
         if (TestCreateActivity.AV.equalsIgnoreCase(testType)) {
-            if (mTestBasedOn.equalsIgnoreCase("AHU")) {
+            if ("AHU".equalsIgnoreCase(mTestBasedOn)) {
                 if (mAhuFilterArrayList != null && mAhuFilterArrayList.size() > 0)
                     BuildTable(mAhuFilterArrayList.size() + 1, mApplicableTestAhu.getLocation());
                 else
                     aleartDialog("There is no filter or equipment location");
-            } else if (mTestBasedOn.equalsIgnoreCase("EQUIPMENT")) {
+            } else if ("EQUIPMENT".equalsIgnoreCase(mTestBasedOn)) {
                 if (mGrilFilterType.equalsIgnoreCase("Grill")) {
                     if (mEquipmentGrillArrayList != null && mEquipmentGrillArrayList.size() > 0) {
                         Log.d("avinash", "mApplicableTestEquipment.getLocation()=" + mApplicableTestEquipment.getLocation());
@@ -434,13 +435,13 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             setCommonTestHeader(testType, mTestBasedOn);
         } else if (TestCreateActivity.ACPHAV.equalsIgnoreCase(testType)) {
             Log.d("Saurabh ", "CodeFlow testType : " + testType);
-            if (mTestBasedOn.equalsIgnoreCase("AHU")) {
+            if ("AHU".equalsIgnoreCase(mTestBasedOn)) {
                 setCommonTestHeader(testType, mTestBasedOn);
                 if (mAhuFilterArrayList != null && mAhuFilterArrayList.size() > 0 && mApplicableTestAhu.getLocation() > 0)
                     BuildTableTest2(mAhuFilterArrayList.size() + 1, mApplicableTestAhu.getLocation());
                 else
                     aleartDialog("There is no gril or applicable test room location");
-            } else if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
+            } else if ("ROOM".equalsIgnoreCase(mTestBasedOn)) {
                 setCommonTestHeader(testType, mTestBasedOn);
                 if (mGrilFilterType.equalsIgnoreCase("Grill")) {
                     if (grillAndSizeFromGrill != null && grillAndSizeFromGrill.size() > 0 && mApplicableTestRoom.getLocation() > 0) {
@@ -471,17 +472,17 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             setCommonTestHeader(testType, mTestBasedOn);
         } else if (TestCreateActivity.FIT.equalsIgnoreCase(testType)) {
 
-            if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
+            if ("ROOM".equalsIgnoreCase(mTestBasedOn)) {
                 if (mRoomFilterArrayList != null && mRoomFilterArrayList.size() > 0)
                     BuildTableTest4(mRoomFilterArrayList.size() + 1, mApplicableTestRoom.getLocation());
                 else
                     aleartDialog("There is no filter ");
-            } else if (mTestBasedOn.equalsIgnoreCase("AHU")) {
+            } else if ("AHU".equalsIgnoreCase(mTestBasedOn)) {
                 if (mAhuFilterArrayList != null && mAhuFilterArrayList.size() > 0)
                     BuildTableTest4(mAhuFilterArrayList.size() + 1, cols);
                 else
                     aleartDialog("There is no filter ");
-            } else if (mTestBasedOn.equalsIgnoreCase("EQUIPMENT")) {
+            } else if ("EQUIPMENT".equalsIgnoreCase(mTestBasedOn)) {
                 if (mEquipmentFilterArrayList != null && mEquipmentFilterArrayList.size() > 0)
                     BuildTableTest4(mEquipmentFilterArrayList.size() + 1, cols);
                 else
@@ -490,7 +491,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             setCommonTestHeader(testType, mTestBasedOn);
         } else if (TestCreateActivity.PCT.equalsIgnoreCase(testType)) {
 
-            if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
+            if ("ROOM".equalsIgnoreCase(mTestBasedOn)) {
                 rows = mApplicableTestRoom.getLocation() + 1;
                 if (rows >= 1) {
                     BuildTableTest5(rows, mApplicableTestRoom.getNoOfCycle());
@@ -498,7 +499,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 } else
                     aleartDialog("There is no noOfCycle or applicable test room location");
 
-            } else if (mTestBasedOn.equalsIgnoreCase("EQUIPMENT")) {
+            } else if ("EQUIPMENT".equalsIgnoreCase(mTestBasedOn)) {
                 rows = mApplicableTestEquipment.getLocation() + 1;
                 if (rows >= 1) {
                     BuildTableTest5(rows + 1, mApplicableTestEquipment.getNoOfCycle());
@@ -866,9 +867,9 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             if (TestCreateActivity.ACPHH.equals(testType)) {
                 roomVolumeTxtList.get((int) (roomVolumeTxtList.size() / 2)).setText("" + room.getVolume());
             } else if (TestCreateActivity.ACPHAV.equals(testType)) {
-                if (mTestBasedOn.equalsIgnoreCase("AHU")) {
+                if ("AHU".equalsIgnoreCase(mTestBasedOn)) {
                     roomVolumeTxtList.get((int) (roomVolumeTxtList.size() / 2)).setText("" + roomDetails[4]);
-                } else if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
+                } else if ("ROOM".equalsIgnoreCase(mTestBasedOn)) {
                     roomVolumeTxtList.get((int) (roomVolumeTxtList.size() / 2)).setText("" + room.getVolume());
                 }
             }
@@ -914,7 +915,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                     intent.putExtra("testType", testType);
                     intent.putExtra("testCode", mTestCode);
                     intent.putExtra("testBasedOn", mTestBasedOn);
-                    if (mTestBasedOn.equalsIgnoreCase("EQUIPMENT")) {
+                    if ("EQUIPMENT".equalsIgnoreCase(mTestBasedOn)) {
                         //get room name,roomNo,and area id
                         intent.putExtra("RoomDetails", roomDetails);
                         intent.putExtra("Equipment", equipment);
@@ -966,7 +967,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                     } else {
                         intent.putExtra("PartnerInstrument", partnerInstrument);
                     }
-                    if (mTestBasedOn.equalsIgnoreCase("AHU")) {
+                    if ("AHU".equalsIgnoreCase(mTestBasedOn)) {
                         intent.putExtra("AhuNumber", ahuNumber);
                         intent.putExtra("RoomDetails", roomDetails);
                         intent.putExtra("AhuFilter", mAhuFilterArrayList);
@@ -974,7 +975,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                         intent.putExtra("rows", mAhuFilterArrayList.size() + 1);
                         intent.putExtra("cols", mApplicableTestAhu.getLocation());
                         intent.putExtra("TOLARENCE", mTolarence);
-                    } else if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
+                    } else if ("ROOM".equalsIgnoreCase(mTestBasedOn)) {
                         //get room name,roomNo,and area id
                         intent.putExtra("Room", room);
                         intent.putExtra("AhuNumber", ahuNumber);
@@ -1080,7 +1081,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                         intent.putExtra("PartnerInstrument", partnerInstrument);
                     }
 
-                    if (mTestBasedOn.equalsIgnoreCase("EQUIPMENT")) {
+                    if ("EQUIPMENT".equalsIgnoreCase(mTestBasedOn)) {
                         intent.putExtra("RoomDetails", roomDetails);
                         intent.putExtra("Equipment", equipment);
                         intent.putExtra("AREANAME", areaName);
@@ -1088,7 +1089,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                         intent.putExtra("ApplicableTestEquipment", mApplicableTestEquipment);
                         intent.putExtra("rows", mEquipmentFilterArrayList.size() + 1);
                         intent.putExtra("cols", mApplicableTestEquipment.getLocation());
-                    } else if (mTestBasedOn.equalsIgnoreCase("AHU")) {
+                    } else if ("AHU".equalsIgnoreCase(mTestBasedOn)) {
                         intent.putExtra("AhuNumber", ahuNumber);
                         intent.putExtra("testItem", mTestItem);
                         intent.putExtra("RoomDetails", roomDetails);
@@ -1098,7 +1099,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                         intent.putExtra("rows", mAhuFilterArrayList.size() + 1);
                         intent.putExtra("cols", mApplicableTestAhu.getLocation());
                         intent.putExtra("TOLARENCE", mTolarence);
-                    } else if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
+                    } else if ("ROOM".equalsIgnoreCase(mTestBasedOn)) {
                         intent.putExtra("Room", room);
                         intent.putExtra("AhuNumber", ahuNumber);
                         intent.putExtra("RoomFilterList", mRoomFilterArrayList);
@@ -1139,7 +1140,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                         intent.putExtra("PartnerInstrument", partnerInstrument);
                     }
 
-                    if (mTestBasedOn.equalsIgnoreCase("EQUIPMENT")) {
+                    if ("EQUIPMENT".equalsIgnoreCase(mTestBasedOn)) {
                         intent.putExtra("RoomDetails", roomDetails);
                         intent.putExtra("Equipment", equipment);
                         intent.putExtra("AREANAME", areaName);
@@ -1147,7 +1148,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                         intent.putExtra("ApplicableTestEquipment", mApplicableTestEquipment);
                         intent.putExtra("rows", mApplicableTestEquipment.getLocation() + 1);
                         intent.putExtra("cols", mApplicableTestEquipment.getNoOfCycle());
-                    } else if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
+                    } else if ("ROOM".equalsIgnoreCase(mTestBasedOn)) {
                         intent.putExtra("Room", room);
                         intent.putExtra("AhuNumber", ahuNumber);
 //                    intent.putExtra("RoomFilterList", mRoomFilterArrayList);
@@ -1197,7 +1198,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                                 intent.putExtra("PartnerInstrument", partnerInstrument);
                             }
 
-                            if (mTestBasedOn.equalsIgnoreCase("EQUIPMENT")) {
+                            if ("EQUIPMENT".equalsIgnoreCase(mTestBasedOn)) {
                                 intent.putExtra("RoomDetails", roomDetails);
                                 intent.putExtra("Equipment", equipment);
                                 intent.putExtra("AREANAME", areaName);
@@ -1205,7 +1206,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                                 intent.putExtra("ApplicableTestEquipment", mApplicableTestEquipment);
 //                        intent.putExtra("rows", mEquipmentFilterArrayList.size() + 1);
 //                        intent.putExtra("cols", mApplicableTestEquipment.getLocation());
-                            } else if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
+                            } else if ("ROOM".equalsIgnoreCase(mTestBasedOn)) {
                                 intent.putExtra("Room", room);
                                 intent.putExtra("AhuNumber", ahuNumber);
 //                    intent.putExtra("RoomFilterList", mRoomFilterArrayList);
@@ -1624,19 +1625,19 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 if (i == 1 && j == 1) {
                     row.addView(addTextView(" Filter No \n         "));
                 } else {
-                    if (mTestBasedOn.equalsIgnoreCase("EQUIPMENT")) {
+                    if ("EQUIPMENT".equalsIgnoreCase(mTestBasedOn)) {
                         if (null != mEquipmentFilterArrayList && mEquipmentFilterArrayList.size() > 0) {
                             EquipmentFilter equipmentFilter = mEquipmentFilterArrayList.get(i - 2);
                             Log.d("valdoc", "DynamicTableActivity filterArrayList=" + mEquipmentFilterArrayList.size() + "i=" + i);
                             row.addView(addTextView(equipmentFilter.getFilterCode()));
                         }
-                    } else if (mTestBasedOn.equalsIgnoreCase("AHU")) {
+                    } else if ("AHU".equalsIgnoreCase(mTestBasedOn)) {
                         if (null != mAhuFilterArrayList && mAhuFilterArrayList.size() > 0) {
                             AhuFilter ahuFilter = mAhuFilterArrayList.get(i - 2);
                             Log.d("valdoc", "DynamicTableActivity filterArrayList=" + mAhuFilterArrayList.size() + "i=" + i);
                             row.addView(addTextView(ahuFilter.getFilterCode()));
                         }
-                    } else if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
+                    } else if ("ROOM".equalsIgnoreCase(mTestBasedOn)) {
                         if (null != mRoomFilterArrayList && mRoomFilterArrayList.size() > 0) {
                             RoomFilter roomFilter = mRoomFilterArrayList.get(i - 2);
                             Log.d("valdoc", "DynamicTableActivity filterArrayList=" + mRoomFilterArrayList.size() + "i=" + i);
@@ -1661,21 +1662,21 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 if (i == 1 && j == 1) {
                     row.addView(addTextView("Average\nbefore Scanning(%) "));
                 } else {
-                    if (mTestBasedOn.equalsIgnoreCase("EQUIPMENT")) {
+                    if ("EQUIPMENT".equalsIgnoreCase(mTestBasedOn)) {
                         String avgUpStrm = getAvgUpStrm(mApplicableTestEquipment.getTestProp());
                         if(avgUpStrm == null || avgUpStrm.equals(""))
                             avgUpStrm = "100";
 
                         row.addView(addEditTextViewbeforestream(i, avgUpStrm));
 //
-                    } else if (mTestBasedOn.equalsIgnoreCase("AHU")) {
+                    } else if ("AHU".equalsIgnoreCase(mTestBasedOn)) {
                         String avgUpStrm = getAvgUpStrm(mApplicableTestAhu.getTestProp());
                         if(avgUpStrm == null || avgUpStrm.equals(""))
                             avgUpStrm = "100";
 
                         row.addView(addEditTextViewbeforestream(i, avgUpStrm));
 //
-                    } else if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
+                    } else if ("ROOM".equalsIgnoreCase(mTestBasedOn)) {
                         String avgUpStrm = getAvgUpStrm(mApplicableTestRoom.getTestProp());
                         if(avgUpStrm == null || avgUpStrm.equals(""))
                             avgUpStrm = "100";
@@ -1897,13 +1898,13 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 if (i == 1 && j == 1) {
                     row.addView(addTextView(" Grill / Filter No\n "));
                 } else {
-                    if (mTestBasedOn.equalsIgnoreCase("AHU")) {
+                    if ("AHU".equalsIgnoreCase(mTestBasedOn)) {
                         if (null != mAhuFilterArrayList && mAhuFilterArrayList.size() > 0) {
                             row.addView(addTextView(mAhuFilterArrayList.get(i - 2).getFilterCode()));
                         } else {
                             row.addView(addTextView("grillAndSizeFromGrill"));
                         }
-                    } else if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
+                    } else if ("ROOM".equalsIgnoreCase(mTestBasedOn)) {
                         if (mGrilFilterType.equalsIgnoreCase("Grill")) {
                             if (null != grillAndSizeFromGrill && grillAndSizeFromGrill.size() > 0) {
                                 row.addView(addTextView(grillAndSizeFromGrill.get(i - 2).getGrillCode().toString()));
@@ -1951,13 +1952,13 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                     row.addView(addTextView(" Grill/Filter\n Area"));
                 } else {
 
-                    if (mTestBasedOn.equalsIgnoreCase("AHU")) {
+                    if ("AHU".equalsIgnoreCase(mTestBasedOn)) {
                         double filterSize = 0.0f;
                         if (!mAhuFilterArrayList.isEmpty())
                             filterSize = mAhuFilterArrayList.get(i - 2).getEffectiveArea();
                         row.addView(addTextView("" + filterSize));
 
-                    } else if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
+                    } else if ("ROOM".equalsIgnoreCase(mTestBasedOn)) {
                         if (mGrilFilterType.equalsIgnoreCase("Grill")) {
                             if (null != grillAndSizeFromGrill && grillAndSizeFromGrill.size() > 0) {
 //                                String grill = grillAndSizeFromGrill.get(i - 2)[1].toString();
@@ -2139,9 +2140,9 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                     row.addView(addTextView("Grill / Filter No"));
                 } else {
                     //becouse i starts with 1 so that i-2
-                    if (mTestBasedOn.equalsIgnoreCase("AHU")) {
+                    if ("AHU".equalsIgnoreCase(mTestBasedOn)) {
                         row.addView(addTextView(mAhuFilterArrayList.get(i - 2).getFilterCode()));
-                    } else if (mTestBasedOn.equalsIgnoreCase("EQUIPMENT")) {
+                    } else if ("EQUIPMENT".equalsIgnoreCase(mTestBasedOn)) {
                         if (mGrilFilterType.equalsIgnoreCase("Grill")) {
                             row.addView(addTextView(mEquipmentGrillArrayList.get(i - 2).getGrillCode()));
                         } else {
@@ -3020,7 +3021,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         if (TestCreateActivity.ACPHAV.equalsIgnoreCase(testType)) {
 //            LinearLayout linearLayout=(LinearLayout)findViewById(R.id.test_table2);
 //            linearLayout.setVisibility(View.VISIBLE);
-            if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
+            if ("ROOM".equalsIgnoreCase(mTestBasedOn)) {
                 findViewById(R.id.room_header_table).setVisibility(View.VISIBLE);
                 TextView measerdTv = (TextView) findViewById(R.id.measerd_av_tv);
                 measerdTv.setText("Measured Air Velocity(fpm)");
@@ -3132,7 +3133,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
 //                instrumentName.setText(partnerInstrument.getpInstrumentName());
 //                instrumentNo.setText("" + partnerInstrument.getSerialNo());
 //            }
-            if (mTestBasedOn.equalsIgnoreCase("EQUIPMENT")) {
+            if ("EQUIPMENT".equalsIgnoreCase(mTestBasedOn)) {
                 findViewById(R.id.room_header_table).setVisibility(View.VISIBLE);
                 findViewById(R.id.ahu_af_table).setVisibility(View.GONE);
                 testHeaderAv.setText("FORM:TEST RAW DATA EQUIPMENT");
@@ -3176,7 +3177,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             sampling_time.setVisibility(View.VISIBLE);
 //            clean_room_class.setVisibility(View.VISIBLE);
             findViewById(R.id.test6A_dynamic_table_ll).setVisibility(View.VISIBLE);
-            if (mTestBasedOn.equalsIgnoreCase("EQUIPMENT")) {
+            if ("EQUIPMENT".equalsIgnoreCase(mTestBasedOn)) {
                 testHeaderAv.setText("FORM :TEST RAW DATA EQUIPMENT");
                 testHeaderAv2.setText("Recovery Performance Test");
                 findViewById(R.id.room_header_table).setVisibility(View.VISIBLE);
