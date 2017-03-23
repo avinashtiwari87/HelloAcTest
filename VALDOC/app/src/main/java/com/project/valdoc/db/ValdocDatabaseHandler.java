@@ -48,7 +48,7 @@ import java.util.List;
  * Created by Avinash on 2/13/2016.
  */
 public class ValdocDatabaseHandler extends SQLiteOpenHelper {
-
+    private static final String TAG = "ValdocDatabaseHandler";
     // Database name
     public static final String DATABASE_NAME = "valdoc.db";
     // Database Version
@@ -728,18 +728,18 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
             + SAMPLINGTIME_LPM283 + " TEXT," + SAMPLINGTIME_LPM50 + " TEXT,"
             + SAMPLINGTIME_LPM75 + " TEXT," + SAMPLINGTIME_LPM100 + " TEXT,"
             + SAMPLINGTIME_LASTUPDATEDDATE + " TEXT" + ")";
-    private static final String TAG = "ValdocDatabaseHandler";
+
 
 
     public ValdocDatabaseHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
-        Log.d("valdoc", "db created");
+        Log.d(TAG, "db created");
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
         // TODO table creation method
-        Log.d("valdoc", "table creating...");
+        Log.d(TAG, "table creating...");
         db.execSQL(CREATE_TABLE_AHU);
         db.execSQL(CREATE_TABLE_APLICABLE_TEST_EQUIPMENT);
         db.execSQL(CREATE_TABLE_APLICABLE_TEST_ROOM);
@@ -768,7 +768,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_EQUIPMENTGRILL);
         db.execSQL(CREATE_TABLE_ISOPARTICLELIMITS);
         db.execSQL(CREATE_TABLE_SAMPLINGTIME);
-        Log.d("valdoc", "table created success fully");
+        Log.d(TAG, "table created success fully");
     }
 
     public boolean deleteTestReportTable() {
@@ -782,7 +782,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
         boolean val = false;
         SQLiteDatabase db = this.getWritableDatabase();
         try {
-            Log.d("Avinash", "testDetailsId" + testDetailsId);
+            Log.d(TAG, "testDetailsId" + testDetailsId);
             val = db.delete(TEST_DETAILS_TABLE_NAME, TEST_DETAILS_TEST_DETAIL_ID + " = " + testDetailsId, null) > 0;
             val = db.delete(TESTREADING_TABLE_NAME, TESTREADING_TEST_DETAIL_ID + " = " + testDetailsId, null) > 0;
             val = db.delete(TESTSPECIFICATIONVALUE_TABLE_NAME, TESTSPECIFICATIONVALUE_TEST_DETAIL_ID + " = " + testDetailsId, null) > 0;
@@ -806,9 +806,9 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
             cursor = database.rawQuery(selectQuery, null);
             if (null != cursor)
                 count = cursor.getCount();
-            Log.d("Avinash", "db update count=" + count);
+            Log.d(TAG, "db update count=" + count);
         } catch (Exception e) {
-            Log.d("Avinash", "db update exception=" + e.getMessage());
+            Log.d(TAG, "db update exception=" + e.getMessage());
         }
         return count;
     }
@@ -830,7 +830,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 if (getExistingId(tableName, SAMPLINGTIME_SAMPLINGTIMEID, samplingTime.getSamplingTimeId()) > 0) {
                     db.update(tableName, contentValues, SAMPLINGTIME_SAMPLINGTIMEID + "=" + samplingTime.getSamplingTimeId(), null);
                 } else {
-//                    Log.d("Avinash", "insert applicable partners.getId()=" + partners.getPartnerId() + " partners.getName()=" + partners.getName());
+//                    Log.d(TAG, "insert applicable partners.getId()=" + partners.getPartnerId() + " partners.getName()=" + partners.getName());
                     db.insert(tableName, null, contentValues);
                 }
             }
@@ -856,7 +856,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 if (getExistingId(tableName, ISOPARTICLELIMITS_LIMITID, isoParticleLimits.getLimitId()) > 0) {
                     db.update(tableName, contentValues, ISOPARTICLELIMITS_LIMITID + "=" + isoParticleLimits.getLimitId(), null);
                 } else {
-//                    Log.d("Avinash", "insert applicable partners.getId()=" + partners.getPartnerId() + " partners.getName()=" + partners.getName());
+//                    Log.d(TAG, "insert applicable partners.getId()=" + partners.getPartnerId() + " partners.getName()=" + partners.getName());
                     db.insert(tableName, null, contentValues);
                 }
             }
@@ -885,7 +885,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 if (getExistingId(tableName, AHU_FILTER_FILTERID, equipmentGrill.getGrillId()) > 0) {
                     db.update(tableName, contentValues, AHU_FILTER_FILTERID + "=" + equipmentGrill.getGrillId(), null);
                 } else {
-//                    Log.d("Avinash", "insert applicable partners.getId()=" + partners.getPartnerId() + " partners.getName()=" + partners.getName());
+//                    Log.d(TAG, "insert applicable partners.getId()=" + partners.getPartnerId() + " partners.getName()=" + partners.getName());
                     db.insert(tableName, null, contentValues);
                 }
             }
@@ -914,7 +914,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 if (getExistingId(tableName, AHU_FILTER_FILTERID, ahuFilter.getFilterId()) > 0) {
                     db.update(tableName, contentValues, AHU_FILTER_FILTERID + "=" + ahuFilter.getFilterId(), null);
                 } else {
-//                    Log.d("Avinash", "insert applicable partners.getId()=" + partners.getPartnerId() + " partners.getName()=" + partners.getName());
+//                    Log.d(TAG, "insert applicable partners.getId()=" + partners.getPartnerId() + " partners.getName()=" + partners.getName());
                     db.insert(tableName, null, contentValues);
                 }
 
@@ -951,7 +951,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 if (getExistingId(tableName, APLICABLE_TEST_AHU_APLICABLE_TESTID, applicableTestAhu.getAplicable_testId()) > 0) {
                     db.update(tableName, contentValues, APLICABLE_TEST_AHU_APLICABLE_TESTID + "=" + applicableTestAhu.getAplicable_testId(), null);
                 } else {
-//                    Log.d("Avinash", "insert applicable partners.getId()=" + partners.getPartnerId() + " partners.getName()=" + partners.getName());
+//                    Log.d(TAG, "insert applicable partners.getId()=" + partners.getPartnerId() + " partners.getName()=" + partners.getName());
                     db.insert(tableName, null, contentValues);
                 }
 
@@ -989,7 +989,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 if (getExistingId(tableName, PARTNERS_ID, partners.getPartnerId()) > 0) {
                     db.update(tableName, contentValues, PARTNERS_ID + "=" + partners.getPartnerId(), null);
                 } else {
-//                    Log.d("Avinash", "insert applicable partners.getId()=" + partners.getPartnerId() + " partners.getName()=" + partners.getName());
+//                    Log.d(TAG, "insert applicable partners.getId()=" + partners.getPartnerId() + " partners.getName()=" + partners.getName());
                     db.insert(tableName, null, contentValues);
                 }
 
@@ -1107,7 +1107,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
         contentValues.put(TEST_DETAILS_TESTNAME, testDetails.getTestName());
         contentValues.put(TEST_DETAILS_CUSTOMER, testDetails.getCustomer());
         contentValues.put(TEST_DETAILS_RAWDATANO, testDetails.getRawDataNo());
-        Log.d("insert value", "testDetails.getDateOfTest()=" + testDetails.getDateOfTest());
+        Log.d(TAG, "inserting value testDetails.getDateOfTest()=" + testDetails.getDateOfTest());
         contentValues.put(TEST_DETAILS_DATEOFTEST, testDetails.getDateOfTest());
         contentValues.put(TEST_DETAILS_INSTRUMENTUSED, testDetails.getInstrumentUsed());
         contentValues.put(TEST_DETAILS_INSTRUMENTNO, testDetails.getInstrumentNo());
@@ -1203,7 +1203,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 if (getExistingId(tableName, AHU_AHUID, ahu.getAhuId()) > 0) {
                     db.update(tableName, contentValues, AHU_AHUID + "=" + ahu.getAhuId(), null);
                 } else {
-//                    Log.d("Avinash", "insert applicable ahu.getAhuId()=" + ahu.getAhuId() + " partners.getName()=" + ahu.getAhuNo());
+//                    Log.d(TAG, "insert applicable ahu.getAhuId()=" + ahu.getAhuId() + " partners.getName()=" + ahu.getAhuNo());
                     db.insert(tableName, null, contentValues);
 
                 }
@@ -1238,7 +1238,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 if (getExistingId(tableName, APLICABLE_TEST_EQUIPMENT_APLICABLE_TESTID, applicableTestEquipment.getAplicable_testId()) > 0) {
                     db.update(tableName, contentValues, APLICABLE_TEST_EQUIPMENT_APLICABLE_TESTID + "=" + applicableTestEquipment.getAplicable_testId(), null);
                 } else {
-                    Log.d("Avinash", "insert applicable applicableTestEquipment.getAplicable_testId()=" + applicableTestEquipment.getAplicable_testId() + " partners.getName()=" + applicableTestEquipment.getEquipmentId());
+                    Log.d(TAG, "insert applicable applicableTestEquipment.getAplicable_testId()=" + applicableTestEquipment.getAplicable_testId() + " partners.getName()=" + applicableTestEquipment.getEquipmentId());
                     db.insert(tableName, null, contentValues);
                 }
             }
@@ -1251,7 +1251,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
     // insert datain ApplicableTestRoom table
     public boolean insertApplicableTestRoom(String tableName, List<ApplicableTestRoom> applicableTestRoomList) {
         SQLiteDatabase db = this.getWritableDatabase();
-        Log.d("Avinash", "insert applicable applicableTestRoom.applicableTestRoomList=" + applicableTestRoomList.size());
+        Log.d(TAG, "insert applicable applicableTestRoom.applicableTestRoomList=" + applicableTestRoomList.size());
         if (applicableTestRoomList.size() != 0) {
             for (ApplicableTestRoom applicableTestRoom : applicableTestRoomList) {
                 ContentValues contentValues = new ContentValues();
@@ -1272,7 +1272,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 if (getExistingId(tableName, APLICABLE_TEST_ROOM_APLICABLE_TESTID, applicableTestRoom.getAplicable_testId()) > 0) {
                     db.update(tableName, contentValues, APLICABLE_TEST_ROOM_APLICABLE_TESTID + "=" + applicableTestRoom.getAplicable_testId(), null);
                 } else {
-//                    Log.d("Avinash", "insert applicable applicableTestRoom.getAplicable_testId()=" + applicableTestRoom.getAplicable_testId() + " applicableTestRoom.getRoomId()=" + applicableTestRoom.getRoomId());
+//                    Log.d(TAG, "insert applicable applicableTestRoom.getAplicable_testId()=" + applicableTestRoom.getAplicable_testId() + " applicableTestRoom.getRoomId()=" + applicableTestRoom.getRoomId());
                     db.insert(tableName, null, contentValues);
 
                 }
@@ -1301,7 +1301,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 contentValues.put(EQUIPMENT_EXHUSTAIRFLOW, equipment.getExhustAirflow());
                 contentValues.put(EQUIPMENT_REMARKS, equipment.getRemarks());
                 contentValues.put(EQUIPMENT_LASTUPDATEDDATE, equipment.getLastUpdatedDate());
-                Log.d("Avinash", "isert db minvalocity=" + equipment.getMinVelocity() + "equipment.getMaxVelocity()=" + equipment.getMaxVelocity());
+                Log.d(TAG, "isert db minvalocity=" + equipment.getMinVelocity() + "equipment.getMaxVelocity()=" + equipment.getMaxVelocity());
                 if (getExistingId(tableName, EQUIPMENT_EQUIPMENTID, equipment.getEquipmentId()) > 0) {
                     db.update(tableName, contentValues, EQUIPMENT_EQUIPMENTID + "=" + equipment.getEquipmentId(), null);
                 } else {
@@ -1336,7 +1336,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 if (getExistingId(tableName, EQUIPMENTFILTER_FILTERID, equipmentFilter.getFilterId()) > 0) {
                     db.update(tableName, contentValues, EQUIPMENTFILTER_FILTERID + "=" + equipmentFilter.getFilterId(), null);
                 } else {
-//                    Log.d("Avinash", "insert applicable equipmentFilter.getFilterId()=" + equipmentFilter.getFilterId() + " applicableTestRoom.getAplicable_testId()=" + equipmentFilter.getFilterCode());
+//                    Log.d(TAG, "insert applicable equipmentFilter.getFilterId()=" + equipmentFilter.getFilterId() + " applicableTestRoom.getAplicable_testId()=" + equipmentFilter.getFilterCode());
                     db.insert(tableName, null, contentValues);
 
                 }
@@ -1368,7 +1368,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 if (getExistingId(tableName, GRILL_GRILLID, grill.getGrillId()) > 0) {
                     db.update(tableName, contentValues, GRILL_GRILLID + "=" + grill.getGrillId(), null);
                 } else {
-//                    Log.d("Avinash", "insert applicable grill.getGrillId()=" + grill.getGrillId() + " grill.getGrillCode()=" + grill.getGrillCode());
+//                    Log.d(TAG, "insert applicable grill.getGrillId()=" + grill.getGrillId() + " grill.getGrillCode()=" + grill.getGrillCode());
                     db.insert(tableName, null, contentValues);
                 }
             }
@@ -1380,7 +1380,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
 
     // insert datain PartnerInstrument table
     public boolean insertPartnerInstrument(String tableName, List<PartnerInstrument> partnerInstrumentList) {
-        Log.d("VALDOC", "controler response data  13=inserting=partnerInstrumentList=" + partnerInstrumentList.size());
+        Log.d(TAG, "controler response data  13=inserting=partnerInstrumentList=" + partnerInstrumentList.size());
         SQLiteDatabase db = this.getWritableDatabase();
         if (partnerInstrumentList.size() != 0) {
             for (PartnerInstrument partnerInstrument : partnerInstrumentList) {
@@ -1407,7 +1407,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 if (getExistingId(tableName, PARTNER_INSTRUMENT_PINSTRUMENTID, partnerInstrument.getpInstrumentId()) > 0) {
                     db.update(tableName, contentValues, PARTNER_INSTRUMENT_PINSTRUMENTID + "=" + partnerInstrument.getpInstrumentId(), null);
                 } else {
-                    Log.d("Avinash", "insert applicable partnerInstrument.getpInstrumentId()=" + partnerInstrument.getpInstrumentId() + " partnerInstrument.getpInstrumentId()=" + partnerInstrument.getpInstrumentId());
+                    Log.d(TAG, "insert applicable partnerInstrument.getpInstrumentId()=" + partnerInstrument.getpInstrumentId() + " partnerInstrument.getpInstrumentId()=" + partnerInstrument.getpInstrumentId());
                     db.insert(tableName, null, contentValues);
 
                 }
@@ -1445,7 +1445,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 if (getExistingId(tableName, CLIENT_INSTRUMENT_CINSTRUMENTID, clientInstrument.getcInstrumentId()) > 0) {
                     db.update(tableName, contentValues, CLIENT_INSTRUMENT_CINSTRUMENTID + "=" + clientInstrument.getcInstrumentId(), null);
                 } else {
-                    Log.d("Avinash", "insert applicable clientInstrument.getcInstrumentId()=" + clientInstrument.getcInstrumentId() + " clientInstrument.getcInstrumentId()=" + clientInstrument.getcInstrumentId());
+                    Log.d(TAG, "insert applicable clientInstrument.getcInstrumentId()=" + clientInstrument.getcInstrumentId() + " clientInstrument.getcInstrumentId()=" + clientInstrument.getcInstrumentId());
                     db.insert(tableName, null, contentValues);
                 }
             }
@@ -1469,7 +1469,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 if (getExistingId(tableName, CLIENT_INSTRUMENT_TEST_CLIENT_INSTRUMENT_TEST_ID, clientInstrumentTest.getClientInstrumentTestId()) > 0) {
                     db.update(tableName, contentValues, CLIENT_INSTRUMENT_TEST_CLIENT_INSTRUMENT_TEST_ID + "=" + clientInstrumentTest.getClientInstrumentTestId(), null);
                 } else {
-//                    Log.d("Avinash", "insert applicable clientInstrument.getcInstrumentId()=" + clientInstrument.getcInstrumentId() + " clientInstrument.getcInstrumentId()=" + clientInstrument.getcInstrumentId());
+//                    Log.d(TAG, "insert applicable clientInstrument.getcInstrumentId()=" + clientInstrument.getcInstrumentId() + " clientInstrument.getcInstrumentId()=" + clientInstrument.getcInstrumentId());
                     db.insert(tableName, null, contentValues);
                 }
             }
@@ -1498,7 +1498,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 if (getExistingId(tableName, PLANT_PLANTID, plant.getPlantId()) > 0) {
                     db.update(tableName, contentValues, PLANT_PLANTID + "=" + plant.getPlantId(), null);
                 } else {
-//                    Log.d("Avinash", "insert applicable plant.getcInstrumentId()=" + plant.getcInstrumentId() + " plant.getcInstrumentId()=" + clientInstrument.getcInstrumentId());
+//                    Log.d(TAG, "insert applicable plant.getcInstrumentId()=" + plant.getcInstrumentId() + " plant.getcInstrumentId()=" + clientInstrument.getcInstrumentId());
                     db.insert(tableName, null, contentValues);
                 }
             }
@@ -1524,7 +1524,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 if (getExistingId(tableName, PARTNER_INSTRUMENT_TEST_ID, partnerInstrumentTest.getPartnerInstrumentTestId()) > 0) {
                     db.update(tableName, contentValues, PARTNER_INSTRUMENT_TEST_ID + "=" + partnerInstrumentTest.getPartnerInstrumentTestId(), null);
                 } else {
-//                    Log.d("Avinash", "insert applicable clientInstrument.getcInstrumentId()=" + clientInstrument.getcInstrumentId() + " clientInstrument.getcInstrumentId()=" + clientInstrument.getcInstrumentId());
+//                    Log.d(TAG, "insert applicable clientInstrument.getcInstrumentId()=" + clientInstrument.getcInstrumentId() + " clientInstrument.getcInstrumentId()=" + clientInstrument.getcInstrumentId());
                     db.insert(tableName, null, contentValues);
                 }
             }
@@ -1575,7 +1575,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 if (getExistingId(tableName, ROOM_ROOMID, room.getRoomId()) > 0) {
                     db.update(tableName, contentValues, ROOM_ROOMID + "=" + room.getRoomId(), null);
                 } else {
-//                    Log.d("Avinash", "insert applicable room.getRoomId()=" + room.getRoomId() + " room.getAreaId()=" + room.getAreaId());
+//                    Log.d(TAG, "insert applicable room.getRoomId()=" + room.getRoomId() + " room.getAreaId()=" + room.getAreaId());
                     db.insert(tableName, null, contentValues);
 
                 }
@@ -1612,7 +1612,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 if (getExistingId(tableName, ROOMFILTER_FILTERID, roomFilter.getFilterId()) > 0) {
                     db.update(tableName, contentValues, ROOMFILTER_FILTERID + "=" + roomFilter.getFilterId(), null);
                 } else {
-//                    Log.d("Avinash", "insert applicable roomFilter.getFilterId()=" + roomFilter.getFilterId() + " roomFilter.getFilterId()=" + roomFilter.getFilterId());
+//                    Log.d(TAG, "insert applicable roomFilter.getFilterId()=" + roomFilter.getFilterId() + " roomFilter.getFilterId()=" + roomFilter.getFilterId());
                     db.insert(tableName, null, contentValues);
 
                 }
@@ -1628,7 +1628,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         if (userList.size() != 0) {
             for (AppUser user : userList) {
-//                Log.d("valdoc", "insert user Login method :" + user.getName() + "\n" + user.getId());
+//                Log.d(TAG, "insert user Login method :" + user.getName() + "\n" + user.getId());
                 ContentValues contentValues = new ContentValues();
                 contentValues.put(USER_ID, user.getApp_user_id());
                 contentValues.put(USER_NAME, user.getName());
@@ -1647,7 +1647,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 if (getExistingId(tableName, USER_ID, user.getApp_user_id()) > 0) {
                     db.update(tableName, contentValues, USER_ID + "=" + user.getApp_user_id(), null);
                 } else {
-//                    Log.d("Avinash", "insert applicable user.getId()=" + user.getApp_user_id() + " user.getName()=" + user.getName());
+//                    Log.d(TAG, "insert applicable user.getId()=" + user.getApp_user_id() + " user.getName()=" + user.getName());
                     db.insert(tableName, null, contentValues);
 
                 }
@@ -1672,7 +1672,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 if (getExistingId(tableName, PARTNERUSER_PARTNER_USER_ID, partnerUser.getPartner_user_id()) > 0) {
                     db.update(tableName, contentValues, PARTNERUSER_PARTNER_USER_ID + "=" + partnerUser.getPartner_user_id(), null);
                 } else {
-                    Log.d("Avinash", "insert partnerUser.getPartner_user_id()=" + partnerUser.getPartner_user_id() + " partnerUser.getApp_user_id()=" + partnerUser.getApp_user_id());
+                    Log.d(TAG, "insert partnerUser.getPartner_user_id()=" + partnerUser.getPartner_user_id() + " partnerUser.getApp_user_id()=" + partnerUser.getApp_user_id());
                     db.insert(tableName, null, contentValues);
 
                 }
@@ -1698,7 +1698,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 if (getExistingId(tableName, TESTMASTER_TESTID, testMaster.getTestid()) > 0) {
                     db.update(tableName, contentValues, TESTMASTER_TESTID + "=" + testMaster.getTestid(), null);
                 } else {
-                    Log.d("Avinash", "insert testMaster.getTestid()=" + testMaster.getTestid() + " testMaster.getTestName()=" + testMaster.getTestName());
+                    Log.d(TAG, "insert testMaster.getTestid()=" + testMaster.getTestid() + " testMaster.getTestName()=" + testMaster.getTestName());
 
                     db.insert(tableName, null, contentValues);
 
@@ -1725,7 +1725,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 if (getExistingId(tableName, AREA_AREAID, area.getAreaId()) > 0) {
                     db.update(tableName, contentValues, AREA_AREAID + "=" + area.getAreaId(), null);
                 } else {
-//                    Log.d("Avinash", "insert area.getAreaId()=" + area.getAreaId() + " area.getPlantId()=" + area.getPlantId());
+//                    Log.d(TAG, "insert area.getAreaId()=" + area.getAreaId() + " area.getPlantId()=" + area.getPlantId());
 
                     db.insert(tableName, null, contentValues);
 
@@ -1744,7 +1744,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
         String selectQuery = "SELECT * FROM " + ISOPARTICLELIMITS_TABLE_NAME + " WHERE " + ValdocDatabaseHandler.ISOPARTICLELIMITS_CLASS + " = " + '"' + className + '"';
         SQLiteDatabase database = this.getWritableDatabase();
         Cursor cursor = database.rawQuery(selectQuery, null);
-        Log.d("valdoc", "Login method :");
+        Log.d(TAG, "Login method :");
         if (cursor.moveToFirst()) {
             do {
                 isoParticleLimits.setLimitId(cursor.getInt(0));
@@ -1766,7 +1766,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
         String selectQuery = "SELECT * FROM " + USER_TABLE_NAME;
         SQLiteDatabase database = this.getWritableDatabase();
         Cursor cursor = database.rawQuery(selectQuery, null);
-        Log.d("valdoc", "Login method :");
+        Log.d(TAG, "Login method :");
         if (cursor.moveToFirst()) {
             do {
                 AppUser user = new AppUser();
@@ -1783,7 +1783,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 user.setRoleType(cursor.getString(10));
                 user.setPermissions(cursor.getString(11));
                 user.setLastUpdated(cursor.getString(12));
-                Log.d("valdoc", "Login method :" + user.getEmail() + "\n" + user.getPassword());
+                Log.d(TAG, "Login method :" + user.getEmail() + "\n" + user.getPassword());
                 userArrayList.add(user);
             } while (cursor.moveToNext());
         } // return contact list return wordList; }
@@ -1792,19 +1792,19 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
 
     // select data from clientInstrument table
     public ArrayList<ClientInstrument> getClientInstrumentInfo(String testCode,String todaysDate) {
-        Log.d("Avinash", "db getClientInstrumentInfo :" + " testCode=" + testCode+" todaysDate="+todaysDate);
+        Log.d(TAG, "db getClientInstrumentInfo :" + " testCode=" + testCode+" todaysDate="+todaysDate);
         ArrayList<ClientInstrument> clientInstrumentArrayList;
         clientInstrumentArrayList = new ArrayList<ClientInstrument>();
         String selectQuery = "SELECT * FROM " + CLIENT_INSTRUMENT_TABLE_NAME + "," + CLIENT_INSTRUMENT_TEST_TABLE_NAME + " WHERE " + CLIENT_INSTRUMENT_TABLE_NAME
                 + "." + CLIENT_INSTRUMENT_CINSTRUMENTID + "=" + CLIENT_INSTRUMENT_TEST_TABLE_NAME + "." + CLIENT_INSTRUMENT_TEST_CLIENT_INSTRUMENT_ID
                 + " AND " + CLIENT_INSTRUMENT_TEST_TABLE_NAME + "." + CLIENT_INSTRUMENT_TEST_CLIENT_INSTRUMENT_TEST_CODE + "=" +
                 '"' + testCode + '"'
-                +" AND "+ CLIENT_INSTRUMENT_TABLE_NAME + "." + CLIENT_INSTRUMENT_CALIBRATIONDUEDATE + ">" + '"' + todaysDate + '"';
+               +" AND "+ CLIENT_INSTRUMENT_TABLE_NAME + "." + CLIENT_INSTRUMENT_CALIBRATIONDUEDATE + ">" + '"' + todaysDate + '"';
 //        String selectQuery1 = "SELECT * FROM " + CLIENT_INSTRUMENT_TABLE_NAME;
         SQLiteDatabase database = this.getWritableDatabase();
-        Log.d("Avinash", "db clientInstrument selectQuery=" + selectQuery);
+        Log.d(TAG, "db clientInstrument selectQuery=" + selectQuery);
         Cursor cursor = database.rawQuery(selectQuery, null);
-        Log.d("Avinash", "db cursor.getCount=" + cursor.getCount());
+        Log.d(TAG, "db cursor.getCount=" + cursor.getCount());
         if (cursor.moveToFirst()) {
             do {
                 ClientInstrument clientInstrument = new ClientInstrument();
@@ -1826,8 +1826,8 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
 //                clientInstrument.setSamplingTime(cursor.getString(13));
 //                clientInstrument.setAerosolUsed(cursor.getString(14));
 //                clientInstrument.setAerosolGeneratorType(cursor.getString(15));
-                Log.d("Avinash", "db clientInstrument id" + clientInstrument.getcInstrumentId());
-                Log.d("Avinash", "db clientInstrument" + clientInstrument.getSerialNo());
+                Log.d(TAG, "db clientInstrument id" + clientInstrument.getcInstrumentId());
+                Log.d(TAG, "db clientInstrument" + clientInstrument.getSerialNo());
                 clientInstrumentArrayList.add(clientInstrument);
             } while (cursor.moveToNext());
         } // return contact list return wordList; }
@@ -1867,7 +1867,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
 //                partnerInstrument.setSamplingTime(cursor.getString(13));
 //                partnerInstrument.setAerosolUsed(cursor.getString(14));
 //                partnerInstrument.setAerosolGeneratorType(cursor.getString(15));
-                Log.d("valdoc", "partnerInstrument" + partnerInstrument.getpInstrumentId()+" todaysDate="+todaysDate);
+                Log.d(TAG, "partnerInstrument" + partnerInstrument.getpInstrumentId()+" todaysDate="+todaysDate);
                 partnerInstrumentArrayList.add(partnerInstrument);
             } while (cursor.moveToNext());
         } // return contact list return wordList; }
@@ -1929,7 +1929,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 ahu.setFreshAirflowTolerance(cursor.getDouble(26));
                 ahu.setBleedAirflowTolerance(cursor.getDouble(27));
                 ahu.setFinalAirflowTolerance(cursor.getDouble(28));
-                Log.d("valdoc", "TestCreateActivity : ahu1");
+                Log.d(TAG, "TestCreateActivity : ahu1");
                 ahuArrayList.add(ahu);
             } while (cursor.moveToNext());
         } // return contact list return wordList; }
@@ -1977,7 +1977,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
 //                equipment.setExhustAirflow(cursor.getInt(8));
 //                equipment.setRemarks(cursor.getString(9));
 //                equipment.setLastUpdatedDate(cursor.getString(10));
-//                Log.d("Avinash", "get equipment db minvalocity=" + cursor.getDouble(5) + "equipment.getMaxVelocity()=" + cursor.getDouble(6));
+//                Log.d(TAG, "get equipment db minvalocity=" + cursor.getDouble(5) + "equipment.getMaxVelocity()=" + cursor.getDouble(6));
 
 //                equipmentArrayList.add(equipment);
             } while (cursor.moveToNext());
@@ -2011,7 +2011,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 equipment.setExhustAirflow(cursor.getInt(8));
                 equipment.setRemarks(cursor.getString(9));
                 equipment.setLastUpdatedDate(cursor.getString(10));
-//                Log.d("Avinash", "get equipment db minvalocity=" + cursor.getDouble(5) + "equipment.getMaxVelocity()=" + cursor.getDouble(6));
+//                Log.d(TAG, "get equipment db minvalocity=" + cursor.getDouble(5) + "equipment.getMaxVelocity()=" + cursor.getDouble(6));
                 equipmentNoArrayList.add(equipment);
             } while (cursor.moveToNext());
         } // return contact list return wordList; }
@@ -2038,7 +2038,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
     // select data from test reading table
     public JSONArray getTestReadingInfo(String idList) {
         JSONArray testReadingJsonArray;
-        Log.d("Avinash", "testDetailsIdList getTestReadingInfo idList=" + idList);
+        Log.d(TAG, "testDetailsIdList getTestReadingInfo idList=" + idList);
         testReadingJsonArray = new JSONArray();
         String selectQuery = "SELECT * FROM " + TESTREADING_TABLE_NAME
                 + " WHERE " + ValdocDatabaseHandler.TESTREADING_TEST_DETAIL_ID + " IN " + "(" + idList + ")";
@@ -2064,13 +2064,13 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
 
     // select data from test details table
     public JSONArray getTestDetailsInfo(String idList) {
-        Log.d("Avinash", "testDetailsIdList TEST_DETAILS_TABLE_NAME1=" + idList);
+        Log.d(TAG, "testDetailsIdList TEST_DETAILS_TABLE_NAME1=" + idList);
         JSONArray testDetailsJsonArray;
         testDetailsJsonArray = new JSONArray();
-        Log.d("Avinash", "testDetailsIdList TEST_DETAILS_TABLE_NAME2=" + idList);
+        Log.d(TAG, "testDetailsIdList TEST_DETAILS_TABLE_NAME2=" + idList);
         String selectQuery = "SELECT * FROM " + TEST_DETAILS_TABLE_NAME
                 + " WHERE " + ValdocDatabaseHandler.TEST_DETAILS_TEST_DETAIL_ID + " IN " + "(" + idList + ")";
-        Log.d("Avinash", "testDetailsIdList TEST_DETAILS_TABLE_NAME selectQuery=" + selectQuery);
+        Log.d(TAG, "testDetailsIdList TEST_DETAILS_TABLE_NAME selectQuery=" + selectQuery);
 //        SELECT * FROM TABLE WHERE ID IN (id1, id2, ..., idn)
         SQLiteDatabase database = this.getWritableDatabase();
         Cursor cursor = database.rawQuery(selectQuery, null);
@@ -2119,7 +2119,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                     jsonObject.put(TEST_DETAILS_FILTERTYPEEFFICIANCY, cursor.getString(34).toString());
                     jsonObject.put(TEST_DETAILS_ACCEPTABLERECOVERYTIME, cursor.getString(35).toString());
 
-                    Log.d("testDetailsIdList", "getCertificateData test details=" + jsonObject.toString());
+                    Log.d(TAG, "getCertificateData test details=" + jsonObject.toString());
                     testDetailsJsonArray.put(jsonObject);
                 } catch (Exception e) {
 
@@ -2133,10 +2133,10 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
     public JSONArray getTestSpecificationValueInfo(String idList) {
         JSONArray testSpecificationValueJsonArray;
         testSpecificationValueJsonArray = new JSONArray();
-        Log.d("Avinash", "testDetailsIdList getTestSpecificationValueInfo idList=" + idList);
+        Log.d(TAG, "testDetailsIdList getTestSpecificationValueInfo idList=" + idList);
         String selectQuery = "SELECT * FROM " + TESTSPECIFICATIONVALUE_TABLE_NAME
                 + " WHERE " + ValdocDatabaseHandler.TESTSPECIFICATIONVALUE_TEST_DETAIL_ID + " IN " + "(" + idList + ")";
-        Log.d("Avinash", "testDetailsIdList TEST_DETAILS_TABLE_NAME selectQuery=" + selectQuery);
+        Log.d(TAG, "testDetailsIdList TEST_DETAILS_TABLE_NAME selectQuery=" + selectQuery);
         SQLiteDatabase database = this.getWritableDatabase();
         Cursor cursor = database.rawQuery(selectQuery, null);
         if (cursor.moveToFirst()) {
@@ -2226,17 +2226,17 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
 
     // select data from room table
     public String[] getRoomByEquipment(int roomId) {
-        Log.d("ValdocDatabaseHandler", "roomId=" + roomId);
+        Log.d(TAG, "roomId=" + roomId);
         String selectQuery = " SELECT " + ROOM_ROOMNO + "," + ROOM_ROOMNAME + "," + ROOM_AREAID + "," + ROOM_ACPH + "," + ROOM_VOLUME + "," + ROOM_AHUID + " FROM " + ROOM_TABLE_NAME +
 //        String selectQuery = " SELECT * FROM " + PARTNERUSER_TABLE_NAME +
                 " WHERE " + ValdocDatabaseHandler.ROOM_ROOMID + " = " + roomId;
         SQLiteDatabase database = this.getWritableDatabase();
         Cursor cursor = database.rawQuery(selectQuery, null);
-        Log.d("ValdocDatabaseHandler", "cursor=" + cursor.getCount());
+        Log.d(TAG, "cursor=" + cursor.getCount());
         String[] strings = new String[6];
         if (cursor.moveToFirst()) {
             do {
-                Log.d("ValdocDatabaseHandler", "roomId=" + roomId);
+                Log.d(TAG, "roomId=" + roomId);
                 strings[0] = cursor.getString(cursor.getColumnIndex(ROOM_ROOMNO));
                 strings[1] = cursor.getString(cursor.getColumnIndex(ROOM_ROOMNAME));
                 strings[2] = cursor.getString(cursor.getColumnIndex(ROOM_AREAID));
@@ -2250,17 +2250,17 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
 
     // select data from room table
     public String[] getRoomByAhu(int ahuId) {
-        Log.d("ValdocDatabaseHandler", "roomId=" + ahuId);
+        Log.d(TAG, "roomId=" + ahuId);
         String selectQuery = " SELECT " + ROOM_ROOMNO + "," + ROOM_ROOMNAME + "," + ROOM_AREAID + "," + ROOM_ACPH + "," + ROOM_VOLUME + "," + ROOM_AHUID + " FROM " + ROOM_TABLE_NAME +
 //        String selectQuery = " SELECT * FROM " + PARTNERUSER_TABLE_NAME +
                 " WHERE " + ValdocDatabaseHandler.ROOM_AHUID + " = " + ahuId;
         SQLiteDatabase database = this.getWritableDatabase();
         Cursor cursor = database.rawQuery(selectQuery, null);
-        Log.d("ValdocDatabaseHandler", "cursor=" + cursor.getCount());
+        Log.d(TAG, "cursor=" + cursor.getCount());
         String[] strings = new String[6];
         if (cursor.moveToFirst()) {
             do {
-                Log.d("ValdocDatabaseHandler", "roomId=" + ahuId);
+                Log.d(TAG, "roomId=" + ahuId);
                 strings[0] = cursor.getString(cursor.getColumnIndex(ROOM_ROOMNO));
                 strings[1] = cursor.getString(cursor.getColumnIndex(ROOM_ROOMNAME));
                 strings[2] = cursor.getString(cursor.getColumnIndex(ROOM_AREAID));
@@ -2302,7 +2302,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
                 strings = cursor.getString(cursor.getColumnIndex(AREA_AREANAME));
-                Log.d("valdoc", "ValdocDatabaseHelper :AREA_AREANAME:=" + strings);
+                Log.d(TAG, "ValdocDatabaseHelper :AREA_AREANAME:=" + strings);
             } while (cursor.moveToNext());
         } // return contact list return wordList; }
         return strings;
@@ -2310,7 +2310,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
 
     // select data from room filter table
     public ArrayList<RoomFilter> getFromRoomFilter(int roomId) {
-//        Log.d("valdoc", "ValdocDatabaseHelper :getFromRoomFilter:=" + roomId);
+//        Log.d(TAG, "ValdocDatabaseHelper :getFromRoomFilter:=" + roomId);
         ArrayList<RoomFilter> filterArrayList;
         filterArrayList = new ArrayList<RoomFilter>();
         String selectQuery = " SELECT * FROM " + ROOMFILTER_TABLE_NAME +
@@ -2348,16 +2348,16 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
 //                " WHERE " + ValdocDatabaseHandler.GRILL_ROOMID + " = " + roomId;
 //        SQLiteDatabase database = this.getWritableDatabase();
 //        Cursor cursor = database.rawQuery(selectQuery, null);
-//        Log.d("valdoc", "ValdocDatabaseHelper :grill code grill:=" + cursor.getCount());
+//        Log.d(TAG, "ValdocDatabaseHelper :grill code grill:=" + cursor.getCount());
 //        ArrayList<String[]> grillList=new ArrayList<String[]>();
 //        if (cursor.moveToFirst()) {
 //            do {
 //                String[] strings = new String[2];
-//                Log.d("valdoc", "ValdocDatabaseHelper :filter code equipment1:=" + cursor.getColumnIndex(GRILL_GRILLCODE));
+//                Log.d(TAG, "ValdocDatabaseHelper :filter code equipment1:=" + cursor.getColumnIndex(GRILL_GRILLCODE));
 //                strings[0] = cursor.getString(cursor.getColumnIndex(GRILL_GRILLCODE));
 //                strings[1] = cursor.getString(cursor.getColumnIndex(GRILL_EFFECTIVEAREA));
 //                grillList.add(strings);
-//                Log.d("valdoc", "ValdocDatabaseHelper :equipment1:=" + strings[0] + "\nstrings[1]=" +strings[1] );
+//                Log.d(TAG, "ValdocDatabaseHelper :equipment1:=" + strings[0] + "\nstrings[1]=" +strings[1] );
 //            } while (cursor.moveToNext());
 //        } // return contact list return wordList; }
 //        return grillList;
@@ -2373,7 +2373,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 " WHERE " + ValdocDatabaseHandler.GRILL_ROOMID + " = " + roomId + " AND "+ ValdocDatabaseHandler.GRILL_ISSUPPLYGRILL + " = " + id ;
         SQLiteDatabase database = this.getWritableDatabase();
         Cursor cursor = database.rawQuery(selectQuery, null);
-        Log.d("valdoc", "ValdocDatabaseHelper :Equipment grill code equipment1:=" + cursor.getCount());
+        Log.d(TAG, "ValdocDatabaseHelper :Equipment grill code equipment1:=" + cursor.getCount());
 //        String[] strings = new String[cursor.getCount()];
         int i = 0;
         if (cursor.moveToFirst()) {
@@ -2388,9 +2388,9 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 grill.setEffectiveArea(cursor.getDouble(6));
                 grill.setIsSupplyGrill(cursor.getInt(7));
                 grill.setLastUpdatedDate(cursor.getString(8).toString());
-//                Log.d("valdoc", "ValdocDatabaseHelper :filter code equipment1:=" + cursor.getColumnIndex(EQUIPMENTFILTER_FILTERCODE));
+//                Log.d(TAG, "ValdocDatabaseHelper :filter code equipment1:=" + cursor.getColumnIndex(EQUIPMENTFILTER_FILTERCODE));
 //                strings[i] = cursor.getString(cursor.getColumnIndex(EQUIPMENTGRILL_GRILLCODE));
-//                Log.d("valdoc", "ValdocDatabaseHelper :equipment1:=" + strings[i] + "i=" + i);
+//                Log.d(TAG, "ValdocDatabaseHelper :equipment1:=" + strings[i] + "i=" + i);
 //                i++;
                 grillArrayList.add(grill);
             } while (cursor.moveToNext());
@@ -2407,7 +2407,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 " WHERE " + ValdocDatabaseHandler.GRILL_ROOMID + " = " + roomId;
         SQLiteDatabase database = this.getWritableDatabase();
         Cursor cursor = database.rawQuery(selectQuery, null);
-        Log.d("valdoc", "ValdocDatabaseHelper :Equipment grill code equipment1:=" + cursor.getCount());
+        Log.d(TAG, "ValdocDatabaseHelper :Equipment grill code equipment1:=" + cursor.getCount());
 //        String[] strings = new String[cursor.getCount()];
         int i = 0;
         if (cursor.moveToFirst()) {
@@ -2422,9 +2422,9 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 grill.setEffectiveArea(cursor.getDouble(6));
                 grill.setIsSupplyGrill(cursor.getInt(7));
                 grill.setLastUpdatedDate(cursor.getString(8).toString());
-//                Log.d("valdoc", "ValdocDatabaseHelper :filter code equipment1:=" + cursor.getColumnIndex(EQUIPMENTFILTER_FILTERCODE));
+//                Log.d(TAG, "ValdocDatabaseHelper :filter code equipment1:=" + cursor.getColumnIndex(EQUIPMENTFILTER_FILTERCODE));
 //                strings[i] = cursor.getString(cursor.getColumnIndex(EQUIPMENTGRILL_GRILLCODE));
-//                Log.d("valdoc", "ValdocDatabaseHelper :equipment1:=" + strings[i] + "i=" + i);
+//                Log.d(TAG, "ValdocDatabaseHelper :equipment1:=" + strings[i] + "i=" + i);
 //                i++;
                 grillArrayList.add(grill);
             } while (cursor.moveToNext());
@@ -2439,16 +2439,16 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
 //                " WHERE " + ValdocDatabaseHandler.GRILL_ROOMID + " = " + roomId;
 //        SQLiteDatabase database = this.getWritableDatabase();
 //        Cursor cursor = database.rawQuery(selectQuery, null);
-//        Log.d("valdoc", "ValdocDatabaseHelper :grill code grill:=" + cursor.getCount());
+//        Log.d(TAG, "ValdocDatabaseHelper :grill code grill:=" + cursor.getCount());
 //        ArrayList<HashMap<String, String>> grillList = new ArrayList<HashMap<String, String>>();
 //        if (cursor.moveToFirst()) {
 //            do {
 //                HashMap<String, String> hashMap = new HashMap<String, String>();
-////                Log.d("valdoc", "ValdocDatabaseHelper :filter code equipment1:=" + cursor.getColumnIndex(GRILL_GRILLCODE));
-////                Log.d("valdoc", "ValdocDatabaseHelper :GRILL_GRILLCODE:=" + cursor.getString(cursor.getColumnIndex(GRILL_GRILLCODE)).toString() + "\n hashMap.get(GRILL_EFFECTIVEAREA) =" + cursor.getDouble(cursor.getColumnIndex(GRILL_EFFECTIVEAREA)));
+////                Log.d(TAG, "ValdocDatabaseHelper :filter code equipment1:=" + cursor.getColumnIndex(GRILL_GRILLCODE));
+////                Log.d(TAG, "ValdocDatabaseHelper :GRILL_GRILLCODE:=" + cursor.getString(cursor.getColumnIndex(GRILL_GRILLCODE)).toString() + "\n hashMap.get(GRILL_EFFECTIVEAREA) =" + cursor.getDouble(cursor.getColumnIndex(GRILL_EFFECTIVEAREA)));
 //                hashMap.put(GRILL_GRILLCODE, cursor.getString(cursor.getColumnIndex(GRILL_GRILLCODE)).toString());
 //                hashMap.put(GRILL_EFFECTIVEAREA, "" + cursor.getDouble(cursor.getColumnIndex(GRILL_EFFECTIVEAREA)));
-////                Log.d("valdoc", "ValdocDatabaseHelper :equipment1:=" + hashMap.get(GRILL_GRILLCODE) + "\n hashMap.get(GRILL_EFFECTIVEAREA) =" + hashMap.get(GRILL_EFFECTIVEAREA));
+////                Log.d(TAG, "ValdocDatabaseHelper :equipment1:=" + hashMap.get(GRILL_GRILLCODE) + "\n hashMap.get(GRILL_EFFECTIVEAREA) =" + hashMap.get(GRILL_EFFECTIVEAREA));
 //                grillList.add(hashMap);
 //            } while (cursor.moveToNext());
 //        } // return contact list return wordList; }
@@ -2493,7 +2493,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 " WHERE " + ValdocDatabaseHandler.EQUIPMENTGRILL_EQUIPMENTID + " = " + equipmentId;
         SQLiteDatabase database = this.getWritableDatabase();
         Cursor cursor = database.rawQuery(selectQuery, null);
-        Log.d("valdoc", "ValdocDatabaseHelper :Equipment grill code equipment1:=" + cursor.getCount());
+        Log.d(TAG, "ValdocDatabaseHelper :Equipment grill code equipment1:=" + cursor.getCount());
 //        String[] strings = new String[cursor.getCount()];
         int i = 0;
         if (cursor.moveToFirst()) {
@@ -2509,9 +2509,9 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 equipmentGrill.setEffectiveArea(cursor.getDouble(6));
                 equipmentGrill.setRemarks(cursor.getString(7).toString());
                 equipmentGrill.setLastUpdatedDate(cursor.getString(8).toString());
-//                Log.d("valdoc", "ValdocDatabaseHelper :filter code equipment1:=" + cursor.getColumnIndex(EQUIPMENTFILTER_FILTERCODE));
+//                Log.d(TAG, "ValdocDatabaseHelper :filter code equipment1:=" + cursor.getColumnIndex(EQUIPMENTFILTER_FILTERCODE));
 //                strings[i] = cursor.getString(cursor.getColumnIndex(EQUIPMENTGRILL_GRILLCODE));
-//                Log.d("valdoc", "ValdocDatabaseHelper :equipment1:=" + strings[i] + "i=" + i);
+//                Log.d(TAG, "ValdocDatabaseHelper :equipment1:=" + strings[i] + "i=" + i);
 //                i++;
                 grillArrayList.add(equipmentGrill);
             } while (cursor.moveToNext());
@@ -2528,7 +2528,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 " WHERE " + ValdocDatabaseHandler.AHU_FILTER_AHUID + " = " + ahuId;
         SQLiteDatabase database = this.getWritableDatabase();
         Cursor cursor = database.rawQuery(selectQuery, null);
-        Log.d("valdoc", "ValdocDatabaseHelper :grill code equipment1:=" + cursor.getCount());
+        Log.d(TAG, "ValdocDatabaseHelper :grill code equipment1:=" + cursor.getCount());
 //        String[] strings = new String[cursor.getCount()];
         int i = 0;
         if (cursor.moveToFirst()) {
@@ -2543,9 +2543,9 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 ahuFilter.setDepthArea(cursor.getDouble(6));
                 ahuFilter.setArea(cursor.getDouble(7));
                 ahuFilter.setEffectiveArea(cursor.getDouble(8));
-//                Log.d("valdoc", "ValdocDatabaseHelper :filter code equipment1:=" + cursor.getColumnIndex(EQUIPMENTFILTER_FILTERCODE));
+//                Log.d(TAG, "ValdocDatabaseHelper :filter code equipment1:=" + cursor.getColumnIndex(EQUIPMENTFILTER_FILTERCODE));
 //                strings[i] = cursor.getString(cursor.getColumnIndex(EQUIPMENTGRILL_GRILLCODE));
-//                Log.d("valdoc", "ValdocDatabaseHelper :equipment1:=" + strings[i] + "i=" + i);
+//                Log.d(TAG, "ValdocDatabaseHelper :equipment1:=" + strings[i] + "i=" + i);
 //                i++;
                 ahuFilterArrayList.add(ahuFilter);
             } while (cursor.moveToNext());
@@ -2563,7 +2563,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
         ;
         SQLiteDatabase database = this.getWritableDatabase();
         Cursor cursor = database.rawQuery(selectQuery, null);
-        Log.d("valdoc", "ValdocDatabaseHelper :grill code equipment1:=" + cursor.getCount());
+        Log.d(TAG, "ValdocDatabaseHelper :grill code equipment1:=" + cursor.getCount());
 //        String[] strings = new String[cursor.getCount()];
         int i = 0;
         if (cursor.moveToFirst()) {
@@ -2578,9 +2578,9 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 ahuFilter.setDepthArea(cursor.getDouble(6));
                 ahuFilter.setArea(cursor.getDouble(7));
                 ahuFilter.setEffectiveArea(cursor.getDouble(8));
-//                Log.d("valdoc", "ValdocDatabaseHelper :filter code equipment1:=" + cursor.getColumnIndex(EQUIPMENTFILTER_FILTERCODE));
+//                Log.d(TAG, "ValdocDatabaseHelper :filter code equipment1:=" + cursor.getColumnIndex(EQUIPMENTFILTER_FILTERCODE));
 //                strings[i] = cursor.getString(cursor.getColumnIndex(EQUIPMENTGRILL_GRILLCODE));
-//                Log.d("valdoc", "ValdocDatabaseHelper :equipment1:=" + strings[i] + "i=" + i);
+//                Log.d(TAG, "ValdocDatabaseHelper :equipment1:=" + strings[i] + "i=" + i);
 //                i++;
                 ahuFilterArrayList.add(ahuFilter);
             } while (cursor.moveToNext());
@@ -2878,7 +2878,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 applicableTestRoom.setNoOfCycle(cursor.getInt(11));
                 applicableTestRoom.setLastUpdatedDate(cursor.getString(12));
                 applicableTestRoomArrayList.add(applicableTestRoom);
-                Log.d("Avinash", "applicableTestRoom=" + applicableTestRoom.getTestName());
+                Log.d(TAG, "applicableTestRoom=" + applicableTestRoom.getTestName());
             } while (cursor.moveToNext());
         } // return contact list return wordList; }
         return applicableTestRoomArrayList;
@@ -2895,8 +2895,8 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
 
         SQLiteDatabase database = this.getWritableDatabase();
         Cursor cursor = database.rawQuery(selectQuery, null);
-        Log.d("Avinash", "applicableTestahu selectQuery=" + selectQuery+" testCode="+testCode);
-        Log.d("Avinash", "applicableTestahu before=" + cursor.getCount() + " testItem=" + testItem);
+        Log.d(TAG, "applicableTestahu selectQuery=" + selectQuery+" testCode="+testCode);
+        Log.d(TAG, "applicableTestahu before=" + cursor.getCount() + " testItem=" + testItem);
         if (cursor.moveToFirst()) {
             do {
                 ApplicableTestAhu applicableTestAhu = new ApplicableTestAhu();
@@ -2928,9 +2928,9 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 + ValdocDatabaseHandler.APLICABLE_TEST_EQUIPMENT_EQUIPMENTID + " = " + equipmentId;
         SQLiteDatabase database = this.getWritableDatabase();
         Cursor cursor = database.rawQuery(selectQuery, null);
-        Log.d("Avinash", "applicableTestEquipment selectQuery=" + selectQuery);
+        Log.d(TAG, "applicableTestEquipment selectQuery=" + selectQuery);
 
-        Log.d("Avinash", "applicableTestEquipment before=" + cursor.getCount());
+        Log.d(TAG, "applicableTestEquipment before=" + cursor.getCount());
         if (cursor.moveToFirst()) {
             do {
                 ApplicableTestEquipment applicableTestEquipment = new ApplicableTestEquipment();
@@ -2948,7 +2948,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 applicableTestEquipment.setNoOfCycle(cursor.getInt(11));
                 applicableTestEquipment.setLastUpdatedDate(cursor.getString(12));
                 applicableTestEquipmentArrayList.add(applicableTestEquipment);
-                Log.d("Avinash", "applicableTestEquipment.setAplicable_testId(cursor.getInt(0));=" + applicableTestEquipment.getAplicable_testId());
+                Log.d(TAG, "applicableTestEquipment.setAplicable_testId(cursor.getInt(0));=" + applicableTestEquipment.getAplicable_testId());
             } while (cursor.moveToNext());
         } // return contact list return wordList; }
         return applicableTestEquipmentArrayList;
