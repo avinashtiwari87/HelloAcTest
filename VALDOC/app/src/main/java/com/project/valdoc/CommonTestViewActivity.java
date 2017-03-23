@@ -85,7 +85,6 @@ public class CommonTestViewActivity extends AppCompatActivity {
     private TextView roomNo;
     private TextView occupancyState;
     private TextView testRefrance;
-    private TextView infarance;
     private TextView testCundoctor;
     private TextView testWitnessOrg;
     private TextView testCondoctorOrg;
@@ -292,7 +291,6 @@ public class CommonTestViewActivity extends AppCompatActivity {
         equipmentNo.setText(""+mTestDetails.getEquipmentNo());
         occupancyState.setText(""+mTestDetails.getOccupencyState());
         testRefrance.setText(""+mTestDetails.getTestReference());
-        infarance.setText("");
         testCundoctor.setText(""+mTestDetails.getTesterName());
         testCondoctorOrg.setText(""+mTestDetails.getTestCondoctorOrg());
         testWitnessOrg.setText(""+mTestDetails.getTestWitnessOrg());
@@ -331,7 +329,6 @@ public class CommonTestViewActivity extends AppCompatActivity {
         equipmentNo = (TextView) findViewById(R.id.equiment_no);
         occupancyState = (TextView) findViewById(R.id.ocupancystate);
         testRefrance = (TextView) findViewById(R.id.testrefrence);
-        infarance = (TextView) findViewById(R.id.infarance);
         testCundoctor = (TextView) findViewById(R.id.testcunducter);
         testCondoctorOrg = (TextView) findViewById(R.id.test_condoctor_org);
         testWitnessOrg = (TextView) findViewById(R.id.testwitness_org);
@@ -1179,7 +1176,6 @@ public class CommonTestViewActivity extends AppCompatActivity {
         if (testType != null && (testType.contains("AV") || testType.contains("AF"))) {
             findViewById(R.id.test_table_1_header_l_ll).setVisibility(View.GONE);
             TextView TestHeader = (TextView) findViewById(R.id.common_header_tv);
-            findViewById(R.id.test_interference).setVisibility(View.GONE);
         }
         TextView TestHeader = (TextView) findViewById(R.id.common_header_tv);
         TextView TestHeader2 = (TextView) findViewById(R.id.common_header_2_tv);

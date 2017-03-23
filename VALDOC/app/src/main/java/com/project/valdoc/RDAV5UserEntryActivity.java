@@ -83,7 +83,6 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
     private TextView roomNo;
     private TextView occupancyState;
     private TextView testRefrance;
-    private TextView infarance;
     private TextView testCundoctor;
     private TextView testWitnessOrg;
     private TextView testCondoctorOrg;
@@ -183,13 +182,11 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
             TextView tvl = txtPassFailList.get(i);
             tvl.setText(PassFailHashMap.get(tvl.getId()) + "");
             if ("PASS".equalsIgnoreCase(tvl.getText().toString().trim())) {
-                infarance.setText(getResources().getString(R.string.meet_infrance_value));
                 tvl.setTextColor(getResources().getColor(R.color.blue));
                 TextView tvP = resultTextViewList.get(i);
                 tvP.setTextColor(getResources().getColor(R.color.blue));
 
             } else {
-                infarance.setText(getResources().getString(R.string.dont_meet_infrance_value));
                 tvl.setTextColor(getResources().getColor(R.color.red));
                 TextView tvF = resultTextViewList.get(i);
                 tvF.setTextColor(getResources().getColor(R.color.red));
@@ -246,7 +243,6 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
         equipmentNo = (TextView) findViewById(R.id.equiment_no);
         occupancyState = (TextView) findViewById(R.id.ocupancystate);
         testRefrance = (TextView) findViewById(R.id.testrefrence);
-        infarance = (TextView) findViewById(R.id.infarance);
         testCundoctor = (TextView) findViewById(R.id.testcunducter);
         testCondoctorOrg = (TextView) findViewById(R.id.test_condoctor_org);
         testWitnessOrg = (TextView) findViewById(R.id.testwitness_org);
@@ -776,7 +772,6 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
         test_table_1_header_2.setVisibility(View.VISIBLE);
         TextView TestHeader = (TextView) findViewById(R.id.common_header_tv);
         TestHeader.setText("TEST RAW DATA EQUIPMENT\n(Average Air Flow Velocity Testing)");
-        findViewById(R.id.test_interference).setVisibility(View.GONE);
         findViewById(R.id.test1_reading_header).setVisibility(View.VISIBLE);
         findViewById(R.id.common_header_test1).setVisibility(View.GONE);
     }

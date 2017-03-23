@@ -340,7 +340,6 @@ public class RDACPHhPostViewActivity extends AppCompatActivity {
         TFTByRvTv = (TextView)findViewById(R.id.acph_h_tfrby_av_value_tv);
         findViewById(R.id.test_table_3_header_l_ll).setVisibility(View.GONE);
         findViewById(R.id.test_table_3_header_2_ll).setVisibility(View.VISIBLE);
-        findViewById(R.id.test_interference).setVisibility(View.GONE);
         findViewById(R.id.acph_h_final_calc_ll).setVisibility(View.VISIBLE);
         TextView TestHeader = (TextView)findViewById(R.id.common_header_tv);
         TextView TestHeader2 = (TextView)findViewById(R.id.common_header_2_tv);

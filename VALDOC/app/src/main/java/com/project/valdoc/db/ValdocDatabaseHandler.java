@@ -1800,6 +1800,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 + " AND " + CLIENT_INSTRUMENT_TEST_TABLE_NAME + "." + CLIENT_INSTRUMENT_TEST_CLIENT_INSTRUMENT_TEST_CODE + "=" +
                 '"' + testCode + '"'
                +" AND "+ CLIENT_INSTRUMENT_TABLE_NAME + "." + CLIENT_INSTRUMENT_CALIBRATIONDUEDATE + ">" + '"' + todaysDate + '"';
+
 //        String selectQuery1 = "SELECT * FROM " + CLIENT_INSTRUMENT_TABLE_NAME;
         SQLiteDatabase database = this.getWritableDatabase();
         Log.d(TAG, "db clientInstrument selectQuery=" + selectQuery);

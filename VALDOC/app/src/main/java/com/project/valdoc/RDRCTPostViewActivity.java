@@ -353,7 +353,6 @@ public class RDRCTPostViewActivity extends AppCompatActivity {
                 finish();
             }
         });
-        findViewById(R.id.test_interference).setVisibility(View.GONE);
         findViewById(R.id.common_certificate_header_ll).setVisibility(View.VISIBLE);
     }
 

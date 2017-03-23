@@ -72,7 +72,6 @@ public class RDACPHAVPostViewActivity extends AppCompatActivity {
     //    private ArrayList<HashMap<String, String>> grillAndSizeFromGrill;
 //    private int applicableTestRoomLocation;
     private String areaName;
-    private TextView infarance;
     private String witnessFirst;
     private String witnessSecond;
     private String witnessThird;
@@ -244,7 +243,6 @@ public class RDACPHAVPostViewActivity extends AppCompatActivity {
         equipmentNoText.setVisibility(View.INVISIBLE);
         roomName = (TextView) findViewById(R.id.room_name);
         roomNo = (TextView) findViewById(R.id.room_no);
-        infarance = (TextView) findViewById(R.id.infarance);
         testCundoctor = (TextView) findViewById(R.id.testcunducter);
         testWitness = (TextView) findViewById(R.id.testwitness);
         testCondoctorOrg = (TextView) findViewById(R.id.test_condoctor_org);
@@ -607,7 +605,6 @@ public class RDACPHAVPostViewActivity extends AppCompatActivity {
         TFRtv = (TextView) findViewById(R.id.acph_av_tfr_value_tv);
         TFRByRvTv = (TextView) findViewById(R.id.acph_av_tfrby_av_value_tv);
 
-        findViewById(R.id.test_interference).setVisibility(View.GONE);
         findViewById(R.id.test2_reading_header).setVisibility(View.VISIBLE);
         TextView TestHeader = (TextView) findViewById(R.id.common_header_tv);
         TextView TestHeader2 = (TextView) findViewById(R.id.common_header_2_tv);

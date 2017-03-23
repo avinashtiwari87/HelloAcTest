@@ -161,8 +161,13 @@ public class RDFITPostViewActivity extends AppCompatActivity {
                 if (i == 1 && j == 1) {
                     row.addView(addTextView(" Average \nbefore Scanning "));
                 } else {
-                    spiltValue = testReadingArrayList.get(i-2).getValue().split(",");
-                    row.addView(addTextView(""+spiltValue[1]));
+                    if("ROOM".equalsIgnoreCase(mTestBasedOn)){
+                        spiltValue = testReadingArrayList.get(i-2).getValue().split(",");
+                        row.addView(addTextView(""+spiltValue[2]));
+                    }else{
+                        spiltValue = testReadingArrayList.get(i-2).getValue().split(",");
+                        row.addView(addTextView(""+spiltValue[1]));
+                    }
                 }
 
             }
@@ -180,8 +185,13 @@ public class RDFITPostViewActivity extends AppCompatActivity {
                 if (i == 1 && j == 1) {
                     row.addView(addTextView(" Average \nAfter Scanning"));
                 } else {
-                    spiltValue = testReadingArrayList.get(i-2).getValue().split(",");
-                    row.addView(addTextView(""+spiltValue[2]));;
+                    if("ROOM".equalsIgnoreCase(mTestBasedOn)){
+                        spiltValue = testReadingArrayList.get(i - 2).getValue().split(",");
+                        row.addView(addTextView("" + spiltValue[3]));
+                    }else {
+                        spiltValue = testReadingArrayList.get(i - 2).getValue().split(",");
+                        row.addView(addTextView("" + spiltValue[2]));
+                    }
                 }
 
             }
@@ -198,8 +208,13 @@ public class RDFITPostViewActivity extends AppCompatActivity {
                 if (i == 1 && j == 1) {
                     row.addView(addTextView(" Variation \nin Concentration*"));
                 } else {
-                    spiltValue = testReadingArrayList.get(i-2).getValue().split(",");
-                    row.addView(addTextView(spiltValue[3]+ "%"));
+                    if("ROOM".equalsIgnoreCase(mTestBasedOn)){
+                        spiltValue = testReadingArrayList.get(i-2).getValue().split(",");
+                        row.addView(addTextView(spiltValue[4]+ "%"));
+                    }else{
+                        spiltValue = testReadingArrayList.get(i-2).getValue().split(",");
+                        row.addView(addTextView(spiltValue[3]+ "%"));
+                    }
                 }
 
             }
@@ -454,7 +469,6 @@ public class RDFITPostViewActivity extends AppCompatActivity {
         test4_table_layout8 = (TableLayout) findViewById(R.id.test4_tableLayout8);
         findViewById(R.id.test_table_4_header_l_ll).setVisibility(View.GONE);
         findViewById(R.id.test_table_4_header_2_ll).setVisibility(View.VISIBLE);
-        findViewById(R.id.test_interference).setVisibility(View.GONE);
         if("ROOM".equalsIgnoreCase(mTestBasedOn)){
             findViewById(R.id.room_volume_table).setVisibility(View.VISIBLE);
             findViewById(R.id.ahu_no_lable).setVisibility(View.VISIBLE);

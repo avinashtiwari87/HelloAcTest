@@ -12,20 +12,28 @@
     android:scrollbarStyle="outsideOverlay"
     tools:context="com.project.valdoc.RDFITUserEntryActivity">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <include layout="@layout/new_common_certificate" />
+        <include layout="@layout/new_common_certificate"
+            android:id="@+id/common_certif"/>
 
         <include
             android:id="@+id/test4_table_ll"
             layout="@layout/test_table_4"
-            android:visibility="visible" />
+            android:visibility="visible"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_below="@+id/common_certif"/>
 
-        <include layout="@layout/tester_witness_footer" />
+        <include layout="@layout/tester_witness_footer"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_below="@+id/test4_table_ll"
+            android:layout_alignParentBottom="true"/>
 
-    </LinearLayout>
+    </RelativeLayout>
 
 </ScrollView>

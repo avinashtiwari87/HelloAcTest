@@ -105,7 +105,6 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
     private TextView filterTypeEficiancyText;
     private TextView filtertypeEficiancy;
     private TextView ahuNoText;
-    private TextView infarance;
     private TextView testCundoctor;
     private TextView testWitness;
     private TextView dateTextView;
@@ -134,6 +133,7 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
     private ImageView cancel;
     private String mPartnerName;
     HashMap<Integer, Double> likageDataMap;
+    HashMap<Integer, BigDecimal> showFitInputDataHashMap;
     HashMap<Integer, Long> PassFailHashMap;
     ArrayList<Double>concentrationVariationListData;
     ArrayList<TextView> resultTextViewList;
@@ -218,14 +218,15 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
             Log.v(TAG, " InputData " + m.getKey() + " " + m.getValue());
         }
 
+        showFitInputDataHashMap = (HashMap<Integer, BigDecimal>) getIntent().getSerializableExtra("ShowInputData");
         for (int i = 0; i < txtViewList.size(); i++) {
             TextView tvl = txtViewList.get(i);
-            Log.d("Saurabh", "Saurabh likageValue : "+likageDataMap.get(tvl.getId()) );
+            Log.d("Saurabh", "Saurabh likageValue : "+showFitInputDataHashMap.get(tvl.getId()) );
             if(tvl.getId() >= 800){
-                tvl.setText(likageDataMap.get(tvl.getId()) + "");
+                tvl.setText(showFitInputDataHashMap.get(tvl.getId()) + "");
             }else{
 //                tvl.setText(likageDataMap.get(tvl.getId())) + "");
-                tvl.setText(""+BigDecimal.valueOf(likageDataMap.get(tvl.getId())).stripTrailingZeros().toPlainString());
+                tvl.setText(""+showFitInputDataHashMap.get(tvl.getId()));
             }
 
         }
@@ -245,13 +246,6 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
             }
         }
 
-        if (passFlag == 0) {
-            infarance.setText("The HEPA Filter System do not Qualifies for the above leak test.");
-        } else if (passFlag == 1) {
-            infarance.setText("The HEPA Filter System Qualifies for the above leak test.");
-        } else {
-            infarance.setText("");
-        }
         // Getting ConcentrationVariation Data
         concentrationVariationListData = (ArrayList<Double>)getIntent().getSerializableExtra("InputDataVariation");
         for (int vr = 0; vr <concentrationVariationListData.size() ; vr++) {
@@ -548,7 +542,6 @@ Date d;
         filtertypeEficiancy=(TextView) findViewById(R.id.test_item_value);
         filtertypeEficiancy.setVisibility(View.VISIBLE);
 
-        infarance = (TextView) findViewById(R.id.infarance);
         testCundoctor = (TextView) findViewById(R.id.testcunducter);
         testWitness = (TextView) findViewById(R.id.testwitness);
         testCondoctorOrg = (TextView) findViewById(R.id.test_condoctor_org);
@@ -614,11 +607,12 @@ Date d;
 //            testReading.setTestReadingID(index);
                 testReading.setTest_detail_id(testDetailsId);
                 testReading.setEntityName(equipmentFilter.getFilterCode());
-                String likage=BigDecimal.valueOf(likageDataMap.get(hasMapKey)).toPlainString();
+                //String likage=BigDecimal.valueOf(likageDataMap.get(hasMapKey)).toPlainString();
+                String likage=showFitInputDataHashMap.get(hasMapKey).toPlainString();
                 Log.d("likage","likage="+likage);
                 StringBuilder grilList = new StringBuilder();
-                grilList.append(equipmentFilter.getFilterCode()).append(",").append(likageDataMap.get(hasStreamBefore)).append(",")
-                        .append(likageDataMap.get(hashstreamAfter)).append(",").append(""+concentrationVariationListData.get(index).toString()).append(",")
+                grilList.append(equipmentFilter.getFilterCode()).append(",").append(showFitInputDataHashMap.get(hasStreamBefore)).append(",")
+                        .append(showFitInputDataHashMap.get(hashstreamAfter)).append(",").append(""+concentrationVariationListData.get(index).toString()).append(",")
                         .append(likage).append(",").append(txtPassFailList.get(index).getText().toString());
 //                grilList.append(equipmentFilter.getFilterType()).append(',').append(equipmentFilter.getEfficiency()).append(",").append(likageDataMap.get(hasStreamBefore)).append(",")
 //                        .append(likageDataMap.get(hashstreamAfter)).append(",")//.append(equipmentFilter.getSpecification()).append(",")
@@ -637,11 +631,12 @@ Date d;
 //            testReading.setTestReadingID(index);
                 testReading.setTest_detail_id(testDetailsId);
                 testReading.setEntityName(ahuFilter.getFilterCode());
-                String likage=BigDecimal.valueOf(likageDataMap.get(hasMapKey)).toPlainString();
+                //String likage=BigDecimal.valueOf(likageDataMap.get(hasMapKey)).toPlainString();
+                String likage=showFitInputDataHashMap.get(hasMapKey).toPlainString();
                 Log.d("likage","likage="+likage);
                 StringBuilder grilList = new StringBuilder();
-                grilList.append(ahuFilter.getFilterCode()).append(',').append(likageDataMap.get(hasStreamBefore)).append(",")
-                        .append(likageDataMap.get(hashstreamAfter)).append(",").append(""+concentrationVariationListData.get(index).toString()).append(",")
+                grilList.append(ahuFilter.getFilterCode()).append(',').append(showFitInputDataHashMap.get(hasStreamBefore)).append(",")
+                        .append(showFitInputDataHashMap.get(hashstreamAfter)).append(",").append(""+concentrationVariationListData.get(index).toString()).append(",")
                         .append(likage).append(",").append(txtPassFailList.get(index).getText().toString());
                 hasStreamBefore++;
                 hashstreamAfter++;
@@ -657,11 +652,15 @@ Date d;
 //            testReading.setTestReadingID(index);
                 testReading.setTest_detail_id(testDetailsId);
                 testReading.setEntityName(roomFilter.getFilterCode());
-                String likage=BigDecimal.valueOf(likageDataMap.get(hasMapKey)).toPlainString();
+                //String likage=BigDecimal.valueOf(likageDataMap.get(hasMapKey)).toPlainString();
+                String likage=showFitInputDataHashMap.get(hasMapKey).toPlainString();
                 Log.d("likage","likage="+likage);
                 StringBuilder grilList = new StringBuilder();
-                grilList.append(roomFilter.getFilterType()).append(',').append(",").append(likageDataMap.get(hasStreamBefore)).append(",")
-                        .append(likageDataMap.get(hashstreamAfter)).append(",").append(""+concentrationVariationListData.get(index).toString()).append(",")
+                Log.d("Saurabh", " getFilterType "+roomFilter.getFilterType());
+                Log.d("Saurabh", " Before "+showFitInputDataHashMap.get(hasStreamBefore));
+                Log.d("Saurabh", " After "+showFitInputDataHashMap.get(hashstreamAfter));
+                grilList.append(roomFilter.getFilterType()).append(',').append(",").append(showFitInputDataHashMap.get(hasStreamBefore)).append(",")
+                        .append(showFitInputDataHashMap.get(hashstreamAfter)).append(",").append(""+concentrationVariationListData.get(index).toString()).append(",")
                         .append(likage).append(",").append(txtPassFailList.get(index).getText().toString());
 
 //                grilList.append(roomFilter.getFilterType()).append(',').append(roomFilter.getEfficiency()).append(",").append(likageDataMap.get(hasStreamBefore)).append(",")
@@ -1289,7 +1288,6 @@ Date d;
         test4_table_layout8 = (TableLayout) findViewById(R.id.test4_tableLayout8);
         findViewById(R.id.test_table_4_header_l_ll).setVisibility(View.GONE);
         findViewById(R.id.test_table_4_header_2_ll).setVisibility(View.VISIBLE);
-        findViewById(R.id.test_interference).setVisibility(View.GONE);
         Log.d("Saurabh", " testbased on "+getIntent().getStringExtra("testBasedOn"));
         if(getIntent().hasExtra("testBasedOn") && "ROOM".equalsIgnoreCase(getIntent().getStringExtra("testBasedOn"))){
             findViewById(R.id.room_volume_table).setVisibility(View.VISIBLE);

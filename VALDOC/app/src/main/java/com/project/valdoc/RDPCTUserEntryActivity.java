@@ -99,7 +99,6 @@ public class RDPCTUserEntryActivity extends AppCompatActivity {
     private TextView roomNo;
     private TextView ahuNo;
     private TextView ahuNoText;
-    private TextView infarance;
     private TextView testCundoctor;
     private TextView testWitness;
     private TextView dateTextView;
@@ -215,7 +214,6 @@ public class RDPCTUserEntryActivity extends AppCompatActivity {
             tvl.setText(averageResultHashMap.get(tvl.getId()) + "");
         }
 
-        infarance.setText("The Above Particle Count Test results confirms to ISO class 8");
         meanValue1 = getIntent().getLongExtra("meanValue1", 0l);
         meanValue2 = getIntent().getLongExtra("meanValue2", 0l);
         stdDev1 = getIntent().getDoubleExtra("stdDev1", 0.0);
@@ -532,7 +530,6 @@ public class RDPCTUserEntryActivity extends AppCompatActivity {
         roomNo = (TextView) findViewById(R.id.room_no);
         roomNo.setVisibility(View.GONE);
         findViewById(R.id.room_no_lable).setVisibility(View.GONE);
-        infarance = (TextView) findViewById(R.id.infarance);
         testCundoctor = (TextView) findViewById(R.id.testcunducter);
         testWitness = (TextView) findViewById(R.id.testwitness);
         testCondoctorOrg = (TextView) findViewById(R.id.test_condoctor_org);
@@ -1172,7 +1169,6 @@ public class RDPCTUserEntryActivity extends AppCompatActivity {
         test5_table_layout5_1.setVisibility(View.GONE);
         findViewById(R.id.test_table_5_header_l_ll).setVisibility(View.GONE);
         findViewById(R.id.test_table_5_header_2_ll).setVisibility(View.VISIBLE);
-        findViewById(R.id.test_interference).setVisibility(View.GONE);
         // PCT new footer
         meanValue1_tv = (TextView) findViewById(R.id.pct_mean_value1);
         meanValue2_tv = (TextView) findViewById(R.id.pct_mean_value2);

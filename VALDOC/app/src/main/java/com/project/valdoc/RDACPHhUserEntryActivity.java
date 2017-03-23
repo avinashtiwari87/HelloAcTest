@@ -91,7 +91,6 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
     private TextView dateTextView;
     private TextView customerName;
     private TextView certificateNo;
-    private TextView infarance;
     private TextView TFRtv;
     private TextView TFTByRvTv;
     private TextView roomVolume;
@@ -193,13 +192,6 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
         if (airChangeTxtList != null && airChangeTxtList.size() > 0) {
             TextView airChangeTxt = airChangeTxtList.get(airChangeTxtList.size() / 2);
             airChangeValue = getIntent().getIntExtra("AirChangeValue", 0);
-            if (airChangeValue > room.getAcph()) {
-                infarance.setText("The above Airflow Volume Test and Derived No.of Air changes per hour meets the specified requirement");
-                TFTByRvTv.setTextColor(ContextCompat.getColor(this, R.color.blue));
-            } else {
-                infarance.setText("The above Airflow Volume Test and Derived No.of Air changes per hour do not meets the specified requirement");
-                TFTByRvTv.setTextColor(ContextCompat.getColor(this, R.color.red));
-            }
             airChangeTxt.setText(airChangeValue + "");
             TFTByRvTv.setText("" + airChangeValue);
         }
@@ -360,7 +352,6 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
         testRefrance = (TextView) findViewById(R.id.testrefrence);
         roomNo = (TextView) findViewById(R.id.room_no);
         ahuNo = (TextView) findViewById(R.id.ahu_no);
-        infarance = (TextView) findViewById(R.id.infarance);
         testCundoctor = (TextView) findViewById(R.id.testcunducter);
         testWitness = (TextView) findViewById(R.id.testwitness);
         testCondoctorOrg = (TextView) findViewById(R.id.test_condoctor_org);
@@ -797,7 +788,6 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
         TFTByRvTv = (TextView) findViewById(R.id.acph_h_tfrby_av_value_tv);
         findViewById(R.id.test_table_3_header_l_ll).setVisibility(View.GONE);
         findViewById(R.id.test_table_3_header_2_ll).setVisibility(View.VISIBLE);
-        findViewById(R.id.test_interference).setVisibility(View.GONE);
         findViewById(R.id.acph_h_final_calc_ll).setVisibility(View.VISIBLE);
         findViewById(R.id.ahu_no_lable).setVisibility(View.VISIBLE);
         findViewById(R.id.room_volume_table).setVisibility(View.VISIBLE);
