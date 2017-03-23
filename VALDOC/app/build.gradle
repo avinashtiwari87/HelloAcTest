@@ -8,12 +8,18 @@ android {
         applicationId "com.project.valdoc.activity"
         minSdkVersion 17
         targetSdkVersion 23
-        versionCode 13
-        versionName "1.0"
+        versionCode 14
+        versionName "2.0"
     }
     buildTypes {
+        debug {
+            minifyEnabled true
+            useProguard false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'),
+                    'proguard-rules.pro'
+        }
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
