@@ -51,8 +51,10 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 public class TestCreateActivity extends AppCompatActivity implements View.OnTouchListener {
     private static final String TAG = "TestCreateActivity";
@@ -1085,7 +1087,7 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
         day = c.get(Calendar.DAY_OF_MONTH);
 
         //raw data no
-        SimpleDateFormat df = new SimpleDateFormat("HH:mm:ss");
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-mm-dd");
         String formattedDate = df.format(c.getTime());
         mTodaysDate=year+"-"+(month+1)+"-"+day;
         // Show current date
@@ -1163,7 +1165,11 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
         instrumentList.add("Select Instrument");
         Log.d(TAG, "TestCreateActivity : client usertype" + userType + " testCode=" + testCode);
         if (null != userType && userType.equalsIgnoreCase("CLIENT")) {
-            clientInstrumentArrayList = mValdocDatabaseHandler.getClientInstrumentInfo(testCode,mTodaysDate);
+            SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+            Date date=new Date();
+            String currentDate = inputFormat.format(date);
+            Log.d(TAG, "TestCreateActivity : currentDate=" + currentDate);
+            clientInstrumentArrayList = mValdocDatabaseHandler.getClientInstrumentInfo(testCode,currentDate);
             for (ClientInstrument clientInstrument : clientInstrumentArrayList) {
                 instrumentList.add(clientInstrument.getSerialNo());
                 Log.d(TAG, "TestCreateActivity : client instrument list" + clientInstrument.getcInstrumentName());
@@ -1174,7 +1180,9 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
             Log.d(TAG, "TestCreateActivity :vendor" + userPartnerId);
 //            loginUserPartnerId = mValdocDatabaseHandler.getPartnerIdFromPartnerUser(appUserId);
 //            Log.d("valdoc", "TestCreateActivity :vendor loginUserPartnerId=" + loginUserPartnerId);
-            partnerInstrumentArrayList = mValdocDatabaseHandler.getPartnerInstrumentInfo(userPartnerId, testCode,mTodaysDate);
+            SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd");
+            String date = inputFormat.format(mTodaysDate);
+            partnerInstrumentArrayList = mValdocDatabaseHandler.getPartnerInstrumentInfo(userPartnerId, testCode,date);
             Log.d(TAG, "TestCreateActivity :vendor partnerInstrumentArrayList" + partnerInstrumentArrayList.size());
             for (PartnerInstrument partnerInstrument : partnerInstrumentArrayList) {
                 instrumentList.add(partnerInstrument.getSerialNo());
