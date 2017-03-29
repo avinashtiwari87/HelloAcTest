@@ -405,7 +405,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
             roomVolume.setText("" + roomDetails[4]);
             testItemValue.setText("" + mApplicableTestAhu.getTestItem());
         } else if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
-            testSpecification.setText(mApplicableTestRoom.getTestSpecification() + " Cfm");
+            testSpecification.setText(mApplicableTestRoom.getTestSpecification() + " ACPH");
             occupancyState.setText(mApplicableTestRoom.getOccupencyState());
             testRefrance.setText(mApplicableTestRoom.getTestReference());
             areaOfTest.setText(areaName);
@@ -633,7 +633,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
                         }
                     }
 
-                    grilList.append("" + grill.getEffectiveArea()).append(',').append(sb).append(",").append(airFlowRateMap.get(index + 1)).append(",").append(arrayList_totalAirFlowRate.get(airflowrateIndex));
+                    grilList.append("" + grill.getEffectiveArea()).append(',').append(sb).append(",").append(airFlowRateMap.get(index + 1)).append(",").append(Math.round(totalAirFlowRateMap.get(avindex)));
                     airflowrateIndex++;
                     index++;
                     avindex++;
@@ -664,7 +664,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
                         }
                     }
 
-                    grilList.append("" + roomFilter.getEffectiveFilterArea()).append(',').append(sb).append(",").append(airFlowRateMap.get(index + 1)).append(",").append(arrayList_totalAirFlowRate.get(airflowrateIndex));
+                    grilList.append("" + roomFilter.getEffectiveFilterArea()).append(',').append(sb).append(",").append(airFlowRateMap.get(index + 1)).append(",").append(Math.round(totalAirFlowRateMap.get(avindex)));
                     airflowrateIndex++;
                     index++;
                     avindex++;

@@ -232,8 +232,8 @@ public class RDPCTUserEntryActivity extends AppCompatActivity {
 //        txtView4.setText(stdDev2 + "");
         meanValue1_tv.setText(meanValue1 + "");
         meanValue2_tv.setText(meanValue2 + "");
-        stdDev1_tv.setText(stdDev1 + "");
-        stdDev2_tv.setText(stdDev2 + "");
+        stdDev1_tv.setText(Math.round(stdDev1) + "");
+        stdDev2_tv.setText(Math.round(stdDev2) + "");
         ucl1_tv.setText(ucl1 + "");
         ucl2_tv.setText(ucl2 + "");
 
@@ -347,7 +347,7 @@ public class RDPCTUserEntryActivity extends AppCompatActivity {
             ///UCL
             JSONObject jsonObject = null;
             try {
-                jsonObject = new JSONObject(mApplicableTestEquipment.getTestProp());
+                jsonObject = new JSONObject(mApplicableTestRoom.getTestProp());
                 if (jsonObject.optString("UCL95").equalsIgnoreCase("Applicable")) {
                     uclId.setVisibility(View.VISIBLE);
                     standerdeviationText.setVisibility(View.VISIBLE);
@@ -862,7 +862,7 @@ public class RDPCTUserEntryActivity extends AppCompatActivity {
         TableRow row1 = new TableRow(this);
         row1.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
                 TableRow.LayoutParams.MATCH_PARENT));
-        TextView tvs = addTextView(" No. of Particles >= 0.5 µm/m³  ");
+        TextView tvs = addTextView(" No. of Particles >= 0.5 µm/m³ ");
         if (4 * cols > 12) {
             tvs.setEms(4 * cols);
         } else {

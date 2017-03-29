@@ -418,7 +418,7 @@ Date d;
             } catch (Exception e) {
 
             }
-            filtertypeEficiancy.setText(mRoomFilterArrayList.get(0).getFilterType()+" & "+mRoomFilterArrayList.get(0).getEfficiency());
+            filtertypeEficiancy.setText(mRoomFilterArrayList.get(0).getFilterType()+" & "+mRoomFilterArrayList.get(0).getEfficiency()+"%");
             testLocation.setText(mRoomFilterArrayList.get(0).getFilterLocation());
             mTestSpecification=mApplicableTestRoom.getTestSpecification();
             calSpesifiCation();
@@ -1085,7 +1085,7 @@ Date d;
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
-                    row.addView(addTextView(" Variation \nin Concentration*"));
+                    row.addView(addTextView(" Variation \nin Concentration"));
                 } else {
                     row.addView(addFITConcentrationVariationTextView(10 + i + "%"));
                 }

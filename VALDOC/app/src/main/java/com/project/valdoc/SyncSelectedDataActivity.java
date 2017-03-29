@@ -515,7 +515,7 @@ public class SyncSelectedDataActivity extends AppCompatActivity implements HttpP
 
             if (isChecked) {
                 selectePosition.put(checkBpxId, checkBpxId - 3);
-                Toast.makeText(mContext, "CheckBox : " + checkBpxId + " Checked ", Toast.LENGTH_SHORT).show();
+               // Toast.makeText(mContext, "CheckBox : " + checkBpxId + " Checked ", Toast.LENGTH_SHORT).show();
             } else {
                 selectePosition.remove(checkBpxId);
 //                Toast.makeText(mContext, "CheckBox : " + checkBpxId + " Unchecked", Toast.LENGTH_SHORT).show();
@@ -536,7 +536,7 @@ public class SyncSelectedDataActivity extends AppCompatActivity implements HttpP
 
         @Override
         public void onClick(View v) {
-            Toast.makeText(mContext, testType + "View Row : " + viewTextId + " Test", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(mContext, testType + "View Row : " + viewTextId + " Test", Toast.LENGTH_SHORT).show();
             if (testType != null && testType.contains("ACPH_AV")) {
                 Intent intent = new Intent(SyncSelectedDataActivity.this, CommonTestViewActivity.class);
                 intent.putExtra("testDetailId", testDetailList.get(viewTextId - 2).getTest_detail_id());

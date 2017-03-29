@@ -3045,7 +3045,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         test3_table_layout5.setVisibility(View.GONE);
         if (TestCreateActivity.ACPHH.equalsIgnoreCase(testType)) {
             testHeaderAv.setText("FORM: TEST RAW DATA");
-            testHeaderAv2.setText("(Air Flow Velocity, Volume Testing and Determination of Air Changes per Hour Rates by Hood)");
+            testHeaderAv2.setText("(Air Flow Velocity, Volume Testing and Determination of Air Changes per Hour Rate by Air Capture Hood)");
             findViewById(R.id.test3_dynamic_table_ll).setVisibility(View.VISIBLE);
             findViewById(R.id.room_header_table).setVisibility(View.VISIBLE);
             findViewById(R.id.ahu_af_table).setVisibility(View.GONE);
