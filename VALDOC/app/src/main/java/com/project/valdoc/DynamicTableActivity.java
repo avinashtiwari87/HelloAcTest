@@ -191,7 +191,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
 
         testType = getIntent().getStringExtra("testType");
         mTestCode = getIntent().getStringExtra("testCode");
-        Log.d(TAG, " TestType : " + testType +" mTestCode "+mTestCode);
+        Log.d(TAG, " TestType : " + testType +" ");
         getExtraFromTestCreateActivity(savedInstanceState);
 
         initRes();
@@ -255,7 +255,6 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 mPartnerName = extras.getString("PRTNERNAME");
                 mTestBasedOn = extras.getString("testBasedOn");
                 mTestCode = extras.getString("testCode");
-                Log.d(TAG, " mTestBasedOn : " + mTestBasedOn +" mTestCode "+mTestCode);
 
                 if (loginUserType.equals("CLIENT")) {
                     clientInstrument = (ClientInstrument) extras.getSerializable("ClientInstrument");

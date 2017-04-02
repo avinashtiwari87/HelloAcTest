@@ -108,7 +108,7 @@ public class ShowSelectedTestActivity extends AppCompatActivity implements Adapt
                 }else if(mTestBasedOn.equalsIgnoreCase("EQUIPMENT")){
                     selectedItem=equipmentTestCode[position];
                 }
-                Toast.makeText(ShowSelectedTestActivity.this, selectedItem, Toast.LENGTH_SHORT).show();
+               // Toast.makeText(ShowSelectedTestActivity.this, selectedItem, Toast.LENGTH_SHORT).show();
 
             }
 
@@ -127,7 +127,7 @@ public class ShowSelectedTestActivity extends AppCompatActivity implements Adapt
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         // An item was selected. You can retrieve the selected item using
         String selection = parent.getItemAtPosition(position).toString();
-        Toast.makeText(ShowSelectedTestActivity.this, selection, Toast.LENGTH_SHORT).show();
+       // Toast.makeText(ShowSelectedTestActivity.this, selection, Toast.LENGTH_SHORT).show();
         if ("AHU".equals(selection)) {
             mTestBasedOn = "AHU";
             updateListViewOnTestSelection(AHUValues);
