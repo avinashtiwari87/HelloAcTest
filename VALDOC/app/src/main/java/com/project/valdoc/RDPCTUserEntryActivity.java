@@ -173,7 +173,7 @@ public class RDPCTUserEntryActivity extends AppCompatActivity {
         datePicker();
         if (TestCreateActivity.PCT.equalsIgnoreCase(mTestType)) {
             BuildTableTest5(rows, cols);
-//            BuildTableTest5(7, 3);
+//            BuildTableTest5(7, 5);
         }
 
         //Receiving User Input Data from Bundle
@@ -838,12 +838,16 @@ public class RDPCTUserEntryActivity extends AppCompatActivity {
 
                     TextView textView = addTextView(" Location ");
                     ViewGroup.LayoutParams params = textView.getLayoutParams();
-                    params.height = getResources().getDimensionPixelSize(R.dimen.text_view_height2);
+                    params.height = getResources().getDimensionPixelSize(R.dimen.text_view_height);
                     textView.setLayoutParams(params);
                     row.addView(textView);
                 } else {
                     int position = i - 1;
-                    row.addView(addTextView(" " + position));
+                    TextView textView = addTextView(" " + position);
+                    ViewGroup.LayoutParams params = textView.getLayoutParams();
+                    params.height = getResources().getDimensionPixelSize(R.dimen.pct_text_cell_height);
+                    textView.setLayoutParams(params);
+                    row.addView(textView);
                 }
 
             }
@@ -863,13 +867,11 @@ public class RDPCTUserEntryActivity extends AppCompatActivity {
         row1.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
                 TableRow.LayoutParams.MATCH_PARENT));
         TextView tvs = addTextView(" No. of Particles >= 0.5 µm/m³ ");
-        if (4 * cols > 12) {
-            tvs.setEms(4 * cols);
-        } else {
-            tvs.setEms(12);
-        }
-        tvs.setPadding(3, 3, 3, 3);
-        tvs.setEms(12);
+        ViewGroup.LayoutParams params11 = tvs.getLayoutParams();
+        params11.height = getResources().getDimensionPixelSize(R.dimen.pct_text_cell_height);
+        tvs.setLayoutParams(params11);
+        tvs.setEms(Utilityies.getPctCellEms(cols));
+        //tvs.setPadding(3, 0, 3, 3);
         tvs.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
         row1.addView(tvs);
 
@@ -888,10 +890,20 @@ public class RDPCTUserEntryActivity extends AppCompatActivity {
             // inner for loop 1
             for (int j = 1; j <= cols; j++) {
                 if (i == 1 && j <= cols) {
-                    row.addView(addTextView(" R " + j));
+                    TextView textView = addTextView(" R " + j);
+                    ViewGroup.LayoutParams layoutParams = textView.getLayoutParams();
+                    layoutParams.height = getResources().getDimensionPixelSize(R.dimen.pct_text_cell_height);
+                    textView.setLayoutParams(layoutParams);
+                    textView.setEms(Utilityies.getPctCellWidth(cols));
+                    row.addView(textView);
                 } else {
                     //row.addView(addTextView(" 4434 | 3434 | 1341 "));
-                    row.addView(addInputDataTextView());
+                    TextView textView = addInputDataTextView();
+                    ViewGroup.LayoutParams layoutParams = textView.getLayoutParams();
+                    layoutParams.height = getResources().getDimensionPixelSize(R.dimen.pct_text_cell_height);
+                    textView.setLayoutParams(layoutParams);
+                    textView.setEms(Utilityies.getPctCellWidth(cols));
+                    row.addView(textView);
                 }
             }
             test5_table_layout2_1.addView(row);
@@ -923,11 +935,16 @@ public class RDPCTUserEntryActivity extends AppCompatActivity {
                 if (i == 1 && j == 1) {
                     TextView textView = addTextView(" Average ");
                     ViewGroup.LayoutParams params = textView.getLayoutParams();
-                    params.height = getResources().getDimensionPixelSize(R.dimen.text_view_height2);
+                    params.height = getResources().getDimensionPixelSize(R.dimen.text_view_height);
                     textView.setLayoutParams(params);
                     row.addView(textView);
                 } else {
-                    row.addView(addResultTextView(i));
+                    TextView textView = addResultTextView(i);
+                    ViewGroup.LayoutParams layoutParams = textView.getLayoutParams();
+                    layoutParams.height = getResources().getDimensionPixelSize(R.dimen.pct_text_cell_height);
+                    textView.setLayoutParams(layoutParams);
+                    textView.setEms(Utilityies.getPctCellWidth(cols));
+                    row.addView(textView);
                 }
 
             }
@@ -948,12 +965,10 @@ public class RDPCTUserEntryActivity extends AppCompatActivity {
         row2.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
                 TableRow.LayoutParams.MATCH_PARENT));
         TextView tvs1 = addTextView(" No. of Particles >= 5 µm/m³  ");
-        if (4 * cols > 12) {
-            tvs1.setEms(4 * cols);
-        } else {
-            tvs1.setEms(12);
-        }
-        tvs1.setPadding(3, 3, 3, 3);
+        ViewGroup.LayoutParams params1 = tvs1.getLayoutParams();
+        params1.height = getResources().getDimensionPixelSize(R.dimen.pct_text_cell_height);
+        tvs1.setLayoutParams(params1);
+        tvs1.setEms(Utilityies.getPctCellEms(cols));
         row2.addView(tvs1);
         test5_tableLayout4_2.addView(row2);
 
@@ -966,9 +981,19 @@ public class RDPCTUserEntryActivity extends AppCompatActivity {
             // inner for loop 1
             for (int j = 1; j <= cols; j++) {
                 if (i == 1 && j <= cols) {
-                    row.addView(addTextView(" R " + j));
+                    TextView textView = addTextView(" R " + j);
+                    ViewGroup.LayoutParams layoutParams = textView.getLayoutParams();
+                    layoutParams.height = getResources().getDimensionPixelSize(R.dimen.pct_text_cell_height);
+                    textView.setLayoutParams(layoutParams);
+                    textView.setEms(Utilityies.getPctCellWidth(cols));
+                    row.addView(textView);
                 } else {
-                    row.addView(addInputDataTextView());
+                    TextView textView = addInputDataTextView();
+                    ViewGroup.LayoutParams layoutParams = textView.getLayoutParams();
+                    layoutParams.height = getResources().getDimensionPixelSize(R.dimen.pct_text_cell_height);
+                    textView.setLayoutParams(layoutParams);
+                    textView.setEms(Utilityies.getPctCellWidth(cols));
+                    row.addView(textView);
                 }
 
             }
@@ -1003,11 +1028,16 @@ public class RDPCTUserEntryActivity extends AppCompatActivity {
                 if (i == 1 && j == 1) {
                     TextView textView = addTextView("Average");
                     ViewGroup.LayoutParams params = textView.getLayoutParams();
-                    params.height = getResources().getDimensionPixelSize(R.dimen.text_view_height2);
+                    params.height = getResources().getDimensionPixelSize(R.dimen.text_view_height);
                     textView.setLayoutParams(params);
                     row.addView(textView);
                 } else {
-                    row.addView(addResultTextView(rows + i));
+                    TextView textView = addResultTextView(rows + i);
+                    ViewGroup.LayoutParams layoutParams = textView.getLayoutParams();
+                    layoutParams.height = getResources().getDimensionPixelSize(R.dimen.pct_text_cell_height);
+                    textView.setLayoutParams(layoutParams);
+                    textView.setEms(Utilityies.getPctCellWidth(cols));
+                    row.addView(textView);
                 }
 
             }

@@ -11,8 +11,9 @@
     <dimen name="normal_text_size1">11sp</dimen>
     <dimen name="normal_text_size2">13sp</dimen>
     <dimen name="header_left_padding">3dp</dimen>
-    <dimen name="text_view_height">90dp</dimen>
+    <dimen name="text_view_height">85dp</dimen>
     <dimen name="text_view_height2">60dp</dimen>
+    <dimen name="pct_text_cell_height">42.5dp</dimen>
 </resources>
 
 

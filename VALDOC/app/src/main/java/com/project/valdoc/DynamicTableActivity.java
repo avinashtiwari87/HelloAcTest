@@ -191,7 +191,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
 
         testType = getIntent().getStringExtra("testType");
         mTestCode = getIntent().getStringExtra("testCode");
-        Log.d(TAG, " TestType : " + testType +" ");
+        Log.d(TAG, " TestType : " + testType + " ");
         getExtraFromTestCreateActivity(savedInstanceState);
 
         initRes();
@@ -292,7 +292,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                         ahuNumber = extras.getString("AhuNumber");
                         mAhuFilterArrayList = (ArrayList<AhuFilter>) extras.getSerializable("AhuFilter");
                         mApplicableTestAhu = (ApplicableTestAhu) extras.getSerializable("ApplicableTestAhu");
-                        mTolarence=extras.getDouble("TOLARENCE");
+                        mTolarence = extras.getDouble("TOLARENCE");
 
                     } else if ("ROOM".equalsIgnoreCase(mTestBasedOn)) {
                         mGrilFilterType = extras.getString("GrilFilterType");
@@ -336,7 +336,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                         Log.d("Dynamictest", "roomDetails=" + roomDetails[1]);
                         mAhuFilterArrayList = (ArrayList<AhuFilter>) extras.getSerializable("AhuFilter");
                         mApplicableTestAhu = (ApplicableTestAhu) extras.getSerializable("ApplicableTestAhu");
-                        mTolarence=extras.getDouble("TOLARENCE");
+                        mTolarence = extras.getDouble("TOLARENCE");
                     } else if ("ROOM".equalsIgnoreCase(mTestBasedOn)) {
                         room = (Room) extras.getSerializable("Room");
                         ahuNumber = extras.getString("AhuNumber");
@@ -494,6 +494,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 rows = mApplicableTestRoom.getLocation() + 1;
                 if (rows >= 1) {
                     BuildTableTest5(rows, mApplicableTestRoom.getNoOfCycle());
+//                    BuildTableTest5(rows + 1, 5);
 //                    BuildTableTest5(7, 3);
                 } else
                     aleartDialog("There is no noOfCycle or applicable test room location");
@@ -502,6 +503,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 rows = mApplicableTestEquipment.getLocation() + 1;
                 if (rows >= 1) {
                     BuildTableTest5(rows + 1, mApplicableTestEquipment.getNoOfCycle());
+
 //                    BuildTableTest5(7, 3);
                 } else
                     aleartDialog("There is no noOfCycle or applicable test room location");
@@ -1299,7 +1301,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
 
     private boolean passfail() {
         boolean flag = true;
-        if(mFitPassFailFlagList.size()>0){
+        if (mFitPassFailFlagList.size() > 0) {
             for (int i = 0; i < mFitPassFailFlagList.size(); i++) {
                 Log.d("flag", "flag= " + i + mFitPassFailFlagList.get(i).toString() + " size=" + mFitPassFailFlagList.size());
                 if (mFitPassFailFlagList.get(i).equals(false)) {
@@ -1307,7 +1309,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                     break;
                 }
             }
-        }else{
+        } else {
             flag = false;
         }
         Log.d("flag", "flag=" + flag);
@@ -1411,6 +1413,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         finalReadingTv.setText("Final Reading");
     }
 
+
     private void BuildTableTest5(int rows, int cols) {
         //first section
         // outer for loop
@@ -1429,7 +1432,11 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                     row.addView(textView);
                 } else {
                     int position = i - 1;
-                    row.addView(addTextView(" " + position));
+                    TextView textView = addTextView(" " + position);
+                    ViewGroup.LayoutParams params = textView.getLayoutParams();
+                    params.height = getResources().getDimensionPixelSize(R.dimen.pct_text_cell_height);
+                    textView.setLayoutParams(params);
+                    row.addView(textView);
                 }
 
             }
@@ -1449,7 +1456,10 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         row1.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
                 TableRow.LayoutParams.MATCH_PARENT));
         TextView tvs = addTextView("No. of Particles ≥ 0. 5 µm/m³ ");
-        tvs.setEms(12);
+        ViewGroup.LayoutParams params1 = tvs.getLayoutParams();
+        params1.height = getResources().getDimensionPixelSize(R.dimen.pct_text_cell_height);
+        tvs.setLayoutParams(params1);
+        tvs.setEms(Utilityies.getPctCellEms(cols));
         row1.addView(tvs);
         test5_tableLayout2_2.addView(row1);
 //        test5_table_layout2_1.addView(row1);
@@ -1465,10 +1475,20 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             // inner for loop 1
             for (int j = 1; j <= cols; j++) {
                 if (i == 1 && j <= cols) {
-                    row.addView(addTextView(" R " + j));
+                    TextView textView = addTextView(" R " + j);
+                    ViewGroup.LayoutParams params11 = textView.getLayoutParams();
+                    params11.height = getResources().getDimensionPixelSize(R.dimen.pct_text_cell_height);
+                    textView.setLayoutParams(params11);
+                    textView.setEms(Utilityies.getPctCellWidth(cols));
+                    row.addView(textView);
                 } else {
                     //row.addView(addTextView(" 4434 | 3434 | 1341 "));
-                    row.addView(addEditTextView(i));
+                    EditText editText = addEditTextView(i);
+                    ViewGroup.LayoutParams params11 = editText.getLayoutParams();
+                    params11.height = getResources().getDimensionPixelSize(R.dimen.pct_text_cell_height);
+                    editText.setLayoutParams(params11);
+                    editText.setEms(Utilityies.getPctCellWidth(cols));
+                    row.addView(editText);
                 }
             }
             test5_table_layout2_1.addView(row);
@@ -1525,7 +1545,10 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         row2.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
                 TableRow.LayoutParams.MATCH_PARENT));
         TextView tvs1 = addTextView("No. of Particles ≥ 5 µm/m³ ");
-        tvs1.setEms(12);
+        ViewGroup.LayoutParams params11 = tvs1.getLayoutParams();
+        params11.height = getResources().getDimensionPixelSize(R.dimen.pct_text_cell_height);
+        tvs1.setLayoutParams(params11);
+        tvs1.setEms(Utilityies.getPctCellEms(cols));
         row2.addView(tvs1);
         test5_tableLayout4_2.addView(row2);
 
@@ -1539,9 +1562,19 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             // inner for loop 1
             for (int j = 1; j <= cols; j++) {
                 if (i == 1 && j <= cols) {
-                    row.addView(addTextView(" R " + j));
+                    TextView textView = addTextView(" R " + j);
+                    ViewGroup.LayoutParams layoutParams = textView.getLayoutParams();
+                    layoutParams.height = getResources().getDimensionPixelSize(R.dimen.pct_text_cell_height);
+                    textView.setLayoutParams(layoutParams);
+                    textView.setEms(Utilityies.getPctCellWidth(cols));
+                    row.addView(textView);
                 } else {
-                    row.addView(addEditTextView(rows + i));
+                    EditText editText = addEditTextView(rows + i);
+                    ViewGroup.LayoutParams layoutParams = editText.getLayoutParams();
+                    layoutParams.height = getResources().getDimensionPixelSize(R.dimen.pct_text_cell_height);
+                    editText.setLayoutParams(layoutParams);
+                    editText.setEms(Utilityies.getPctCellWidth(cols));
+                    row.addView(editText);
                 }
 
             }
@@ -1663,21 +1696,21 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 } else {
                     if ("EQUIPMENT".equalsIgnoreCase(mTestBasedOn)) {
                         String avgUpStrm = getAvgUpStrm(mApplicableTestEquipment.getTestProp());
-                        if(avgUpStrm == null || avgUpStrm.equals(""))
+                        if (avgUpStrm == null || avgUpStrm.equals(""))
                             avgUpStrm = "100";
 
                         row.addView(addEditTextViewbeforestream(i, avgUpStrm));
 //
                     } else if ("AHU".equalsIgnoreCase(mTestBasedOn)) {
                         String avgUpStrm = getAvgUpStrm(mApplicableTestAhu.getTestProp());
-                        if(avgUpStrm == null || avgUpStrm.equals(""))
+                        if (avgUpStrm == null || avgUpStrm.equals(""))
                             avgUpStrm = "100";
 
                         row.addView(addEditTextViewbeforestream(i, avgUpStrm));
 //
                     } else if ("ROOM".equalsIgnoreCase(mTestBasedOn)) {
                         String avgUpStrm = getAvgUpStrm(mApplicableTestRoom.getTestProp());
-                        if(avgUpStrm == null || avgUpStrm.equals(""))
+                        if (avgUpStrm == null || avgUpStrm.equals(""))
                             avgUpStrm = "100";
 
                         row.addView(addEditTextViewbeforestream(i, avgUpStrm));
@@ -2639,7 +2672,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                             }
                             // Pass Fail Calculation
                             TextView txtPassFail = txtPassFailList.get(i);
-                            Log.d(TAG, "slpDlpValue=" + slpDlpValue+" mTolarence="+mTolarence);
+                            Log.d(TAG, "slpDlpValue=" + slpDlpValue + " mTolarence=" + mTolarence);
                             if (Math.abs(slpDlpValue) <= mTolarence) {
                                 txtConcentrationVariationList.get(i).setTextColor(getResources().getColor(R.color.black));
                                 txtPassFail.setTextColor(getResources().getColor(R.color.blue));
@@ -2884,8 +2917,9 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
 
     /**
      * Caculating the diffrance percentage in FIT test
+     *
      * @param beforeScaning initial value
-     * @param afterScaning after value
+     * @param afterScaning  after value
      * @return double type value
      */
     private double fitDiffPercent(double beforeScaning, double afterScaning) {

@@ -26,6 +26,34 @@ public class Utilityies {
 
     }
 
+    /**
+     * to calculate the cell width for PCT dynamic cell
+     * @param noOfCycle no of column
+     * @return width based on no of column
+     */
+    public static int getPctCellWidth(int noOfCycle) {
+        if (noOfCycle == 1) {
+            return 12;
+        } else if (noOfCycle == 2) {
+            return 6;
+        } else {
+            return 4;
+        }
+    }
+
+    /**
+     * calculate pct ems value for no of particle cell
+     * @param noOfCycle no of cycle fo R value
+     * @return calculated cms value
+     */
+    public static int getPctCellEms(int noOfCycle) {
+        if (noOfCycle <= 3) {
+            return 12;
+        } else {
+            return (4*noOfCycle);
+        }
+    }
+
     public static String parseDateToddMMyyyy(String time) {
         String str = "";
         Date date = null;

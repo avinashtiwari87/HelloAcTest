@@ -47,14 +47,14 @@
         </ScrollView>
     </RelativeLayout>
 
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+<RelativeLayout
+android:layout_width="wrap_content"
+android:layout_height="wrap_content">
 
-        <include
-            layout="@layout/tester_witness_footer"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true" />
-    </RelativeLayout>
+<include
+    layout="@layout/tester_witness_footer"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true" />
 </RelativeLayout>
+    </RelativeLayout>
