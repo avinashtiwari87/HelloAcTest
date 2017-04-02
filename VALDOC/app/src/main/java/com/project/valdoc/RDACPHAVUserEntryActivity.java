@@ -1215,7 +1215,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
             TestHeader2.setText("(Air Flow Velocity/ Volume Testing)");
         } else if ("ROOM".equalsIgnoreCase(mTestBasedOn)) {
             TestHeader.setText("TEST RAW DATA ");
-            TestHeader2.setText("(Air Flow Velocity, Volume Testing and Determination of Air Changes per Hour Rates by Amnemoter)");
+            TestHeader2.setText("(Air Flow Velocity, Volume Testing and Determination of Air Changes per Hour Rates by Anemometer)");
             findViewById(R.id.acph_av_final_calc_ll).setVisibility(View.VISIBLE);
             findViewById(R.id.common_certificate_header_ll).setVisibility(View.VISIBLE);
             findViewById(R.id.ahu_no_lable).setVisibility(View.VISIBLE);

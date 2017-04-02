@@ -1198,7 +1198,7 @@ public class CommonTestViewActivity extends AppCompatActivity {
             findViewById(R.id.common_header_test1).setVisibility(View.GONE);
             TestHeader.setText("TEST RAW DATA ");
             TestHeader2.setVisibility(View.VISIBLE);
-            TestHeader2.setText("(Air Flow Velocity, Volume Testing and Determination of Air Changes per Hour Rates by Amnemoter)");
+            TestHeader2.setText("(Air Flow Velocity, Volume Testing and Determination of Air Changes per Hour Rates by Anemometer)");
             findViewById(R.id.ahu_no_lable).setVisibility(View.VISIBLE);
             findViewById(R.id.room_volume_table).setVisibility(View.VISIBLE);
             findViewById(R.id.test2_tableLayout6).setVisibility(View.GONE);

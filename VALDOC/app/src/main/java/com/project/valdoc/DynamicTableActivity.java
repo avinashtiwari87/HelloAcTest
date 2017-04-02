@@ -2883,6 +2883,12 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         return leakageValue;
     }
 
+    /**
+     * Caculating the diffrance percentage in FIT test
+     * @param beforeScaning initial value
+     * @param afterScaning after value
+     * @return double type value
+     */
     private double fitDiffPercent(double beforeScaning, double afterScaning) {
         Log.d(TAG, "Saurabh beforeScaning " + beforeScaning + " afterScaning " + afterScaning);
         double diffPercent = 0.00;
