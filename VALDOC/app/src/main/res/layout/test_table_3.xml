@@ -35,13 +35,13 @@
 
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
 
             <HorizontalScrollView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <LinearLayout
@@ -96,15 +96,16 @@
     <LinearLayout
         android:id="@+id/acph_h_final_calc_ll"
         android:layout_width="match_parent"
-        android:visibility="gone"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:visibility="gone"
         android:orientation="horizontal">
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:background="@drawable/border"
             android:layout_weight="1"
-            android:background="@color/black_overlay"
             android:orientation="vertical">
             <TextView
                 android:layout_width="wrap_content"
@@ -132,6 +133,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="center"
                 android:background="@drawable/border"
                 android:textColor="@color/black"
                 android:textStyle="bold"
@@ -164,6 +166,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/black"
                 android:textStyle="bold"
+                android:gravity="center"
                 android:textSize="@dimen/normal_text_size"
                 android:background="@drawable/border"
                 android:text="((TFR/RV)x60))"/>
