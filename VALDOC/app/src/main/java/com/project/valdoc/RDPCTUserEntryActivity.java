@@ -329,7 +329,7 @@ public class RDPCTUserEntryActivity extends AppCompatActivity {
             roomNo.setText(room.getRoomNo().toString());
             ahuNo.setText(ahuNumber);
             occupancyState.setText(mApplicableTestRoom.getOccupencyState().toString());
-            String samplingtime = getSamplingTime(mApplicableTestRoom.getTestSpecification(), "");
+            String samplingtime = getSamplingTime(mApplicableTestRoom.getTestSpecification(), samplingFlowRate.getText().toString());
             samplingTime.setText("" + samplingtime);
             atrest_one.setText(""+mApplicableTestRoom.getOccupencyState().toString());
             atrest_two.setText(""+mApplicableTestRoom.getOccupencyState().toString());
@@ -378,7 +378,7 @@ public class RDPCTUserEntryActivity extends AppCompatActivity {
             roomNo.setText(roomDetails[2]);
             areaOfTest.setText(areaName);
 
-            String samplingtime = getSamplingTime(mApplicableTestEquipment.getTestSpecification(), "");
+            String samplingtime = getSamplingTime(mApplicableTestEquipment.getTestSpecification(), samplingFlowRate.getText().toString());
             samplingTime.setText("" + samplingtime);
             cleanRoomClass.setText("" + mApplicableTestEquipment.getTestSpecification());
             iso_class.setText("" + mApplicableTestEquipment.getTestSpecification());
@@ -438,7 +438,7 @@ public class RDPCTUserEntryActivity extends AppCompatActivity {
 
     private String getSamplingTime(String testSpecification, String range) {
         String samplingTime = "";
-        if (testSpecification.contains("5") || testSpecification.contains("6")) {
+        if (testSpecification.contains("5") || testSpecification.contains("6")|| testSpecification.contains("Grade A")||testSpecification.contains("Grade B")) {
             if (range.contains("28.3")) {
                 samplingTime = "36 Minute";
             } else if (range.contains("50")) {
@@ -866,7 +866,7 @@ public class RDPCTUserEntryActivity extends AppCompatActivity {
         TableRow row1 = new TableRow(this);
         row1.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
                 TableRow.LayoutParams.MATCH_PARENT));
-        TextView tvs = addTextView(" No. of Particles >= 0.5 µm/m³ ");
+        TextView tvs = addTextView(" No. of Particles ≥ 0.5 µm/m³ ");
         ViewGroup.LayoutParams params11 = tvs.getLayoutParams();
         params11.height = getResources().getDimensionPixelSize(R.dimen.pct_text_cell_height);
         tvs.setLayoutParams(params11);
@@ -963,7 +963,7 @@ public class RDPCTUserEntryActivity extends AppCompatActivity {
         TableRow row2 = new TableRow(this);
         row2.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
                 TableRow.LayoutParams.MATCH_PARENT));
-        TextView tvs1 = addTextView(" No. of Particles >= 5 µm/m³  ");
+        TextView tvs1 = addTextView(" No. of Particles ≥ 5 µm/m³  ");
         ViewGroup.LayoutParams params1 = tvs1.getLayoutParams();
         params1.height = getResources().getDimensionPixelSize(R.dimen.pct_text_cell_height);
         tvs1.setLayoutParams(params1);

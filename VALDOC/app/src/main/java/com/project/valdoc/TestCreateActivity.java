@@ -1378,6 +1378,7 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
             public void onItemSelected(AdapterView<?> parent, View arg1,
                                        int pos, long arg3) {
                 TextView selectedText = (TextView) parent.getChildAt(0);
+                String type = "";
                 if (null != selectedText) {
                     if (pos == 0) {
                         selectedText.setTextColor(Color.GRAY);
@@ -1403,11 +1404,68 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
                     if (pos > 0)
                         getInstrumentList(loginUserType, searchRoomsTestCode[pos]);
                 }
+                /**
+                 * clearing all spiner data
+                 */
+//                testItemList = new ArrayList<String>();
+//                if(testItemList.size()>0)
+//                    testItemList.clear();
+//                testItemList.add("Select Test Item");
+//                roomAdapter = new ArrayAdapter<String>(TestCreateActivity.this, R.layout.spiner_text, testItemList);
+//                roomSpinner.setAdapter(roomAdapter);
+//                roomAdapter.notifyDataSetChanged();
+
+                witnessThird.clearFocus();
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(witnessThird.getWindowToken(), 0);
+                occupancySpiner.setVisibility(View.GONE);
+//                ahuSpinner.setVisibility(View.GONE);
+//                equipmentSpinner.setVisibility(View.GONE);
+                equipmentOrAhuSpinnerPos = equipmentAhuOrRoomSpinner.getSelectedItemPosition();
+                if (equipmentOrAhuSpinnerPos > 0)
+                    type = equipmentAhuOrRoomTestCodeList[equipmentOrAhuSpinnerPos - 1];
                 // TODO Auto-generated method stub
-//                testSpinnerPos = testSpinner.getSelectedItemPosition();
-//                spinerTestType = testSpinner.getSelectedItem().toString();
-//                Toast.makeText(getBaseContext(), TestList.get(arg2),
-//                        Toast.LENGTH_SHORT).show();
+                if (type.toString().equals("AHU")) {
+                    roomNoSpinner.setVisibility(View.GONE);
+                    ahuSpinner.setVisibility(View.VISIBLE);
+                    roomSpinner.setVisibility(View.VISIBLE);
+                    ahuListItemCreation();
+                    ahuSpinnerCreation();
+//                    applicableTestList = Arrays.asList(ahuTestValues);
+//                    applicableTestAdapter = new ArrayAdapter<String>(TestCreateActivity.this, R.layout.spiner_text, applicableTestList);
+//                    applicableTestSpinner.setAdapter(applicableTestAdapter);
+//                    applicableTestAdapter.notifyDataSetChanged();
+
+                    createAhuList();
+                    spinerAhuOrEquipment = "AHU";
+                } else if (type.toString().equals("EQUIPMENT")) {
+                    roomNoSpinner.setVisibility(View.GONE);
+                    ahuSpinner.setVisibility(View.VISIBLE);
+                    roomSpinner.setVisibility(View.VISIBLE);
+                    equipmentListItemCreation();
+                    equipmentSpinnerCreation();
+//                    applicableTestList = Arrays.asList(equipmentTestValues);
+//                    applicableTestAdapter = new ArrayAdapter<String>(TestCreateActivity.this, R.layout.spiner_text, applicableTestList);
+//                    applicableTestSpinner.setAdapter(applicableTestAdapter);
+//                    applicableTestAdapter.notifyDataSetChanged();
+                    spinerAhuOrEquipment = "EQUIPMENT";
+                } else if (type.toString().equals("ROOM")) {
+                    ahuSpinner.setVisibility(View.VISIBLE);
+                    roomSpinner.setVisibility(View.VISIBLE);
+                    roomNoSpinner.setVisibility(View.VISIBLE);
+//                    applicableTestList = Arrays.asList(roomsTestValues);
+//                    applicableTestAdapter = new ArrayAdapter<String>(TestCreateActivity.this, R.layout.spiner_text, applicableTestList);
+//                    applicableTestSpinner.setAdapter(applicableTestAdapter);
+//                    applicableTestAdapter.notifyDataSetChanged();
+                    roomListItemCreation();
+                    roomSpinnerCreation();
+                    spinerAhuOrEquipment = "ROOM";
+                } else {
+                    spinerAhuOrEquipment = "";
+                    roomNoSpinner.setVisibility(View.GONE);
+                    ahuSpinner.setVisibility(View.GONE);
+                    roomSpinner.setVisibility(View.GONE);
+                }
             }
 
             public void onNothingSelected(AdapterView<?> arg0) {

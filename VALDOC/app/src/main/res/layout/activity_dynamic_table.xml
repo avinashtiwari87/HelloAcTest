@@ -47,6 +47,8 @@
 
 </ScrollView>
 
-    <include layout="@layout/test_table_common_footer"/>
+    <include layout="@layout/test_table_common_footer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
 </LinearLayout>
