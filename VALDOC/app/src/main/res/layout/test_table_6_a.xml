@@ -176,7 +176,7 @@
                                 android:id="@+id/test6A_tableLayout1"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="5dp">
+                                android:layout_marginLeft="1dp">
                             </TableLayout>
 
                             <TableLayout
@@ -196,7 +196,7 @@
                                 android:id="@+id/test6A_tableLayout3"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="5dp">
+                                >
                             </TableLayout>
 
                             <TableLayout
@@ -210,7 +210,7 @@
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="5dp"
+
                             android:orientation="horizontal">
 
                             <TextView
@@ -219,19 +219,20 @@
                                 android:background="@drawable/border"
                                 android:layout_height="wrap_content"
                                 android:text="Final Reading"
-                                android:textSize="20sp"
+                                android:textSize="18sp"
+                                android:gravity="center"
                                 android:textColor="@color/black"
-                                android:ems="8"/>
+                                android:ems="11"/>
 
                             <EditText
                                 android:id="@+id/test6_final_reading_value_tv"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:inputType="number"
-                                android:textSize="20sp"
+                                android:gravity="center"
                                 android:background="@drawable/border"
                                 android:textColor="@color/black"
-                                android:ems="9"/>
+                                android:ems="14"/>
 
                         </LinearLayout>
 

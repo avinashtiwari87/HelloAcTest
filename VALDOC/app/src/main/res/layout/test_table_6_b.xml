@@ -42,14 +42,14 @@
         <TextView
             style="@style/TextAppearance.AppCompat.header_right"
             android:layout_width="match_parent"
-            android:layout_height="35dp"
+            android:layout_height="40dp"
             android:background="@drawable/border2"
             android:text=" Intial Reading " />
 
         <TextView
             style="@style/TextAppearance.AppCompat.header_right"
             android:layout_width="match_parent"
-            android:layout_height="35dp"
+            android:layout_height="40dp"
             android:background="@drawable/border2"
             android:text=" Worst Case Reading " />
 
@@ -81,7 +81,8 @@
             android:id="@+id/initial_reading"
             style="@style/TextAppearance.AppCompat.header_right"
             android:layout_width="match_parent"
-            android:layout_height="35dp"
+            android:layout_height="40dp"
+            android:gravity="center"
             android:background="@drawable/border2"
             android:text=" 88269 " />
 
@@ -89,8 +90,9 @@
             android:id="@+id/worst_case"
             style="@style/TextAppearance.AppCompat.header_right"
             android:layout_width="match_parent"
-            android:layout_height="35dp"
+            android:layout_height="40dp"
             android:background="@drawable/border2"
+            android:gravity="center"
             android:text=" 2455378 " />
 
         <TextView
@@ -98,6 +100,7 @@
             style="@style/TextAppearance.AppCompat.header_right"
             android:layout_width="match_parent"
             android:layout_height="40dp"
+            android:gravity="center"
             android:background="@drawable/border2"
             android:text=" 242000" />
     </LinearLayout>
