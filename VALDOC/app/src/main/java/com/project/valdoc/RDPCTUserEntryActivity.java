@@ -871,7 +871,6 @@ public class RDPCTUserEntryActivity extends AppCompatActivity {
         params11.height = getResources().getDimensionPixelSize(R.dimen.pct_text_cell_height);
         tvs.setLayoutParams(params11);
         tvs.setEms(Utilityies.getPctCellEms(cols));
-        //tvs.setPadding(3, 0, 3, 3);
         tvs.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
         row1.addView(tvs);
 
