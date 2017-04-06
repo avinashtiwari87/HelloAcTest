@@ -13,16 +13,18 @@
             android:id="@+id/test_type_header_AVTest"
             style="@style/TextAppearance.AppCompat.header_text"
             android:text="@string/header_title" />
+
         <TextView
             android:id="@+id/test_type_header_AVTest_2"
             style="@style/TextAppearance.AppCompat.header_text"
 
-            android:textStyle="normal"
-            android:text="(Average Air Flow Velocity Testing)" />
+            android:text="(Average Air Flow Velocity Testing)"
+            android:textStyle="normal" />
     </LinearLayout>
 
-    <include layout="@layout/common_test_detail_header"
-        android:id="@+id/common_header_test1"/>
+    <include
+        android:id="@+id/common_header_test1"
+        layout="@layout/common_test_detail_header" />
 
     <LinearLayout
         android:id="@+id/test_table_1_header_2_ll"
@@ -32,16 +34,6 @@
         <TextView
             style="@style/TextAppearance.AppCompat.header_text"
             android:text="@string/header_title_result" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/test1_reading_header"
-        android:visibility="gone"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TextView
-            style="@style/TextAppearance.AppCompat.header_text"
-            android:text="Airflow Velocity(fpm)" />
     </LinearLayout>
 
     <ScrollView
@@ -63,22 +55,57 @@
                     android:gravity="center"
                     android:orientation="horizontal">
 
-                    <TableLayout
-                        android:id="@+id/tableLayout1"
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"></TableLayout>
+                        android:orientation="vertical">
 
-                    <TableLayout
-                        android:id="@+id/tableLayout2"
+                        <TextView
+                            style="@style/TextAppearance.AppCompat.header_text"
+                            android:layout_marginLeft="5dp"
+                            android:background="@drawable/border1"
+                            android:textSize="18sp" />
+
+                        <TableLayout
+                            android:id="@+id/tableLayout1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"></TableLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignLeft="@+id/tableLayout1"></TableLayout>
+                        android:orientation="vertical">
 
-                    <TableLayout
-                        android:id="@+id/tableLayout3"
+                        <LinearLayout
+                            android:id="@+id/test1_reading_header"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:visibility="gone">
+
+                            <TextView
+                                style="@style/TextAppearance.AppCompat.header_text"
+                                android:background="@drawable/border1"
+                                android:text="Airflow Velocity(fpm)" />
+                        </LinearLayout>
+
+                        <TableLayout
+                            android:id="@+id/tableLayout2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"></TableLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"></TableLayout>
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TableLayout
+                            android:id="@+id/tableLayout3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"></TableLayout>
+                    </LinearLayout>
 
                     <TableLayout
                         android:id="@+id/tableLayout4"
