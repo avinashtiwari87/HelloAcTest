@@ -1199,8 +1199,15 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
         test2_table_layout8.setVisibility(View.GONE);
         TFRtv = (TextView) findViewById(R.id.acph_av_tfr_value_tv);
         TFTByRvTv = (TextView) findViewById(R.id.acph_av_tfrby_av_value_tv);
+        TextView measerdTv = (TextView) findViewById(R.id.measerd_av_tv);
+        ViewGroup.LayoutParams params = measerdTv.getLayoutParams();
+        params.height = 76;
+        measerdTv.setLayoutParams(params);
 
         findViewById(R.id.test2_reading_header).setVisibility(View.VISIBLE);
+        findViewById(R.id.test2_header_row1_tv).setVisibility(View.VISIBLE);
+        findViewById(R.id.test2_header_row4_tv).setVisibility(View.VISIBLE);
+        findViewById(R.id.test2_header_row5_tv).setVisibility(View.VISIBLE);
         TextView TestHeader = (TextView) findViewById(R.id.common_header_tv);
         TextView TestHeader2 = (TextView) findViewById(R.id.common_header_2_tv);
         TestHeader.setText("TEST RAW DATA EQUIPMENT");
@@ -1208,11 +1215,13 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
         TestHeader2.setText("(Air Flow Velocity, Volume Testing and Determination of Air Changes per Hour Rates)");
         if ("AHU".equalsIgnoreCase(mTestBasedOn)) {
             findViewById(R.id.acph_av_final_calc_ll).setVisibility(View.VISIBLE);
+            findViewById(R.id.test2_header_row6_tv).setVisibility(View.VISIBLE);
             test2_table_layout6.setVisibility(View.VISIBLE);
             findViewById(R.id.acph_av_final_calc_ll).setVisibility(View.GONE);
             findViewById(R.id.common_certificate_header_ll).setVisibility(View.VISIBLE);
             TestHeader.setText(" TEST RAW DATA AHU/EQUIPMENT ");
             TestHeader2.setText("(Air Flow Velocity/ Volume Testing)");
+            measerdTv.setText("Airflow Velocity (fpm)\n");
         } else if ("ROOM".equalsIgnoreCase(mTestBasedOn)) {
             TestHeader.setText("TEST RAW DATA ");
             TestHeader2.setText("(Air Flow Velocity, Volume Testing and Determination of Air Changes per Hour Rates by Anemometer)");
@@ -1221,8 +1230,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
             findViewById(R.id.ahu_no_lable).setVisibility(View.VISIBLE);
             findViewById(R.id.room_volume_table).setVisibility(View.VISIBLE);
             test2_table_layout6.setVisibility(View.GONE);
-            TextView measerdTv = (TextView) findViewById(R.id.measerd_av_tv);
-            measerdTv.setText("Measured Air Velocity(fpm)");
+            measerdTv.setText("Measured Air Velocity (fpm) ");
         }
     }
 }

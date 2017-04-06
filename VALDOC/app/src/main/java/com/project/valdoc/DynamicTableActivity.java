@@ -3050,6 +3050,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             findViewById(R.id.test1_dynamic_table_ll).setVisibility(View.VISIBLE);
             findViewById(R.id.test1_reading_header).setVisibility(View.VISIBLE);
             findViewById(R.id.room_header_table).setVisibility(View.VISIBLE);
+            findViewById(R.id.test1_header_row1_tv).setVisibility(View.VISIBLE);
             findViewById(R.id.ahu_af_table).setVisibility(View.GONE);
         }
         //Test 2
@@ -3097,6 +3098,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             testHeaderAv2.setText("(Air Flow Velocity, Volume Testing and Determination of Air Changes per Hour Rate by Air Capture Hood)");
             findViewById(R.id.test3_dynamic_table_ll).setVisibility(View.VISIBLE);
             findViewById(R.id.room_header_table).setVisibility(View.VISIBLE);
+            findViewById(R.id.measerd_h_value_tv).setVisibility(View.VISIBLE);
             findViewById(R.id.ahu_af_table).setVisibility(View.GONE);
 
 

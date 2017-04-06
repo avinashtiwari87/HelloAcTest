@@ -66,6 +66,7 @@
                     <TextView
                         android:id="@+id/measerd_h_value_tv"
                         android:layout_width="wrap_content"
+                        android:visibility="gone"
                         style="@style/TextAppearance.AppCompat.header_text"
                         android:background="@drawable/border1"
                         android:text="Measured Air Flow Quantity(cfm)" />

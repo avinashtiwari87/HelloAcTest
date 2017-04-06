@@ -798,6 +798,7 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
         TFTByRvTv = (TextView) findViewById(R.id.acph_h_tfrby_av_value_tv);
         findViewById(R.id.test_table_3_header_l_ll).setVisibility(View.GONE);
         findViewById(R.id.test_table_3_header_2_ll).setVisibility(View.VISIBLE);
+        findViewById(R.id.measerd_h_value_tv).setVisibility(View.VISIBLE);
         findViewById(R.id.acph_h_final_calc_ll).setVisibility(View.VISIBLE);
         findViewById(R.id.ahu_no_lable).setVisibility(View.VISIBLE);
         findViewById(R.id.room_volume_table).setVisibility(View.VISIBLE);
