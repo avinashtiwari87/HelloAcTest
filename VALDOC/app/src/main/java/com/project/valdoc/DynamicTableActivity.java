@@ -1846,12 +1846,17 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             TableRow row = new TableRow(this);
             row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
                     TableRow.LayoutParams.WRAP_CONTENT));
+
             // inner for loop
-            for (int j = 1; j <= 1; j++) {
-                if (i == 1 && j == 1) {
-                    row.addView(addTextView("Measured Airflow Qty\n(cfm) "));
+            for (int j = 1; j <= cols; j++) {
+                if (i == 1 && j <= cols) {
+                    TextView textView = addTextView(" Q " + j);
+                    textView.setEms(2+Utilityies.getPctCellWidth(cols));
+                    row.addView(textView);
                 } else {
-                    row.addView(addEditTextView(i));
+                    EditText editText = addEditTextView(i);
+                    editText.setEms(2+Utilityies.getPctCellWidth(cols));
+                    row.addView(editText);
                 }
             }
             test3_table_layout2.addView(row);
@@ -1864,12 +1869,17 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
                     TableRow.LayoutParams.WRAP_CONTENT));
             // inner for loop
-            for (int j = 1; j <= 1; j++) {
+            for (int j = 1; j <= cols; j++) {
                 if (i == 1 && j == 1) {
-                    row.addView(addTextView(" Total Air Flow Rate\n in cfm (TFR)"));
+                    TextView textView = addTextView(" Average ");
+                    textView.setEms(4);
+                    row.addView(textView);
                 } else {
                     //row.addView(addTextViewWithoutBorder("0"));
-                    row.addView(addTextViewWithIdsNoBorder(i, totalAirFlowRateIds, totalAirFlowRateTxtList));
+                    //row.addView(addTextViewWithIdsNoBorder(i, totalAirFlowRateIds, totalAirFlowRateTxtList));
+                    TextView textView = addTextViewWithIdsNoBorder(i, totalAirFlowRateIds, totalAirFlowRateTxtList);
+                    textView.setEms(4);
+                    row.addView(textView);
                 }
             }
             test3_table_layout3.addView(row);

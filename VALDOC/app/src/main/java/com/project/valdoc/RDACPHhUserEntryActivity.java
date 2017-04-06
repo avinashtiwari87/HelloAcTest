@@ -15,6 +15,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -620,16 +621,21 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
         //Second section
         // outer for loop
         for (int i = 1; i <= rows; i++) {
+
             TableRow row = new TableRow(this);
             row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
                     TableRow.LayoutParams.WRAP_CONTENT));
+
             // inner for loop
-            for (int j = 1; j <= 1; j++) {
-                if (i == 1 && j == 1) {
-                    row.addView(addTextView("Measured Air Flow Quantity\n(cfm) Q1"));
+            for (int j = 1; j <= cols; j++) {
+                if (i == 1 && j <= cols) {
+                    TextView textView = addTextView(" Q " + j);
+                    textView.setEms(1+Utilityies.getPctCellWidth(cols));
+                    row.addView(textView);
                 } else {
-                    //row.addView(addTextView(" "));
-                    row.addView(addInputDataTextView());
+                    TextView editText = addInputDataTextView();
+                    editText.setEms(1+Utilityies.getPctCellWidth(cols));
+                    row.addView(editText);
                 }
             }
             test3_table_layout2.addView(row);
@@ -642,13 +648,17 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
             row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
                     TableRow.LayoutParams.WRAP_CONTENT));
             // inner for loop
-            for (int j = 1; j <= 1; j++) {
+            for (int j = 1; j <= cols; j++) {
                 if (i == 1 && j == 1) {
-                    row.addView(addTextView("Air Flow Rate (cfm)\n(Average)"));
+                    TextView textView = addTextView(" Average ");
+                    textView.setEms(8);
+                    row.addView(textView);
                 } else {
                     //row.addView(addTextViewWithoutBorder("0"));
                     //row.addView(addTextViewWithIdsNoBorder(i, totalAirFlowRateIds, totalAirFlowRateTxtList));
-                    row.addView(addAverageInputDataTextView());
+                    TextView textView = addAverageInputDataTextView();
+                    textView.setEms(8);
+                    row.addView(textView);
                 }
             }
             test3_table_layout3.addView(row);
@@ -779,6 +789,7 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
         test3_table_layout = (TableLayout) findViewById(R.id.test3_tableLayout1);
         test3_table_layout2 = (TableLayout) findViewById(R.id.test3_tableLayout2);
         test3_table_layout3 = (TableLayout) findViewById(R.id.test3_tableLayout3);
+        findViewById(R.id.room_h_test_tv).setVisibility(View.VISIBLE);
         test3_table_layout4 = (TableLayout) findViewById(R.id.test3_tableLayout4);
         test3_table_layout4.setVisibility(View.GONE);
         test3_table_layout5 = (TableLayout) findViewById(R.id.test3_tableLayout5);
