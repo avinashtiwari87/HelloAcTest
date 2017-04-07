@@ -193,18 +193,25 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
         for (Map.Entry m : userEnterdValue.entrySet()) {
             Log.v(TAG, m.getKey() + " " + m.getValue());
         }
-
-        Log.v(TAG, " txtViewList size: " + txtViewList.size());
-        for (int i = 0; i < txtViewList.size(); i++) {
-            TextView tvl = txtViewList.get(i);
-            tvl.setText(userEnterdValue.get(tvl.getId()) + "");
-        }
-
         //Receiving Result Data from Bundle
         //average of v1 ,v2...where id is 1,2....
         airFlowRateMap = (HashMap<Integer, Long>) getIntent().getSerializableExtra("ResultData");
         for (Map.Entry n : airFlowRateMap.entrySet()) {
             Log.v(TAG, " Result: " + n.getKey() + " " + n.getValue());
+        }
+
+        Log.v(TAG, " txtViewList size: " + txtViewList.size());
+        for (int i = 0; i < txtViewList.size(); i++) {
+            TextView tvl = txtViewList.get(i);
+            // Checking individual input base on Average
+            for (int j = 0; j <txtViewList.size()/cols ; j++) {
+                TextView avgResultTv = resultTextViewList.get(j);
+                boolean results =checkInputValueBasedOnAverage(userEnterdValue.get(tvl.getId()),
+                        airFlowRateMap.get(avgResultTv.getId()),10 );
+                if(!results)
+                    tvl.setTextColor(Color.RED);
+            }
+            tvl.setText(userEnterdValue.get(tvl.getId()) + "");
         }
 
         for (int i = 0; i < resultTextViewList.size(); i++) {
@@ -1232,6 +1239,21 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
             test2_table_layout6.setVisibility(View.GONE);
             measerdTv.setText("Measured Air Velocity (fpm) ");
         }
+    }
+
+    private boolean checkInputValueBasedOnAverage(int inputValue , long averageValue, int percentValue) {
+        double variance = 0;
+        long avg;
+        boolean resultValue = false;
+
+        variance = (double) (averageValue * percentValue) / 100;
+        avg = Math.round(variance);
+
+        if ((inputValue >= (averageValue - avg)) || (inputValue <= (averageValue + avg))) {
+            resultValue = true;
+        }
+
+        return resultValue;
     }
 }
 

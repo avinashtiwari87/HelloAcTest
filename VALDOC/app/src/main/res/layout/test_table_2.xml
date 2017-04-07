@@ -211,6 +211,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/border"
                 android:text="(TFR)"
+                android:gravity="center"
                 android:textColor="@color/black"
                 android:textSize="@dimen/normal_text_size"
                 android:textStyle="bold" />
@@ -244,6 +245,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/border"
+                android:gravity="center"
                 android:text="((TFR/RV)x60))"
                 android:textColor="@color/black"
                 android:textSize="@dimen/normal_text_size"
