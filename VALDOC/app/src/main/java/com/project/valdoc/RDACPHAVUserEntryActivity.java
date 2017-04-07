@@ -249,13 +249,15 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
                 mtvl.setText(Math.round(mTotalAirFlowRateValue) + "");
                 if (mTestBasedOn.equalsIgnoreCase("AHU")) {
                     if (colorPicker(Double.parseDouble(mApplicableTestAhu.getTestSpecification()), mTotalAirFlowRateValue, mTestBasedOn)) {
-                        mtvl.setTextColor(Color.RED);
+                        //mtvl.setTextColor(Color.RED);
+                        mtvl.setTextColor(Color.BLACK);
                     } else {
                         mtvl.setTextColor(Color.BLACK);
                     }
                 } else if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
                     if (colorPicker(Double.parseDouble(mApplicableTestRoom.getTestSpecification()), mTotalAirFlowRateValue, mTestBasedOn)) {
-                        mtvl.setTextColor(Color.RED);
+                        //mtvl.setTextColor(Color.RED);
+                        mtvl.setTextColor(Color.BLACK);
                     } else {
                         mtvl.setTextColor(Color.BLACK);
                     }
@@ -269,13 +271,15 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
                     tvl.setText(Math.round(totalAirFlowRateMap.get(tvl.getId())) + "");
                     if (mTestBasedOn.equalsIgnoreCase("AHU")) {
                         if (colorPicker(Double.parseDouble(mApplicableTestAhu.getTestSpecification()), (double) totalAirFlowRateMap.get(tvl.getId()), mTestBasedOn)) {
-                            tvl.setTextColor(Color.RED);
+                            //tvl.setTextColor(Color.RED);
+                            tvl.setTextColor(Color.BLACK);
                         } else {
                             tvl.setTextColor(Color.BLACK);
                         }
                     } else if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
                         if (colorPicker(Double.parseDouble(mApplicableTestRoom.getTestSpecification()), (double) totalAirFlowRateMap.get(tvl.getId()), mTestBasedOn)) {
-                            tvl.setTextColor(Color.RED);
+                           // tvl.setTextColor(Color.RED);
+                            tvl.setTextColor(Color.BLACK);
                         } else {
                             tvl.setTextColor(Color.BLACK);
                         }
@@ -285,13 +289,15 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
             TFRtv.setText(Math.round(totalAirFlowRate) + "");
             if (mTestBasedOn.equalsIgnoreCase("AHU")) {
                 if (colorPicker(Double.parseDouble(mApplicableTestAhu.getTestSpecification()), totalAirFlowRate, mTestBasedOn)) {
-                    TFRtv.setTextColor(Color.RED);
+                    //TFRtv.setTextColor(Color.RED);
+                    TFRtv.setTextColor(Color.BLACK);
                 } else {
                     TFRtv.setTextColor(Color.BLACK);
                 }
             } else if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
                 if (colorPicker(Double.parseDouble(mApplicableTestRoom.getTestSpecification()), totalAirFlowRate, mTestBasedOn)) {
-                    TFRtv.setTextColor(Color.RED);
+                    //TFRtv.setTextColor(Color.RED);
+                    TFRtv.setTextColor(Color.BLACK);
                 } else {
                     TFRtv.setTextColor(Color.BLACK);
                 }
