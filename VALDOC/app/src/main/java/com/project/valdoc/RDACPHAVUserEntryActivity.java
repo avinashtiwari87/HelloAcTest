@@ -891,25 +891,49 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
                         if (null != mAhuFilterArrayList && mAhuFilterArrayList.size() > 0) {
 //                            HashMap<String, String> grill = (HashMap<String, String>) grillAndSizeFromGrill.get(i - 2);
 //                            Log.d("valdoc", "DynamicTableActivity grillAndSizeFromGrill=" + grillAndSizeFromGrill.size() + "i=" + i);
-                            row.addView(addTextView(mAhuFilterArrayList.get(i - 2).getFilterCode()));
+                            TextView grillTV = addTextView(mAhuFilterArrayList.get(i - 2).getFilterCode());
+                            ViewGroup.LayoutParams params = grillTV.getLayoutParams();
+                            params.height = 90;
+                            grillTV.setLayoutParams(params);
+                            row.addView(grillTV);
                         } else {
-                            row.addView(addTextView("grillAndSizeFromGrill"));
+                            TextView grillTV = addTextView("grillAndSizeFromGrill");
+                            ViewGroup.LayoutParams params = grillTV.getLayoutParams();
+                            params.height = 90;
+                            grillTV.setLayoutParams(params);
+                            row.addView(grillTV);
                         }
                     } else if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
                         if (mGrilFilterType.equalsIgnoreCase("Grill")) {
                             if (null != grillAndSizeFromGrill && grillAndSizeFromGrill.size() > 0) {
-                                row.addView(addTextView(grillAndSizeFromGrill.get(i - 2).getGrillCode().toString()));
+                                TextView grillTV = addTextView(grillAndSizeFromGrill.get(i - 2).getGrillCode().toString());
+                                ViewGroup.LayoutParams params = grillTV.getLayoutParams();
+                                params.height = 90;
+                                grillTV.setLayoutParams(params);
+                                row.addView(grillTV);
                             } else {
-                                row.addView(addTextView("grillAndSizeFromGrill"));
+                                TextView grillTV = addTextView("grillAndSizeFromGrill");
+                                ViewGroup.LayoutParams params = grillTV.getLayoutParams();
+                                params.height = 90;
+                                grillTV.setLayoutParams(params);
+                                row.addView(grillTV);
                             }
 
                         } else {
                             if (null != mRoomFilterArrayList && mRoomFilterArrayList.size() > 0) {
 //                            HashMap<String, String> grill = (HashMap<String, String>) grillAndSizeFromGrill.get(i - 2);
 //                            Log.d("valdoc", "DynamicTableActivity grillAndSizeFromGrill=" + grillAndSizeFromGrill.size() + "i=" + i);
-                                row.addView(addTextView(mRoomFilterArrayList.get(i - 2).getFilterCode()));
+                                TextView grillTV = addTextView(mRoomFilterArrayList.get(i - 2).getFilterCode());
+                                ViewGroup.LayoutParams params = grillTV.getLayoutParams();
+                                params.height = 90;
+                                grillTV.setLayoutParams(params);
+                                row.addView(grillTV);
                             } else {
-                                row.addView(addTextView("grillAndSizeFromGrill"));
+                                TextView grillTV = addTextView("grillAndSizeFromGrill");
+                                ViewGroup.LayoutParams params = grillTV.getLayoutParams();
+                                params.height = 90;
+                                grillTV.setLayoutParams(params);
+                                row.addView(grillTV);
                             }
 
                         }
@@ -944,7 +968,11 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
                         double filterSize = 0.0f;
                         if (!mAhuFilterArrayList.isEmpty()) {
                             filterSize = mAhuFilterArrayList.get(i - 2).getEffectiveArea();
-                            row.addView(addTextView("" + filterSize));
+                            TextView grillTV = addTextView("" + filterSize);
+                            ViewGroup.LayoutParams params = grillTV.getLayoutParams();
+                            params.height = 90;
+                            grillTV.setLayoutParams(params);
+                            row.addView(grillTV);
                         }
 
                     } else if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
@@ -954,7 +982,11 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
                                 float filterSize = 0.0f;
 //                                if (!grill.isEmpty())
                                 filterSize = (float) (grillAndSizeFromGrill.get(i - 2).getEffectiveArea());
-                                row.addView(addTextView("" + filterSize));
+                                TextView grillTV = addTextView("" + filterSize);
+                                ViewGroup.LayoutParams params = grillTV.getLayoutParams();
+                                params.height = 90;
+                                grillTV.setLayoutParams(params);
+                                row.addView(grillTV);
 //                                row.addView(addTextViewWithTagIds(i, filterSizeIds, filterSizeTxtViewList, filterSize + ""));
                             }
 
@@ -963,7 +995,11 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
                             if (!mRoomFilterArrayList.isEmpty())
                                 filterSize = mRoomFilterArrayList.get(i - 2).getEffectiveFilterArea();
 //                            row.addView(addTextViewWithTagIds(i, filterSizeIds, filterSizeTxtViewList, filterSize + ""));
-                            row.addView(addTextView("" + filterSize));
+                            TextView grillTV = addTextView("" + filterSize);
+                            ViewGroup.LayoutParams params = grillTV.getLayoutParams();
+                            params.height = 90;
+                            grillTV.setLayoutParams(params);
+                            row.addView(grillTV);
 
                         }
 
@@ -985,10 +1021,19 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
             // inner for loop
             for (int j = 1; j <= cols; j++) {
                 if (i == 1 && j <= cols) {
-                    row.addView(addTextView(" V " + j));
+                    TextView grillTV = addTextView(" V " + j);
+                    ViewGroup.LayoutParams params = grillTV.getLayoutParams();
+                    params.height = 90;
+                    grillTV.setLayoutParams(params);
+                    row.addView(grillTV);
                 } else {
                     //row.addView(addEditTextView());
-                    row.addView(addInputDataTextView());
+                    TextView grillTV = addInputDataTextView();
+                    ViewGroup.LayoutParams params = grillTV.getLayoutParams();
+                    params.height = 90;
+                    grillTV.setLayoutParams(params);
+                    row.addView(grillTV);
+
                 }
             }
             test2_table_layout3.addView(row);
@@ -1010,7 +1055,12 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
                     row.addView(grillTV);
                 } else {
                     //result data  set
-                    row.addView(addResultTextView(i));
+                    TextView grillTV = addResultTextView(i);
+                    ViewGroup.LayoutParams params = grillTV.getLayoutParams();
+                    params.height = 90;
+                    grillTV.setLayoutParams(params);
+                    row.addView(grillTV);
+
                 }
             }
             test2_table_layout4.addView(row);
@@ -1033,7 +1083,11 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
                     row.addView(grillTV);
                 } else {
                     //row.addView(addTextView("490"));
-                    row.addView(addTextViewWithTagIds(i, airFlowRateIds, airFlowRateTxtViewList, 0));
+                    TextView grillTV = addTextViewWithTagIds(i, airFlowRateIds, airFlowRateTxtViewList, 0);
+                    ViewGroup.LayoutParams params = grillTV.getLayoutParams();
+                    params.height = 90;
+                    grillTV.setLayoutParams(params);
+                    row.addView(grillTV);
                     airFlowRateIds++;
                 }
             }
@@ -1249,7 +1303,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
         TFTByRvTv = (TextView) findViewById(R.id.acph_av_tfrby_av_value_tv);
         TextView measerdTv = (TextView) findViewById(R.id.measerd_av_tv);
         ViewGroup.LayoutParams params = measerdTv.getLayoutParams();
-        params.height = 76;
+        params.height = 40;
         measerdTv.setLayoutParams(params);
 
         findViewById(R.id.test2_reading_header).setVisibility(View.VISIBLE);
