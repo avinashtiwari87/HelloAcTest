@@ -15,6 +15,7 @@
     <dimen name="text_view_height2">60dp</dimen>
     <dimen name="pct_text_cell_height">42.5dp</dimen>
     <dimen name="text_cell_height">85dp</dimen>
+    <dimen name="text_cell_height_H">36dp</dimen>
 </resources>
 
 

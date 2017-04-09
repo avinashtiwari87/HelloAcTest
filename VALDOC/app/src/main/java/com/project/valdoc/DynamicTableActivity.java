@@ -1814,7 +1814,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
                     //row.addView(addTextView(" Grill/Filter No\n "));
-                    TextView grillTV = addTextView(" Grill/Filter No\n ");
+                    TextView grillTV = addTextViewHeading(" Grill/Filter No\n ");
                     ViewGroup.LayoutParams params = grillTV.getLayoutParams();
                     params.height = 72;
                     grillTV.setLayoutParams(params);
@@ -1823,18 +1823,18 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
 
                     if (mGrilFilterType.equalsIgnoreCase("Grill")) {
                         if (null != grillAndSizeFromGrill && grillAndSizeFromGrill.size() > 0) {
-                            row.addView(addTextView(grillAndSizeFromGrill.get(i - 2).getGrillCode().toString()));
+                            row.addView(addTextViewH(grillAndSizeFromGrill.get(i - 2).getGrillCode().toString()));
                         } else {
-                            row.addView(addTextView("grillAndSizeFromGrill"));
+                            row.addView(addTextViewH("grillAndSizeFromGrill"));
                         }
 
                     } else {
                         if (null != mRoomFilterArrayList && mRoomFilterArrayList.size() > 0) {
 //                            HashMap<String, String> grill = (HashMap<String, String>) grillAndSizeFromGrill.get(i - 2);
 //                            Log.d("valdoc", "DynamicTableActivity grillAndSizeFromGrill=" + grillAndSizeFromGrill.size() + "i=" + i);
-                            row.addView(addTextView(mRoomFilterArrayList.get(i - 2).getFilterCode()));
+                            row.addView(addTextViewH(mRoomFilterArrayList.get(i - 2).getFilterCode()));
                         } else {
-                            row.addView(addTextView("grillAndSizeFromGrill"));
+                            row.addView(addTextViewH("grillAndSizeFromGrill"));
                         }
 
                     }
@@ -1855,7 +1855,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             // inner for loop
             for (int j = 1; j <= cols; j++) {
                 if (i == 1 && j <= cols) {
-                    TextView textView = addTextView(" Q " + j);
+                    TextView textView = addTextViewH(" Q " + j);
                     if (cols <= 2)
                         textView.setEms(13+ Utilityies.getPctCellWidth(cols));
                     else
@@ -1867,6 +1867,9 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                         editText.setEms(13+Utilityies.getPctCellWidth(cols));
                     else
                         editText.setEms(2+Utilityies.getPctCellWidth(cols));
+                    ViewGroup.LayoutParams params = editText.getLayoutParams();
+                    params.height = 36;
+                    editText.setLayoutParams(params);
                     row.addView(editText);
                 }
             }
@@ -1882,7 +1885,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             // inner for loop
             for (int j = 1; j <= cols; j++) {
                 if (i == 1 && j == 1) {
-                    TextView textView = addTextView(" Average ");
+                    TextView textView = addTextViewH(" Average ");
                     textView.setEms(4);
                     row.addView(textView);
                 } else {
@@ -1905,7 +1908,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
-                    row.addView(addTextView(" Room Volume in\n ft3(RV)"));
+                    row.addView(addTextViewH(" Room Volume in\n ft3(RV)"));
                 } else {
                     // row.addView(addTextViewWithoutBorder("490"));
                     row.addView(addTextViewWithIdsNoBorder(i, 0, roomVolumeTxtList));
@@ -1923,7 +1926,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
-                    row.addView(addTextView("No. of Air Changes/Hr\n ((TFR/RV)x60))"));
+                    row.addView(addTextViewH("No. of Air Changes/Hr\n ((TFR/RV)x60))"));
                 } else {
                     //row.addView(addTextViewWithoutBorder("490"));
                     row.addView(addTextViewWithIdsNoBorder(i, 0, airChangeTxtList));
@@ -2278,6 +2281,44 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
 
 
     private TextView addTextView(String textValue) {
+        TextView tv = new TextView(this);
+        tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+                TableRow.LayoutParams.WRAP_CONTENT));
+        tv.setBackgroundResource(R.drawable.border1);
+//        ViewGroup.LayoutParams layoutParams = tv.getLayoutParams();
+//        layoutParams.height = getResources().getDimensionPixelSize(R.dimen.text_cell_height_H);
+//        tv.setLayoutParams(layoutParams);
+
+        tv.setGravity(Gravity.CENTER);
+        tv.setPadding(5, 5, 5, 5);
+        tv.setTextColor(getResources().getColor(R.color.black));
+        tv.setTextSize(getResources().getDimension(R.dimen.normal_text_size));
+        tv.setSingleLine(false);
+        tv.setMaxLines(3);
+        tv.setEllipsize(TextUtils.TruncateAt.END);
+        tv.setText(textValue);
+        return tv;
+    }
+    private TextView addTextViewH(String textValue) {
+        TextView tv = new TextView(this);
+        tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+                TableRow.LayoutParams.WRAP_CONTENT));
+        tv.setBackgroundResource(R.drawable.border1);
+        ViewGroup.LayoutParams layoutParams = tv.getLayoutParams();
+        layoutParams.height = getResources().getDimensionPixelSize(R.dimen.text_cell_height_H);
+        tv.setLayoutParams(layoutParams);
+
+        tv.setGravity(Gravity.CENTER);
+        tv.setPadding(5, 5, 5, 5);
+        tv.setTextColor(getResources().getColor(R.color.black));
+        tv.setTextSize(getResources().getDimension(R.dimen.normal_text_size));
+        tv.setSingleLine(false);
+        tv.setMaxLines(3);
+        tv.setEllipsize(TextUtils.TruncateAt.END);
+        tv.setText(textValue);
+        return tv;
+    }
+    private TextView addTextViewHeading(String textValue) {
         TextView tv = new TextView(this);
         tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
                 TableRow.LayoutParams.WRAP_CONTENT));
