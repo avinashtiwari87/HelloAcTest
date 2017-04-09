@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -555,7 +556,12 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
-                    row.addView(addTextView("Grille / Filter ID"));
+                    //row.addView(addTextView("Grille / Filter ID"));
+                    TextView grillTV = addTextView(" Grill/Filter No\n ");
+                    ViewGroup.LayoutParams params = grillTV.getLayoutParams();
+                    params.height = 98;
+                    grillTV.setLayoutParams(params);
+                    row.addView(grillTV);
                 } else {
                     if (mTestBasedOn.equalsIgnoreCase("AHU")) {
                         row.addView(addTextView(mAhuFilterArrayList.get(i - 2).getFilterCode()));
@@ -605,7 +611,12 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
-                    row.addView(addTextView("Avg. Airflow Velocity(fpm)"));
+                    //row.addView(addTextView("Avg. Airflow Velocity(fpm)"));
+                    TextView grillTV = addTextView("Avg. Airflow Velocity(fpm)");
+                    ViewGroup.LayoutParams params = grillTV.getLayoutParams();
+                    params.height = 98;
+                    grillTV.setLayoutParams(params);
+                    row.addView(grillTV);
                 } else {
                     //result data  set
                     row.addView(addResultTextView(i));
@@ -773,8 +784,6 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
         TextView TestHeader = (TextView) findViewById(R.id.common_header_tv);
         TestHeader.setText("TEST RAW DATA EQUIPMENT\n(Average Air Flow Velocity Testing)");
         findViewById(R.id.test1_reading_header).setVisibility(View.VISIBLE);
-        findViewById(R.id.test1_header_row1_tv).setVisibility(View.VISIBLE);
-        findViewById(R.id.test1_header_row2_tv).setVisibility(View.VISIBLE);
         findViewById(R.id.common_header_test1).setVisibility(View.GONE);
     }
 }
