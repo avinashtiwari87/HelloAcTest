@@ -559,7 +559,7 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
                     //row.addView(addTextView("Grille / Filter ID"));
                     TextView grillTV = addTextView(" Grill/Filter No\n ");
                     ViewGroup.LayoutParams params = grillTV.getLayoutParams();
-                    params.height = 98;
+                    params.height = 72;
                     grillTV.setLayoutParams(params);
                     row.addView(grillTV);
                 } else {
@@ -614,7 +614,7 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
                     //row.addView(addTextView("Avg. Airflow Velocity(fpm)"));
                     TextView grillTV = addTextView("Avg. Airflow Velocity(fpm)");
                     ViewGroup.LayoutParams params = grillTV.getLayoutParams();
-                    params.height = 98;
+                    params.height = 72;
                     grillTV.setLayoutParams(params);
                     row.addView(grillTV);
                 } else {
@@ -653,6 +653,11 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
         TextView tv = new TextView(this);
         tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
                 TableRow.LayoutParams.WRAP_CONTENT));
+
+        ViewGroup.LayoutParams params = tv.getLayoutParams();
+        params.height = 36;
+        tv.setLayoutParams(params);
+
         tv.setBackgroundResource(R.drawable.border1);
         tv.setGravity(Gravity.CENTER);
         //tv.setPadding(5, 5, 5, 5);
@@ -673,6 +678,11 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
         TextView tv = new TextView(this);
         tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
                 TableRow.LayoutParams.WRAP_CONTENT));
+
+        ViewGroup.LayoutParams params = tv.getLayoutParams();
+        params.height = 36;
+        tv.setLayoutParams(params);
+
         tv.setBackgroundResource(R.drawable.border1);
         tv.setGravity(Gravity.CENTER);
         tv.setTextColor(getResources().getColor(R.color.black));

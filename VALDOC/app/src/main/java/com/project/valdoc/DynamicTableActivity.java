@@ -2210,18 +2210,18 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                     //row.addView(addTextView("Grill / Filter No"));
                     TextView grillTV = addTextView(" Grill/Filter No\n ");
                     ViewGroup.LayoutParams params = grillTV.getLayoutParams();
-                    params.height = 98;
+                    params.height = 72;
                     grillTV.setLayoutParams(params);
                     row.addView(grillTV);
                 } else {
                     //becouse i starts with 1 so that i-2
                     if ("AHU".equalsIgnoreCase(mTestBasedOn)) {
-                        row.addView(addTextView(mAhuFilterArrayList.get(i - 2).getFilterCode()));
+                        row.addView(addTextViewH(mAhuFilterArrayList.get(i - 2).getFilterCode()));
                     } else if ("EQUIPMENT".equalsIgnoreCase(mTestBasedOn)) {
                         if (mGrilFilterType.equalsIgnoreCase("Grill")) {
-                            row.addView(addTextView(mEquipmentGrillArrayList.get(i - 2).getGrillCode()));
+                            row.addView(addTextViewH(mEquipmentGrillArrayList.get(i - 2).getGrillCode()));
                         } else {
-                            row.addView(addTextView(mEquipmentFilterArrayList.get(i - 2).getFilterCode()));
+                            row.addView(addTextViewH(mEquipmentFilterArrayList.get(i - 2).getFilterCode()));
                         }
 
                     }
@@ -2245,10 +2245,15 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             // inner for loop
             for (int j = 1; j <= cols; j++) {
                 if (i == 1 && j <= cols) {
-                    row.addView(addTextView(" V " + j));
+                    row.addView(addTextViewH(" V " + j));
                 } else {
                     //tv.setText(84+i+j+"");
-                    row.addView(addEditTextView(i));
+                    //row.addView(addEditTextView(i));
+                    EditText textView = addEditTextView(i);
+                    ViewGroup.LayoutParams layoutParams = textView.getLayoutParams();
+                    layoutParams.height = 36;
+                    textView.setLayoutParams(layoutParams);
+                    row.addView(textView);
                 }
             }
             table_layout2.addView(row);
