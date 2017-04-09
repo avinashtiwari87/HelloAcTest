@@ -605,7 +605,7 @@ public class RDACPHAVPostViewActivity extends AppCompatActivity {
         TFRtv = (TextView) findViewById(R.id.acph_av_tfr_value_tv);
         TFRByRvTv = (TextView) findViewById(R.id.acph_av_tfrby_av_value_tv);
 
-        findViewById(R.id.test2_reading_header).setVisibility(View.VISIBLE);
+
         TextView TestHeader = (TextView) findViewById(R.id.common_header_tv);
         TextView TestHeader2 = (TextView) findViewById(R.id.common_header_2_tv);
         TestHeader.setText("TEST RAW DATA EQUIPMENT");

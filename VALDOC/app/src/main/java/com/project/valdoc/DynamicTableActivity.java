@@ -1949,7 +1949,12 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
-                    row.addView(addTextView(" Grill / Filter No\n "));
+                    //row.addView(addTextView(" Grill / Filter No\n "));
+                    TextView grillTV = addTextView(" Grill/Filter No\n ");
+                    ViewGroup.LayoutParams params = grillTV.getLayoutParams();
+                    params.height = 126;
+                    grillTV.setLayoutParams(params);
+                    row.addView(grillTV);
                 } else {
                     if ("AHU".equalsIgnoreCase(mTestBasedOn)) {
                         if (null != mAhuFilterArrayList && mAhuFilterArrayList.size() > 0) {

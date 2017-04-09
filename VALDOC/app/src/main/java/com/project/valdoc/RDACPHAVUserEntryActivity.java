@@ -880,7 +880,12 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
-                    row.addView(addTextView(" Grill / Filter No\n "));
+                    //row.addView(addTextView(" Grill / Filter No\n "));
+                    TextView grillTV = addTextView(" Grill/Filter No\n ");
+                    ViewGroup.LayoutParams params = grillTV.getLayoutParams();
+                    params.height = 125;
+                    grillTV.setLayoutParams(params);
+                    row.addView(grillTV);
                 } else {
                     if (mTestBasedOn.equalsIgnoreCase("AHU")) {
                         if (null != mAhuFilterArrayList && mAhuFilterArrayList.size() > 0) {
@@ -928,7 +933,12 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
-                    row.addView(addTextView(" Grill/Filter Area(ft2)\n  A"));
+                   // row.addView(addTextView(" Grill/Filter Area(ft2)\n  A"));
+                    TextView grillTV = addTextView(" Grill/Filter Area(ft2)\n  A");
+                    ViewGroup.LayoutParams params = grillTV.getLayoutParams();
+                    params.height = 125;
+                    grillTV.setLayoutParams(params);
+                    row.addView(grillTV);
                 } else {
                     if (mTestBasedOn.equalsIgnoreCase("AHU")) {
                         double filterSize = 0.0f;
@@ -992,7 +1002,12 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
-                    row.addView(addTextView("Average Air Velocity\n  (fpm)"));
+                    //row.addView(addTextView("Average Air Velocity\n  (fpm)"));
+                    TextView grillTV = addTextView("Average Air Velocity\n  (fpm)");
+                    ViewGroup.LayoutParams params = grillTV.getLayoutParams();
+                    params.height = 125;
+                    grillTV.setLayoutParams(params);
+                    row.addView(grillTV);
                 } else {
                     //result data  set
                     row.addView(addResultTextView(i));
@@ -1010,7 +1025,12 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
-                    row.addView(addTextView(" Air Flow Rate\n cfm(AxAv)"));
+                    //row.addView(addTextView(" Air Flow Rate\n cfm(AxAv)"));
+                    TextView grillTV = addTextView(" Air Flow Rate\n cfm(AxAv)");
+                    ViewGroup.LayoutParams params = grillTV.getLayoutParams();
+                    params.height = 125;
+                    grillTV.setLayoutParams(params);
+                    row.addView(grillTV);
                 } else {
                     //row.addView(addTextView("490"));
                     row.addView(addTextViewWithTagIds(i, airFlowRateIds, airFlowRateTxtViewList, 0));
@@ -1030,7 +1050,12 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
-                    row.addView(addTextView("Total Air Flow Rate\n (cfm)"));
+                    //row.addView(addTextView("Total Air Flow Rate\n (cfm)"));
+                    TextView grillTV = addTextView("Total Air Flow Rate\n (cfm)");
+                    ViewGroup.LayoutParams params = grillTV.getLayoutParams();
+                    params.height = 125;
+                    grillTV.setLayoutParams(params);
+                    row.addView(grillTV);
                 } else {
                     //row.addView(addTextViewWithoutBorder("490"));
                     row.addView(addTextViewWithIdsNoBorder(i, totalAirFlowRateIds, totalAirFlowRateTxtList));
@@ -1218,9 +1243,6 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
         measerdTv.setLayoutParams(params);
 
         findViewById(R.id.test2_reading_header).setVisibility(View.VISIBLE);
-        findViewById(R.id.test2_header_row1_tv).setVisibility(View.VISIBLE);
-        findViewById(R.id.test2_header_row4_tv).setVisibility(View.VISIBLE);
-        findViewById(R.id.test2_header_row5_tv).setVisibility(View.VISIBLE);
         TextView TestHeader = (TextView) findViewById(R.id.common_header_tv);
         TextView TestHeader2 = (TextView) findViewById(R.id.common_header_2_tv);
         TestHeader.setText("TEST RAW DATA EQUIPMENT");
@@ -1228,7 +1250,6 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
         TestHeader2.setText("(Air Flow Velocity, Volume Testing and Determination of Air Changes per Hour Rates)");
         if ("AHU".equalsIgnoreCase(mTestBasedOn)) {
             findViewById(R.id.acph_av_final_calc_ll).setVisibility(View.VISIBLE);
-            findViewById(R.id.test2_header_row6_tv).setVisibility(View.VISIBLE);
             test2_table_layout6.setVisibility(View.VISIBLE);
             findViewById(R.id.acph_av_final_calc_ll).setVisibility(View.GONE);
             findViewById(R.id.common_certificate_header_ll).setVisibility(View.VISIBLE);
