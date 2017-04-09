@@ -13,6 +13,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -592,7 +593,11 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
-                    row.addView(addTextView(" Grill/Filter No\n "));
+                    TextView grillTV = addTextView(" Grill/Filter No\n ");
+                    ViewGroup.LayoutParams params = grillTV.getLayoutParams();
+                    params.height = 100;
+                    grillTV.setLayoutParams(params);
+                    row.addView(grillTV);
                 } else {
 
                     if (mGrilFilterType.equalsIgnoreCase("Grill")) {
@@ -630,11 +635,17 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
             for (int j = 1; j <= cols; j++) {
                 if (i == 1 && j <= cols) {
                     TextView textView = addTextView(" Q " + j);
-                    textView.setEms(1+Utilityies.getPctCellWidth(cols));
+                    if (cols <= 2)
+                        textView.setEms(4+Utilityies.getPctCellWidth(cols));
+                    else
+                        textView.setEms(Utilityies.getPctCellWidth(cols));
                     row.addView(textView);
                 } else {
                     TextView editText = addInputDataTextView();
-                    editText.setEms(1+Utilityies.getPctCellWidth(cols));
+                    if (cols <= 2)
+                        editText.setEms(4+Utilityies.getPctCellWidth(cols));
+                    else
+                        editText.setEms(Utilityies.getPctCellWidth(cols));
                     row.addView(editText);
                 }
             }
@@ -651,13 +662,19 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
             for (int j = 1; j <= cols; j++) {
                 if (i == 1 && j == 1) {
                     TextView textView = addTextView(" Average ");
-                    textView.setEms(8);
+                    if (cols <= 2)
+                        textView.setEms(10);
+                    else
+                        textView.setEms(8);
                     row.addView(textView);
                 } else {
                     //row.addView(addTextViewWithoutBorder("0"));
                     //row.addView(addTextViewWithIdsNoBorder(i, totalAirFlowRateIds, totalAirFlowRateTxtList));
                     TextView textView = addAverageInputDataTextView();
-                    textView.setEms(8);
+                    if (cols <= 2)
+                        textView.setEms(10);
+                    else
+                        textView.setEms(8);
                     row.addView(textView);
                 }
             }
