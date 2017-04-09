@@ -883,7 +883,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
                     //row.addView(addTextView(" Grill / Filter No\n "));
                     TextView grillTV = addTextView(" Grill/Filter No\n ");
                     ViewGroup.LayoutParams params = grillTV.getLayoutParams();
-                    params.height = 125;
+                    params.height = 130;
                     grillTV.setLayoutParams(params);
                     row.addView(grillTV);
                 } else {
@@ -936,7 +936,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
                    // row.addView(addTextView(" Grill/Filter Area(ft2)\n  A"));
                     TextView grillTV = addTextView(" Grill/Filter Area(ft2)\n  A");
                     ViewGroup.LayoutParams params = grillTV.getLayoutParams();
-                    params.height = 125;
+                    params.height = 130;
                     grillTV.setLayoutParams(params);
                     row.addView(grillTV);
                 } else {
@@ -1005,7 +1005,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
                     //row.addView(addTextView("Average Air Velocity\n  (fpm)"));
                     TextView grillTV = addTextView("Average Air Velocity\n  (fpm)");
                     ViewGroup.LayoutParams params = grillTV.getLayoutParams();
-                    params.height = 125;
+                    params.height = 130;
                     grillTV.setLayoutParams(params);
                     row.addView(grillTV);
                 } else {
@@ -1028,7 +1028,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
                     //row.addView(addTextView(" Air Flow Rate\n cfm(AxAv)"));
                     TextView grillTV = addTextView(" Air Flow Rate\n cfm(AxAv)");
                     ViewGroup.LayoutParams params = grillTV.getLayoutParams();
-                    params.height = 125;
+                    params.height = 130;
                     grillTV.setLayoutParams(params);
                     row.addView(grillTV);
                 } else {
@@ -1110,6 +1110,11 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
         TextView tv = new TextView(this);
         tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
                 TableRow.LayoutParams.WRAP_CONTENT));
+
+        ViewGroup.LayoutParams layoutParams = tv.getLayoutParams();
+        layoutParams.height = 90;
+        tv.setLayoutParams(layoutParams);
+
         tv.setBackgroundResource(R.drawable.border1);
         tv.setGravity(Gravity.CENTER);
         tv.setTextColor(getResources().getColor(R.color.black));
@@ -1127,6 +1132,11 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
         TextView tv = new TextView(this);
         tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
                 TableRow.LayoutParams.WRAP_CONTENT));
+
+        ViewGroup.LayoutParams layoutParams = tv.getLayoutParams();
+        layoutParams.height = 90;
+        tv.setLayoutParams(layoutParams);
+
         tv.setBackgroundResource(R.drawable.border1);
         tv.setGravity(Gravity.CENTER);
         tv.setTextColor(getResources().getColor(R.color.black));

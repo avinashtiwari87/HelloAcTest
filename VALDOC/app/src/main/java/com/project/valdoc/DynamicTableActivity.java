@@ -1958,25 +1958,25 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 } else {
                     if ("AHU".equalsIgnoreCase(mTestBasedOn)) {
                         if (null != mAhuFilterArrayList && mAhuFilterArrayList.size() > 0) {
-                            row.addView(addTextView(mAhuFilterArrayList.get(i - 2).getFilterCode()));
+                            row.addView(addTextViewForTest2(mAhuFilterArrayList.get(i - 2).getFilterCode()));
                         } else {
-                            row.addView(addTextView("grillAndSizeFromGrill"));
+                            row.addView(addTextViewForTest2("grillAndSizeFromGrill"));
                         }
                     } else if ("ROOM".equalsIgnoreCase(mTestBasedOn)) {
                         if (mGrilFilterType.equalsIgnoreCase("Grill")) {
                             if (null != grillAndSizeFromGrill && grillAndSizeFromGrill.size() > 0) {
-                                row.addView(addTextView(grillAndSizeFromGrill.get(i - 2).getGrillCode().toString()));
+                                row.addView(addTextViewForTest2(grillAndSizeFromGrill.get(i - 2).getGrillCode().toString()));
                             } else {
-                                row.addView(addTextView("grillAndSizeFromGrill"));
+                                row.addView(addTextViewForTest2("grillAndSizeFromGrill"));
                             }
 
                         } else {
                             if (null != mRoomFilterArrayList && mRoomFilterArrayList.size() > 0) {
 //                            HashMap<String, String> grill = (HashMap<String, String>) grillAndSizeFromGrill.get(i - 2);
 //                            Log.d("valdoc", "DynamicTableActivity grillAndSizeFromGrill=" + grillAndSizeFromGrill.size() + "i=" + i);
-                                row.addView(addTextView(mRoomFilterArrayList.get(i - 2).getFilterCode()));
+                                row.addView(addTextViewForTest2(mRoomFilterArrayList.get(i - 2).getFilterCode()));
                             } else {
-                                row.addView(addTextView("grillAndSizeFromGrill"));
+                                row.addView(addTextViewForTest2("grillAndSizeFromGrill"));
                             }
 
                         }
@@ -2030,8 +2030,8 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                             double filterSize = 0.0f;
                             if (!mRoomFilterArrayList.isEmpty())
                                 filterSize = mRoomFilterArrayList.get(i - 2).getEffectiveFilterArea();
-                            row.addView(addTextViewWithTagIds(i, filterSizeIds, filterSizeTxtViewList, filterSize + ""));
-//                        row.addView(addTextView("" + filterSize));
+                            //row.addView(addTextViewWithTagIds(i, filterSizeIds, filterSizeTxtViewList, filterSize + ""));
+                            row.addView(addTextView("" + filterSize));
 
                         }
 
@@ -2064,7 +2064,12 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 if (i == 1 && j <= cols) {
                     row.addView(addTextView(" V " + j + "\n "));
                 } else {
-                    row.addView(addEditTextView(i));
+                    //row.addView(addEditTextView(i));
+                    EditText textView = addEditTextView(i);
+                    ViewGroup.LayoutParams layoutParams = textView.getLayoutParams();
+                    layoutParams.height = 90;
+                    textView.setLayoutParams(layoutParams);
+                    row.addView(textView);
                 }
             }
             test2_table_layout3.addView(row);
@@ -2272,6 +2277,26 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         TextView tv = new TextView(this);
         tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
                 TableRow.LayoutParams.WRAP_CONTENT));
+        tv.setBackgroundResource(R.drawable.border1);
+        tv.setGravity(Gravity.CENTER);
+        tv.setPadding(5, 5, 5, 5);
+        tv.setTextColor(getResources().getColor(R.color.black));
+        tv.setTextSize(getResources().getDimension(R.dimen.normal_text_size));
+        tv.setSingleLine(false);
+        tv.setMaxLines(3);
+        tv.setEllipsize(TextUtils.TruncateAt.END);
+        tv.setText(textValue);
+        return tv;
+    }
+    private TextView addTextViewForTest2(String textValue) {
+        TextView tv = new TextView(this);
+        tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+                TableRow.LayoutParams.WRAP_CONTENT));
+
+        ViewGroup.LayoutParams layoutParams = tv.getLayoutParams();
+        layoutParams.height = 90;
+        tv.setLayoutParams(layoutParams);
+
         tv.setBackgroundResource(R.drawable.border1);
         tv.setGravity(Gravity.CENTER);
         tv.setPadding(5, 5, 5, 5);
