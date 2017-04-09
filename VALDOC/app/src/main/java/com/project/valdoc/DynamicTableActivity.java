@@ -1813,7 +1813,12 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
-                    row.addView(addTextView(" Grill/Filter No\n "));
+                    //row.addView(addTextView(" Grill/Filter No\n "));
+                    TextView grillTV = addTextView(" Grill/Filter No\n ");
+                    ViewGroup.LayoutParams params = grillTV.getLayoutParams();
+                    params.height = 100;
+                    grillTV.setLayoutParams(params);
+                    row.addView(grillTV);
                 } else {
 
                     if (mGrilFilterType.equalsIgnoreCase("Grill")) {
@@ -1851,11 +1856,17 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             for (int j = 1; j <= cols; j++) {
                 if (i == 1 && j <= cols) {
                     TextView textView = addTextView(" Q " + j);
-                    textView.setEms(2+Utilityies.getPctCellWidth(cols));
+                    if (cols <= 2)
+                        textView.setEms(13+ Utilityies.getPctCellWidth(cols));
+                    else
+                        textView.setEms(2 + Utilityies.getPctCellWidth(cols));
                     row.addView(textView);
                 } else {
                     EditText editText = addEditTextView(i);
-                    editText.setEms(2+Utilityies.getPctCellWidth(cols));
+                    if (cols <= 2)
+                        editText.setEms(13+Utilityies.getPctCellWidth(cols));
+                    else
+                        editText.setEms(2+Utilityies.getPctCellWidth(cols));
                     row.addView(editText);
                 }
             }
