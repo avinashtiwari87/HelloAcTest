@@ -595,7 +595,7 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
                 if (i == 1 && j == 1) {
                     TextView grillTV = addTextView(" Grill/Filter No\n ");
                     ViewGroup.LayoutParams params = grillTV.getLayoutParams();
-                    params.height = 100;
+                    params.height = 72;
                     grillTV.setLayoutParams(params);
                     row.addView(grillTV);
                 } else {

@@ -1816,7 +1816,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                     //row.addView(addTextView(" Grill/Filter No\n "));
                     TextView grillTV = addTextView(" Grill/Filter No\n ");
                     ViewGroup.LayoutParams params = grillTV.getLayoutParams();
-                    params.height = 100;
+                    params.height = 72;
                     grillTV.setLayoutParams(params);
                     row.addView(grillTV);
                 } else {
