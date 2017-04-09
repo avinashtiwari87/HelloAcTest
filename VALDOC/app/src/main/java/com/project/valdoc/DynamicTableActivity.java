@@ -2062,12 +2062,16 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             // inner for loop
             for (int j = 1; j <= cols; j++) {
                 if (i == 1 && j <= cols) {
-                    row.addView(addTextView(" V " + j + "\n "));
+                    TextView textView = addTextView(" V " + j + "\n ");
+                    ViewGroup.LayoutParams layoutParams = textView.getLayoutParams();
+                    layoutParams.height = 85;
+                    textView.setLayoutParams(layoutParams);
+                    row.addView(textView);
                 } else {
                     //row.addView(addEditTextView(i));
                     EditText textView = addEditTextView(i);
                     ViewGroup.LayoutParams layoutParams = textView.getLayoutParams();
-                    layoutParams.height = 90;
+                    layoutParams.height = 85;
                     textView.setLayoutParams(layoutParams);
                     row.addView(textView);
                 }
@@ -2294,7 +2298,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 TableRow.LayoutParams.WRAP_CONTENT));
 
         ViewGroup.LayoutParams layoutParams = tv.getLayoutParams();
-        layoutParams.height = 90;
+        layoutParams.height = getResources().getDimensionPixelSize(R.dimen.text_cell_height);;
         tv.setLayoutParams(layoutParams);
 
         tv.setBackgroundResource(R.drawable.border1);
