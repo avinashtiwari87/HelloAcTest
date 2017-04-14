@@ -1046,7 +1046,8 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                     intent.putExtra("AirChangeValue", AirChangeValue);
                     //sending Input Data
                     intent.putExtra("InputData", inputDataHashMap);
-
+                    //sending Result Data over Bundle
+                    intent.putExtra("ResultData", resultDataHashMap);
                     startActivity(intent);
                 }
                 if (TestCreateActivity.FIT.equalsIgnoreCase(testType)) {
@@ -1868,7 +1869,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                     else
                         editText.setEms(2+Utilityies.getPctCellWidth(cols));
                     ViewGroup.LayoutParams params = editText.getLayoutParams();
-                    params.height = 36;
+                    params.height = getResources().getDimensionPixelSize(R.dimen.text_cell_height_H);
                     editText.setLayoutParams(params);
                     row.addView(editText);
                 }
@@ -2310,7 +2311,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 TableRow.LayoutParams.WRAP_CONTENT));
         tv.setBackgroundResource(R.drawable.border1);
         ViewGroup.LayoutParams layoutParams = tv.getLayoutParams();
-        layoutParams.height = getResources().getDimensionPixelSize(R.dimen.text_cell_height_H);
+        layoutParams.height =getResources().getDimensionPixelSize(R.dimen.text_cell_height_H);
         tv.setLayoutParams(layoutParams);
 
         tv.setGravity(Gravity.CENTER);
@@ -2688,7 +2689,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                     Log.d(TAG, " TextView : Tag " + txtViewList.get(i).getTag() + " tagF " + tagF);
                     if (txtViewList.get(i).getTag().equals(tagF)) {
                         TextView tvl = txtViewList.get(i);
-                        tvl.setText(getRoundedAverageValue(tagF) + "");
+                        //tvl.setText(getRoundedAverageValue(tagF) + "");
                         resultDataHashMap.put(tvl.getId(), getRoundedAverageValue(tagF));
                     }
                 }
@@ -2733,9 +2734,17 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             }
             //Calculation Test 3 specific
             if (TestCreateActivity.ACPHH.equals(testType)) {
+                // Average calculation
+                for (int i = 0; i < totalAirFlowRateTxtList.size(); i++) {
+                    Log.d(TAG, "_H TextView : Tag " + totalAirFlowRateTxtList.get(i).getTag() + " tagF " + tagF);
+                    if (totalAirFlowRateTxtList.get(i).getTag().equals(tagF)) {
+                        TextView tvl = totalAirFlowRateTxtList.get(i);
+                        resultDataHashMap.put(tvl.getId(), getRoundedAverageValue(tagF));
+                    }
+                }
 
                 //Total AirFlow Rate (sum of AirFlow Rate)
-                if (totalAirFlowRateTxtList != null && totalAirFlowRateTxtList.size() > 0) {
+               if (totalAirFlowRateTxtList != null && totalAirFlowRateTxtList.size() > 0) {
                     int middleTxt = totalAirFlowRateTxtList.size() / 2;
                     TextView mtvl = totalAirFlowRateTxtList.get(middleTxt);
                     totalAirFlowRate = getSumOfAirSupply(editTextList);

@@ -102,7 +102,7 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
     private TextView instrumentNoLable;
 
     ArrayList<TextView> txtViewList;
-    ArrayList<TextView> avgTxtViewList;
+    ArrayList<TextView> resultTextViewList;
     private ImageView submit;
     private ImageView clear;
     private ImageView cancel;
@@ -110,7 +110,7 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
     private double totalAirFlowRate = 0;
     private double airChangeValue;
     HashMap<Integer, Integer> supplyAirVelocity;
-    ArrayList<TextView> resultTextViewList;
+    HashMap<Integer, Long> averageDataHashMap;
     private ValdocDatabaseHandler mValdocDatabaseHandler = new ValdocDatabaseHandler(RDACPHhUserEntryActivity.this);
     SharedPreferences sharedpreferences;
     int testDetailsId = 0;
@@ -134,7 +134,7 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
         initRes();
 
         txtViewList = new ArrayList<TextView>();
-        avgTxtViewList = new ArrayList<TextView>();
+        resultTextViewList = new ArrayList<TextView>();
         roomVolumeTxtList = new ArrayList<TextView>();
         totalAirFlowRateTxtList = new ArrayList<TextView>();
         airChangeTxtList = new ArrayList<TextView>();
@@ -167,16 +167,21 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
 
         //Receiving User Input Data from Bundle
         supplyAirVelocity = (HashMap<Integer, Integer>) getIntent().getSerializableExtra("InputData");
+        averageDataHashMap = (HashMap<Integer, Long>) getIntent().getSerializableExtra("ResultData");
         for (Map.Entry m : supplyAirVelocity.entrySet()) {
             Log.v(TAG, m.getKey() + " " + m.getValue());
+        }
+        for (Map.Entry k : averageDataHashMap.entrySet()) {
+            Log.v(TAG, k.getKey() + " Avg. Data " + k.getValue());
         }
         for (int i = 0; i < txtViewList.size(); i++) {
             TextView tvl = txtViewList.get(i);
             tvl.setText(supplyAirVelocity.get(tvl.getId()) + "");
-
+        }
+        for (int i = 0; i < resultTextViewList.size(); i++) {
             //Average
-            TextView avgTvl = avgTxtViewList.get(i);
-            avgTvl.setText(supplyAirVelocity.get(tvl.getId()) + "");
+            TextView avgTvl = resultTextViewList.get(i);
+            avgTvl.setText(averageDataHashMap.get(avgTvl.getId()) + "");
         }
 
         //Total AirFlow Rate (sum of AirFlow Rate)
@@ -602,16 +607,24 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
 
                     if (mGrilFilterType.equalsIgnoreCase("Grill")) {
                         if (null != grillAndSizeFromGrill && grillAndSizeFromGrill.size() > 0) {
-                            row.addView(addTextView(grillAndSizeFromGrill.get(i - 2).getGrillCode().toString()));
+                            TextView textView = addTextView(grillAndSizeFromGrill.get(i - 2).getGrillCode().toString());
+                            if (cols <= 3)
+                                textView.setEms(4+Utilityies.getPctCellWidth(cols));
+                            else
+                                textView.setEms(Utilityies.getPctCellWidth(cols));
+                            row.addView(textView);
                         } else {
                             row.addView(addTextView("grillAndSizeFromGrill"));
                         }
 
                     } else {
                         if (null != mRoomFilterArrayList && mRoomFilterArrayList.size() > 0) {
-//                            HashMap<String, String> grill = (HashMap<String, String>) grillAndSizeFromGrill.get(i - 2);
-//                            Log.d("valdoc", "DynamicTableActivity grillAndSizeFromGrill=" + grillAndSizeFromGrill.size() + "i=" + i);
-                            row.addView(addTextView(mRoomFilterArrayList.get(i - 2).getFilterCode()));
+                            TextView textView = addTextView(mRoomFilterArrayList.get(i - 2).getFilterCode());
+                            if (cols <= 3)
+                                textView.setEms(4+Utilityies.getPctCellWidth(cols));
+                            else
+                                textView.setEms(Utilityies.getPctCellWidth(cols));
+                            row.addView(textView);
                         } else {
                             row.addView(addTextView("grillAndSizeFromGrill"));
                         }
@@ -659,25 +672,21 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
             row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
                     TableRow.LayoutParams.WRAP_CONTENT));
             // inner for loop
-            for (int j = 1; j <= cols; j++) {
-                if (i == 1 && j == 1) {
+                if (i == 1) {
                     TextView textView = addTextView(" Average ");
                     if (cols <= 2)
                         textView.setEms(10);
                     else
                         textView.setEms(8);
                     row.addView(textView);
-                } else {
-                    //row.addView(addTextViewWithoutBorder("0"));
-                    //row.addView(addTextViewWithIdsNoBorder(i, totalAirFlowRateIds, totalAirFlowRateTxtList));
-                    TextView textView = addAverageInputDataTextView();
+                }else{
+                    TextView textView = addResultTextView(i);
                     if (cols <= 2)
                         textView.setEms(10);
                     else
                         textView.setEms(8);
                     row.addView(textView);
                 }
-            }
             test3_table_layout3.addView(row);
         }
 
@@ -731,13 +740,14 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
                 TableRow.LayoutParams.WRAP_CONTENT));
 
         ViewGroup.LayoutParams params = tv.getLayoutParams();
-        params.height = 36;
+        params.height = getResources().getDimensionPixelSize(R.dimen.text_cell_height_H);
         tv.setLayoutParams(params);
 
         tv.setBackgroundResource(R.drawable.border1);
         tv.setGravity(Gravity.CENTER);
         tv.setTextColor(getResources().getColor(R.color.black));
         tv.setTextSize(getResources().getDimension(R.dimen.normal_text_size));
+
         //tv.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD);
         tv.setSingleLine(false);
         tv.setMaxLines(3);
@@ -754,7 +764,7 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
                 TableRow.LayoutParams.WRAP_CONTENT));
 
         ViewGroup.LayoutParams params = tv.getLayoutParams();
-        params.height = 36;
+        params.height = getResources().getDimensionPixelSize(R.dimen.text_cell_height_H);
         tv.setLayoutParams(params);
 
         tv.setBackgroundResource(R.drawable.border1);
@@ -771,23 +781,29 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
         return tv;
     }
 
-    int idAvgtv = 600;
-
-    private TextView addAverageInputDataTextView() {
+    int idAvgtv = 400;
+    private TextView addResultTextView(int rowsNo) {
         TextView tv = new TextView(this);
         tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
                 TableRow.LayoutParams.WRAP_CONTENT));
+
+        ViewGroup.LayoutParams params = tv.getLayoutParams();
+        params.height = getResources().getDimensionPixelSize(R.dimen.text_cell_height_H);
+        tv.setLayoutParams(params);
+
         tv.setBackgroundResource(R.drawable.border1);
-        tv.setGravity(Gravity.CENTER);
+        tv.setPadding(5, 6, 5, 6);
         tv.setTextColor(getResources().getColor(R.color.black));
         tv.setTextSize(getResources().getDimension(R.dimen.normal_text_size));
-        //tv.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD);
-        tv.setId(idAvgtv);
-        tv.setSingleLine(false);
-        tv.setMaxLines(3);
+        tv.setGravity(Gravity.CENTER);
+        tv.setEms(4);
+        tv.setSingleLine(true);
         tv.setEllipsize(TextUtils.TruncateAt.END);
+        Log.d(TAG, " idCountTv " + idAvgtv);
+        tv.setId(idAvgtv);
+        tv.setTag(rowsNo);
         idAvgtv++;
-        avgTxtViewList.add(tv);
+        resultTextViewList.add(tv);
         return tv;
     }
 
