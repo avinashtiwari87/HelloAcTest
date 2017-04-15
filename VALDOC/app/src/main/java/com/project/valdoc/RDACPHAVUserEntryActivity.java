@@ -227,17 +227,8 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
         }
 
         // Checking individual input base on Average
-        for (int i = 0; i <cols*(rows-1); i++) {
-            for (int j = 0; j <cols; j++) {
-                boolean results =checkInputValueBasedOnAverage(userEnterdValue.get(200+j),
-                        airFlowRateMap.get(1+(rows-2)) ,10 );
-                if(results){
-                    txtViewList.get(j).setTextColor(Color.RED);
-                }else{
-                    txtViewList.get(j).setTextColor(Color.BLACK);
-                }
-            }
-        }
+        int variation = 10;
+        getInputDataValidationByAverage(variation);
 
         //Total AirFlow Rate (sum of AirFlow Rate)
         if (totalAirFlowRateTxtList != null && totalAirFlowRateTxtList.size() > 0) {
@@ -1339,17 +1330,34 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
         }
     }
 
-    private boolean checkInputValueBasedOnAverage(int inputValue , long averageValue, int percentValue) {
+    int idCounts = 200, inputTxtCount = 0;
+    private void getInputDataValidationByAverage(int variation) {
+        Log.d(TAG, " rows " + rows + " cols " + cols);
+        for (int i = 1; i <= rows - 1; i++) {
+            for (int j = 0; j < cols; j++) {
+                Log.d(TAG, " IdCounts " + idCounts + " inputTxtCount " + inputTxtCount);
+                boolean results = checkInputValueBasedOnAverage(userEnterdValue.get(idCounts),
+                        airFlowRateMap.get(i), variation);
+                idCounts++;
+                if (results) {
+                    txtViewList.get(inputTxtCount).setTextColor(Color.RED);
+                } else {
+                    txtViewList.get(inputTxtCount).setTextColor(Color.BLACK);
+                }
+                inputTxtCount++;
+            }
+        }
+    }
+
+    private boolean checkInputValueBasedOnAverage(int inputValue, long averageValue,
+                                                  int percentValue) {
         double variance = 0;
         long avg;
-        boolean resultValue = false;
-
+        boolean resultValue = true;
         variance = (double) (averageValue * percentValue) / 100;
         avg = Math.round(variance);
-        if(inputValue<=(averageValue+avg)){
-            resultValue = true;
-        }else if(inputValue>=(averageValue-avg)){
-            resultValue = true;
+        if (inputValue >= (averageValue - avg) && inputValue <= (averageValue + avg)) {
+            resultValue = false;
         }
         return resultValue;
     }
