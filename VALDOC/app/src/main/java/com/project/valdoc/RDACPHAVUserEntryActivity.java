@@ -174,9 +174,13 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
         textViewValueAssignment();
         initRes();
         datePicker();
-        if (TestCreateActivity.ACPHAV.equalsIgnoreCase(mTestType)) {
-            BuildTableTest2(rows, cols);
-        }
+
+            if (rows > 0 && cols > 0) {
+                BuildTableTest2(rows, cols);
+            }else {
+                Utilityies.showAlert(RDACPHAVUserEntryActivity.this,
+                        getResources().getString(R.string.table_not_created));
+            }
 
         //setting the test 2 room volume
         if (roomVolumeTxtList != null && roomVolumeTxtList.size() > 0) {
@@ -185,7 +189,6 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
             } else if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
                 roomVolumeTxtList.get((int) (roomVolumeTxtList.size() / 2)).setText("" + room.getVolume());
             }
-//            roomVolumeTxtList.get((int) (roomVolumeTxtList.size() / 2)).setText("8500");
         }
 
         //Receiving User Input Data from Bundle key start from 200
@@ -875,7 +878,6 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
-                    //row.addView(addTextView(" Grill / Filter No\n "));
                     TextView grillTV = addTextView(" Grill/Filter No\n ");
                     ViewGroup.LayoutParams params = grillTV.getLayoutParams();
                     params.height = getResources().getDimensionPixelSize(R.dimen.common_txt_header_height);
@@ -884,17 +886,15 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
                 } else {
                     if (mTestBasedOn.equalsIgnoreCase("AHU")) {
                         if (null != mAhuFilterArrayList && mAhuFilterArrayList.size() > 0) {
-//                            HashMap<String, String> grill = (HashMap<String, String>) grillAndSizeFromGrill.get(i - 2);
-//                            Log.d("valdoc", "DynamicTableActivity grillAndSizeFromGrill=" + grillAndSizeFromGrill.size() + "i=" + i);
                             TextView grillTV = addTextView(mAhuFilterArrayList.get(i - 2).getFilterCode());
                             ViewGroup.LayoutParams params = grillTV.getLayoutParams();
-                            params.height = getResources().getDimensionPixelSize(R.dimen.text_cell_height_AV);;
+                            params.height = getResources().getDimensionPixelSize(R.dimen.common_text_cell_height);
                             grillTV.setLayoutParams(params);
                             row.addView(grillTV);
                         } else {
                             TextView grillTV = addTextView("grillAndSizeFromGrill");
                             ViewGroup.LayoutParams params = grillTV.getLayoutParams();
-                            params.height = getResources().getDimensionPixelSize(R.dimen.text_cell_height_AV);;
+                            params.height = getResources().getDimensionPixelSize(R.dimen.common_text_cell_height);
                             grillTV.setLayoutParams(params);
                             row.addView(grillTV);
                         }
@@ -903,39 +903,33 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
                             if (null != grillAndSizeFromGrill && grillAndSizeFromGrill.size() > 0) {
                                 TextView grillTV = addTextView(grillAndSizeFromGrill.get(i - 2).getGrillCode().toString());
                                 ViewGroup.LayoutParams params = grillTV.getLayoutParams();
-                                params.height = getResources().getDimensionPixelSize(R.dimen.text_cell_height_AV);;
+                                params.height = getResources().getDimensionPixelSize(R.dimen.common_text_cell_height);
                                 grillTV.setLayoutParams(params);
                                 row.addView(grillTV);
                             } else {
                                 TextView grillTV = addTextView("grillAndSizeFromGrill");
                                 ViewGroup.LayoutParams params = grillTV.getLayoutParams();
-                                params.height = getResources().getDimensionPixelSize(R.dimen.text_cell_height_AV);;
+                                params.height = getResources().getDimensionPixelSize(R.dimen.common_text_cell_height);
                                 grillTV.setLayoutParams(params);
                                 row.addView(grillTV);
                             }
 
                         } else {
                             if (null != mRoomFilterArrayList && mRoomFilterArrayList.size() > 0) {
-//                            HashMap<String, String> grill = (HashMap<String, String>) grillAndSizeFromGrill.get(i - 2);
-//                            Log.d("valdoc", "DynamicTableActivity grillAndSizeFromGrill=" + grillAndSizeFromGrill.size() + "i=" + i);
                                 TextView grillTV = addTextView(mRoomFilterArrayList.get(i - 2).getFilterCode());
                                 ViewGroup.LayoutParams params = grillTV.getLayoutParams();
-                                params.height = getResources().getDimensionPixelSize(R.dimen.text_cell_height_AV);;
+                                params.height = getResources().getDimensionPixelSize(R.dimen.common_text_cell_height);
                                 grillTV.setLayoutParams(params);
                                 row.addView(grillTV);
                             } else {
                                 TextView grillTV = addTextView("grillAndSizeFromGrill");
                                 ViewGroup.LayoutParams params = grillTV.getLayoutParams();
-                                params.height = getResources().getDimensionPixelSize(R.dimen.text_cell_height_AV);;
+                                params.height = getResources().getDimensionPixelSize(R.dimen.common_text_cell_height);
                                 grillTV.setLayoutParams(params);
                                 row.addView(grillTV);
                             }
-
                         }
-
                     }
-
-//                    row.addView(addTextView("AHU 2031/0.3MICRON/" + i));
                 }
 
             }
@@ -965,7 +959,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
                             filterSize = mAhuFilterArrayList.get(i - 2).getEffectiveArea();
                             TextView grillTV = addTextView("" + filterSize);
                             ViewGroup.LayoutParams params = grillTV.getLayoutParams();
-                            params.height = getResources().getDimensionPixelSize(R.dimen.text_cell_height_AV);
+                            params.height = getResources().getDimensionPixelSize(R.dimen.common_text_cell_height);
                             grillTV.setLayoutParams(params);
                             row.addView(grillTV);
                         }
@@ -973,26 +967,22 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
                     } else if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
                         if (mGrilFilterType.equalsIgnoreCase("Grill")) {
                             if (null != grillAndSizeFromGrill && grillAndSizeFromGrill.size() > 0) {
-//                                HashMap<String, String> grill = (HashMap<String, String>) grillAndSizeFromGrill.get(i - 2);
                                 float filterSize = 0.0f;
-//                                if (!grill.isEmpty())
                                 filterSize = (float) (grillAndSizeFromGrill.get(i - 2).getEffectiveArea());
                                 TextView grillTV = addTextView("" + filterSize);
                                 ViewGroup.LayoutParams params = grillTV.getLayoutParams();
-                                params.height = getResources().getDimensionPixelSize(R.dimen.text_cell_height_AV);
+                                params.height = getResources().getDimensionPixelSize(R.dimen.common_text_cell_height);
                                 grillTV.setLayoutParams(params);
                                 row.addView(grillTV);
-//                                row.addView(addTextViewWithTagIds(i, filterSizeIds, filterSizeTxtViewList, filterSize + ""));
                             }
 
                         } else {
                             double filterSize = 0.0f;
                             if (!mRoomFilterArrayList.isEmpty())
                                 filterSize = mRoomFilterArrayList.get(i - 2).getEffectiveFilterArea();
-//                            row.addView(addTextViewWithTagIds(i, filterSizeIds, filterSizeTxtViewList, filterSize + ""));
                             TextView grillTV = addTextView("" + filterSize);
                             ViewGroup.LayoutParams params = grillTV.getLayoutParams();
-                            params.height =getResources().getDimensionPixelSize(R.dimen.text_cell_height_AV);
+                            params.height =getResources().getDimensionPixelSize(R.dimen.common_text_cell_height);
                             grillTV.setLayoutParams(params);
                             row.addView(grillTV);
 
@@ -1018,14 +1008,14 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
                 if (i == 1 && j <= cols) {
                     TextView grillTV = addTextView(" V " + j);
                     ViewGroup.LayoutParams params = grillTV.getLayoutParams();
-                    params.height = getResources().getDimensionPixelSize(R.dimen.text_cell_height_AV);
+                    params.height = getResources().getDimensionPixelSize(R.dimen.common_text_cell_height);
                     grillTV.setLayoutParams(params);
                     row.addView(grillTV);
                 } else {
                     //row.addView(addEditTextView());
                     TextView grillTV = addInputDataTextView();
                     ViewGroup.LayoutParams params = grillTV.getLayoutParams();
-                    params.height = getResources().getDimensionPixelSize(R.dimen.text_cell_height_AV);
+                    params.height = getResources().getDimensionPixelSize(R.dimen.common_text_cell_height);
                     grillTV.setLayoutParams(params);
                     row.addView(grillTV);
 
@@ -1042,7 +1032,6 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
-                    //row.addView(addTextView("Average Air Velocity\n  (fpm)"));
                     TextView grillTV = addTextView("Average Air Velocity\n  (fpm)");
                     ViewGroup.LayoutParams params = grillTV.getLayoutParams();
                     params.height =getResources().getDimensionPixelSize(R.dimen.common_txt_header_height);
@@ -1052,7 +1041,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
                     //result data  set
                     TextView grillTV = addResultTextView(i);
                     ViewGroup.LayoutParams params = grillTV.getLayoutParams();
-                    params.height = getResources().getDimensionPixelSize(R.dimen.text_cell_height_AV);
+                    params.height = getResources().getDimensionPixelSize(R.dimen.common_text_cell_height);
                     grillTV.setLayoutParams(params);
                     row.addView(grillTV);
 
@@ -1080,7 +1069,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
                     //row.addView(addTextView("490"));
                     TextView grillTV = addTextViewWithTagIds(i, airFlowRateIds, airFlowRateTxtViewList, 0);
                     ViewGroup.LayoutParams params = grillTV.getLayoutParams();
-                    params.height = getResources().getDimensionPixelSize(R.dimen.text_cell_height_AV);
+                    params.height = getResources().getDimensionPixelSize(R.dimen.common_text_cell_height);
                     grillTV.setLayoutParams(params);
                     row.addView(grillTV);
                     airFlowRateIds++;
@@ -1099,7 +1088,6 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
-                    //row.addView(addTextView("Total Air Flow Rate\n (cfm)"));
                     TextView grillTV = addTextView("Total Air Flow Rate\n (cfm)");
                     ViewGroup.LayoutParams params = grillTV.getLayoutParams();
                     params.height = getResources().getDimensionPixelSize(R.dimen.common_txt_header_height);
@@ -1108,7 +1096,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
                 } else {
                     TextView grillTV = addTextViewWithIdsNoBorder(i, totalAirFlowRateIds, totalAirFlowRateTxtList);
                     ViewGroup.LayoutParams params = grillTV.getLayoutParams();
-                    params.height = getResources().getDimensionPixelSize(R.dimen.text_cell_height_AV);
+                    params.height = getResources().getDimensionPixelSize(R.dimen.common_text_cell_height);
                     grillTV.setLayoutParams(params);
                     row.addView(grillTV);
                 }
@@ -1127,7 +1115,6 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
                 if (i == 1 && j == 1) {
                     row.addView(addTextView(" Room Volume in\n ft3(RV)"));
                 } else {
-                    //row.addView(addTextViewWithoutBorder("490"));
                     row.addView(addTextViewWithIdsNoBorder(i, 0, roomVolumeTxtList));
                 }
             }
@@ -1145,7 +1132,6 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
                 if (i == 1 && j == 1) {
                     row.addView(addTextView("No. of Air Changes/Hr\n ((TFR/RV)x60))"));
                 } else {
-                    //row.addView(addTextViewWithoutBorder("490"));
                     row.addView(addTextViewWithIdsNoBorder(i, 0, airChangeTxtList));
                 }
             }

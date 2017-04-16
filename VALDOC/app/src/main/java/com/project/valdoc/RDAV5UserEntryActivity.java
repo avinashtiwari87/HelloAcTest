@@ -154,7 +154,8 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
         if (rows > 0 && cols > 0) {
             BuildTable(rows, cols);
         } else {
-            Utilityies.showAlert(RDAV5UserEntryActivity.this, "NO Grill or Fillter Data");
+            Utilityies.showAlert(RDAV5UserEntryActivity.this,
+                    getResources().getString(R.string.table_not_created));
         }
 
         //Receiving User Input Data from Bundle

@@ -181,6 +181,7 @@
     <string name="test_data_sync">TEST DATA SYNC</string>
     <string name="select_room_equipment_ahu">Select Rooms, AHU or Equipment</string>
     <string name="server_setting_text">Before changing the service url make sure to backup or sync your database. Otherwise you will lose all your data exist in this device and if not synchronized with the server.For dedicated server please contact\\nsupport@abc.com</string>
+    <string name="table_not_created">No grill or filter data</string>
 
     <string-array name="select_test_option">
         <item>Rooms</item>

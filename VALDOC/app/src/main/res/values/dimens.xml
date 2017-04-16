@@ -14,9 +14,9 @@
     <dimen name="text_view_height">85dp</dimen>
     <dimen name="text_view_height2">60dp</dimen>
     <dimen name="pct_text_cell_height">42.5dp</dimen>
-    <dimen name="text_cell_height_AV">38dp</dimen>
+    <dimen name="common_text_cell_height">38dp</dimen>
+    <dimen name="common_text_cell_width">220dp</dimen>
     <dimen name="common_txt_header_height">76dp</dimen>
-    <dimen name="text_cell_height_H">38dp</dimen>
 </resources>
 
 
