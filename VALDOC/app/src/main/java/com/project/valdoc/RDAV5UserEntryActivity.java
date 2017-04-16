@@ -6,6 +6,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -115,6 +116,8 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
     private Ahu ahu = null;
     private ArrayList<AhuFilter> mAhuFilterArrayList = null;
     private ApplicableTestAhu mApplicableTestAhu = null;
+    private HashMap<Integer, Integer> inputDataHashMap;
+    private HashMap<Integer, Long> resultDataHashMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -155,24 +158,28 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
         }
 
         //Receiving User Input Data from Bundle
-        HashMap<Integer, Integer> hashMap = (HashMap<Integer, Integer>) getIntent().getSerializableExtra("InputData");
-        for (Map.Entry m : hashMap.entrySet()) {
+        inputDataHashMap= (HashMap<Integer, Integer>) getIntent().getSerializableExtra("InputData");
+        for (Map.Entry m : inputDataHashMap.entrySet()) {
             Log.v(TAG, " InputData " + m.getKey() + " " + m.getValue());
         }
         for (int i = 0; i < txtViewList.size(); i++) {
             TextView tvl = txtViewList.get(i);
-            tvl.setText(hashMap.get(tvl.getId()) + "");
+            tvl.setText(inputDataHashMap.get(tvl.getId()) + "");
         }
 
         //Receiving Result Data from Bundle
-        HashMap<Integer, Long> resultHashMap = (HashMap<Integer, Long>) getIntent().getSerializableExtra("ResultData");
-        for (Map.Entry n : resultHashMap.entrySet()) {
+        resultDataHashMap = (HashMap<Integer, Long>) getIntent().getSerializableExtra("ResultData");
+        for (Map.Entry n : resultDataHashMap.entrySet()) {
             Log.v(TAG, " Result: " + n.getKey() + " " + n.getValue());
         }
         for (int i = 0; i < resultTextViewList.size(); i++) {
             TextView tvl = resultTextViewList.get(i);
-            tvl.setText(resultHashMap.get(tvl.getId()) + "");
+            tvl.setText(resultDataHashMap.get(tvl.getId()) + "");
         }
+
+        // Checking individual input base on Average
+        int variation = 10;
+        getInputDataValidationByAverage(variation);
 
         //Receiving Pass Fail Data from Bundle
         HashMap<Integer, Long> PassFailHashMap = (HashMap<Integer, Long>) getIntent().getSerializableExtra("PassFailData");
@@ -795,5 +802,37 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
         TestHeader.setText("TEST RAW DATA EQUIPMENT\n(Average Air Flow Velocity Testing)");
         findViewById(R.id.test1_reading_header).setVisibility(View.VISIBLE);
         findViewById(R.id.common_header_test1).setVisibility(View.GONE);
+    }
+
+    int idCounts = 200, inputTxtCount = 0;
+    private void getInputDataValidationByAverage(int variation) {
+        Log.d(TAG, " rows " + rows + " cols " + cols);
+        for (int i = 1; i <= rows - 1; i++) {
+            for (int j = 0; j < cols; j++) {
+                Log.d(TAG, " IdCounts " + idCounts + " inputTxtCount " + inputTxtCount);
+                boolean results = checkInputValueBasedOnAverage(inputDataHashMap.get(idCounts),
+                        resultDataHashMap.get(i), variation);
+                idCounts++;
+                if (results) {
+                    txtViewList.get(inputTxtCount).setTextColor(Color.RED);
+                } else {
+                    txtViewList.get(inputTxtCount).setTextColor(Color.BLACK);
+                }
+                inputTxtCount++;
+            }
+        }
+    }
+
+    private boolean checkInputValueBasedOnAverage(int inputValue, long averageValue,
+                                                  int percentValue) {
+        double variance = 0;
+        long avg;
+        boolean resultValue = true;
+        variance = (double) (averageValue * percentValue) / 100;
+        avg = Math.round(variance);
+        if (inputValue >= (averageValue - avg) && inputValue <= (averageValue + avg)) {
+            resultValue = false;
+        }
+        return resultValue;
     }
 }
