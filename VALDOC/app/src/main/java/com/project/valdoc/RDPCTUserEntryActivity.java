@@ -652,21 +652,21 @@ public class RDPCTUserEntryActivity extends AppCompatActivity {
 
         //class value
         TestSpesificationValue testSpesificationValue10 = new TestSpesificationValue();
-        testSpesificationValue7.setTest_detail_id("" + testDetailsId);
-        testSpesificationValue7.setFieldName("Class");
-        testSpesificationValue7.setFieldValue("" + iso_class.getText().toString());
+        testSpesificationValue10.setTest_detail_id("" + testDetailsId);
+        testSpesificationValue10.setFieldName("Class");
+        testSpesificationValue10.setFieldValue("" + iso_class.getText().toString());
         spesificationValueArrayList.add(testSpesificationValue10);
 
         TestSpesificationValue testSpesificationValue11 = new TestSpesificationValue();
-        testSpesificationValue8.setTest_detail_id("" + testDetailsId);
-        testSpesificationValue8.setFieldName("SmallParticle");
-        testSpesificationValue8.setFieldValue("" + small_particle.getText().toString());
+        testSpesificationValue11.setTest_detail_id("" + testDetailsId);
+        testSpesificationValue11.setFieldName("SmallParticle");
+        testSpesificationValue11.setFieldValue("" + small_particle.getText().toString());
         spesificationValueArrayList.add(testSpesificationValue11);
 
         TestSpesificationValue testSpesificationValue12 = new TestSpesificationValue();
-        testSpesificationValue9.setTest_detail_id("" + testDetailsId);
-        testSpesificationValue9.setFieldName("LargeParticle");
-        testSpesificationValue9.setFieldValue("" + large_particle.getText().toString());
+        testSpesificationValue12.setTest_detail_id("" + testDetailsId);
+        testSpesificationValue12.setFieldName("LargeParticle");
+        testSpesificationValue12.setFieldValue("" + large_particle.getText().toString());
         spesificationValueArrayList.add(testSpesificationValue12);
 
         return spesificationValueArrayList;
