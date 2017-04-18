@@ -171,9 +171,12 @@ public class RDPCTUserEntryActivity extends AppCompatActivity {
         initRes();
         textViewValueAssignment();
         datePicker();
-        if (TestCreateActivity.PCT.equalsIgnoreCase(mTestType)) {
+
+        if (rows > 0 && cols > 0) {
             BuildTableTest5(rows, cols);
-//            BuildTableTest5(7, 5);
+        } else {
+            Utilityies.showAlert(RDPCTUserEntryActivity.this,
+                    getResources().getString(R.string.table_not_created));
         }
 
         //Receiving User Input Data from Bundle
@@ -676,7 +679,6 @@ public class RDPCTUserEntryActivity extends AppCompatActivity {
         ArrayList<TestReading> testReadingArrayList = new ArrayList<TestReading>();
         int hasMapKey = 200;
         int loopRow = (rows - 1) * 2;
-        Log.d("Avinash", "rows=" + rows + " loopRow=" + loopRow);
         for (int i = 1; i <= loopRow; i++) {
             TestReading testReading = new TestReading();
 //            testReading.setTestReadingID(i);
@@ -691,10 +693,8 @@ public class RDPCTUserEntryActivity extends AppCompatActivity {
                     sb.append(',');
                 sb.append(rHashMap.get(hasMapKey).toString());
                 hasMapKey++;
-                Log.d("Avinash", "hasMapKey=" + hasMapKey + " i=" + i);
             }
             grilList.append(sb).append(",").append(averageResultHashMap.get(i));
-            Log.d("Avinash", "grilList.toString()=" + grilList.toString() + " i=" + i);
             testReading.setValue("" + grilList.toString());
             testReadingArrayList.add(testReading);
         }

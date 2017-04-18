@@ -157,8 +157,11 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
         textViewValueAssignment();
         datePicker();
 
-        if (TestCreateActivity.ACPHH.equalsIgnoreCase(mTestType)) {
+        //Creating Tables based on rows and columns
+        if (rows > 0 && cols > 0) {
             BuildTableTest3(rows, cols);
+        }else {
+            Utilityies.showAlert(RDACPHhUserEntryActivity.this, "NO Grill or Fillter Data");
         }
 
         //setting the test 2 room volume
@@ -740,7 +743,7 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
                 TableRow.LayoutParams.WRAP_CONTENT));
 
         ViewGroup.LayoutParams params = tv.getLayoutParams();
-        params.height = getResources().getDimensionPixelSize(R.dimen.text_cell_height_H);
+        params.height = getResources().getDimensionPixelSize(R.dimen.common_text_cell_height);
         tv.setLayoutParams(params);
 
         tv.setBackgroundResource(R.drawable.border1);
@@ -764,7 +767,7 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
                 TableRow.LayoutParams.WRAP_CONTENT));
 
         ViewGroup.LayoutParams params = tv.getLayoutParams();
-        params.height = getResources().getDimensionPixelSize(R.dimen.text_cell_height_H);
+        params.height = getResources().getDimensionPixelSize(R.dimen.common_text_cell_height);
         tv.setLayoutParams(params);
 
         tv.setBackgroundResource(R.drawable.border1);
@@ -788,7 +791,7 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
                 TableRow.LayoutParams.WRAP_CONTENT));
 
         ViewGroup.LayoutParams params = tv.getLayoutParams();
-        params.height = getResources().getDimensionPixelSize(R.dimen.text_cell_height_H);
+        params.height = getResources().getDimensionPixelSize(R.dimen.common_text_cell_height);
         tv.setLayoutParams(params);
 
         tv.setBackgroundResource(R.drawable.border1);
