@@ -193,7 +193,7 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
         datePicker();
 
         //Creating Tables based on rows and columns
-        if (rows > 0 && cols > 0) {
+//        if (rows > 0 && cols > 0) {
             pr = ProgressDialog.show(this, "Please Wait", "Loading...");
             pr.setCanceledOnTouchOutside(true);
             pr.setCancelable(true);
@@ -267,9 +267,9 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
                     tvl.setTextColor(getResources().getColor(R.color.red));
                 }
             }
-        }else {
-            Utilityies.showAlert(RDFITUserEntryActivity.this, getResources().getString(R.string.table_not_created));
-        }
+//        }else {
+//            Utilityies.showAlert(RDFITUserEntryActivity.this, getResources().getString(R.string.table_not_created));
+//        }
 
         //Custom Action Bar
         ActionBar mActionBar = getSupportActionBar();
@@ -700,6 +700,8 @@ Date d;
         testDetails.setRawDataNo(certificateNo.getText().toString());
         testDetails.setTestName(mTestCode);
         testDetails.setAcceptableRecoveryTime("");
+        testDetails.setDiffAVinFilter(0);
+        testDetails.setDiffAVbetweenFilter(0);
         if (loginUserType.equals("CLIENT")) {
             testDetails.setInstrumentUsed(instrumentUsed.getText().toString());
             testDetails.setMake("" + clientInstrument.getMake().toString());

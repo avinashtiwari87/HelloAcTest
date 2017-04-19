@@ -181,12 +181,12 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
     public static final String APLICABLE_TEST_ROOM_OCCUPENCYSTATE = "occupencyState";
     public static final String APLICABLE_TEST_ROOM_TESTREFERENCE = "testReference";
     public static final String APLICABLE_TEST_ROOM_TESTPROP = "testProp";
-    public static final String APLICABLE_TEST_ROOM_DIFFAVINFILTER = "diffAVinFilter";
-    public static final String APLICABLE_TEST_ROOM_DIFFAVBETWEENFILTER = "diffAVbetweenFilter";
+
     public static final String APLICABLE_TEST_ROOM_PERIODICITY = "periodicity";
     public static final String APLICABLE_TEST_ROOM_LOCATION = "location";
     public static final String APLICABLE_TEST_ROOM_NOOFCYCLE = "noOfCycle";
-
+    public static final String APLICABLE_TEST_ROOM_DIFFAVINFILTER = "diffAVinFilter";
+    public static final String APLICABLE_TEST_ROOM_DIFFAVBETWEENFILTER = "diffAVbetweenFilter";
     public static final String APLICABLE_TEST_ROOM_LASTUPDATEDDATE = "lastUpdatedDate";
     // aplicable_test_equipment table create statment
     private static final String CREATE_TABLE_APLICABLE_TEST_ROOM = "CREATE TABLE " + APLICABLE_TEST_ROOM_TABLE_NAME
@@ -567,6 +567,8 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
     public static final String TEST_DETAILS_TESTSPECIFICATION = "testSpecification";
     public static final String TEST_DETAILS_TEST_TESTREFERENCE = "testReference";
     public static final String TEST_DETAILS_OCCUPENCYSTATE = "occupencyState";
+    public static final String TEST_DETAILS_DIFFAVINFILTER = "diffAVinFilter";
+    public static final String TEST_DETAILS_DIFFAVBETWEENFILTER = "diffAVbetweenFilter";
     public static final String TEST_DETAILS_BLOCKNAME = "blockName";
     public static final String TEST_DETAILS_TESTAREA = "testArea";
     public static final String TEST_DETAILS_AHUNO = "ahuNo";
@@ -604,8 +606,8 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
             + TEST_DETAILS_SAMPLINGFLOWRATE + " TEXT," + TEST_DETAILS_SAMPLINGTIME + " TEXT," + TEST_DETAILS_AEROSOLUSED
             + " TEXT," + TEST_DETAILS_AEROSOLGENERATORTYPE + " TEXT," + TEST_DETAILS_TESTCODE + " TEXT," + TEST_DETAILS_ROOMVOLUME
             + " TEXT," + TEST_DETAILS_TESTWITNESSORG + " TEXT," + TEST_DETAILS_TESTCONDOCTORORG + " TEXT," + TEST_DETAILS_TESTITEM + " TEXT,"
-            + TEST_DETAILS_TESTLOCATION + " TEXT," + TEST_DETAILS_FILTERTYPEEFFICIANCY + " TEXT," +
-            TEST_DETAILS_ACCEPTABLERECOVERYTIME + " TEXT " + ")";
+            + TEST_DETAILS_TESTLOCATION + " TEXT," + TEST_DETAILS_FILTERTYPEEFFICIANCY + " TEXT," + TEST_DETAILS_DIFFAVINFILTER + " INTEGER,"
+            + TEST_DETAILS_DIFFAVBETWEENFILTER + " INTEGER," + TEST_DETAILS_ACCEPTABLERECOVERYTIME + " TEXT " + ")";
 
 
     //test spesification table details
@@ -1140,7 +1142,10 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
         contentValues.put(TEST_DETAILS_TESTITEM, testDetails.getTestItem());
         contentValues.put(TEST_DETAILS_TESTLOCATION, testDetails.getTestLocation());
         contentValues.put(TEST_DETAILS_FILTERTYPEEFFICIANCY, testDetails.getFilterTypeEficiancy());
+        contentValues.put(TEST_DETAILS_DIFFAVINFILTER, testDetails.getDiffAVinFilter());
+        contentValues.put(TEST_DETAILS_DIFFAVBETWEENFILTER, testDetails.getDiffAVbetweenFilter());
         contentValues.put(TEST_DETAILS_ACCEPTABLERECOVERYTIME, testDetails.getAcceptableRecoveryTime());
+
         db.insert(tableName, null, contentValues);
 //            }
         return true;
@@ -2691,7 +2696,9 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 TestDetails.setRoomVolume(cursor.getString(29));
                 TestDetails.setTestWitnessOrg(cursor.getString(30));
                 TestDetails.setTestCondoctorOrg(cursor.getString(31));
-                TestDetails.setTestItem(cursor.getString(32));
+                TestDetails.setDiffAVinFilter(cursor.getInt(32));
+                TestDetails.setDiffAVbetweenFilter(cursor.getInt(33));
+                TestDetails.setTestItem(cursor.getString(34));
 //                testDetailList.add(TestDetails);
             } while (cursor.moveToNext());
         }

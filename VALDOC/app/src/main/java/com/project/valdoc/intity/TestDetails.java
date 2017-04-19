@@ -45,6 +45,8 @@ public class TestDetails {
     private String filterTypeEficiancy;
     private String testLocation;
     private String acceptableRecoveryTime;
+    private int diffAVinFilter;
+    private int diffAVbetweenFilter;
 
     public String getAcceptableRecoveryTime() {
         return acceptableRecoveryTime;
@@ -340,5 +342,21 @@ public class TestDetails {
 
     public void setTestLocation(String testLocation) {
         this.testLocation = testLocation;
+    }
+
+    public int getDiffAVinFilter() {
+        return diffAVinFilter;
+    }
+
+    public void setDiffAVinFilter(int diffAVinFilter) {
+        this.diffAVinFilter = diffAVinFilter;
+    }
+
+    public int getDiffAVbetweenFilter() {
+        return diffAVbetweenFilter;
+    }
+
+    public void setDiffAVbetweenFilter(int diffAVbetweenFilter) {
+        this.diffAVbetweenFilter = diffAVbetweenFilter;
     }
 }

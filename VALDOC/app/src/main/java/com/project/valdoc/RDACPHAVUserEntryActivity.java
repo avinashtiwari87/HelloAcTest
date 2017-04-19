@@ -175,12 +175,12 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
         initRes();
         datePicker();
 
-            if (rows > 0 && cols > 0) {
-                BuildTableTest2(rows, cols);
-            }else {
-                Utilityies.showAlert(RDACPHAVUserEntryActivity.this,
-                        getResources().getString(R.string.table_not_created));
-            }
+        if (rows > 0 && cols > 0) {
+            BuildTableTest2(rows, cols);
+        } else {
+            Utilityies.showAlert(RDACPHAVUserEntryActivity.this,
+                    getResources().getString(R.string.table_not_created));
+        }
 
         //setting the test 2 room volume
         if (roomVolumeTxtList != null && roomVolumeTxtList.size() > 0) {
@@ -218,7 +218,6 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
                     TextView tv2 = airFlowRateTxtViewList.get(i);
 
                     try {
-
                         AxAv = Double.valueOf(mAhuFilterArrayList.get(i).getEffectiveArea()) * airFlowRateMap.get(tvl.getId());
                     } catch (NumberFormatException e) {
                         e.printStackTrace();
@@ -232,9 +231,9 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
         // Checking individual input base on Average
         if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
             int variation = mApplicableTestRoom.getDiffAVinFilter();
-           if(variation!=0) {
-               getInputDataValidationByAverage(variation);
-           }
+            if (variation != 0) {
+                getInputDataValidationByAverage(variation);
+            }
         }
 
         //Total AirFlow Rate (sum of AirFlow Rate)
@@ -280,7 +279,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
                         }
                     } else if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
                         if (colorPicker(Double.parseDouble(mApplicableTestRoom.getTestSpecification()), (double) totalAirFlowRateMap.get(tvl.getId()), mTestBasedOn)) {
-                           // tvl.setTextColor(Color.RED);
+                            // tvl.setTextColor(Color.RED);
                             tvl.setTextColor(Color.BLACK);
                         } else {
                             tvl.setTextColor(Color.BLACK);
@@ -577,7 +576,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
             spesificationValueArrayList.add(testSpesificationValue1);
         } else if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
             testSpesificationValue1.setFieldName("RV");
-            testSpesificationValue1.setFieldValue("" + room.getVolume());
+            testSpesificationValue1.setFieldValue("" + Math.round(room.getVolume()));
             spesificationValueArrayList.add(testSpesificationValue1);
             TestSpesificationValue testSpesificationValue2 = new TestSpesificationValue();
 //        testSpesificationValue2.setTest_specific_id(1);
@@ -758,8 +757,12 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
         testDetails.setAerosolGeneratorType("");
         testDetails.setAerosolUsed("");
         if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
+            testDetails.setDiffAVinFilter(mApplicableTestRoom.getDiffAVinFilter());
+            testDetails.setDiffAVbetweenFilter(mApplicableTestRoom.getDiffAVbetweenFilter());
             testDetails.setTestItem("");
         } else {
+            testDetails.setDiffAVinFilter(0);
+            testDetails.setDiffAVbetweenFilter(0);
             testDetails.setTestItem("" + testItemValue.getText());
         }
 
@@ -950,10 +953,10 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
-                   // row.addView(addTextView(" Grill/Filter Area(ft2)\n  A"));
+                    // row.addView(addTextView(" Grill/Filter Area(ft2)\n  A"));
                     TextView grillTV = addTextView(" Grill/Filter Area(ft2)\n  A");
                     ViewGroup.LayoutParams params = grillTV.getLayoutParams();
-                    params.height =getResources().getDimensionPixelSize(R.dimen.common_txt_header_height);
+                    params.height = getResources().getDimensionPixelSize(R.dimen.common_txt_header_height);
                     grillTV.setLayoutParams(params);
                     row.addView(grillTV);
                 } else {
@@ -986,7 +989,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
                                 filterSize = mRoomFilterArrayList.get(i - 2).getEffectiveFilterArea();
                             TextView grillTV = addTextView("" + filterSize);
                             ViewGroup.LayoutParams params = grillTV.getLayoutParams();
-                            params.height =getResources().getDimensionPixelSize(R.dimen.common_text_cell_height);
+                            params.height = getResources().getDimensionPixelSize(R.dimen.common_text_cell_height);
                             grillTV.setLayoutParams(params);
                             row.addView(grillTV);
 
@@ -1038,7 +1041,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
                 if (i == 1 && j == 1) {
                     TextView grillTV = addTextView("Average Air Velocity\n  (fpm)");
                     ViewGroup.LayoutParams params = grillTV.getLayoutParams();
-                    params.height =getResources().getDimensionPixelSize(R.dimen.common_txt_header_height);
+                    params.height = getResources().getDimensionPixelSize(R.dimen.common_txt_header_height);
                     grillTV.setLayoutParams(params);
                     row.addView(grillTV);
                 } else {
@@ -1066,7 +1069,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
                     //row.addView(addTextView(" Air Flow Rate\n cfm(AxAv)"));
                     TextView grillTV = addTextView(" Air Flow Rate\n cfm(AxAv)");
                     ViewGroup.LayoutParams params = grillTV.getLayoutParams();
-                    params.height =getResources().getDimensionPixelSize(R.dimen.common_txt_header_height);
+                    params.height = getResources().getDimensionPixelSize(R.dimen.common_txt_header_height);
                     grillTV.setLayoutParams(params);
                     row.addView(grillTV);
                 } else {
@@ -1321,6 +1324,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
     }
 
     int idCounts = 200, inputTxtCount = 0;
+
     private void getInputDataValidationByAverage(int variation) {
         Log.d(TAG, " rows " + rows + " cols " + cols);
         for (int i = 1; i <= rows - 1; i++) {

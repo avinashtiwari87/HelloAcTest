@@ -572,6 +572,8 @@ public class RDRCTUserEntryActivity extends AppCompatActivity {
         testDetails.setDateOfTest("" + dateTextView.getText());
         testDetails.setRawDataNo(certificateNo.getText().toString());
         testDetails.setTestName(TestCreateActivity.RCT);
+        testDetails.setDiffAVinFilter(0);
+        testDetails.setDiffAVbetweenFilter(0);
         if (loginUserType.equals("CLIENT")) {
             testDetails.setInstrumentUsed(clientInstrument.getcInstrumentName());
             testDetails.setMake(clientInstrument.getMake());
