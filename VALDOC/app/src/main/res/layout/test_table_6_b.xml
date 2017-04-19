@@ -13,13 +13,15 @@
 
         <TextView
             style="@style/TextAppearance.AppCompat.header_left"
-            android:gravity="center"
-            android:layout_weight="1"
-            android:text=" Location ID " />
+            android:gravity="center_horizontal"
+            android:text=" Location ID "
+            android:layout_width="match_parent"
+            android:layout_height="92dp" />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
             android:gravity="center"
             android:text=" 1 " />
 
@@ -38,6 +40,7 @@
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:background="@drawable/border2"
+            android:gravity="center"
             android:text=" Test Parameter " />
 
         <TextView
@@ -78,6 +81,7 @@
             style="@style/TextAppearance.AppCompat.header_left"
             android:layout_width="match_parent"
             android:layout_height="40dp"
+            android:gravity="center"
             android:background="@drawable/border2"
             android:text=" No. of Particles ≥ 0. 5 µm/m³ " />
 
@@ -120,6 +124,7 @@
         <TextView
             style="@style/TextAppearance.AppCompat.header_left"
             android:layout_weight="3"
+            android:gravity="center"
             android:text=" Recovery Time (minutes)" />
 
         <TextView

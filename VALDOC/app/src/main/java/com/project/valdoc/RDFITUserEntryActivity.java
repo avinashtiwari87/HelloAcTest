@@ -700,6 +700,8 @@ Date d;
         testDetails.setRawDataNo(certificateNo.getText().toString());
         testDetails.setTestName(mTestCode);
         testDetails.setAcceptableRecoveryTime("");
+        testDetails.setDiffAVinFilter(0);
+        testDetails.setDiffAVbetweenFilter(0);
         if (loginUserType.equals("CLIENT")) {
             testDetails.setInstrumentUsed(instrumentUsed.getText().toString());
             testDetails.setMake("" + clientInstrument.getMake().toString());

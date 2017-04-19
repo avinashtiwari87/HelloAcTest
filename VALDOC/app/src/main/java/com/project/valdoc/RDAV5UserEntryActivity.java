@@ -443,6 +443,8 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
         testDetails.setFilterTypeEficiancy("");
         testDetails.setTestLocation("");
         testDetails.setAcceptableRecoveryTime("");
+        testDetails.setDiffAVinFilter(0);
+        testDetails.setDiffAVbetweenFilter(0);
         if (loginUserType.equals("CLIENT")) {
             Log.d("getCertificateData", "client instrumentUsed.getText()=" + instrumentUsed.getText());
             testDetails.setInstrumentUsed("" + instrumentUsed.getText());

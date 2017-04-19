@@ -345,6 +345,6 @@ public class RDACPHhPostViewActivity extends AppCompatActivity {
         TextView TestHeader2 = (TextView)findViewById(R.id.common_header_2_tv);
         TestHeader2.setVisibility(View.VISIBLE);
         TestHeader.setText("TEST RAW DATA");
-        TestHeader2.setText("(Air Flow Velocity, Volume Testing and Determination of Air Changes per Hour Rates by Hood)");
+        TestHeader2.setText("(Air Flow Velocity, Volume Testing and Determination of Air Changes per Hour Rates by Air Capture Hood)");
     }
 }

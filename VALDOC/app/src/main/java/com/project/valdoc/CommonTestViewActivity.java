@@ -757,7 +757,7 @@ public class CommonTestViewActivity extends AppCompatActivity {
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
-                    row.addView(addTextView(" Variation \nin Concentration*"));
+                    row.addView(addTextView(" Variation \nin Concentration"));
                 } else {
                     row.addView(addTextView(10 + i + "%"));
                 }

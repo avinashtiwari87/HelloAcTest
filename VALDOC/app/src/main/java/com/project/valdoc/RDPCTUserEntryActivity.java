@@ -716,6 +716,8 @@ public class RDPCTUserEntryActivity extends AppCompatActivity {
         testDetails.setFilterTypeEficiancy("");
         testDetails.setTestLocation("");
         testDetails.setAcceptableRecoveryTime("");
+        testDetails.setDiffAVinFilter(0);
+        testDetails.setDiffAVbetweenFilter(0);
         if (loginUserType.equals("CLIENT")) {
             testDetails.setInstrumentUsed(clientInstrument.getcInstrumentName());
             testDetails.setMake(clientInstrument.getMake());
