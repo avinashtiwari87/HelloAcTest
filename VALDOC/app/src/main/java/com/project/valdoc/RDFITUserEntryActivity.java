@@ -165,18 +165,18 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rdfituser_entry);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-        pr = ProgressDialog.show(this, "Please Wait", "Loading...");
-        pr.setCanceledOnTouchOutside(true);
-        pr.setCancelable(true);
 
         //init res file from xml
         initRes();
 
+        // Init objects
         txtPassFailList = new ArrayList<TextView>();
         txtConcentrationVariationList = new ArrayList<TextView>();
         txtViewList = new ArrayList<TextView>();
         sharedpreferences = getSharedPreferences("valdoc", Context.MODE_PRIVATE);
         testDetailsId = (sharedpreferences.getInt("TESTDETAILSID", 0) + 1);
+
+        // Get data from test create screen
         if (getIntent().hasExtra("rows") && getIntent().hasExtra("cols")) {
             rows = getIntent().getIntExtra("rows", 0);
             cols = getIntent().getIntExtra("cols", 0);
@@ -194,78 +194,82 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
 
         //Creating Tables based on rows and columns
         if (rows > 0 && cols > 0) {
+            pr = ProgressDialog.show(this, "Please Wait", "Loading...");
+            pr.setCanceledOnTouchOutside(true);
+            pr.setCancelable(true);
+
             buildTestFour(rows, cols);
+
+
+            //Receiving User Input Data from Bundle
+            likageDataMap = (HashMap<Integer, Double>) getIntent().getSerializableExtra("InputData");
+            int k=0;
+            int count=0;
+            int constVal=((likageDataMap.size()/3)*2);
+            int kk=200;
+            for (Map.Entry m : likageDataMap.entrySet()) {
+                if(count>=constVal){
+                    TextView tvl = txtPassFailList.get(k);
+                    Double spesification = getSpecification(mshowSpesification);
+                    if (spesification >= Double.parseDouble(likageDataMap.get(kk).toString())) {
+                        tvl.setText("PASS");
+                    } else {
+                        tvl.setText("FAIL");
+                    }
+                    k++;
+                    kk++;
+                }
+                count++;
+                Log.v(TAG, " InputData " + m.getKey() + " " + m.getValue());
+            }
+
+            showFitInputDataHashMap = (HashMap<Integer, BigDecimal>) getIntent().getSerializableExtra("ShowInputData");
+            for (int i = 0; i < txtViewList.size(); i++) {
+                TextView tvl = txtViewList.get(i);
+                Log.d("Saurabh", "Saurabh likageValue : "+showFitInputDataHashMap.get(tvl.getId()) );
+                if(tvl.getId() >= 800){
+                    tvl.setText(showFitInputDataHashMap.get(tvl.getId()) + "");
+                }else{
+//                tvl.setText(likageDataMap.get(tvl.getId())) + "");
+                    tvl.setText(""+showFitInputDataHashMap.get(tvl.getId()));
+                }
+
+            }
+            //Receiving Pass Fail Data from Bundle
+            PassFailHashMap = (HashMap<Integer, Long>) getIntent().getSerializableExtra("PassFailData");
+            for (Map.Entry O : PassFailHashMap.entrySet()) {
+                Log.v(TAG, " PassFail " + O.getKey() + " " + O.getValue());
+            }
+            int passFlag = 1;
+            for (int i = 0; i < txtPassFailList.size(); i++) {
+                TextView tvl = txtPassFailList.get(i);
+                if ("PASS".equalsIgnoreCase(tvl.getText().toString().trim())) {
+                    tvl.setTextColor(getResources().getColor(R.color.blue));
+                } else {
+                    passFlag = 0;
+                    tvl.setTextColor(getResources().getColor(R.color.red));
+                }
+            }
+
+            // Getting ConcentrationVariation Data
+            concentrationVariationListData = (ArrayList<Double>)getIntent().getSerializableExtra("InputDataVariation");
+            for (int vr = 0; vr <concentrationVariationListData.size() ; vr++) {
+                Log.v(TAG, " InputDataVariation  "+concentrationVariationListData.get(vr).toString());
+            }
+            for (int i = 0; i < txtConcentrationVariationList.size(); i++) {
+                TextView tvl = txtConcentrationVariationList.get(i);
+                tvl.setText(concentrationVariationListData.get(i)+ " %");
+                String pasFailCheck = String.valueOf(PassFailHashMap.get(300+i));
+                Log.d(TAG, "Saurabh PassRedBlack "+pasFailCheck);
+                if("PASS".equalsIgnoreCase(pasFailCheck.trim())){
+                    tvl.setTextColor(getResources().getColor(R.color.black));
+                }else{
+                    tvl.setTextColor(getResources().getColor(R.color.red));
+                }
+            }
         }else {
             Utilityies.showAlert(RDFITUserEntryActivity.this, getResources().getString(R.string.table_not_created));
         }
-
-        //Receiving User Input Data from Bundle
-        likageDataMap = (HashMap<Integer, Double>) getIntent().getSerializableExtra("InputData");
-        int k=0;
-        int count=0;
-        int constVal=((likageDataMap.size()/3)*2);
-        int kk=200;
-        for (Map.Entry m : likageDataMap.entrySet()) {
-            if(count>=constVal){
-                TextView tvl = txtPassFailList.get(k);
-                Double spesification = getSpecification(mshowSpesification);
-                if (spesification >= Double.parseDouble(likageDataMap.get(kk).toString())) {
-                    tvl.setText("PASS");
-                } else {
-                    tvl.setText("FAIL");
-                }
-                k++;
-                kk++;
-            }
-            count++;
-            Log.v(TAG, " InputData " + m.getKey() + " " + m.getValue());
-        }
-
-        showFitInputDataHashMap = (HashMap<Integer, BigDecimal>) getIntent().getSerializableExtra("ShowInputData");
-        for (int i = 0; i < txtViewList.size(); i++) {
-            TextView tvl = txtViewList.get(i);
-            Log.d("Saurabh", "Saurabh likageValue : "+showFitInputDataHashMap.get(tvl.getId()) );
-            if(tvl.getId() >= 800){
-                tvl.setText(showFitInputDataHashMap.get(tvl.getId()) + "");
-            }else{
-//                tvl.setText(likageDataMap.get(tvl.getId())) + "");
-                tvl.setText(""+showFitInputDataHashMap.get(tvl.getId()));
-            }
-
-        }
-        //Receiving Pass Fail Data from Bundle
-        PassFailHashMap = (HashMap<Integer, Long>) getIntent().getSerializableExtra("PassFailData");
-        for (Map.Entry O : PassFailHashMap.entrySet()) {
-            Log.v(TAG, " PassFail " + O.getKey() + " " + O.getValue());
-        }
-        int passFlag = 1;
-        for (int i = 0; i < txtPassFailList.size(); i++) {
-            TextView tvl = txtPassFailList.get(i);
-            if ("PASS".equalsIgnoreCase(tvl.getText().toString().trim())) {
-                tvl.setTextColor(getResources().getColor(R.color.blue));
-            } else {
-                passFlag = 0;
-                tvl.setTextColor(getResources().getColor(R.color.red));
-            }
-        }
-
-        // Getting ConcentrationVariation Data
-        concentrationVariationListData = (ArrayList<Double>)getIntent().getSerializableExtra("InputDataVariation");
-        for (int vr = 0; vr <concentrationVariationListData.size() ; vr++) {
-            Log.v(TAG, " InputDataVariation  "+concentrationVariationListData.get(vr).toString());
-        }
-        for (int i = 0; i < txtConcentrationVariationList.size(); i++) {
-            TextView tvl = txtConcentrationVariationList.get(i);
-            tvl.setText(concentrationVariationListData.get(i)+ " %");
-            String pasFailCheck = String.valueOf(PassFailHashMap.get(300+i));
-            Log.d(TAG, "Saurabh PassRedBlack "+pasFailCheck);
-            if("PASS".equalsIgnoreCase(pasFailCheck.trim())){
-                tvl.setTextColor(getResources().getColor(R.color.black));
-            }else{
-                tvl.setTextColor(getResources().getColor(R.color.red));
-            }
-        }
-
 
         //Custom Action Bar
         ActionBar mActionBar = getSupportActionBar();
