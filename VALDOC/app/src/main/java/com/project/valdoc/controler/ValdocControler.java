@@ -640,6 +640,8 @@ public class ValdocControler {
                 applicableTestRoom.setPeriodicity(jsonObject.optString("periodicity").toString());
                 applicableTestRoom.setLocation(jsonObject.optInt("location"));
                 applicableTestRoom.setNoOfCycle(jsonObject.optInt("noOfCycle"));
+                applicableTestRoom.setDiffAVinFilter(jsonObject.optInt("diffAVinFilter"));
+                applicableTestRoom.setDiffAVbetweenFilter(jsonObject.optInt("diffAVbetweenFilter"));
 
                 applicableTestRoom.setLastUpdatedDate(jsonObject.optString("lastUpdatedDate").toString());
                 arrayList.add(applicableTestRoom);

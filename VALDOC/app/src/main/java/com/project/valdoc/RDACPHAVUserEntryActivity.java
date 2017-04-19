@@ -230,8 +230,12 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
         }
 
         // Checking individual input base on Average
-        int variation = 10;
-        getInputDataValidationByAverage(variation);
+        if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
+            int variation = mApplicableTestRoom.getDiffAVinFilter();
+           if(variation!=0) {
+               getInputDataValidationByAverage(variation);
+           }
+        }
 
         //Total AirFlow Rate (sum of AirFlow Rate)
         if (totalAirFlowRateTxtList != null && totalAirFlowRateTxtList.size() > 0) {

@@ -95,7 +95,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
             + " INTEGER," + AHU_FINALFILTERTYPE + " TEXT," + AHU_FINALFILTEREFFICIENCY + " TEXT,"
             + AHU_FINALFILTERLEAK + " TEXT," + AHU_REMARKS + " TEXT," + AHU_LASTUPDATEDDATE + " TEXT," + AHU_FRESHPARTICLESIZE + " REAL,"
             + AHU_BLEEDPARTICLESIZE + " REAL," + AHU_FINALPARTICLESIZE + " REAL," + AHU_FRESHAIRFLOWTOLERANCE + " REAL,"
-            + AHU_BLEEDAIRFLOWTOLERANCE + " REAL,"+ AHU_FINALAIRFLOWTOLERANCE + " REAL"+ ")";
+            + AHU_BLEEDAIRFLOWTOLERANCE + " REAL," + AHU_FINALAIRFLOWTOLERANCE + " REAL" + ")";
 
     //Applicable test ahu table details
     public static final String APLICABLE_TEST_AHU_TABLE_NAME = "aplicable_test_ahu";
@@ -181,7 +181,8 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
     public static final String APLICABLE_TEST_ROOM_OCCUPENCYSTATE = "occupencyState";
     public static final String APLICABLE_TEST_ROOM_TESTREFERENCE = "testReference";
     public static final String APLICABLE_TEST_ROOM_TESTPROP = "testProp";
-
+    public static final String APLICABLE_TEST_ROOM_DIFFAVINFILTER = "diffAVinFilter";
+    public static final String APLICABLE_TEST_ROOM_DIFFAVBETWEENFILTER = "diffAVbetweenFilter";
     public static final String APLICABLE_TEST_ROOM_PERIODICITY = "periodicity";
     public static final String APLICABLE_TEST_ROOM_LOCATION = "location";
     public static final String APLICABLE_TEST_ROOM_NOOFCYCLE = "noOfCycle";
@@ -193,8 +194,8 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
             + APLICABLE_TEST_ROOM_TESTNAME + " TEXT," + APLICABLE_TEST_ROOM_TESTCODE + " TEXT," + APLICABLE_TEST_ROOM_TESTFORMAT
             + " TEXT," + APLICABLE_TEST_ROOM_TESTSPECIFICATION + " TEXT," + APLICABLE_TEST_ROOM_OCCUPENCYSTATE + " TEXT,"
             + APLICABLE_TEST_ROOM_TESTREFERENCE + " TEXT," + APLICABLE_TEST_ROOM_TESTPROP + " TEXT," + APLICABLE_TEST_ROOM_PERIODICITY + " TEXT,"
-            + APLICABLE_TEST_ROOM_LOCATION + " INTEGER," + APLICABLE_TEST_ROOM_NOOFCYCLE + " INTEGER,"
-            + APLICABLE_TEST_ROOM_LASTUPDATEDDATE + " TEXT " + ")";
+            + APLICABLE_TEST_ROOM_LOCATION + " INTEGER," + APLICABLE_TEST_ROOM_NOOFCYCLE + " INTEGER," + APLICABLE_TEST_ROOM_DIFFAVINFILTER + " INTEGER,"
+            + APLICABLE_TEST_ROOM_DIFFAVBETWEENFILTER + " INTEGER," + APLICABLE_TEST_ROOM_LASTUPDATEDDATE + " TEXT " + ")";
 
     //equipment able details
     public static final String EQUIPMENT_TABLE_NAME = "equipment";
@@ -604,7 +605,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
             + " TEXT," + TEST_DETAILS_AEROSOLGENERATORTYPE + " TEXT," + TEST_DETAILS_TESTCODE + " TEXT," + TEST_DETAILS_ROOMVOLUME
             + " TEXT," + TEST_DETAILS_TESTWITNESSORG + " TEXT," + TEST_DETAILS_TESTCONDOCTORORG + " TEXT," + TEST_DETAILS_TESTITEM + " TEXT,"
             + TEST_DETAILS_TESTLOCATION + " TEXT," + TEST_DETAILS_FILTERTYPEEFFICIANCY + " TEXT," +
-            TEST_DETAILS_ACCEPTABLERECOVERYTIME+" TEXT "+ ")";
+            TEST_DETAILS_ACCEPTABLERECOVERYTIME + " TEXT " + ")";
 
 
     //test spesification table details
@@ -728,7 +729,6 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
             + SAMPLINGTIME_LPM283 + " TEXT," + SAMPLINGTIME_LPM50 + " TEXT,"
             + SAMPLINGTIME_LPM75 + " TEXT," + SAMPLINGTIME_LPM100 + " TEXT,"
             + SAMPLINGTIME_LASTUPDATEDDATE + " TEXT" + ")";
-
 
 
     public ValdocDatabaseHandler(Context context) {
@@ -1138,9 +1138,9 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
         contentValues.put(TEST_DETAILS_TESTWITNESSORG, testDetails.getTestWitnessOrg());
         contentValues.put(TEST_DETAILS_TESTCONDOCTORORG, testDetails.getTestCondoctorOrg());
         contentValues.put(TEST_DETAILS_TESTITEM, testDetails.getTestItem());
-        contentValues.put(TEST_DETAILS_TESTLOCATION,testDetails.getTestLocation());
-        contentValues.put(TEST_DETAILS_FILTERTYPEEFFICIANCY,testDetails.getFilterTypeEficiancy());
-        contentValues.put(TEST_DETAILS_ACCEPTABLERECOVERYTIME,testDetails.getAcceptableRecoveryTime());
+        contentValues.put(TEST_DETAILS_TESTLOCATION, testDetails.getTestLocation());
+        contentValues.put(TEST_DETAILS_FILTERTYPEEFFICIANCY, testDetails.getFilterTypeEficiancy());
+        contentValues.put(TEST_DETAILS_ACCEPTABLERECOVERYTIME, testDetails.getAcceptableRecoveryTime());
         db.insert(tableName, null, contentValues);
 //            }
         return true;
@@ -1267,6 +1267,8 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 contentValues.put(APLICABLE_TEST_ROOM_PERIODICITY, applicableTestRoom.getPeriodicity());
                 contentValues.put(APLICABLE_TEST_ROOM_LOCATION, applicableTestRoom.getLocation());
                 contentValues.put(APLICABLE_TEST_ROOM_NOOFCYCLE, applicableTestRoom.getNoOfCycle());
+                contentValues.put(APLICABLE_TEST_ROOM_DIFFAVINFILTER, applicableTestRoom.getDiffAVinFilter());
+                contentValues.put(APLICABLE_TEST_ROOM_DIFFAVBETWEENFILTER, applicableTestRoom.getDiffAVbetweenFilter());
                 contentValues.put(APLICABLE_TEST_ROOM_LASTUPDATEDDATE, applicableTestRoom.getLastUpdatedDate());
 
                 if (getExistingId(tableName, APLICABLE_TEST_ROOM_APLICABLE_TESTID, applicableTestRoom.getAplicable_testId()) > 0) {
@@ -1791,15 +1793,15 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
     }
 
     // select data from clientInstrument table
-    public ArrayList<ClientInstrument> getClientInstrumentInfo(String testCode,String todaysDate) {
-        Log.d(TAG, "db getClientInstrumentInfo :" + " testCode=" + testCode+" todaysDate="+todaysDate);
+    public ArrayList<ClientInstrument> getClientInstrumentInfo(String testCode, String todaysDate) {
+        Log.d(TAG, "db getClientInstrumentInfo :" + " testCode=" + testCode + " todaysDate=" + todaysDate);
         ArrayList<ClientInstrument> clientInstrumentArrayList;
         clientInstrumentArrayList = new ArrayList<ClientInstrument>();
         String selectQuery = "SELECT * FROM " + CLIENT_INSTRUMENT_TABLE_NAME + "," + CLIENT_INSTRUMENT_TEST_TABLE_NAME + " WHERE " + CLIENT_INSTRUMENT_TABLE_NAME
                 + "." + CLIENT_INSTRUMENT_CINSTRUMENTID + "=" + CLIENT_INSTRUMENT_TEST_TABLE_NAME + "." + CLIENT_INSTRUMENT_TEST_CLIENT_INSTRUMENT_ID
                 + " AND " + CLIENT_INSTRUMENT_TEST_TABLE_NAME + "." + CLIENT_INSTRUMENT_TEST_CLIENT_INSTRUMENT_TEST_CODE + "=" +
                 '"' + testCode + '"'
-               +" AND "+ CLIENT_INSTRUMENT_TABLE_NAME + "." + CLIENT_INSTRUMENT_CALIBRATIONDUEDATE + ">" + '"' + todaysDate + '"';
+                + " AND " + CLIENT_INSTRUMENT_TABLE_NAME + "." + CLIENT_INSTRUMENT_CALIBRATIONDUEDATE + ">" + '"' + todaysDate + '"';
 
 //        String selectQuery1 = "SELECT * FROM " + CLIENT_INSTRUMENT_TABLE_NAME;
         SQLiteDatabase database = this.getWritableDatabase();
@@ -1836,12 +1838,12 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
     }
 
     // select data from partnerInstrument table
-    public ArrayList<PartnerInstrument> getPartnerInstrumentInfo(int partnerId, String testCode,String todaysDate) {
+    public ArrayList<PartnerInstrument> getPartnerInstrumentInfo(int partnerId, String testCode, String todaysDate) {
         ArrayList<PartnerInstrument> partnerInstrumentArrayList;
         partnerInstrumentArrayList = new ArrayList<PartnerInstrument>();
         String selectQuery = "SELECT * FROM " + PARTNER_INSTRUMENT_TABLE_NAME + "," + PARTNER_INSTRUMENT_TEST_TABLE_NAME + " WHERE " + PARTNER_INSTRUMENT_TABLE_NAME
                 + "." + PARTNER_INSTRUMENT_PINSTRUMENTID + "=" + PARTNER_INSTRUMENT_TEST_TABLE_NAME + "." + PARTNER_INSTRUMENT_ID
-                + " AND "+ PARTNER_INSTRUMENT_TABLE_NAME + "." + PARTNER_INSTRUMENT_CALIBRATIONDUEDATE + ">" + '"' + todaysDate + '"'
+                + " AND " + PARTNER_INSTRUMENT_TABLE_NAME + "." + PARTNER_INSTRUMENT_CALIBRATIONDUEDATE + ">" + '"' + todaysDate + '"'
                 + " AND " + PARTNER_INSTRUMENT_TEST_TABLE_NAME + "." + PARTNER_INSTRUMENT_TEST_CODE + "=" + '"' + testCode + '"';
 //                " WHERE " + ValdocDatabaseHandler.PARTNER_INSTRUMENT_PARTNERID + " = " + partnerId;
         SQLiteDatabase database = this.getWritableDatabase();
@@ -1868,7 +1870,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
 //                partnerInstrument.setSamplingTime(cursor.getString(13));
 //                partnerInstrument.setAerosolUsed(cursor.getString(14));
 //                partnerInstrument.setAerosolGeneratorType(cursor.getString(15));
-                Log.d(TAG, "partnerInstrument" + partnerInstrument.getpInstrumentId()+" todaysDate="+todaysDate);
+                Log.d(TAG, "partnerInstrument" + partnerInstrument.getpInstrumentId() + " todaysDate=" + todaysDate);
                 partnerInstrumentArrayList.add(partnerInstrument);
             } while (cursor.moveToNext());
         } // return contact list return wordList; }
@@ -2368,10 +2370,10 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
     public ArrayList<Grill> getRoomAvGrill(int roomId) {
         ArrayList<Grill> grillArrayList;
         grillArrayList = new ArrayList<Grill>();
-        int id=1;
+        int id = 1;
         String selectQuery = " SELECT * FROM " + GRILL_TABLE_NAME +
 //        String selectQuery = " SELECT * FROM " + PARTNERUSER_TABLE_NAME +
-                " WHERE " + ValdocDatabaseHandler.GRILL_ROOMID + " = " + roomId + " AND "+ ValdocDatabaseHandler.GRILL_ISSUPPLYGRILL + " = " + id ;
+                " WHERE " + ValdocDatabaseHandler.GRILL_ROOMID + " = " + roomId + " AND " + ValdocDatabaseHandler.GRILL_ISSUPPLYGRILL + " = " + id;
         SQLiteDatabase database = this.getWritableDatabase();
         Cursor cursor = database.rawQuery(selectQuery, null);
         Log.d(TAG, "ValdocDatabaseHelper :Equipment grill code equipment1:=" + cursor.getCount());
@@ -2877,7 +2879,9 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 applicableTestRoom.setPeriodicity(cursor.getString(9));
                 applicableTestRoom.setLocation(cursor.getInt(10));
                 applicableTestRoom.setNoOfCycle(cursor.getInt(11));
-                applicableTestRoom.setLastUpdatedDate(cursor.getString(12));
+                applicableTestRoom.setDiffAVinFilter(cursor.getInt(12));
+                applicableTestRoom.setDiffAVbetweenFilter(cursor.getInt(13));
+                applicableTestRoom.setLastUpdatedDate(cursor.getString(14));
                 applicableTestRoomArrayList.add(applicableTestRoom);
                 Log.d(TAG, "applicableTestRoom=" + applicableTestRoom.getTestName());
             } while (cursor.moveToNext());
@@ -2896,7 +2900,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
 
         SQLiteDatabase database = this.getWritableDatabase();
         Cursor cursor = database.rawQuery(selectQuery, null);
-        Log.d(TAG, "applicableTestahu selectQuery=" + selectQuery+" testCode="+testCode);
+        Log.d(TAG, "applicableTestahu selectQuery=" + selectQuery + " testCode=" + testCode);
         Log.d(TAG, "applicableTestahu before=" + cursor.getCount() + " testItem=" + testItem);
         if (cursor.moveToFirst()) {
             do {

@@ -1787,9 +1787,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
-
-                    row.addView(addTextView(" Variation \nin Concentration"));
-
+                    TextView grillTV = addTextView(" Variation \nin Concentration");
                    // row.addView(addTextView(" Variation \nin Concentration*"));
 
                     ViewGroup.LayoutParams params = grillTV.getLayoutParams();

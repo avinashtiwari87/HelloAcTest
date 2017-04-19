@@ -18,6 +18,8 @@ public class ApplicableTestRoom implements Serializable{
     private String testReference;
     private String testProp;
     private String periodicity;
+    private int diffAVinFilter;
+    private int diffAVbetweenFilter;
     private int location;
     private int noOfCycle;
     private String lastUpdatedDate;
@@ -132,5 +134,21 @@ public class ApplicableTestRoom implements Serializable{
 
     public void setLastUpdatedDate(String lastUpdatedDate) {
         this.lastUpdatedDate = lastUpdatedDate;
+    }
+
+    public int getDiffAVinFilter() {
+        return diffAVinFilter;
+    }
+
+    public void setDiffAVinFilter(int diffAVinFilter) {
+        this.diffAVinFilter = diffAVinFilter;
+    }
+
+    public int getDiffAVbetweenFilter() {
+        return diffAVbetweenFilter;
+    }
+
+    public void setDiffAVbetweenFilter(int diffAVbetweenFilter) {
+        this.diffAVbetweenFilter = diffAVbetweenFilter;
     }
 }
