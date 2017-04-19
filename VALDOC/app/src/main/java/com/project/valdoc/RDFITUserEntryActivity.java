@@ -193,7 +193,7 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
         datePicker();
 
         //Creating Tables based on rows and columns
-        if (rows > 0 && cols > 0) {
+        //if (rows > 0 && cols > 0) {
             pr = ProgressDialog.show(this, "Please Wait", "Loading...");
             pr.setCanceledOnTouchOutside(true);
             pr.setCancelable(true);
@@ -267,9 +267,9 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
                     tvl.setTextColor(getResources().getColor(R.color.red));
                 }
             }
-        }else {
+/*        }else {
             Utilityies.showAlert(RDFITUserEntryActivity.this, getResources().getString(R.string.table_not_created));
-        }
+        }*/
 
         //Custom Action Bar
         ActionBar mActionBar = getSupportActionBar();
@@ -1054,7 +1054,12 @@ Date d;
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
-                    row.addView(addTextView(" Filter No \n         "));
+                    //row.addView(addTextView(" Filter No \n         "));
+                    TextView grillTV = addTextView(" Filter No");
+                    ViewGroup.LayoutParams params = grillTV.getLayoutParams();
+                    params.height = getResources().getDimensionPixelSize(R.dimen.common_txt_header_height);
+                    grillTV.setLayoutParams(params);
+                    row.addView(grillTV);
                 } else {
                     if (mTestBasedOn.equalsIgnoreCase("EQUIPMENT")) {
                         if (null != mEquipmentFilterArrayList && mEquipmentFilterArrayList.size() > 0) {
@@ -1091,7 +1096,12 @@ Date d;
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
-                    row.addView(addTextView(" Average \nbefore Scanning "));
+                   // row.addView(addTextView(" Average \nbefore Scanning "));
+                    TextView grillTV = addTextView("Average\nbefore Scanning(%) ");
+                    ViewGroup.LayoutParams params = grillTV.getLayoutParams();
+                    params.height = getResources().getDimensionPixelSize(R.dimen.common_txt_header_height);
+                    grillTV.setLayoutParams(params);
+                    row.addView(grillTV);
                 } else {
                     row.addView(addInputDataTextViewBeforeStream());
                 }
@@ -1109,7 +1119,12 @@ Date d;
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
-                    row.addView(addTextView(" Average \nAfter Scanning"));
+                   // row.addView(addTextView(" Average \nAfter Scanning"));
+                    TextView grillTV = addTextView("Average\nAfter Scanning(%)");
+                    ViewGroup.LayoutParams params = grillTV.getLayoutParams();
+                    params.height = getResources().getDimensionPixelSize(R.dimen.common_txt_header_height);
+                    grillTV.setLayoutParams(params);
+                    row.addView(grillTV);
                 } else {
                     row.addView(addInputDataTextViewAfterStream());
                 }
@@ -1126,7 +1141,12 @@ Date d;
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
-                    row.addView(addTextView(" Variation \nin Concentration"));
+                   // row.addView(addTextView(" Variation \nin Concentration"));
+                    TextView grillTV = addTextView(" Variation \nin Concentration");
+                    ViewGroup.LayoutParams params = grillTV.getLayoutParams();
+                    params.height = getResources().getDimensionPixelSize(R.dimen.common_txt_header_height);
+                    grillTV.setLayoutParams(params);
+                    row.addView(grillTV);
                 } else {
                     row.addView(addFITConcentrationVariationTextView(10 + i + "%"));
                 }
@@ -1143,7 +1163,12 @@ Date d;
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
-                    row.addView(addTextView(" Obtained Leakage \n(% Leakage)"));
+                    //row.addView(addTextView(" Obtained Leakage \n(% Leakage)"));
+                    TextView grillTV = addTextView(" Obtained Leakage \n(% Leakage)");
+                    ViewGroup.LayoutParams params = grillTV.getLayoutParams();
+                    params.height = getResources().getDimensionPixelSize(R.dimen.common_txt_header_height);
+                    grillTV.setLayoutParams(params);
+                    row.addView(grillTV);
                 } else {
                     row.addView(addInputDataTextView());
                 }
@@ -1161,7 +1186,12 @@ Date d;
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
-                    row.addView(addTextView(" Test Results\n(Pass/Fail)"));
+                    //row.addView(addTextView(" Test Results\n(Pass/Fail)"));
+                    TextView grillTV = addTextView(" Test Results\n(Pass/Fail)");
+                    ViewGroup.LayoutParams params = grillTV.getLayoutParams();
+                    params.height = getResources().getDimensionPixelSize(R.dimen.common_txt_header_height);
+                    grillTV.setLayoutParams(params);
+                    row.addView(grillTV);
                 } else {
                     //row.addView(addTextView(" Pass "));
                     row.addView(addTextPassFail(" ", i));
@@ -1202,6 +1232,11 @@ Date d;
         tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
                 TableRow.LayoutParams.WRAP_CONTENT));
         tv.setBackgroundResource(R.drawable.border1);
+
+        ViewGroup.LayoutParams layoutParams = tv.getLayoutParams();
+        layoutParams.height = getResources().getDimensionPixelSize(R.dimen.common_text_cell_height);
+        tv.setLayoutParams(layoutParams);
+
         tv.setGravity(Gravity.CENTER);
         tv.setPadding(5, 5, 5, 5);
         tv.setTextColor(getResources().getColor(R.color.black));
@@ -1316,6 +1351,11 @@ Date d;
         tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
                 TableRow.LayoutParams.WRAP_CONTENT));
         tv.setBackgroundResource(R.drawable.border1);
+
+        ViewGroup.LayoutParams layoutParams = tv.getLayoutParams();
+        layoutParams.height = getResources().getDimensionPixelSize(R.dimen.common_text_cell_height);
+        tv.setLayoutParams(layoutParams);
+
         tv.setGravity(Gravity.CENTER);
         tv.setTextColor(getResources().getColor(R.color.black));
         tv.setTextSize(getResources().getDimension(R.dimen.normal_text_size));
