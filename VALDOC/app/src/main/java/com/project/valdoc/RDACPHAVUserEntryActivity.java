@@ -208,7 +208,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
             TextView tvl = txtViewList.get(i);
             tvl.setText(userEnterdValue.get(tvl.getId()) + "");
         }
-
+        totalAirFlowRateMap = (HashMap<Integer, Float>) getIntent().getSerializableExtra("ResultData2");
         for (int i = 0; i < resultTextViewList.size(); i++) {
             TextView tvl = resultTextViewList.get(i);
             tvl.setText(airFlowRateMap.get(tvl.getId()) + "");
@@ -225,6 +225,32 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
                     tv2.setText(Math.round(AxAv) + "");
                     arrayList_totalAirFlowRate.add(AxAv);
                 }
+            } else {
+                if (!mRoomFilterArrayList.isEmpty()) {
+                    //Air Flow Rate(AxAv)
+                    TextView tv2 = airFlowRateTxtViewList.get(i);
+
+                    try {
+                        AxAv = Double.valueOf(mRoomFilterArrayList.get(i).getEffectiveFilterArea()) * airFlowRateMap.get(tvl.getId());
+                    } catch (NumberFormatException e) {
+                        e.printStackTrace();
+                    }
+                    tv2.setText(Math.round(AxAv) + "");
+                    totalAirFlowRateMap.put(tv2.getId(), (float) AxAv);
+                } else if (!grillAndSizeFromGrill.isEmpty()) {
+                    //Air Flow Rate(AxAv)
+                    TextView tv2 = airFlowRateTxtViewList.get(i);
+
+                    try {
+                        AxAv = Double.valueOf(grillAndSizeFromGrill.get(i).getEffectiveArea()) * airFlowRateMap.get(tvl.getId());
+                    } catch (NumberFormatException e) {
+                        e.printStackTrace();
+                    }
+                    tv2.setText(Math.round(AxAv) + "");
+                    totalAirFlowRateMap.put(tv2.getId(), (float) AxAv);
+//                    arrayList_totalAirFlowRate.add(AxAv);
+
+                }
             }
         }
 
@@ -240,7 +266,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
         if (totalAirFlowRateTxtList != null && totalAirFlowRateTxtList.size() > 0) {
             int middleTxt = totalAirFlowRateTxtList.size() / 2;
             TextView mtvl = totalAirFlowRateTxtList.get(middleTxt);
-            totalAirFlowRate = getIntent().getFloatExtra("totalAirFlowRate", 0f);
+//            totalAirFlowRate = getIntent().getFloatExtra("totalAirFlowRate", 0f);
             if (mTestBasedOn.equalsIgnoreCase("AHU")) {
                 if (!arrayList_totalAirFlowRate.isEmpty() && arrayList_totalAirFlowRate.size() > 0) {
                     for (int i = 0; i < arrayList_totalAirFlowRate.size(); i++) {
@@ -265,7 +291,8 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
                 }
             } else {
                 //Air Flow Rate(AxAv)
-                totalAirFlowRateMap = (HashMap<Integer, Float>) getIntent().getSerializableExtra("ResultData2");
+//                totalAirFlowRateMap = (HashMap<Integer, Float>) getIntent().getSerializableExtra("ResultData2");
+                totalAirFlowRate = getTfr(totalAirFlowRateMap);
                 for (int i = 0; i < airFlowRateTxtViewList.size(); i++) {
                     TextView tvl = airFlowRateTxtViewList.get(i);
                     Log.v(TAG, " totalAirFlowRateMap: " + tvl.getId());
@@ -335,6 +362,13 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
             if (mActionBar != null)
                 Utilityies.setCustomActionBar(RDACPHAVUserEntryActivity.this, mActionBar, userName);
         }
+    }
+
+    private double getTfr(HashMap<Integer, Float> total_AirFlowRateMap) {
+        double sum = 0.0;
+        for (float sum1 : total_AirFlowRateMap.values())
+            sum += sum1;
+        return sum;
     }
 
     private boolean colorPicker(double testSpesification, double totalairflowrate, String testBasedOn) {

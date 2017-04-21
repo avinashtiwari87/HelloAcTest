@@ -329,6 +329,15 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                         roomDetails = extras.getStringArray("RoomDetails");
                         equipment = (Equipment) extras.getSerializable("Equipment");
                         mApplicableTestEquipment = (ApplicableTestEquipment) extras.getSerializable("ApplicableTestEquipment");
+                        /**
+                         * tolarance calculation
+                         */
+                        String tolarance = extras.getString("TOLARENCE");
+                        if (null != tolarance) {
+                            mTolarence = Double.parseDouble(tolarance.toString());
+                        } else {
+                            mTolarence = 0.0;
+                        }
                     } else if ("AHU".equalsIgnoreCase(mTestBasedOn)) {
                         mTestItem = extras.getString("testItem");
                         ahuNumber = extras.getString("AhuNumber");
@@ -342,6 +351,14 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                         ahuNumber = extras.getString("AhuNumber");
                         mRoomFilterArrayList = (ArrayList<RoomFilter>) extras.getSerializable("RoomFilter");
                         mApplicableTestRoom = (ApplicableTestRoom) extras.getSerializable("ApplicableTestRoom");
+                        /** tolarance calculation
+                         */
+                        String tolarance = extras.getString("TOLARENCE");
+                        if (null != tolarance) {
+                            mTolarence = Double.parseDouble(tolarance.toString());
+                        } else {
+                            mTolarence = 0.0;
+                        }
                     }
 
                     //take test specification from room filter
@@ -1076,7 +1093,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                     intent.putExtra("testCode", mTestCode);
                     //get area based on room area id
                     intent.putExtra("AREANAME", areaName);
-
+                    intent.putExtra("TOLARENCE", mTolarence);
                     if (loginUserType.equals("CLIENT")) {
                         intent.putExtra("ClientInstrument", clientInstrument);
                     } else {
@@ -1100,7 +1117,6 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                         intent.putExtra("ApplicableTestAhu", mApplicableTestAhu);
                         intent.putExtra("rows", mAhuFilterArrayList.size() + 1);
                         intent.putExtra("cols", mApplicableTestAhu.getLocation());
-                        intent.putExtra("TOLARENCE", mTolarence);
                     } else if ("ROOM".equalsIgnoreCase(mTestBasedOn)) {
                         intent.putExtra("Room", room);
                         intent.putExtra("AhuNumber", ahuNumber);
@@ -1290,14 +1306,17 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         }
         if (validate.contains(true)) {
             return true;
-        } else if (passfail()) {
-            Log.d("flag", "flag=1");
-            return true;
+        } else if (mTestBasedOn.equals("FIT")) {
+            if (!passfail()) {
+                Log.d("flag", "flag=1");
+                return true;
+            } else {
+                Log.d("flag", "flag=2");
+                return false;
+            }
         } else {
-            Log.d("flag", "flag=2");
             return false;
         }
-
     }
 
     private boolean passfail() {
@@ -1719,7 +1738,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
-                   // row.addView(addTextView("Average\nbefore Scanning(%) "));
+                    // row.addView(addTextView("Average\nbefore Scanning(%) "));
                     TextView grillTV = addTextView("Average\nbefore Scanning(%) ");
                     ViewGroup.LayoutParams params = grillTV.getLayoutParams();
                     params.height = getResources().getDimensionPixelSize(R.dimen.common_txt_header_height);
@@ -1788,7 +1807,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
                     TextView grillTV = addTextView(" Variation \nin Concentration");
-                   // row.addView(addTextView(" Variation \nin Concentration*"));
+                    // row.addView(addTextView(" Variation \nin Concentration*"));
 
                     ViewGroup.LayoutParams params = grillTV.getLayoutParams();
                     params.height = getResources().getDimensionPixelSize(R.dimen.common_txt_header_height);
@@ -1812,7 +1831,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
-                   // row.addView(addTextView(" Obtained Leakage \n(% Leakage)"));
+                    // row.addView(addTextView(" Obtained Leakage \n(% Leakage)"));
                     TextView grillTV = addTextView(" Obtained Leakage \n(% Leakage)");
                     ViewGroup.LayoutParams params = grillTV.getLayoutParams();
                     params.height = getResources().getDimensionPixelSize(R.dimen.common_txt_header_height);
@@ -1896,16 +1915,16 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 if (i == 1 && j <= cols) {
                     TextView textView = addTextView(" Q " + j);
                     if (cols <= 2)
-                        textView.setEms(13+ Utilityies.getPctCellWidth(cols));
+                        textView.setEms(13 + Utilityies.getPctCellWidth(cols));
                     else
                         textView.setEms(2 + Utilityies.getPctCellWidth(cols));
                     row.addView(textView);
                 } else {
                     EditText editText = addEditTextView(i);
                     if (cols <= 2)
-                        editText.setEms(13+Utilityies.getPctCellWidth(cols));
+                        editText.setEms(13 + Utilityies.getPctCellWidth(cols));
                     else
-                        editText.setEms(2+Utilityies.getPctCellWidth(cols));
+                        editText.setEms(2 + Utilityies.getPctCellWidth(cols));
                     row.addView(editText);
                 }
             }
@@ -2660,8 +2679,10 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                     Log.d(TAG, " AirFlowRateText : Tag " + airFlowRateTxtViewList.get(i).getTag() + " tagF " + tagF);
                     if (airFlowRateTxtViewList.get(i).getTag().equals(tagF)) {
                         TextView tvl = airFlowRateTxtViewList.get(i);
-                        tvl.setText(getMultiplicationAirFlow((int) tvl.getTag(), txtViewList.get(i).getText().toString()) + "");
-                        resultDataHashMap2.put(tvl.getId(), getMultiplicationAirFlow((int) tvl.getTag(), txtViewList.get(i).getText().toString()));
+                        float aXAv=getMultiplicationAirFlow((int) tvl.getTag(), txtViewList.get(i).getText().toString());
+                        tvl.setText(""+aXAv);
+                        resultDataHashMap2.put(tvl.getId(),aXAv);
+//                        resultDataHashMap2.put(tvl.getId(), getMultiplicationAirFlow((int) tvl.getTag(), txtViewList.get(i).getText().toString()));
                     }
                 }
                 //Total AirFlow Rate (sum of AirFlow Rate)
@@ -2706,7 +2727,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 }
 
                 //Total AirFlow Rate (sum of AirFlow Rate)
-               if (totalAirFlowRateTxtList != null && totalAirFlowRateTxtList.size() > 0) {
+                if (totalAirFlowRateTxtList != null && totalAirFlowRateTxtList.size() > 0) {
                     int middleTxt = totalAirFlowRateTxtList.size() / 2;
                     TextView mtvl = totalAirFlowRateTxtList.get(middleTxt);
                     totalAirFlowRate = getSumOfAirSupply(editTextList);
@@ -2749,8 +2770,9 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                             }
                             // Pass Fail Calculation
                             TextView txtPassFail = txtPassFailList.get(i);
-                            Log.d(TAG, "slpDlpValue=" + slpDlpValue + " mTolarence=" + mTolarence);
-                            if (Math.abs(slpDlpValue) <= mTolarence) {
+                            double absSlpDlpValue = Math.abs(slpDlpValue);
+                            Log.d(TAG, "abs slpDlpValue=" + absSlpDlpValue + " mTolarence=" + mTolarence);
+                            if (absSlpDlpValue <= mTolarence) {
                                 txtConcentrationVariationList.get(i).setTextColor(getResources().getColor(R.color.black));
                                 txtPassFail.setTextColor(getResources().getColor(R.color.blue));
                                 txtPassFail.setText(" PASS ");
@@ -2760,7 +2782,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                                     mFitPassFailFlagList.set(i, true);
                                 }
                                 passFailHashMap.put(txtPassFail.getId(), " PASS ");
-                            } else if (Math.abs(slpDlpValue) > mTolarence) {
+                            } else if (absSlpDlpValue > mTolarence) {
                                 if (null != mFitPassFailFlagList && i >= mFitPassFailFlagList.size()) {
                                     mFitPassFailFlagList.add(i, false);
                                 } else {
@@ -2770,7 +2792,6 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                                 txtPassFail.setTextColor(getResources().getColor(R.color.red));
                                 txtPassFail.setText(" FAIL ");
                                 passFailHashMap.put(txtPassFail.getId(), " FAIL ");
-
                             }
                             // adding concentration Variation Data
                             txtConcentrationVariationList.get(i).setText(slpDlpValue + " %");

@@ -852,7 +852,7 @@ public class ValdocControler {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
 
                 user.setApp_user_id(jsonObject.optInt("app_user_id"));
-                user.setName(jsonObject.optString("name").toString());
+                user.setName(jsonObject.optString("fName").toString());
                 user.setPartnerId(jsonObject.optInt("partner_id"));
                 if (jsonObject.optString("user_type").equalsIgnoreCase("PARTNER")) {
                     user.setUserType("PARTNER");

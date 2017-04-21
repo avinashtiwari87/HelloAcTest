@@ -548,7 +548,6 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
 //            createApplicableTestRoomList(room.getRoomId(),A);
 //            Log.d(TAG, "TestCreateActivity mApplicableTestRoom=" + mApplicableTestRoom.getLocation());
             intent.putExtra("ApplicableTestRoom", mApplicableTestRoom);
-
             grillAndSizeFromGrill = mValdocDatabaseHandler.getRoomAvGrill(room.getRoomId());
             if (null != grillAndSizeFromGrill && grillAndSizeFromGrill.size() > 0) {
                 intent.putExtra("GrilFilterType", "Grill");
@@ -562,7 +561,16 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
         }
         startActivity(intent);
     }
+    private String getAvgUpStrmAfter(String testProp) {
+        String avgUpStrm = "";
+        try {
+            JSONObject jsonObject = new JSONObject(testProp);
+            avgUpStrm = jsonObject.getString("AVERAGE_UPSTREEM_CONCENTRATION_AFTER");
+        } catch (Exception e) {
 
+        }
+        return avgUpStrm;
+    }
     private double getTolarance(Ahu ahu, String testItem) {
         double tolarence=0.0;
         if(testItem.equalsIgnoreCase("Fresh Air Filter")){
@@ -690,6 +698,7 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
             intent.putExtra("EquipmentFilter", mEquipmentFilterArrayList);
 //            ApplicableTestEquipment applicableTestEquipment = createApplicableTestEquipmentList(equipment.getEquipmentId(), testType);
             intent.putExtra("ApplicableTestEquipment", mApplicableTestEquipment);
+            intent.putExtra("TOLARENCE", getAvgUpStrmAfter(mApplicableTestEquipment.getTestProp()));
 
 
         } else if (testBasedOn.equalsIgnoreCase("AHU")) {
@@ -735,7 +744,7 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
             intent.putExtra("AREANAME", areaName);
 //            createApplicableTestRoomList(room.getRoomId(), FIT);
             intent.putExtra("ApplicableTestRoom", mApplicableTestRoom);
-
+            intent.putExtra("TOLARENCE", getAvgUpStrmAfter(mApplicableTestRoom.getTestProp()));
         }
         // location will be the size off rommfilter list
         startActivity(intent);
