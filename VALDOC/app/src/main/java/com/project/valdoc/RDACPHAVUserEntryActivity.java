@@ -182,6 +182,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
                     getResources().getString(R.string.table_not_created));
         }
 
+        Log.d(TAG, " mTestBasedOn : " + mTestBasedOn);
         //setting the test 2 room volume
         if (roomVolumeTxtList != null && roomVolumeTxtList.size() > 0) {
             if (mTestBasedOn.equalsIgnoreCase("AHU")) {
@@ -253,10 +254,12 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
                 }
             }
         }
-
+ airChangeValue = getIntent().getIntExtra("AirChangeValue", 0);
         // Checking individual input base on Average
         if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
+airChangeValue = getAirChangeCalculation(Math.round(totalAirFlowRate), (float) room.getVolume());
             int variation = mApplicableTestRoom.getDiffAVinFilter();
+            Log.d(TAG, "Input Validation value: "+variation);
             if (variation != 0) {
                 getInputDataValidationByAverage(variation);
             }
@@ -333,7 +336,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
             //AirFlow Change
             if (airChangeTxtList != null && airChangeTxtList.size() > 0) {
                 TextView airChangeTxt = airChangeTxtList.get(airChangeTxtList.size() / 2);
-                airChangeValue = getIntent().getIntExtra("AirChangeValue", 0);
+
                 if (mTestBasedOn.equalsIgnoreCase("AHU")) {
                     int value = 0;
                     try {
@@ -1389,5 +1392,11 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
         }
         return resultValue;
     }
+
+    private int getAirChangeCalculation(float TFR, float RV) {
+        Log.d(TAG, " AirChangeCalculation : " + (TFR / RV) * 60 + " int : " + (int) Math.round(((TFR / RV) * 60)));
+        return (int) Math.round(((TFR / RV) * 60));
+    }
+
 }
 
