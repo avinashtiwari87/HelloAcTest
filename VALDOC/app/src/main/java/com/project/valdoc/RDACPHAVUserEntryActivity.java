@@ -117,7 +117,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
     ArrayList<TextView> txtViewList;
     private double totalAirFlowRate = 0d;
     private double airChangeValue;
-    private double mTolarence;
+    private double mTolarence=0.0;
     HashMap<Integer, Long> airFlowRateMap;
     HashMap<Integer, Float> totalAirFlowRateMap;
     private ImageView submit;
@@ -653,8 +653,8 @@ airChangeValue = getAirChangeCalculation(Math.round(totalAirFlowRate), (float) r
                     }
                 }
 //                AxAv
-                grilList.append("" + ahuFilter.getEffectiveArea()).append(',').append(sb).append(",").append(airFlowRateMap.get(index + 1)).append(",")
-                        .append(arrayList_totalAirFlowRate.get(airflowrateIndex));
+                grilList.append("" + ahuFilter.getEffectiveArea()).append(',').append(sb).append(",").append(Math.round(airFlowRateMap.get(index + 1))).append(",")
+                        .append(Math.round(arrayList_totalAirFlowRate.get(airflowrateIndex)));
 //                    Log.d("ACPH_AV","arrayList_totalAirFlowRate="+arrayList_totalAirFlowRate.size()+"val="+arrayList_totalAirFlowRate.get(airflowrateIndex));
                 airflowrateIndex++;
                 index++;
@@ -685,7 +685,7 @@ airChangeValue = getAirChangeCalculation(Math.round(totalAirFlowRate), (float) r
                         }
                     }
 
-                    grilList.append("" + grill.getEffectiveArea()).append(',').append(sb).append(",").append(airFlowRateMap.get(index + 1)).append(",").append(Math.round(totalAirFlowRateMap.get(avindex)));
+                    grilList.append("" + grill.getEffectiveArea()).append(',').append(sb).append(",").append(Math.round(airFlowRateMap.get(index + 1))).append(",").append(Math.round(totalAirFlowRateMap.get(avindex)));
                     airflowrateIndex++;
                     index++;
                     avindex++;
@@ -716,7 +716,7 @@ airChangeValue = getAirChangeCalculation(Math.round(totalAirFlowRate), (float) r
                         }
                     }
 
-                    grilList.append("" + roomFilter.getEffectiveFilterArea()).append(',').append(sb).append(",").append(airFlowRateMap.get(index + 1)).append(",").append(Math.round(totalAirFlowRateMap.get(avindex)));
+                    grilList.append("" + roomFilter.getEffectiveFilterArea()).append(',').append(sb).append(",").append(Math.round(airFlowRateMap.get(index + 1))).append(",").append(Math.round(totalAirFlowRateMap.get(avindex)));
                     airflowrateIndex++;
                     index++;
                     avindex++;
@@ -808,6 +808,7 @@ airChangeValue = getAirChangeCalculation(Math.round(totalAirFlowRate), (float) r
         testDetails.setTestCondoctorOrg("" + testCondoctorOrg.getText());
         testDetails.setFilterTypeEficiancy("");
         testDetails.setTestLocation("");
+        testDetails.setTolarance(""+mTolarence);
         return testDetails;
     }
 

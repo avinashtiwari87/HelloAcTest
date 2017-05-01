@@ -489,6 +489,7 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
         testDetails.setRoomVolume("");
         testDetails.setTestWitnessOrg("" + testWitnessOrg.getText());
         testDetails.setTestCondoctorOrg("" + testCondoctorOrg.getText());
+        testDetails.setTolarance("");
         return testDetails;
     }
 

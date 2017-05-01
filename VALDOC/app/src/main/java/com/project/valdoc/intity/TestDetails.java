@@ -45,6 +45,7 @@ public class TestDetails {
     private String filterTypeEficiancy;
     private String testLocation;
     private String acceptableRecoveryTime;
+    private String tolarance;
     private int diffAVinFilter;
     private int diffAVbetweenFilter;
 
@@ -358,5 +359,13 @@ public class TestDetails {
 
     public void setDiffAVbetweenFilter(int diffAVbetweenFilter) {
         this.diffAVbetweenFilter = diffAVbetweenFilter;
+    }
+
+    public String getTolarance() {
+        return tolarance;
+    }
+
+    public void setTolarance(String tolarance) {
+        this.tolarance = tolarance;
     }
 }

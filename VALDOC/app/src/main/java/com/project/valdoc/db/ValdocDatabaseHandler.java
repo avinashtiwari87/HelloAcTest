@@ -592,6 +592,8 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
     public static final String TEST_DETAILS_TESTLOCATION = "testLocation";
     public static final String TEST_DETAILS_FILTERTYPEEFFICIANCY = "filterTypeEfficiancy";
     public static final String TEST_DETAILS_ACCEPTABLERECOVERYTIME = "acceptableRecoveryTime";
+    public static final String TEST_DETAILS_TOLARANCE = "tolarance";
+
 
     // test details table create statment
     private static final String CREATE_TABLE_TESTDETAILS = "CREATE TABLE " + TEST_DETAILS_TABLE_NAME
@@ -607,7 +609,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
             + " TEXT," + TEST_DETAILS_AEROSOLGENERATORTYPE + " TEXT," + TEST_DETAILS_TESTCODE + " TEXT," + TEST_DETAILS_ROOMVOLUME
             + " TEXT," + TEST_DETAILS_TESTWITNESSORG + " TEXT," + TEST_DETAILS_TESTCONDOCTORORG + " TEXT," + TEST_DETAILS_TESTITEM + " TEXT,"
             + TEST_DETAILS_TESTLOCATION + " TEXT," + TEST_DETAILS_FILTERTYPEEFFICIANCY + " TEXT," + TEST_DETAILS_DIFFAVINFILTER + " INTEGER,"
-            + TEST_DETAILS_DIFFAVBETWEENFILTER + " INTEGER," + TEST_DETAILS_ACCEPTABLERECOVERYTIME + " TEXT " + ")";
+            + TEST_DETAILS_DIFFAVBETWEENFILTER + " INTEGER," + TEST_DETAILS_ACCEPTABLERECOVERYTIME + " TEXT, " + TEST_DETAILS_TOLARANCE + " TEXT " + ")";
 
 
     //test spesification table details
@@ -1145,6 +1147,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
         contentValues.put(TEST_DETAILS_DIFFAVINFILTER, testDetails.getDiffAVinFilter());
         contentValues.put(TEST_DETAILS_DIFFAVBETWEENFILTER, testDetails.getDiffAVbetweenFilter());
         contentValues.put(TEST_DETAILS_ACCEPTABLERECOVERYTIME, testDetails.getAcceptableRecoveryTime());
+        contentValues.put(TEST_DETAILS_TOLARANCE,testDetails.getTolarance());
 
         db.insert(tableName, null, contentValues);
 //            }
@@ -2126,7 +2129,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                     jsonObject.put(TEST_DETAILS_TESTLOCATION, cursor.getString(33).toString());
                     jsonObject.put(TEST_DETAILS_FILTERTYPEEFFICIANCY, cursor.getString(34).toString());
                     jsonObject.put(TEST_DETAILS_ACCEPTABLERECOVERYTIME, cursor.getString(35).toString());
-
+                    jsonObject.put(TEST_DETAILS_TOLARANCE, cursor.getString(36).toString());
                     Log.d(TAG, "getCertificateData test details=" + jsonObject.toString());
                     testDetailsJsonArray.put(jsonObject);
                 } catch (Exception e) {

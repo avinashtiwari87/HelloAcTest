@@ -55,7 +55,7 @@ import java.util.regex.Pattern;
 
 public class RDFITUserEntryActivity extends AppCompatActivity {
     private static final String TAG = "RDFITUser";
-    TextView headerText,headerText_2;
+    TextView headerText, headerText_2;
     TableLayout test4_table_layout, test4_table_layout2, test4_table_layout3, test4_table_layout4,
             test4_table_layout5, test4_table_layout6, test4_table_layout7, test4_table_layout8;
     LinearLayout common_certificate_header;
@@ -77,7 +77,7 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
     private String witnessSecond;
     private String witnessThird;
     private String userName = "";
-
+    private double mTolarence = 0.0;
     //certificate view id creation
     private TextView instrumentUsed;
     private TextView instrumentSerialNo;
@@ -136,7 +136,7 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
     HashMap<Integer, Double> likageDataMap;
     HashMap<Integer, BigDecimal> showFitInputDataHashMap;
     HashMap<Integer, Long> PassFailHashMap;
-    ArrayList<Double>concentrationVariationListData;
+    ArrayList<Double> concentrationVariationListData;
     ArrayList<TextView> resultTextViewList;
     private ValdocDatabaseHandler mValdocDatabaseHandler = new ValdocDatabaseHandler(RDFITUserEntryActivity.this);
     SharedPreferences sharedpreferences;
@@ -145,7 +145,7 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
     private int month;
     private int day;
     static final int DATE_PICKER_ID = 1111;
-    private String mDate="";
+    private String mDate = "";
 
     private String testType;
     private String mTestCode = "";
@@ -194,79 +194,76 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
 
         //Creating Tables based on rows and columns
         //if (rows > 0 && cols > 0) {
-            pr = ProgressDialog.show(this, "Please Wait", "Loading...");
-            pr.setCanceledOnTouchOutside(true);
-            pr.setCancelable(true);
-
-            buildTestFour(rows, cols);
-
-
-            //Receiving User Input Data from Bundle
-            likageDataMap = (HashMap<Integer, Double>) getIntent().getSerializableExtra("InputData");
-            int k=0;
-            int count=0;
-            int constVal=((likageDataMap.size()/3)*2);
-            int kk=200;
-            for (Map.Entry m : likageDataMap.entrySet()) {
-                if(count>=constVal){
-                    TextView tvl = txtPassFailList.get(k);
-                    Double spesification = getSpecification(mshowSpesification);
-                    if (spesification >= Double.parseDouble(likageDataMap.get(kk).toString())) {
-                        tvl.setText("PASS");
-                    } else {
-                        tvl.setText("FAIL");
-                    }
-                    k++;
-                    kk++;
-                }
-                count++;
-                Log.v(TAG, " InputData " + m.getKey() + " " + m.getValue());
-            }
-
-            showFitInputDataHashMap = (HashMap<Integer, BigDecimal>) getIntent().getSerializableExtra("ShowInputData");
-            for (int i = 0; i < txtViewList.size(); i++) {
-                TextView tvl = txtViewList.get(i);
-                Log.d("Saurabh", "Saurabh likageValue : "+showFitInputDataHashMap.get(tvl.getId()) );
-                if(tvl.getId() >= 800){
-                    tvl.setText(showFitInputDataHashMap.get(tvl.getId()) + "");
-                }else{
-//                tvl.setText(likageDataMap.get(tvl.getId())) + "");
-                    tvl.setText(""+showFitInputDataHashMap.get(tvl.getId()));
-                }
-
-            }
-            //Receiving Pass Fail Data from Bundle
-            PassFailHashMap = (HashMap<Integer, Long>) getIntent().getSerializableExtra("PassFailData");
-            for (Map.Entry O : PassFailHashMap.entrySet()) {
-                Log.v(TAG, " PassFail " + O.getKey() + " " + O.getValue());
-            }
-            int passFlag = 1;
-            for (int i = 0; i < txtPassFailList.size(); i++) {
-                TextView tvl = txtPassFailList.get(i);
-                if ("PASS".equalsIgnoreCase(tvl.getText().toString().trim())) {
-                    tvl.setTextColor(getResources().getColor(R.color.blue));
+        pr = ProgressDialog.show(this, "Please Wait", "Loading...");
+        pr.setCanceledOnTouchOutside(true);
+        pr.setCancelable(true);
+        buildTestFour(rows, cols);
+        //Receiving User Input Data from Bundle
+        likageDataMap = (HashMap<Integer, Double>) getIntent().getSerializableExtra("InputData");
+        int k = 0;
+        int count = 0;
+        int constVal = ((likageDataMap.size() / 3) * 2);
+        int kk = 200;
+        for (Map.Entry m : likageDataMap.entrySet()) {
+            if (count >= constVal) {
+                TextView tvl = txtPassFailList.get(k);
+                Double spesification = getSpecification(mshowSpesification);
+                if (spesification >= Double.parseDouble(likageDataMap.get(kk).toString())) {
+                    tvl.setText("PASS");
                 } else {
-                    passFlag = 0;
-                    tvl.setTextColor(getResources().getColor(R.color.red));
+                    tvl.setText("FAIL");
                 }
+                k++;
+                kk++;
+            }
+            count++;
+            Log.v(TAG, " InputData " + m.getKey() + " " + m.getValue());
+        }
+
+        showFitInputDataHashMap = (HashMap<Integer, BigDecimal>) getIntent().getSerializableExtra("ShowInputData");
+        for (int i = 0; i < txtViewList.size(); i++) {
+            TextView tvl = txtViewList.get(i);
+            Log.d("Saurabh", "Saurabh likageValue : " + showFitInputDataHashMap.get(tvl.getId()));
+            if (tvl.getId() >= 800) {
+                tvl.setText(showFitInputDataHashMap.get(tvl.getId()) + "");
+            } else {
+//                tvl.setText(likageDataMap.get(tvl.getId())) + "");
+                tvl.setText("" + showFitInputDataHashMap.get(tvl.getId()));
             }
 
-            // Getting ConcentrationVariation Data
-            concentrationVariationListData = (ArrayList<Double>)getIntent().getSerializableExtra("InputDataVariation");
-            for (int vr = 0; vr <concentrationVariationListData.size() ; vr++) {
-                Log.v(TAG, " InputDataVariation  "+concentrationVariationListData.get(vr).toString());
+        }
+        //Receiving Pass Fail Data from Bundle
+        PassFailHashMap = (HashMap<Integer, Long>) getIntent().getSerializableExtra("PassFailData");
+        for (Map.Entry O : PassFailHashMap.entrySet()) {
+            Log.v(TAG, " PassFail " + O.getKey() + " " + O.getValue());
+        }
+        int passFlag = 1;
+        for (int i = 0; i < txtPassFailList.size(); i++) {
+            TextView tvl = txtPassFailList.get(i);
+            if ("PASS".equalsIgnoreCase(tvl.getText().toString().trim())) {
+                tvl.setTextColor(getResources().getColor(R.color.blue));
+            } else {
+                passFlag = 0;
+                tvl.setTextColor(getResources().getColor(R.color.red));
             }
-            for (int i = 0; i < txtConcentrationVariationList.size(); i++) {
-                TextView tvl = txtConcentrationVariationList.get(i);
-                tvl.setText(concentrationVariationListData.get(i)+ " %");
-                String pasFailCheck = String.valueOf(PassFailHashMap.get(300+i));
-                Log.d(TAG, "Saurabh PassRedBlack "+pasFailCheck);
-                if("PASS".equalsIgnoreCase(pasFailCheck.trim())){
-                    tvl.setTextColor(getResources().getColor(R.color.black));
-                }else{
-                    tvl.setTextColor(getResources().getColor(R.color.red));
-                }
+        }
+
+        // Getting ConcentrationVariation Data
+        concentrationVariationListData = (ArrayList<Double>) getIntent().getSerializableExtra("InputDataVariation");
+        for (int vr = 0; vr < concentrationVariationListData.size(); vr++) {
+            Log.v(TAG, " InputDataVariation  " + concentrationVariationListData.get(vr).toString());
+        }
+        for (int i = 0; i < txtConcentrationVariationList.size(); i++) {
+            TextView tvl = txtConcentrationVariationList.get(i);
+            tvl.setText(concentrationVariationListData.get(i) + " %");
+            String pasFailCheck = String.valueOf(PassFailHashMap.get(300 + i));
+            Log.d(TAG, "Saurabh PassRedBlack " + pasFailCheck);
+            if ("PASS".equalsIgnoreCase(pasFailCheck.trim())) {
+                tvl.setTextColor(getResources().getColor(R.color.black));
+            } else {
+                tvl.setTextColor(getResources().getColor(R.color.red));
             }
+        }
 /*        }else {
             Utilityies.showAlert(RDFITUserEntryActivity.this, getResources().getString(R.string.table_not_created));
         }*/
@@ -282,8 +279,8 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
         try {
             Pattern regex = Pattern.compile("(\\d+(?:\\.\\d+)?)");
             Matcher matcher = regex.matcher(valueFromDB);
-            while(matcher.find()){
-                System.out.println("Specific Value... "+matcher.group(1));
+            while (matcher.find()) {
+                System.out.println("Specific Value... " + matcher.group(1));
                 returnValue = Double.valueOf(matcher.group(1));
             }
         } catch (NumberFormatException e) {
@@ -295,7 +292,7 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
     private void calSpesifiCation() {
         int len = mTestSpecification.length();
         mshowSpesification = (String) mTestSpecification.toString();
-                //.subSequence(28, (len - 1));
+        //.subSequence(28, (len - 1));
     }
 
     private void datePicker() {
@@ -317,8 +314,8 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
         SimpleDateFormat dateFormatter = new SimpleDateFormat("dd-MM-yyyy");
         String entered_dob = dateFormatter.format(d);
         // Show current date
-         mDate = new StringBuilder().append(day).append("-").append(month + 1).append("-").append(year).append(" ").toString();
-        dateTextView.setText(""+mDate);
+        mDate = new StringBuilder().append(day).append("-").append(month + 1).append("-").append(year).append(" ").toString();
+        dateTextView.setText("" + mDate);
 //        new StringBuilder()
 //                // Month is 0 based, just add 1
 //                .append(year).append("-").append(month + 1).append("-")
@@ -339,8 +336,9 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
     }
 
     private DatePickerDialog.OnDateSetListener pickerListener = new DatePickerDialog.OnDateSetListener() {
-Date d;
+        Date d;
         SimpleDateFormat dateFormatter;
+
         // when dialog box is closed, below method will be called.
         @Override
         public void onDateSet(DatePicker view, int selectedYear,
@@ -352,8 +350,8 @@ Date d;
             dateFormatter = new SimpleDateFormat("dd-MM-yyyy");
             String entered_dob = dateFormatter.format(d);
             // Show selected date
-             mDate = new StringBuilder().append(day).append("-").append(month + 1).append("-").append(year).append(" ").toString();
-            dateTextView.setText(""+mDate);
+            mDate = new StringBuilder().append(day).append("-").append(month + 1).append("-").append(year).append(" ").toString();
+            dateTextView.setText("" + mDate);
 //            new StringBuilder().append(year)
 //                    .append("-").append(month + 1).append("-").append(day)
 //                    .append(" "));
@@ -382,13 +380,13 @@ Date d;
             } catch (Exception e) {
 
             }
-            filtertypeEficiancy.setText(mEquipmentFilterArrayList.get(0).getFilterType()+" & "+mEquipmentFilterArrayList.get(0).getEfficiency()+"%");
+            filtertypeEficiancy.setText(mEquipmentFilterArrayList.get(0).getFilterType() + " & " + mEquipmentFilterArrayList.get(0).getEfficiency() + "%");
 //            testLocationText.setText(mEquipmentFilterArrayList.get(0).getf());
             equipmentName.setText(equipment.getEquipmentName());
             equipmentNo.setText(equipment.getEquipmentNo());
-            mTestSpecification=mApplicableTestEquipment.getTestSpecification();
+            mTestSpecification = mApplicableTestEquipment.getTestSpecification();
             calSpesifiCation();
-            testSpecification.setText("Max "+mshowSpesification+"%");
+            testSpecification.setText("Max " + mshowSpesification + "%");
             occupancyState.setText(mApplicableTestEquipment.getOccupencyState());
             testRefrance.setText(mApplicableTestEquipment.getTestReference());
             roomName.setText(roomDetails[1]);
@@ -401,14 +399,14 @@ Date d;
                 jsonObject = new JSONObject(mApplicableTestAhu.getTestProp());
                 aerosolUsed.setText(jsonObject.optString("AEROSOL_USED"));
                 aerosolGeneratorType.setText(jsonObject.optString("AEROSOL_GENERATOR_TYPE"));
-                filtertypeEficiancy.setText(jsonObject.optString("Filter_Type")+" & "+jsonObject.optString("Filter_Efficiency"));
+                filtertypeEficiancy.setText(jsonObject.optString("Filter_Type") + " & " + jsonObject.optString("Filter_Efficiency") + "%");
             } catch (Exception e) {
 
             }
 
-            mTestSpecification=mApplicableTestAhu.getTestSpecification();
+            mTestSpecification = mApplicableTestAhu.getTestSpecification();
             calSpesifiCation();
-            testSpecification.setText("Max "+mshowSpesification);
+            testSpecification.setText("Max " + mshowSpesification);
             occupancyState.setText(mApplicableTestAhu.getOccupencyState());
             testRefrance.setText(mApplicableTestAhu.getTestReference());
             areaOfTest.setText(areaName);
@@ -425,11 +423,11 @@ Date d;
             } catch (Exception e) {
 
             }
-            filtertypeEficiancy.setText(mRoomFilterArrayList.get(0).getFilterType()+" & "+mRoomFilterArrayList.get(0).getEfficiency()+"%");
+            filtertypeEficiancy.setText(mRoomFilterArrayList.get(0).getFilterType() + " & " + mRoomFilterArrayList.get(0).getEfficiency() + "%");
             testLocation.setText(mRoomFilterArrayList.get(0).getFilterLocation());
-            mTestSpecification=mApplicableTestRoom.getTestSpecification();
+            mTestSpecification = mApplicableTestRoom.getTestSpecification();
             calSpesifiCation();
-            testSpecification.setText("Max "+mshowSpesification);
+            testSpecification.setText("Max " + mshowSpesification);
             occupancyState.setText(mApplicableTestRoom.getOccupencyState());
             testRefrance.setText(mApplicableTestRoom.getTestReference());
             areaOfTest.setText(areaName);
@@ -443,11 +441,11 @@ Date d;
         if (sharedpreferences.getString("USERTYPE", "").equalsIgnoreCase("CLIENT")) {
             testCondoctorOrg.setText("(" + sharedpreferences.getString("CLIENTORG", "") + ")");
             testWitnessOrg.setText("(" + sharedpreferences.getString("CLIENTORG", "") + ")");
-            customerName.setText(""+ sharedpreferences.getString("CLIENTORG", ""));
+            customerName.setText("" + sharedpreferences.getString("CLIENTORG", ""));
         } else {
             testCondoctorOrg.setText("(" + sharedpreferences.getString("PARTNERORG", "") + ")");
             testWitnessOrg.setText("(" + sharedpreferences.getString("CLIENTORG", "") + ")");
-            customerName.setText(""+ sharedpreferences.getString("PARTNERORG", ""));
+            customerName.setText("" + sharedpreferences.getString("PARTNERORG", ""));
         }
         plantName.setText("from config screen");
         Log.d("valdoc", "RDAV5UserEnryActivity 1witness=" + witnessFirst);
@@ -488,16 +486,16 @@ Date d;
         instrumentSerialNo = (TextView) findViewById(R.id.instrumentserialno);
         calibrationOn = (TextView) findViewById(R.id.calibratedon);
         calibrationDueOn = (TextView) findViewById(R.id.calibrationdueon);
-        aerosolGeneratorTable= (TableRow) findViewById(R.id.aerosol_generator_table);
+        aerosolGeneratorTable = (TableRow) findViewById(R.id.aerosol_generator_table);
         aerosolGeneratorTable.setVisibility(View.VISIBLE);
-        aerosolUsedTable= (TableRow) findViewById(R.id.aerosol_used_table);
+        aerosolUsedTable = (TableRow) findViewById(R.id.aerosol_used_table);
         aerosolUsedTable.setVisibility(View.VISIBLE);
-        aerosolGeneratorType= (TextView) findViewById(R.id.aerosol_generator_type_value);
-        aerosolUsed= (TextView) findViewById(R.id.aerosol_used);
-        testLocationText=(TextView) findViewById(R.id.room_volume_text);
+        aerosolGeneratorType = (TextView) findViewById(R.id.aerosol_generator_type_value);
+        aerosolUsed = (TextView) findViewById(R.id.aerosol_used);
+        testLocationText = (TextView) findViewById(R.id.room_volume_text);
         testLocationText.setText("Test Location :");
-        testLocation=(TextView) findViewById(R.id.room_volume);
-        if(mTestBasedOn.equalsIgnoreCase("ROOM")||mTestBasedOn.equalsIgnoreCase("AHU")){
+        testLocation = (TextView) findViewById(R.id.room_volume);
+        if (mTestBasedOn.equalsIgnoreCase("ROOM") || mTestBasedOn.equalsIgnoreCase("AHU")) {
             equipmentNameText = (TextView) findViewById(R.id.equiment_name_text);
             equipmentNameText.setVisibility(View.INVISIBLE);
             equipmentNoText = (TextView) findViewById(R.id.equiment_no_text);
@@ -512,15 +510,15 @@ Date d;
         plantName = (TextView) findViewById(R.id.plantname);
         areaOfTest = (TextView) findViewById(R.id.areaoftest);
         roomName = (TextView) findViewById(R.id.room_name);
-        room_no_lable=(TextView)findViewById(R.id.room_no_lable);
+        room_no_lable = (TextView) findViewById(R.id.room_no_lable);
         roomNo = (TextView) findViewById(R.id.room_no);
-        if(mTestBasedOn.equalsIgnoreCase("AHU")){
+        if (mTestBasedOn.equalsIgnoreCase("AHU")) {
             findViewById(R.id.room_volume_table).setVisibility(View.VISIBLE);
             roomNo.setVisibility(View.INVISIBLE);
             testLocationText.setVisibility(View.GONE);
             testLocation.setVisibility(View.GONE);
         }
-        if(mTestBasedOn.equalsIgnoreCase("ROOM")){
+        if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
             testLocationText.setVisibility(View.VISIBLE);
             testLocation.setVisibility(View.VISIBLE);
         }
@@ -543,10 +541,10 @@ Date d;
             room_no_lable.setVisibility(View.GONE);
         }
 
-        filterTypeEficiancyText=(TextView) findViewById(R.id.test_item_text);
+        filterTypeEficiancyText = (TextView) findViewById(R.id.test_item_text);
         filterTypeEficiancyText.setVisibility(View.VISIBLE);
         filterTypeEficiancyText.setText("Filter Type & Efficiency :");
-        filtertypeEficiancy=(TextView) findViewById(R.id.test_item_value);
+        filtertypeEficiancy = (TextView) findViewById(R.id.test_item_value);
         filtertypeEficiancy.setVisibility(View.VISIBLE);
 
         testCundoctor = (TextView) findViewById(R.id.testcunducter);
@@ -615,11 +613,11 @@ Date d;
                 testReading.setTest_detail_id(testDetailsId);
                 testReading.setEntityName(equipmentFilter.getFilterCode());
                 //String likage=BigDecimal.valueOf(likageDataMap.get(hasMapKey)).toPlainString();
-                String likage=showFitInputDataHashMap.get(hasMapKey).toPlainString();
-                Log.d("likage","likage="+likage);
+                String likage = showFitInputDataHashMap.get(hasMapKey).toPlainString();
+                Log.d("likage", "likage=" + likage);
                 StringBuilder grilList = new StringBuilder();
                 grilList.append(equipmentFilter.getFilterCode()).append(",").append(showFitInputDataHashMap.get(hasStreamBefore)).append(",")
-                        .append(showFitInputDataHashMap.get(hashstreamAfter)).append(",").append(""+concentrationVariationListData.get(index).toString()).append(",")
+                        .append(showFitInputDataHashMap.get(hashstreamAfter)).append(",").append("" + concentrationVariationListData.get(index).toString()).append(",")
                         .append(likage).append(",").append(txtPassFailList.get(index).getText().toString());
 //                grilList.append(equipmentFilter.getFilterType()).append(',').append(equipmentFilter.getEfficiency()).append(",").append(likageDataMap.get(hasStreamBefore)).append(",")
 //                        .append(likageDataMap.get(hashstreamAfter)).append(",")//.append(equipmentFilter.getSpecification()).append(",")
@@ -639,11 +637,11 @@ Date d;
                 testReading.setTest_detail_id(testDetailsId);
                 testReading.setEntityName(ahuFilter.getFilterCode());
                 //String likage=BigDecimal.valueOf(likageDataMap.get(hasMapKey)).toPlainString();
-                String likage=showFitInputDataHashMap.get(hasMapKey).toPlainString();
-                Log.d("likage","likage="+likage);
+                String likage = showFitInputDataHashMap.get(hasMapKey).toPlainString();
+                Log.d("likage", "likage=" + likage);
                 StringBuilder grilList = new StringBuilder();
                 grilList.append(ahuFilter.getFilterCode()).append(',').append(showFitInputDataHashMap.get(hasStreamBefore)).append(",")
-                        .append(showFitInputDataHashMap.get(hashstreamAfter)).append(",").append(""+concentrationVariationListData.get(index).toString()).append(",")
+                        .append(showFitInputDataHashMap.get(hashstreamAfter)).append(",").append("" + concentrationVariationListData.get(index).toString()).append(",")
                         .append(likage).append(",").append(txtPassFailList.get(index).getText().toString());
                 hasStreamBefore++;
                 hashstreamAfter++;
@@ -653,21 +651,21 @@ Date d;
                 testReading.setValue(grilList.toString());
                 testReadingArrayList.add(testReading);
             }
-        }else if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
+        } else if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
             for (RoomFilter roomFilter : mRoomFilterArrayList) {
                 TestReading testReading = new TestReading();
 //            testReading.setTestReadingID(index);
                 testReading.setTest_detail_id(testDetailsId);
                 testReading.setEntityName(roomFilter.getFilterCode());
                 //String likage=BigDecimal.valueOf(likageDataMap.get(hasMapKey)).toPlainString();
-                String likage=showFitInputDataHashMap.get(hasMapKey).toPlainString();
-                Log.d("likage","likage="+likage);
+                String likage = showFitInputDataHashMap.get(hasMapKey).toPlainString();
+                Log.d("likage", "likage=" + likage);
                 StringBuilder grilList = new StringBuilder();
-                Log.d("Saurabh", " getFilterType "+roomFilter.getFilterType());
-                Log.d("Saurabh", " Before "+showFitInputDataHashMap.get(hasStreamBefore));
-                Log.d("Saurabh", " After "+showFitInputDataHashMap.get(hashstreamAfter));
+                Log.d("Saurabh", " getFilterType " + roomFilter.getFilterType());
+                Log.d("Saurabh", " Before " + showFitInputDataHashMap.get(hasStreamBefore));
+                Log.d("Saurabh", " After " + showFitInputDataHashMap.get(hashstreamAfter));
                 grilList.append(roomFilter.getFilterType()).append(',').append(",").append(showFitInputDataHashMap.get(hasStreamBefore)).append(",")
-                        .append(showFitInputDataHashMap.get(hashstreamAfter)).append(",").append(""+concentrationVariationListData.get(index).toString()).append(",")
+                        .append(showFitInputDataHashMap.get(hashstreamAfter)).append(",").append("" + concentrationVariationListData.get(index).toString()).append(",")
                         .append(likage).append(",").append(txtPassFailList.get(index).getText().toString());
 
 //                grilList.append(roomFilter.getFilterType()).append(',').append(roomFilter.getEfficiency()).append(",").append(likageDataMap.get(hasStreamBefore)).append(",")
@@ -720,15 +718,15 @@ Date d;
         }
         testDetails.setSamplingFlowRate("");
         testDetails.setSamplingTime("");
-        Log.d("setAerosolUsed",""+ aerosolUsed.getText());
-        Log.d("setAerosolUsed","aerosolGeneratorType"+""+ aerosolGeneratorType.getText());
+        Log.d("setAerosolUsed", "" + aerosolUsed.getText());
+        Log.d("setAerosolUsed", "aerosolGeneratorType" + "" + aerosolGeneratorType.getText());
         testDetails.setAerosolUsed("" + aerosolUsed.getText());
         testDetails.setAerosolGeneratorType("" + aerosolGeneratorType.getText());
 
         testDetails.setTestSpecification(testSpecification.getText().toString());
         testDetails.setBlockName(plantName.getText().toString());
         testDetails.setTestArea(areaOfTest.getText().toString());
-        testDetails.setFilterTypeEficiancy(""+filtertypeEficiancy.getText().toString());
+        testDetails.setFilterTypeEficiancy("" + filtertypeEficiancy.getText().toString());
         testDetails.setOccupencyState(occupancyState.getText().toString());
         testDetails.setTestReference(testRefrance.getText().toString());
         testDetails.setTesterName(testCundoctor.getText().toString());
@@ -740,12 +738,12 @@ Date d;
         if (null != witnessThird && witnessThird.length() > 0)
             witness.append("," + witnessThird);
         testDetails.setWitnessName("" + witness);
-        if(mTestBasedOn.equalsIgnoreCase("AHU")){
+        if (mTestBasedOn.equalsIgnoreCase("AHU")) {
             testDetails.setTestItem("" + mTestItem);
 //            testDetails.setFilterTypeEficiancy(""+filtertypeEficiancy.getText().toString());
             testDetails.setRoomName("");
             testDetails.setRoomNo("");
-        }else{
+        } else {
             testDetails.setRoomName(roomName.getText().toString());
             testDetails.setRoomNo(roomNo.getText().toString());
             testDetails.setTestItem("");
@@ -758,16 +756,17 @@ Date d;
             testDetails.setEquipmentName("" + equipmentName.getText().toString());
             testDetails.setEquipmentNo("" + equipmentNo.getText().toString());
             testDetails.setAhuNo("");
-        }else{
+        } else {
             testDetails.setEquipmentName("");
             testDetails.setEquipmentNo("");
             testDetails.setAhuNo(ahuNo.getText().toString());
         }
-        if(mTestBasedOn.equalsIgnoreCase("ROOM")){
-            testDetails.setTestLocation(""+testLocation.getText().toString());
-        }else{
+        if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
+            testDetails.setTestLocation("" + testLocation.getText().toString());
+        } else {
             testDetails.setTestLocation("");
         }
+        testDetails.setTolarance("" + mTolarence);
         return testDetails;
     }
 
@@ -796,12 +795,12 @@ Date d;
 
                 //get area based on room area id
                 areaName = extras.getString("AREANAME");
-                mTestItem= extras.getString("testItem");
+                mTestItem = extras.getString("testItem");
                 mPartnerName = extras.getString("PRTNERNAME");
                 mTestBasedOn = extras.getString("testBasedOn");
                 testType = extras.getString("testType");
                 mTestCode = extras.getString("testCode");
-
+                mTolarence=extras.getDouble("TOLARENCE");
                 if (loginUserType.equals("CLIENT")) {
                     clientInstrument = (ClientInstrument) extras.getSerializable("ClientInstrument");
                 } else {
@@ -833,13 +832,13 @@ Date d;
     @Override
     protected void onResume() {
         super.onResume();
-        if("AHU".equalsIgnoreCase(mTestBasedOn)){
+        if ("AHU".equalsIgnoreCase(mTestBasedOn)) {
             headerText.setText("TEST RAW DATA AHU/EQUIPMENT");
             headerText_2.setText("Installed HEPA Filter System Leakage Test by Aerosol Photometer Method");
-        }else if("ROOM".equalsIgnoreCase(mTestBasedOn)){
+        } else if ("ROOM".equalsIgnoreCase(mTestBasedOn)) {
             headerText.setText("TEST RAW DATA");
             headerText_2.setText("Installed HEPA Filter System Leakage Test by Aerosol Photometer Method");
-        }else{
+        } else {
             headerText.setText("TEST RAW DATA EQUIPMENT");
             headerText_2.setText("Installed HEPA Filter System Leakage Test by Aerosol Photometer Method");
         }
@@ -882,7 +881,7 @@ Date d;
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
-                   // row.addView(addTextView(" Filter Type"));
+                    // row.addView(addTextView(" Filter Type"));
                     TextView grillTV = addTextView(" Filter Type");
                     ViewGroup.LayoutParams params = grillTV.getLayoutParams();
                     params.height = getResources().getDimensionPixelSize(R.dimen.common_txt_header_height);
@@ -908,7 +907,7 @@ Date d;
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
-                   // row.addView(addTextView(" Filter Efficiency\n at Particle Size* "));
+                    // row.addView(addTextView(" Filter Efficiency\n at Particle Size* "));
                     TextView grillTV = addTextView(" Filter Efficiency\n at Particle Size* ");
                     ViewGroup.LayoutParams params = grillTV.getLayoutParams();
                     params.height = getResources().getDimensionPixelSize(R.dimen.common_txt_header_height);
@@ -934,7 +933,7 @@ Date d;
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
-                   // row.addView(addTextView(" Average Up Stream\n Concentration (µg/liter) "));
+                    // row.addView(addTextView(" Average Up Stream\n Concentration (µg/liter) "));
                     TextView grillTV = addTextView(" Average Up Stream\n Concentration (µg/liter) ");
                     ViewGroup.LayoutParams params = grillTV.getLayoutParams();
                     params.height = getResources().getDimensionPixelSize(R.dimen.common_txt_header_height);
@@ -958,7 +957,7 @@ Date d;
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
                     //row.addView(addTextView(" Average Up Stream after\nConcentration (µg/liter) "));
-                    TextView grillTV =addTextView(" Average Up Stream after\nConcentration (µg/liter) ");
+                    TextView grillTV = addTextView(" Average Up Stream after\nConcentration (µg/liter) ");
                     ViewGroup.LayoutParams params = grillTV.getLayoutParams();
                     params.height = getResources().getDimensionPixelSize(R.dimen.common_txt_header_height);
                     grillTV.setLayoutParams(params);
@@ -981,7 +980,7 @@ Date d;
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
-                   // row.addView(addTextView(" SLP of DL for Tests\n after Installation** "));
+                    // row.addView(addTextView(" SLP of DL for Tests\n after Installation** "));
                     TextView grillTV = addTextView(" SLP of DL for Tests\n after Installation** ");
                     ViewGroup.LayoutParams params = grillTV.getLayoutParams();
                     params.height = getResources().getDimensionPixelSize(R.dimen.common_txt_header_height);
@@ -1098,7 +1097,7 @@ Date d;
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
-                   // row.addView(addTextView(" Average \nbefore Scanning "));
+                    // row.addView(addTextView(" Average \nbefore Scanning "));
                     TextView grillTV = addTextView("Average\nbefore Scanning(%) ");
                     ViewGroup.LayoutParams params = grillTV.getLayoutParams();
                     params.height = getResources().getDimensionPixelSize(R.dimen.common_txt_header_height);
@@ -1121,7 +1120,7 @@ Date d;
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
-                   // row.addView(addTextView(" Average \nAfter Scanning"));
+                    // row.addView(addTextView(" Average \nAfter Scanning"));
                     TextView grillTV = addTextView("Average\nAfter Scanning(%)");
                     ViewGroup.LayoutParams params = grillTV.getLayoutParams();
                     params.height = getResources().getDimensionPixelSize(R.dimen.common_txt_header_height);
@@ -1143,7 +1142,7 @@ Date d;
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
-                   // row.addView(addTextView(" Variation \nin Concentration"));
+                    // row.addView(addTextView(" Variation \nin Concentration"));
                     TextView grillTV = addTextView(" Variation \nin Concentration");
                     ViewGroup.LayoutParams params = grillTV.getLayoutParams();
                     params.height = getResources().getDimensionPixelSize(R.dimen.common_txt_header_height);
@@ -1377,7 +1376,7 @@ Date d;
         headerText = (TextView) findViewById(R.id.common_header_tv);
         headerText_2 = (TextView) findViewById(R.id.common_header_2_tv);
         headerText_2.setVisibility(View.VISIBLE);
-        common_certificate_header = (LinearLayout)findViewById(R.id.common_certificate_header_ll);
+        common_certificate_header = (LinearLayout) findViewById(R.id.common_certificate_header_ll);
         common_certificate_header.setVisibility(View.VISIBLE);
 
         //Test4
@@ -1391,13 +1390,13 @@ Date d;
         test4_table_layout8 = (TableLayout) findViewById(R.id.test4_tableLayout8);
         findViewById(R.id.test_table_4_header_l_ll).setVisibility(View.GONE);
         findViewById(R.id.test_table_4_header_2_ll).setVisibility(View.VISIBLE);
-        Log.d("Saurabh", " testbased on "+getIntent().getStringExtra("testBasedOn"));
-        if(getIntent().hasExtra("testBasedOn") && "ROOM".equalsIgnoreCase(getIntent().getStringExtra("testBasedOn"))){
+        Log.d("Saurabh", " testbased on " + getIntent().getStringExtra("testBasedOn"));
+        if (getIntent().hasExtra("testBasedOn") && "ROOM".equalsIgnoreCase(getIntent().getStringExtra("testBasedOn"))) {
             findViewById(R.id.room_volume_table).setVisibility(View.VISIBLE);
             findViewById(R.id.ahu_no_lable).setVisibility(View.VISIBLE);
             findViewById(R.id.test_item_table).setVisibility(View.VISIBLE);
 
-        }else if(getIntent().hasExtra("testBasedOn") && "AHU".equalsIgnoreCase(getIntent().getStringExtra("testBasedOn"))){
+        } else if (getIntent().hasExtra("testBasedOn") && "AHU".equalsIgnoreCase(getIntent().getStringExtra("testBasedOn"))) {
             findViewById(R.id.room_volume_table).setVisibility(View.VISIBLE);
             findViewById(R.id.test_item_table).setVisibility(View.VISIBLE);
             findViewById(R.id.room_no_ahu_fit).setVisibility(View.GONE);
