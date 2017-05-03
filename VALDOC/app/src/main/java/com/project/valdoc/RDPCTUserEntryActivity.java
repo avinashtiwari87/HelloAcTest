@@ -332,7 +332,7 @@ public class RDPCTUserEntryActivity extends AppCompatActivity {
             roomNo.setText(room.getRoomNo().toString());
             ahuNo.setText(ahuNumber);
             occupancyState.setText(mApplicableTestRoom.getOccupencyState().toString());
-            String samplingtime = getSamplingTime(mApplicableTestRoom.getTestSpecification(), samplingFlowRate.getText().toString());
+            String samplingtime = Utilityies.getSamplingTime(mApplicableTestRoom.getTestSpecification(), samplingFlowRate.getText().toString());
             samplingTime.setText("" + samplingtime);
             atrest_one.setText(""+mApplicableTestRoom.getOccupencyState().toString());
             atrest_two.setText(""+mApplicableTestRoom.getOccupencyState().toString());
@@ -381,7 +381,7 @@ public class RDPCTUserEntryActivity extends AppCompatActivity {
             roomNo.setText(roomDetails[2]);
             areaOfTest.setText(areaName);
 
-            String samplingtime = getSamplingTime(mApplicableTestEquipment.getTestSpecification(), samplingFlowRate.getText().toString());
+            String samplingtime = Utilityies.getSamplingTime(mApplicableTestEquipment.getTestSpecification(), samplingFlowRate.getText().toString());
             samplingTime.setText("" + samplingtime);
             cleanRoomClass.setText("" + mApplicableTestEquipment.getTestSpecification());
             iso_class.setText("" + mApplicableTestEquipment.getTestSpecification());
@@ -439,25 +439,25 @@ public class RDPCTUserEntryActivity extends AppCompatActivity {
         testWitness.setText(witness);
     }
 
-    private String getSamplingTime(String testSpecification, String range) {
-        String samplingTime = "";
-        if (testSpecification.contains("5") || testSpecification.contains("6")|| testSpecification.contains("Grade A")||testSpecification.contains("Grade B")) {
-            if (range.contains("28.3")) {
-                samplingTime = "36 Minute";
-            } else if (range.contains("50")) {
-                samplingTime = "20 Minute";
-            } else if (range.contains("75")) {
-                samplingTime = "14 Minute";
-            } else if (range.contains("100")) {
-                samplingTime = "10 Minute";
-            }else {
-                samplingTime = "1 Minute";
-            }
-        } else {
-            samplingTime = "1 Minute";
-        }
-        return samplingTime;
-    }
+//    private String getSamplingTime(String testSpecification, String range) {
+//        String samplingTime = "";
+//        if (testSpecification.contains("5") || testSpecification.contains("6")|| testSpecification.contains("Grade A")||testSpecification.contains("Grade B")) {
+//            if (range.contains("28.3")) {
+//                samplingTime = "36 Minute";
+//            } else if (range.contains("50")) {
+//                samplingTime = "20 Minute";
+//            } else if (range.contains("75")) {
+//                samplingTime = "14 Minute";
+//            } else if (range.contains("100")) {
+//                samplingTime = "10 Minute";
+//            }else {
+//                samplingTime = "1 Minute";
+//            }
+//        } else {
+//            samplingTime = "1 Minute";
+//        }
+//        return samplingTime;
+//    }
 
     private void initTextView() {
         // layout data which is not in use
@@ -608,13 +608,13 @@ public class RDPCTUserEntryActivity extends AppCompatActivity {
         TestSpesificationValue testSpesificationValue2 = new TestSpesificationValue();
         testSpesificationValue2.setTest_detail_id("" + testDetailsId);
         testSpesificationValue2.setFieldName("Standard Deviation1");
-        testSpesificationValue2.setFieldValue("" + stdDev1);
+        testSpesificationValue2.setFieldValue("" + Math.round(stdDev1));
         spesificationValueArrayList.add(testSpesificationValue2);
 
         TestSpesificationValue testSpesificationValue3 = new TestSpesificationValue();
         testSpesificationValue3.setTest_detail_id("" + testDetailsId);
         testSpesificationValue3.setFieldName("Standard Deviation2");
-        testSpesificationValue3.setFieldValue("" + stdDev2);
+        testSpesificationValue3.setFieldValue("" + Math.round(stdDev2));
         spesificationValueArrayList.add(testSpesificationValue3);
 
         TestSpesificationValue testSpesificationValue4 = new TestSpesificationValue();
@@ -775,6 +775,7 @@ public class RDPCTUserEntryActivity extends AppCompatActivity {
         if (null != witnessThird && witnessThird.length() > 0)
             witness.append("," + witnessThird);
         testDetails.setWitnessName("" + witness);
+        testDetails.setTolarance("");
         return testDetails;
     }
 

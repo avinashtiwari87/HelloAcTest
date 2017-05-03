@@ -538,6 +538,7 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
         testDetails.setRoomVolume("" + roomVolume.getText());
         testDetails.setTestWitnessOrg("" + testWitnessOrg.getText());
         testDetails.setTestCondoctorOrg("" + testCondoctorOrg.getText());
+        testDetails.setTolarance("");
         return testDetails;
     }
 

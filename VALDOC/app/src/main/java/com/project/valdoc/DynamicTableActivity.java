@@ -345,7 +345,15 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                         Log.d("Dynamictest", "roomDetails=" + roomDetails[1]);
                         mAhuFilterArrayList = (ArrayList<AhuFilter>) extras.getSerializable("AhuFilter");
                         mApplicableTestAhu = (ApplicableTestAhu) extras.getSerializable("ApplicableTestAhu");
-                        mTolarence = extras.getDouble("TOLARENCE");
+                        /**
+                         * tolarance calculation
+                         */
+                        String tolarance = extras.getString("TOLARENCE");
+                        if (null != tolarance) {
+                            mTolarence = Double.parseDouble(tolarance.toString());
+                        } else {
+                            mTolarence = 0.0;
+                        }
                     } else if ("ROOM".equalsIgnoreCase(mTestBasedOn)) {
                         room = (Room) extras.getSerializable("Room");
                         ahuNumber = extras.getString("AhuNumber");
@@ -738,7 +746,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 test_value4.setText("" + room.getRoomNo());
                 test_value6.setText("" + mApplicableTestRoom.getOccupencyState());
 
-                String samplingTime = getSamplingTime(mApplicableTestRoom.getTestSpecification(), "");
+                String samplingTime = Utilityies.getSamplingTime(mApplicableTestRoom.getTestSpecification(), test_value10.getText().toString());
                 test_value11.setText("" + samplingTime);
                 test_value12.setText("" + mApplicableTestRoom.getTestSpecification());
             } else if (TestBasedOn.equalsIgnoreCase("EQUIPMENT")) {
@@ -746,7 +754,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 test_value4.setText("" + equipment.getEquipmentNo());
                 test_value6.setText("" + mApplicableTestEquipment.getOccupencyState());
 
-                String samplingTime = getSamplingTime(mApplicableTestEquipment.getTestSpecification(), "");
+                String samplingTime = Utilityies.getSamplingTime(mApplicableTestEquipment.getTestSpecification(), test_value10.getText().toString());
                 test_value11.setText("" + samplingTime);
                 test_value12.setText("" + mApplicableTestEquipment.getTestSpecification());
                 test_header12.setVisibility(View.GONE);
@@ -1306,7 +1314,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         }
         if (validate.contains(true)) {
             return true;
-        } else if (mTestBasedOn.equals("FIT")) {
+        } else if (testType.equals("FIT")) {
             if (!passfail()) {
                 Log.d("flag", "flag=1");
                 return true;
@@ -1321,15 +1329,18 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
 
     private boolean passfail() {
         boolean flag = true;
+        Log.d("flag", "passfail=1");
         if (mFitPassFailFlagList.size() > 0) {
             for (int i = 0; i < mFitPassFailFlagList.size(); i++) {
                 Log.d("flag", "flag= " + i + mFitPassFailFlagList.get(i).toString() + " size=" + mFitPassFailFlagList.size());
                 if (mFitPassFailFlagList.get(i).equals(false)) {
                     flag = false;
+                    Log.d("flag", "passfail=2");
                     break;
                 }
             }
         } else {
+            Log.d("flag", "passfail=3");
             flag = false;
         }
         Log.d("flag", "flag=" + flag);

@@ -117,7 +117,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
     ArrayList<TextView> txtViewList;
     private double totalAirFlowRate = 0d;
     private double airChangeValue;
-    private double mTolarence;
+    private double mTolarence=0.0;
     HashMap<Integer, Long> airFlowRateMap;
     HashMap<Integer, Float> totalAirFlowRateMap;
     private ImageView submit;
@@ -182,6 +182,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
                     getResources().getString(R.string.table_not_created));
         }
 
+        Log.d(TAG, " mTestBasedOn : " + mTestBasedOn);
         //setting the test 2 room volume
         if (roomVolumeTxtList != null && roomVolumeTxtList.size() > 0) {
             if (mTestBasedOn.equalsIgnoreCase("AHU")) {
@@ -253,10 +254,12 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
                 }
             }
         }
-
+ airChangeValue = getIntent().getIntExtra("AirChangeValue", 0);
         // Checking individual input base on Average
         if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
+airChangeValue = getAirChangeCalculation(Math.round(totalAirFlowRate), (float) room.getVolume());
             int variation = mApplicableTestRoom.getDiffAVinFilter();
+            Log.d(TAG, "Input Validation value: "+variation);
             if (variation != 0) {
                 getInputDataValidationByAverage(variation);
             }
@@ -333,7 +336,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
             //AirFlow Change
             if (airChangeTxtList != null && airChangeTxtList.size() > 0) {
                 TextView airChangeTxt = airChangeTxtList.get(airChangeTxtList.size() / 2);
-                airChangeValue = getIntent().getIntExtra("AirChangeValue", 0);
+
                 if (mTestBasedOn.equalsIgnoreCase("AHU")) {
                     int value = 0;
                     try {
@@ -650,8 +653,8 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
                     }
                 }
 //                AxAv
-                grilList.append("" + ahuFilter.getEffectiveArea()).append(',').append(sb).append(",").append(airFlowRateMap.get(index + 1)).append(",")
-                        .append(arrayList_totalAirFlowRate.get(airflowrateIndex));
+                grilList.append("" + ahuFilter.getEffectiveArea()).append(',').append(sb).append(",").append(Math.round(airFlowRateMap.get(index + 1))).append(",")
+                        .append(Math.round(arrayList_totalAirFlowRate.get(airflowrateIndex)));
 //                    Log.d("ACPH_AV","arrayList_totalAirFlowRate="+arrayList_totalAirFlowRate.size()+"val="+arrayList_totalAirFlowRate.get(airflowrateIndex));
                 airflowrateIndex++;
                 index++;
@@ -682,7 +685,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
                         }
                     }
 
-                    grilList.append("" + grill.getEffectiveArea()).append(',').append(sb).append(",").append(airFlowRateMap.get(index + 1)).append(",").append(Math.round(totalAirFlowRateMap.get(avindex)));
+                    grilList.append("" + grill.getEffectiveArea()).append(',').append(sb).append(",").append(Math.round(airFlowRateMap.get(index + 1))).append(",").append(Math.round(totalAirFlowRateMap.get(avindex)));
                     airflowrateIndex++;
                     index++;
                     avindex++;
@@ -713,7 +716,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
                         }
                     }
 
-                    grilList.append("" + roomFilter.getEffectiveFilterArea()).append(',').append(sb).append(",").append(airFlowRateMap.get(index + 1)).append(",").append(Math.round(totalAirFlowRateMap.get(avindex)));
+                    grilList.append("" + roomFilter.getEffectiveFilterArea()).append(',').append(sb).append(",").append(Math.round(airFlowRateMap.get(index + 1))).append(",").append(Math.round(totalAirFlowRateMap.get(avindex)));
                     airflowrateIndex++;
                     index++;
                     avindex++;
@@ -805,6 +808,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
         testDetails.setTestCondoctorOrg("" + testCondoctorOrg.getText());
         testDetails.setFilterTypeEficiancy("");
         testDetails.setTestLocation("");
+        testDetails.setTolarance(""+mTolarence);
         return testDetails;
     }
 
@@ -1389,5 +1393,11 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
         }
         return resultValue;
     }
+
+    private int getAirChangeCalculation(float TFR, float RV) {
+        Log.d(TAG, " AirChangeCalculation : " + (TFR / RV) * 60 + " int : " + (int) Math.round(((TFR / RV) * 60)));
+        return (int) Math.round(((TFR / RV) * 60));
+    }
+
 }
 

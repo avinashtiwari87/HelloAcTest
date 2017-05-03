@@ -26,6 +26,26 @@ public class Utilityies {
 
     }
 
+    public static String getSamplingTime(String testSpecification, String range) {
+        String samplingTime = "";
+        if (testSpecification.contains("5") || testSpecification.contains("6")|| testSpecification.contains("Grade A")||testSpecification.contains("Grade B")) {
+            if (range.contains("28.3")) {
+                samplingTime = "36 Minute";
+            } else if (range.contains("50")) {
+                samplingTime = "20 Minute";
+            } else if (range.contains("75")) {
+                samplingTime = "14 Minute";
+            } else if (range.contains("100")) {
+                samplingTime = "10 Minute";
+            }else {
+                samplingTime = "1 Minute";
+            }
+        } else {
+            samplingTime = "1 Minute";
+        }
+        return samplingTime;
+    }
+
     /**
      * to calculate the cell width for PCT dynamic cell
      * @param noOfCycle no of column

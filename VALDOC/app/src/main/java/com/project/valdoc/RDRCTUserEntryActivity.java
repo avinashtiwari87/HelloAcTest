@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -37,7 +38,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 
 public class RDRCTUserEntryActivity extends AppCompatActivity {
-    TextView headerText,headerText_2;
+    TextView headerText, headerText_2;
     int rows, cols;
     String mTestType;
     private static final String TAG = "RDRCT";
@@ -47,7 +48,7 @@ public class RDRCTUserEntryActivity extends AppCompatActivity {
     private PartnerInstrument partnerInstrument;
     private String ahuNumber;
     private Room room;
-//    private ArrayList<HashMap<String, String>> grillAndSizeFromGrill;
+    //    private ArrayList<HashMap<String, String>> grillAndSizeFromGrill;
     private String areaName;
     private String witnessFirst;
     private String witnessSecond;
@@ -118,6 +119,7 @@ public class RDRCTUserEntryActivity extends AppCompatActivity {
     private ImageView cancel;
 
     private String[] roomDetails;
+    private String mAcceptableRecoveryTime = "";
     private Equipment equipment;
     private ApplicableTestRoom mApplicableTestRoom = null;
     private ApplicableTestEquipment mApplicableTestEquipment = null;
@@ -125,13 +127,13 @@ public class RDRCTUserEntryActivity extends AppCompatActivity {
     ArrayList<TextView> resultTextViewList;
     private ValdocDatabaseHandler mValdocDatabaseHandler = new ValdocDatabaseHandler(RDRCTUserEntryActivity.this);
     SharedPreferences sharedpreferences;
-    int testDetailsId=0;
+    int testDetailsId = 0;
     String mInitialReading;
     String mWorstReading;
     String mFinalReading;
     int mCount;
     private String mPartnerName;
-    private String  mTestCode="";
+    private String mTestCode = "";
     private String testType;
     private String mTestBasedOn;
     private int year;
@@ -147,7 +149,7 @@ public class RDRCTUserEntryActivity extends AppCompatActivity {
 
         mInputValue = new HashMap<Integer, Integer>();
         sharedpreferences = getSharedPreferences("valdoc", Context.MODE_PRIVATE);
-        testDetailsId = (sharedpreferences.getInt("TESTDETAILSID", 0)+1);
+        testDetailsId = (sharedpreferences.getInt("TESTDETAILSID", 0) + 1);
 
         if (getIntent().hasExtra("rows") && getIntent().hasExtra("cols")) {
             rows = getIntent().getIntExtra("rows", 0);
@@ -267,10 +269,7 @@ public class RDRCTUserEntryActivity extends AppCompatActivity {
         initialReading.setText("" + mInitialReading);
         worstCase.setText("" + mWorstReading);
         finalReading.setText("" + mFinalReading);
-        if (mCount > 0) {
-            int count = mCount + 1;
-            recoveryTime.setText("" + count);
-        }
+
         areaOfTest.setText(areaName);
         samplingFlowRateText.setText("Sampling Flow Rate :");
         samplingTimeText.setText("Sampling Time :");
@@ -282,13 +281,9 @@ public class RDRCTUserEntryActivity extends AppCompatActivity {
             occupancyState.setText(mApplicableTestRoom.getOccupencyState().toString());
             String samplingtime = getSamplingTime(mApplicableTestRoom.getTestSpecification(), "");
             samplingTime.setText("" + samplingtime);
-            JSONObject jsonObject = null;
-            try {
-                jsonObject = new JSONObject(mApplicableTestRoom.getTestProp());
-                    recovery_time_tv.setText("<= "+jsonObject.optString("ACCEPTABLE_RECOVERY_TIME")+" min");
-                }catch(Exception e){
-                recovery_time_tv.setText("");
-                }
+            mAcceptableRecoveryTime = getAcceptableRecoveryTime(mApplicableTestRoom.getTestProp());
+            recovery_time_tv.setText("≤ " + mAcceptableRecoveryTime + " min");
+
 //            samplingFlowRate.setText("under development");
             cleanRoomClass.setText(" " + mApplicableTestRoom.getTestSpecification());
         } else if (mTestBasedOn.equalsIgnoreCase("EQUIPMENT")) {
@@ -303,12 +298,23 @@ public class RDRCTUserEntryActivity extends AppCompatActivity {
             String samplingtime = getSamplingTime(mApplicableTestEquipment.getTestSpecification(), "");
             samplingTime.setText("" + samplingtime);
             cleanRoomClass.setText("" + mApplicableTestEquipment.getTestSpecification());
-            JSONObject jsonObject = null;
-            try {
-                jsonObject = new JSONObject(mApplicableTestEquipment.getTestProp());
-                recovery_time_tv.setText("<= "+jsonObject.optString("ACCEPTABLE_RECOVERY_TIME")+" min");
-            }catch(Exception e){
-                recovery_time_tv.setText("");
+            mAcceptableRecoveryTime = getAcceptableRecoveryTime(mApplicableTestEquipment.getTestProp());
+            recovery_time_tv.setText("≤ " + mAcceptableRecoveryTime + " min");
+        }
+        int count = 0;
+        if (mCount > 0) {
+            count = mCount + 1;
+            recoveryTime.setText(" " + count);
+            if (mAcceptableRecoveryTime.length() > 0) {
+                int acceptableRecoveryTime = 0;
+                try {
+                    acceptableRecoveryTime = Integer.parseInt(mAcceptableRecoveryTime);
+                    if (acceptableRecoveryTime < count) {
+                        recoveryTime.setTextColor(Color.RED);
+                    }
+                } catch (Exception e) {
+
+                }
             }
         }
 
@@ -322,14 +328,14 @@ public class RDRCTUserEntryActivity extends AppCompatActivity {
 //        roomNo.setText(room.getRoomNo().toString());
 //        ahuNo.setText(ahuNumber);
         testCundoctor.setText(userName);
-        if(sharedpreferences.getString("USERTYPE", "").equalsIgnoreCase("CLIENT")){
-            testCondoctorOrg.setText("("+sharedpreferences.getString("CLIENTORG", "")+")");
-            testWitnessOrg.setText("("+sharedpreferences.getString("CLIENTORG", "")+")");
-            customerName.setText(""+ sharedpreferences.getString("CLIENTORG", ""));
-        }else{
-            testCondoctorOrg.setText("("+sharedpreferences.getString("PARTNERORG", "")+")");
-            testWitnessOrg.setText("("+sharedpreferences.getString("CLIENTORG", "")+")");
-            customerName.setText(""+ sharedpreferences.getString("PARTNERORG", ""));
+        if (sharedpreferences.getString("USERTYPE", "").equalsIgnoreCase("CLIENT")) {
+            testCondoctorOrg.setText("(" + sharedpreferences.getString("CLIENTORG", "") + ")");
+            testWitnessOrg.setText("(" + sharedpreferences.getString("CLIENTORG", "") + ")");
+            customerName.setText("" + sharedpreferences.getString("CLIENTORG", ""));
+        } else {
+            testCondoctorOrg.setText("(" + sharedpreferences.getString("PARTNERORG", "") + ")");
+            testWitnessOrg.setText("(" + sharedpreferences.getString("CLIENTORG", "") + ")");
+            customerName.setText("" + sharedpreferences.getString("PARTNERORG", ""));
         }
         plantName.setText("from config screen");
         Log.d("valdoc", "RDAV5UserEnryActivity 1witness=" + witnessFirst);
@@ -340,6 +346,18 @@ public class RDRCTUserEntryActivity extends AppCompatActivity {
         if (null != witnessThird && witnessThird.length() > 0)
             witness.append("," + witnessThird);
         testWitness.setText(witness);
+    }
+
+    private String getAcceptableRecoveryTime(String testProp) {
+        String acceptableRecoveryTime = "";
+        JSONObject jsonObject = null;
+        try {
+            jsonObject = new JSONObject(testProp);
+            acceptableRecoveryTime = jsonObject.optString("ACCEPTABLE_RECOVERY_TIME");
+        } catch (Exception e) {
+            acceptableRecoveryTime = "";
+        }
+        return acceptableRecoveryTime;
     }
 
     private String getSamplingTime(String testSpecification, String range) {
@@ -367,7 +385,7 @@ public class RDRCTUserEntryActivity extends AppCompatActivity {
         headerText_2.setVisibility(View.VISIBLE);
         headerText.setText("TEST RAW DATA EQUIPMENT");
         headerText_2.setText("Recovery Performance Test");
-        if("ROOM".equalsIgnoreCase(mTestBasedOn))
+        if ("ROOM".equalsIgnoreCase(mTestBasedOn))
             headerText.setText("TEST RAW DATA ");
         // layout data which is not in use
         instrumentNoTextView = (TextView) findViewById(R.id.instrument_no6);
@@ -384,24 +402,24 @@ public class RDRCTUserEntryActivity extends AppCompatActivity {
         samplingTimeTable = (TableRow) findViewById(R.id.aerosol_used_table);
         samplingTimeTable.setVisibility(View.VISIBLE);
 
-        aerosolGenTable = (TableRow)findViewById(R.id.aerosol_gen_table_rct);
+        aerosolGenTable = (TableRow) findViewById(R.id.aerosol_gen_table_rct);
         aerosolGenTable.setVisibility(View.VISIBLE);
         aerosol_gen_rct = (TextView) findViewById(R.id.aerosol_gen_rct);
 
-        recovery_time_rct = (TableRow)findViewById(R.id.recovery_time_rct);
+        recovery_time_rct = (TableRow) findViewById(R.id.recovery_time_rct);
         recovery_time_rct.setVisibility(View.VISIBLE);
         recovery_time_tv = (TextView) findViewById(R.id.recovery_time_tv);
 
-        aerosol_used_rct = (TableRow)findViewById(R.id.aerosol_used_rct);
+        aerosol_used_rct = (TableRow) findViewById(R.id.aerosol_used_rct);
         aerosol_used_rct.setVisibility(View.VISIBLE);
         aerosol_used_rct_tv = (TextView) findViewById(R.id.aerosol_used_rct_tv);
 
-        samplingFlowRateText= (TextView) findViewById(R.id.aerosol_generator_type_text);
-        samplingTimeText= (TextView) findViewById(R.id.aerosol_used_text);
+        samplingFlowRateText = (TextView) findViewById(R.id.aerosol_generator_type_text);
+        samplingTimeText = (TextView) findViewById(R.id.aerosol_used_text);
         samplingFlowRate = (TextView) findViewById(R.id.aerosol_generator_type_value);
         samplingTime = (TextView) findViewById(R.id.aerosol_used);
 
-        testspecificationText=(TextView)findViewById(R.id.testspecification_text);
+        testspecificationText = (TextView) findViewById(R.id.testspecification_text);
         testspecificationText.setText("Cleanroom Class :");
         cleanRoomClass = (TextView) findViewById(R.id.testspecification);
 
@@ -414,9 +432,9 @@ public class RDRCTUserEntryActivity extends AppCompatActivity {
         customerName = (TextView) findViewById(R.id.customer_name);
         certificateNo = (TextView) findViewById(R.id.trd_no);
         instrumentUsed = (TextView) findViewById(R.id.instrumentused);
-        room_no_lable=(TextView)findViewById(R.id.room_no_lable);
+        room_no_lable = (TextView) findViewById(R.id.room_no_lable);
         roomNo = (TextView) findViewById(R.id.room_no);
-        if(mTestBasedOn.equalsIgnoreCase("ROOM")){
+        if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
             equipmentLable = (TextView) findViewById(R.id.equiment_name_text);
             equipmentLable.setVisibility(View.INVISIBLE);
             equipmentNoLable = (TextView) findViewById(R.id.equiment_no_text);
@@ -508,28 +526,28 @@ public class RDRCTUserEntryActivity extends AppCompatActivity {
         ArrayList<TestSpesificationValue> spesificationValueArrayList = new ArrayList<TestSpesificationValue>();
         TestSpesificationValue testSpesificationValue = new TestSpesificationValue();
 //        testSpesificationValue.setTest_specific_id(1);
-        testSpesificationValue.setTest_detail_id(""+testDetailsId);
+        testSpesificationValue.setTest_detail_id("" + testDetailsId);
         testSpesificationValue.setFieldName("Initial Reading");
         testSpesificationValue.setFieldValue("" + initialReading.getText().toString());
         spesificationValueArrayList.add(testSpesificationValue);
 
         TestSpesificationValue testSpesificationValue1 = new TestSpesificationValue();
 //        testSpesificationValue1.setTest_specific_id(1);
-        testSpesificationValue1.setTest_detail_id(""+testDetailsId);
+        testSpesificationValue1.setTest_detail_id("" + testDetailsId);
         testSpesificationValue1.setFieldName("Worst Case Reading");
         testSpesificationValue1.setFieldValue("" + worstCase.getText().toString());
         spesificationValueArrayList.add(testSpesificationValue1);
 
         TestSpesificationValue testSpesificationValue2 = new TestSpesificationValue();
 //        testSpesificationValue2.setTest_specific_id(1);
-        testSpesificationValue2.setTest_detail_id(""+testDetailsId);
+        testSpesificationValue2.setTest_detail_id("" + testDetailsId);
         testSpesificationValue2.setFieldName("Final Reading");
         testSpesificationValue2.setFieldValue("" + finalReading.getText().toString());
         spesificationValueArrayList.add(testSpesificationValue2);
 
         TestSpesificationValue testSpesificationValue3 = new TestSpesificationValue();
 //        testSpesificationValue3.setTest_specific_id(1);
-        testSpesificationValue3.setTest_detail_id(""+testDetailsId);
+        testSpesificationValue3.setTest_detail_id("" + testDetailsId);
         testSpesificationValue3.setFieldName("Recovery Time");
         testSpesificationValue3.setFieldValue("" + recoveryTime.getText().toString());
         spesificationValueArrayList.add(testSpesificationValue3);
@@ -548,7 +566,7 @@ public class RDRCTUserEntryActivity extends AppCompatActivity {
         //v1,v2....value cration
         StringBuilder sb = new StringBuilder();
         int k = 202;
-        int size=mInputValue.size();
+        int size = mInputValue.size();
         for (int j = 2; j < size; j++) {
             if (j != 2)
                 sb.append(',');
@@ -567,7 +585,7 @@ public class RDRCTUserEntryActivity extends AppCompatActivity {
 //        TO DO: need to make it dynamic
         testDetails.setTest_detail_id(testDetailsId);
         testDetails.setCustomer(customerName.getText().toString());
-        String date = year+"-"+(month + 1)+"-"+day+" ";
+        String date = year + "-" + (month + 1) + "-" + day + " ";
 //        testDetails.setDateOfTest(""+date);
         testDetails.setDateOfTest("" + dateTextView.getText());
         testDetails.setRawDataNo(certificateNo.getText().toString());
@@ -578,13 +596,13 @@ public class RDRCTUserEntryActivity extends AppCompatActivity {
             testDetails.setInstrumentUsed(clientInstrument.getcInstrumentName());
             testDetails.setMake(clientInstrument.getMake());
             testDetails.setModel(clientInstrument.getModel());
-            testDetails.setInstrumentNo(""+clientInstrument.getSerialNo());
+            testDetails.setInstrumentNo("" + clientInstrument.getSerialNo());
             testDetails.setCalibratedOn("" + clientInstrument.getLastCalibrated());
             testDetails.setCalibratedDueOn("" + clientInstrument.getCalibrationDueDate());
             testDetails.setAerosolUsed("");
             testDetails.setAerosolGeneratorType("");
-           // testDetails.setSamplingFlowRate("" + samplingFlowRate.getText().toString());
-           // testDetails.setSamplingTime("" + samplingTime.getText().toString());
+            // testDetails.setSamplingFlowRate("" + samplingFlowRate.getText().toString());
+            // testDetails.setSamplingTime("" + samplingTime.getText().toString());
         } else {
             testDetails.setInstrumentUsed(partnerInstrument.getpInstrumentName());
             testDetails.setMake(partnerInstrument.getMake());
@@ -595,7 +613,7 @@ public class RDRCTUserEntryActivity extends AppCompatActivity {
             testDetails.setAerosolUsed("");
             testDetails.setAerosolGeneratorType("");
             //testDetails.setSamplingFlowRate("" + samplingFlowRate.getText().toString());
-           // testDetails.setSamplingTime("" + samplingTime.getText().toString());
+            // testDetails.setSamplingTime("" + samplingTime.getText().toString());
         }
         testDetails.setFilterTypeEficiancy("");
         testDetails.setTestLocation("");
@@ -612,7 +630,7 @@ public class RDRCTUserEntryActivity extends AppCompatActivity {
         testDetails.setTesterName(testCundoctor.getText().toString());
         testDetails.setPartnerName("" + mPartnerName);
         testDetails.setTestCode(mTestCode);
-        testDetails.setTestSpecification(""+cleanRoomClass.getText().toString());
+        testDetails.setTestSpecification("" + cleanRoomClass.getText().toString());
         StringBuilder witness = new StringBuilder();
         witness.append(witnessFirst.toString());
         if (null != witnessSecond && witnessSecond.length() > 0)
@@ -624,7 +642,7 @@ public class RDRCTUserEntryActivity extends AppCompatActivity {
         testDetails.setTestWitnessOrg("" + testWitnessOrg.getText());
         testDetails.setTestCondoctorOrg("" + testCondoctorOrg.getText());
         testDetails.setRoomVolume("");
-        testDetails.setAcceptableRecoveryTime(""+recovery_time_tv.getText().toString()+"");
+        testDetails.setAcceptableRecoveryTime("" + recovery_time_tv.getText().toString() + "");
         if (mTestBasedOn.equalsIgnoreCase("EQUIPMENT")) {
             testDetails.setEquipmentName("" + equipmentName.getText().toString());
             testDetails.setEquipmentNo("" + equipmentNo.getText().toString());
@@ -634,6 +652,7 @@ public class RDRCTUserEntryActivity extends AppCompatActivity {
             testDetails.setEquipmentNo("");
             testDetails.setAhuNo(ahuNo.getText().toString());
         }
+        testDetails.setTolarance("");
         return testDetails;
     }
 

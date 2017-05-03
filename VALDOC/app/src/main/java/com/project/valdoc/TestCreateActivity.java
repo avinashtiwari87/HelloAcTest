@@ -723,7 +723,8 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
             intent.putExtra("AhuFilter", mAhuFilterArrayList);
 //            ApplicableTestAhu applicableTestAhu = createApplicableTestAhuList(ahu.getAhuId(), testType);
             intent.putExtra("ApplicableTestAhu", mApplicableTestAhu);
-            intent.putExtra("TOLARENCE", getTolarance(ahu,roomSpinner.getSelectedItem().toString()));
+//            intent.putExtra("TOLARENCE", getTolarance(ahu,roomSpinner.getSelectedItem().toString()));
+            intent.putExtra("TOLARENCE",getAvgUpStrmAfter(mApplicableTestAhu.getTestProp()));
         } else if (testBasedOn.equalsIgnoreCase("ROOM")) {
             //get room name,roomNo,and area id
             Log.d(TAG, "TestCreateActivity :roomNoSpinner:=" + roomNoSpinner.getSelectedItemPosition());
