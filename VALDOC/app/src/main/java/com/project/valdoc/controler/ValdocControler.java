@@ -157,7 +157,7 @@ public class ValdocControler {
         if (statusCode == HttpURLConnection.HTTP_OK) {
             Log.d("valdocControler", "resultData2=" + resultData);
             HashMap<String, ArrayList> arrayListHashMap = parseResponse(resultData);
-            controlerResponse.controlerResult(arrayListHashMap, "Data synked successfully");
+            controlerResponse.controlerResult(arrayListHashMap, "Data synced successfully");
         }
 
     }
