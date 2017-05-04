@@ -50,10 +50,10 @@
                             <TextView
                                 android:id="@+id/measerd_av_tv"
                                 style="@style/TextAppearance.AppCompat.header_text"
-                                android:layout_height="40dp"
+                                android:layout_height="wrap_content"
                                 android:background="@drawable/border1"
                                 android:text="Airflow Velocity (fpm)"
-                                android:textSize="18sp" />
+                                android:textSize="16sp" />
                         </LinearLayout>
 
                         <TableLayout

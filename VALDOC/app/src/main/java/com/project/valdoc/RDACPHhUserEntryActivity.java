@@ -605,7 +605,7 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
                 if (i == 1 && j == 1) {
                     TextView grillTV = addTextView(" Grill/Filter No\n ");
                     ViewGroup.LayoutParams params = grillTV.getLayoutParams();
-                    params.height = 72;
+                    params.height = getResources().getDimensionPixelSize(R.dimen.common_txt_header_height);
                     grillTV.setLayoutParams(params);
                     row.addView(grillTV);
                 } else {
@@ -613,10 +613,7 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
                     if (mGrilFilterType.equalsIgnoreCase("Grill")) {
                         if (null != grillAndSizeFromGrill && grillAndSizeFromGrill.size() > 0) {
                             TextView textView = addTextView(grillAndSizeFromGrill.get(i - 2).getGrillCode().toString());
-                            if (cols <= 3)
-                                textView.setEms(4+Utilityies.getPctCellWidth(cols));
-                            else
-                                textView.setEms(Utilityies.getPctCellWidth(cols));
+                            textView.setEms(Utilityies.getPctCellWidth(cols));
                             row.addView(textView);
                         } else {
                             row.addView(addTextView("grillAndSizeFromGrill"));
@@ -625,10 +622,7 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
                     } else {
                         if (null != mRoomFilterArrayList && mRoomFilterArrayList.size() > 0) {
                             TextView textView = addTextView(mRoomFilterArrayList.get(i - 2).getFilterCode());
-                            if (cols <= 3)
-                                textView.setEms(4+Utilityies.getPctCellWidth(cols));
-                            else
-                                textView.setEms(Utilityies.getPctCellWidth(cols));
+                            textView.setEms(Utilityies.getPctCellWidth(cols));
                             row.addView(textView);
                         } else {
                             row.addView(addTextView("grillAndSizeFromGrill"));
@@ -653,17 +647,11 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
             for (int j = 1; j <= cols; j++) {
                 if (i == 1 && j <= cols) {
                     TextView textView = addTextView(" Q " + j);
-                    if (cols <= 2)
-                        textView.setEms(4+Utilityies.getPctCellWidth(cols));
-                    else
-                        textView.setEms(Utilityies.getPctCellWidth(cols));
+                    textView.setEms(Utilityies.getPctCellWidth(cols));
                     row.addView(textView);
                 } else {
                     TextView editText = addInputDataTextView();
-                    if (cols <= 2)
-                        editText.setEms(4+Utilityies.getPctCellWidth(cols));
-                    else
-                        editText.setEms(Utilityies.getPctCellWidth(cols));
+                    editText.setEms(Utilityies.getPctCellWidth(cols));
                     row.addView(editText);
                 }
             }
@@ -677,21 +665,15 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
             row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
                     TableRow.LayoutParams.WRAP_CONTENT));
             // inner for loop
-                if (i == 1) {
-                    TextView textView = addTextView(" Average ");
-                    if (cols <= 2)
-                        textView.setEms(10);
-                    else
-                        textView.setEms(8);
-                    row.addView(textView);
-                }else{
-                    TextView textView = addResultTextView(i);
-                    if (cols <= 2)
-                        textView.setEms(10);
-                    else
-                        textView.setEms(8);
-                    row.addView(textView);
-                }
+            if (i == 1) {
+                TextView textView = addTextView(" Average ");
+                textView.setEms(8);
+                row.addView(textView);
+            }else{
+                TextView textView = addResultTextView(i);
+                textView.setEms(8);
+                row.addView(textView);
+            }
             test3_table_layout3.addView(row);
         }
 
