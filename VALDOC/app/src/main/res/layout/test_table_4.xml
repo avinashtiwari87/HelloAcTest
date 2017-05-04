@@ -73,6 +73,7 @@
         </RelativeLayout>
 
     </LinearLayout>
+
     <LinearLayout
         android:visibility="gone"
         android:id="@+id/instrument_no_and_roomname_layout"
@@ -130,18 +131,6 @@
         </RelativeLayout>
 
     </LinearLayout>
-    <LinearLayout
-        android:visibility="gone"
-        android:id="@+id/test_table_4_header_2_ll"
-        style="@style/TextAppearance.AppCompat.header_top"
-        android:layout_marginTop="5dp">
-
-        <TextView
-            style="@style/TextAppearance.AppCompat.header_text"
-            android:textStyle="normal"
-            android:textSize="15sp"
-            android:text="Measured Upstream Aerosol Concentration (%)" />
-    </LinearLayout>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -164,27 +153,49 @@
                     android:gravity="center"
                     android:orientation="horizontal">
 
-
                     <TableLayout
                         android:id="@+id/test4_tableLayout1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp" />
 
-                    <TableLayout
-                        android:id="@+id/test4_tableLayout2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
 
-                    <TableLayout
-                        android:id="@+id/test4_tableLayout3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:background="@drawable/border1"
+                            android:textStyle="normal"
+                            android:textSize="15sp"
+                            android:gravity="center"
+                            android:text="Measured Upstream Aerosol Concentration (%)" />
 
-                    <TableLayout
-                        android:id="@+id/test4_tableLayout4"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TableLayout
+                                android:id="@+id/test4_tableLayout2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+
+                            <TableLayout
+                                android:id="@+id/test4_tableLayout3"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+
+                            <TableLayout
+                                android:id="@+id/test4_tableLayout4"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
 
                     <TableLayout
                         android:id="@+id/test4_tableLayout5"

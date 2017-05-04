@@ -521,7 +521,6 @@
         android:visibility="gone"
         android:id="@+id/common_certificate_header_ll"
         style="@style/TextAppearance.AppCompat.header_top"
-        android:background="@drawable/border"
         android:layout_marginTop="10dp">
 
         <TextView

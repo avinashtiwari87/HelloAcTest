@@ -1710,7 +1710,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                     //row.addView(addTextView(" Filter No \n         "));
                     TextView grillTV = addTextView(" Filter No");
                     ViewGroup.LayoutParams params = grillTV.getLayoutParams();
-                    params.height = getResources().getDimensionPixelSize(R.dimen.common_txt_header_height);
+                    params.height = getResources().getDimensionPixelSize(R.dimen.common_txt_header_height1);
                     grillTV.setLayoutParams(params);
                     row.addView(grillTV);
                 } else {
@@ -1845,7 +1845,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                     // row.addView(addTextView(" Obtained Leakage \n(% Leakage)"));
                     TextView grillTV = addTextView(" Obtained Leakage \n(% Leakage)");
                     ViewGroup.LayoutParams params = grillTV.getLayoutParams();
-                    params.height = getResources().getDimensionPixelSize(R.dimen.common_txt_header_height);
+                    params.height = getResources().getDimensionPixelSize(R.dimen.common_txt_header_height1);
                     grillTV.setLayoutParams(params);
                     row.addView(grillTV);
                 } else {
@@ -3230,7 +3230,6 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
 //            test_header11.setVisibility(View.GONE);
 //            test_header12.setVisibility(View.GONE);
             findViewById(R.id.test4_dynamic_table_ll).setVisibility(View.VISIBLE);
-            findViewById(R.id.test_table_4_header_2_ll).setVisibility(View.VISIBLE);
 
             if ("EQUIPMENT".equalsIgnoreCase(mTestBasedOn)) {
                 testHeaderAv.setText("FORM:TEST RAW DATA EQUIPMENT");

@@ -845,205 +845,6 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
 
     }
 
-    private void BuildTableTest4(int rows, int cols) {
-        //first section
-        // outer for loop
-        for (int i = 1; i <= rows; i++) {
-            TableRow row = new TableRow(this);
-            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
-                    TableRow.LayoutParams.WRAP_CONTENT));
-            // inner for loop
-            for (int j = 1; j <= 1; j++) {
-                if (i == 1 && j == 1) {
-                    //row.addView(addTextView(" Filter No \n         "));
-                    TextView grillTV = addTextView(" Filter No");
-                    ViewGroup.LayoutParams params = grillTV.getLayoutParams();
-                    params.height = getResources().getDimensionPixelSize(R.dimen.common_txt_header_height);
-                    grillTV.setLayoutParams(params);
-                    row.addView(grillTV);
-                } else {
-                    if (null != filterArrayList && filterArrayList.size() > 0) {
-                        RoomFilter roomFilter = filterArrayList.get(i - 2);
-                        row.addView(addTextView(roomFilter.getFilterCode()));
-                    }
-                }
-
-            }
-            test4_table_layout.addView(row);
-        }
-
-        //Second section
-        // outer for loop
-        for (int i = 1; i <= rows; i++) {
-            TableRow row = new TableRow(this);
-            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
-                    TableRow.LayoutParams.WRAP_CONTENT));
-            // inner for loop
-            for (int j = 1; j <= 1; j++) {
-                if (i == 1 && j == 1) {
-                    // row.addView(addTextView(" Filter Type"));
-                    TextView grillTV = addTextView(" Filter Type");
-                    ViewGroup.LayoutParams params = grillTV.getLayoutParams();
-                    params.height = getResources().getDimensionPixelSize(R.dimen.common_txt_header_height);
-                    grillTV.setLayoutParams(params);
-                    row.addView(grillTV);
-                } else {
-                    if (null != filterArrayList && filterArrayList.size() > 0) {
-                        RoomFilter roomFilter = filterArrayList.get(i - 2);
-                        row.addView(addTextView(roomFilter.getFilterType()));
-                    }
-                }
-
-            }
-            test4_table_layout2.addView(row);
-        }
-
-        //Third section
-        // outer for loop
-        for (int i = 1; i <= rows; i++) {
-            TableRow row = new TableRow(this);
-            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
-                    TableRow.LayoutParams.WRAP_CONTENT));
-            // inner for loop
-            for (int j = 1; j <= 1; j++) {
-                if (i == 1 && j == 1) {
-                    // row.addView(addTextView(" Filter Efficiency\n at Particle Size* "));
-                    TextView grillTV = addTextView(" Filter Efficiency\n at Particle Size* ");
-                    ViewGroup.LayoutParams params = grillTV.getLayoutParams();
-                    params.height = getResources().getDimensionPixelSize(R.dimen.common_txt_header_height);
-                    grillTV.setLayoutParams(params);
-                    row.addView(grillTV);
-                } else {
-                    if (null != filterArrayList && filterArrayList.size() > 0) {
-                        RoomFilter roomFilter = filterArrayList.get(i - 2);
-                        row.addView(addTextView(roomFilter.getEfficiency() + "%" + " | " + roomFilter.getParticleSize() + "µm"));
-                    }
-                }
-
-            }
-            test4_table_layout3.addView(row);
-        }
-
-        //Fourth section
-        // outer for loop
-        for (int i = 1; i <= rows; i++) {
-            TableRow row = new TableRow(this);
-            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
-                    TableRow.LayoutParams.WRAP_CONTENT));
-            // inner for loop
-            for (int j = 1; j <= 1; j++) {
-                if (i == 1 && j == 1) {
-                    // row.addView(addTextView(" Average Up Stream\n Concentration (µg/liter) "));
-                    TextView grillTV = addTextView(" Average Up Stream\n Concentration (µg/liter) ");
-                    ViewGroup.LayoutParams params = grillTV.getLayoutParams();
-                    params.height = getResources().getDimensionPixelSize(R.dimen.common_txt_header_height);
-                    grillTV.setLayoutParams(params);
-                    row.addView(grillTV);
-                } else {
-                    row.addView(addInputDataTextViewBeforeStream());
-                }
-
-            }
-            test4_table_layout4.addView(row);
-        }
-
-        //Fifthe section section
-        // outer for loop
-        for (int i = 1; i <= rows; i++) {
-            TableRow row = new TableRow(this);
-            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
-                    TableRow.LayoutParams.WRAP_CONTENT));
-            // inner for loop
-            for (int j = 1; j <= 1; j++) {
-                if (i == 1 && j == 1) {
-                    //row.addView(addTextView(" Average Up Stream after\nConcentration (µg/liter) "));
-                    TextView grillTV = addTextView(" Average Up Stream after\nConcentration (µg/liter) ");
-                    ViewGroup.LayoutParams params = grillTV.getLayoutParams();
-                    params.height = getResources().getDimensionPixelSize(R.dimen.common_txt_header_height);
-                    grillTV.setLayoutParams(params);
-                    row.addView(grillTV);
-                } else {
-                    row.addView(addInputDataTextViewAfterStream());
-                    //row.addView(addEditTextView(i));
-                }
-
-            }
-            test4_table_layout5.addView(row);
-        }
-
-        //Sixth section
-        // outer for loop
-        for (int i = 1; i <= rows; i++) {
-            TableRow row = new TableRow(this);
-            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
-                    TableRow.LayoutParams.WRAP_CONTENT));
-            // inner for loop
-            for (int j = 1; j <= 1; j++) {
-                if (i == 1 && j == 1) {
-                    // row.addView(addTextView(" SLP of DL for Tests\n after Installation** "));
-                    TextView grillTV = addTextView(" SLP of DL for Tests\n after Installation** ");
-                    ViewGroup.LayoutParams params = grillTV.getLayoutParams();
-                    params.height = getResources().getDimensionPixelSize(R.dimen.common_txt_header_height);
-                    grillTV.setLayoutParams(params);
-                    row.addView(grillTV);
-                } else {
-                    if (null != filterArrayList && filterArrayList.size() > 0) {
-                        RoomFilter roomFilter = filterArrayList.get(i - 2);
-                        row.addView(addTextView(roomFilter.getSpecification() + "%"));
-                    }
-                }
-
-            }
-            test4_table_layout6.addView(row);
-        }
-
-        //Sixth section
-        // outer for loop
-        for (int i = 1; i <= rows; i++) {
-            TableRow row = new TableRow(this);
-            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
-                    TableRow.LayoutParams.WRAP_CONTENT));
-            // inner for loop
-            for (int j = 1; j <= 1; j++) {
-                if (i == 1 && j == 1) {
-                    //row.addView(addTextView(" Obtained Test Results\n (% Leakage) "));
-                    TextView grillTV = addTextView(" Obtained Test Results\n (% Leakage) ");
-                    ViewGroup.LayoutParams params = grillTV.getLayoutParams();
-                    params.height = getResources().getDimensionPixelSize(R.dimen.common_txt_header_height);
-                    grillTV.setLayoutParams(params);
-                    row.addView(grillTV);
-                } else {
-                    //row.addView(addTextView(" 0.0015 "));
-                    row.addView(addInputDataTextView());
-                }
-
-            }
-            test4_table_layout7.addView(row);
-        }
-
-        //Seventh section
-        // outer for loop
-        for (int i = 1; i <= rows; i++) {
-            TableRow row = new TableRow(this);
-            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
-                    TableRow.LayoutParams.WRAP_CONTENT));
-            // inner for loop
-            for (int j = 1; j <= 1; j++) {
-                if (i == 1 && j == 1) {
-                    row.addView(addTextView(" Test Status\n    "));
-                } else {
-                    //row.addView(addTextView(" Pass "));
-                    row.addView(addTextPassFail(" ", i));
-                }
-            }
-            test4_table_layout8.addView(row);
-        }
-
-        //dismiss progressbar
-        if (pr.isShowing())
-            pr.dismiss();
-
-    }
 
     private void buildTestFour(int rows, int column) {
         //first section
@@ -1058,7 +859,7 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
                     //row.addView(addTextView(" Filter No \n         "));
                     TextView grillTV = addTextView(" Filter No");
                     ViewGroup.LayoutParams params = grillTV.getLayoutParams();
-                    params.height = getResources().getDimensionPixelSize(R.dimen.common_txt_header_height);
+                    params.height = getResources().getDimensionPixelSize(R.dimen.common_txt_header_height1);
                     grillTV.setLayoutParams(params);
                     row.addView(grillTV);
                 } else {
@@ -1167,7 +968,7 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
                     //row.addView(addTextView(" Obtained Leakage \n(% Leakage)"));
                     TextView grillTV = addTextView(" Obtained Leakage \n(% Leakage)");
                     ViewGroup.LayoutParams params = grillTV.getLayoutParams();
-                    params.height = getResources().getDimensionPixelSize(R.dimen.common_txt_header_height);
+                    params.height = getResources().getDimensionPixelSize(R.dimen.common_txt_header_height1);
                     grillTV.setLayoutParams(params);
                     row.addView(grillTV);
                 } else {
@@ -1190,7 +991,7 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
                     //row.addView(addTextView(" Test Results\n(Pass/Fail)"));
                     TextView grillTV = addTextView(" Test Results\n(Pass/Fail)");
                     ViewGroup.LayoutParams params = grillTV.getLayoutParams();
-                    params.height = getResources().getDimensionPixelSize(R.dimen.common_txt_header_height);
+                    params.height = getResources().getDimensionPixelSize(R.dimen.common_txt_header_height1);
                     grillTV.setLayoutParams(params);
                     row.addView(grillTV);
                 } else {
@@ -1389,7 +1190,6 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
         test4_table_layout7 = (TableLayout) findViewById(R.id.test4_tableLayout7);
         test4_table_layout8 = (TableLayout) findViewById(R.id.test4_tableLayout8);
         findViewById(R.id.test_table_4_header_l_ll).setVisibility(View.GONE);
-        findViewById(R.id.test_table_4_header_2_ll).setVisibility(View.VISIBLE);
         Log.d("Saurabh", " testbased on " + getIntent().getStringExtra("testBasedOn"));
         if (getIntent().hasExtra("testBasedOn") && "ROOM".equalsIgnoreCase(getIntent().getStringExtra("testBasedOn"))) {
             findViewById(R.id.room_volume_table).setVisibility(View.VISIBLE);
