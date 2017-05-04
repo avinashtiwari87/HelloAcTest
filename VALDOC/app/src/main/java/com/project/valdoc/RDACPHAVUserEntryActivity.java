@@ -257,7 +257,6 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
  airChangeValue = getIntent().getIntExtra("AirChangeValue", 0);
         // Checking individual input base on Average
         if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
-airChangeValue = getAirChangeCalculation(Math.round(totalAirFlowRate), (float) room.getVolume());
             int variation = mApplicableTestRoom.getDiffAVinFilter();
             Log.d(TAG, "Input Validation value: "+variation);
             if (variation != 0) {
@@ -296,6 +295,7 @@ airChangeValue = getAirChangeCalculation(Math.round(totalAirFlowRate), (float) r
                 //Air Flow Rate(AxAv)
 //                totalAirFlowRateMap = (HashMap<Integer, Float>) getIntent().getSerializableExtra("ResultData2");
                 totalAirFlowRate = getTfr(totalAirFlowRateMap);
+                airChangeValue = getAirChangeCalculation(Math.round(totalAirFlowRate), (float) room.getVolume());
                 for (int i = 0; i < airFlowRateTxtViewList.size(); i++) {
                     TextView tvl = airFlowRateTxtViewList.get(i);
                     Log.v(TAG, " totalAirFlowRateMap: " + tvl.getId());
