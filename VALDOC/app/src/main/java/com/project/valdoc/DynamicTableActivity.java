@@ -1889,7 +1889,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
-                    TextView grillTV = addTextViewHeading(" Grill/Filter No\n ");
+                    TextView grillTV = addTextViewHeading(" Grill/Filter No ");
                     ViewGroup.LayoutParams params = grillTV.getLayoutParams();
                     params.height = getResources().getDimensionPixelSize(R.dimen.common_txt_header_height);
                     grillTV.setLayoutParams(params);
@@ -1925,17 +1925,11 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             for (int j = 1; j <= cols; j++) {
                 if (i == 1 && j <= cols) {
                     TextView textView = addTextView(" Q " + j);
-                    if (cols <= 2)
-                        textView.setEms(13 + Utilityies.getPctCellWidth(cols));
-                    else
-                        textView.setEms(2 + Utilityies.getPctCellWidth(cols));
+                    textView.setEms(2 + Utilityies.getPctCellWidth(cols));
                     row.addView(textView);
                 } else {
                     EditText editText = addEditTextView(i);
-                    if (cols <= 2)
-                        editText.setEms(13 + Utilityies.getPctCellWidth(cols));
-                    else
-                        editText.setEms(2 + Utilityies.getPctCellWidth(cols));
+                    editText.setEms(2 + Utilityies.getPctCellWidth(cols));
                     row.addView(editText);
                 }
             }
@@ -1958,6 +1952,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                     TextView textView = addTextViewWithIdsNoBorder(i, totalAirFlowRateIds, totalAirFlowRateTxtList);
                     textView.setEms(4);
                     row.addView(textView);
+                    totalAirFlowRateIds++;
                 }
             }
             test3_table_layout3.addView(row);
@@ -2561,7 +2556,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         layoutParams.height = getResources().getDimensionPixelSize(R.dimen.common_text_cell_height);
         editTv.setLayoutParams(layoutParams);
 
-        editTv.setPadding(8, 6, 8, 6);
+        editTv.setPadding(5, 5, 5, 5);
         editTv.setTextColor(getResources().getColor(R.color.black));
         editTv.setTextSize(getResources().getDimension(R.dimen.normal_text_size));
         editTv.setGravity(Gravity.CENTER);
