@@ -1470,9 +1470,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         //first section
         // outer for loop
         for (int i = 1; i <= rows; i++) {
-            TableRow row = new TableRow(this);
-            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
-                    TableRow.LayoutParams.WRAP_CONTENT));
+            TableRow row = getTableRow(this);
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
@@ -1494,16 +1492,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             }
             test5_table_layout.addView(row);
         }
-/*        for (int sk = 0; sk < 3; sk++) {
-            TableRow row = new TableRow(this);
-            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
-                    TableRow.LayoutParams.WRAP_CONTENT));
-            row.addView(addTextView("    "));
-            test5_table_layout.addView(row);
-        }*/
 
-// adding no of partical text
-//        if(i==1) {
         TableRow row1 = new TableRow(this);
         row1.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
                 TableRow.LayoutParams.MATCH_PARENT));
@@ -1514,15 +1503,11 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         tvs.setEms(Utilityies.getPctCellEms(cols));
         row1.addView(tvs);
         test5_tableLayout2_2.addView(row1);
-//        test5_table_layout2_1.addView(row1);
-//        }
 
         //Second section
         // outer for loop
         for (int i = 1; i <= rows; i++) {
-            TableRow row = new TableRow(this);
-            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
-                    TableRow.LayoutParams.WRAP_CONTENT));
+            TableRow row = getTableRow(this);
 
             // inner for loop 1
             for (int j = 1; j <= cols; j++) {
@@ -1546,9 +1531,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             test5_table_layout2_1.addView(row);
         }
         for (int sk = 0; sk < 3; sk++) {
-            TableRow row = new TableRow(this);
-            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
-                    TableRow.LayoutParams.WRAP_CONTENT));
+            TableRow row = getTableRow(this);
             if (sk == 0) {
                 row.addView(addStretchedTextView(" Mean Average "));
             }
@@ -1564,9 +1547,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         //Third section
         // outer for loop
         for (int i = 1; i <= rows; i++) {
-            TableRow row = new TableRow(this);
-            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
-                    TableRow.LayoutParams.WRAP_CONTENT));
+            TableRow row = getTableRow(this);
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
@@ -1584,18 +1565,14 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         }
         //Footer Rows....
         for (int sk = 0; sk < 3; sk++) {
-            TableRow rowFooter = new TableRow(this);
-            rowFooter.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
-                    TableRow.LayoutParams.WRAP_CONTENT));
+            TableRow rowFooter = getTableRow(this);
             rowFooter.addView(addTextViewWithTagIds(sk, test5CommonFormulaIds1, RDPC3TxtList, "0"));
             test5_table_layout3_1.addView(rowFooter);
             test5CommonFormulaIds1++;
         }
 
 
-        TableRow row2 = new TableRow(this);
-        row2.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
-                TableRow.LayoutParams.MATCH_PARENT));
+        TableRow row2 = getTableRow(this);
         TextView tvs1 = addTextView("No. of Particles ≥ 5 µm/m³ ");
         ViewGroup.LayoutParams params11 = tvs1.getLayoutParams();
         params11.height = getResources().getDimensionPixelSize(R.dimen.pct_text_cell_height);
@@ -1608,9 +1585,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         //Fourth section
         // outer for loop
         for (int i = 1; i <= rows; i++) {
-            TableRow row = new TableRow(this);
-            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
-                    TableRow.LayoutParams.WRAP_CONTENT));
+            TableRow row = getTableRow(this);
             // inner for loop 1
             for (int j = 1; j <= cols; j++) {
                 if (i == 1 && j <= cols) {
@@ -1634,9 +1609,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
 
         }
         for (int sk = 0; sk < 3; sk++) {
-            TableRow row = new TableRow(this);
-            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
-                    TableRow.LayoutParams.WRAP_CONTENT));
+            TableRow row = getTableRow(this);
             if (sk == 0) {
                 row.addView(addStretchedTextView(" Mean Average "));
             }
@@ -1654,9 +1627,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         //Fifth section
         // outer for loop
         for (int i = 1; i <= rows; i++) {
-            TableRow row = new TableRow(this);
-            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
-                    TableRow.LayoutParams.WRAP_CONTENT));
+            TableRow row = getTableRow(this);
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
@@ -1701,9 +1672,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         //first section
         // outer for loop
         for (int i = 1; i <= rows; i++) {
-            TableRow row = new TableRow(this);
-            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
-                    TableRow.LayoutParams.WRAP_CONTENT));
+            TableRow row = getTableRow(this);
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
@@ -1743,13 +1712,10 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         //Second section
         // outer for loop
         for (int i = 1; i <= rows; i++) {
-            TableRow row = new TableRow(this);
-            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
-                    TableRow.LayoutParams.WRAP_CONTENT));
+            TableRow row = getTableRow(this);
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
-                    // row.addView(addTextView("Average\nbefore Scanning(%) "));
                     TextView grillTV = addTextView(" Average before Scanning(%) ");
                     ViewGroup.LayoutParams params = grillTV.getLayoutParams();
                     params.height = getResources().getDimensionPixelSize(R.dimen.common_txt_header_height);
@@ -1760,23 +1726,17 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                         String avgUpStrm = getAvgUpStrm(mApplicableTestEquipment.getTestProp());
                         if (avgUpStrm == null || avgUpStrm.equals(""))
                             avgUpStrm = "100";
-
                         row.addView(addEditTextViewbeforestream(i, avgUpStrm));
-//
                     } else if ("AHU".equalsIgnoreCase(mTestBasedOn)) {
                         String avgUpStrm = getAvgUpStrm(mApplicableTestAhu.getTestProp());
                         if (avgUpStrm == null || avgUpStrm.equals(""))
                             avgUpStrm = "100";
-
                         row.addView(addEditTextViewbeforestream(i, avgUpStrm));
-//
                     } else if ("ROOM".equalsIgnoreCase(mTestBasedOn)) {
                         String avgUpStrm = getAvgUpStrm(mApplicableTestRoom.getTestProp());
                         if (avgUpStrm == null || avgUpStrm.equals(""))
                             avgUpStrm = "100";
-
                         row.addView(addEditTextViewbeforestream(i, avgUpStrm));
-//
                     }
                 }
 
@@ -1787,9 +1747,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         //Third section section
         // outer for loop
         for (int i = 1; i <= rows; i++) {
-            TableRow row = new TableRow(this);
-            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
-                    TableRow.LayoutParams.WRAP_CONTENT));
+            TableRow row = getTableRow(this);
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
@@ -1811,9 +1769,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         //fourth section
         // outer for loop
         for (int i = 1; i <= rows; i++) {
-            TableRow row = new TableRow(this);
-            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
-                    TableRow.LayoutParams.WRAP_CONTENT));
+            TableRow row = getTableRow(this);
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
@@ -1836,9 +1792,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         //fifth section
         // outer for loop
         for (int i = 1; i <= rows; i++) {
-            TableRow row = new TableRow(this);
-            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
-                    TableRow.LayoutParams.WRAP_CONTENT));
+            TableRow row = getTableRow(this);
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
@@ -1858,7 +1812,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         //Eighth section
         // outer for loop
         for (int i = 1; i <= rows; i++) {
-            TableRow row = new TableRow(this);
+            TableRow row = getTableRow(this);
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
@@ -1883,9 +1837,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         //first section
         // outer for loop
         for (int i = 1; i <= rows; i++) {
-            TableRow row = new TableRow(this);
-            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
-                    TableRow.LayoutParams.WRAP_CONTENT));
+            TableRow row = getTableRow(this);
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
@@ -1917,9 +1869,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         //Second section
         // outer for loop
         for (int i = 1; i <= rows; i++) {
-            TableRow row = new TableRow(this);
-            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
-                    TableRow.LayoutParams.WRAP_CONTENT));
+            TableRow row = getTableRow(this);
 
             // inner for loop
             for (int j = 1; j <= cols; j++) {
@@ -1939,9 +1889,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         //Third section
         // outer for loop
         for (int i = 1; i <= rows; i++) {
-            TableRow row = new TableRow(this);
-            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
-                    TableRow.LayoutParams.WRAP_CONTENT));
+            TableRow row = getTableRow(this);
             // inner for loop
             for (int j = 1; j <= cols; j++) {
                 if (i == 1 && j == 1) {
@@ -1961,9 +1909,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         //Fourth section
         // outer for loop
         for (int i = 1; i <= rows; i++) {
-            TableRow row = new TableRow(this);
-            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
-                    TableRow.LayoutParams.WRAP_CONTENT));
+            TableRow row = getTableRow(this);
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
@@ -1978,9 +1924,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         //Fifth section
         // outer for loop
         for (int i = 1; i <= rows; i++) {
-            TableRow row = new TableRow(this);
-            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
-                    TableRow.LayoutParams.WRAP_CONTENT));
+            TableRow row = getTableRow(this);
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
@@ -2003,9 +1947,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         //first section
         // outer for loop
         for (int i = 1; i <= rows; i++) {
-            TableRow row = new TableRow(this);
-            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
-                    TableRow.LayoutParams.WRAP_CONTENT));
+            TableRow row = getTableRow(this);
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
@@ -2046,9 +1988,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         //Second section
         // outer for loop
         for (int i = 1; i <= rows; i++) {
-            TableRow row = new TableRow(this);
-            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
-                    TableRow.LayoutParams.WRAP_CONTENT));
+            TableRow row = getTableRow(this);
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
@@ -2084,9 +2024,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         // outer for loop
         for (int i = 1; i <= rows; i++) {
 
-            TableRow row = new TableRow(this);
-            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
-                    TableRow.LayoutParams.WRAP_CONTENT));
+            TableRow row = getTableRow(this);
 
             // inner for loop
             for (int j = 1; j <= cols; j++) {
@@ -2101,9 +2039,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         //Fourth section
         // outer for loop
         for (int i = 1; i <= rows; i++) {
-            TableRow row = new TableRow(this);
-            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
-                    TableRow.LayoutParams.WRAP_CONTENT));
+            TableRow row = getTableRow(this);
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
@@ -2118,9 +2054,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         //Fifth section
         // outer for loop
         for (int i = 1; i <= rows; i++) {
-            TableRow row = new TableRow(this);
-            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
-                    TableRow.LayoutParams.WRAP_CONTENT));
+            TableRow row = getTableRow(this);
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
@@ -2137,15 +2071,14 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         //Sixth section
         // outer for loop
         for (int i = 1; i <= rows; i++) {
-            TableRow row = new TableRow(this);
-            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
-                    TableRow.LayoutParams.WRAP_CONTENT));
+            TableRow row = getTableRow(this);
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
                     row.addView(addTextView(" Total Air Flow Rate\n in cfm (TFR)"));
                 } else {
                     row.addView(addTextViewWithIdsNoBorder(i, totalAirFlowRateIds, totalAirFlowRateTxtList));
+                    totalAirFlowRateIds++;
                 }
             }
             test2_table_layout6.addView(row);
@@ -2154,9 +2087,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         //Seventh section
         // outer for loop
         for (int i = 1; i <= rows; i++) {
-            TableRow row = new TableRow(this);
-            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
-                    TableRow.LayoutParams.WRAP_CONTENT));
+            TableRow row = getTableRow(this);
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
@@ -2171,9 +2102,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         //Eight section
         // outer for loop
         for (int i = 1; i <= rows; i++) {
-            TableRow row = new TableRow(this);
-            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
-                    TableRow.LayoutParams.WRAP_CONTENT));
+            TableRow row = getTableRow(this);
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
@@ -2195,9 +2124,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         //third section
         // outer for loop
         for (int i = 1; i <= rows; i++) {
-            TableRow row = new TableRow(this);
-            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
-                    TableRow.LayoutParams.WRAP_CONTENT));
+            TableRow row = getTableRow(this);
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
@@ -2213,10 +2140,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         //first section
         // outer for loop
         for (int i = 1; i <= rows; i++) {
-            TableRow row = new TableRow(this);
-            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
-                    TableRow.LayoutParams.WRAP_CONTENT));
-
+            TableRow row = getTableRow(this);
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
@@ -2246,15 +2170,10 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
 
         }
 
-
         //Second section
         // outer for loop
         for (int i = 1; i <= rows; i++) {
-
-            TableRow row = new TableRow(this);
-            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
-                    TableRow.LayoutParams.WRAP_CONTENT));
-
+            TableRow row = getTableRow(this);
             // inner for loop
             for (int j = 1; j <= cols; j++) {
                 if (i == 1 && j <= cols) {
@@ -2269,9 +2188,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         //fourth section
         // outer for loop
         for (int i = 1; i <= rows; i++) {
-            TableRow row = new TableRow(this);
-            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
-                    TableRow.LayoutParams.WRAP_CONTENT));
+            TableRow row = getTableRow(this);
             // inner for loop
             for (int j = 1; j <= 1; j++) {
 
@@ -2290,6 +2207,12 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
 
     }
 
+    private TableRow getTableRow(Context context){
+        TableRow row = new TableRow(context);
+        row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
+                TableRow.LayoutParams.WRAP_CONTENT));
+        return row;
+    }
 
     private TextView addTextView(String textValue) {
         TextView tv = new TextView(this);

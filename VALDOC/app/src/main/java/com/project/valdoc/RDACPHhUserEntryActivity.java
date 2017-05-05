@@ -603,7 +603,7 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
-                    TextView grillTV = addTextView(" Grill/Filter No\n ");
+                    TextView grillTV = addTextView(" Grill/Filter No ");
                     ViewGroup.LayoutParams params = grillTV.getLayoutParams();
                     params.height = getResources().getDimensionPixelSize(R.dimen.common_txt_header_height);
                     grillTV.setLayoutParams(params);
@@ -729,7 +729,7 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
         ViewGroup.LayoutParams params = tv.getLayoutParams();
         params.height = getResources().getDimensionPixelSize(R.dimen.common_text_cell_height);
         tv.setLayoutParams(params);
-
+        tv.setPadding(15,0,15,0);
         tv.setBackgroundResource(R.drawable.border1);
         tv.setGravity(Gravity.CENTER);
         tv.setTextColor(getResources().getColor(R.color.black));

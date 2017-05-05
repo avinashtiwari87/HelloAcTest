@@ -254,7 +254,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
                 }
             }
         }
- airChangeValue = getIntent().getIntExtra("AirChangeValue", 0);
+        airChangeValue = getIntent().getIntExtra("AirChangeValue", 0);
         // Checking individual input base on Average
         if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
             int variation = mApplicableTestRoom.getDiffAVinFilter();
@@ -293,7 +293,6 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
                 }
             } else {
                 //Air Flow Rate(AxAv)
-//                totalAirFlowRateMap = (HashMap<Integer, Float>) getIntent().getSerializableExtra("ResultData2");
                 totalAirFlowRate = getTfr(totalAirFlowRateMap);
                 airChangeValue = getAirChangeCalculation(Math.round(totalAirFlowRate), (float) room.getVolume());
                 for (int i = 0; i < airFlowRateTxtViewList.size(); i++) {
@@ -917,13 +916,11 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
         //first section
         // outer for loop
         for (int i = 1; i <= rows; i++) {
-            TableRow row = new TableRow(this);
-            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
-                    TableRow.LayoutParams.WRAP_CONTENT));
+            TableRow row = getTableRow(this);
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
-                    TextView grillTV = addTextView(" Grill/Filter No\n ");
+                    TextView grillTV = addTextView(" Grill/Filter No ");
                     ViewGroup.LayoutParams params = grillTV.getLayoutParams();
                     params.height = getResources().getDimensionPixelSize(R.dimen.common_txt_header_height);
                     grillTV.setLayoutParams(params);
@@ -985,14 +982,12 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
         //Second section
         // outer for loop
         for (int i = 1; i <= rows; i++) {
-            TableRow row = new TableRow(this);
-            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
-                    TableRow.LayoutParams.WRAP_CONTENT));
+            TableRow row = getTableRow(this);
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
                     // row.addView(addTextView(" Grill/Filter Area(ft2)\n  A"));
-                    TextView grillTV = addTextView(" Grill/Filter Area(ft2)\n  A");
+                    TextView grillTV = addTextView(" Grill/Filter Area(ft2)\n  A ");
                     ViewGroup.LayoutParams params = grillTV.getLayoutParams();
                     params.height = getResources().getDimensionPixelSize(R.dimen.common_txt_header_height);
                     grillTV.setLayoutParams(params);
@@ -1044,9 +1039,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
         // outer for loop
         for (int i = 1; i <= rows; i++) {
 
-            TableRow row = new TableRow(this);
-            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
-                    TableRow.LayoutParams.WRAP_CONTENT));
+            TableRow row = getTableRow(this);
 
             // inner for loop
             for (int j = 1; j <= cols; j++) {
@@ -1071,13 +1064,11 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
         //Fourth section
         // outer for loop
         for (int i = 1; i <= rows; i++) {
-            TableRow row = new TableRow(this);
-            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
-                    TableRow.LayoutParams.WRAP_CONTENT));
+            TableRow row = getTableRow(this);
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
-                    TextView grillTV = addTextView("Average Air Velocity\n  (fpm)");
+                    TextView grillTV = addTextView(" Average Air Velocity\n  (fpm) ");
                     ViewGroup.LayoutParams params = grillTV.getLayoutParams();
                     params.height = getResources().getDimensionPixelSize(R.dimen.common_txt_header_height);
                     grillTV.setLayoutParams(params);
@@ -1098,9 +1089,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
         //Fifth section
         // outer for loop
         for (int i = 1; i <= rows; i++) {
-            TableRow row = new TableRow(this);
-            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
-                    TableRow.LayoutParams.WRAP_CONTENT));
+            TableRow row = getTableRow(this);
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
@@ -1127,13 +1116,11 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
         //Sixth section
         // outer for loop
         for (int i = 1; i <= rows; i++) {
-            TableRow row = new TableRow(this);
-            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
-                    TableRow.LayoutParams.WRAP_CONTENT));
+            TableRow row = getTableRow(this);
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
-                    TextView grillTV = addTextView("Total Air Flow Rate\n (cfm)");
+                    TextView grillTV = addTextView(" Total Air Flow Rate\n (cfm) ");
                     ViewGroup.LayoutParams params = grillTV.getLayoutParams();
                     params.height = getResources().getDimensionPixelSize(R.dimen.common_txt_header_height);
                     grillTV.setLayoutParams(params);
@@ -1152,13 +1139,11 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
         //Seventh section
         // outer for loop
         for (int i = 1; i <= rows; i++) {
-            TableRow row = new TableRow(this);
-            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
-                    TableRow.LayoutParams.WRAP_CONTENT));
+            TableRow row = getTableRow(this);
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
-                    row.addView(addTextView(" Room Volume in\n ft3(RV)"));
+                    row.addView(addTextView(" Room Volume in\n ft3(RV) "));
                 } else {
                     row.addView(addTextViewWithIdsNoBorder(i, 0, roomVolumeTxtList));
                 }
@@ -1169,13 +1154,11 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
         //Eight section
         // outer for loop
         for (int i = 1; i <= rows; i++) {
-            TableRow row = new TableRow(this);
-            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
-                    TableRow.LayoutParams.WRAP_CONTENT));
+            TableRow row = getTableRow(this);
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
-                    row.addView(addTextView("No. of Air Changes/Hr\n ((TFR/RV)x60))"));
+                    row.addView(addTextView(" No. of Air Changes/Hr\n ((TFR/RV)x60)) "));
                 } else {
                     row.addView(addTextViewWithIdsNoBorder(i, 0, airChangeTxtList));
                 }
@@ -1189,6 +1172,13 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
 
     }
 
+    private TableRow getTableRow(Context context){
+        TableRow row = new TableRow(context);
+        row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
+                TableRow.LayoutParams.WRAP_CONTENT));
+        return row;
+    }
+
     private TextView addTextView(String textValue) {
         TextView tv = new TextView(this);
         tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
@@ -1197,7 +1187,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
         ViewGroup.LayoutParams layoutParams = tv.getLayoutParams();
         layoutParams.height = 90;
         tv.setLayoutParams(layoutParams);
-
+        tv.setPadding(10,0,10,0);
         tv.setBackgroundResource(R.drawable.border1);
         tv.setGravity(Gravity.CENTER);
         tv.setTextColor(getResources().getColor(R.color.black));
@@ -1242,7 +1232,6 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
         tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
                 TableRow.LayoutParams.WRAP_CONTENT));
         tv.setBackgroundResource(R.drawable.border);
-        tv.setPadding(5, 6, 5, 6);
         tv.setTextColor(getResources().getColor(R.color.black));
         tv.setTextSize(getResources().getDimension(R.dimen.normal_text_size));
         tv.setGravity(Gravity.CENTER);
@@ -1304,7 +1293,6 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
         editTv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
                 TableRow.LayoutParams.WRAP_CONTENT));
         editTv.setBackgroundResource(R.drawable.border);
-        editTv.setPadding(5, 5, 5, 5);
         editTv.setTextColor(getResources().getColor(R.color.black));
         editTv.setGravity(Gravity.CENTER);
         // editTv.setTextSize(getResources().getDimension(R.dimen.normal_text_size));

@@ -560,9 +560,7 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
         //first section
         // outer for loop
         for (int i = 1; i <= rows; i++) {
-            TableRow row = new TableRow(this);
-            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
-                    TableRow.LayoutParams.WRAP_CONTENT));
+            TableRow row = getTableRow(this);
 
             // inner for loop
             for (int j = 1; j <= 1; j++) {
@@ -596,9 +594,7 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
         // outer for loop
         for (int i = 1; i <= rows; i++) {
 
-            TableRow row = new TableRow(this);
-            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
-                    TableRow.LayoutParams.WRAP_CONTENT));
+            TableRow row = getTableRow(this);
 
             // inner for loop
             for (int j = 1; j <= cols; j++) {
@@ -621,14 +617,12 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
         //third section
         // outer for loop
         for (int i = 1; i <= rows; i++) {
-            TableRow row = new TableRow(this);
-            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
-                    TableRow.LayoutParams.WRAP_CONTENT));
+            TableRow row = getTableRow(this);
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
                     //row.addView(addTextView("Avg. Airflow Velocity(fpm)"));
-                    TextView grillTV = addTextView("Avg. Airflow Velocity(fpm)");
+                    TextView grillTV = addTextView("Avg. Airflow Velocity\n(fpm)");
                     ViewGroup.LayoutParams params = grillTV.getLayoutParams();
                     params.height = getResources().getDimensionPixelSize(R.dimen.common_txt_header_height);
                     grillTV.setLayoutParams(params);
@@ -644,9 +638,7 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
         //fourth section
         // outer for loop
         for (int i = 1; i <= rows; i++) {
-            TableRow row = new TableRow(this);
-            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
-                    TableRow.LayoutParams.WRAP_CONTENT));
+            TableRow row = getTableRow(this);
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
@@ -670,6 +662,13 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
 
     }
 
+    private TableRow getTableRow(Context context){
+        TableRow row = new TableRow(context);
+        row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
+                TableRow.LayoutParams.WRAP_CONTENT));
+        return row;
+    }
+
     private TextView addTextView(String textValue) {
         TextView tv = new TextView(this);
         tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
@@ -678,7 +677,7 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
         ViewGroup.LayoutParams layoutParams = tv.getLayoutParams();
         layoutParams.height = getResources().getDimensionPixelSize(R.dimen.common_text_cell_height);
         tv.setLayoutParams(layoutParams);
-
+        tv.setPadding(15,0,15,0);
         tv.setBackgroundResource(R.drawable.border1);
         tv.setGravity(Gravity.CENTER);
         //tv.setPadding(5, 5, 5, 5);
