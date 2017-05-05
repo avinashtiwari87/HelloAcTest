@@ -851,13 +851,13 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
         // outer for loop
         for (int i = 1; i <= rows; i++) {
             TableRow row = new TableRow(this);
-            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
                     TableRow.LayoutParams.WRAP_CONTENT));
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
                     //row.addView(addTextView(" Filter No \n         "));
-                    TextView grillTV = addTextView(" Filter No");
+                    TextView grillTV = addTextView("Filter No");
                     ViewGroup.LayoutParams params = grillTV.getLayoutParams();
                     params.height = getResources().getDimensionPixelSize(R.dimen.common_txt_header_height1);
                     grillTV.setLayoutParams(params);
@@ -893,13 +893,13 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
         // outer for loop
         for (int i = 1; i <= rows; i++) {
             TableRow row = new TableRow(this);
-            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
                     TableRow.LayoutParams.WRAP_CONTENT));
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
                     // row.addView(addTextView(" Average \nbefore Scanning "));
-                    TextView grillTV = addTextView("Average\nbefore Scanning(%) ");
+                    TextView grillTV = addTextView("Average before Scanning(%)");
                     ViewGroup.LayoutParams params = grillTV.getLayoutParams();
                     params.height = getResources().getDimensionPixelSize(R.dimen.common_txt_header_height);
                     grillTV.setLayoutParams(params);
@@ -916,13 +916,13 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
         // outer for loop
         for (int i = 1; i <= rows; i++) {
             TableRow row = new TableRow(this);
-            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
                     TableRow.LayoutParams.WRAP_CONTENT));
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
                     // row.addView(addTextView(" Average \nAfter Scanning"));
-                    TextView grillTV = addTextView("Average\nAfter Scanning(%)");
+                    TextView grillTV = addTextView("Average After Scanning(%)");
                     ViewGroup.LayoutParams params = grillTV.getLayoutParams();
                     params.height = getResources().getDimensionPixelSize(R.dimen.common_txt_header_height);
                     grillTV.setLayoutParams(params);
@@ -938,13 +938,13 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
         // outer for loop
         for (int i = 1; i <= rows; i++) {
             TableRow row = new TableRow(this);
-            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
                     TableRow.LayoutParams.WRAP_CONTENT));
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
                     // row.addView(addTextView(" Variation \nin Concentration"));
-                    TextView grillTV = addTextView(" Variation \nin Concentration");
+                    TextView grillTV = addTextView("Variation in Concentration");
                     ViewGroup.LayoutParams params = grillTV.getLayoutParams();
                     params.height = getResources().getDimensionPixelSize(R.dimen.common_txt_header_height);
                     grillTV.setLayoutParams(params);
@@ -960,13 +960,13 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
         // outer for loop
         for (int i = 1; i <= rows; i++) {
             TableRow row = new TableRow(this);
-            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
                     TableRow.LayoutParams.WRAP_CONTENT));
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
                     //row.addView(addTextView(" Obtained Leakage \n(% Leakage)"));
-                    TextView grillTV = addTextView(" Obtained Leakage \n(% Leakage)");
+                    TextView grillTV = addTextView("Obtained Leakage \n(% Leakage)");
                     ViewGroup.LayoutParams params = grillTV.getLayoutParams();
                     params.height = getResources().getDimensionPixelSize(R.dimen.common_txt_header_height1);
                     grillTV.setLayoutParams(params);
@@ -983,13 +983,13 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
         // outer for loop
         for (int i = 1; i <= rows; i++) {
             TableRow row = new TableRow(this);
-            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
                     TableRow.LayoutParams.WRAP_CONTENT));
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
                     //row.addView(addTextView(" Test Results\n(Pass/Fail)"));
-                    TextView grillTV = addTextView(" Test Results\n(Pass/Fail)");
+                    TextView grillTV = addTextView("Test Results\n(Pass/Fail)");
                     ViewGroup.LayoutParams params = grillTV.getLayoutParams();
                     params.height = getResources().getDimensionPixelSize(R.dimen.common_txt_header_height1);
                     grillTV.setLayoutParams(params);
@@ -1017,7 +1017,7 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
         ViewGroup.LayoutParams layoutParams = tv.getLayoutParams();
         layoutParams.height = getResources().getDimensionPixelSize(R.dimen.common_text_cell_height);
         tv.setLayoutParams(layoutParams);
-
+        tv.setPadding(15,0,15,0);
         tv.setGravity(Gravity.CENTER);
         tv.setTextColor(getResources().getColor(R.color.black));
         tv.setTextSize(getResources().getDimension(R.dimen.normal_text_size));
