@@ -468,7 +468,6 @@ public class RDFITPostViewActivity extends AppCompatActivity {
         test4_table_layout7 = (TableLayout) findViewById(R.id.test4_tableLayout7);
         test4_table_layout8 = (TableLayout) findViewById(R.id.test4_tableLayout8);
         findViewById(R.id.test_table_4_header_l_ll).setVisibility(View.GONE);
-        findViewById(R.id.test_table_4_header_2_ll).setVisibility(View.VISIBLE);
         if("ROOM".equalsIgnoreCase(mTestBasedOn)){
             findViewById(R.id.room_volume_table).setVisibility(View.VISIBLE);
             findViewById(R.id.ahu_no_lable).setVisibility(View.VISIBLE);
