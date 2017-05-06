@@ -185,6 +185,7 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
             //Average
             TextView avgTvl = resultTextViewList.get(i);
             avgTvl.setText(averageDataHashMap.get(avgTvl.getId()) + "");
+            Log.v(TAG, "resultTextViewList Id "+avgTvl.getId() + " Avg. Values " + averageDataHashMap.get(avgTvl.getId()));
         }
 
         //Total AirFlow Rate (sum of AirFlow Rate)
