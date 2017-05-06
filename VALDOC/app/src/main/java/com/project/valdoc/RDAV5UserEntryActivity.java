@@ -179,8 +179,13 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
         }
 
         // Checking individual input base on Average
-        int variation = 10;
-        getInputDataValidationByAverage(variation);
+        if(equipment != null){
+            double minValue = equipment.getMinVelocity(), maxValue = equipment.getMaxVelocity();
+            Log.d(TAG, " minValue "+minValue+" maxValue "+maxValue);
+            if(minValue>0 && maxValue>0){
+                getInputDataValidationByTestSpecification((int)minValue, (int)maxValue);
+            }
+        }
 
         //Receiving Pass Fail Data from Bundle
         HashMap<Integer, Long> PassFailHashMap = (HashMap<Integer, Long>) getIntent().getSerializableExtra("PassFailData");
@@ -828,33 +833,29 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
     }
 
     int idCounts = 200, inputTxtCount = 0;
-    private void getInputDataValidationByAverage(int variation) {
+    private void getInputDataValidationByTestSpecification(int minValue, int maxValue) {
         Log.d(TAG, " rows " + rows + " cols " + cols);
         for (int i = 1; i <= rows - 1; i++) {
             for (int j = 0; j < cols; j++) {
                 Log.d(TAG, " IdCounts " + idCounts + " inputTxtCount " + inputTxtCount);
                 boolean results = checkInputValueBasedOnAverage(inputDataHashMap.get(idCounts),
-                        resultDataHashMap.get(i), variation);
+                        minValue, maxValue);
                 idCounts++;
                 if (results) {
-                    txtViewList.get(inputTxtCount).setTextColor(Color.RED);
-                } else {
                     txtViewList.get(inputTxtCount).setTextColor(Color.BLACK);
+                } else {
+                    txtViewList.get(inputTxtCount).setTextColor(Color.RED);
                 }
                 inputTxtCount++;
             }
         }
     }
 
-    private boolean checkInputValueBasedOnAverage(int inputValue, long averageValue,
-                                                  int percentValue) {
-        double variance = 0;
-        long avg;
-        boolean resultValue = true;
-        variance = (double) (averageValue * percentValue) / 100;
-        avg = Math.round(variance);
-        if (inputValue >= (averageValue - avg) && inputValue <= (averageValue + avg)) {
-            resultValue = false;
+    private boolean checkInputValueBasedOnAverage(int inputValue, int minValue,
+                                                  int maxValue) {
+        boolean resultValue = false;
+        if (inputValue >= minValue && inputValue <= maxValue) {
+            resultValue = true;
         }
         return resultValue;
     }
