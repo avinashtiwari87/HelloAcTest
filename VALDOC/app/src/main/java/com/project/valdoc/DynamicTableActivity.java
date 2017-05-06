@@ -1469,7 +1469,8 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
     private void BuildTableTest5(int rows, int cols) {
         //first section
         // outer for loop
-        for (int i = 1; i <= rows; i++) {
+        Log.d("PCT","rows="+rows);
+        for (int i = 1; i < rows; i++) {
             TableRow row = getTableRow(this);
             // inner for loop
             for (int j = 1; j <= 1; j++) {
@@ -1496,7 +1497,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         TableRow row1 = new TableRow(this);
         row1.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
                 TableRow.LayoutParams.MATCH_PARENT));
-        TextView tvs = addTextView("No. of Particles ≥ 0. 5 µm/m³ ");
+        TextView tvs = addTextView("No. of Particles ≥ 0. 5 µm/m³");
         ViewGroup.LayoutParams params1 = tvs.getLayoutParams();
         params1.height = getResources().getDimensionPixelSize(R.dimen.pct_text_cell_height);
         tvs.setLayoutParams(params1);
@@ -1506,7 +1507,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
 
         //Second section
         // outer for loop
-        for (int i = 1; i <= rows; i++) {
+        for (int i = 1; i < rows; i++) {
             TableRow row = getTableRow(this);
 
             // inner for loop 1
@@ -1546,7 +1547,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
 
         //Third section
         // outer for loop
-        for (int i = 1; i <= rows; i++) {
+        for (int i = 1; i < rows; i++) {
             TableRow row = getTableRow(this);
             // inner for loop
             for (int j = 1; j <= 1; j++) {
@@ -1584,7 +1585,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
 
         //Fourth section
         // outer for loop
-        for (int i = 1; i <= rows; i++) {
+        for (int i = 1; i < rows; i++) {
             TableRow row = getTableRow(this);
             // inner for loop 1
             for (int j = 1; j <= cols; j++) {
@@ -1626,7 +1627,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
 
         //Fifth section
         // outer for loop
-        for (int i = 1; i <= rows; i++) {
+        for (int i = 1; i < rows; i++) {
             TableRow row = getTableRow(this);
             // inner for loop
             for (int j = 1; j <= 1; j++) {
@@ -2222,7 +2223,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         ViewGroup.LayoutParams layoutParams = tv.getLayoutParams();
         layoutParams.height = getResources().getDimensionPixelSize(R.dimen.common_text_cell_height);
         tv.setLayoutParams(layoutParams);
-        tv.setPadding(15,0,15,0);
+//        tv.setPadding(0,0,15,0);
         tv.setGravity(Gravity.CENTER);
         tv.setTextColor(getResources().getColor(R.color.black));
         tv.setTextSize(getResources().getDimension(R.dimen.normal_text_size));

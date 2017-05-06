@@ -117,7 +117,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
     ArrayList<TextView> txtViewList;
     private double totalAirFlowRate = 0d;
     private double airChangeValue;
-    private double mTolarence=0.0;
+    private double mTolarence = 0.0;
     HashMap<Integer, Long> airFlowRateMap;
     HashMap<Integer, Float> totalAirFlowRateMap;
     private ImageView submit;
@@ -258,7 +258,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
         // Checking individual input base on Average
         if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
             int variation = mApplicableTestRoom.getDiffAVinFilter();
-            Log.d(TAG, "Input Validation value: "+variation);
+            Log.d(TAG, "Input Validation value: " + variation);
             if (variation != 0) {
                 getInputDataValidationByAverage(variation);
             }
@@ -320,14 +320,14 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
             if (mTestBasedOn.equalsIgnoreCase("AHU")) {
                 if (colorPicker(Double.parseDouble(mApplicableTestAhu.getTestSpecification()), totalAirFlowRate, mTestBasedOn)) {
                     //TFRtv.setTextColor(Color.RED);
-                    TFRtv.setTextColor(Color.BLACK);
+                    TFRtv.setTextColor(Color.RED);
                 } else {
                     TFRtv.setTextColor(Color.BLACK);
                 }
             } else if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
                 if (colorPicker(Double.parseDouble(mApplicableTestRoom.getTestSpecification()), totalAirFlowRate, mTestBasedOn)) {
                     //TFRtv.setTextColor(Color.RED);
-                    TFRtv.setTextColor(Color.BLACK);
+                    TFRtv.setTextColor(Color.RED);
                 } else {
                     TFRtv.setTextColor(Color.BLACK);
                 }
@@ -379,7 +379,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
         } else {
             testSpesification += (testSpesification / 4);
         }
-        if (totalairflowrate > testSpesification) {
+        if (testSpesification < totalairflowrate) {
             return true;
         } else {
             return false;
@@ -807,7 +807,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
         testDetails.setTestCondoctorOrg("" + testCondoctorOrg.getText());
         testDetails.setFilterTypeEficiancy("");
         testDetails.setTestLocation("");
-        testDetails.setTolarance(""+mTolarence);
+        testDetails.setTolarance("" + mTolarence);
         return testDetails;
     }
 
@@ -1172,7 +1172,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
 
     }
 
-    private TableRow getTableRow(Context context){
+    private TableRow getTableRow(Context context) {
         TableRow row = new TableRow(context);
         row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
                 TableRow.LayoutParams.WRAP_CONTENT));
@@ -1187,7 +1187,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
         ViewGroup.LayoutParams layoutParams = tv.getLayoutParams();
         layoutParams.height = 90;
         tv.setLayoutParams(layoutParams);
-        tv.setPadding(10,0,10,0);
+        tv.setPadding(10, 0, 10, 0);
         tv.setBackgroundResource(R.drawable.border1);
         tv.setGravity(Gravity.CENTER);
         tv.setTextColor(getResources().getColor(R.color.black));
