@@ -2396,7 +2396,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
         int id = 1;
         String selectQuery = " SELECT * FROM " + GRILL_TABLE_NAME +
 //        String selectQuery = " SELECT * FROM " + PARTNERUSER_TABLE_NAME +
-                " WHERE " + ValdocDatabaseHandler.GRILL_ROOMID + " = " + roomId + " AND " + ValdocDatabaseHandler.GRILL_ISSUPPLYGRILL + " = " + id;
+                " WHERE " + GRILL_ROOMID + " = " + roomId + " AND " + GRILL_ISSUPPLYGRILL + " = " + id;
         SQLiteDatabase database = this.getWritableDatabase();
         Cursor cursor = database.rawQuery(selectQuery, null);
         Log.d(TAG, "ValdocDatabaseHelper :Equipment grill code equipment1:=" + cursor.getCount());
