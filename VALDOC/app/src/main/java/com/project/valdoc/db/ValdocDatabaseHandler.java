@@ -1147,7 +1147,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
         contentValues.put(TEST_DETAILS_DIFFAVINFILTER, testDetails.getDiffAVinFilter());
         contentValues.put(TEST_DETAILS_DIFFAVBETWEENFILTER, testDetails.getDiffAVbetweenFilter());
         contentValues.put(TEST_DETAILS_ACCEPTABLERECOVERYTIME, testDetails.getAcceptableRecoveryTime());
-        contentValues.put(TEST_DETAILS_TOLARANCE,testDetails.getTolarance());
+        contentValues.put(TEST_DETAILS_TOLARANCE, testDetails.getTolarance());
 
         db.insert(tableName, null, contentValues);
 //            }
@@ -1902,10 +1902,21 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
     }
 
     // select data from user table
-    public ArrayList<Ahu> getAhuInfo() {
+    public ArrayList<Ahu> getAhuInfo(String testCode, String testBasedon) {
         ArrayList<Ahu> ahuArrayList;
         ahuArrayList = new ArrayList<Ahu>();
-        String selectQuery = "SELECT * FROM " + AHU_TABLE_NAME;
+        String selectQuery = "";
+        if (testBasedon.equalsIgnoreCase("AHU")) {
+            selectQuery = "SELECT * FROM " + AHU_TABLE_NAME + "," + APLICABLE_TEST_AHU_TABLE_NAME + " WHERE " + AHU_TABLE_NAME
+                    + "." + AHU_AHUID + "=" + APLICABLE_TEST_AHU_TABLE_NAME + "." + APLICABLE_TEST_AHU_AHUID + " AND " + APLICABLE_TEST_AHU_TABLE_NAME
+                    + "." + APLICABLE_TEST_AHU_TESTCODE + "=" + '"' + testCode + '"' + " GROUP BY " + AHU_TABLE_NAME + "." + AHU_AHUID;
+        } else if (testBasedon.equalsIgnoreCase("ROOM")) {
+            selectQuery = "SELECT * FROM " + AHU_TABLE_NAME + "," + APLICABLE_TEST_ROOM_TABLE_NAME + "," + ROOM_TABLE_NAME + " WHERE " + AHU_TABLE_NAME
+                    + "." + AHU_AHUID + "=" + ROOM_TABLE_NAME + "." + ROOM_AHUID + " AND " + ROOM_TABLE_NAME
+                    + "." + ROOM_ROOMID + "=" + APLICABLE_TEST_ROOM_TABLE_NAME + "." + APLICABLE_TEST_ROOM_ROOMID + " AND " + APLICABLE_TEST_ROOM_TABLE_NAME
+                    + "." + APLICABLE_TEST_ROOM_TESTCODE + "=" + '"' + testCode + '"' + " GROUP BY " + AHU_TABLE_NAME + "." + AHU_AHUID;
+        }
+
         SQLiteDatabase database = this.getWritableDatabase();
         Cursor cursor = database.rawQuery(selectQuery, null);
         if (cursor.moveToFirst()) {
@@ -1965,10 +1976,14 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
     }
 
     // select data from user table
-    public ArrayList<String> getEquipmentName() {
+    public ArrayList<String> getEquipmentName(String testCode) {
         ArrayList<String> equipmentNameArrayList;
         equipmentNameArrayList = new ArrayList<String>();
-        String selectQuery = "SELECT DISTINCT " + EQUIPMENT_EQUIPMENTNAME + " FROM " + EQUIPMENT_TABLE_NAME;
+//        String selectQuery = "SELECT DISTINCT " + EQUIPMENT_EQUIPMENTNAME + " FROM " + EQUIPMENT_TABLE_NAME;
+
+        String selectQuery = "SELECT * FROM " + EQUIPMENT_TABLE_NAME + "," + APLICABLE_TEST_EQUIPMENT_TABLE_NAME + " WHERE " + EQUIPMENT_TABLE_NAME
+                + "." + EQUIPMENT_EQUIPMENTID + "=" + APLICABLE_TEST_EQUIPMENT_TABLE_NAME + "." + APLICABLE_TEST_EQUIPMENT_EQUIPMENTID + " AND " + APLICABLE_TEST_EQUIPMENT_TABLE_NAME
+                + "." + APLICABLE_TEST_EQUIPMENT_TESTCODE + "=" + '"' + testCode + '"' + " GROUP BY " + EQUIPMENT_TABLE_NAME + "." + EQUIPMENT_EQUIPMENTID;
         SQLiteDatabase database = this.getWritableDatabase();
         Cursor cursor = database.rawQuery(selectQuery, null);
         String equipmentName = "";
