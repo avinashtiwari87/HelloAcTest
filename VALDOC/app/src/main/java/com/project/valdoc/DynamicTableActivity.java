@@ -1892,17 +1892,15 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         for (int i = 1; i <= rows; i++) {
             TableRow row = getTableRow(this);
             // inner for loop
-            for (int j = 1; j <= cols; j++) {
-                if (i == 1 && j == 1) {
-                    TextView textView = addTextView(" Average ");
-                    textView.setEms(4);
-                    row.addView(textView);
-                } else {
-                    TextView textView = addTextViewWithIdsNoBorder(i, totalAirFlowRateIds, totalAirFlowRateTxtList);
-                    textView.setEms(4);
-                    row.addView(textView);
-                    totalAirFlowRateIds++;
-                }
+            // inner for loop
+            if (i == 1) {
+                TextView textView = addTextView(" Average ");
+                textView.setEms(4);
+                row.addView(textView);
+            }else{
+                TextView textView = addTextViewWithIdsNoBorder(i, totalAirFlowRateIds, totalAirFlowRateTxtList);
+                textView.setEms(4);
+                row.addView(textView);
             }
             test3_table_layout3.addView(row);
         }
@@ -2079,7 +2077,6 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                     row.addView(addTextView(" Total Air Flow Rate\n in cfm (TFR)"));
                 } else {
                     row.addView(addTextViewWithIdsNoBorder(i, totalAirFlowRateIds, totalAirFlowRateTxtList));
-                    totalAirFlowRateIds++;
                 }
             }
             test2_table_layout6.addView(row);
@@ -2348,7 +2345,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         if (ids > 0)
             tv.setId(ids);
         tv.setTag(Tag);
-        ids++;
+        totalAirFlowRateIds++;
         txtViewList.add(tv);
         return tv;
     }

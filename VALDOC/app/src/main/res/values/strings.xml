@@ -54,7 +54,7 @@
     <string name="calibration_due">Calibration Due On :</string>
     <string name="calibration_due_on_date">29.07.2014</string>
     <string name="details_of_specification_area">Details Of Specification And Area</string>
-    <string name="test_specification">Test Spesification :</string>
+    <string name="test_specification">Test Specification :</string>
     <string name="test_specification_details">Required Air Velocity 90 fpm +/- 20%</string>
     <string name="block_plant_name">Block/Plant Name :</string>
     <string name="block_plant_details">FTO3</string>
