@@ -192,20 +192,20 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
             int middleTxt = totalAirFlowRateTxtList.size() / 2;
             TextView mtvl = totalAirFlowRateTxtList.get(middleTxt);
             totalAirFlowRate = getIntent().getFloatExtra("totalAirFlowRate", 0f);
-            mtvl.setText(totalAirFlowRate + "");
-            TFRtv.setText(totalAirFlowRate + "");
+            mtvl.setText(Math.round(totalAirFlowRate) + "");
+            TFRtv.setText(Math.round(totalAirFlowRate) + "");
         }
         totalAirFlowRate = getIntent().getFloatExtra("totalAirFlowRate", 0f);
-        TFRtv.setText("" + totalAirFlowRate);
+        TFRtv.setText("" + Math.round(totalAirFlowRate));
         //AirFlow Change
         if (airChangeTxtList != null && airChangeTxtList.size() > 0) {
             TextView airChangeTxt = airChangeTxtList.get(airChangeTxtList.size() / 2);
             airChangeValue = getIntent().getIntExtra("AirChangeValue", 0);
-            airChangeTxt.setText(airChangeValue + "");
-            TFTByRvTv.setText("" + airChangeValue);
+            airChangeTxt.setText(Math.round(airChangeValue) + "");
+            TFTByRvTv.setText("" + Math.round(airChangeValue));
         }
         airChangeValue = getIntent().getIntExtra("AirChangeValue", 0);
-        TFTByRvTv.setText("" + airChangeValue);
+        TFTByRvTv.setText("" + Math.round(airChangeValue));
         //Custom Action Bar
         ActionBar mActionBar = getSupportActionBar();
         if (mActionBar != null)
@@ -407,13 +407,6 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
             }
         });
 
-//        dateTextView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                // On button click show datepicker dialog
-//                showDialog(DATE_PICKER_ID);
-//            }
-//        });
     }
 
     private ArrayList<TestSpesificationValue> testSpesificationValue() {
@@ -422,7 +415,7 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
 //        testSpesificationValue.setTest_specific_id(1);
         testSpesificationValue.setTest_detail_id("" + testDetailsId);
         testSpesificationValue.setFieldName("TFR");
-        testSpesificationValue.setFieldValue("" + totalAirFlowRate);
+        testSpesificationValue.setFieldValue("" + Math.round(totalAirFlowRate));
         spesificationValueArrayList.add(testSpesificationValue);
 
         TestSpesificationValue testSpesificationValue1 = new TestSpesificationValue();
@@ -436,7 +429,7 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
 //        testSpesificationValue2.setTest_specific_id(1);
         testSpesificationValue2.setTest_detail_id("" + testDetailsId);
         testSpesificationValue2.setFieldName("((TFR/RV)x60))");
-        testSpesificationValue2.setFieldValue("" + airChangeValue);
+        testSpesificationValue2.setFieldValue("" + Math.round(airChangeValue));
         spesificationValueArrayList.add(testSpesificationValue2);
 
         return spesificationValueArrayList;
@@ -613,7 +606,7 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
                     if (mGrilFilterType.equalsIgnoreCase("Grill")) {
                         if (null != grillAndSizeFromGrill && grillAndSizeFromGrill.size() > 0) {
                             TextView textView = addTextView(grillAndSizeFromGrill.get(i - 2).getGrillCode().toString());
-                            textView.setEms(Utilityies.getPctCellWidth(cols));
+//                            textView.setEms(Utilityies.getPctCellWidth(cols));
                             row.addView(textView);
                         } else {
                             row.addView(addTextView("grillAndSizeFromGrill"));
@@ -622,7 +615,7 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
                     } else {
                         if (null != mRoomFilterArrayList && mRoomFilterArrayList.size() > 0) {
                             TextView textView = addTextView(mRoomFilterArrayList.get(i - 2).getFilterCode());
-                            textView.setEms(Utilityies.getPctCellWidth(cols));
+//                            textView.setEms(Utilityies.getPctCellWidth(cols));
                             row.addView(textView);
                         } else {
                             row.addView(addTextView("grillAndSizeFromGrill"));
