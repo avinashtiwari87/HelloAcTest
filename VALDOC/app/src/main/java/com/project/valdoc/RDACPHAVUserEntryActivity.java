@@ -265,6 +265,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
         }
 
         //Total AirFlow Rate (sum of AirFlow Rate)
+        Log.d(TAG, " totalAirFlowRateTxtList.size() "+totalAirFlowRateTxtList.size());
         if (totalAirFlowRateTxtList != null && totalAirFlowRateTxtList.size() > 0) {
             int middleTxt = totalAirFlowRateTxtList.size() / 2;
             TextView mtvl = totalAirFlowRateTxtList.get(middleTxt);
@@ -278,15 +279,13 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
                 mtvl.setText(Math.round(mTotalAirFlowRateValue) + "");
                 if (mTestBasedOn.equalsIgnoreCase("AHU")) {
                     if (colorPicker(Double.parseDouble(mApplicableTestAhu.getTestSpecification()), mTotalAirFlowRateValue, mTestBasedOn)) {
-                        //mtvl.setTextColor(Color.RED);
-                        mtvl.setTextColor(Color.BLACK);
+                        mtvl.setTextColor(Color.RED);
                     } else {
                         mtvl.setTextColor(Color.BLACK);
                     }
                 } else if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
                     if (colorPicker(Double.parseDouble(mApplicableTestRoom.getTestSpecification()), mTotalAirFlowRateValue, mTestBasedOn)) {
-                        //mtvl.setTextColor(Color.RED);
-                        mtvl.setTextColor(Color.BLACK);
+                        mtvl.setTextColor(Color.RED);
                     } else {
                         mtvl.setTextColor(Color.BLACK);
                     }
@@ -301,15 +300,13 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
                     tvl.setText(Math.round(totalAirFlowRateMap.get(tvl.getId())) + "");
                     if (mTestBasedOn.equalsIgnoreCase("AHU")) {
                         if (colorPicker(Double.parseDouble(mApplicableTestAhu.getTestSpecification()), (double) totalAirFlowRateMap.get(tvl.getId()), mTestBasedOn)) {
-                            //tvl.setTextColor(Color.RED);
-                            tvl.setTextColor(Color.BLACK);
+                            tvl.setTextColor(Color.RED);
                         } else {
                             tvl.setTextColor(Color.BLACK);
                         }
                     } else if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
                         if (colorPicker(Double.parseDouble(mApplicableTestRoom.getTestSpecification()), (double) totalAirFlowRateMap.get(tvl.getId()), mTestBasedOn)) {
-                            // tvl.setTextColor(Color.RED);
-                            tvl.setTextColor(Color.BLACK);
+                            tvl.setTextColor(Color.RED);
                         } else {
                             tvl.setTextColor(Color.BLACK);
                         }
