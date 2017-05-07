@@ -36,7 +36,7 @@ public class HttpConnectionTask extends AsyncTask<String, Void, Integer> {
 
     @Override
     protected void onPreExecute() {
-        mDialog.setMessage("Data Synking...");
+        mDialog.setMessage("Data Syncing...");
         mDialog.show();
     }
 
