@@ -183,7 +183,7 @@ public class RDPCTUserEntryActivity extends AppCompatActivity {
 
         //Receiving User Input Data from Bundle
         rHashMap = (HashMap<Integer, Integer>) getIntent().getSerializableExtra("InputData");
-        int size=rHashMap.size()/2;
+        int size = rHashMap.size()/2;
         long smallParticle = Long.parseLong(small_particle.getText().toString().trim());
         long largeParticle = Long.parseLong(large_particle.getText().toString().trim());
         for (int i = 0; i < txtViewList.size(); i++) {
