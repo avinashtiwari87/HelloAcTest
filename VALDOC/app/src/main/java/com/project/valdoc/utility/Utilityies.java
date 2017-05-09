@@ -22,6 +22,7 @@ import java.util.Date;
  * Created by Avinash on 4/3/2016.
  */
 public class Utilityies {
+    public static final String SERVER_SETTING="ServerSetting";
     private Utilityies() {
 
     }

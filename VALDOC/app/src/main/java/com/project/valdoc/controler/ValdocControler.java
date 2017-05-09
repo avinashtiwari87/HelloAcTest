@@ -51,10 +51,10 @@ public class ValdocControler {
 //    private String postUrl = "http://valdoc.in:8080/valdoc/sync/postTableData";
 //    private String url = "http://valdoc.in:8080/valdoctest/sync/getTableData?date=";  //2015-11-12
 //    private String postUrl = "http://valdoc.in:8080/valdoctest/sync/postTableData";
-    private String url = "http://192.169.143.229:8080/valdoctest/sync/getTableData?date=";
-    private String postUrl = "http://192.169.143.229:8080/valdoctest/sync/postTableData";
-//    private String url = "/sync/getTableData?date=";  //2015-11-12
-//    private String postUrl = "/sync/postTableData";
+//    private String url = "http://192.169.143.229:8080/valdoctest/sync/getTableData?date=";
+//    private String postUrl = "http://192.169.143.229:8080/valdoctest/sync/postTableData";
+    private String url = "/sync/getTableData?date=";  //2015-11-12
+    private String postUrl = "/sync/postTableData";
 
     public void getHttpConectionforSync(Context context, String method) {
         mContext = context;
@@ -136,9 +136,9 @@ public class ValdocControler {
     private void postConnection(String method, JSONObject jsonDATA) {
         Log.d("valdocControler", "post data json=" + jsonDATA.toString());
         HttpConnectionTask httpConnectionTask = new HttpConnectionTask(mContext, method, jsonDATA);
-//        baseUrl = sharedpreferences.getString("URL", "");
-        httpConnectionTask.execute(postUrl);
-//        httpConnectionTask.execute(baseUrl+postUrl);
+        baseUrl = sharedpreferences.getString("URL", "");
+//        httpConnectionTask.execute(postUrl);
+        httpConnectionTask.execute(baseUrl+postUrl);
     }
 
     private void getConection(String method) {
@@ -148,8 +148,8 @@ public class ValdocControler {
         baseUrl = sharedpreferences.getString("URL", "");
         String query = "";
         query = lastSyncDate.replace(" ", "%20");
-        httpConnectionTask.execute(url + query);
-//        httpConnectionTask.execute(baseUrl+url + query);
+//        httpConnectionTask.execute(url + query);
+        httpConnectionTask.execute(baseUrl+url + query);
     }
 
     public void getAllDb(int statusCode, String resultData) {

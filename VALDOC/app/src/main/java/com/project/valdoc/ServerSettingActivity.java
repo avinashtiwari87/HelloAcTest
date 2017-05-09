@@ -9,6 +9,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.project.valdoc.utility.Utilityies;
+
 public class ServerSettingActivity extends AppCompatActivity {
 
     SharedPreferences sharedpreferences;
@@ -33,7 +35,7 @@ public class ServerSettingActivity extends AppCompatActivity {
             public void onClick(View v) {
                 SharedPreferences.Editor editor = sharedpreferences.edit();
                 if(serverUrl.getText().length()!=0&&plantName.getText().length()!=0) {
-                    editor.putBoolean("ServerSetting", true);
+                    editor.putBoolean(Utilityies.SERVER_SETTING, true);
                     editor.putString("URL",serverUrl.getText().toString());
                     editor.putString("PLANTNAME",plantName.getText().toString());
                     editor.commit();

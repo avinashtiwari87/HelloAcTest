@@ -20,6 +20,7 @@ import com.project.valdoc.intity.PartnerInstrument;
 import com.project.valdoc.intity.Room;
 import com.project.valdoc.intity.RoomFilter;
 import com.project.valdoc.intity.TestMaster;
+import com.project.valdoc.utility.Utilityies;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,14 +45,14 @@ public class SplashScreen extends Activity {
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             public void run() {
-                if (sharedpreferences.getBoolean("login", false) == false) {
-                    Intent intent = new Intent(SplashScreen.this, LoginActivity.class);
-                    startActivity(intent);
-                } else if(sharedpreferences.getBoolean("ServerSetting", false) == false){
+                if (sharedpreferences.getBoolean(Utilityies.SERVER_SETTING, false) == false) {
                     Intent intent = new Intent(SplashScreen.this, ServerSettingActivity.class);
                     startActivity(intent);
                     finish();
-                }else {
+                } else if (sharedpreferences.getBoolean("login", false) == false) {
+                    Intent intent = new Intent(SplashScreen.this, LoginActivity.class);
+                    startActivity(intent);
+                } else {
                     Intent intent = new Intent(SplashScreen.this, AfterLoginActivity.class);
                     intent.putExtra("USERNAME", sharedpreferences.getString("USERNAME", ""));
                     intent.putExtra("USERTYPE", sharedpreferences.getString("USERTYPE", ""));

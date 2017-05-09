@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.provider.CalendarContract;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -200,9 +201,9 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
         //Receiving Result Data from Bundle
         //average of v1 ,v2...where id is 1,2....
         airFlowRateMap = (HashMap<Integer, Long>) getIntent().getSerializableExtra("ResultData");
-        for (Map.Entry n : airFlowRateMap.entrySet()) {
-            Log.v(TAG, " Result: " + n.getKey() + " " + n.getValue());
-        }
+//        for (Map.Entry n : airFlowRateMap.entrySet()) {
+//            Log.v(TAG, " Result: " + n.getKey() + " " + n.getValue());
+//        }
 
         Log.v(TAG, " txtViewList size: " + txtViewList.size());
         for (int i = 0; i < txtViewList.size(); i++) {
@@ -224,6 +225,8 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
                     tv2.setText(Math.round(AxAv) + "");
+//                    tv2.setTextColor(Color.RED);
+                    Log.d("AHU","filter AxAv="+AxAv);
                     arrayList_totalAirFlowRate.add(AxAv);
                 }
             } else {
@@ -237,10 +240,12 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
                     tv2.setText(Math.round(AxAv) + "");
+//                    tv2.setTextColor(Color.RED);
                     totalAirFlowRateMap.put(tv2.getId(), (float) AxAv);
                 } else if (!grillAndSizeFromGrill.isEmpty()) {
                     //Air Flow Rate(AxAv)
                     TextView tv2 = airFlowRateTxtViewList.get(i);
+                    tv2.setTextColor(Color.RED);
 
                     try {
                         AxAv = Double.valueOf(grillAndSizeFromGrill.get(i).getEffectiveArea()) * airFlowRateMap.get(tvl.getId());
@@ -248,6 +253,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
                     tv2.setText(Math.round(AxAv) + "");
+//                    tv2.setTextColor(Color.RED);
                     totalAirFlowRateMap.put(tv2.getId(), (float) AxAv);
 //                    arrayList_totalAirFlowRate.add(AxAv);
 
