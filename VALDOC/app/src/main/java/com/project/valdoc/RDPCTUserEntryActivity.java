@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -41,6 +42,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Map;
 
 public class RDPCTUserEntryActivity extends AppCompatActivity {
     private static final String TAG = "RDPC3";
@@ -212,9 +214,24 @@ public class RDPCTUserEntryActivity extends AppCompatActivity {
 
                 //Receiving Result Data from Bundle
         averageResultHashMap = (HashMap<Integer, Long>) getIntent().getSerializableExtra("ResultData");
-        for (int i = 0; i < resultTextViewList.size(); i++) {
+        for (Map.Entry kk : averageResultHashMap.entrySet()) {
+            Log.v(TAG, " kk.getKey() "+kk.getKey() + "kk Avg. Data " + kk.getValue());
+        }
+        int resultListSize = resultTextViewList.size();
+        long smallParticle = Long.parseLong(small_particle.getText().toString().trim());
+        long largeParticle = Long.parseLong(large_particle.getText().toString().trim());
+        for (int i = 0; i < resultListSize; i++) {
             TextView tvl = resultTextViewList.get(i);
-            tvl.setText(averageResultHashMap.get(tvl.getId()) + "");
+            long resultValue = averageResultHashMap.get(tvl.getId());
+            tvl.setText( resultValue+ "");
+
+            if(tvl.getId()<(resultListSize/2)){
+                if(resultValue > smallParticle )
+                    tvl.setTextColor(Color.RED);
+            }else{
+                if(resultValue > largeParticle )
+                    tvl.setTextColor(Color.RED);
+            }
         }
 
         meanValue1 = getIntent().getLongExtra("meanValue1", 0l);
@@ -224,15 +241,6 @@ public class RDPCTUserEntryActivity extends AppCompatActivity {
         ucl1 = getIntent().getLongExtra("UCL_V1", 0l);
         ucl2 = getIntent().getLongExtra("UCL_V2", 0l);
 
-//        TextView txtView = RDPC3TxtList.get(0);
-//        txtView.setText(meanValue1 + "");
-//        TextView txtView2 = RDPC3TxtList2.get(0);
-//        txtView2.setText(meanValue2 + "");
-//
-//        TextView txtView3 = RDPC3TxtList.get(1);
-//        txtView3.setText(stdDev1 + "");
-//        TextView txtView4 = RDPC3TxtList2.get(1);
-//        txtView4.setText(stdDev2 + "");
         meanValue1_tv.setText(meanValue1 + "");
         meanValue2_tv.setText(meanValue2 + "");
         stdDev1_tv.setText(Math.round(stdDev1) + "");
@@ -240,11 +248,50 @@ public class RDPCTUserEntryActivity extends AppCompatActivity {
         ucl1_tv.setText(ucl1 + "");
         ucl2_tv.setText(ucl2 + "");
 
-
         //Custom Action Bar
         ActionBar mActionBar = getSupportActionBar();
         if (mActionBar != null)
             Utilityies.setCustomActionBar(RDPCTUserEntryActivity.this, mActionBar, userName);
+
+        //Pass Fail condition based on ISO-8 value from DBs
+        if(small_particle.getText().toString().trim() != null){//No. of Particles ≥ 0. 5 µm/m³
+            if(meanValue1>smallParticle){
+                meanValue1_tv.setTextColor(Color.RED);
+            }
+            if(Math.round(stdDev1)>smallParticle){
+                stdDev1_tv.setTextColor(Color.RED);
+            }
+            if(ucl1>smallParticle){
+                ucl1_tv.setTextColor(Color.RED);
+            }
+            if(arrayList1.get(0)>smallParticle){
+                minimumValue1_tv.setTextColor(Color.RED);
+            }
+            if(arrayList1.get(arrayList1.size()-1) > smallParticle){
+                maximumValue1_tv.setTextColor(Color.RED);
+            }
+        }
+
+// No. of Particles ≥ 5 µm/m³
+        if(large_particle.getText().toString().trim() != null){
+            if(meanValue2>largeParticle){
+                meanValue2_tv.setTextColor(Color.RED);
+            }
+            if(Math.round(stdDev2)>largeParticle){
+                stdDev2_tv.setTextColor(Color.RED);
+            }
+            if(ucl2>largeParticle){
+                ucl2_tv.setTextColor(Color.RED);
+            }
+            if(arrayList2.get(0) > largeParticle){
+                minimumValue2_tv.setTextColor(Color.RED);
+            }
+            if(arrayList2.get(arrayList2.size()-1) > largeParticle){
+                maximumValue2_tv.setTextColor(Color.RED);
+            }
+        }
+
+
     }
 
     private void datePicker() {
