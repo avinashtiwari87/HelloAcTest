@@ -2215,7 +2215,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         ViewGroup.LayoutParams layoutParams = tv.getLayoutParams();
         layoutParams.height = getResources().getDimensionPixelSize(R.dimen.common_text_cell_height);
         tv.setLayoutParams(layoutParams);
-//        tv.setPadding(0,0,15,0);
+        tv.setPadding(0,0,15,0);
         tv.setGravity(Gravity.CENTER);
         tv.setTextColor(getResources().getColor(R.color.black));
         tv.setTextSize(getResources().getDimension(R.dimen.normal_text_size));

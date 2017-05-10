@@ -728,9 +728,9 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
                 TableRow.LayoutParams.WRAP_CONTENT));
 
         ViewGroup.LayoutParams params = tv.getLayoutParams();
-        params.height = getResources().getDimensionPixelSize(R.dimen.common_text_cell_height);
+        params.height = getResources().getDimensionPixelSize(R.dimen.pct_text_cell_height);
         tv.setLayoutParams(params);
-        tv.setPadding(15,0,15,0);
+        tv.setPadding(15,0,15,10);
         tv.setBackgroundResource(R.drawable.border1);
         tv.setGravity(Gravity.CENTER);
         tv.setTextColor(getResources().getColor(R.color.black));
