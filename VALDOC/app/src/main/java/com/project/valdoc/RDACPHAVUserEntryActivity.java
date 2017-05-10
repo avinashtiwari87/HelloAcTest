@@ -201,9 +201,6 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
         //Receiving Result Data from Bundle
         //average of v1 ,v2...where id is 1,2....
         airFlowRateMap = (HashMap<Integer, Long>) getIntent().getSerializableExtra("ResultData");
-//        for (Map.Entry n : airFlowRateMap.entrySet()) {
-//            Log.v(TAG, " Result: " + n.getKey() + " " + n.getValue());
-//        }
 
         Log.v(TAG, " txtViewList size: " + txtViewList.size());
         for (int i = 0; i < txtViewList.size(); i++) {
@@ -225,8 +222,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
                     tv2.setText(Math.round(AxAv) + "");
-//                    tv2.setTextColor(Color.RED);
-                    Log.d("AHU","filter AxAv="+AxAv);
+                    Log.d("AHU"," AHU filter AxAv= "+AxAv);
                     arrayList_totalAirFlowRate.add(AxAv);
                 }
             } else {
@@ -240,26 +236,25 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
                     tv2.setText(Math.round(AxAv) + "");
-//                    tv2.setTextColor(Color.RED);
+                    Log.d("Room","if Room filter AxAv= "+AxAv);
                     totalAirFlowRateMap.put(tv2.getId(), (float) AxAv);
                 } else if (!grillAndSizeFromGrill.isEmpty()) {
                     //Air Flow Rate(AxAv)
                     TextView tv2 = airFlowRateTxtViewList.get(i);
                     tv2.setTextColor(Color.RED);
-
                     try {
                         AxAv = Double.valueOf(grillAndSizeFromGrill.get(i).getEffectiveArea()) * airFlowRateMap.get(tvl.getId());
                     } catch (NumberFormatException e) {
                         e.printStackTrace();
                     }
                     tv2.setText(Math.round(AxAv) + "");
-//                    tv2.setTextColor(Color.RED);
+                    Log.d("Room","else Room filter AxAv= "+AxAv);
                     totalAirFlowRateMap.put(tv2.getId(), (float) AxAv);
-//                    arrayList_totalAirFlowRate.add(AxAv);
 
                 }
             }
         }
+
         airChangeValue = getIntent().getIntExtra("AirChangeValue", 0);
         // Checking individual input base on Average
         if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
@@ -268,6 +263,11 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
             if (variation != 0) {
                 getInputDataValidationByAverage(variation);
             }
+            variation = mApplicableTestRoom.getDiffAVbetweenFilter();
+            Log.d(TAG, "AxAv Validation value: " + variation);
+            if(variation != 0){
+               getAxAvDataValidationByAverage(variation);
+            }
         }
 
         //Total AirFlow Rate (sum of AirFlow Rate)
@@ -275,7 +275,6 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
         if (totalAirFlowRateTxtList != null && totalAirFlowRateTxtList.size() > 0) {
             int middleTxt = totalAirFlowRateTxtList.size() / 2;
             TextView mtvl = totalAirFlowRateTxtList.get(middleTxt);
-//            totalAirFlowRate = getIntent().getFloatExtra("totalAirFlowRate", 0f);
             if (mTestBasedOn.equalsIgnoreCase("AHU")) {
                 if (!arrayList_totalAirFlowRate.isEmpty() && arrayList_totalAirFlowRate.size() > 0) {
                     for (int i = 0; i < arrayList_totalAirFlowRate.size(); i++) {
@@ -322,7 +321,6 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
             TFRtv.setText(Math.round(totalAirFlowRate) + "");
             if (mTestBasedOn.equalsIgnoreCase("AHU")) {
                 if (colorPicker(Double.parseDouble(mApplicableTestAhu.getTestSpecification()), totalAirFlowRate, mTestBasedOn)) {
-
                     TFRtv.setTextColor(Color.RED);
                 } else {
                     TFRtv.setTextColor(Color.BLACK);
@@ -367,6 +365,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
                 Utilityies.setCustomActionBar(RDACPHAVUserEntryActivity.this, mActionBar, userName);
         }
     }
+
 
     private double getTfr(HashMap<Integer, Float> total_AirFlowRateMap) {
         double sum = 0.0;
@@ -1352,7 +1351,6 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
     }
 
     int idCounts = 200, inputTxtCount = 0;
-
     private void getInputDataValidationByAverage(int variation) {
         Log.d(TAG, " rows " + rows + " cols " + cols);
         for (int i = 1; i <= rows - 1; i++) {
@@ -1387,6 +1385,38 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
     private int getAirChangeCalculation(float TFR, float RV) {
         Log.d(TAG, " AirChangeCalculation : " + (TFR / RV) * 60 + " int : " + (int) Math.round(((TFR / RV) * 60)));
         return (int) Math.round(((TFR / RV) * 60));
+    }
+
+    int idCountAxAv = 300, txtCountAxAv = 0;
+    private void getAxAvDataValidationByAverage(int variation) {
+        //check individual AxAv value based on All AxAv average
+        //+- of variation %
+        long axAvAverage = (long)getTfr(totalAirFlowRateMap)/totalAirFlowRateMap.size();
+        Log.d(TAG, " AxAv Averge "+axAvAverage);
+        for (int i = 1; i <= rows - 1; i++) {
+            Log.d(TAG, " idCountAxAv " + idCountAxAv + " txtCountAxAv " + txtCountAxAv);
+            boolean results = checkAxAvBasedOnAverage(totalAirFlowRateMap.get(idCountAxAv),
+                    axAvAverage, variation);
+            idCounts++;
+            if (results) {
+                airFlowRateTxtViewList.get(txtCountAxAv).setTextColor(Color.RED);
+            } else {
+                airFlowRateTxtViewList.get(txtCountAxAv).setTextColor(Color.BLACK);
+            }
+            txtCountAxAv++;
+        }
+    }
+
+    private boolean checkAxAvBasedOnAverage(Float inputValue, long axAvAverage, int percentValue) {
+        double variance = 0;
+        long avg;
+        boolean resultValue = true;
+        variance = (double) (axAvAverage * percentValue) / 100;
+        avg = Math.round(variance);
+        if (inputValue >= (axAvAverage - avg) && inputValue <= (axAvAverage + avg)) {
+            resultValue = false;
+        }
+        return resultValue;
     }
 
 }
