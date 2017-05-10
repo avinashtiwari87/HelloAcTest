@@ -271,7 +271,6 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
         }
 
         //Total AirFlow Rate (sum of AirFlow Rate)
-        Log.d(TAG, " totalAirFlowRateTxtList.size() "+totalAirFlowRateTxtList.size());
         if (totalAirFlowRateTxtList != null && totalAirFlowRateTxtList.size() > 0) {
             int middleTxt = totalAirFlowRateTxtList.size() / 2;
             TextView mtvl = totalAirFlowRateTxtList.get(middleTxt);
@@ -288,12 +287,6 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
                     } else {
                         mtvl.setTextColor(Color.BLACK);
                     }
-                } else if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
-                    if (colorPicker(Double.parseDouble(mApplicableTestRoom.getTestSpecification()), mTotalAirFlowRateValue, mTestBasedOn)) {
-                        mtvl.setTextColor(Color.RED);
-                    } else {
-                        mtvl.setTextColor(Color.BLACK);
-                    }
                 }
             } else {
                 //Air Flow Rate(AxAv)
@@ -301,16 +294,9 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
                 airChangeValue = getAirChangeCalculation(Math.round(totalAirFlowRate), (float) room.getVolume());
                 for (int i = 0; i < airFlowRateTxtViewList.size(); i++) {
                     TextView tvl = airFlowRateTxtViewList.get(i);
-                    Log.v(TAG, " totalAirFlowRateMap: " + tvl.getId());
                     tvl.setText(Math.round(totalAirFlowRateMap.get(tvl.getId())) + "");
                     if (mTestBasedOn.equalsIgnoreCase("AHU")) {
                         if (colorPicker(Double.parseDouble(mApplicableTestAhu.getTestSpecification()), (double) totalAirFlowRateMap.get(tvl.getId()), mTestBasedOn)) {
-                            tvl.setTextColor(Color.RED);
-                        } else {
-                            tvl.setTextColor(Color.BLACK);
-                        }
-                    } else if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
-                        if (colorPicker(Double.parseDouble(mApplicableTestRoom.getTestSpecification()), (double) totalAirFlowRateMap.get(tvl.getId()), mTestBasedOn)) {
                             tvl.setTextColor(Color.RED);
                         } else {
                             tvl.setTextColor(Color.BLACK);
@@ -1397,7 +1383,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
             Log.d(TAG, " idCountAxAv " + idCountAxAv + " txtCountAxAv " + txtCountAxAv);
             boolean results = checkAxAvBasedOnAverage(totalAirFlowRateMap.get(idCountAxAv),
                     axAvAverage, variation);
-            idCounts++;
+            idCountAxAv++;
             if (results) {
                 airFlowRateTxtViewList.get(txtCountAxAv).setTextColor(Color.RED);
             } else {
