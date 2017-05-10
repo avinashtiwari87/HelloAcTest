@@ -189,7 +189,7 @@ public class RDPCTUserEntryActivity extends AppCompatActivity {
         int size = rHashMap.size()/2;
         long smallParticle = Long.parseLong(small_particle.getText().toString().trim());
         long largeParticle = Long.parseLong(large_particle.getText().toString().trim());
-        for (int i = 0; i < txtViewList.size(); i++) {
+        for (int i = 0; i < txtViewList.size()-2; i++) {
             TextView tvl = txtViewList.get(i);
             //tvl.setText(rHashMap.get(tvl.getId()) + "");
             Log.d("Saurabh"," Saurabh txtViewList ID "+tvl.getId());
