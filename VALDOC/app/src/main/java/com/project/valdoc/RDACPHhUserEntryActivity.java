@@ -6,6 +6,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -186,6 +187,12 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
             TextView avgTvl = resultTextViewList.get(i);
             avgTvl.setText(averageDataHashMap.get(avgTvl.getId()) + "");
             Log.v(TAG, "resultTextViewList Id "+avgTvl.getId() + " Avg. Values " + averageDataHashMap.get(avgTvl.getId()));
+        }
+
+        int variation = mApplicableTestRoom.getDiffAVbetweenFilter();
+        Log.d(TAG, "AxAv_H Validation value: " + variation);
+        if(variation != 0){
+            getAxAvDataValidationByAverage(variation);
         }
 
         //Total AirFlow Rate (sum of AirFlow Rate)
@@ -831,5 +838,44 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
         TestHeader2.setVisibility(View.VISIBLE);
         TestHeader.setText("TEST RAW DATA");
         TestHeader2.setText("(Air Flow Velocity, Volume Testing and Determination of Air Changes per Hour Rates by Air Capture Hood)");
+    }
+
+    int idCountAxAv = 400, txtCountAxAv = 0;
+    private void getAxAvDataValidationByAverage(int variation) {
+        //check individual AxAv value based on All AxAv average
+        //+- of variation %
+        long axAvAverage = getTfr(averageDataHashMap)/averageDataHashMap.size();
+        Log.d(TAG, " AxAv_H Averge "+axAvAverage);
+        for (int i = 1; i <= rows - 1; i++) {
+            Log.d(TAG, " idCountAxAv " + idCountAxAv + " txtCountAxAv " + txtCountAxAv);
+            boolean results = checkAxAvBasedOnAverage(averageDataHashMap.get(idCountAxAv),
+                    axAvAverage, variation);
+            idCountAxAv++;
+            if (results) {
+                resultTextViewList.get(txtCountAxAv).setTextColor(Color.RED);
+            } else {
+                resultTextViewList.get(txtCountAxAv).setTextColor(Color.BLACK);
+            }
+            txtCountAxAv++;
+        }
+    }
+
+    private boolean checkAxAvBasedOnAverage(long inputValue, long axAvAverage, int percentValue) {
+        double variance = 0;
+        long avg;
+        boolean resultValue = true;
+        variance = (double) (axAvAverage * percentValue) / 100;
+        avg = Math.round(variance);
+        if (inputValue >= (axAvAverage - avg) && inputValue <= (axAvAverage + avg)) {
+            resultValue = false;
+        }
+        return resultValue;
+    }
+
+    private long getTfr(HashMap<Integer, Long> total_AirFlowRateMap) {
+        long sum = 0l;
+        for (float sum1 : total_AirFlowRateMap.values())
+            sum += sum1;
+        return sum;
     }
 }
