@@ -183,12 +183,16 @@ public class RDPCTUserEntryActivity extends AppCompatActivity {
 
         //Receiving User Input Data from Bundle
         rHashMap = (HashMap<Integer, Integer>) getIntent().getSerializableExtra("InputData");
+        for (Map.Entry mm : rHashMap.entrySet()) {
+            Log.v(TAG, " mm getKey() "+mm.getKey() + " mm Input Data " + mm.getValue());
+        }
         int size = rHashMap.size()/2;
         long smallParticle = Long.parseLong(small_particle.getText().toString().trim());
         long largeParticle = Long.parseLong(large_particle.getText().toString().trim());
-        for (int i = 0; i < txtViewList.size(); i++) {
+        for (int i = 0; i < txtViewList.size()-2; i++) {
             TextView tvl = txtViewList.get(i);
             //tvl.setText(rHashMap.get(tvl.getId()) + "");
+            Log.d("Saurabh"," Saurabh txtViewList ID "+tvl.getId());
             long inputValue = rHashMap.get(tvl.getId());
             tvl.setText( inputValue+ "");
 
@@ -889,7 +893,7 @@ public class RDPCTUserEntryActivity extends AppCompatActivity {
     private void BuildTableTest5(int rows, int cols) {
         //first section
         // outer for loop
-        for (int i = 1; i <= rows; i++) {
+        for (int i = 1; i < rows; i++) {
             TableRow row = new TableRow(this);
             row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
                     TableRow.LayoutParams.WRAP_CONTENT));
@@ -914,16 +918,7 @@ public class RDPCTUserEntryActivity extends AppCompatActivity {
             }
             test5_table_layout.addView(row);
         }
-/*        for (int sk = 0; sk < 3; sk++) {
-            TableRow row = new TableRow(this);
-            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
-                    TableRow.LayoutParams.WRAP_CONTENT));
-            row.addView(addTextView("    "));
-            test5_table_layout.addView(row);
-        }*/
 
-// adding no of partical text
-//        if(i==1) {
         TableRow row1 = new TableRow(this);
         row1.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
                 TableRow.LayoutParams.MATCH_PARENT));
@@ -936,13 +931,8 @@ public class RDPCTUserEntryActivity extends AppCompatActivity {
         row1.addView(tvs);
 
         test5_tableLayout2_2.addView(row1);
-//        test5_table_layout2_1.addView(row1);
-//        }
 
-
-        //Second section
-        // outer for loop
-        for (int i = 1; i <= rows; i++) {
+        for (int i = 1; i < rows; i++) {
             TableRow row = new TableRow(this);
             row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
                     TableRow.LayoutParams.WRAP_CONTENT));
@@ -986,7 +976,7 @@ public class RDPCTUserEntryActivity extends AppCompatActivity {
 
         //Third section
         // outer for loop
-        for (int i = 1; i <= rows; i++) {
+        for (int i = 1; i < rows; i++) {
             TableRow row = new TableRow(this);
             row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
                     TableRow.LayoutParams.WRAP_CONTENT));
@@ -1034,7 +1024,7 @@ public class RDPCTUserEntryActivity extends AppCompatActivity {
 
         //Fourth section
         // outer for loop
-        for (int i = 1; i <= rows; i++) {
+        for (int i = 1; i <rows; i++) {
             TableRow row = new TableRow(this);
             row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
                     TableRow.LayoutParams.WRAP_CONTENT));
@@ -1079,7 +1069,7 @@ public class RDPCTUserEntryActivity extends AppCompatActivity {
 
         //Fifth section
         // outer for loop
-        for (int i = 1; i <= rows; i++) {
+        for (int i = 1; i < rows; i++) {
             TableRow row = new TableRow(this);
             row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
                     TableRow.LayoutParams.WRAP_CONTENT));
@@ -1165,7 +1155,7 @@ public class RDPCTUserEntryActivity extends AppCompatActivity {
     }
 
     private TextView addTextViewWithTagIds(int Tag, int Ids,
-                                           ArrayList<TextView> txtViewList, float value) {
+                                           ArrayList<TextView> txtList, float value) {
         TextView tv = new TextView(this);
         tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
                 TableRow.LayoutParams.WRAP_CONTENT));
@@ -1182,7 +1172,7 @@ public class RDPCTUserEntryActivity extends AppCompatActivity {
         tv.setId(Ids);
         tv.setTag(Tag);
         Ids++;
-        txtViewList.add(tv);
+        txtList.add(tv);
         return tv;
     }
 
@@ -1224,8 +1214,8 @@ public class RDPCTUserEntryActivity extends AppCompatActivity {
         tv.setMaxLines(3);
         tv.setEms(4);
         tv.setEllipsize(TextUtils.TruncateAt.END);
-        idCountEtv++;
         txtViewList.add(tv);
+        idCountEtv++;
         return tv;
     }
 

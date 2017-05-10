@@ -514,13 +514,10 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             }
             setCommonTestHeader(testType, mTestBasedOn);
         } else if (TestCreateActivity.PCT.equalsIgnoreCase(testType)) {
-
             if ("ROOM".equalsIgnoreCase(mTestBasedOn)) {
                 rows = mApplicableTestRoom.getLocation() + 1;
                 if (rows >= 1) {
                     BuildTableTest5(rows, mApplicableTestRoom.getNoOfCycle());
-//                    BuildTableTest5(rows + 1, 5);
-//                    BuildTableTest5(7, 3);
                 } else
                     aleartDialog("There is no noOfCycle or applicable test room location");
 
@@ -528,8 +525,6 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 rows = mApplicableTestEquipment.getLocation() + 1;
                 if (rows >= 1) {
                     BuildTableTest5(rows + 1, mApplicableTestEquipment.getNoOfCycle());
-
-//                    BuildTableTest5(7, 3);
                 } else
                     aleartDialog("There is no noOfCycle or applicable test room location");
             }
