@@ -183,16 +183,12 @@ public class RDPCTUserEntryActivity extends AppCompatActivity {
 
         //Receiving User Input Data from Bundle
         rHashMap = (HashMap<Integer, Integer>) getIntent().getSerializableExtra("InputData");
-        for (Map.Entry mm : rHashMap.entrySet()) {
-            Log.v(TAG, " mm getKey() "+mm.getKey() + " mm Input Data " + mm.getValue());
-        }
         int size = rHashMap.size()/2;
         long smallParticle = Long.parseLong(small_particle.getText().toString().trim());
         long largeParticle = Long.parseLong(large_particle.getText().toString().trim());
         for (int i = 0; i < txtViewList.size(); i++) {
             TextView tvl = txtViewList.get(i);
             //tvl.setText(rHashMap.get(tvl.getId()) + "");
-            Log.d("Saurabh"," Saurabh txtViewList ID "+tvl.getId());
             long inputValue = rHashMap.get(tvl.getId());
             tvl.setText( inputValue+ "");
 
@@ -231,16 +227,13 @@ public class RDPCTUserEntryActivity extends AppCompatActivity {
 
                 //Receiving Result Data from Bundle
         averageResultHashMap = (HashMap<Integer, Long>) getIntent().getSerializableExtra("ResultData");
-        for (Map.Entry kk : averageResultHashMap.entrySet()) {
-            Log.v(TAG, " kk.getKey() "+kk.getKey() + "kk Avg. Data " + kk.getValue());
-        }
         int resultListSize = resultTextViewList.size();
         for (int i = 0; i < resultListSize; i++) {
             TextView tvl = resultTextViewList.get(i);
             long resultValue = averageResultHashMap.get(tvl.getId());
             tvl.setText( resultValue+ "");
 //Validating result value
-            if(tvl.getId()<(resultListSize/2)){
+            if(tvl.getId()<1+(resultListSize/2)){
                 if(resultValue > smallParticle )
                     tvl.setTextColor(Color.RED);
             }else{
