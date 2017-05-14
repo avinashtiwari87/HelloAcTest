@@ -368,6 +368,7 @@ public class RDRCTPostViewActivity extends AppCompatActivity {
         aerosol_gen_rct = (TextView) findViewById(R.id.aerosol_gen_rct);
         equipmentLable = (TextView) findViewById(R.id.equiment_name_text);
         equipmentNoLable = (TextView) findViewById(R.id.equiment_no_text);
+        ahuNo = (TextView) findViewById(R.id.ahu_no);
         if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
             headerText2.setVisibility(View.VISIBLE);
             headerText.setText("TEST RAW DATA (RD_RCT)");
@@ -377,7 +378,6 @@ public class RDRCTPostViewActivity extends AppCompatActivity {
             findViewById(R.id.ahu_no_lable).setVisibility(View.VISIBLE);
             ahuNoText = (TextView) findViewById(R.id.ahu_no_text);
             ahuNoText.setVisibility(View.VISIBLE);
-            ahuNo = (TextView) findViewById(R.id.ahu_no);
             ahuNo.setVisibility(View.VISIBLE);
         }else{
             headerText2.setVisibility(View.VISIBLE);
