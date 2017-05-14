@@ -165,6 +165,9 @@ public class RDPCTUserEntryActivity extends AppCompatActivity {
         mTestBasedOn = getIntent().getStringExtra("testBasedOn");
         testType = getIntent().getStringExtra("testType");
         Log.d(TAG, " mTestCode : " + mTestCode+" mTestBasedOn "+mTestBasedOn+" cols "+testType);
+        if("EQUIPMENT".equalsIgnoreCase(mTestBasedOn)){
+            rows = rows+1;
+        }
 
         //dynamic data population
         getExtraFromTestCreateActivity(savedInstanceState);

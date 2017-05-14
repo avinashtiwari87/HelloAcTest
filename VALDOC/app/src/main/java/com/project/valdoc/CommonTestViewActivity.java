@@ -1199,6 +1199,7 @@ public class CommonTestViewActivity extends AppCompatActivity {
         if (testType != null && (testType.contains("AV") || testType.contains("AF"))) {
             findViewById(R.id.test_table_1_header_l_ll).setVisibility(View.GONE);
             TextView TestHeader = (TextView) findViewById(R.id.common_header_tv);
+            findViewById(R.id.test1_reading_header).setVisibility(View.VISIBLE);
         }
         TextView TestHeader = (TextView) findViewById(R.id.common_header_tv);
         TextView TestHeader2 = (TextView) findViewById(R.id.common_header_2_tv);
