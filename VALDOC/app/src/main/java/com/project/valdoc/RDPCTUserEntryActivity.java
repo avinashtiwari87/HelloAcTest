@@ -747,10 +747,11 @@ public class RDPCTUserEntryActivity extends AppCompatActivity {
             //v1,v2....value cration
             StringBuilder sb = new StringBuilder();
             for (int j = 0; j < cols; j++) {
-                if (j != 0)
+                if (j != 0 && rHashMap.get(hasMapKey) != null){
                     sb.append(',');
-                sb.append(rHashMap.get(hasMapKey).toString());
-                hasMapKey++;
+                    sb.append(rHashMap.get(hasMapKey).toString());
+                    hasMapKey++;
+                }
             }
             grilList.append(sb).append(",").append(averageResultHashMap.get(i));
             testReading.setValue("" + grilList.toString());

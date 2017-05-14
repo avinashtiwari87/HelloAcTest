@@ -16,8 +16,7 @@
             android:scrollbarAlwaysDrawVerticalTrack="true"
             android:scrollbarFadeDuration="5"
             android:scrollbarStyle="outsideOverlay"
-            android:layout_weight="1"
-            tools:context="com.project.valdoc.RDACPHhUserEntryActivity">
+            android:layout_weight="1">
 
             <RelativeLayout
                 android:layout_width="match_parent"

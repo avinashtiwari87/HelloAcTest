@@ -20,6 +20,8 @@
     <ScrollView
         android:layout_below="@+id/header_sunc_data"
         android:layout_above="@+id/select_all_checkbox"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="30dp"
         android:layout_width="wrap_content"
         android:scrollbars="vertical"
         android:scrollbarStyle="insideOverlay"
@@ -121,6 +123,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textStyle="bold"
+        android:textSize="20sp"
         android:layout_above="@+id/sync_selected_button"
         android:layout_alignStart="@+id/header_sunc_data"
         android:id="@+id/select_all_checkbox" />

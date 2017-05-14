@@ -166,7 +166,7 @@ public class RDPCTPostViewActivity extends AppCompatActivity {
         tvs.setEms(Utilityies.getPctCellEms(cols));
         tvs.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
         row1.addView(tvs);
-
+        test5_tableLayout2_2.addView(row1);
         //Second section
         // outer for loop
         for (int i = 1; i <= rows; i++) {
