@@ -240,8 +240,6 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
         certificateNo = (TextView) findViewById(R.id.trd_no);
         instrumentUsed = (TextView) findViewById(R.id.instrumentused);
 
-//        make = (TextView) findViewById(R.id.make);
-//        model = (TextView) findViewById(R.id.modle);
         instrumentSerialNo = (TextView) findViewById(R.id.instrumentserialno);
         calibrationOn = (TextView) findViewById(R.id.calibratedon);
         calibrationDueOn = (TextView) findViewById(R.id.calibrationdueon);
@@ -249,8 +247,6 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
         plantName = (TextView) findViewById(R.id.plantname);
         areaOfTest = (TextView) findViewById(R.id.areaoftest);
 
-//        roomNameLable = (TextView) findViewById(R.id.ahu_no_lable);
-//        roomNameLable.setText(getResources().getString(R.string.room_name));
         roomName = (TextView) findViewById(R.id.room_name);
         roomNo = (TextView) findViewById(R.id.room_no);
         equipmentName = (TextView) findViewById(R.id.equiment_name);
@@ -294,18 +290,8 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
                 } else {
                     Toast.makeText(RDAV5UserEntryActivity.this, "Data not saved", Toast.LENGTH_LONG).show();
                 }
-
-//                mValdocDatabaseHandler.insertTestSpesificationValue(ValdocDatabaseHandler.TESTSPECIFICATIONVALUE_TABLE_NAME, testSpesificationValueDataCreation());
             }
         });
-
-//        dateTextView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                // On button click show datepicker dialog
-//                showDialog(DATE_PICKER_ID);
-//            }
-//        });
     }
 
     @Override
@@ -341,15 +327,11 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
     private void textViewValueAssignment() {
         if (loginUserType.equals("CLIENT")) {
             instrumentUsed.setText(clientInstrument.getcInstrumentName());
-//            make.setText(clientInstrument.getMake());
-//            model.setText(clientInstrument.getModel());
             instrumentSerialNo.setText("" + clientInstrument.getSerialNo());
             calibrationOn.setText(Utilityies.parseDateToddMMyyyy(clientInstrument.getLastCalibrated()));
             calibrationDueOn.setText(Utilityies.parseDateToddMMyyyy(clientInstrument.getCalibrationDueDate()));
         } else {
             instrumentUsed.setText(partnerInstrument.getpInstrumentName());
-//            make.setText(partnerInstrument.getMake());
-//            model.setText(partnerInstrument.getModel());
             instrumentSerialNo.setText("" + partnerInstrument.getpInstrumentId());
             calibrationOn.setText(Utilityies.parseDateToddMMyyyy(partnerInstrument.getLastCalibrationDate()));
             calibrationDueOn.setText(Utilityies.parseDateToddMMyyyy(partnerInstrument.getCalibrationDueDate()));
@@ -501,9 +483,7 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
     private void getExtraFromTestCreateActivity(Bundle savedInstanceState) {
         if (savedInstanceState == null) {
             Bundle extras = getIntent().getExtras();
-            Log.d("valdoc", "DynamicTableActivity" + "onresume rows= getextra start");
             if (extras == null) {
-                Log.d("valdoc", "DynamicTableActivity" + "onresume rows=extra null");
                 loginUserType = null;
                 clientInstrument = null;
                 partnerInstrument = null;
@@ -548,13 +528,6 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
                     mAhuFilterArrayList = (ArrayList<AhuFilter>) extras.getSerializable("FILTERLIST");
                     mApplicableTestAhu = (ApplicableTestAhu) extras.getSerializable("ApplicableTestAhu");
                 }
-//                //get filter list from equipment filter
-//                filterList = new String[extras.getStringArray("FILTERLIST").length];
-//                filterList = extras.getStringArray("FILTERLIST");
-//                Log.d("valdoc", "DynamicTableActivity" + "onresume rows=filterList=" + filterList.length);
-//                //get area based on room area id
-//                applicableTestEquipmentLocation = extras.getInt("LOCATION");
-//                Log.d("valdoc", "DynamicTableActivity" + "onresume rows=applicableTestEquipmentLocation" + applicableTestEquipmentLocation);
             }
         }
 
@@ -566,7 +539,6 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
         // outer for loop
         for (int i = 1; i <= rows; i++) {
             TableRow row = getTableRow(this);
-
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
@@ -585,26 +557,19 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
                         } else {
                             row.addView(addTextView(mEquipmentFilterArrayList.get(i - 2).getFilterCode()));
                         }
-
                     }
-//                    row.addView(addTextView("QC/DGC/HF/0" + i));
                 }
-
             }
-
             table_layout.addView(row);
         }
 
         //Second section
         // outer for loop
         for (int i = 1; i <= rows; i++) {
-
             TableRow row = getTableRow(this);
-
             // inner for loop
             for (int j = 1; j <= cols; j++) {
                 if (i == 1 && j <= cols) {
-                    //row.addView(addTextView(" V " + j));
                     TextView grillTV = addTextView(" V " + j);
                     ViewGroup.LayoutParams params = grillTV.getLayoutParams();
                     params.height = getResources().getDimensionPixelSize(R.dimen.common_text_cell_height);
@@ -685,11 +650,9 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
         tv.setPadding(15,0,15,0);
         tv.setBackgroundResource(R.drawable.border1);
         tv.setGravity(Gravity.CENTER);
-        //tv.setPadding(5, 5, 5, 5);
         tv.setTextColor(getResources().getColor(R.color.black));
         tv.setTextSize(getResources().getDimension(R.dimen.normal_text_size));
         tv.setGravity(Gravity.CENTER);
-        //tv.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD);
         tv.setSingleLine(false);
         tv.setMaxLines(3);
         tv.setEllipsize(TextUtils.TruncateAt.END);
@@ -698,7 +661,6 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
     }
 
     int idCountEtv = 200;
-
     private TextView addInputDataTextView() {
         TextView tv = new TextView(this);
         tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
@@ -713,7 +675,6 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
         tv.setTextColor(getResources().getColor(R.color.black));
         tv.setTextSize(getResources().getDimension(R.dimen.normal_text_size));
         tv.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
-        //tv.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD);
         tv.setId(idCountEtv);
         tv.setGravity(Gravity.CENTER);
         tv.setSingleLine(false);
@@ -726,7 +687,6 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
     }
 
     int idCountTv = 1;
-
     private TextView addResultTextView(int rowsNo) {
         TextView tv = new TextView(this);
         tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
@@ -758,15 +718,12 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
         TextView tv = new TextView(this);
         tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
                 TableRow.LayoutParams.WRAP_CONTENT));
-        //tv.setBackgroundResource(R.drawable.border);
         tv.setPadding(5, 5, 5, 5);
         tv.setTextColor(getResources().getColor(R.color.black));
         tv.setTextSize(getResources().getDimension(R.dimen.normal_text_size));
         tv.setGravity(Gravity.CENTER);
-        //tv.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD);
         tv.setSingleLine(true);
         tv.setEllipsize(TextUtils.TruncateAt.END);
-        //tv.setText(textValue);
         return tv;
     }
 
@@ -778,8 +735,6 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
         editTv.setPadding(5, 5, 5, 5);
         editTv.setTextColor(getResources().getColor(R.color.black));
         editTv.setGravity(Gravity.CENTER);
-        // editTv.setTextSize(getResources().getDimension(R.dimen.normal_text_size));
-        //editTv.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD);
         editTv.setEms(3);
         editTv.setSingleLine(true);
         editTv.setEllipsize(TextUtils.TruncateAt.END);
@@ -787,7 +742,6 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
     }
 
     int idPassFailTv = 300;
-
     private TextView addTextPassFail(String textValue, int tagRows) {
         TextView tv = new TextView(this);
         tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
@@ -801,7 +755,6 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
         tv.setGravity(Gravity.CENTER);
         tv.setTextColor(getResources().getColor(R.color.black));
         tv.setTextSize(getResources().getDimension(R.dimen.normal_text_size));
-        //tv.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD);
         tv.setSingleLine(false);
         tv.setTag(tagRows);
         tv.setId(idPassFailTv);
@@ -834,7 +787,6 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
 
     int idCounts = 200, inputTxtCount = 0;
     private void getInputDataValidationByTestSpecification(int minValue, int maxValue) {
-        Log.d(TAG, " rows " + rows + " cols " + cols);
         for (int i = 1; i <= rows - 1; i++) {
             for (int j = 0; j < cols; j++) {
                 Log.d(TAG, " IdCounts " + idCounts + " inputTxtCount " + inputTxtCount);

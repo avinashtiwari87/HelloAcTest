@@ -366,35 +366,35 @@ public class CommonTestViewActivity extends AppCompatActivity {
         //first section
         // outer for loop
         for (int i = 1; i <= rows; i++) {
-            TableRow row = new TableRow(this);
-            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
-                    TableRow.LayoutParams.WRAP_CONTENT));
-
+            TableRow row = getTableRow(this);
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
-                    row.addView(addTextView("Grill/Filter ID"));
+                    TextView grillTV = addTextView("Grille / Filter ID");
+                    ViewGroup.LayoutParams params = grillTV.getLayoutParams();
+                    params.height = getResources().getDimensionPixelSize(R.dimen.common_txt_header_height);
+                    grillTV.setLayoutParams(params);
+                    row.addView(grillTV);
                 } else {
                     row.addView(addGridTextView(""));
                 }
 
             }
-
             table_layout.addView(row);
         }
 
         //Second section
         // outer for loop
         for (int i = 1; i <= rows; i++) {
-
-            TableRow row = new TableRow(this);
-            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
-                    TableRow.LayoutParams.WRAP_CONTENT));
-
+            TableRow row = getTableRow(this);
             // inner for loop
             for (int j = 1; j <= cols; j++) {
                 if (i == 1 && j <= cols) {
-                    row.addView(addTextView(" V " + j));
+                    TextView grillTV = addTextView(" V " + j);
+                    ViewGroup.LayoutParams params = grillTV.getLayoutParams();
+                    params.height = getResources().getDimensionPixelSize(R.dimen.common_text_cell_height);
+                    grillTV.setLayoutParams(params);
+                    row.addView(grillTV);
                 } else {
                     //text view for user input
                     row.addView(addInputDataTextView());
@@ -407,13 +407,15 @@ public class CommonTestViewActivity extends AppCompatActivity {
         //third section
         // outer for loop
         for (int i = 1; i <= rows; i++) {
-            TableRow row = new TableRow(this);
-            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
-                    TableRow.LayoutParams.WRAP_CONTENT));
+            TableRow row = getTableRow(this);
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
-                    row.addView(addTextView("Avg. Airflow Velocity(fpm)"));
+                    TextView grillTV = addTextView("Avg. Airflow Velocity\n(fpm)");
+                    ViewGroup.LayoutParams params = grillTV.getLayoutParams();
+                    params.height = getResources().getDimensionPixelSize(R.dimen.common_txt_header_height);
+                    grillTV.setLayoutParams(params);
+                    row.addView(grillTV);
                 } else {
                     //result data  set
                     row.addView(addResultTextView(i));
@@ -425,13 +427,15 @@ public class CommonTestViewActivity extends AppCompatActivity {
         //fourth section
         // outer for loop
         for (int i = 1; i <= rows; i++) {
-            TableRow row = new TableRow(this);
-            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
-                    TableRow.LayoutParams.WRAP_CONTENT));
+            TableRow row = getTableRow(this);
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
-                    row.addView(addTextView(" Result "));
+                    TextView grillTV = addTextView(" Result ");
+                    ViewGroup.LayoutParams params = grillTV.getLayoutParams();
+                    params.height = getResources().getDimensionPixelSize(R.dimen.common_txt_header_height);
+                    grillTV.setLayoutParams(params);
+                    row.addView(grillTV);
                 } else {
                     //row.addView(addTextView(" PASS "));
                     row.addView(addTextPassFail(" ", i));
@@ -439,12 +443,19 @@ public class CommonTestViewActivity extends AppCompatActivity {
             }
             table_layout4.addView(row);
         }
-
         //dismiss progressbar
         if (pr.isShowing())
             pr.dismiss();
-
     }
+
+    private TableRow getTableRow(Context context){
+        TableRow row = new TableRow(context);
+        row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
+                TableRow.LayoutParams.WRAP_CONTENT));
+        return row;
+    }
+
+
 
     private void BuildTableTest2(int rows, int cols) {
         //first section
@@ -980,15 +991,12 @@ public class CommonTestViewActivity extends AppCompatActivity {
         TextView tv = new TextView(this);
         tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
                 TableRow.LayoutParams.WRAP_CONTENT));
-        //tv.setBackgroundResource(R.drawable.border);
         tv.setPadding(5, 5, 5, 5);
         tv.setTextColor(getResources().getColor(R.color.black));
         tv.setTextSize(getResources().getDimension(R.dimen.normal_text_size));
-        //tv.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD);
+        tv.setGravity(Gravity.CENTER);
         tv.setSingleLine(true);
         tv.setEllipsize(TextUtils.TruncateAt.END);
-        txtViewWithoutBorderList.add(tv);
-        tv.setText(s);
         return tv;
     }
 
@@ -996,13 +1004,16 @@ public class CommonTestViewActivity extends AppCompatActivity {
         TextView tv = new TextView(this);
         tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
                 TableRow.LayoutParams.WRAP_CONTENT));
+
+        ViewGroup.LayoutParams layoutParams = tv.getLayoutParams();
+        layoutParams.height = getResources().getDimensionPixelSize(R.dimen.common_text_cell_height);
+        tv.setLayoutParams(layoutParams);
+        tv.setPadding(15,0,15,0);
         tv.setBackgroundResource(R.drawable.border1);
         tv.setGravity(Gravity.CENTER);
-        //tv.setPadding(5, 5, 5, 5);
         tv.setTextColor(getResources().getColor(R.color.black));
         tv.setTextSize(getResources().getDimension(R.dimen.normal_text_size));
         tv.setGravity(Gravity.CENTER);
-        //tv.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD);
         tv.setSingleLine(false);
         tv.setMaxLines(3);
         tv.setEllipsize(TextUtils.TruncateAt.END);
@@ -1014,13 +1025,16 @@ public class CommonTestViewActivity extends AppCompatActivity {
         TextView tv = new TextView(this);
         tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
                 TableRow.LayoutParams.WRAP_CONTENT));
+
+        ViewGroup.LayoutParams layoutParams = tv.getLayoutParams();
+        layoutParams.height = getResources().getDimensionPixelSize(R.dimen.common_text_cell_height);
+        tv.setLayoutParams(layoutParams);
+        tv.setPadding(15,0,15,0);
         tv.setBackgroundResource(R.drawable.border1);
         tv.setGravity(Gravity.CENTER);
-        //tv.setPadding(5, 5, 5, 5);
         tv.setTextColor(getResources().getColor(R.color.black));
         tv.setTextSize(getResources().getDimension(R.dimen.normal_text_size));
         tv.setGravity(Gravity.CENTER);
-        //tv.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD);
         tv.setSingleLine(false);
         tv.setMaxLines(3);
         tv.setEllipsize(TextUtils.TruncateAt.END);
@@ -1030,17 +1044,20 @@ public class CommonTestViewActivity extends AppCompatActivity {
     }
 
     int idCountEtv = 200;
-
     private TextView addInputDataTextView() {
         TextView tv = new TextView(this);
         tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
                 TableRow.LayoutParams.WRAP_CONTENT));
+
+        ViewGroup.LayoutParams layoutParams = tv.getLayoutParams();
+        layoutParams.height = getResources().getDimensionPixelSize(R.dimen.common_text_cell_height);
+        tv.setLayoutParams(layoutParams);
+
         tv.setBackgroundResource(R.drawable.border1);
-        //tv.setPadding(5, 5, 5, 5);
+        tv.setGravity(Gravity.CENTER);
         tv.setTextColor(getResources().getColor(R.color.black));
         tv.setTextSize(getResources().getDimension(R.dimen.normal_text_size));
         tv.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
-        //tv.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD);
         tv.setId(idCountEtv);
         tv.setGravity(Gravity.CENTER);
         tv.setSingleLine(false);
@@ -1049,21 +1066,23 @@ public class CommonTestViewActivity extends AppCompatActivity {
         tv.setEllipsize(TextUtils.TruncateAt.END);
         idCountEtv++;
         txtViewList.add(tv);
-        Log.d(TAG, "CodeFlow idCountEtv " + idCountEtv);
         return tv;
     }
 
     int idPassFailTv = 300;
-
     private TextView addTextPassFail(String textValue, int tagRows) {
         TextView tv = new TextView(this);
         tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
                 TableRow.LayoutParams.WRAP_CONTENT));
         tv.setBackgroundResource(R.drawable.border1);
-        //tv.setPadding(5, 5, 5, 5);
+
+        ViewGroup.LayoutParams layoutParams = tv.getLayoutParams();
+        layoutParams.height = getResources().getDimensionPixelSize(R.dimen.common_text_cell_height);
+        tv.setLayoutParams(layoutParams);
+
+        tv.setGravity(Gravity.CENTER);
         tv.setTextColor(getResources().getColor(R.color.black));
         tv.setTextSize(getResources().getDimension(R.dimen.normal_text_size));
-        //tv.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD);
         tv.setSingleLine(false);
         tv.setTag(tagRows);
         tv.setId(idPassFailTv);
@@ -1077,13 +1096,17 @@ public class CommonTestViewActivity extends AppCompatActivity {
     }
 
     int idCountTv = 1;
-
     private TextView addResultTextView(int rowsNo) {
         TextView tv = new TextView(this);
         tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
                 TableRow.LayoutParams.WRAP_CONTENT));
         tv.setBackgroundResource(R.drawable.border);
-        tv.setPadding(5, 6, 5, 6);
+
+        ViewGroup.LayoutParams layoutParams = tv.getLayoutParams();
+        layoutParams.height = getResources().getDimensionPixelSize(R.dimen.common_text_cell_height);
+        tv.setLayoutParams(layoutParams);
+
+        tv.setPadding(5, 4, 5, 5);
         tv.setTextColor(getResources().getColor(R.color.black));
         tv.setTextSize(getResources().getDimension(R.dimen.normal_text_size));
         tv.setGravity(Gravity.CENTER);

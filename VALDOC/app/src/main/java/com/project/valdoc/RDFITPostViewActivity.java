@@ -11,6 +11,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TableLayout;
@@ -137,7 +138,11 @@ public class RDFITPostViewActivity extends AppCompatActivity {
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
-                    row.addView(addTextView(" Filter No \n         "));
+                    TextView grillTV = addTextView("Filter No");
+                    ViewGroup.LayoutParams params = grillTV.getLayoutParams();
+                    params.height = getResources().getDimensionPixelSize(R.dimen.common_txt_header_height1);
+                    grillTV.setLayoutParams(params);
+                    row.addView(grillTV);
                 } else {
                     if (null != testReadingArrayList && testReadingArrayList.size() > 0) {
                         row.addView(addTextView(testReadingArrayList.get(i - 2).getEntityName()));
@@ -159,7 +164,11 @@ public class RDFITPostViewActivity extends AppCompatActivity {
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
-                    row.addView(addTextView(" Average \nbefore Scanning "));
+                    TextView grillTV = addTextView("Average before Scanning(%)");
+                    ViewGroup.LayoutParams params = grillTV.getLayoutParams();
+                    params.height = getResources().getDimensionPixelSize(R.dimen.common_txt_header_height);
+                    grillTV.setLayoutParams(params);
+                    row.addView(grillTV);
                 } else {
                     if("ROOM".equalsIgnoreCase(mTestBasedOn)){
                         spiltValue = testReadingArrayList.get(i-2).getValue().split(",");
@@ -183,7 +192,11 @@ public class RDFITPostViewActivity extends AppCompatActivity {
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
-                    row.addView(addTextView(" Average \nAfter Scanning"));
+                    TextView grillTV = addTextView("Average After Scanning(%)");
+                    ViewGroup.LayoutParams params = grillTV.getLayoutParams();
+                    params.height = getResources().getDimensionPixelSize(R.dimen.common_txt_header_height);
+                    grillTV.setLayoutParams(params);
+                    row.addView(grillTV);
                 } else {
                     if("ROOM".equalsIgnoreCase(mTestBasedOn)){
                         spiltValue = testReadingArrayList.get(i - 2).getValue().split(",");
@@ -206,7 +219,11 @@ public class RDFITPostViewActivity extends AppCompatActivity {
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
-                    row.addView(addTextView(" Variation \nin Concentration"));
+                    TextView grillTV = addTextView("Variation in Concentration");
+                    ViewGroup.LayoutParams params = grillTV.getLayoutParams();
+                    params.height = getResources().getDimensionPixelSize(R.dimen.common_txt_header_height);
+                    grillTV.setLayoutParams(params);
+                    row.addView(grillTV);
                 } else {
                     if("ROOM".equalsIgnoreCase(mTestBasedOn)){
                         spiltValue = testReadingArrayList.get(i-2).getValue().split(",");
@@ -229,7 +246,11 @@ public class RDFITPostViewActivity extends AppCompatActivity {
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
-                    row.addView(addTextView(" Obtained Leakage \n(% Leakage)"));
+                    TextView grillTV = addTextView("Obtained Leakage \n(% Leakage)");
+                    ViewGroup.LayoutParams params = grillTV.getLayoutParams();
+                    params.height = getResources().getDimensionPixelSize(R.dimen.common_txt_header_height1);
+                    grillTV.setLayoutParams(params);
+                    row.addView(grillTV);
                 } else {
                     spiltValue = testReadingArrayList.get(i-2).getValue().split(",");
                     row.addView(addTextView(spiltValue[spiltValue.length-2]+ ""));
@@ -248,7 +269,11 @@ public class RDFITPostViewActivity extends AppCompatActivity {
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
-                    row.addView(addTextView(" Test Results\n(Passed / Not Passed)"));
+                    TextView grillTV = addTextView("Test Results\n(Pass/Fail)");
+                    ViewGroup.LayoutParams params = grillTV.getLayoutParams();
+                    params.height = getResources().getDimensionPixelSize(R.dimen.common_txt_header_height1);
+                    grillTV.setLayoutParams(params);
+                    row.addView(grillTV);
                 } else {
                     spiltValue = testReadingArrayList.get(i-2).getValue().split(",");
                     row.addView(addTextView(spiltValue[spiltValue.length-1].toString().trim()));
@@ -268,6 +293,11 @@ public class RDFITPostViewActivity extends AppCompatActivity {
         tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
                 TableRow.LayoutParams.WRAP_CONTENT));
         tv.setBackgroundResource(R.drawable.border1);
+
+        ViewGroup.LayoutParams layoutParams = tv.getLayoutParams();
+        layoutParams.height = getResources().getDimensionPixelSize(R.dimen.common_text_cell_height);
+        tv.setLayoutParams(layoutParams);
+        tv.setPadding(15,0,15,0);
         tv.setGravity(Gravity.CENTER);
         tv.setTextColor(getResources().getColor(R.color.black));
         tv.setTextSize(getResources().getDimension(R.dimen.normal_text_size));
@@ -276,11 +306,6 @@ public class RDFITPostViewActivity extends AppCompatActivity {
         tv.setMaxLines(3);
         tv.setEllipsize(TextUtils.TruncateAt.END);
         tv.setText(textValue);
-        if("PASS".equalsIgnoreCase(textValue)){
-            tv.setTextColor(ContextCompat.getColor(this, R.color.blue));
-        }else if("FAIL".equalsIgnoreCase(textValue)){
-            tv.setTextColor(ContextCompat.getColor(this, R.color.red));
-        }
         return tv;
     }
 
