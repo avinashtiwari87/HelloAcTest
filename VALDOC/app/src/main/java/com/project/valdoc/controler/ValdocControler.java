@@ -135,6 +135,7 @@ public class ValdocControler {
 
     private void postConnection(String method, JSONObject jsonDATA) {
         Log.d("valdocControler", "post data json=" + jsonDATA.toString());
+        sharedpreferences = mContext.getSharedPreferences("valdoc", Context.MODE_PRIVATE);
         HttpConnectionTask httpConnectionTask = new HttpConnectionTask(mContext, method, jsonDATA);
         baseUrl = sharedpreferences.getString("URL", "");
 //        httpConnectionTask.execute(postUrl);
