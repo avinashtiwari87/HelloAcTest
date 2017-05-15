@@ -8,7 +8,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.project.valdoc.RDACPHAVUserEntryActivity">
+    tools:context="com.project.valdoc.RDFITUserEntryActivity">
 
         <ScrollView
             android:layout_width="wrap_content"
@@ -16,8 +16,7 @@
             android:layout_weight="1"
             android:scrollbarAlwaysDrawVerticalTrack="true"
             android:scrollbarFadeDuration="5"
-            android:scrollbarStyle="outsideOverlay"
-            tools:context="com.project.valdoc.RDFITUserEntryActivity">
+            android:scrollbarStyle="outsideOverlay">
 
             <RelativeLayout
                 android:layout_width="match_parent"

@@ -165,6 +165,9 @@ public class RDPCTUserEntryActivity extends AppCompatActivity {
         mTestBasedOn = getIntent().getStringExtra("testBasedOn");
         testType = getIntent().getStringExtra("testType");
         Log.d(TAG, " mTestCode : " + mTestCode+" mTestBasedOn "+mTestBasedOn+" cols "+testType);
+        if("EQUIPMENT".equalsIgnoreCase(mTestBasedOn)){
+            rows = rows+1;
+        }
 
         //dynamic data population
         getExtraFromTestCreateActivity(savedInstanceState);
@@ -744,10 +747,11 @@ public class RDPCTUserEntryActivity extends AppCompatActivity {
             //v1,v2....value cration
             StringBuilder sb = new StringBuilder();
             for (int j = 0; j < cols; j++) {
-                if (j != 0)
+                if (j != 0 && rHashMap.get(hasMapKey) != null){
                     sb.append(',');
-                sb.append(rHashMap.get(hasMapKey).toString());
-                hasMapKey++;
+                    sb.append(rHashMap.get(hasMapKey).toString());
+                    hasMapKey++;
+                }
             }
             grilList.append(sb).append(",").append(averageResultHashMap.get(i));
             testReading.setValue("" + grilList.toString());

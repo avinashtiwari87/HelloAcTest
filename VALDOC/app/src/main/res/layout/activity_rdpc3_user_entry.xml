@@ -39,6 +39,7 @@
                     layout="@layout/pct_test_footer"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="4dp"
                     android:layout_below="@+id/test5_table_ll" />
             </RelativeLayout>
 

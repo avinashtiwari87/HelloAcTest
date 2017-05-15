@@ -85,6 +85,9 @@ public class SyncSelectedDataActivity extends AppCompatActivity implements HttpP
             BuildSyncDataTable(getTestDataByTestCode(testType).size() + 1, colos + 1);
         } else {
             findViewById(R.id.no_data_found_tv).setVisibility(View.VISIBLE);
+            findViewById(R.id.sync_selected_button).setVisibility(View.GONE);
+            findViewById(R.id.select_all_checkbox).setVisibility(View.GONE);
+
         }
     }
 

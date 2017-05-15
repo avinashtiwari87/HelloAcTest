@@ -10,6 +10,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -121,7 +122,11 @@ public class RDACPHhPostViewActivity extends AppCompatActivity {
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
-                    row.addView(addTextView(" Grille/Filter No\n "));
+                    TextView grillTV = addTextView(" Grill/Filter No ");
+                    ViewGroup.LayoutParams params = grillTV.getLayoutParams();
+                    params.height = getResources().getDimensionPixelSize(R.dimen.common_txt_header_height);
+                    grillTV.setLayoutParams(params);
+                    row.addView(grillTV);
                 } else {
                     if (null != testReadingArrayList && testReadingArrayList.size() > 0) {
                         row.addView(addTextView(testReadingArrayList.get(i - 2).getEntityName()));
@@ -136,15 +141,21 @@ public class RDACPHhPostViewActivity extends AppCompatActivity {
         //Second section
         // outer for loop
         for (int i = 1; i <= rows; i++) {
+
             TableRow row = new TableRow(this);
             row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
                     TableRow.LayoutParams.WRAP_CONTENT));
+
             // inner for loop
-            for (int j = 1; j <= 1; j++) {
-                if (i == 1 && j == 1) {
-                    row.addView(addTextView("Measured Air Flow Quantity(cfm)\n    Q1"));
+            for (int j = 1; j <= cols; j++) {
+                if (i == 1 && j <= cols) {
+                    TextView textView = addTextView(" Q " + j);
+                    textView.setEms(Utilityies.getPctCellWidth(cols));
+                    row.addView(textView);
                 } else {
-                    row.addView(addTextView(""+testReadingArrayList.get(i-2).getValue()));
+                    TextView editText = addTextView(""+testReadingArrayList.get(i-2).getValue());
+                    editText.setEms(Utilityies.getPctCellWidth(cols));
+                    row.addView(editText);
                 }
             }
             test3_table_layout2.addView(row);
@@ -157,12 +168,14 @@ public class RDACPHhPostViewActivity extends AppCompatActivity {
             row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
                     TableRow.LayoutParams.WRAP_CONTENT));
             // inner for loop
-            for (int j = 1; j <= 1; j++) {
-                if (i == 1 && j == 1) {
-                    row.addView(addTextView("Air Flow Rate(cfm)\n    (Average)"));
-                } else {
-                    row.addView(addTextView(""+testReadingArrayList.get(i-2).getValue()));
-                }
+            if (i == 1) {
+                TextView textView = addTextView(" Average ");
+                textView.setEms(8);
+                row.addView(textView);
+            }else{
+                TextView textView = addTextView(""+testReadingArrayList.get(i-2).getValue());
+                textView.setEms(8);
+                row.addView(textView);
             }
             test3_table_layout3.addView(row);
         }
@@ -209,10 +222,16 @@ public class RDACPHhPostViewActivity extends AppCompatActivity {
         TextView tv = new TextView(this);
         tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
                 TableRow.LayoutParams.WRAP_CONTENT));
+
+        ViewGroup.LayoutParams params = tv.getLayoutParams();
+        params.height = getResources().getDimensionPixelSize(R.dimen.pct_text_cell_height);
+        tv.setLayoutParams(params);
+        tv.setPadding(15,0,15,10);
         tv.setBackgroundResource(R.drawable.border1);
         tv.setGravity(Gravity.CENTER);
         tv.setTextColor(getResources().getColor(R.color.black));
         tv.setTextSize(getResources().getDimension(R.dimen.normal_text_size));
+
         //tv.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD);
         tv.setSingleLine(false);
         tv.setMaxLines(3);
