@@ -747,9 +747,11 @@ public class RDPCTUserEntryActivity extends AppCompatActivity {
             //v1,v2....value cration
             StringBuilder sb = new StringBuilder();
             for (int j = 0; j < cols; j++) {
-                if (j != 0 && rHashMap.get(hasMapKey) != null){
+                if (j != 0){
                     sb.append(',');
-                    sb.append(rHashMap.get(hasMapKey).toString());
+                    if(rHashMap.get(hasMapKey) != null){
+                        sb.append(rHashMap.get(hasMapKey).toString());
+                    }
                     hasMapKey++;
                 }
             }

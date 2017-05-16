@@ -540,7 +540,7 @@ public class SyncSelectedDataActivity extends AppCompatActivity implements HttpP
         @Override
         public void onClick(View v) {
 //            Toast.makeText(mContext, testType + "View Row : " + viewTextId + " Test", Toast.LENGTH_SHORT).show();
-            if (testType != null && testType.contains("ACPH_AV")) {
+            if (testType != null && (testType.contains("AV")||testType.contains("AF"))) {
                 Intent intent = new Intent(SyncSelectedDataActivity.this, CommonTestViewActivity.class);
                 intent.putExtra("testDetailId", testDetailList.get(viewTextId - 2).getTest_detail_id());
                 intent.putExtra("TestType", testType);

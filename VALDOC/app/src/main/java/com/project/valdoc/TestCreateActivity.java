@@ -117,6 +117,7 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
     //test name and details
     public static final String AV = "AV";
     public static final String ACPHAV = "ACPH_AV";
+    public static final String ARD_AF_AHU = "ARD_AF_AHU";
     public static final String ACPHH = "ACPH_H";
     public static final String FIT = "FIT";
     public static final String PCT = "PCT";
