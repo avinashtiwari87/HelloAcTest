@@ -156,7 +156,7 @@ public class RDACPHAVPostViewActivity extends AppCompatActivity {
         textViewValueAssignment();
         initRes();
 
-        if (mTestType.contains(TestCreateActivity.ACPHAV)) {
+        if (mTestType.contains(TestCreateActivity.ARD_AF_AHU)) {
             BuildTableTest2(testReadingArrayList.size() + 1, spiltValue.length - 3);
         }
 

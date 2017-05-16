@@ -235,9 +235,11 @@ public class CommonTestViewActivity extends AppCompatActivity {
                 avgresultTextViewList.get(j).setText(""+Math.round(Double.parseDouble(spiltValue[spiltValue.length-1])));
             }
             testSpesificationValues = mValdocDatabaseHandler.getTestSpecificationValueById(testDetailId+"");
-            int kk = testSpesificationValues.size()/2;
-            txtViewWithoutBorderList.get(kk).
-                    setText(" "+testSpesificationValues.get(testSpesificationValues.size()-1).getFieldValue());
+            if(testSpesificationValues.size()>0 && txtViewWithoutBorderList.size()>0){
+                int kk = testSpesificationValues.size()/2;
+                txtViewWithoutBorderList.get(kk).
+                        setText(" "+testSpesificationValues.get(testSpesificationValues.size()-1).getFieldValue());
+            }
 
         } else if (testType != null && testType.contains("ACPH_H")) {
             findViewById(R.id.test3_table_ll).setVisibility(View.VISIBLE);
@@ -467,7 +469,11 @@ public class CommonTestViewActivity extends AppCompatActivity {
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
-                    row.addView(addTextView(" Grill / Filter ID "));
+                    TextView grillTV = addTextView(" Grill/Filter No ");
+                    ViewGroup.LayoutParams params = grillTV.getLayoutParams();
+                    params.height = getResources().getDimensionPixelSize(R.dimen.common_txt_header_height);
+                    grillTV.setLayoutParams(params);
+                    row.addView(grillTV);
                 } else {
                     row.addView(addGridTextView(""));
 //                    row.addView(addTextView("AHU 2031/0.3MICRON/" + i));
@@ -487,7 +493,11 @@ public class CommonTestViewActivity extends AppCompatActivity {
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
-                    row.addView(addTextView(" Grill / Filter Area(ft2)\n A "));
+                    TextView grillTV = addTextView(" Grill/Filter Area(ft2)\n  A ");
+                    ViewGroup.LayoutParams params = grillTV.getLayoutParams();
+                    params.height = getResources().getDimensionPixelSize(R.dimen.common_txt_header_height);
+                    grillTV.setLayoutParams(params);
+                    row.addView(grillTV);
                 } else {
                     row.addView(addResultTextView(i));
                 }
@@ -524,7 +534,11 @@ public class CommonTestViewActivity extends AppCompatActivity {
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
-                    row.addView(addTextView(" Average Air Velocity\n (fpm) "));
+                    TextView grillTV = addTextView(" Average Air Velocity\n  (fpm) ");
+                    ViewGroup.LayoutParams params = grillTV.getLayoutParams();
+                    params.height = getResources().getDimensionPixelSize(R.dimen.common_txt_header_height);
+                    grillTV.setLayoutParams(params);
+                    row.addView(grillTV);
                 } else {
                     //result data  set
                     row.addView(addAverageResultTextView(i));
@@ -542,7 +556,11 @@ public class CommonTestViewActivity extends AppCompatActivity {
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
-                    row.addView(addTextView(" Air Flow Rate\n cfm(AxAv) "));
+                    TextView grillTV = addTextView(" Air Flow Rate\n cfm(AxAv)");
+                    ViewGroup.LayoutParams params = grillTV.getLayoutParams();
+                    params.height = getResources().getDimensionPixelSize(R.dimen.common_txt_header_height);
+                    grillTV.setLayoutParams(params);
+                    row.addView(grillTV);
                 } else {
                     row.addView(axvResultTextView(i));
                 }
@@ -560,7 +578,11 @@ public class CommonTestViewActivity extends AppCompatActivity {
             // inner for loop
             for (int j = 1; j <= 1; j++) {
                 if (i == 1 && j == 1) {
-                    row.addView(addTextView(" Total Air Flow Rate\n (cfm) "));
+                    TextView grillTV = addTextView(" Total Air Flow Rate\n (cfm) ");
+                    ViewGroup.LayoutParams params = grillTV.getLayoutParams();
+                    params.height = getResources().getDimensionPixelSize(R.dimen.common_txt_header_height);
+                    grillTV.setLayoutParams(params);
+                    row.addView(grillTV);
                 } else {
                     row.addView(addTextViewWithoutBorder(""));
                 }
@@ -1128,6 +1150,9 @@ public class CommonTestViewActivity extends AppCompatActivity {
         tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
                 TableRow.LayoutParams.WRAP_CONTENT));
         tv.setBackgroundResource(R.drawable.border);
+        ViewGroup.LayoutParams layoutParams = tv.getLayoutParams();
+        layoutParams.height = getResources().getDimensionPixelSize(R.dimen.common_text_cell_height);
+        tv.setLayoutParams(layoutParams);
         tv.setPadding(5, 6, 5, 6);
         tv.setTextColor(getResources().getColor(R.color.black));
         tv.setTextSize(getResources().getDimension(R.dimen.normal_text_size));
@@ -1150,6 +1175,9 @@ public class CommonTestViewActivity extends AppCompatActivity {
         tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
                 TableRow.LayoutParams.WRAP_CONTENT));
         tv.setBackgroundResource(R.drawable.border);
+        ViewGroup.LayoutParams layoutParams = tv.getLayoutParams();
+        layoutParams.height = getResources().getDimensionPixelSize(R.dimen.common_text_cell_height);
+        tv.setLayoutParams(layoutParams);
         tv.setPadding(5, 6, 5, 6);
         tv.setTextColor(getResources().getColor(R.color.black));
         tv.setTextSize(getResources().getDimension(R.dimen.normal_text_size));
@@ -1214,6 +1242,7 @@ public class CommonTestViewActivity extends AppCompatActivity {
             }
 
         }else if(testType != null && testType.contains("ACPH_AV")){
+            findViewById(R.id.test2_reading_header).setVisibility(View.VISIBLE);
             findViewById(R.id.acph_av_final_calc_ll).setVisibility(View.VISIBLE);
             TFRtv = (TextView) findViewById(R.id.acph_av_tfr_value_tv);
             TFTByRvTv = (TextView) findViewById(R.id.acph_av_tfrby_av_value_tv);
