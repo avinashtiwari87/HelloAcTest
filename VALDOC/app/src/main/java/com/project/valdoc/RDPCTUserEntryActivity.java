@@ -736,7 +736,8 @@ public class RDPCTUserEntryActivity extends AppCompatActivity {
     private ArrayList<TestReading> testReading() {
         ArrayList<TestReading> testReadingArrayList = new ArrayList<TestReading>();
         int hasMapKey = 200;
-        int loopRow = (rows - 1) * 2;
+//        int loopRow = (rows - 1) * 2;
+        int loopRow =rHashMap.size();
         for (int i = 1; i <= loopRow; i++) {
             TestReading testReading = new TestReading();
 //            testReading.setTestReadingID(i);
@@ -747,11 +748,11 @@ public class RDPCTUserEntryActivity extends AppCompatActivity {
             //v1,v2....value cration
             StringBuilder sb = new StringBuilder();
             for (int j = 0; j < cols; j++) {
-                if (j != 0 && rHashMap.get(hasMapKey) != null){
+                if (j != 0 && rHashMap.get(hasMapKey) != null)
                     sb.append(',');
-                    sb.append(rHashMap.get(hasMapKey).toString());
+                    sb.append(""+rHashMap.get(hasMapKey));
                     hasMapKey++;
-                }
+
             }
             grilList.append(sb).append(",").append(averageResultHashMap.get(i));
             testReading.setValue("" + grilList.toString());

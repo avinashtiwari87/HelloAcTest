@@ -89,6 +89,14 @@ public class SyncSelectedDataActivity extends AppCompatActivity implements HttpP
             findViewById(R.id.select_all_checkbox).setVisibility(View.GONE);
 
         }
+        hideTable();
+    }
+
+    private void hideTable() {
+        if(mTestBasedOn.equalsIgnoreCase("EQUIPMENT")){
+            table_layout6.setVisibility(View.GONE);
+        }
+        table_layout9.setVisibility(View.GONE);
     }
 
     private void syncTestData() {
