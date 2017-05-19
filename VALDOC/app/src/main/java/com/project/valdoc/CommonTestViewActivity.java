@@ -59,6 +59,7 @@ public class CommonTestViewActivity extends AppCompatActivity {
     ArrayList<TextView> resultTextViewList;
     ArrayList<TextView> avgresultTextViewList;
     ArrayList<TextView> axvresultTextViewList;
+    ArrayList<TextView> wBTextViewList;
     ArrayList<TextView> gridTextList;
     ArrayList<TextView> txtViewWithoutBorderList;
     TestDetails mTestDetails;
@@ -118,6 +119,7 @@ public class CommonTestViewActivity extends AppCompatActivity {
         resultTextViewList = new ArrayList<TextView>();
         avgresultTextViewList = new ArrayList<TextView>();
         axvresultTextViewList = new ArrayList<TextView>();
+        wBTextViewList = new ArrayList<TextView>();
         gridTextList = new ArrayList<TextView>();
         txtViewWithoutBorderList = new ArrayList<TextView>();
 
@@ -224,15 +226,18 @@ public class CommonTestViewActivity extends AppCompatActivity {
                 //fmgmgmgmg
                 resultTextViewList.get(j).setText(""+spiltValue[0]);
                 axvresultTextViewList.get(j).setText(""+Math.round(Double.parseDouble(spiltValue[0])*
+                        Double.parseDouble(spiltValue[spiltValue.length-2])));
+                //
+                wBTextViewList.get(j).setText(""+Math.round(Double.parseDouble(spiltValue[0])*
                         Double.parseDouble(spiltValue[spiltValue.length-1])));
 
                 // V1, v2, v3, value setup
-                for (int i = 1; i <spiltValue.length-1; i++) {
+                for (int i = 1; i <spiltValue.length-2; i++) {
                     txtViewList.get(textId).setText(""+spiltValue[i]);
                     textId++;
                 }
 
-                avgresultTextViewList.get(j).setText(""+Math.round(Double.parseDouble(spiltValue[spiltValue.length-1])));
+                avgresultTextViewList.get(j).setText(""+Math.round(Double.parseDouble(spiltValue[spiltValue.length-2])));
             }
             testSpesificationValues = mValdocDatabaseHandler.getTestSpecificationValueById(testDetailId+"");
             if(testSpesificationValues.size()>0 && txtViewWithoutBorderList.size()>0){
@@ -515,8 +520,8 @@ public class CommonTestViewActivity extends AppCompatActivity {
                     TableRow.LayoutParams.WRAP_CONTENT));
 
             // inner for loop
-            for (int j = 1; j <= cols; j++) {
-                if (i == 1 && j <= cols) {
+            for (int j = 1; j <cols; j++) {
+                if (i == 1 && j <cols) {
                     row.addView(addTextView(" V " + j + "\n "));
                 } else {
                     //row.addView(addEditTextView());
@@ -1019,6 +1024,7 @@ public class CommonTestViewActivity extends AppCompatActivity {
         tv.setGravity(Gravity.CENTER);
         tv.setSingleLine(true);
         tv.setEllipsize(TextUtils.TruncateAt.END);
+        wBTextViewList.add(tv);
         return tv;
     }
 
