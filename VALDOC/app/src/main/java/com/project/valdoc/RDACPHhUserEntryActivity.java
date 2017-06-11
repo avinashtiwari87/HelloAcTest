@@ -201,6 +201,14 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
         airChangeValue = getTFTBy60Value(totalAirFlowRate);
         TFTByRvTv.setText("" + Math.round(airChangeValue));
 
+        Boolean textColor = passFailCheckForTfrBy60(
+                Double.parseDouble(mApplicableTestRoom.getTestSpecification()),airChangeValue);
+        if(textColor){
+            TFTByRvTv.setTextColor(Color.BLUE);
+        }else{
+            TFTByRvTv.setTextColor(Color.RED);
+        }
+
         //Custom Action Bar
         ActionBar mActionBar = getSupportActionBar();
         if (mActionBar != null)
@@ -225,6 +233,15 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
         }
         Log.d(TAG, "TFR_Value : "+tfrValue);
         return tfrValue;
+    }
+
+    private boolean passFailCheckForTfrBy60(double testSpesification, double totalairflowrate) {
+        Log.d(TAG, "Test Specification : "+testSpesification);
+        if(totalairflowrate > testSpesification){
+            return true;
+        }else{
+            return false;
+        }
     }
 
     private void datePicker() {
