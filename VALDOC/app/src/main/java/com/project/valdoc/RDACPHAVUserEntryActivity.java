@@ -361,12 +361,15 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
     }
 
     private boolean colorPicker(double testSpesification, double totalairflowrate, String testBasedOn) {
+        double testSpecification_1 = 0.0d,testSpecification_2 = 0.0d;
         if (testBasedOn.equalsIgnoreCase("AHU")) {
-            testSpesification += (testSpesification * mTolarence) / 100;
+            testSpecification_1 = testSpesification+(testSpesification * mTolarence) / 100;
+            testSpecification_2 = testSpesification-(testSpesification * mTolarence) / 100;
         } else {
-            testSpesification += (testSpesification / 4);
+            testSpecification_1 = testSpesification +(testSpesification / 4);
+            testSpecification_2 = testSpesification -(testSpesification / 4);
         }
-        if (testSpesification < totalairflowrate) {
+        if (totalairflowrate > testSpecification_2 && totalairflowrate < testSpecification_1) {
             return true;
         } else {
             return false;
