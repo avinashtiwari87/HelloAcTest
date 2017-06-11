@@ -195,30 +195,36 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
             getAxAvDataValidationByAverage(variation);
         }
 
-        //Total AirFlow Rate (sum of AirFlow Rate)
-        if (totalAirFlowRateTxtList != null && totalAirFlowRateTxtList.size() > 0) {
-            int middleTxt = totalAirFlowRateTxtList.size() / 2;
-            TextView mtvl = totalAirFlowRateTxtList.get(middleTxt);
-            totalAirFlowRate = getIntent().getFloatExtra("totalAirFlowRate", 0f);
-            mtvl.setText(Math.round(totalAirFlowRate) + "");
-            TFRtv.setText(Math.round(totalAirFlowRate) + "");
-        }
-        totalAirFlowRate = getIntent().getFloatExtra("totalAirFlowRate", 0f);
+        totalAirFlowRate = getResultAverageData(averageDataHashMap);
         TFRtv.setText("" + Math.round(totalAirFlowRate));
-        //AirFlow Change
-        if (airChangeTxtList != null && airChangeTxtList.size() > 0) {
-            TextView airChangeTxt = airChangeTxtList.get(airChangeTxtList.size() / 2);
-            airChangeValue = getIntent().getIntExtra("AirChangeValue", 0);
-            airChangeTxt.setText(Math.round(airChangeValue) + "");
-            TFTByRvTv.setText("" + Math.round(airChangeValue));
-        }
-        airChangeValue = getIntent().getIntExtra("AirChangeValue", 0);
+
+        airChangeValue = getTFTBy60Value(totalAirFlowRate);
         TFTByRvTv.setText("" + Math.round(airChangeValue));
+
         //Custom Action Bar
         ActionBar mActionBar = getSupportActionBar();
         if (mActionBar != null)
             Utilityies.setCustomActionBar(RDACPHhUserEntryActivity.this, mActionBar, userName);
 
+    }
+
+    private double getTFTBy60Value(double totalAirFlowRate) {
+        double tftBy60Value = 0.0d;
+        double roomVolume = room.getVolume();
+        if(roomVolume > 0){
+            tftBy60Value = (totalAirFlowRate/roomVolume)*60;
+        }
+        Log.d(TAG, "TFRBy60_Value : "+tftBy60Value);
+        return tftBy60Value;
+    }
+
+    private long getResultAverageData(HashMap<Integer, Long> averageDataHashMap) {
+        long tfrValue = 0l;
+        for (Map.Entry k : averageDataHashMap.entrySet()) {
+            tfrValue += (long)k.getValue();
+        }
+        Log.d(TAG, "TFR_Value : "+tfrValue);
+        return tfrValue;
     }
 
     private void datePicker() {
