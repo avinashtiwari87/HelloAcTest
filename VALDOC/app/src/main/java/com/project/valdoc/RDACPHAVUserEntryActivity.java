@@ -313,7 +313,8 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
                 }
             } else if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
                 if (colorPicker(Double.parseDouble(mApplicableTestRoom.getTestSpecification()), totalAirFlowRate, mTestBasedOn)) {
-                    TFRtv.setTextColor(Color.RED);
+                    //TFRtv.setTextColor(Color.RED);
+                    TFRtv.setTextColor(Color.BLACK);
                 } else {
                     TFRtv.setTextColor(Color.BLACK);
                 }
