@@ -629,8 +629,9 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
                 if (i == 1 && j == 1) {
                     TextView grillTV = addTextView(" Grill/Filter No ");
                     ViewGroup.LayoutParams params = grillTV.getLayoutParams();
-                    params.height = getResources().getDimensionPixelSize(R.dimen.common_txt_header_height);
+                    params.height = getResources().getDimensionPixelSize(R.dimen.common_txt_header_height_h);
                     grillTV.setLayoutParams(params);
+                    grillTV.setEms(Utilityies.getPctCellWidth(cols));
                     row.addView(grillTV);
                 } else {
 
@@ -686,55 +687,25 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
         // outer for loop
         for (int i = 1; i <= rows; i++) {
             TableRow row = new TableRow(this);
-            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
-                    TableRow.LayoutParams.WRAP_CONTENT));
             // inner for loop
-            if (i == 1) {
-                TextView textView = addTextView(" Average ");
-                textView.setEms(8);
-                row.addView(textView);
-            }else{
-                TextView textView = addResultTextView(i);
-                textView.setEms(8);
-                row.addView(textView);
-            }
+                if (i == 1) {
+                    TextView textView = addTextView(" Average ");
+                    if (cols > 4){
+                        textView.setEms(3+Utilityies.getPctCellWidth(cols));
+                    }else{
+                        textView.setEms(Utilityies.getPctCellWidth(cols));
+                    }
+                    row.addView(textView);
+                }else{
+                    TextView textView = addResultTextView(i);
+                    if (cols > 4){
+                        textView.setEms(3+Utilityies.getPctCellWidth(cols));
+                    }else{
+                        textView.setEms(Utilityies.getPctCellWidth(cols));
+                    };
+                    row.addView(textView);
+                }
             test3_table_layout3.addView(row);
-        }
-
-        //Fourth section
-        // outer for loop
-        for (int i = 1; i <= rows; i++) {
-            TableRow row = new TableRow(this);
-            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
-                    TableRow.LayoutParams.WRAP_CONTENT));
-            // inner for loop
-            for (int j = 1; j <= 1; j++) {
-                if (i == 1 && j == 1) {
-                    row.addView(addTextView(" Room Volume in\n ft3(RV)"));
-                } else {
-                    //row.addView(addTextViewWithoutBorder(""+room.getVolume()));
-                    row.addView(addTextViewWithIdsNoBorder(i, 0, roomVolumeTxtList));
-                }
-            }
-            test3_table_layout4.addView(row);
-        }
-
-        //Fifth section
-        // outer for loop
-        for (int i = 1; i <= rows; i++) {
-            TableRow row = new TableRow(this);
-            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
-                    TableRow.LayoutParams.WRAP_CONTENT));
-            // inner for loop
-            for (int j = 1; j <= 1; j++) {
-                if (i == 1 && j == 1) {
-                    row.addView(addTextView("No. of Air Changes/Hr\n ((TFR/RV)x60))"));
-                } else {
-                    //row.addView(addTextViewWithoutBorder("490"));
-                    row.addView(addTextViewWithIdsNoBorder(i, 0, airChangeTxtList));
-                }
-            }
-            test3_table_layout5.addView(row);
         }
 
         //dismiss progressbar
@@ -747,7 +718,7 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
 
     private TextView addTextView(String textValue) {
         TextView tv = new TextView(this);
-        tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+        tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
                 TableRow.LayoutParams.WRAP_CONTENT));
 
         ViewGroup.LayoutParams params = tv.getLayoutParams();
@@ -795,7 +766,7 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
     int idAvgtv = 400;
     private TextView addResultTextView(int rowsNo) {
         TextView tv = new TextView(this);
-        tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+        tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
                 TableRow.LayoutParams.WRAP_CONTENT));
 
         ViewGroup.LayoutParams params = tv.getLayoutParams();
@@ -803,11 +774,9 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
         tv.setLayoutParams(params);
 
         tv.setBackgroundResource(R.drawable.border1);
-        tv.setPadding(5, 6, 5, 6);
         tv.setTextColor(getResources().getColor(R.color.black));
         tv.setTextSize(getResources().getDimension(R.dimen.normal_text_size));
         tv.setGravity(Gravity.CENTER);
-        tv.setEms(4);
         tv.setSingleLine(true);
         tv.setEllipsize(TextUtils.TruncateAt.END);
         Log.d(TAG, " idCountTv " + idAvgtv);
