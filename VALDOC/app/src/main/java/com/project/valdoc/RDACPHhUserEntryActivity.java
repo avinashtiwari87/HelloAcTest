@@ -302,16 +302,17 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
     };
 
     private void textViewValueAssignment() {
-        if (loginUserType.equals("CLIENT")) {
-            instrumentUsed.setText(clientInstrument.getcInstrumentName());
-            instrumentSerialNo.setText("" + clientInstrument.getSerialNo());
-            calibrationOn.setText(Utilityies.parseDateToddMMyyyy(clientInstrument.getLastCalibrated()));
-            calibrationDueOn.setText(Utilityies.parseDateToddMMyyyy(clientInstrument.getCalibrationDueDate()));
-        } else {
+        if (loginUserType.equalsIgnoreCase("PARTNER")) {
             instrumentUsed.setText(partnerInstrument.getpInstrumentName());
             instrumentSerialNo.setText("" + partnerInstrument.getpInstrumentId());
             calibrationOn.setText(Utilityies.parseDateToddMMyyyy(partnerInstrument.getLastCalibrationDate()));
             calibrationDueOn.setText(Utilityies.parseDateToddMMyyyy(partnerInstrument.getCalibrationDueDate()));
+        } else {
+            instrumentUsed.setText(clientInstrument.getcInstrumentName());
+            instrumentSerialNo.setText("" + clientInstrument.getSerialNo());
+            calibrationOn.setText(Utilityies.parseDateToddMMyyyy(clientInstrument.getLastCalibrated()));
+            calibrationDueOn.setText(Utilityies.parseDateToddMMyyyy(clientInstrument.getCalibrationDueDate()));
+
         }
 
         testSpecification.setText("Specified Air Change/hr NLT " + room.getAcph());
@@ -330,16 +331,18 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
 
 
         testCundoctor.setText(userName);
-        if (sharedpreferences.getString("USERTYPE", "").equalsIgnoreCase("CLIENT")) {
-            testCondoctorOrg.setText("(" + sharedpreferences.getString("CLIENTORG", "") + ")");
-            testWitnessOrg.setText("(" + sharedpreferences.getString("CLIENTORG", "") + ")");
-            customerName.setText(""+ sharedpreferences.getString("CLIENTORG", ""));
+        String clientOrg = sharedpreferences.getString("CLIENTORG", "");
+        String prtnerOrg = sharedpreferences.getString("PARTNERORG", "");
+        if (sharedpreferences.getString("USERTYPE", "").equalsIgnoreCase("PARTNER")) {
+            testCondoctorOrg.setText("(" + prtnerOrg + ")");
+            testWitnessOrg.setText("(" + clientOrg + ")");
+            customerName.setText(""+prtnerOrg);
         } else {
-            testCondoctorOrg.setText("(" + sharedpreferences.getString("PARTNERORG", "") + ")");
-            testWitnessOrg.setText("(" + sharedpreferences.getString("CLIENTORG", "") + ")");
-            customerName.setText(""+ sharedpreferences.getString("PARTNERORG", ""));
+            testCondoctorOrg.setText("(" +clientOrg+ ")");
+            testWitnessOrg.setText("(" + clientOrg + ")");
+            customerName.setText(""+ clientOrg);
         }
-         plantName.setText("from config screen");
+         plantName.setText(""+clientOrg);
         Log.d("valdoc", "RDAV5UserEnryActivity 1witness=" + witnessFirst);
         StringBuilder witness = new StringBuilder();
         witness.append(witnessFirst.toString());
@@ -552,8 +555,8 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
         testDetails.setWitnessName("" + witness);
         testDetails.setEquipmentName("");
         testDetails.setEquipmentNo("");
-        testDetails.setDiffAVinFilter(0);
-        testDetails.setDiffAVbetweenFilter(0);
+        testDetails.setDiffAVinFilter(mApplicableTestRoom.getDiffAVinFilter());
+        testDetails.setDiffAVbetweenFilter(mApplicableTestRoom.getDiffAVbetweenFilter());
         testDetails.setSamplingFlowRate("");
         testDetails.setSamplingTime("");
         testDetails.setAerosolGeneratorType("");

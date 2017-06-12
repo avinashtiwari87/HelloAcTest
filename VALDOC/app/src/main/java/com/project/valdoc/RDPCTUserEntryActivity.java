@@ -46,13 +46,13 @@ import java.util.Map;
 
 public class RDPCTUserEntryActivity extends AppCompatActivity {
     private static final String TAG = "RDPC3";
-    TextView headerText,headerText2;
+    TextView headerText, headerText2;
     //Test 5 View ...
     TableLayout test5_table_layout, test5_table_layout2, test5_table_layout2_1,
             test5_table_layout3, test5_tableLayout2_2, test5_table_layout4, test5_tableLayout4_2, test5_table_layout4_1,
             test5_table_layout5, test5_table_layout5_1, test5_table_layout3_1;
     // PCT new footer
-    TextView meanValue1_tv,small_particle,iso_class, large_particle,uclId,standerdeviationText,meanValue2_tv, stdDev1_tv, stdDev2_tv, ucl1_tv, ucl2_tv, minimumValue1_tv, minimumValue2_tv, maximumValue1_tv, maximumValue2_tv;
+    TextView meanValue1_tv, small_particle, iso_class, large_particle, uclId, standerdeviationText, meanValue2_tv, stdDev1_tv, stdDev2_tv, ucl1_tv, ucl2_tv, minimumValue1_tv, minimumValue2_tv, maximumValue1_tv, maximumValue2_tv;
     int rows, cols;
     String mTestType;
     //    ProgressDialog pr;
@@ -159,14 +159,14 @@ public class RDPCTUserEntryActivity extends AppCompatActivity {
             rows = getIntent().getIntExtra("rows", 0);
             cols = getIntent().getIntExtra("cols", 0);
             mTestType = getIntent().getStringExtra("testType");
-            Log.d(TAG, " TestType : " + mTestType+" rows "+rows+" cols "+cols);
+            Log.d(TAG, " TestType : " + mTestType + " rows " + rows + " cols " + cols);
         }
         mTestCode = getIntent().getStringExtra("testCode");
         mTestBasedOn = getIntent().getStringExtra("testBasedOn");
         testType = getIntent().getStringExtra("testType");
-        Log.d(TAG, " mTestCode : " + mTestCode+" mTestBasedOn "+mTestBasedOn+" cols "+testType);
-        if("EQUIPMENT".equalsIgnoreCase(mTestBasedOn)){
-            rows = rows+1;
+        Log.d(TAG, " mTestCode : " + mTestCode + " mTestBasedOn " + mTestBasedOn + " cols " + testType);
+        if ("EQUIPMENT".equalsIgnoreCase(mTestBasedOn)) {
+            rows = rows + 1;
         }
 
         //dynamic data population
@@ -186,61 +186,61 @@ public class RDPCTUserEntryActivity extends AppCompatActivity {
 
         //Receiving User Input Data from Bundle
         rHashMap = (HashMap<Integer, Integer>) getIntent().getSerializableExtra("InputData");
-        int size = rHashMap.size()/2;
+        int size = rHashMap.size() / 2;
         long smallParticle = Long.parseLong(small_particle.getText().toString().trim());
         long largeParticle = Long.parseLong(large_particle.getText().toString().trim());
         for (int i = 0; i < txtViewList.size(); i++) {
             TextView tvl = txtViewList.get(i);
             //tvl.setText(rHashMap.get(tvl.getId()) + "");
             long inputValue = rHashMap.get(tvl.getId());
-            tvl.setText( inputValue+ "");
+            tvl.setText(inputValue + "");
 
             //Validating input value
-            if(tvl.getId()<(200+size)){
-                if(inputValue > smallParticle )
+            if (tvl.getId() < (200 + size)) {
+                if (inputValue > smallParticle)
                     tvl.setTextColor(Color.RED);
-            }else{
-                if(inputValue > largeParticle )
+            } else {
+                if (inputValue > largeParticle)
                     tvl.setTextColor(Color.RED);
             }
         }
 
         //Finding mean and max value
-        ArrayList<Integer> arrayList1=new ArrayList<Integer>();
-        ArrayList<Integer> arrayList2=new ArrayList<Integer>();
-        int k=200;
-        for(int i=0;i<size;i++) {
-            int j=rHashMap.get(k);
+        ArrayList<Integer> arrayList1 = new ArrayList<Integer>();
+        ArrayList<Integer> arrayList2 = new ArrayList<Integer>();
+        int k = 200;
+        for (int i = 0; i < size; i++) {
+            int j = rHashMap.get(k);
             arrayList1.add(j);
             k++;
         }
-       int l=200+size;
-        for(int i=0;i<size;i++) {
-            int j=rHashMap.get(l);
+        int l = 200 + size;
+        for (int i = 0; i < size; i++) {
+            int j = rHashMap.get(l);
             arrayList2.add(j);
             l++;
         }
         Collections.sort(arrayList1);
         Collections.sort(arrayList2);
 
-        minimumValue1_tv.setText(""+arrayList1.get(0));
-        minimumValue2_tv.setText(""+arrayList2.get(0));
-        maximumValue1_tv.setText(""+arrayList1.get(arrayList1.size()-1));
-        maximumValue2_tv.setText(""+arrayList2.get(arrayList2.size()-1));
+        minimumValue1_tv.setText("" + arrayList1.get(0));
+        minimumValue2_tv.setText("" + arrayList2.get(0));
+        maximumValue1_tv.setText("" + arrayList1.get(arrayList1.size() - 1));
+        maximumValue2_tv.setText("" + arrayList2.get(arrayList2.size() - 1));
 
-                //Receiving Result Data from Bundle
+        //Receiving Result Data from Bundle
         averageResultHashMap = (HashMap<Integer, Long>) getIntent().getSerializableExtra("ResultData");
         int resultListSize = resultTextViewList.size();
         for (int i = 0; i < resultListSize; i++) {
             TextView tvl = resultTextViewList.get(i);
             long resultValue = averageResultHashMap.get(tvl.getId());
-            tvl.setText( resultValue+ "");
+            tvl.setText(resultValue + "");
 //Validating result value
-            if(tvl.getId()<1+(resultListSize/2)){
-                if(resultValue > smallParticle )
+            if (tvl.getId() < 1 + (resultListSize / 2)) {
+                if (resultValue > smallParticle)
                     tvl.setTextColor(Color.RED);
-            }else{
-                if(resultValue > largeParticle )
+            } else {
+                if (resultValue > largeParticle)
                     tvl.setTextColor(Color.RED);
             }
         }
@@ -265,39 +265,39 @@ public class RDPCTUserEntryActivity extends AppCompatActivity {
             Utilityies.setCustomActionBar(RDPCTUserEntryActivity.this, mActionBar, userName);
 
         //Pass Fail condition based on ISO-8 value from DBs
-        if(small_particle.getText().toString().trim() != null){//No. of Particles ≥ 0. 5 µm/m³
-            if(meanValue1>smallParticle){
+        if (small_particle.getText().toString().trim() != null) {//No. of Particles ≥ 0. 5 µm/m³
+            if (meanValue1 > smallParticle) {
                 meanValue1_tv.setTextColor(Color.RED);
             }
-            if(Math.round(stdDev1)>smallParticle){
+            if (Math.round(stdDev1) > smallParticle) {
                 stdDev1_tv.setTextColor(Color.RED);
             }
-            if(ucl1>smallParticle){
+            if (ucl1 > smallParticle) {
                 ucl1_tv.setTextColor(Color.RED);
             }
-            if(arrayList1.get(0)>smallParticle){
+            if (arrayList1.get(0) > smallParticle) {
                 minimumValue1_tv.setTextColor(Color.RED);
             }
-            if(arrayList1.get(arrayList1.size()-1) > smallParticle){
+            if (arrayList1.get(arrayList1.size() - 1) > smallParticle) {
                 maximumValue1_tv.setTextColor(Color.RED);
             }
         }
 
 // No. of Particles ≥ 5 µm/m³
-        if(large_particle.getText().toString().trim() != null){
-            if(meanValue2>largeParticle){
+        if (large_particle.getText().toString().trim() != null) {
+            if (meanValue2 > largeParticle) {
                 meanValue2_tv.setTextColor(Color.RED);
             }
-            if(Math.round(stdDev2)>largeParticle){
+            if (Math.round(stdDev2) > largeParticle) {
                 stdDev2_tv.setTextColor(Color.RED);
             }
-            if(ucl2>largeParticle){
+            if (ucl2 > largeParticle) {
                 ucl2_tv.setTextColor(Color.RED);
             }
-            if(arrayList2.get(0) > largeParticle){
+            if (arrayList2.get(0) > largeParticle) {
                 minimumValue2_tv.setTextColor(Color.RED);
             }
-            if(arrayList2.get(arrayList2.size()-1) > largeParticle){
+            if (arrayList2.get(arrayList2.size() - 1) > largeParticle) {
                 maximumValue2_tv.setTextColor(Color.RED);
             }
         }
@@ -365,20 +365,21 @@ public class RDPCTUserEntryActivity extends AppCompatActivity {
     };
 
     private void textViewValueAssignment() {
-        if (loginUserType.equals("CLIENT")) {
-            instrumentUsed.setText(clientInstrument.getcInstrumentName());
-            instrumentSerialNo.setText("" + clientInstrument.getSerialNo());
-            calibrationOn.setText(Utilityies.parseDateToddMMyyyy(clientInstrument.getLastCalibrated()));
-            calibrationDueOn.setText(Utilityies.parseDateToddMMyyyy(clientInstrument.getCalibrationDueDate()));
-            samplingFlowRate.setText(clientInstrument.getRange());
-//            samplingTime.setText(clientInstrument.getSamplingTime());
-        } else {
+        if (loginUserType.equalsIgnoreCase("PARTNER")) {
             instrumentUsed.setText(partnerInstrument.getpInstrumentName());
             instrumentSerialNo.setText("" + partnerInstrument.getpInstrumentId());
             calibrationOn.setText(Utilityies.parseDateToddMMyyyy(partnerInstrument.getLastCalibrationDate()));
             calibrationDueOn.setText(Utilityies.parseDateToddMMyyyy(partnerInstrument.getCalibrationDueDate()));
             samplingFlowRate.setText(partnerInstrument.getRange());
 //            samplingTime.setText(partnerInstrument.getSamplingTime());
+        } else {
+            instrumentUsed.setText(clientInstrument.getcInstrumentName());
+            instrumentSerialNo.setText("" + clientInstrument.getSerialNo());
+            calibrationOn.setText(Utilityies.parseDateToddMMyyyy(clientInstrument.getLastCalibrated()));
+            calibrationDueOn.setText(Utilityies.parseDateToddMMyyyy(clientInstrument.getCalibrationDueDate()));
+            samplingFlowRate.setText(clientInstrument.getRange());
+//            samplingTime.setText(clientInstrument.getSamplingTime());
+
         }
         testCundoctor.setText(userName);
         areaOfTest.setText(areaName);
@@ -392,18 +393,18 @@ public class RDPCTUserEntryActivity extends AppCompatActivity {
             occupancyState.setText(mApplicableTestRoom.getOccupencyState().toString());
             String samplingtime = Utilityies.getSamplingTime(mApplicableTestRoom.getTestSpecification(), samplingFlowRate.getText().toString());
             samplingTime.setText("" + samplingtime);
-            atrest_one.setText(""+mApplicableTestRoom.getOccupencyState().toString());
-            atrest_two.setText(""+mApplicableTestRoom.getOccupencyState().toString());
+            atrest_one.setText("" + mApplicableTestRoom.getOccupencyState().toString());
+            atrest_two.setText("" + mApplicableTestRoom.getOccupencyState().toString());
             cleanRoomClass.setText(" " + mApplicableTestRoom.getTestSpecification());
             iso_class.setText("" + mApplicableTestRoom.getTestSpecification());
             ///////////////
-            IsoParticleLimits isoParticleLimits=mValdocDatabaseHandler.getIsoParticle(mApplicableTestRoom.getTestSpecification());
-            if(mApplicableTestRoom.getOccupencyState().equalsIgnoreCase("at-rest")) {
-                small_particle.setText(""+isoParticleLimits.getRestSmallParticleLimit());
-                large_particle.setText(""+isoParticleLimits.getRestLargeParticleLimit());
-            }else if(mApplicableTestRoom.getOccupencyState().equalsIgnoreCase("in-operation")){
-                small_particle.setText(""+isoParticleLimits.getOperationSmallParticleLimit());
-                large_particle.setText(""+isoParticleLimits.getOperationLargeParticleLimit());
+            IsoParticleLimits isoParticleLimits = mValdocDatabaseHandler.getIsoParticle(mApplicableTestRoom.getTestSpecification());
+            if (mApplicableTestRoom.getOccupencyState().equalsIgnoreCase("at-rest")) {
+                small_particle.setText("" + isoParticleLimits.getRestSmallParticleLimit());
+                large_particle.setText("" + isoParticleLimits.getRestLargeParticleLimit());
+            } else if (mApplicableTestRoom.getOccupencyState().equalsIgnoreCase("in-operation")) {
+                small_particle.setText("" + isoParticleLimits.getOperationSmallParticleLimit());
+                large_particle.setText("" + isoParticleLimits.getOperationLargeParticleLimit());
             }
             ///UCL
             JSONObject jsonObject = null;
@@ -432,8 +433,8 @@ public class RDPCTUserEntryActivity extends AppCompatActivity {
             equipmentNo.setText(equipment.getEquipmentNo());
             occupancyState.setText(mApplicableTestEquipment.getOccupencyState());
             testRefrance.setText(mApplicableTestEquipment.getTestReference());
-            atrest_one.setText(""+mApplicableTestEquipment.getOccupencyState().toString());
-            atrest_two.setText(""+mApplicableTestEquipment.getOccupencyState().toString());
+            atrest_one.setText("" + mApplicableTestEquipment.getOccupencyState().toString());
+            atrest_two.setText("" + mApplicableTestEquipment.getOccupencyState().toString());
             roomName.setText(roomDetails[1]);
             // room no not needed
             roomNo.setText(roomDetails[2]);
@@ -444,13 +445,13 @@ public class RDPCTUserEntryActivity extends AppCompatActivity {
             cleanRoomClass.setText("" + mApplicableTestEquipment.getTestSpecification());
             iso_class.setText("" + mApplicableTestEquipment.getTestSpecification());
             ////////////////////////
-            IsoParticleLimits isoParticleLimits=mValdocDatabaseHandler.getIsoParticle(mApplicableTestEquipment.getTestSpecification());
-            if(mApplicableTestEquipment.getOccupencyState().equalsIgnoreCase("at-rest")) {
-                small_particle.setText(""+isoParticleLimits.getRestSmallParticleLimit());
-                large_particle.setText(""+isoParticleLimits.getRestLargeParticleLimit());
-            }else if(mApplicableTestEquipment.getOccupencyState().equalsIgnoreCase("in-operation")){
-                small_particle.setText(""+isoParticleLimits.getOperationSmallParticleLimit());
-                large_particle.setText(""+isoParticleLimits.getOperationLargeParticleLimit());
+            IsoParticleLimits isoParticleLimits = mValdocDatabaseHandler.getIsoParticle(mApplicableTestEquipment.getTestSpecification());
+            if (mApplicableTestEquipment.getOccupencyState().equalsIgnoreCase("at-rest")) {
+                small_particle.setText("" + isoParticleLimits.getRestSmallParticleLimit());
+                large_particle.setText("" + isoParticleLimits.getRestLargeParticleLimit());
+            } else if (mApplicableTestEquipment.getOccupencyState().equalsIgnoreCase("in-operation")) {
+                small_particle.setText("" + isoParticleLimits.getOperationSmallParticleLimit());
+                large_particle.setText("" + isoParticleLimits.getOperationLargeParticleLimit());
             }
 
             ///UCL
@@ -476,17 +477,19 @@ public class RDPCTUserEntryActivity extends AppCompatActivity {
 
             }
         }
-
-        if (sharedpreferences.getString("USERTYPE", "").equalsIgnoreCase("CLIENT")) {
-            testCondoctorOrg.setText("(" + sharedpreferences.getString("CLIENTORG", "") + ")");
-            testWitnessOrg.setText("(" + sharedpreferences.getString("CLIENTORG", "") + ")");
-            customerName.setText("" + sharedpreferences.getString("CLIENTORG", ""));
+        String clientOrg = sharedpreferences.getString("CLIENTORG", "");
+        String prtnerOrg = sharedpreferences.getString("PARTNERORG", "");
+        if (sharedpreferences.getString("USERTYPE", "").equalsIgnoreCase("PARTNER")) {
+            testCondoctorOrg.setText("(" + prtnerOrg + ")");
+            testWitnessOrg.setText("(" + clientOrg + ")");
+            customerName.setText("" + prtnerOrg);
         } else {
-            testCondoctorOrg.setText("(" + sharedpreferences.getString("PARTNERORG", "") + ")");
-            testWitnessOrg.setText("(" + sharedpreferences.getString("CLIENTORG", "") + ")");
-            customerName.setText("" + sharedpreferences.getString("PARTNERORG", ""));
+            testCondoctorOrg.setText("(" + clientOrg + ")");
+            testWitnessOrg.setText("(" + clientOrg + ")");
+            customerName.setText("" + clientOrg);
+
         }
-        plantName.setText("from config screen");
+        plantName.setText("" + clientOrg);
         Log.d("valdoc", "RDAV5UserEnryActivity 1witness=" + witnessFirst);
         StringBuilder witness = new StringBuilder();
         witness.append(witnessFirst.toString());
@@ -520,7 +523,7 @@ public class RDPCTUserEntryActivity extends AppCompatActivity {
     private void initTextView() {
         // layout data which is not in use
         atrest_one = (TextView) findViewById(R.id.atrest_one);
-        atrest_two= (TextView) findViewById(R.id.atrest_two);
+        atrest_two = (TextView) findViewById(R.id.atrest_two);
         instrumentNoTextView = (TextView) findViewById(R.id.instrument_no5);
         instrumentNoTextView.setVisibility(View.GONE);
         testerNameTextView = (TextView) findViewById(R.id.tester_name_test5);
@@ -737,7 +740,7 @@ public class RDPCTUserEntryActivity extends AppCompatActivity {
         ArrayList<TestReading> testReadingArrayList = new ArrayList<TestReading>();
         int hasMapKey = 200;
 //        int loopRow = (rows - 1) * 2;
-        int loopRow =rHashMap.size();
+        int loopRow = rHashMap.size();
         for (int i = 1; i <= loopRow; i++) {
             TestReading testReading = new TestReading();
 //            testReading.setTestReadingID(i);
@@ -750,8 +753,8 @@ public class RDPCTUserEntryActivity extends AppCompatActivity {
             for (int j = 0; j < cols; j++) {
                 if (j != 0 && rHashMap.get(hasMapKey) != null)
                     sb.append(',');
-                    sb.append(""+rHashMap.get(hasMapKey));
-                    hasMapKey++;
+                sb.append("" + rHashMap.get(hasMapKey));
+                hasMapKey++;
 
             }
             grilList.append(sb).append(",").append(averageResultHashMap.get(i));
@@ -1022,7 +1025,7 @@ public class RDPCTUserEntryActivity extends AppCompatActivity {
 
         //Fourth section
         // outer for loop
-        for (int i = 1; i <rows; i++) {
+        for (int i = 1; i < rows; i++) {
             TableRow row = new TableRow(this);
             row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
                     TableRow.LayoutParams.WRAP_CONTENT));
@@ -1220,11 +1223,11 @@ public class RDPCTUserEntryActivity extends AppCompatActivity {
     private void initRes() {
         headerText = (TextView) findViewById(R.id.common_header_tv);
         headerText2 = (TextView) findViewById(R.id.common_header_2_tv);
-        if("ROOM".equalsIgnoreCase(mTestBasedOn)){
+        if ("ROOM".equalsIgnoreCase(mTestBasedOn)) {
             headerText2.setVisibility(View.VISIBLE);
             headerText.setText("TEST RAW DATA ");
             headerText2.setText("Airborne Particle Count Test for Classification of Cleanrooms/zones and Clean Air Devices");
-        }else{
+        } else {
             headerText2.setVisibility(View.VISIBLE);
             headerText.setText("TEST RAW DATA EQUIPMENT");
             headerText2.setText("Airborne Particle Count Test for Classification of Cleanrooms/zones and Clean Air Devices");
@@ -1256,14 +1259,14 @@ public class RDPCTUserEntryActivity extends AppCompatActivity {
         stdDev2_tv = (TextView) findViewById(R.id.pct_std_dev2);
         ucl1_tv = (TextView) findViewById(R.id.pct_95_ucl_1);
         ucl2_tv = (TextView) findViewById(R.id.pct_95_ucl_2);
-        small_particle= (TextView) findViewById(R.id.small_particle);
-        large_particle= (TextView) findViewById(R.id.large_particle);
-        iso_class= (TextView) findViewById(R.id.iso_class);
+        small_particle = (TextView) findViewById(R.id.small_particle);
+        large_particle = (TextView) findViewById(R.id.large_particle);
+        iso_class = (TextView) findViewById(R.id.iso_class);
         minimumValue1_tv = (TextView) findViewById(R.id.pct_minimum_value_1);
         minimumValue2_tv = (TextView) findViewById(R.id.pct_minimum_value_2);
         maximumValue1_tv = (TextView) findViewById(R.id.pct_maximum_value_1);
         maximumValue2_tv = (TextView) findViewById(R.id.pct_maximum_value_2);
-        if(getIntent().hasExtra("testBasedOn") && "ROOM".equalsIgnoreCase(getIntent().getStringExtra("testBasedOn"))){
+        if (getIntent().hasExtra("testBasedOn") && "ROOM".equalsIgnoreCase(getIntent().getStringExtra("testBasedOn"))) {
             findViewById(R.id.ahu_no_lable).setVisibility(View.VISIBLE);
             roomNo.setVisibility(View.VISIBLE);
             findViewById(R.id.room_no_lable).setVisibility(View.VISIBLE);

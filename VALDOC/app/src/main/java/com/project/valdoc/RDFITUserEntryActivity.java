@@ -360,16 +360,17 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
     };
 
     private void textViewValueAssignment() {
-        if (loginUserType.equals("CLIENT")) {
-            instrumentUsed.setText(clientInstrument.getcInstrumentName());
-            instrumentSerialNo.setText("" + clientInstrument.getSerialNo());
-            calibrationOn.setText(Utilityies.parseDateToddMMyyyy(clientInstrument.getLastCalibrated()));
-            calibrationDueOn.setText(Utilityies.parseDateToddMMyyyy(clientInstrument.getCalibrationDueDate()));
-        } else {
+        if (loginUserType.equalsIgnoreCase("PARTNER")) {
             instrumentUsed.setText(partnerInstrument.getpInstrumentName());
             instrumentSerialNo.setText("" + partnerInstrument.getpInstrumentId());
             calibrationOn.setText(Utilityies.parseDateToddMMyyyy(partnerInstrument.getLastCalibrationDate()));
             calibrationDueOn.setText(Utilityies.parseDateToddMMyyyy(partnerInstrument.getCalibrationDueDate()));
+        } else {
+            instrumentUsed.setText(clientInstrument.getcInstrumentName());
+            instrumentSerialNo.setText("" + clientInstrument.getSerialNo());
+            calibrationOn.setText(Utilityies.parseDateToddMMyyyy(clientInstrument.getLastCalibrated()));
+            calibrationDueOn.setText(Utilityies.parseDateToddMMyyyy(clientInstrument.getCalibrationDueDate()));
+
         }
         if (mTestBasedOn.equalsIgnoreCase("EQUIPMENT")) {
             JSONObject jsonObject = null;
@@ -438,16 +439,19 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
 
         ///Common data
         testCundoctor.setText(userName);
-        if (sharedpreferences.getString("USERTYPE", "").equalsIgnoreCase("CLIENT")) {
-            testCondoctorOrg.setText("(" + sharedpreferences.getString("CLIENTORG", "") + ")");
-            testWitnessOrg.setText("(" + sharedpreferences.getString("CLIENTORG", "") + ")");
-            customerName.setText("" + sharedpreferences.getString("CLIENTORG", ""));
+        String clientOrg = sharedpreferences.getString("CLIENTORG", "");
+        String prtnerOrg = sharedpreferences.getString("PARTNERORG", "");
+        if (sharedpreferences.getString("USERTYPE", "").equalsIgnoreCase("PARTNER")) {
+            testCondoctorOrg.setText("(" + prtnerOrg + ")");
+            testWitnessOrg.setText("(" + clientOrg + ")");
+            customerName.setText("" + prtnerOrg);
         } else {
-            testCondoctorOrg.setText("(" + sharedpreferences.getString("PARTNERORG", "") + ")");
-            testWitnessOrg.setText("(" + sharedpreferences.getString("CLIENTORG", "") + ")");
-            customerName.setText("" + sharedpreferences.getString("PARTNERORG", ""));
+            testCondoctorOrg.setText("(" + clientOrg + ")");
+            testWitnessOrg.setText("(" + clientOrg + ")");
+            customerName.setText("" + clientOrg);
+
         }
-        plantName.setText("from config screen");
+        plantName.setText("" + clientOrg);
         Log.d("valdoc", "RDAV5UserEnryActivity 1witness=" + witnessFirst);
         StringBuilder witness = new StringBuilder();
         witness.append(witnessFirst.toString());
@@ -800,7 +804,7 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
                 mTestBasedOn = extras.getString("testBasedOn");
                 testType = extras.getString("testType");
                 mTestCode = extras.getString("testCode");
-                mTolarence=extras.getDouble("TOLARENCE");
+                mTolarence = extras.getDouble("TOLARENCE");
                 if (loginUserType.equals("CLIENT")) {
                     clientInstrument = (ClientInstrument) extras.getSerializable("ClientInstrument");
                 } else {
@@ -1017,7 +1021,7 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
         ViewGroup.LayoutParams layoutParams = tv.getLayoutParams();
         layoutParams.height = getResources().getDimensionPixelSize(R.dimen.common_text_cell_height);
         tv.setLayoutParams(layoutParams);
-        tv.setPadding(15,0,15,0);
+        tv.setPadding(15, 0, 15, 0);
         tv.setGravity(Gravity.CENTER);
         tv.setTextColor(getResources().getColor(R.color.black));
         tv.setTextSize(getResources().getDimension(R.dimen.normal_text_size));

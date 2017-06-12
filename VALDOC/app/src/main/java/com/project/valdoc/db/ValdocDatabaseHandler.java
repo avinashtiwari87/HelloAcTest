@@ -2143,8 +2143,10 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                     jsonObject.put(TEST_DETAILS_TESTITEM, cursor.getString(32).toString());
                     jsonObject.put(TEST_DETAILS_TESTLOCATION, cursor.getString(33).toString());
                     jsonObject.put(TEST_DETAILS_FILTERTYPEEFFICIANCY, cursor.getString(34).toString());
-                    jsonObject.put(TEST_DETAILS_ACCEPTABLERECOVERYTIME, cursor.getString(35).toString());
-                    jsonObject.put(TEST_DETAILS_TOLARANCE, cursor.getString(36).toString());
+                    jsonObject.put(TEST_DETAILS_DIFFAVINFILTER,cursor.getInt(35));
+                    jsonObject.put(TEST_DETAILS_DIFFAVBETWEENFILTER,cursor.getInt(36));
+                    jsonObject.put(TEST_DETAILS_ACCEPTABLERECOVERYTIME, cursor.getString(37).toString());
+                    jsonObject.put(TEST_DETAILS_TOLARANCE, cursor.getString(38).toString());
                     Log.d(TAG, "getCertificateData test details=" + jsonObject.toString());
                     testDetailsJsonArray.put(jsonObject);
                 } catch (Exception e) {

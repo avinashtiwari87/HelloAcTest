@@ -1634,6 +1634,7 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
                 }
                 if (pos > 0) {
                     //Creating occupancy list spiner
+                    Log.d("getahuapplicable","room");
                     getApplicationTestList();
 //                    createApplicableTestRoomList(mRoomNoArrayList.get(pos - 1).getRoomId(),);
                 }
@@ -1719,6 +1720,7 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
 
                 if (pos > 0) {
                     //Creating occupancy list spiner
+                    Log.d("getahuapplicable","ahu");
                     getApplicationTestList();
 //                    createApplicableTestRoomList(mRoomNoArrayList.get(pos - 1).getRoomId(),);
                 }
@@ -1776,6 +1778,7 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
                 }
                 if (pos > 0) {
                     //Creating occupancy list spiner
+                    Log.d("getahuapplicable","equipment");
                     getApplicationTestList();
 //                    createApplicableTestRoomList(mRoomNoArrayList.get(pos - 1).getRoomId(),);
                 }

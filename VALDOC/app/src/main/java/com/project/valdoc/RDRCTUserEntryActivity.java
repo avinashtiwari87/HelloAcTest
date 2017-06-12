@@ -248,14 +248,7 @@ public class RDRCTUserEntryActivity extends AppCompatActivity {
     };
 
     private void textViewValueAssignment() {
-        if (loginUserType.equals("CLIENT")) {
-            instrumentUsed.setText(clientInstrument.getcInstrumentName());
-            instrumentSerialNo.setText("" + clientInstrument.getSerialNo());
-            calibrationOn.setText(Utilityies.parseDateToddMMyyyy(clientInstrument.getLastCalibrated()));
-            calibrationDueOn.setText(Utilityies.parseDateToddMMyyyy(clientInstrument.getCalibrationDueDate()));
-            samplingFlowRate.setText(clientInstrument.getRange());
-//            samplingTime.setText(clientInstrument.getSamplingTime());
-        } else {
+        if (loginUserType.equalsIgnoreCase("PARTNER")) {
             instrumentUsed.setText(partnerInstrument.getpInstrumentName());
             //make.setText(partnerInstrument.getMake());
             //model.setText(partnerInstrument.getModel());
@@ -264,6 +257,14 @@ public class RDRCTUserEntryActivity extends AppCompatActivity {
             calibrationDueOn.setText(Utilityies.parseDateToddMMyyyy(partnerInstrument.getCalibrationDueDate()));
             samplingFlowRate.setText(partnerInstrument.getRange());
 //            samplingTime.setText(partnerInstrument.getSamplingTime());
+        } else {
+            instrumentUsed.setText(clientInstrument.getcInstrumentName());
+            instrumentSerialNo.setText("" + clientInstrument.getSerialNo());
+            calibrationOn.setText(Utilityies.parseDateToddMMyyyy(clientInstrument.getLastCalibrated()));
+            calibrationDueOn.setText(Utilityies.parseDateToddMMyyyy(clientInstrument.getCalibrationDueDate()));
+            samplingFlowRate.setText(clientInstrument.getRange());
+//            samplingTime.setText(clientInstrument.getSamplingTime());
+
         }
 
         initialReading.setText("" + mInitialReading);
@@ -328,16 +329,19 @@ public class RDRCTUserEntryActivity extends AppCompatActivity {
 //        roomNo.setText(room.getRoomNo().toString());
 //        ahuNo.setText(ahuNumber);
         testCundoctor.setText(userName);
-        if (sharedpreferences.getString("USERTYPE", "").equalsIgnoreCase("CLIENT")) {
-            testCondoctorOrg.setText("(" + sharedpreferences.getString("CLIENTORG", "") + ")");
-            testWitnessOrg.setText("(" + sharedpreferences.getString("CLIENTORG", "") + ")");
-            customerName.setText("" + sharedpreferences.getString("CLIENTORG", ""));
+        String clientOrg = sharedpreferences.getString("CLIENTORG", "");
+        String prtnerOrg = sharedpreferences.getString("PARTNERORG", "");
+        if (sharedpreferences.getString("USERTYPE", "").equalsIgnoreCase("PARTNER")) {
+            testCondoctorOrg.setText("(" + prtnerOrg + ")");
+            testWitnessOrg.setText("(" + clientOrg + ")");
+            customerName.setText("" + prtnerOrg);
         } else {
-            testCondoctorOrg.setText("(" + sharedpreferences.getString("PARTNERORG", "") + ")");
-            testWitnessOrg.setText("(" + sharedpreferences.getString("CLIENTORG", "") + ")");
-            customerName.setText("" + sharedpreferences.getString("PARTNERORG", ""));
+            testCondoctorOrg.setText("(" + clientOrg + ")");
+            testWitnessOrg.setText("(" + clientOrg + ")");
+            customerName.setText("" + clientOrg);
+
         }
-        plantName.setText("from config screen");
+        plantName.setText(""+clientOrg);
         Log.d("valdoc", "RDAV5UserEnryActivity 1witness=" + witnessFirst);
         StringBuilder witness = new StringBuilder();
         witness.append(witnessFirst.toString());

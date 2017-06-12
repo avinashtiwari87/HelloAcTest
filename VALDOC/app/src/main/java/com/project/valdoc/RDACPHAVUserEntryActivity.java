@@ -417,19 +417,19 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
 
     private void textViewValueAssignment() {
 
-        if (loginUserType.equals("CLIENT")) {
-            instrumentUsed.setText(clientInstrument.getcInstrumentName());
-//            make.setText(clientInstrument.getMake());
-            instrumentSerialNo.setText("" + clientInstrument.getSerialNo());
-            calibrationOn.setText(Utilityies.parseDateToddMMyyyy(clientInstrument.getLastCalibrated()));
-            calibrationDueOn.setText(Utilityies.parseDateToddMMyyyy(clientInstrument.getCalibrationDueDate()));
-        } else {
+        if (loginUserType.equalsIgnoreCase("PARTNER")) {
             instrumentUsed.setText(partnerInstrument.getpInstrumentName());
 //            make.setText(partnerInstrument.getMake());
 //            model.setText(partnerInstrument.getModel());
             instrumentSerialNo.setText("" + partnerInstrument.getpInstrumentId());
             calibrationOn.setText(Utilityies.parseDateToddMMyyyy(partnerInstrument.getLastCalibrationDate()));
             calibrationDueOn.setText(Utilityies.parseDateToddMMyyyy(partnerInstrument.getCalibrationDueDate()));
+        } else {
+            instrumentUsed.setText(clientInstrument.getcInstrumentName());
+//            make.setText(clientInstrument.getMake());
+            instrumentSerialNo.setText("" + clientInstrument.getSerialNo());
+            calibrationOn.setText(Utilityies.parseDateToddMMyyyy(clientInstrument.getLastCalibrated()));
+            calibrationDueOn.setText(Utilityies.parseDateToddMMyyyy(clientInstrument.getCalibrationDueDate()));
         }
 
         testCundoctor.setText(userName);
@@ -443,7 +443,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
             // room no not needed
             roomNo.setText(roomDetails[2]);
             ahu_equip_value.setText(ahuNumber);
-            ahuNo.setText("hello" + ahuNumber);
+            ahuNo.setText("" + ahuNumber);
             roomVolume.setText("" + roomDetails[4]);
             testItemValue.setText("" + mApplicableTestAhu.getTestItem());
         } else if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
@@ -460,16 +460,16 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
 
         String clientOrg = sharedpreferences.getString("CLIENTORG", "");
         String prtnerOrg = sharedpreferences.getString("PARTNERORG", "");
-        if (sharedpreferences.getString("USERTYPE", "").equalsIgnoreCase("CLIENT")) {
-            testCondoctorOrg.setText("(" + clientOrg + ")");
-            testWitnessOrg.setText("(" + clientOrg + ")");
-            customerName.setText("" + clientOrg);
-        } else {
+        if (sharedpreferences.getString("USERTYPE", "").equalsIgnoreCase("PARTNER")) {
             testCondoctorOrg.setText("(" + prtnerOrg + ")");
             testWitnessOrg.setText("(" + clientOrg + ")");
             customerName.setText("" + prtnerOrg);
+        } else {
+            testCondoctorOrg.setText("(" + clientOrg + ")");
+            testWitnessOrg.setText("(" + clientOrg + ")");
+            customerName.setText("" + clientOrg);
         }
-        plantName.setText("from cofig screen");
+        plantName.setText(""+clientOrg);
         Log.d("valdoc", "RDAV5UserEnryActivity 1witness=" + witnessFirst);
         StringBuilder witness = new StringBuilder();
         witness.append(witnessFirst.toString());
