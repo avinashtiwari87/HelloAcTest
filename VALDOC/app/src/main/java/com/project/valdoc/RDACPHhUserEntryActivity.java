@@ -672,11 +672,11 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
             for (int j = 1; j <= cols; j++) {
                 if (i == 1 && j <= cols) {
                     TextView textView = addTextView(" Q " + j);
-                    textView.setEms(Utilityies.getPctCellWidth(cols));
+                    textView.setEms(2+Utilityies.getPctCellWidth(cols));
                     row.addView(textView);
                 } else {
                     TextView editText = addInputDataTextView();
-                    editText.setEms(Utilityies.getPctCellWidth(cols));
+                    editText.setEms(2+Utilityies.getPctCellWidth(cols));
                     row.addView(editText);
                 }
             }

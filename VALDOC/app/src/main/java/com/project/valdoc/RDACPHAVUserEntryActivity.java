@@ -371,9 +371,9 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
             testSpecification_2 = testSpesification -(testSpesification / 4);
         }
         if (totalairflowrate > testSpecification_2 && totalairflowrate < testSpecification_1) {
-            return true;
-        } else {
             return false;
+        } else {
+            return true;
         }
     }
 
