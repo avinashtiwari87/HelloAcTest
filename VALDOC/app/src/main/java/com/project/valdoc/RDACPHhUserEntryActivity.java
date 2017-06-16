@@ -625,7 +625,7 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
         // outer for loop
         for (int i = 1; i <= rows; i++) {
             TableRow row = new TableRow(this);
-            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
                     TableRow.LayoutParams.WRAP_CONTENT));
             // inner for loop
             for (int j = 1; j <= 1; j++) {
@@ -634,14 +634,14 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
                     ViewGroup.LayoutParams params = grillTV.getLayoutParams();
                     params.height = getResources().getDimensionPixelSize(R.dimen.common_txt_header_height_h);
                     grillTV.setLayoutParams(params);
-                    grillTV.setEms(Utilityies.getPctCellWidth(cols));
+                    grillTV.setEms(8+Utilityies.getPctCellWidth(cols));
                     row.addView(grillTV);
                 } else {
 
                     if (mGrilFilterType.equalsIgnoreCase("Grill")) {
                         if (null != grillAndSizeFromGrill && grillAndSizeFromGrill.size() > 0) {
                             TextView textView = addTextView(grillAndSizeFromGrill.get(i - 2).getGrillCode().toString());
-//                            textView.setEms(Utilityies.getPctCellWidth(cols));
+                            textView.setEms(8+Utilityies.getPctCellWidth(cols));
                             row.addView(textView);
                         } else {
                             row.addView(addTextView("grillAndSizeFromGrill"));
@@ -650,7 +650,7 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
                     } else {
                         if (null != mRoomFilterArrayList && mRoomFilterArrayList.size() > 0) {
                             TextView textView = addTextView(mRoomFilterArrayList.get(i - 2).getFilterCode());
-//                            textView.setEms(Utilityies.getPctCellWidth(cols));
+                            textView.setEms(8+Utilityies.getPctCellWidth(cols));
                             row.addView(textView);
                         } else {
                             row.addView(addTextView("grillAndSizeFromGrill"));
@@ -668,18 +668,24 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
         for (int i = 1; i <= rows; i++) {
 
             TableRow row = new TableRow(this);
-            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
                     TableRow.LayoutParams.WRAP_CONTENT));
 
             // inner for loop
             for (int j = 1; j <= cols; j++) {
                 if (i == 1 && j <= cols) {
                     TextView textView = addTextView(" Q " + j);
-                    textView.setEms(2+Utilityies.getPctCellWidth(cols));
+                    if(cols>4)
+                        textView.setEms(4+Utilityies.getPctCellWidth(cols));
+                    else
+                        textView.setEms(8+Utilityies.getPctCellWidth(cols));
                     row.addView(textView);
                 } else {
                     TextView editText = addInputDataTextView();
-                    editText.setEms(2+Utilityies.getPctCellWidth(cols));
+                    if(cols>4)
+                        editText.setEms(4+Utilityies.getPctCellWidth(cols));
+                    else
+                        editText.setEms(8+Utilityies.getPctCellWidth(cols));
                     row.addView(editText);
                 }
             }
@@ -690,22 +696,22 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
         // outer for loop
         for (int i = 1; i <= rows; i++) {
             TableRow row = new TableRow(this);
+            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
+                    TableRow.LayoutParams.WRAP_CONTENT));
             // inner for loop
                 if (i == 1) {
                     TextView textView = addTextView(" Average ");
-                    if (cols > 4){
-                        textView.setEms(3+Utilityies.getPctCellWidth(cols));
-                    }else{
-                        textView.setEms(Utilityies.getPctCellWidth(cols));
-                    }
+                    if(cols>4)
+                        textView.setEms(7+Utilityies.getPctCellWidth(cols));
+                    else
+                        textView.setEms(9+Utilityies.getPctCellWidth(cols));
                     row.addView(textView);
                 }else{
                     TextView textView = addResultTextView(i);
-                    if (cols > 4){
-                        textView.setEms(3+Utilityies.getPctCellWidth(cols));
-                    }else{
-                        textView.setEms(Utilityies.getPctCellWidth(cols));
-                    };
+                    if(cols>4)
+                        textView.setEms(7+Utilityies.getPctCellWidth(cols));
+                    else
+                        textView.setEms(9+Utilityies.getPctCellWidth(cols));
                     row.addView(textView);
                 }
             test3_table_layout3.addView(row);
@@ -745,7 +751,7 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
 
     private TextView addInputDataTextView() {
         TextView tv = new TextView(this);
-        tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+        tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
                 TableRow.LayoutParams.WRAP_CONTENT));
 
         ViewGroup.LayoutParams params = tv.getLayoutParams();
@@ -792,7 +798,7 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
 
     private TextView addTextViewWithIdsNoBorder(int Tag, int ids, ArrayList<TextView> txtViewList) {
         TextView tv = new TextView(this);
-        tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+        tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
                 TableRow.LayoutParams.WRAP_CONTENT));
         tv.setGravity(Gravity.CENTER);
         tv.setPadding(5, 5, 5, 5);
