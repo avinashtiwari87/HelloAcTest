@@ -52,6 +52,8 @@
                         android:id="@+id/test3_tableLayout1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:padding="0dp"
+                        android:layout_marginBottom="2dp"
                         android:layout_marginLeft="5dp" />
 
                     <LinearLayout
@@ -97,16 +99,15 @@
                             android:id="@+id/test3_tableLayout3"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:background="@drawable/border"
-                            android:padding="0dp" />
+                            android:padding="0dp"
+                            android:background="@drawable/border" />
                     </LinearLayout>
                     <TableLayout
                         android:id="@+id/test3_tableLayout4"
                         android:paddingTop="14dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/border"
-                        android:padding="0dp" />
+                        android:background="@drawable/border" />
 
                     <TableLayout
                         android:id="@+id/test3_tableLayout5"
@@ -114,8 +115,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="5dp"
-                        android:background="@drawable/border"
-                        android:padding="0dp" />
+                        android:background="@drawable/border" />
 
 
                 </LinearLayout>
