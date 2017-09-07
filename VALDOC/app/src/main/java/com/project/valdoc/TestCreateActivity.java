@@ -1193,9 +1193,13 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
             Log.d(TAG, "TestCreateActivity :vendor" + userPartnerId);
 //            loginUserPartnerId = mValdocDatabaseHandler.getPartnerIdFromPartnerUser(appUserId);
 //            Log.d("valdoc", "TestCreateActivity :vendor loginUserPartnerId=" + loginUserPartnerId);
-            SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd");
-            String date = inputFormat.format(mTodaysDate);
-            partnerInstrumentArrayList = mValdocDatabaseHandler.getPartnerInstrumentInfo(userPartnerId, testCode, date);
+//            SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd");
+//            String date = inputFormat.format(mTodaysDate);
+            SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+            Date date = new Date();
+            String currentDate = inputFormat.format(date);
+            Log.d(TAG, "TestCreateActivity : currentDate=" + currentDate);
+            partnerInstrumentArrayList = mValdocDatabaseHandler.getPartnerInstrumentInfo(userPartnerId, testCode, currentDate);
             Log.d(TAG, "TestCreateActivity :vendor partnerInstrumentArrayList" + partnerInstrumentArrayList.size());
             for (PartnerInstrument partnerInstrument : partnerInstrumentArrayList) {
                 instrumentList.add(partnerInstrument.getSerialNo());

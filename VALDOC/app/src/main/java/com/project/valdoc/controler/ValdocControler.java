@@ -139,7 +139,7 @@ public class ValdocControler {
         HttpConnectionTask httpConnectionTask = new HttpConnectionTask(mContext, method, jsonDATA);
         baseUrl = sharedpreferences.getString("URL", "");
 //        httpConnectionTask.execute(postUrl);
-        httpConnectionTask.execute(baseUrl+postUrl);
+        httpConnectionTask.execute(baseUrl + postUrl);
     }
 
     private void getConection(String method) {
@@ -150,7 +150,7 @@ public class ValdocControler {
         String query = "";
         query = lastSyncDate.replace(" ", "%20");
 //        httpConnectionTask.execute(url + query);
-        httpConnectionTask.execute(baseUrl+url + query);
+        httpConnectionTask.execute(baseUrl + url + query);
     }
 
     public void getAllDb(int statusCode, String resultData) {
@@ -853,7 +853,10 @@ public class ValdocControler {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
 
                 user.setApp_user_id(jsonObject.optInt("app_user_id"));
-                user.setName(jsonObject.optString("fName").toString());
+                user.setfName(jsonObject.optString("fName").toString());
+                user.setmName(jsonObject.optString("mName").toString());
+                user.setlName(jsonObject.optString("lName").toString());
+                user.setUserName(jsonObject.optString("userName").toString());
                 user.setPartnerId(jsonObject.optInt("partner_id"));
                 if (jsonObject.optString("user_type").equalsIgnoreCase("PARTNER")) {
                     user.setUserType("PARTNER");
@@ -867,7 +870,9 @@ public class ValdocControler {
                 user.setIsDeleted(jsonObject.optInt("is_deleted"));
                 user.setPassword(passwordDecryption(jsonObject.optString("password").toString()));
                 user.setRoleType(jsonObject.optString("role_type").toString());
-                user.setPermissions(jsonObject.optString("permissions").toString());
+                user.setPermissions(jsonObject.optString("permissionStrAsCSV").toString());
+                user.setEmployeeId(jsonObject.optString("employeeId").toString());
+                user.setRemarks(jsonObject.optString("remarks").toString());
                 user.setLastUpdated(jsonObject.optString("last_updated").toString());
                 arrayList.add(user);
                 Log.d("valdoc", "parse user");

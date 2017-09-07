@@ -633,6 +633,8 @@ public class RDRCTUserEntryActivity extends AppCompatActivity {
 //        testDetails.setAhuNo(ahuNo.getText().toString());
         testDetails.setTesterName(testCundoctor.getText().toString());
         testDetails.setPartnerName("" + mPartnerName);
+        int partnerId = sharedpreferences.getInt("PARTNERID", 0);
+        testDetails.setPartnerId(partnerId);
         testDetails.setTestCode(mTestCode);
         testDetails.setTestSpecification("" + cleanRoomClass.getText().toString());
         StringBuilder witness = new StringBuilder();

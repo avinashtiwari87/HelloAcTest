@@ -479,25 +479,31 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
     //user table details
     public static final String USER_TABLE_NAME = "app_user";
     public static final String USER_ID = "app_user_id";
-    public static final String USER_NAME = "name";
-    public static final String USER_TYPE = "user_type";
+    public static final String USER_FNAME = "fName";
+    public static final String USER_MNAME = "mName";
+    public static final String USER_LNAME = "lName";
+    public static final String USER_USERNAME = "userName";
     public static final String USER_EMAIL = "email";
+    public static final String USER_PASSWORD = "password";
     public static final String USER_CONTACT = "contact";
     public static final String USER_DEPARTMENT = "department";
     public static final String USER_ACTIVE = "is_active";
     public static final String USER_DELETED = "is_deleted";
-    public static final String USER_PASSWORD = "password";
     public static final String USER_PARTNERID = "partner_id";
+    public static final String USER_TYPE = "user_type";
     public static final String USER_ROLE_TYPE = "role_type";
-    public static final String USER_PERMISSIONS = "permissions";
+    public static final String USER_PERMISSIONS = "permissionStrAsCSV";
+    public static final String USER_EMPLOYEEID = "employeeId";
+    public static final String USER_REMARKS = "remarks";
     public static final String USER_LAST_UPDATED = "last_updated";
 
     // user table create statment
     private static final String CREATE_TABLE_USER = "CREATE TABLE " + USER_TABLE_NAME
-            + "(" + USER_ID + " INTEGER," + USER_NAME + " TEXT,"
+            + "(" + USER_ID + " INTEGER," + USER_FNAME + " TEXT," + USER_MNAME + " TEXT," + USER_LNAME + " TEXT," + USER_USERNAME + " TEXT,"
             + USER_TYPE + " REAL," + USER_EMAIL + " TEXT," + USER_CONTACT + " TEXT," + USER_DEPARTMENT + " TEXT,"
             + USER_ACTIVE + " NUMERIC," + USER_DELETED + " NUMERIC," + USER_PASSWORD + " TEXT, " + USER_PARTNERID + " INTEGER,"
-            + USER_ROLE_TYPE + " TEXT," + USER_PERMISSIONS + " TEXT," + USER_LAST_UPDATED + " TEXT " + ")";
+            + USER_ROLE_TYPE + " TEXT," + USER_PERMISSIONS + " TEXT," + USER_EMPLOYEEID + " TEXT," + USER_REMARKS + " TEXT,"
+            + USER_LAST_UPDATED + " TEXT " + ")";
 
     //partner user table details
     public static final String PARTNERUSER_TABLE_NAME = "partneruser";
@@ -580,6 +586,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
     public static final String TEST_DETAILS_WITNESSNAME = "witnessName";
     public static final String TEST_DETAILS_PARTNERNAME = "partnerName";
     //new addition
+    public static final String TEST_DETAILS_PARTNERID = "partner_id";
     public static final String TEST_DETAILS_SAMPLINGFLOWRATE = "samplingFlowRate";
     public static final String TEST_DETAILS_SAMPLINGTIME = "samplingTime";
     public static final String TEST_DETAILS_AEROSOLUSED = "aerosolUsed";
@@ -609,7 +616,8 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
             + " TEXT," + TEST_DETAILS_AEROSOLGENERATORTYPE + " TEXT," + TEST_DETAILS_TESTCODE + " TEXT," + TEST_DETAILS_ROOMVOLUME
             + " TEXT," + TEST_DETAILS_TESTWITNESSORG + " TEXT," + TEST_DETAILS_TESTCONDOCTORORG + " TEXT," + TEST_DETAILS_TESTITEM + " TEXT,"
             + TEST_DETAILS_TESTLOCATION + " TEXT," + TEST_DETAILS_FILTERTYPEEFFICIANCY + " TEXT," + TEST_DETAILS_DIFFAVINFILTER + " INTEGER,"
-            + TEST_DETAILS_DIFFAVBETWEENFILTER + " INTEGER," + TEST_DETAILS_ACCEPTABLERECOVERYTIME + " TEXT, " + TEST_DETAILS_TOLARANCE + " TEXT " + ")";
+            + TEST_DETAILS_DIFFAVBETWEENFILTER + " INTEGER," + TEST_DETAILS_ACCEPTABLERECOVERYTIME + " TEXT, "
+            + TEST_DETAILS_PARTNERID + " INTEGER," + TEST_DETAILS_TOLARANCE + " TEXT " + ")";
 
 
     //test spesification table details
@@ -1147,6 +1155,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
         contentValues.put(TEST_DETAILS_DIFFAVINFILTER, testDetails.getDiffAVinFilter());
         contentValues.put(TEST_DETAILS_DIFFAVBETWEENFILTER, testDetails.getDiffAVbetweenFilter());
         contentValues.put(TEST_DETAILS_ACCEPTABLERECOVERYTIME, testDetails.getAcceptableRecoveryTime());
+        contentValues.put(TEST_DETAILS_PARTNERID,testDetails.getPartnerId());
         contentValues.put(TEST_DETAILS_TOLARANCE, testDetails.getTolarance());
 
         db.insert(tableName, null, contentValues);
@@ -1641,7 +1650,10 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
 //                Log.d(TAG, "insert user Login method :" + user.getName() + "\n" + user.getId());
                 ContentValues contentValues = new ContentValues();
                 contentValues.put(USER_ID, user.getApp_user_id());
-                contentValues.put(USER_NAME, user.getName());
+                contentValues.put(USER_FNAME, user.getfName());
+                contentValues.put(USER_MNAME, user.getmName());
+                contentValues.put(USER_LNAME, user.getlName());
+                contentValues.put(USER_USERNAME, user.getUserName());
                 contentValues.put(USER_TYPE, user.getUserType());
                 contentValues.put(USER_EMAIL, user.getEmail());
                 contentValues.put(USER_CONTACT, user.getContact());
@@ -1652,6 +1664,8 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 contentValues.put(USER_PARTNERID, user.getPartnerId());
                 contentValues.put(USER_ROLE_TYPE, user.getRoleType());
                 contentValues.put(USER_PERMISSIONS, user.getPermissions());
+                contentValues.put(USER_EMPLOYEEID, user.getPermissions());
+                contentValues.put(USER_REMARKS, user.getPermissions());
                 contentValues.put(USER_LAST_UPDATED, user.getLastUpdated());
 
                 if (getExistingId(tableName, USER_ID, user.getApp_user_id()) > 0) {
@@ -1781,18 +1795,23 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
             do {
                 AppUser user = new AppUser();
                 user.setApp_user_id(Integer.parseInt(cursor.getString(0)));
-                user.setName(cursor.getString(1));
-                user.setUserType(cursor.getString(2));
-                user.setEmail(cursor.getString(3));
-                user.setContact(cursor.getString(4));
-                user.setDepartment(cursor.getString(5));
-                user.setIsActive(Integer.parseInt(cursor.getString(6)));
-                user.setIsDeleted(Integer.parseInt(cursor.getString(7)));
-                user.setPassword(cursor.getString(8));
-                user.setPartnerId(cursor.getInt(9));
-                user.setRoleType(cursor.getString(10));
-                user.setPermissions(cursor.getString(11));
-                user.setLastUpdated(cursor.getString(12));
+                user.setfName(cursor.getString(1));
+                user.setmName(cursor.getString(2));
+                user.setlName(cursor.getString(3));
+                user.setUserName(cursor.getString(4));
+                user.setUserType(cursor.getString(5));
+                user.setEmail(cursor.getString(6));
+                user.setContact(cursor.getString(7));
+                user.setDepartment(cursor.getString(8));
+                user.setIsActive(Integer.parseInt(cursor.getString(9)));
+                user.setIsDeleted(Integer.parseInt(cursor.getString(10)));
+                user.setPassword(cursor.getString(11));
+                user.setPartnerId(cursor.getInt(12));
+                user.setRoleType(cursor.getString(13));
+                user.setPermissions(cursor.getString(14));
+                user.setEmployeeId(cursor.getString(15));
+                user.setRemarks(cursor.getString(16));
+                user.setLastUpdated(cursor.getString(17));
                 Log.d(TAG, "Login method :" + user.getEmail() + "\n" + user.getPassword());
                 userArrayList.add(user);
             } while (cursor.moveToNext());
@@ -2143,10 +2162,11 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                     jsonObject.put(TEST_DETAILS_TESTITEM, cursor.getString(32).toString());
                     jsonObject.put(TEST_DETAILS_TESTLOCATION, cursor.getString(33).toString());
                     jsonObject.put(TEST_DETAILS_FILTERTYPEEFFICIANCY, cursor.getString(34).toString());
-                    jsonObject.put(TEST_DETAILS_DIFFAVINFILTER,cursor.getInt(35));
-                    jsonObject.put(TEST_DETAILS_DIFFAVBETWEENFILTER,cursor.getInt(36));
+                    jsonObject.put(TEST_DETAILS_DIFFAVINFILTER, cursor.getInt(35));
+                    jsonObject.put(TEST_DETAILS_DIFFAVBETWEENFILTER, cursor.getInt(36));
                     jsonObject.put(TEST_DETAILS_ACCEPTABLERECOVERYTIME, cursor.getString(37).toString());
-                    jsonObject.put(TEST_DETAILS_TOLARANCE, cursor.getString(38).toString());
+                    jsonObject.put(TEST_DETAILS_PARTNERID,cursor.getInt(38));
+                    jsonObject.put(TEST_DETAILS_TOLARANCE, cursor.getString(39).toString());
                     Log.d(TAG, "getCertificateData test details=" + jsonObject.toString());
                     testDetailsJsonArray.put(jsonObject);
                 } catch (Exception e) {

@@ -731,6 +731,8 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
         testDetails.setDateOfTest("" + dateTextView.getText());
         testDetails.setRawDataNo(certificateNo.getText().toString());
         testDetails.setPartnerName("" + mPartnerName);
+        int partnerId = sharedpreferences.getInt("PARTNERID", 0);
+        testDetails.setPartnerId(partnerId);
         testDetails.setTestName(mTestCode);
         testDetails.setAcceptableRecoveryTime("");
         if (loginUserType.equals("CLIENT")) {
@@ -799,6 +801,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
         testDetails.setFilterTypeEficiancy("");
         testDetails.setTestLocation("");
         testDetails.setTolarance("" + mTolarence);
+
         return testDetails;
     }
 

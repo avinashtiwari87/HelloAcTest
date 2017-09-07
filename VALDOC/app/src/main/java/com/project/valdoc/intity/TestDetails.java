@@ -33,6 +33,7 @@ public class TestDetails {
     private String testerName;
     private String witnessName;
     private String partnerName;
+    private int partnerId;
     private String SamplingFlowRate;
     private String SamplingTime;
     private String AerosolUsed;
@@ -255,6 +256,14 @@ public class TestDetails {
 
     public void setPartnerName(String partnerName) {
         this.partnerName = partnerName;
+    }
+
+    public int getPartnerId() {
+        return partnerId;
+    }
+
+    public void setPartnerId(int partnerId) {
+        this.partnerId = partnerId;
     }
 
     public String getSamplingFlowRate() {

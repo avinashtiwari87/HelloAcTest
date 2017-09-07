@@ -5,17 +5,23 @@ package com.project.valdoc.intity;
  */
 public class AppUser {
     private int app_user_id;
-    private String name;
+    private String fName;
+    private String mName;
+    private String lName;
+    private String userName;
     private String email;
+    private String password;
     private String contact;
     private String department;
-    private String password;
+
     private String userType;
     private int isActive;
     private int isDeleted;
     private String roleType;
     private String permissions;
     private int partnerId;
+    private String employeeId;
+    private String remarks;
     private String lastUpdated;
 
     public int getApp_user_id() {
@@ -26,12 +32,36 @@ public class AppUser {
         this.app_user_id = app_user_id;
     }
 
-    public String getName() {
-        return name;
+    public String getfName() {
+        return fName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setfName(String fName) {
+        this.fName = fName;
+    }
+
+    public String getmName() {
+        return mName;
+    }
+
+    public void setmName(String mName) {
+        this.mName = mName;
+    }
+
+    public String getlName() {
+        return lName;
+    }
+
+    public void setlName(String lName) {
+        this.lName = lName;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public String getEmail() {
@@ -40,6 +70,14 @@ public class AppUser {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getContact() {
@@ -56,14 +94,6 @@ public class AppUser {
 
     public void setDepartment(String department) {
         this.department = department;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public String getUserType() {
@@ -112,6 +142,22 @@ public class AppUser {
 
     public void setPartnerId(int partnerId) {
         this.partnerId = partnerId;
+    }
+
+    public String getEmployeeId() {
+        return employeeId;
+    }
+
+    public void setEmployeeId(String employeeId) {
+        this.employeeId = employeeId;
+    }
+
+    public String getRemarks() {
+        return remarks;
+    }
+
+    public void setRemarks(String remarks) {
+        this.remarks = remarks;
     }
 
     public String getLastUpdated() {

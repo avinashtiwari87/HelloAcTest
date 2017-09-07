@@ -699,6 +699,8 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
         testDetails.setDateOfTest("" + dateTextView.getText().toString());
 //        testDetails.setDateOfTest("" + date);
         testDetails.setPartnerName("" + mPartnerName);
+        int partnerId = sharedpreferences.getInt("PARTNERID", 0);
+        testDetails.setPartnerId(partnerId);
         testDetails.setRawDataNo(certificateNo.getText().toString());
         testDetails.setTestName(mTestCode);
         testDetails.setAcceptableRecoveryTime("");
