@@ -94,7 +94,7 @@ public class RDACPHhPostViewActivity extends AppCompatActivity {
         textViewValueAssignment();
 
         if (mTestType.contains(TestCreateActivity.ACPHH)) {
-            BuildTableTest3(testReadingArrayList.size() + 1, spiltValue.length - 3);
+            BuildTableTest3(testReadingArrayList.size() + 1, spiltValue.length );
         }
 
         //Setting TFR and TFR*AV/60
@@ -110,8 +110,111 @@ public class RDACPHhPostViewActivity extends AppCompatActivity {
         }
 
     }
-
-
+//latest method
+//private void BuildTableTest3(int rows, int cols) {
+//    //first section
+//    // outer for loop
+//    for (int i = 1; i <= rows; i++) {
+//        TableRow row = new TableRow(this);
+//        row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
+//                TableRow.LayoutParams.WRAP_CONTENT));
+//        // inner for loop
+//        for (int j = 1; j <= 1; j++) {
+//            if (i == 1 && j == 1) {
+//                TextView grillTV = addTextView(" Grill/Filter No ");
+//                ViewGroup.LayoutParams params = grillTV.getLayoutParams();
+//                params.height = getResources().getDimensionPixelSize(R.dimen.common_txt_header_height_h);
+//                grillTV.setLayoutParams(params);
+//                grillTV.setEms(8+Utilityies.getPctCellWidth(cols));
+//                row.addView(grillTV);
+//            } else {
+//
+//                if (mGrilFilterType.equalsIgnoreCase("Grill")) {
+//                    if (null != grillAndSizeFromGrill && grillAndSizeFromGrill.size() > 0) {
+//                        TextView textView = addTextView(grillAndSizeFromGrill.get(i - 2).getGrillCode().toString());
+//                        textView.setEms(8+Utilityies.getPctCellWidth(cols));
+//                        row.addView(textView);
+//                    } else {
+//                        row.addView(addTextView("grillAndSizeFromGrill"));
+//                    }
+//
+//                } else {
+//                    if (null != mRoomFilterArrayList && mRoomFilterArrayList.size() > 0) {
+//                        TextView textView = addTextView(mRoomFilterArrayList.get(i - 2).getFilterCode());
+//                        textView.setEms(8+Utilityies.getPctCellWidth(cols));
+//                        row.addView(textView);
+//                    } else {
+//                        row.addView(addTextView("grillAndSizeFromGrill"));
+//                    }
+//
+//                }
+//
+//            }
+//        }
+//        test3_table_layout.addView(row);
+//    }
+//
+//    //Second section
+//    // outer for loop
+//    for (int i = 1; i <= rows; i++) {
+//
+//        TableRow row = new TableRow(this);
+//        row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
+//                TableRow.LayoutParams.WRAP_CONTENT));
+//
+//        // inner for loop
+//        for (int j = 1; j <= cols; j++) {
+//            if (i == 1 && j <= cols) {
+//                TextView textView = addTextView(" Q " + j);
+//                if(cols>4)
+//                    textView.setEms(4+Utilityies.getPctCellWidth(cols));
+//                else
+//                    textView.setEms(8+Utilityies.getPctCellWidth(cols));
+//                row.addView(textView);
+//            } else {
+//                TextView editText = addInputDataTextView();
+//                if(cols>4)
+//                    editText.setEms(4+Utilityies.getPctCellWidth(cols));
+//                else
+//                    editText.setEms(8+Utilityies.getPctCellWidth(cols));
+//                row.addView(editText);
+//            }
+//        }
+//        test3_table_layout2.addView(row);
+//    }
+//
+//    //Third section
+//    // outer for loop
+//    for (int i = 1; i <= rows; i++) {
+//        TableRow row = new TableRow(this);
+//        row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
+//                TableRow.LayoutParams.WRAP_CONTENT));
+//        // inner for loop
+//        if (i == 1) {
+//            TextView textView = addTextView(" Average ");
+//            if(cols>4)
+//                textView.setEms(7+Utilityies.getPctCellWidth(cols));
+//            else
+//                textView.setEms(9+Utilityies.getPctCellWidth(cols));
+//            row.addView(textView);
+//        }else{
+//            TextView textView = addResultTextView(i);
+//            if(cols>4)
+//                textView.setEms(7+Utilityies.getPctCellWidth(cols));
+//            else
+//                textView.setEms(9+Utilityies.getPctCellWidth(cols));
+//            row.addView(textView);
+//        }
+//        test3_table_layout3.addView(row);
+//    }
+//
+//    //dismiss progressbar
+////    if (pr.isShowing())
+////        pr.dismiss();
+//
+//
+//}
+//old method
     private void BuildTableTest3(int rows, int cols) {
         //first section
         // outer for loop
@@ -124,12 +227,16 @@ public class RDACPHhPostViewActivity extends AppCompatActivity {
                 if (i == 1 && j == 1) {
                     TextView grillTV = addTextView(" Grill/Filter No ");
                     ViewGroup.LayoutParams params = grillTV.getLayoutParams();
-                    params.height = getResources().getDimensionPixelSize(R.dimen.common_txt_header_height);
+                    //params.height = getResources().getDimensionPixelSize(R.dimen.common_txt_header_height);
                     grillTV.setLayoutParams(params);
+                    grillTV.setEms(Utilityies.getPctCellWidth(cols));
                     row.addView(grillTV);
                 } else {
                     if (null != testReadingArrayList && testReadingArrayList.size() > 0) {
-                        row.addView(addTextView(testReadingArrayList.get(i - 2).getEntityName()));
+                        TextView textView =addTextView(testReadingArrayList.get(i - 2).getEntityName());
+                                textView.setEms(Utilityies.getPctCellWidth(cols));
+                        row.addView(textView);
+
                     } else {
                         row.addView(addTextView("grillAndSizeFromGrill"));
                     }
@@ -150,11 +257,17 @@ public class RDACPHhPostViewActivity extends AppCompatActivity {
             for (int j = 1; j <= cols; j++) {
                 if (i == 1 && j <= cols) {
                     TextView textView = addTextView(" Q " + j);
+                    //if(cols>4)
                     textView.setEms(Utilityies.getPctCellWidth(cols));
+//                    else
+//                    textView.setEms(8+Utilityies.getPctCellWidth(cols));
                     row.addView(textView);
                 } else {
                     TextView editText = addTextView(""+testReadingArrayList.get(i-2).getValue());
+                    if(cols>4)
                     editText.setEms(Utilityies.getPctCellWidth(cols));
+                    else
+                        editText.setEms(8+Utilityies.getPctCellWidth(cols));
                     row.addView(editText);
                 }
             }
@@ -170,11 +283,17 @@ public class RDACPHhPostViewActivity extends AppCompatActivity {
             // inner for loop
             if (i == 1) {
                 TextView textView = addTextView(" Average ");
-                textView.setEms(8);
+                //if(cols>4)
+                textView.setEms(Utilityies.getPctCellWidth(cols));
+//                else
+//                    textView.setEms(9+Utilityies.getPctCellWidth(cols));
                 row.addView(textView);
             }else{
                 TextView textView = addTextView(""+testReadingArrayList.get(i-2).getValue());
-                textView.setEms(8);
+               // if(cols>4)
+                    textView.setEms(Utilityies.getPctCellWidth(cols));
+//                else
+//                    textView.setEms(9+Utilityies.getPctCellWidth(cols));
                 row.addView(textView);
             }
             test3_table_layout3.addView(row);

@@ -520,8 +520,8 @@ public class CommonTestViewActivity extends AppCompatActivity {
                     TableRow.LayoutParams.WRAP_CONTENT));
 
             // inner for loop
-            for (int j = 1; j <cols; j++) {
-                if (i == 1 && j <cols) {
+            for (int j = 1; j <=cols; j++) {
+                if (i == 1 && j <=cols) {
                     row.addView(addTextView(" V " + j + "\n "));
                 } else {
                     //row.addView(addEditTextView());

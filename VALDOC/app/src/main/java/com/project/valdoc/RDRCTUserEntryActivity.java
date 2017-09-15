@@ -284,7 +284,8 @@ public class RDRCTUserEntryActivity extends AppCompatActivity {
             samplingTime.setText("" + samplingtime);
             mAcceptableRecoveryTime = getAcceptableRecoveryTime(mApplicableTestRoom.getTestProp());
             recovery_time_tv.setText("≤ " + mAcceptableRecoveryTime + " min");
-
+            aerosol_used_rct_tv.setText(""+getAerosolUsed(mApplicableTestRoom.getTestProp()));
+            aerosol_gen_rct.setText(""+getAerosolGeneratorType(mApplicableTestRoom.getTestProp()));
 //            samplingFlowRate.setText("under development");
             cleanRoomClass.setText(" " + mApplicableTestRoom.getTestSpecification());
         } else if (mTestBasedOn.equalsIgnoreCase("EQUIPMENT")) {
@@ -301,6 +302,8 @@ public class RDRCTUserEntryActivity extends AppCompatActivity {
             cleanRoomClass.setText("" + mApplicableTestEquipment.getTestSpecification());
             mAcceptableRecoveryTime = getAcceptableRecoveryTime(mApplicableTestEquipment.getTestProp());
             recovery_time_tv.setText("≤ " + mAcceptableRecoveryTime + " min");
+            aerosol_used_rct_tv.setText(""+getAerosolUsed(mApplicableTestEquipment.getTestProp()));
+            aerosol_gen_rct.setText(""+getAerosolGeneratorType(mApplicableTestEquipment.getTestProp()));
         }
         int count = 0;
         if (mCount > 0) {
@@ -352,6 +355,33 @@ public class RDRCTUserEntryActivity extends AppCompatActivity {
         testWitness.setText(witness);
     }
 
+    private String getAerosolGeneratorType(String testProp) {
+        String acceptableRecoveryTime = "";
+        JSONObject jsonObject = null;
+        try {
+            jsonObject = new JSONObject(testProp);
+            acceptableRecoveryTime = jsonObject.optString("AEROSOL_GENERATOR_TYPE");
+        } catch (Exception e) {
+            acceptableRecoveryTime = "";
+        }
+        if(acceptableRecoveryTime.equalsIgnoreCase("NULL"))
+            acceptableRecoveryTime="";
+        return acceptableRecoveryTime;
+    }
+    private String getAerosolUsed(String testProp) {
+        String acceptableRecoveryTime = "";
+        JSONObject jsonObject = null;
+        try {
+            jsonObject = new JSONObject(testProp);
+            acceptableRecoveryTime = jsonObject.optString("AEROSOL_USED");
+        } catch (Exception e) {
+            acceptableRecoveryTime = "";
+        }
+        if(acceptableRecoveryTime.equalsIgnoreCase("NULL"))
+            acceptableRecoveryTime="";
+        return acceptableRecoveryTime;
+    }
+
     private String getAcceptableRecoveryTime(String testProp) {
         String acceptableRecoveryTime = "";
         JSONObject jsonObject = null;
@@ -361,6 +391,8 @@ public class RDRCTUserEntryActivity extends AppCompatActivity {
         } catch (Exception e) {
             acceptableRecoveryTime = "";
         }
+        if(acceptableRecoveryTime.equalsIgnoreCase("NULL"))
+            acceptableRecoveryTime="";
         return acceptableRecoveryTime;
     }
 
@@ -614,11 +646,14 @@ public class RDRCTUserEntryActivity extends AppCompatActivity {
             testDetails.setInstrumentNo("" + partnerInstrument.getpInstrumentId());
             testDetails.setCalibratedOn("" + partnerInstrument.getLastCalibrationDate());
             testDetails.setCalibratedDueOn("" + partnerInstrument.getCalibrationDueDate());
-            testDetails.setAerosolUsed("");
-            testDetails.setAerosolGeneratorType("");
+
             //testDetails.setSamplingFlowRate("" + samplingFlowRate.getText().toString());
             // testDetails.setSamplingTime("" + samplingTime.getText().toString());
         }
+        testDetails.setAerosolUsed(""+aerosol_used_rct_tv);
+        testDetails.setAerosolGeneratorType(""+aerosol_gen_rct);
+
+
         testDetails.setFilterTypeEficiancy("");
         testDetails.setTestLocation("");
         testDetails.setSamplingFlowRate("" + samplingFlowRate.getText().toString());

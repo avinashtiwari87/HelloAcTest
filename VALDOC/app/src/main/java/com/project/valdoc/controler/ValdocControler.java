@@ -53,6 +53,7 @@ public class ValdocControler {
 //    private String postUrl = "http://valdoc.in:8080/valdoctest/sync/postTableData";
 //    private String url = "http://192.169.143.229:8080/valdoctest/sync/getTableData?date=";
 //    private String postUrl = "http://192.169.143.229:8080/valdoctest/sync/postTableData";
+    //new http://132.148.136.228:8080/valdoctest
     private String url = "/sync/getTableData?date=";  //2015-11-12
     private String postUrl = "/sync/postTableData";
 

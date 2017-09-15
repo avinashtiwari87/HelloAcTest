@@ -2736,9 +2736,14 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 TestDetails.setRoomVolume(cursor.getString(29));
                 TestDetails.setTestWitnessOrg(cursor.getString(30));
                 TestDetails.setTestCondoctorOrg(cursor.getString(31));
-                TestDetails.setDiffAVinFilter(cursor.getInt(32));
-                TestDetails.setDiffAVbetweenFilter(cursor.getInt(33));
-                TestDetails.setTestItem(cursor.getString(34));
+                TestDetails.setTestLocation(cursor.getString(33));
+                TestDetails.setFilterTypeEficiancy(cursor.getString(34));
+                TestDetails.setTestItem(cursor.getString(32));
+                TestDetails.setDiffAVinFilter(cursor.getInt(35));
+                TestDetails.setDiffAVbetweenFilter(cursor.getInt(36));
+                TestDetails.setAcceptableRecoveryTime(cursor.getString(37));
+                TestDetails.setPartnerId(cursor.getInt(38));
+                TestDetails.setTolarance(cursor.getString(39));
 //                testDetailList.add(TestDetails);
             } while (cursor.moveToNext());
         }

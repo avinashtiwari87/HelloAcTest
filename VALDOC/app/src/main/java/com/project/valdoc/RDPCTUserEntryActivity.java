@@ -741,7 +741,8 @@ public class RDPCTUserEntryActivity extends AppCompatActivity {
         int hasMapKey = 200;
 //        int loopRow = (rows - 1) * 2;
         int loopRow = rHashMap.size();
-        for (int i = 1; i <= loopRow; i++) {
+        int size=(loopRow/cols);
+        for (int i = 1; i <= size; i++) {
             TestReading testReading = new TestReading();
 //            testReading.setTestReadingID(i);
 //        TO DO test details id is id of test details table
