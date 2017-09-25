@@ -683,7 +683,7 @@ public class RDRCTUserEntryActivity extends AppCompatActivity {
         testDetails.setTestWitnessOrg("" + testWitnessOrg.getText());
         testDetails.setTestCondoctorOrg("" + testCondoctorOrg.getText());
         testDetails.setRoomVolume("");
-        testDetails.setAcceptableRecoveryTime("" + recovery_time_tv.getText().toString() + "");
+        testDetails.setAcceptableRecoveryTime("" + mAcceptableRecoveryTime + "");
         if (mTestBasedOn.equalsIgnoreCase("EQUIPMENT")) {
             testDetails.setEquipmentName("" + equipmentName.getText().toString());
             testDetails.setEquipmentNo("" + equipmentNo.getText().toString());
