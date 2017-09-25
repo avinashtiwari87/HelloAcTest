@@ -172,6 +172,8 @@ public class ValdocControler {
 
             //Get the instance of JSONArray that contains JSONObjects
             //user data parsing
+//            Log.d("avinashjson",jsonRootObject.optJSONArray("users").toString());
+//            Log.d("avinashjson",jsonRootObject.optJSONArray("users").length()+"");
             ArrayList userArrayList = userData(jsonRootObject.optJSONArray("users"));
             arrayListHashMap.put(ValdocDatabaseHandler.USER_TABLE_NAME, userArrayList);
 
@@ -848,7 +850,8 @@ public class ValdocControler {
     private ArrayList userData(JSONArray jsonArray) {
         ArrayList arrayList = new ArrayList();
         //Iterate the jsonArray and print the info of JSONObjects
-        for (int i = 0; i < jsonArray.length(); i++) {
+        int length=jsonArray.length();
+        for (int i = 0; i < length; i++) {
             AppUser user = new AppUser();
             try {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);

@@ -650,8 +650,8 @@ public class RDRCTUserEntryActivity extends AppCompatActivity {
             //testDetails.setSamplingFlowRate("" + samplingFlowRate.getText().toString());
             // testDetails.setSamplingTime("" + samplingTime.getText().toString());
         }
-        testDetails.setAerosolUsed(""+aerosol_used_rct_tv);
-        testDetails.setAerosolGeneratorType(""+aerosol_gen_rct);
+        testDetails.setAerosolUsed(""+aerosol_used_rct_tv.getText().toString());
+        testDetails.setAerosolGeneratorType(""+aerosol_gen_rct.getText().toString());
 
 
         testDetails.setFilterTypeEficiancy("");

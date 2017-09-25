@@ -150,7 +150,7 @@
                 <TextView
                     style="@style/TestHeaderTextViewNormal"
                     android:id="@+id/aerosol_gen_rct"
-                    android:text=" "/>
+                    android:text="Poly dispersed Aerosol"/>
             </TableRow>
 
             <TableRow
@@ -390,7 +390,7 @@
                 <TextView
                     style="@style/TestHeaderTextViewNormal"
                     android:id="@+id/aerosol_used_rct_tv"
-                    android:text=" "/>
+                    android:text=" PAO"/>
             </TableRow>
 
             <TableRow

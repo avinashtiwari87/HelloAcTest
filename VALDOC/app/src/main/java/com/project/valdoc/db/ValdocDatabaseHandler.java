@@ -1155,7 +1155,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
         contentValues.put(TEST_DETAILS_DIFFAVINFILTER, testDetails.getDiffAVinFilter());
         contentValues.put(TEST_DETAILS_DIFFAVBETWEENFILTER, testDetails.getDiffAVbetweenFilter());
         contentValues.put(TEST_DETAILS_ACCEPTABLERECOVERYTIME, testDetails.getAcceptableRecoveryTime());
-        contentValues.put(TEST_DETAILS_PARTNERID,testDetails.getPartnerId());
+        contentValues.put(TEST_DETAILS_PARTNERID, testDetails.getPartnerId());
         contentValues.put(TEST_DETAILS_TOLARANCE, testDetails.getTolarance());
 
         db.insert(tableName, null, contentValues);
@@ -1871,8 +1871,8 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
         String selectQuery = "SELECT * FROM " + PARTNER_INSTRUMENT_TABLE_NAME + "," + PARTNER_INSTRUMENT_TEST_TABLE_NAME + " WHERE " + PARTNER_INSTRUMENT_TABLE_NAME
                 + "." + PARTNER_INSTRUMENT_PINSTRUMENTID + "=" + PARTNER_INSTRUMENT_TEST_TABLE_NAME + "." + PARTNER_INSTRUMENT_ID
                 + " AND " + PARTNER_INSTRUMENT_TABLE_NAME + "." + PARTNER_INSTRUMENT_CALIBRATIONDUEDATE + ">" + '"' + todaysDate + '"'
-                + " AND " + PARTNER_INSTRUMENT_TEST_TABLE_NAME + "." + PARTNER_INSTRUMENT_TEST_CODE + "=" + '"' + testCode + '"';
-//                " WHERE " + ValdocDatabaseHandler.PARTNER_INSTRUMENT_PARTNERID + " = " + partnerId;
+                + " AND " + PARTNER_INSTRUMENT_TEST_TABLE_NAME + "." + PARTNER_INSTRUMENT_TEST_CODE + "=" + '"' + testCode + '"' +
+                " AND " + ValdocDatabaseHandler.PARTNER_INSTRUMENT_PARTNERID + " = " + partnerId;
         SQLiteDatabase database = this.getWritableDatabase();
         Cursor cursor = database.rawQuery(selectQuery, null);
         if (cursor.moveToFirst()) {
@@ -2165,7 +2165,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                     jsonObject.put(TEST_DETAILS_DIFFAVINFILTER, cursor.getInt(35));
                     jsonObject.put(TEST_DETAILS_DIFFAVBETWEENFILTER, cursor.getInt(36));
                     jsonObject.put(TEST_DETAILS_ACCEPTABLERECOVERYTIME, cursor.getString(37).toString());
-                    jsonObject.put(TEST_DETAILS_PARTNERID,cursor.getInt(38));
+                    jsonObject.put(TEST_DETAILS_PARTNERID, cursor.getInt(38));
                     jsonObject.put(TEST_DETAILS_TOLARANCE, cursor.getString(39).toString());
                     Log.d(TAG, "getCertificateData test details=" + jsonObject.toString());
                     testDetailsJsonArray.put(jsonObject);

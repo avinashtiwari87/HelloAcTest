@@ -1181,6 +1181,8 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
             SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
             Date date = new Date();
             String currentDate = inputFormat.format(date);
+//            if(null!=instrumentList&& instrumentList.size()>0)
+//                instrumentList.clear();
             Log.d(TAG, "TestCreateActivity : currentDate=" + currentDate);
             clientInstrumentArrayList = mValdocDatabaseHandler.getClientInstrumentInfo(testCode, currentDate);
             for (ClientInstrument clientInstrument : clientInstrumentArrayList) {
@@ -1199,6 +1201,8 @@ public class TestCreateActivity extends AppCompatActivity implements View.OnTouc
             Date date = new Date();
             String currentDate = inputFormat.format(date);
             Log.d(TAG, "TestCreateActivity : currentDate=" + currentDate);
+//            if(null!=instrumentList&& instrumentList.size()>0)
+//                instrumentList.clear();
             partnerInstrumentArrayList = mValdocDatabaseHandler.getPartnerInstrumentInfo(userPartnerId, testCode, currentDate);
             Log.d(TAG, "TestCreateActivity :vendor partnerInstrumentArrayList" + partnerInstrumentArrayList.size());
             for (PartnerInstrument partnerInstrument : partnerInstrumentArrayList) {
