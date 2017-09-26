@@ -230,9 +230,9 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
     private void getExtraFromTestCreateActivity(Bundle savedInstanceState) {
         if (savedInstanceState == null) {
             Bundle extras = getIntent().getExtras();
-            Log.d("valdoc", "DynamicTableActivity" + "onresume rows= getextra start");
+            Log.d(TAG, "DynamicTableActivity" + "onresume rows= getextra start");
             if (extras == null) {
-                Log.d("valdoc", "DynamicTableActivity" + "onresume rows=extra null");
+                Log.d(TAG, "DynamicTableActivity" + "onresume rows=extra null");
                 loginUserType = null;
                 clientInstrument = null;
                 partnerInstrument = null;
@@ -342,7 +342,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                         mTestItem = extras.getString("testItem");
                         ahuNumber = extras.getString("AhuNumber");
                         roomDetails = extras.getStringArray("RoomDetails");
-                        Log.d("Dynamictest", "roomDetails=" + roomDetails[1]);
+                       // Log.d(TAG, "roomDetails=" + roomDetails[1]);
                         mAhuFilterArrayList = (ArrayList<AhuFilter>) extras.getSerializable("AhuFilter");
                         mApplicableTestAhu = (ApplicableTestAhu) extras.getSerializable("ApplicableTestAhu");
                         /**
@@ -443,13 +443,13 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             } else if ("EQUIPMENT".equalsIgnoreCase(mTestBasedOn)) {
                 if (mGrilFilterType.equalsIgnoreCase("Grill")) {
                     if (mEquipmentGrillArrayList != null && mEquipmentGrillArrayList.size() > 0) {
-                        Log.d("avinash", "mApplicableTestEquipment.getLocation()=" + mApplicableTestEquipment.getLocation());
+                        Log.d(TAG, "mApplicableTestEquipment.getLocation()=" + mApplicableTestEquipment.getLocation());
                         BuildTable(mEquipmentGrillArrayList.size() + 1, mApplicableTestEquipment.getLocation());
                     } else
                         aleartDialog("There is no filter or equipment location");
                 } else {
                     if (mEquipmentFilterArrayList != null && mEquipmentFilterArrayList.size() > 0) {
-                        Log.d("avinash", "mApplicableTestEquipment.getLocation()=" + mApplicableTestEquipment.getLocation());
+                        Log.d(TAG, "mApplicableTestEquipment.getLocation()=" + mApplicableTestEquipment.getLocation());
                         BuildTable(mEquipmentFilterArrayList.size() + 1, mApplicableTestEquipment.getLocation());
                     } else
                         aleartDialog("There is no filter or equipment location");
@@ -458,7 +458,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             }
             setCommonTestHeader(testType, mTestBasedOn);
         } else if (TestCreateActivity.ACPHAV.equalsIgnoreCase(testType)) {
-            Log.d("Saurabh ", "CodeFlow testType : " + testType);
+            Log.d(TAG , "CodeFlow testType : " + testType);
             if ("AHU".equalsIgnoreCase(mTestBasedOn)) {
                 setCommonTestHeader(testType, mTestBasedOn);
                 if (mAhuFilterArrayList != null && mAhuFilterArrayList.size() > 0 && mApplicableTestAhu.getLocation() > 0)
@@ -591,7 +591,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             test_value6.setText("" + mApplicableTestEquipment.getOccupencyState());
             datePicker();
         } else if (TestCreateActivity.ACPHAV.equalsIgnoreCase(testType)) {
-            Log.d("Saurabh", "CodeFlow TestBasedOn " + TestBasedOn);
+            Log.d(TAG, "CodeFlow TestBasedOn " + TestBasedOn);
             test_header1.setText("Room Name :");
             test_header2.setText("Instrument Used :");
             test_header3.setText("Test Conducted By:");
@@ -690,7 +690,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             if (TestBasedOn.equalsIgnoreCase("AHU")) {
                 test_value1.setText("" + ahuNumber);
                 //test_value4.setText("" + mTestItem);
-                Log.d("saurabh ", " mTestItem " + mTestItem);
+                Log.d(TAG, " mTestItem " + mTestItem);
                 test_value4_1.setText("" + mTestItem);
                 test_value6.setText("" + mApplicableTestAhu.getOccupencyState());
             } else if (TestBasedOn.equalsIgnoreCase("ROOM")) {
@@ -1311,10 +1311,8 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             return true;
         } else if (testType.equals("FIT")) {
             if (!passfail()) {
-                Log.d("flag", "flag=1");
                 return true;
             } else {
-                Log.d("flag", "flag=2");
                 return false;
             }
         } else {
@@ -1324,21 +1322,17 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
 
     private boolean passfail() {
         boolean flag = true;
-        Log.d("flag", "passfail=1");
         if (mFitPassFailFlagList.size() > 0) {
             for (int i = 0; i < mFitPassFailFlagList.size(); i++) {
-                Log.d("flag", "flag= " + i + mFitPassFailFlagList.get(i).toString() + " size=" + mFitPassFailFlagList.size());
+                Log.d(TAG, "flag= " + i + mFitPassFailFlagList.get(i).toString() + " size=" + mFitPassFailFlagList.size());
                 if (mFitPassFailFlagList.get(i).equals(false)) {
                     flag = false;
-                    Log.d("flag", "passfail=2");
                     break;
                 }
             }
         } else {
-            Log.d("flag", "passfail=3");
             flag = false;
         }
-        Log.d("flag", "flag=" + flag);
         return flag;
     }
 
@@ -1464,7 +1458,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
     private void BuildTableTest5(int rows, int cols) {
         //first section
         // outer for loop
-        Log.d("PCT","rows="+rows);
+        Log.d(TAG,"PCT rows="+rows);
         for (int i = 1; i < rows; i++) {
             TableRow row = getTableRow(this);
             // inner for loop
@@ -1682,19 +1676,19 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                     if ("EQUIPMENT".equalsIgnoreCase(mTestBasedOn)) {
                         if (null != mEquipmentFilterArrayList && mEquipmentFilterArrayList.size() > 0) {
                             EquipmentFilter equipmentFilter = mEquipmentFilterArrayList.get(i - 2);
-                            Log.d("valdoc", "DynamicTableActivity filterArrayList=" + mEquipmentFilterArrayList.size() + "i=" + i);
+                            Log.d(TAG, "DynamicTableActivity filterArrayList=" + mEquipmentFilterArrayList.size() + "i=" + i);
                             row.addView(addTextView(equipmentFilter.getFilterCode()));
                         }
                     } else if ("AHU".equalsIgnoreCase(mTestBasedOn)) {
                         if (null != mAhuFilterArrayList && mAhuFilterArrayList.size() > 0) {
                             AhuFilter ahuFilter = mAhuFilterArrayList.get(i - 2);
-                            Log.d("valdoc", "DynamicTableActivity filterArrayList=" + mAhuFilterArrayList.size() + "i=" + i);
+                            Log.d(TAG, "DynamicTableActivity filterArrayList=" + mAhuFilterArrayList.size() + "i=" + i);
                             row.addView(addTextView(ahuFilter.getFilterCode()));
                         }
                     } else if ("ROOM".equalsIgnoreCase(mTestBasedOn)) {
                         if (null != mRoomFilterArrayList && mRoomFilterArrayList.size() > 0) {
                             RoomFilter roomFilter = mRoomFilterArrayList.get(i - 2);
-                            Log.d("valdoc", "DynamicTableActivity filterArrayList=" + mRoomFilterArrayList.size() + "i=" + i);
+                            Log.d(TAG, "DynamicTableActivity filterArrayList=" + mRoomFilterArrayList.size() + "i=" + i);
                             row.addView(addTextView(roomFilter.getFilterCode()));
                         }
                     }
@@ -1953,23 +1947,47 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                 } else {
                     if ("AHU".equalsIgnoreCase(mTestBasedOn)) {
                         if (null != mAhuFilterArrayList && mAhuFilterArrayList.size() > 0) {
-                            row.addView(addTextView(mAhuFilterArrayList.get(i - 2).getFilterCode()));
+                            TextView grillTV =addTextView(mAhuFilterArrayList.get(i - 2).getFilterCode());
+                            ViewGroup.LayoutParams params = grillTV.getLayoutParams();
+                            params.height = getResources().getDimensionPixelSize(R.dimen.common_text_cell_height);
+                            grillTV.setLayoutParams(params);
+                            row.addView(grillTV);
                         } else {
-                            row.addView(addTextView("grillAndSizeFromGrill"));
+                            TextView grillTV = addTextView("grillAndSizeFromGrill");
+                            ViewGroup.LayoutParams params = grillTV.getLayoutParams();
+                            params.height = getResources().getDimensionPixelSize(R.dimen.common_text_cell_height);
+                            grillTV.setLayoutParams(params);
+                            row.addView(grillTV);
                         }
                     } else if ("ROOM".equalsIgnoreCase(mTestBasedOn)) {
                         if (mGrilFilterType.equalsIgnoreCase("Grill")) {
                             if (null != grillAndSizeFromGrill && grillAndSizeFromGrill.size() > 0) {
-                                row.addView(addTextView(grillAndSizeFromGrill.get(i - 2).getGrillCode().toString()));
+                                TextView grillTV =addTextView(grillAndSizeFromGrill.get(i - 2).getGrillCode().toString());
+                                ViewGroup.LayoutParams params = grillTV.getLayoutParams();
+                                params.height = getResources().getDimensionPixelSize(R.dimen.common_text_cell_height);
+                                grillTV.setLayoutParams(params);
+                                row.addView(grillTV);
                             } else {
-                                row.addView(addTextView("grillAndSizeFromGrill"));
+                                TextView grillTV =addTextView("grillAndSizeFromGrill");
+                                ViewGroup.LayoutParams params = grillTV.getLayoutParams();
+                                params.height = getResources().getDimensionPixelSize(R.dimen.common_text_cell_height);
+                                grillTV.setLayoutParams(params);
+                                row.addView(grillTV);
                             }
 
                         } else {
                             if (null != mRoomFilterArrayList && mRoomFilterArrayList.size() > 0) {
-                                row.addView(addTextView(mRoomFilterArrayList.get(i - 2).getFilterCode()));
+                                TextView grillTV =addTextView(mRoomFilterArrayList.get(i - 2).getFilterCode());
+                                ViewGroup.LayoutParams params = grillTV.getLayoutParams();
+                                params.height = getResources().getDimensionPixelSize(R.dimen.common_text_cell_height);
+                                grillTV.setLayoutParams(params);
+                                row.addView(grillTV);
                             } else {
-                                row.addView(addTextView("grillAndSizeFromGrill"));
+                                TextView grillTV =addTextView("grillAndSizeFromGrill");
+                                ViewGroup.LayoutParams params = grillTV.getLayoutParams();
+                                params.height = getResources().getDimensionPixelSize(R.dimen.common_text_cell_height);
+                                grillTV.setLayoutParams(params);
+                                row.addView(grillTV);
                             }
 
                         }
@@ -2023,9 +2041,17 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
             // inner for loop
             for (int j = 1; j <= cols; j++) {
                 if (i == 1 && j <= cols) {
-                    row.addView(addTextView(" V " + j));
+                    TextView grillTV = addTextView(" V " + j);
+                    ViewGroup.LayoutParams params = grillTV.getLayoutParams();
+                    params.height = getResources().getDimensionPixelSize(R.dimen.common_text_cell_height);
+                    grillTV.setLayoutParams(params);
+                    row.addView(grillTV);
                 } else {
-                    row.addView(addEditTextView(i));
+                    TextView grillTV = addEditTextView(i);
+                    ViewGroup.LayoutParams params = grillTV.getLayoutParams();
+                    params.height = getResources().getDimensionPixelSize(R.dimen.common_text_cell_height);
+                    grillTV.setLayoutParams(params);
+                    row.addView(grillTV);
                 }
             }
             test2_table_layout3.addView(row);
@@ -2940,7 +2966,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
      * @return double type value
      */
     private double fitDiffPercent(double beforeScaning, double afterScaning) {
-        Log.d(TAG, "Saurabh beforeScaning " + beforeScaning + " afterScaning " + afterScaning);
+        Log.d(TAG, "beforeScaning " + beforeScaning + " afterScaning " + afterScaning);
         double diffPercent = 0.00;
         DecimalFormat df2 = new DecimalFormat(".##");
         if (beforeScaning > 0 && afterScaning > 0) {

@@ -16,9 +16,9 @@
     <dimen name="pct_text_cell_height">42.5dp</dimen>
     <dimen name="common_text_cell_height">39dp</dimen>
     <dimen name="common_text_cell_width">220dp</dimen>
-    <dimen name="common_txt_header_height">74dp</dimen>
+    <dimen name="common_txt_header_height">79dp</dimen>
     <dimen name="common_txt_header_height_h">78dp</dimen>
-    <dimen name="common_txt_header_height1">116dp</dimen>
+    <dimen name="common_txt_header_height1">119dp</dimen>
 </resources>
 
 
