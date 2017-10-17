@@ -799,7 +799,7 @@ public class RDPCTUserEntryActivity extends AppCompatActivity {
             testDetails.setInstrumentUsed(partnerInstrument.getpInstrumentName());
             testDetails.setMake(partnerInstrument.getMake());
             testDetails.setModel(partnerInstrument.getModel());
-            testDetails.setInstrumentNo("" + partnerInstrument.getpInstrumentId());
+            testDetails.setInstrumentNo("" + partnerInstrument.getSerialNo());
             testDetails.setCalibratedOn(partnerInstrument.getLastCalibrationDate());
             testDetails.setCalibratedDueOn(partnerInstrument.getCalibrationDueDate());
             testDetails.setAerosolUsed("");

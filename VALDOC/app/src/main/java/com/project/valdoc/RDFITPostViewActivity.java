@@ -370,7 +370,7 @@ public class RDFITPostViewActivity extends AppCompatActivity {
             testWitnessOrg.setText("(" + clientOrg + ")");
             customerName.setText(""+prtnerOrg);
         }
-        plantName.setText("from cofig screen");
+        plantName.setText(""+mTestDetails.getBlockName());
     }
 
 

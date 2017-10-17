@@ -252,7 +252,7 @@ public class RDRCTUserEntryActivity extends AppCompatActivity {
             instrumentUsed.setText(partnerInstrument.getpInstrumentName());
             //make.setText(partnerInstrument.getMake());
             //model.setText(partnerInstrument.getModel());
-            instrumentSerialNo.setText("" + partnerInstrument.getpInstrumentId());
+            instrumentSerialNo.setText("" + partnerInstrument.getSerialNo());
             calibrationOn.setText(Utilityies.parseDateToddMMyyyy(partnerInstrument.getLastCalibrationDate()));
             calibrationDueOn.setText(Utilityies.parseDateToddMMyyyy(partnerInstrument.getCalibrationDueDate()));
             samplingFlowRate.setText(partnerInstrument.getRange());

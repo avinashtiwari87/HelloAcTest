@@ -70,8 +70,8 @@ public class CommonTestViewActivity extends AppCompatActivity {
     private ValdocDatabaseHandler mValdocDatabaseHandler;
     private int rows, cols, testDetailId = 1;
     private String mTestBasedOn;
-    private ArrayList<TestReading> testReadingList;
-    private ArrayList<TestSpesificationValue>testSpesificationValues;
+    private ArrayList<TestReading> testReadingList = new ArrayList<TestReading>();
+    private ArrayList<TestSpesificationValue> testSpesificationValues = new ArrayList<TestSpesificationValue>();
     //certificate view id creation
     private TextView instrumentUsed;
     private TextView equipmentName;
@@ -135,80 +135,80 @@ public class CommonTestViewActivity extends AppCompatActivity {
         testDetailId = getIntent().getIntExtra("testDetailId", 1);
         rows = getIntent().getIntExtra("rows", 6);
         cols = getIntent().getIntExtra("cols", 5);
-        mTestBasedOn=getIntent().getStringExtra("TestBasedOn");
-        Log.d(TAG, "CodeFlow TestType : " + testType + " testDetailId " + testDetailId+" mTestBasedOn "+mTestBasedOn);
+        mTestBasedOn = getIntent().getStringExtra("TestBasedOn");
+        Log.d(TAG, "CodeFlow TestType : " + testType + " testDetailId " + testDetailId + " mTestBasedOn " + mTestBasedOn);
 
         initRes();
         initTextView();
         String spiltValue[] = null;
-        if(testType != null && testType.contains("ACPH_AV")){
+        if (testType != null && testType.contains("ACPH_AV")) {
             findViewById(R.id.test1_table_ll).setVisibility(View.GONE);
             findViewById(R.id.test2_table_ll).setVisibility(View.VISIBLE);
             testReadingList = mValdocDatabaseHandler.getTestReadingDataById(testDetailId + "");
             spiltValue = testReadingList.get(0).getValue().split(",");
             Log.d(TAG, "CodeFlow : spiltValue length : " + spiltValue.length);
-            BuildTableTest2(testReadingList.size()+1,(spiltValue.length-3));
-            int textId =0;
+            BuildTableTest2(testReadingList.size() + 1, (spiltValue.length - 3));
+            int textId = 0;
             for (int j = 0; j < testReadingList.size(); j++) {
                 //filter
                 gridTextList.get(j).setText(testReadingList.get(j).getEntityName());
-                spiltValue =testReadingList.get(j).getValue().split(",");
+                spiltValue = testReadingList.get(j).getValue().split(",");
 
                 //Filter Area(A)
-                resultTextViewList.get(j).setText(""+spiltValue[0]);
+                resultTextViewList.get(j).setText("" + spiltValue[0]);
                 //Air Flow rate (AxAv)
-                axvresultTextViewList.get(j).setText(""+Math.round(Double.parseDouble(spiltValue[0])*
-                        Double.parseDouble(spiltValue[spiltValue.length-2])));
+                axvresultTextViewList.get(j).setText("" + Math.round(Double.parseDouble(spiltValue[0]) *
+                        Double.parseDouble(spiltValue[spiltValue.length - 2])));
 
                 // V1, v2, v3, v4 value....
-                for (int i = 1; i <spiltValue.length-2; i++) {
-                    txtViewList.get(textId).setText(""+spiltValue[i]);
+                for (int i = 1; i < spiltValue.length - 2; i++) {
+                    txtViewList.get(textId).setText("" + spiltValue[i]);
                     textId++;
                 }
                 //Average Air Velocity(FPM)
-                avgresultTextViewList.get(j).setText(""+spiltValue[spiltValue.length-2]);
+                avgresultTextViewList.get(j).setText("" + spiltValue[spiltValue.length - 2]);
             }
-            testSpesificationValues = mValdocDatabaseHandler.getTestSpecificationValueById(testDetailId+"");
-            for (int i = 0; i <testSpesificationValues.size() ; i++) {
-                if("TFR".equalsIgnoreCase(testSpesificationValues.get(i).getFieldName())){
-                    TFRtv.setText(""+Math.round(Double.parseDouble(testSpesificationValues.get(i).getFieldValue())));
-                }else if("((TFR/RV)x60))".equalsIgnoreCase(testSpesificationValues.get(i).getFieldName())){
-                    TFTByRvTv.setText(""+Math.round(Double.parseDouble(testSpesificationValues.get(i).getFieldValue())));
+            testSpesificationValues = mValdocDatabaseHandler.getTestSpecificationValueById(testDetailId + "");
+            for (int i = 0; i < testSpesificationValues.size(); i++) {
+                if ("TFR".equalsIgnoreCase(testSpesificationValues.get(i).getFieldName())) {
+                    TFRtv.setText("" + Math.round(Double.parseDouble(testSpesificationValues.get(i).getFieldValue())));
+                } else if ("((TFR/RV)x60))".equalsIgnoreCase(testSpesificationValues.get(i).getFieldName())) {
+                    TFTByRvTv.setText("" + Math.round(Double.parseDouble(testSpesificationValues.get(i).getFieldValue())));
                 }
             }
 
 
-        }else if (testType != null && testType.contains("AV")) {
+        } else if (testType != null && testType.contains("AV")) {
             findViewById(R.id.test1_table_ll).setVisibility(View.VISIBLE);
             testReadingList = mValdocDatabaseHandler.getTestReadingDataById(testDetailId + "");
             spiltValue = testReadingList.get(0).getValue().split(",");
             Log.d(TAG, "CodeFlow : spiltValue length : " + spiltValue.length);
-            BuildTable(testReadingList.size()+1,(spiltValue.length-1));
+            BuildTable(testReadingList.size() + 1, (spiltValue.length - 1));
             //input Data
-                int textId =0;
-                for (int j = 0; j < testReadingList.size(); j++) {
-                    Log.d(TAG, "CodeFlow : outerForLoop J: " + j);
-                    //filter
-                    gridTextList.get(j).setText(testReadingList.get(j).getEntityName());
-                    //Average
-                    resultTextViewList.get(j).setText(""+spiltValue[spiltValue.length-1]);
-                    if("PASS".equalsIgnoreCase(spiltValue[spiltValue.length-1])){
-                        resultTextViewList.get(j).setTextColor(ContextCompat.getColor(this, R.color.blue));
-                    }else{
-                        resultTextViewList.get(j).setTextColor(ContextCompat.getColor(this, R.color.red));
-                    }
-                    //Results pass/fail
-                    //txtPassFailList.get(j).setText(""+spiltValue[spiltValue.length-1]);
-                    //V1, V2, v3.. Value..
-                    spiltValue =testReadingList.get(j).getValue().split(",");
-                    for (int i = 0; i <spiltValue.length-1; i++) {
-                        txtViewList.get(textId).setText(""+spiltValue[i]);
-                        Log.d(TAG, "CodeFlow : InnerForLoop I: " + i+" textId "+textId);
-                        textId++;
-
-                    }
+            int textId = 0;
+            for (int j = 0; j < testReadingList.size(); j++) {
+                Log.d(TAG, "CodeFlow : outerForLoop J: " + j);
+                //filter
+                gridTextList.get(j).setText(testReadingList.get(j).getEntityName());
+                //Average
+                resultTextViewList.get(j).setText("" + spiltValue[spiltValue.length - 1]);
+                if ("PASS".equalsIgnoreCase(spiltValue[spiltValue.length - 1])) {
+                    resultTextViewList.get(j).setTextColor(ContextCompat.getColor(this, R.color.blue));
+                } else {
+                    resultTextViewList.get(j).setTextColor(ContextCompat.getColor(this, R.color.red));
+                }
+                //Results pass/fail
+                //txtPassFailList.get(j).setText(""+spiltValue[spiltValue.length-1]);
+                //V1, V2, v3.. Value..
+                spiltValue = testReadingList.get(j).getValue().split(",");
+                for (int i = 0; i < spiltValue.length - 1; i++) {
+                    txtViewList.get(textId).setText("" + spiltValue[i]);
+                    Log.d(TAG, "CodeFlow : InnerForLoop I: " + i + " textId " + textId);
+                    textId++;
 
                 }
+
+            }
 
         } else if (testType != null && testType.contains("AF")) {
             findViewById(R.id.test1_table_ll).setVisibility(View.GONE);
@@ -216,34 +216,34 @@ public class CommonTestViewActivity extends AppCompatActivity {
             testReadingList = mValdocDatabaseHandler.getTestReadingDataById(testDetailId + "");
             spiltValue = testReadingList.get(0).getValue().split(",");
             Log.d(TAG, "CodeFlow : spiltValue length : " + spiltValue.length);
-            BuildTableTest2(testReadingList.size()+1,(spiltValue.length-2));
-            int textId =0;
+            BuildTableTest2(testReadingList.size() + 1, (spiltValue.length - 2));
+            int textId = 0;
             for (int j = 0; j < testReadingList.size(); j++) {
                 //filter
                 gridTextList.get(j).setText(testReadingList.get(j).getEntityName());
-                spiltValue =testReadingList.get(j).getValue().split(",");
+                spiltValue = testReadingList.get(j).getValue().split(",");
 
                 //fmgmgmgmg
-                resultTextViewList.get(j).setText(""+spiltValue[0]);
-                axvresultTextViewList.get(j).setText(""+Math.round(Double.parseDouble(spiltValue[0])*
-                        Double.parseDouble(spiltValue[spiltValue.length-2])));
+                resultTextViewList.get(j).setText("" + spiltValue[0]);
+                axvresultTextViewList.get(j).setText("" + Math.round(Double.parseDouble(spiltValue[0]) *
+                        Double.parseDouble(spiltValue[spiltValue.length - 2])));
                 //
-                wBTextViewList.get(j).setText(""+Math.round(Double.parseDouble(spiltValue[0])*
-                        Double.parseDouble(spiltValue[spiltValue.length-1])));
+                wBTextViewList.get(j).setText("" + Math.round(Double.parseDouble(spiltValue[0]) *
+                        Double.parseDouble(spiltValue[spiltValue.length - 1])));
 
                 // V1, v2, v3, value setup
-                for (int i = 1; i <spiltValue.length-2; i++) {
-                    txtViewList.get(textId).setText(""+spiltValue[i]);
+                for (int i = 1; i < spiltValue.length - 2; i++) {
+                    txtViewList.get(textId).setText("" + spiltValue[i]);
                     textId++;
                 }
 
-                avgresultTextViewList.get(j).setText(""+Math.round(Double.parseDouble(spiltValue[spiltValue.length-2])));
+                avgresultTextViewList.get(j).setText("" + Math.round(Double.parseDouble(spiltValue[spiltValue.length - 2])));
             }
-            testSpesificationValues = mValdocDatabaseHandler.getTestSpecificationValueById(testDetailId+"");
-            if(testSpesificationValues.size()>0 && txtViewWithoutBorderList.size()>0){
-                int kk = testSpesificationValues.size()/2;
+            testSpesificationValues = mValdocDatabaseHandler.getTestSpecificationValueById(testDetailId + "");
+            if (testSpesificationValues.size() > 0 && txtViewWithoutBorderList.size() > 0) {
+                int kk = testSpesificationValues.size() / 2;
                 txtViewWithoutBorderList.get(kk).
-                        setText(" "+testSpesificationValues.get(testSpesificationValues.size()-1).getFieldValue());
+                        setText(" " + testSpesificationValues.get(testSpesificationValues.size() - 1).getFieldValue());
             }
 
         } else if (testType != null && testType.contains("ACPH_H")) {
@@ -272,49 +272,49 @@ public class CommonTestViewActivity extends AppCompatActivity {
 
     private void textViewValueAsignment() {
         if (mTestBasedOn.equalsIgnoreCase("AHU")) {
-            testItemValue.setText(""+mTestDetails.getTestItem());
+            testItemValue.setText("" + mTestDetails.getTestItem());
             String ahu_no = mTestDetails.getAhuNo();
-            ahuEqValue.setText(""+ahu_no);
-        }else if (mTestBasedOn.equalsIgnoreCase("ROOM")){
+            ahuEqValue.setText("" + ahu_no);
+        } else if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
             String ahu_no = mTestDetails.getAhuNo();
-            ahuEqValue.setText(""+ahu_no);
-            room_volume.setText(""+mTestDetails.getRoomVolume());
+            ahuEqValue.setText("" + ahu_no);
+            room_volume.setText("" + mTestDetails.getRoomVolume());
         }
-        dateTextView.setText(""+mTestDetails.getDateOfTest());
-        customerName.setText(""+mTestDetails.getCustomer());
-        certificateNo.setText(""+mTestDetails.getRawDataNo());
-        instrumentUsed.setText(""+mTestDetails.getInstrumentUsed());
+        dateTextView.setText("" + mTestDetails.getDateOfTest());
+        customerName.setText("" + mTestDetails.getCustomer());
+        certificateNo.setText("" + mTestDetails.getRawDataNo());
+        instrumentUsed.setText("" + mTestDetails.getInstrumentUsed());
 
-        instrumentSerialNo.setText(""+mTestDetails.getInstrumentNo());
-        calibrationOn.setText(""+mTestDetails.getCalibratedOn());
-        calibrationDueOn.setText(""+mTestDetails.getCalibratedDueOn());
-        testSpecification.setText(""+mTestDetails.getTestSpecification());
-        plantName.setText(""+mTestDetails.getBlockName());
-        areaOfTest.setText(""+mTestDetails.getTestArea());
+        instrumentSerialNo.setText("" + mTestDetails.getInstrumentNo());
+        calibrationOn.setText("" + mTestDetails.getCalibratedOn());
+        calibrationDueOn.setText("" + mTestDetails.getCalibratedDueOn());
+        testSpecification.setText("" + mTestDetails.getTestSpecification());
+        plantName.setText("" + mTestDetails.getBlockName());
+        areaOfTest.setText("" + mTestDetails.getTestArea());
 
-        roomName.setText(""+mTestDetails.getRoomName());
-        roomNo.setText(""+mTestDetails.getRoomNo());
-        equipmentName.setText(""+mTestDetails.getEquipmentName());
-        equipmentNo.setText(""+mTestDetails.getEquipmentNo());
-        occupancyState.setText(""+mTestDetails.getOccupencyState());
-        testRefrance.setText(""+mTestDetails.getTestReference());
-        testCundoctor.setText(""+mTestDetails.getTesterName());
-        testCondoctorOrg.setText(""+mTestDetails.getTestCondoctorOrg());
-        testWitnessOrg.setText(""+mTestDetails.getTestWitnessOrg());
-        testWitness.setText(""+mTestDetails.getWitnessName());
+        roomName.setText("" + mTestDetails.getRoomName());
+        roomNo.setText("" + mTestDetails.getRoomNo());
+        equipmentName.setText("" + mTestDetails.getEquipmentName());
+        equipmentNo.setText("" + mTestDetails.getEquipmentNo());
+        occupancyState.setText("" + mTestDetails.getOccupencyState());
+        testRefrance.setText("" + mTestDetails.getTestReference());
+        testCundoctor.setText("" + mTestDetails.getTesterName());
+        testCondoctorOrg.setText("" + mTestDetails.getTestCondoctorOrg());
+        testWitnessOrg.setText("" + mTestDetails.getTestWitnessOrg());
+        testWitness.setText("" + mTestDetails.getWitnessName());
 
         String clientOrg = sharedpreferences.getString("CLIENTORG", "");
         String prtnerOrg = sharedpreferences.getString("PARTNERORG", "");
         if (sharedpreferences.getString("USERTYPE", "").equalsIgnoreCase("CLIENT")) {
             testCondoctorOrg.setText("(" + clientOrg + ")");
             testWitnessOrg.setText("(" + clientOrg + ")");
-            customerName.setText(""+clientOrg);
+            customerName.setText("" + clientOrg);
         } else {
             testCondoctorOrg.setText("(" + prtnerOrg + ")");
             testWitnessOrg.setText("(" + clientOrg + ")");
-            customerName.setText(""+prtnerOrg);
+            customerName.setText("" + prtnerOrg);
         }
-        plantName.setText("from cofig screen");
+        plantName.setText("" + mTestDetails.getBlockName());
     }
 
     private void initTextView() {
@@ -357,14 +357,14 @@ public class CommonTestViewActivity extends AppCompatActivity {
             testItemValue = (TextView) findViewById(R.id.test_item_value);
             testItemValue.setVisibility(View.VISIBLE);
             findViewById(R.id.test_item_table).setVisibility(View.VISIBLE);
-            ahuEqValue = (TextView)findViewById(R.id.ahu_equipment_value_tv);
-        }else if (mTestBasedOn.equalsIgnoreCase("ROOM")){
+            ahuEqValue = (TextView) findViewById(R.id.ahu_equipment_value_tv);
+        } else if (mTestBasedOn.equalsIgnoreCase("ROOM")) {
             findViewById(R.id.equiment_no_text).setVisibility(View.GONE);
             findViewById(R.id.equiment_no).setVisibility(View.GONE);
             findViewById(R.id.equiment_name_text).setVisibility(View.GONE);
             findViewById(R.id.equiment_name).setVisibility(View.GONE);
-            ahuEqValue = (TextView)findViewById(R.id.ahu_no);
-            room_volume = (TextView)findViewById(R.id.room_volume);
+            ahuEqValue = (TextView) findViewById(R.id.ahu_no);
+            room_volume = (TextView) findViewById(R.id.room_volume);
         }
 
     }
@@ -455,13 +455,12 @@ public class CommonTestViewActivity extends AppCompatActivity {
             pr.dismiss();
     }
 
-    private TableRow getTableRow(Context context){
+    private TableRow getTableRow(Context context) {
         TableRow row = new TableRow(context);
         row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
                 TableRow.LayoutParams.WRAP_CONTENT));
         return row;
     }
-
 
 
     private void BuildTableTest2(int rows, int cols) {
@@ -520,8 +519,8 @@ public class CommonTestViewActivity extends AppCompatActivity {
                     TableRow.LayoutParams.WRAP_CONTENT));
 
             // inner for loop
-            for (int j = 1; j <=cols; j++) {
-                if (i == 1 && j <=cols) {
+            for (int j = 1; j <= cols; j++) {
+                if (i == 1 && j <= cols) {
                     row.addView(addTextView(" V " + j + "\n "));
                 } else {
                     //row.addView(addEditTextView());
@@ -1036,7 +1035,7 @@ public class CommonTestViewActivity extends AppCompatActivity {
         ViewGroup.LayoutParams layoutParams = tv.getLayoutParams();
         layoutParams.height = getResources().getDimensionPixelSize(R.dimen.common_text_cell_height);
         tv.setLayoutParams(layoutParams);
-        tv.setPadding(15,0,15,0);
+        tv.setPadding(15, 0, 15, 0);
         tv.setBackgroundResource(R.drawable.border1);
         tv.setGravity(Gravity.CENTER);
         tv.setTextColor(getResources().getColor(R.color.black));
@@ -1057,7 +1056,7 @@ public class CommonTestViewActivity extends AppCompatActivity {
         ViewGroup.LayoutParams layoutParams = tv.getLayoutParams();
         layoutParams.height = getResources().getDimensionPixelSize(R.dimen.common_text_cell_height);
         tv.setLayoutParams(layoutParams);
-        tv.setPadding(15,0,15,0);
+        tv.setPadding(15, 0, 15, 0);
         tv.setBackgroundResource(R.drawable.border1);
         tv.setGravity(Gravity.CENTER);
         tv.setTextColor(getResources().getColor(R.color.black));
@@ -1072,6 +1071,7 @@ public class CommonTestViewActivity extends AppCompatActivity {
     }
 
     int idCountEtv = 200;
+
     private TextView addInputDataTextView() {
         TextView tv = new TextView(this);
         tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
@@ -1098,6 +1098,7 @@ public class CommonTestViewActivity extends AppCompatActivity {
     }
 
     int idPassFailTv = 300;
+
     private TextView addTextPassFail(String textValue, int tagRows) {
         TextView tv = new TextView(this);
         tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
@@ -1124,6 +1125,7 @@ public class CommonTestViewActivity extends AppCompatActivity {
     }
 
     int idCountTv = 1;
+
     private TextView addResultTextView(int rowsNo) {
         TextView tv = new TextView(this);
         tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
@@ -1237,7 +1239,7 @@ public class CommonTestViewActivity extends AppCompatActivity {
         }
         TextView TestHeader = (TextView) findViewById(R.id.common_header_tv);
         TextView TestHeader2 = (TextView) findViewById(R.id.common_header_2_tv);
-        if(testType != null && testType.contains("AF")){
+        if (testType != null && testType.contains("AF")) {
             findViewById(R.id.acph_av_final_calc_ll).setVisibility(View.GONE);
             findViewById(R.id.common_certificate_header_ll).setVisibility(View.VISIBLE);
             if (mTestBasedOn.equalsIgnoreCase("AHU")) {
@@ -1247,7 +1249,7 @@ public class CommonTestViewActivity extends AppCompatActivity {
                 findViewById(R.id.test2_reading_header).setVisibility(View.VISIBLE);
             }
 
-        }else if(testType != null && testType.contains("ACPH_AV")){
+        } else if (testType != null && testType.contains("ACPH_AV")) {
             findViewById(R.id.test2_reading_header).setVisibility(View.VISIBLE);
             findViewById(R.id.acph_av_final_calc_ll).setVisibility(View.VISIBLE);
             TFRtv = (TextView) findViewById(R.id.acph_av_tfr_value_tv);
@@ -1263,8 +1265,7 @@ public class CommonTestViewActivity extends AppCompatActivity {
             findViewById(R.id.test2_tableLayout6).setVisibility(View.GONE);
             TextView measerdTv = (TextView) findViewById(R.id.measerd_av_tv);
             measerdTv.setText("Measured Air Velocity(fpm)");
-        }
-        else{
+        } else {
             findViewById(R.id.test_table_1_header_2_ll).setVisibility(View.GONE);
             findViewById(R.id.common_header_test1).setVisibility(View.GONE);
             TestHeader.setText("TEST RAW DATA EQUIPMENT");

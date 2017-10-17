@@ -72,9 +72,9 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
     private Room room;
     private ApplicableTestAhu mApplicableTestAhu = null;
     private ApplicableTestRoom mApplicableTestRoom = null;
-    private ArrayList<AhuFilter> mAhuFilterArrayList = null;
-    private ArrayList<RoomFilter> mRoomFilterArrayList;
-    private ArrayList<Grill> grillAndSizeFromGrill;
+    private ArrayList<AhuFilter> mAhuFilterArrayList = new ArrayList<AhuFilter>();
+    private ArrayList<RoomFilter> mRoomFilterArrayList = new ArrayList<RoomFilter>();
+    private ArrayList<Grill> grillAndSizeFromGrill = new ArrayList<Grill>();
 
     //    private int applicableTestRoomLocation;
     private String areaName;
@@ -222,7 +222,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
                     tv2.setText(Math.round(AxAv) + "");
-                    Log.d("AHU"," AHU filter AxAv= "+AxAv);
+                    Log.d("AHU", " AHU filter AxAv= " + AxAv);
                     arrayList_totalAirFlowRate.add(AxAv);
                 }
             } else {
@@ -236,7 +236,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
                     tv2.setText(Math.round(AxAv) + "");
-                    Log.d("Room","if Room filter AxAv= "+AxAv);
+                    Log.d("Room", "if Room filter AxAv= " + AxAv);
                     totalAirFlowRateMap.put(tv2.getId(), (float) AxAv);
                 } else if (!grillAndSizeFromGrill.isEmpty()) {
                     //Air Flow Rate(AxAv)
@@ -248,7 +248,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
                     tv2.setText(Math.round(AxAv) + "");
-                    Log.d("Room","else Room filter AxAv= "+AxAv);
+                    Log.d("Room", "else Room filter AxAv= " + AxAv);
                     totalAirFlowRateMap.put(tv2.getId(), (float) AxAv);
 
                 }
@@ -265,8 +265,8 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
             }
             variation = mApplicableTestRoom.getDiffAVbetweenFilter();
             Log.d(TAG, "AxAv Validation value: " + variation);
-            if(variation != 0){
-               getAxAvDataValidationByAverage(variation);
+            if (variation != 0) {
+                getAxAvDataValidationByAverage(variation);
             }
         }
 
@@ -362,13 +362,13 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
     }
 
     private boolean colorPicker(double testSpesification, double totalairflowrate, String testBasedOn) {
-        double testSpecification_1 = 0.0d,testSpecification_2 = 0.0d;
+        double testSpecification_1 = 0.0d, testSpecification_2 = 0.0d;
         if (testBasedOn.equalsIgnoreCase("AHU")) {
-            testSpecification_1 = testSpesification+(testSpesification * mTolarence) / 100;
-            testSpecification_2 = testSpesification-(testSpesification * mTolarence) / 100;
+            testSpecification_1 = testSpesification + (testSpesification * mTolarence) / 100;
+            testSpecification_2 = testSpesification - (testSpesification * mTolarence) / 100;
         } else {
-            testSpecification_1 = testSpesification +(testSpesification / 4);
-            testSpecification_2 = testSpesification -(testSpesification / 4);
+            testSpecification_1 = testSpesification + (testSpesification / 4);
+            testSpecification_2 = testSpesification - (testSpesification / 4);
         }
         if (totalairflowrate > testSpecification_2 && totalairflowrate < testSpecification_1) {
             return false;
@@ -469,7 +469,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
             testWitnessOrg.setText("(" + clientOrg + ")");
             customerName.setText("" + clientOrg);
         }
-        plantName.setText(""+clientOrg);
+        plantName.setText("" + clientOrg);
         Log.d("valdoc", "RDAV5UserEnryActivity 1witness=" + witnessFirst);
         StringBuilder witness = new StringBuilder();
         witness.append(witnessFirst.toString());
@@ -635,7 +635,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
                     if (i != 0)
                         sb.append(',');
                     if (null != userEnterdValue && userEnterdValue.size() > 0) {
-                        Log.d("Avinash", "value=" + userEnterdValue.isEmpty());
+                        Log.d(TAG, "value=" + userEnterdValue.isEmpty());
                         if (null != userEnterdValue.get(hasMapKey).toString()) {
                             sb.append("" + userEnterdValue.get(hasMapKey).toString());
                             hasMapKey++;
@@ -748,7 +748,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
             testDetails.setInstrumentUsed(partnerInstrument.getpInstrumentName());
             testDetails.setMake(partnerInstrument.getMake());
             testDetails.setModel(partnerInstrument.getModel());
-            testDetails.setInstrumentNo("" + partnerInstrument.getpInstrumentId());
+            testDetails.setInstrumentNo("" + partnerInstrument.getSerialNo());
             testDetails.setCalibratedOn(partnerInstrument.getLastCalibrationDate());
             testDetails.setCalibratedDueOn(partnerInstrument.getCalibrationDueDate());
             testDetails.setSamplingFlowRate("");
@@ -1344,6 +1344,7 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
     }
 
     int idCounts = 200, inputTxtCount = 0;
+
     private void getInputDataValidationByAverage(int variation) {
         Log.d(TAG, " rows " + rows + " cols " + cols);
         for (int i = 1; i <= rows - 1; i++) {
@@ -1381,11 +1382,12 @@ public class RDACPHAVUserEntryActivity extends AppCompatActivity {
     }
 
     int idCountAxAv = 300, txtCountAxAv = 0;
+
     private void getAxAvDataValidationByAverage(int variation) {
         //check individual AxAv value based on All AxAv average
         //+- of variation %
-        long axAvAverage = (long)getTfr(totalAirFlowRateMap)/totalAirFlowRateMap.size();
-        Log.d(TAG, " AxAv Averge "+axAvAverage);
+        long axAvAverage = (long) getTfr(totalAirFlowRateMap) / totalAirFlowRateMap.size();
+        Log.d(TAG, " AxAv Averge " + axAvAverage);
         for (int i = 1; i <= rows - 1; i++) {
             Log.d(TAG, " idCountAxAv " + idCountAxAv + " txtCountAxAv " + txtCountAxAv);
             boolean results = checkAxAvBasedOnAverage(totalAirFlowRateMap.get(idCountAxAv),

@@ -21,7 +21,7 @@ import javax.net.ssl.HttpsURLConnection;
  * Created by Avinash on 3/20/2016.
  */
 public class HttpPostConnection {
-    private static final String TAG = "Http Connection";
+    private static final String TAG = "HttpPostConnection";
 
 
     private String[] blogTitles;
@@ -29,7 +29,7 @@ public class HttpPostConnection {
 
     public HttpPostConnection(HttpUrlConnectionPostResponce connectionResponce) {
         mHttpUrlConnectionResponce = connectionResponce;
-        Log.d("VALDOC", "avinash HttpConnection");
+        Log.d(TAG, " HttpConnection");
     }
 //            new AsyncHttpTask().execute(url);
 
@@ -157,7 +157,7 @@ public class HttpPostConnection {
             statusCode = conn.getResponseCode();
             mHttpUrlConnectionResponce.httpPostResponceResult(responseData, statusCode);
         } catch (IOException e) {
-            Log.d("avinash","exception="+e.getMessage());
+            Log.d(TAG,"exception="+e.getMessage());
             e.printStackTrace();
         } finally {
             if (conn != null) {

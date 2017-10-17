@@ -68,8 +68,8 @@ public class RDACPHAVPostViewActivity extends AppCompatActivity {
     private Room room;
     private ApplicableTestAhu mApplicableTestAhu = null;
     private ApplicableTestRoom mApplicableTestRoom = null;
-    private ArrayList<AhuFilter> mAhuFilterArrayList = null;
-    private ArrayList<RoomFilter> mRoomFilterArrayList;
+    private ArrayList<AhuFilter> mAhuFilterArrayList = new ArrayList<AhuFilter>();
+    private ArrayList<RoomFilter> mRoomFilterArrayList=new ArrayList<RoomFilter>();
     //    private ArrayList<HashMap<String, String>> grillAndSizeFromGrill;
 //    private int applicableTestRoomLocation;
     private String areaName;
@@ -212,7 +212,7 @@ public class RDACPHAVPostViewActivity extends AppCompatActivity {
             testWitnessOrg.setText("(" + clientOrg + ")");
             customerName.setText(""+prtnerOrg);
         }
-        plantName.setText("from cofig screen");
+        plantName.setText(""+mTestDetails.getBlockName());
     }
 
     private void initTextView() {

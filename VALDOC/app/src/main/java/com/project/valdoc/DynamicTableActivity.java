@@ -152,8 +152,8 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
     private String ahuNumber;
     private String mTestItem;
     private Room room;
-    private ArrayList<Grill> grillAndSizeFromGrill;
-    private ArrayList<RoomFilter> mRoomFilterArrayList;
+    private ArrayList<Grill> grillAndSizeFromGrill=new ArrayList<Grill>();
+    private ArrayList<RoomFilter> mRoomFilterArrayList=new ArrayList<RoomFilter>();
     private String witnessFirst;
     private String witnessSecond;
     private String witnessThird;
@@ -169,13 +169,13 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
     private String mTestBasedOn;
     private String mGrilFilterType;
     private ArrayList mFitPassFailFlagList = new ArrayList();
-    private ArrayList<EquipmentGrill> mEquipmentGrillArrayList = null;
+    private ArrayList<EquipmentGrill> mEquipmentGrillArrayList = new ArrayList<EquipmentGrill>();
     private Ahu ahu = null;
-    private ArrayList<AhuFilter> mAhuFilterArrayList = null;
+    private ArrayList<AhuFilter> mAhuFilterArrayList = new ArrayList<AhuFilter>();
     private ApplicableTestAhu mApplicableTestAhu = null;
     private ApplicableTestRoom mApplicableTestRoom = null;
     private ApplicableTestEquipment mApplicableTestEquipment = null;
-    private ArrayList<EquipmentFilter> mEquipmentFilterArrayList = null;
+    private ArrayList<EquipmentFilter> mEquipmentFilterArrayList = new ArrayList<EquipmentFilter>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

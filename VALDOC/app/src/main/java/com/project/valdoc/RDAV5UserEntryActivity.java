@@ -110,11 +110,11 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
     static final int DATE_PICKER_ID = 1111;
     private String mTestBasedOn;
     private String mGrilFilterType;
-    private ArrayList<EquipmentGrill> mEquipmentGrillArrayList = null;
-    private ArrayList<EquipmentFilter> mEquipmentFilterArrayList = null;
+    private ArrayList<EquipmentGrill> mEquipmentGrillArrayList = new ArrayList<EquipmentGrill>();
+    private ArrayList<EquipmentFilter> mEquipmentFilterArrayList = new ArrayList<EquipmentFilter>();
     private ApplicableTestEquipment applicableTestEquipment = null;
     private Ahu ahu = null;
-    private ArrayList<AhuFilter> mAhuFilterArrayList = null;
+    private ArrayList<AhuFilter> mAhuFilterArrayList = new ArrayList<AhuFilter>();
     private ApplicableTestAhu mApplicableTestAhu = null;
     private HashMap<Integer, Integer> inputDataHashMap;
     private HashMap<Integer, Long> resultDataHashMap;
@@ -159,7 +159,7 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
         }
 
         //Receiving User Input Data from Bundle
-        inputDataHashMap= (HashMap<Integer, Integer>) getIntent().getSerializableExtra("InputData");
+        inputDataHashMap = (HashMap<Integer, Integer>) getIntent().getSerializableExtra("InputData");
         for (Map.Entry m : inputDataHashMap.entrySet()) {
             Log.v(TAG, " InputData " + m.getKey() + " " + m.getValue());
         }
@@ -179,11 +179,11 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
         }
 
         // Checking individual input base on Average
-        if(equipment != null){
+        if (equipment != null) {
             double minValue = equipment.getMinVelocity(), maxValue = equipment.getMaxVelocity();
-            Log.d(TAG, " minValue "+minValue+" maxValue "+maxValue);
-            if(minValue>0 && maxValue>0){
-                getInputDataValidationByTestSpecification((int)minValue, (int)maxValue);
+            Log.d(TAG, " minValue " + minValue + " maxValue " + maxValue);
+            if (minValue > 0 && maxValue > 0) {
+                getInputDataValidationByTestSpecification((int) minValue, (int) maxValue);
             }
         }
 
@@ -355,16 +355,16 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
         String prtnerOrg = sharedpreferences.getString("PARTNERORG", "");
 
         if (sharedpreferences.getString("USERTYPE", "").equalsIgnoreCase("PARTNER")) {
-            testCondoctorOrg.setText("(" +prtnerOrg + ")");
+            testCondoctorOrg.setText("(" + prtnerOrg + ")");
             testWitnessOrg.setText("(" + clientOrg + ")");
-            customerName.setText(""+ prtnerOrg);
+            customerName.setText("" + prtnerOrg);
         } else {
-            testCondoctorOrg.setText("(" + clientOrg+ ")");
+            testCondoctorOrg.setText("(" + clientOrg + ")");
             testWitnessOrg.setText("(" + clientOrg + ")");
-            customerName.setText(""+ clientOrg);
+            customerName.setText("" + clientOrg);
 
         }
-        plantName.setText(""+clientOrg);
+        plantName.setText("" + clientOrg);
 
 //        testSpecification.setText("Required Air Velocity " + equipment.getMinVelocity() + "-" + equipment.getMaxVelocity() + "fpm");
         if (mTestBasedOn.equalsIgnoreCase("EQUIPMENT")) {
@@ -454,7 +454,7 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
             testDetails.setInstrumentUsed("" + instrumentUsed.getText());
             testDetails.setMake("" + partnerInstrument.getMake());
             testDetails.setModel("" + partnerInstrument.getModel());
-            testDetails.setInstrumentNo("" + partnerInstrument.getpInstrumentId());
+            testDetails.setInstrumentNo("" + partnerInstrument.getSerialNo());
             testDetails.setCalibratedOn("" + partnerInstrument.getLastCalibrationDate());
             testDetails.setCalibratedDueOn("" + partnerInstrument.getCalibrationDueDate());
             testDetails.setSamplingFlowRate("");
@@ -639,7 +639,7 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
 
     }
 
-    private TableRow getTableRow(Context context){
+    private TableRow getTableRow(Context context) {
         TableRow row = new TableRow(context);
         row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
                 TableRow.LayoutParams.WRAP_CONTENT));
@@ -654,7 +654,7 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
         ViewGroup.LayoutParams layoutParams = tv.getLayoutParams();
         layoutParams.height = getResources().getDimensionPixelSize(R.dimen.common_text_cell_height);
         tv.setLayoutParams(layoutParams);
-        tv.setPadding(15,0,15,0);
+        tv.setPadding(15, 0, 15, 0);
         tv.setBackgroundResource(R.drawable.border1);
         tv.setGravity(Gravity.CENTER);
         tv.setTextColor(getResources().getColor(R.color.black));
@@ -668,6 +668,7 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
     }
 
     int idCountEtv = 200;
+
     private TextView addInputDataTextView() {
         TextView tv = new TextView(this);
         tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
@@ -694,6 +695,7 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
     }
 
     int idCountTv = 1;
+
     private TextView addResultTextView(int rowsNo) {
         TextView tv = new TextView(this);
         tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
@@ -749,6 +751,7 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
     }
 
     int idPassFailTv = 300;
+
     private TextView addTextPassFail(String textValue, int tagRows) {
         TextView tv = new TextView(this);
         tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
@@ -793,6 +796,7 @@ public class RDAV5UserEntryActivity extends AppCompatActivity {
     }
 
     int idCounts = 200, inputTxtCount = 0;
+
     private void getInputDataValidationByTestSpecification(int minValue, int maxValue) {
         for (int i = 1; i <= rows - 1; i++) {
             for (int j = 0; j < cols; j++) {

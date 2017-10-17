@@ -62,8 +62,8 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
     private String ahuNumber;
     private Room room;
     private ApplicableTestRoom mApplicableTestRoom = null;
-    private ArrayList<RoomFilter> mRoomFilterArrayList;
-    private ArrayList<Grill> grillAndSizeFromGrill;
+    private ArrayList<RoomFilter> mRoomFilterArrayList = new ArrayList<RoomFilter>();
+    private ArrayList<Grill> grillAndSizeFromGrill = new ArrayList<Grill>();
     private String areaName;
     private String witnessFirst;
     private String witnessSecond;
@@ -161,7 +161,7 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
         //Creating Tables based on rows and columns
         if (rows > 0 && cols > 0) {
             BuildTableTest3(rows, cols);
-        }else {
+        } else {
             Utilityies.showAlert(RDACPHhUserEntryActivity.this, "NO Grill or Fillter Data");
         }
 
@@ -186,12 +186,12 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
             //Average
             TextView avgTvl = resultTextViewList.get(i);
             avgTvl.setText(averageDataHashMap.get(avgTvl.getId()) + "");
-            Log.v(TAG, "resultTextViewList Id "+avgTvl.getId() + " Avg. Values " + averageDataHashMap.get(avgTvl.getId()));
+            Log.v(TAG, "resultTextViewList Id " + avgTvl.getId() + " Avg. Values " + averageDataHashMap.get(avgTvl.getId()));
         }
 
         int variation = mApplicableTestRoom.getDiffAVbetweenFilter();
         Log.d(TAG, "AxAv_H Validation value: " + variation);
-        if(variation != 0){
+        if (variation != 0) {
             getAxAvDataValidationByAverage(variation);
         }
 
@@ -202,10 +202,10 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
         TFTByRvTv.setText("" + Math.round(airChangeValue));
 
         Boolean textColor = passFailCheckForTfrBy60(
-                Double.parseDouble(mApplicableTestRoom.getTestSpecification()),airChangeValue);
-        if(textColor){
+                Double.parseDouble(mApplicableTestRoom.getTestSpecification()), airChangeValue);
+        if (textColor) {
             TFTByRvTv.setTextColor(Color.BLUE);
-        }else{
+        } else {
             TFTByRvTv.setTextColor(Color.RED);
         }
 
@@ -219,27 +219,27 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
     private double getTFTBy60Value(double totalAirFlowRate) {
         double tftBy60Value = 0.0d;
         double roomVolume = room.getVolume();
-        if(roomVolume > 0){
-            tftBy60Value = (totalAirFlowRate/roomVolume)*60;
+        if (roomVolume > 0) {
+            tftBy60Value = (totalAirFlowRate / roomVolume) * 60;
         }
-        Log.d(TAG, "TFRBy60_Value : "+tftBy60Value);
+        Log.d(TAG, "TFRBy60_Value : " + tftBy60Value);
         return tftBy60Value;
     }
 
     private long getResultAverageData(HashMap<Integer, Long> averageDataHashMap) {
         long tfrValue = 0l;
         for (Map.Entry k : averageDataHashMap.entrySet()) {
-            tfrValue += (long)k.getValue();
+            tfrValue += (long) k.getValue();
         }
-        Log.d(TAG, "TFR_Value : "+tfrValue);
+        Log.d(TAG, "TFR_Value : " + tfrValue);
         return tfrValue;
     }
 
     private boolean passFailCheckForTfrBy60(double testSpesification, double totalairflowrate) {
-        Log.d(TAG, "Test Specification : "+testSpesification);
-        if(totalairflowrate > testSpesification){
+        Log.d(TAG, "Test Specification : " + testSpesification);
+        if (totalairflowrate > testSpesification) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }
@@ -336,13 +336,13 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
         if (sharedpreferences.getString("USERTYPE", "").equalsIgnoreCase("PARTNER")) {
             testCondoctorOrg.setText("(" + prtnerOrg + ")");
             testWitnessOrg.setText("(" + clientOrg + ")");
-            customerName.setText(""+prtnerOrg);
+            customerName.setText("" + prtnerOrg);
         } else {
-            testCondoctorOrg.setText("(" +clientOrg+ ")");
+            testCondoctorOrg.setText("(" + clientOrg + ")");
             testWitnessOrg.setText("(" + clientOrg + ")");
-            customerName.setText(""+ clientOrg);
+            customerName.setText("" + clientOrg);
         }
-         plantName.setText(""+clientOrg);
+        plantName.setText("" + clientOrg);
         Log.d("valdoc", "RDAV5UserEnryActivity 1witness=" + witnessFirst);
         StringBuilder witness = new StringBuilder();
         witness.append(witnessFirst.toString());
@@ -531,7 +531,7 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
             testDetails.setInstrumentUsed(partnerInstrument.getpInstrumentName());
             testDetails.setMake(partnerInstrument.getMake());
             testDetails.setModel(partnerInstrument.getModel());
-            testDetails.setInstrumentNo("" + partnerInstrument.getpInstrumentId());
+            testDetails.setInstrumentNo("" + partnerInstrument.getSerialNo());
             testDetails.setCalibratedOn(partnerInstrument.getLastCalibrationDate());
             testDetails.setCalibratedDueOn(partnerInstrument.getCalibrationDueDate());
             testDetails.setSamplingFlowRate("");
@@ -636,14 +636,14 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
                     ViewGroup.LayoutParams params = grillTV.getLayoutParams();
                     params.height = getResources().getDimensionPixelSize(R.dimen.common_txt_header_height_h);
                     grillTV.setLayoutParams(params);
-                    grillTV.setEms(8+Utilityies.getPctCellWidth(cols));
+                    grillTV.setEms(8 + Utilityies.getPctCellWidth(cols));
                     row.addView(grillTV);
                 } else {
 
                     if (mGrilFilterType.equalsIgnoreCase("Grill")) {
                         if (null != grillAndSizeFromGrill && grillAndSizeFromGrill.size() > 0) {
                             TextView textView = addTextView(grillAndSizeFromGrill.get(i - 2).getGrillCode().toString());
-                            textView.setEms(8+Utilityies.getPctCellWidth(cols));
+                            textView.setEms(8 + Utilityies.getPctCellWidth(cols));
                             row.addView(textView);
                         } else {
                             row.addView(addTextView("grillAndSizeFromGrill"));
@@ -652,7 +652,7 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
                     } else {
                         if (null != mRoomFilterArrayList && mRoomFilterArrayList.size() > 0) {
                             TextView textView = addTextView(mRoomFilterArrayList.get(i - 2).getFilterCode());
-                            textView.setEms(8+Utilityies.getPctCellWidth(cols));
+                            textView.setEms(8 + Utilityies.getPctCellWidth(cols));
                             row.addView(textView);
                         } else {
                             row.addView(addTextView("grillAndSizeFromGrill"));
@@ -677,17 +677,17 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
             for (int j = 1; j <= cols; j++) {
                 if (i == 1 && j <= cols) {
                     TextView textView = addTextView(" Q " + j);
-                    if(cols>4)
-                        textView.setEms(4+Utilityies.getPctCellWidth(cols));
+                    if (cols > 4)
+                        textView.setEms(4 + Utilityies.getPctCellWidth(cols));
                     else
-                        textView.setEms(8+Utilityies.getPctCellWidth(cols));
+                        textView.setEms(8 + Utilityies.getPctCellWidth(cols));
                     row.addView(textView);
                 } else {
                     TextView editText = addInputDataTextView();
-                    if(cols>4)
-                        editText.setEms(4+Utilityies.getPctCellWidth(cols));
+                    if (cols > 4)
+                        editText.setEms(4 + Utilityies.getPctCellWidth(cols));
                     else
-                        editText.setEms(8+Utilityies.getPctCellWidth(cols));
+                        editText.setEms(8 + Utilityies.getPctCellWidth(cols));
                     row.addView(editText);
                 }
             }
@@ -701,21 +701,21 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
             row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
                     TableRow.LayoutParams.WRAP_CONTENT));
             // inner for loop
-                if (i == 1) {
-                    TextView textView = addTextView(" Average ");
-                    if(cols>4)
-                        textView.setEms(7+Utilityies.getPctCellWidth(cols));
-                    else
-                        textView.setEms(9+Utilityies.getPctCellWidth(cols));
-                    row.addView(textView);
-                }else{
-                    TextView textView = addResultTextView(i);
-                    if(cols>4)
-                        textView.setEms(7+Utilityies.getPctCellWidth(cols));
-                    else
-                        textView.setEms(9+Utilityies.getPctCellWidth(cols));
-                    row.addView(textView);
-                }
+            if (i == 1) {
+                TextView textView = addTextView(" Average ");
+                if (cols > 4)
+                    textView.setEms(7 + Utilityies.getPctCellWidth(cols));
+                else
+                    textView.setEms(9 + Utilityies.getPctCellWidth(cols));
+                row.addView(textView);
+            } else {
+                TextView textView = addResultTextView(i);
+                if (cols > 4)
+                    textView.setEms(7 + Utilityies.getPctCellWidth(cols));
+                else
+                    textView.setEms(9 + Utilityies.getPctCellWidth(cols));
+                row.addView(textView);
+            }
             test3_table_layout3.addView(row);
         }
 
@@ -735,7 +735,7 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
         ViewGroup.LayoutParams params = tv.getLayoutParams();
         params.height = getResources().getDimensionPixelSize(R.dimen.pct_text_cell_height);
         tv.setLayoutParams(params);
-        tv.setPadding(15,0,15,10);
+        tv.setPadding(15, 0, 15, 10);
         tv.setBackgroundResource(R.drawable.border1);
         tv.setGravity(Gravity.CENTER);
         tv.setTextColor(getResources().getColor(R.color.black));
@@ -775,6 +775,7 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
     }
 
     int idAvgtv = 400;
+
     private TextView addResultTextView(int rowsNo) {
         TextView tv = new TextView(this);
         tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
@@ -844,11 +845,12 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
     }
 
     int idCountAxAv = 400, txtCountAxAv = 0;
+
     private void getAxAvDataValidationByAverage(int variation) {
         //check individual AxAv value based on All AxAv average
         //+- of variation %
-        long axAvAverage = getTfr(averageDataHashMap)/averageDataHashMap.size();
-        Log.d(TAG, " AxAv_H Averge "+axAvAverage);
+        long axAvAverage = getTfr(averageDataHashMap) / averageDataHashMap.size();
+        Log.d(TAG, " AxAv_H Averge " + axAvAverage);
         for (int i = 1; i <= rows - 1; i++) {
             Log.d(TAG, " idCountAxAv " + idCountAxAv + " txtCountAxAv " + txtCountAxAv);
             boolean results = checkAxAvBasedOnAverage(averageDataHashMap.get(idCountAxAv),

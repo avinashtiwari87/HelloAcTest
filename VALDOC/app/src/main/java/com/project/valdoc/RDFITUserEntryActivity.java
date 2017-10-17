@@ -70,7 +70,7 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
     private PartnerInstrument partnerInstrument;
     private String ahuNumber;
     private Room room;
-    private ArrayList<RoomFilter> filterArrayList;
+    private ArrayList<RoomFilter> filterArrayList = new ArrayList<RoomFilter>();
     private String areaName;
     private String mTestItem;
     private String witnessFirst;
@@ -152,12 +152,12 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
     private String mTestBasedOn;
     private String[] roomDetails;
     private Equipment equipment;
-    private ArrayList<AhuFilter> mAhuFilterArrayList = null;
+    private ArrayList<AhuFilter> mAhuFilterArrayList = new ArrayList<AhuFilter>();
     private ApplicableTestAhu mApplicableTestAhu = null;
     private ApplicableTestRoom mApplicableTestRoom = null;
     private ApplicableTestEquipment mApplicableTestEquipment = null;
-    private ArrayList<EquipmentFilter> mEquipmentFilterArrayList = null;
-    private ArrayList<RoomFilter> mRoomFilterArrayList;
+    private ArrayList<EquipmentFilter> mEquipmentFilterArrayList = new ArrayList<EquipmentFilter>();
+    private ArrayList<RoomFilter> mRoomFilterArrayList = new ArrayList<RoomFilter>();
 
 
     @Override
@@ -717,7 +717,7 @@ public class RDFITUserEntryActivity extends AppCompatActivity {
             testDetails.setInstrumentUsed("" + partnerInstrument.getpInstrumentName());
             testDetails.setMake("" + partnerInstrument.getMake());
             testDetails.setModel("" + partnerInstrument.getModel());
-            testDetails.setInstrumentNo("" + partnerInstrument.getpInstrumentId());
+            testDetails.setInstrumentNo("" + partnerInstrument.getSerialNo());
             testDetails.setCalibratedOn("" + partnerInstrument.getLastCalibrationDate());
             testDetails.setCalibratedDueOn("" + partnerInstrument.getCalibrationDueDate());
 
