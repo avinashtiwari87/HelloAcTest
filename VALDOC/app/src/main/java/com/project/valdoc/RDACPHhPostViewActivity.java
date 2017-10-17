@@ -35,13 +35,13 @@ public class RDACPHhPostViewActivity extends AppCompatActivity {
             test3_table_layout5;
     TextView TFRtv, TFTByRvTv;
     //Header TextView
-    TextView roomVolume, roomVolumeText, ahuNo, ahuNoText, equipmentNameText,equipmentNoText, dateTextView;
-    TextView plantName, areaOfTest, roomName, occupancyState, testRefrance,roomNo, testCundoctor,testWitness,testCondoctorOrg,testWitnessOrg;
-    TextView customerName, certificateNo, instrumentUsed, instrumentSerialNo, calibrationOn,calibrationDueOn, testSpecification;
+    TextView roomVolume, roomVolumeText, ahuNo, ahuNoText, equipmentNameText, equipmentNoText, dateTextView;
+    TextView plantName, areaOfTest, roomName, occupancyState, testRefrance, roomNo, testCundoctor, testWitness, testCondoctorOrg, testWitnessOrg;
+    TextView customerName, certificateNo, instrumentUsed, instrumentSerialNo, calibrationOn, calibrationDueOn, testSpecification;
     private ImageView cancel;
 
     ArrayList<TextView> txtViewList;
-    ArrayList<TextView>avgTxtViewList;
+    ArrayList<TextView> avgTxtViewList;
     ArrayList<TextView> roomVolumeTxtList;
     ArrayList<TextView> totalAirFlowRateTxtList;
     ArrayList<TextView> airChangeTxtList;
@@ -82,35 +82,36 @@ public class RDACPHhPostViewActivity extends AppCompatActivity {
         //Getting TestType and ID
         mTestType = getIntent().getStringExtra("TestType");
         testDetailId = getIntent().getIntExtra("testDetailId", 1);
-        Log.d(TAG," mTestType "+mTestType+" testDetailId "+testDetailId);
+        Log.d(TAG, " mTestType " + mTestType + " testDetailId " + testDetailId);
 
         //Reading Data from DB
         testReadingArrayList = mValdocDatabaseHandler.getTestReadingDataById(testDetailId + "");
         mTestDetails = mValdocDatabaseHandler.getTestDetailById(testDetailId);
         testSpecificationValueArrayList = mValdocDatabaseHandler.getTestSpecificationValueById(testDetailId + "");
         spiltValue = testReadingArrayList.get(0).getValue().split(",");
-        Log.d(TAG," testReadingArrayList "+testReadingArrayList.size()+" testSpecificationValueArrayList "+testSpecificationValueArrayList.size());
+        Log.d(TAG, " testReadingArrayList " + testReadingArrayList.size() + " testSpecificationValueArrayList " + testSpecificationValueArrayList.size());
         // setting teast header value
         textViewValueAssignment();
 
         if (mTestType.contains(TestCreateActivity.ACPHH)) {
-            BuildTableTest3(testReadingArrayList.size() + 1, spiltValue.length );
+            BuildTableTest3(testReadingArrayList.size() + 1, spiltValue.length - 1);
         }
 
         //Setting TFR and TFR*AV/60
-        if(testSpecificationValueArrayList != null && testSpecificationValueArrayList.size()>=3){
-            Log.d(TAG," testSpesificationValueArrayList "+testSpecificationValueArrayList.size());
+        if (testSpecificationValueArrayList != null && testSpecificationValueArrayList.size() >= 3) {
+            Log.d(TAG, " testSpesificationValueArrayList " + testSpecificationValueArrayList.size());
             DecimalFormat df2 = new DecimalFormat(".##");
             try {
-                TFRtv.setText(""+df2.format(Double.valueOf(testSpecificationValueArrayList.get(0).getFieldValue())));
-                TFTByRvTv.setText(""+df2.format(Double.valueOf(testSpecificationValueArrayList.get(2).getFieldValue())));
+                TFRtv.setText("" + df2.format(Double.valueOf(testSpecificationValueArrayList.get(0).getFieldValue())));
+                TFTByRvTv.setText("" + df2.format(Double.valueOf(testSpecificationValueArrayList.get(2).getFieldValue())));
             } catch (NumberFormatException e) {
                 e.printStackTrace();
             }
         }
 
     }
-//latest method
+
+    //latest method
 //private void BuildTableTest3(int rows, int cols) {
 //    //first section
 //    // outer for loop
@@ -233,8 +234,8 @@ public class RDACPHhPostViewActivity extends AppCompatActivity {
                     row.addView(grillTV);
                 } else {
                     if (null != testReadingArrayList && testReadingArrayList.size() > 0) {
-                        TextView textView =addTextView(testReadingArrayList.get(i - 2).getEntityName());
-                                textView.setEms(Utilityies.getPctCellWidth(cols));
+                        TextView textView = addTextView(testReadingArrayList.get(i - 2).getEntityName());
+                        textView.setEms(Utilityies.getPctCellWidth(cols));
                         row.addView(textView);
 
                     } else {
@@ -252,7 +253,9 @@ public class RDACPHhPostViewActivity extends AppCompatActivity {
             TableRow row = new TableRow(this);
             row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
                     TableRow.LayoutParams.WRAP_CONTENT));
-
+            String[] spiltQValue = null;
+            if (i != 1)
+                spiltQValue = testReadingArrayList.get(i - 2).getValue().split(",");
             // inner for loop
             for (int j = 1; j <= cols; j++) {
                 if (i == 1 && j <= cols) {
@@ -263,11 +266,11 @@ public class RDACPHhPostViewActivity extends AppCompatActivity {
 //                    textView.setEms(8+Utilityies.getPctCellWidth(cols));
                     row.addView(textView);
                 } else {
-                    TextView editText = addTextView(""+testReadingArrayList.get(i-2).getValue());
-                    if(cols>4)
-                    editText.setEms(Utilityies.getPctCellWidth(cols));
+                    TextView editText = addTextView("" + spiltQValue[j - 1]);
+                    if (cols > 4)
+                        editText.setEms(Utilityies.getPctCellWidth(cols));
                     else
-                        editText.setEms(8+Utilityies.getPctCellWidth(cols));
+                        editText.setEms(8 + Utilityies.getPctCellWidth(cols));
                     row.addView(editText);
                 }
             }
@@ -280,6 +283,9 @@ public class RDACPHhPostViewActivity extends AppCompatActivity {
             TableRow row = new TableRow(this);
             row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
                     TableRow.LayoutParams.WRAP_CONTENT));
+            String[] spiltQValue = null;
+            if (i != 1)
+                spiltQValue = testReadingArrayList.get(i - 2).getValue().split(",");
             // inner for loop
             if (i == 1) {
                 TextView textView = addTextView(" Average ");
@@ -288,10 +294,10 @@ public class RDACPHhPostViewActivity extends AppCompatActivity {
 //                else
 //                    textView.setEms(9+Utilityies.getPctCellWidth(cols));
                 row.addView(textView);
-            }else{
-                TextView textView = addTextView(""+testReadingArrayList.get(i-2).getValue());
-               // if(cols>4)
-                    textView.setEms(Utilityies.getPctCellWidth(cols));
+            } else {
+                TextView textView = addTextView("" + spiltQValue[cols]);
+                // if(cols>4)
+                textView.setEms(Utilityies.getPctCellWidth(cols));
 //                else
 //                    textView.setEms(9+Utilityies.getPctCellWidth(cols));
                 row.addView(textView);
@@ -345,7 +351,7 @@ public class RDACPHhPostViewActivity extends AppCompatActivity {
         ViewGroup.LayoutParams params = tv.getLayoutParams();
         params.height = getResources().getDimensionPixelSize(R.dimen.pct_text_cell_height);
         tv.setLayoutParams(params);
-        tv.setPadding(15,0,15,10);
+        tv.setPadding(15, 0, 15, 10);
         tv.setBackgroundResource(R.drawable.border1);
         tv.setGravity(Gravity.CENTER);
         tv.setTextColor(getResources().getColor(R.color.black));
@@ -378,6 +384,7 @@ public class RDACPHhPostViewActivity extends AppCompatActivity {
         txtViewList.add(tv);
         return tv;
     }
+
     private void textViewValueAssignment() {
         dateTextView.setText("" + mTestDetails.getDateOfTest());
         instrumentUsed.setText(mTestDetails.getInstrumentUsed());
@@ -405,13 +412,13 @@ public class RDACPHhPostViewActivity extends AppCompatActivity {
         if (sharedpreferences.getString("USERTYPE", "").equalsIgnoreCase("CLIENT")) {
             testCondoctorOrg.setText("(" + clientOrg + ")");
             testWitnessOrg.setText("(" + clientOrg + ")");
-            customerName.setText(""+clientOrg);
+            customerName.setText("" + clientOrg);
         } else {
             testCondoctorOrg.setText("(" + prtnerOrg + ")");
             testWitnessOrg.setText("(" + clientOrg + ")");
-            customerName.setText(""+prtnerOrg);
+            customerName.setText("" + prtnerOrg);
         }
-        plantName.setText(""+mTestDetails.getBlockName());
+        plantName.setText("" + mTestDetails.getBlockName());
     }
 
 
@@ -474,13 +481,13 @@ public class RDACPHhPostViewActivity extends AppCompatActivity {
         test3_table_layout4.setVisibility(View.GONE);
         test3_table_layout5 = (TableLayout) findViewById(R.id.test3_tableLayout5);
         test3_table_layout5.setVisibility(View.GONE);
-        TFRtv = (TextView)findViewById(R.id.acph_h_tfr_value_tv);
-        TFTByRvTv = (TextView)findViewById(R.id.acph_h_tfrby_av_value_tv);
+        TFRtv = (TextView) findViewById(R.id.acph_h_tfr_value_tv);
+        TFTByRvTv = (TextView) findViewById(R.id.acph_h_tfrby_av_value_tv);
         findViewById(R.id.test_table_3_header_l_ll).setVisibility(View.GONE);
         findViewById(R.id.test_table_3_header_2_ll).setVisibility(View.VISIBLE);
         findViewById(R.id.acph_h_final_calc_ll).setVisibility(View.VISIBLE);
-        TextView TestHeader = (TextView)findViewById(R.id.common_header_tv);
-        TextView TestHeader2 = (TextView)findViewById(R.id.common_header_2_tv);
+        TextView TestHeader = (TextView) findViewById(R.id.common_header_tv);
+        TextView TestHeader2 = (TextView) findViewById(R.id.common_header_2_tv);
         TestHeader2.setVisibility(View.VISIBLE);
         TestHeader.setText("TEST RAW DATA");
         TestHeader2.setText("(Air Flow Velocity, Volume Testing and Determination of Air Changes per Hour Rates by Air Capture Hood)");

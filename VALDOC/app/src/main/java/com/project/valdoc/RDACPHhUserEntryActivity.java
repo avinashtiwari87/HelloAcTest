@@ -473,6 +473,7 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
     private ArrayList<TestReading> testReading() {
         ArrayList<TestReading> testReadingArrayList = new ArrayList<TestReading>();
         int index = 0;
+        int averageIndex = 400;
         int hasMapKey = 200;
         if (mGrilFilterType.equalsIgnoreCase("Grill")) {
             for (Grill grill : grillAndSizeFromGrill) {
@@ -481,8 +482,21 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
 //        TO DO test details id is id of test details table
                 testReading.setTest_detail_id(testDetailsId);
                 testReading.setEntityName(grill.getGrillCode().toString());
-                testReading.setValue(supplyAirVelocity.get(hasMapKey).toString());
-                hasMapKey++;
+                //Q1,Q2....value cration
+                StringBuilder sb = new StringBuilder();
+                for (int i = 0; i < cols; i++) {
+                    if (i != 0)
+                        sb.append(',');
+                    if (null != supplyAirVelocity && supplyAirVelocity.size() > 0) {
+                        Log.d(TAG, "value=" + supplyAirVelocity.isEmpty());
+                        if (null != supplyAirVelocity.get(hasMapKey).toString()) {
+                            sb.append("" + supplyAirVelocity.get(hasMapKey).toString());
+                            hasMapKey++;
+                        }
+                    }
+                }
+                testReading.setValue(""+sb.append(",").append(averageDataHashMap.get(averageIndex)));
+                averageIndex++;
                 index++;
                 testReadingArrayList.add(testReading);
             }
@@ -493,8 +507,21 @@ public class RDACPHhUserEntryActivity extends AppCompatActivity {
 //        TO DO test details id is id of test details table
                 testReading.setTest_detail_id(testDetailsId);
                 testReading.setEntityName(roomFilter.getFilterCode().toString());
-                testReading.setValue(supplyAirVelocity.get(hasMapKey).toString());
-                hasMapKey++;
+                //Q1,Q2....value cration
+                StringBuilder sb = new StringBuilder();
+                for (int i = 0; i < cols; i++) {
+                    if (i != 0)
+                        sb.append(',');
+                    if (null != supplyAirVelocity && supplyAirVelocity.size() > 0) {
+                        Log.d(TAG, "value=" + supplyAirVelocity.isEmpty());
+                        if (null != supplyAirVelocity.get(hasMapKey).toString()) {
+                            sb.append("" + supplyAirVelocity.get(hasMapKey).toString());
+                            hasMapKey++;
+                        }
+                    }
+                }
+                testReading.setValue(""+sb.append(",").append(averageDataHashMap.get(averageIndex)));
+                averageIndex++;
                 index++;
                 testReadingArrayList.add(testReading);
             }
