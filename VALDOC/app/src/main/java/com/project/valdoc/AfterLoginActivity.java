@@ -464,9 +464,9 @@ public class AfterLoginActivity extends AppCompatActivity implements HttpConnect
                         response = new JSONObject(resultData);
                         if (response.getString("status").equalsIgnoreCase("success")) {
                             if (mValdocDatabaseHandler.deleteTestReportTable()) {
-                                aleartDialog("post Data synced successfully");
+                                aleartDialog("Data synced successfully");
                             } else {
-                                aleartDialog("Post Data not synced successfully,Please sync again !");
+                                aleartDialog("Data not synced successfully,Please sync again !");
                             }
                         }
                     } catch (Exception e) {

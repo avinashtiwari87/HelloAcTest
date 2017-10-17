@@ -1787,7 +1787,8 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
     public ArrayList<AppUser> getUserInfo() {
         ArrayList<AppUser> userArrayList;
         userArrayList = new ArrayList<AppUser>();
-        String selectQuery = "SELECT * FROM " + USER_TABLE_NAME;
+        String selectQuery = "SELECT * FROM " + USER_TABLE_NAME + " WHERE " + USER_ACTIVE + " = " + 1;
+
         SQLiteDatabase database = this.getWritableDatabase();
         Cursor cursor = database.rawQuery(selectQuery, null);
         Log.d(TAG, "Login method :");
@@ -1884,7 +1885,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 partnerInstrument.setpInstrumentName(cursor.getString(3));
                 partnerInstrument.setMake(cursor.getString(4));
                 partnerInstrument.setModel(cursor.getString(5));
-                partnerInstrument.setLastUpdatedDate(cursor.getString(6));
+                partnerInstrument.setLastCalibrationDate(cursor.getString(6));
                 partnerInstrument.setCalibrationDueDate(cursor.getString(7));
 //                partnerInstrument.setCurrentLocation(cursor.getString(8));
                 partnerInstrument.setStatus(cursor.getString(8));
@@ -1897,7 +1898,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
 //                partnerInstrument.setSamplingTime(cursor.getString(13));
 //                partnerInstrument.setAerosolUsed(cursor.getString(14));
 //                partnerInstrument.setAerosolGeneratorType(cursor.getString(15));
-                Log.d(TAG, "partnerInstrument" + partnerInstrument.getpInstrumentId() + " todaysDate=" + todaysDate);
+                //Log.d(TAG, "partnerInstrument" + partnerInstrument.getpInstrumentId() + " todaysDate=" + todaysDate);
                 partnerInstrumentArrayList.add(partnerInstrument);
             } while (cursor.moveToNext());
         } // return contact list return wordList; }

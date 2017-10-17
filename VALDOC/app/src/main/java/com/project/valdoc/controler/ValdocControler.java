@@ -850,7 +850,7 @@ public class ValdocControler {
     private ArrayList userData(JSONArray jsonArray) {
         ArrayList arrayList = new ArrayList();
         //Iterate the jsonArray and print the info of JSONObjects
-        int length=jsonArray.length();
+        int length = jsonArray.length();
         for (int i = 0; i < length; i++) {
             AppUser user = new AppUser();
             try {
@@ -870,7 +870,10 @@ public class ValdocControler {
                 user.setEmail(jsonObject.optString("email").toString());
                 user.setContact(jsonObject.optString("contact").toString());
                 user.setDepartment(jsonObject.optString("department").toString());
-                user.setIsActive(jsonObject.optInt("is_active"));
+                if (jsonObject.optBoolean("is_active"))
+                    user.setIsActive(1);
+                else
+                    user.setIsActive(0);
                 user.setIsDeleted(jsonObject.optInt("is_deleted"));
                 user.setPassword(passwordDecryption(jsonObject.optString("password").toString()));
                 user.setRoleType(jsonObject.optString("role_type").toString());
