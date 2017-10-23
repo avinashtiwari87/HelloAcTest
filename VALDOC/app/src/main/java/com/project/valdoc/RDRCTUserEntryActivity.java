@@ -284,8 +284,8 @@ public class RDRCTUserEntryActivity extends AppCompatActivity {
             samplingTime.setText("" + samplingtime);
             mAcceptableRecoveryTime = getAcceptableRecoveryTime(mApplicableTestRoom.getTestProp());
             recovery_time_tv.setText("≤ " + mAcceptableRecoveryTime + " min");
-            aerosol_used_rct_tv.setText(""+getAerosolUsed(mApplicableTestRoom.getTestProp()));
-            aerosol_gen_rct.setText(""+getAerosolGeneratorType(mApplicableTestRoom.getTestProp()));
+//            aerosol_used_rct_tv.setText(""+getAerosolUsed(mApplicableTestRoom.getTestProp()));
+//            aerosol_gen_rct.setText(""+getAerosolGeneratorType(mApplicableTestRoom.getTestProp()));
 //            samplingFlowRate.setText("under development");
             cleanRoomClass.setText(" " + mApplicableTestRoom.getTestSpecification());
         } else if (mTestBasedOn.equalsIgnoreCase("EQUIPMENT")) {
@@ -302,8 +302,8 @@ public class RDRCTUserEntryActivity extends AppCompatActivity {
             cleanRoomClass.setText("" + mApplicableTestEquipment.getTestSpecification());
             mAcceptableRecoveryTime = getAcceptableRecoveryTime(mApplicableTestEquipment.getTestProp());
             recovery_time_tv.setText("≤ " + mAcceptableRecoveryTime + " min");
-            aerosol_used_rct_tv.setText(""+getAerosolUsed(mApplicableTestEquipment.getTestProp()));
-            aerosol_gen_rct.setText(""+getAerosolGeneratorType(mApplicableTestEquipment.getTestProp()));
+//            aerosol_used_rct_tv.setText(""+getAerosolUsed(mApplicableTestEquipment.getTestProp()));
+//            aerosol_gen_rct.setText(""+getAerosolGeneratorType(mApplicableTestEquipment.getTestProp()));
         }
         int count = 0;
         if (mCount > 0) {
@@ -439,7 +439,7 @@ public class RDRCTUserEntryActivity extends AppCompatActivity {
         samplingTimeTable.setVisibility(View.VISIBLE);
 
         aerosolGenTable = (TableRow) findViewById(R.id.aerosol_gen_table_rct);
-        aerosolGenTable.setVisibility(View.VISIBLE);
+        aerosolGenTable.setVisibility(View.GONE);
         aerosol_gen_rct = (TextView) findViewById(R.id.aerosol_gen_rct);
 
         recovery_time_rct = (TableRow) findViewById(R.id.recovery_time_rct);
@@ -447,9 +447,9 @@ public class RDRCTUserEntryActivity extends AppCompatActivity {
         recovery_time_tv = (TextView) findViewById(R.id.recovery_time_tv);
 
         aerosol_used_rct = (TableRow) findViewById(R.id.aerosol_used_rct);
-        aerosol_used_rct.setVisibility(View.VISIBLE);
+        aerosol_used_rct.setVisibility(View.GONE);
         aerosol_used_rct_tv = (TextView) findViewById(R.id.aerosol_used_rct_tv);
-
+        aerosol_used_rct_tv.setVisibility(View.GONE);
         samplingFlowRateText = (TextView) findViewById(R.id.aerosol_generator_type_text);
         samplingTimeText = (TextView) findViewById(R.id.aerosol_used_text);
         samplingFlowRate = (TextView) findViewById(R.id.aerosol_generator_type_value);

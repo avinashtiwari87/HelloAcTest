@@ -290,19 +290,15 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
     public static final String PARTNER_INSTRUMENT_PINSTRUMENTNAME = "pInstrumentName";
     public static final String PARTNER_INSTRUMENT_MAKE = "make";
     public static final String PARTNER_INSTRUMENT_MODEL = "model";
-    public static final String PARTNER_INSTRUMENT_LASTCALIBRATED = "lastCalibrated";
+    public static final String PARTNER_INSTRUMENT_LASTCALIBRATED = "lastCalibrationDate";
     public static final String PARTNER_INSTRUMENT_CALIBRATIONDUEDATE = "calibrationDueDate";
     //    public static final String PARTNER_INSTRUMENT_CURRENTLOCATION = "currentLocation";
     public static final String PARTNER_INSTRUMENT_STATUS = "status";
     //    public static final String PARTNER_INSTRUMENT_TESTID = "testId";
     public static final String PARTNER_INSTRUMENT_CERTFILENAME = "certFileName";
     public static final String PARTNER_INSTRUMENT_REMARKS = "remarks";
+    public static final String PARTNER_INSTRUMENT_OPRANGE = "oprange";
     public static final String PARTNER_INSTRUMENT_LASTUPDATEDDATE = "lastUpdatedDate";
-    //new addition
-//    public static final String PARTNER_INSTRUMENT_SAMPLINGFLOWRATE = "samplingFlowRate";
-//    public static final String PARTNER_INSTRUMENT_SAMPLINGTIME = "samplingTime";
-//    public static final String PARTNER_INSTRUMENT_AEROSOLUSED = "aerosolUsed";
-//    public static final String PARTNER_INSTRUMENT_AEROSOLGENERATORTYPE = "aerosolGeneratorType";
 
     // partner instrument table create statment
     private static final String CREATE_TABLE_PARTNER_INSTRUMENT = "CREATE TABLE " + PARTNER_INSTRUMENT_TABLE_NAME
@@ -310,7 +306,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
             + PARTNER_INSTRUMENT_SERIALNO + " TEXT," + PARTNER_INSTRUMENT_PINSTRUMENTNAME + " TEXT," + PARTNER_INSTRUMENT_MAKE + " TEXT," + PARTNER_INSTRUMENT_MODEL + " TEXT,"
             + PARTNER_INSTRUMENT_LASTCALIBRATED + " NUMERIC," + PARTNER_INSTRUMENT_CALIBRATIONDUEDATE + " NUMERIC,"
             + PARTNER_INSTRUMENT_STATUS + " TEXT," + PARTNER_INSTRUMENT_CERTFILENAME + " TEXT," + PARTNER_INSTRUMENT_REMARKS
-            + " TEXT," + PARTNER_INSTRUMENT_LASTUPDATEDDATE + " TEXT" + ")";
+            + " TEXT," + PARTNER_INSTRUMENT_OPRANGE + " TEXT," + PARTNER_INSTRUMENT_LASTUPDATEDDATE + " TEXT" + ")";
 //            + PARTNER_INSTRUMENT_SAMPLINGFLOWRATE + " TEXT," + PARTNER_INSTRUMENT_SAMPLINGTIME + " TEXT,"
 //            + PARTNER_INSTRUMENT_AEROSOLUSED + " TEXT," + PARTNER_INSTRUMENT_AEROSOLGENERATORTYPE + " TEXT" + ")";
 
@@ -325,7 +321,7 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
     public static final String PLANT_DIRECTOREMAILID = "directorEmailId";
     public static final String PLANT_CONTACTPERSONNAME = "contactPersonName";
     public static final String PLANT_CONTACTPERSONNO = "contactPersonNo";
-    //
+
     // plant  table create statment
     private static final String CREATE_TABLE_PLANT = "CREATE TABLE " + PLANT_TABLE_NAME
             + "(" + PLANT_PLANTID + " INTEGER," + PLANT_PLANTNAME + " TEXT,"
@@ -392,12 +388,15 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
     public static final String PARTNER_INSTRUMENT_TEST_CODE = "partner_instrument_test_code";
     public static final String PARTNER_INSTRUMENT_TEST_NAME = "partner_instrument_test_name";
     public static final String PARTNER_INSTRUMENT_TEST_LASTUPDATEDDATE = "lastUpdatedDate";
-    public static final String PARTNER_INSTRUMENT_TEST_RANGE = "range";
+    public static final String PARTNER_INSTRUMENT_APPROVEDREJECTEDBY = "approvedRejectedBy";
+    public static final String PARTNER_INSTRUMENT_APPROVEDREJECTEDSTATUS = "approvedRejectedStatus";
+    public static final String PARTNER_INSTRUMENT_CHANGESTATUS = "changeStatus";
 
     private static final String CREATE_TABLE_PARTNER_INSTRUMENT_TEST = "CREATE TABLE " + PARTNER_INSTRUMENT_TEST_TABLE_NAME
             + "(" + PARTNER_INSTRUMENT_TEST_ID + " INTEGER," + PARTNER_INSTRUMENT_ID + " INTEGER,"
             + PARTNER_INSTRUMENT_TEST_CODE + " TEXT," + PARTNER_INSTRUMENT_TEST_NAME + " TEXT,"
-            + PARTNER_INSTRUMENT_TEST_LASTUPDATEDDATE + " TEXT," + PARTNER_INSTRUMENT_TEST_RANGE + " TEXT" + ")";
+            + PARTNER_INSTRUMENT_TEST_LASTUPDATEDDATE + " TEXT," + PARTNER_INSTRUMENT_APPROVEDREJECTEDBY + " TEXT,"
+            + PARTNER_INSTRUMENT_APPROVEDREJECTEDSTATUS + " TEXT," + PARTNER_INSTRUMENT_CHANGESTATUS + " TEXT" + ")";
 
 
     //roomfilter able details
@@ -1415,13 +1414,8 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 contentValues.put(PARTNER_INSTRUMENT_STATUS, partnerInstrument.getStatus());
                 contentValues.put(PARTNER_INSTRUMENT_CERTFILENAME, partnerInstrument.getCertFileName());
                 contentValues.put(PARTNER_INSTRUMENT_REMARKS, partnerInstrument.getRemarks());
+                contentValues.put(PARTNER_INSTRUMENT_OPRANGE, partnerInstrument.getRange());
                 contentValues.put(PARTNER_INSTRUMENT_LASTUPDATEDDATE, partnerInstrument.getLastUpdatedDate());
-//                contentValues.put(PARTNER_INSTRUMENT_CURRENTLOCATION, partnerInstrument.getCurrentLocation());
-//                contentValues.put(PARTNER_INSTRUMENT_TESTID, partnerInstrument.getTestId());
-//                contentValues.put(PARTNER_INSTRUMENT_SAMPLINGFLOWRATE, partnerInstrument.getSamplingFlowRate());
-//                contentValues.put(PARTNER_INSTRUMENT_SAMPLINGTIME, partnerInstrument.getSamplingTime());
-//                contentValues.put(PARTNER_INSTRUMENT_AEROSOLUSED, partnerInstrument.getAerosolUsed());
-//                contentValues.put(PARTNER_INSTRUMENT_AEROSOLGENERATORTYPE, partnerInstrument.getAerosolGeneratorType());
 
                 if (getExistingId(tableName, PARTNER_INSTRUMENT_PINSTRUMENTID, partnerInstrument.getpInstrumentId()) > 0) {
                     db.update(tableName, contentValues, PARTNER_INSTRUMENT_PINSTRUMENTID + "=" + partnerInstrument.getpInstrumentId(), null);
@@ -1538,7 +1532,9 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 contentValues.put(PARTNER_INSTRUMENT_TEST_CODE, partnerInstrumentTest.getPartnerInstrumentTestCode());
                 contentValues.put(PARTNER_INSTRUMENT_TEST_NAME, partnerInstrumentTest.getPartnerInstrumentTestName());
                 contentValues.put(PARTNER_INSTRUMENT_TEST_LASTUPDATEDDATE, partnerInstrumentTest.getLastUpdatedDate());
-                contentValues.put(PARTNER_INSTRUMENT_TEST_RANGE, partnerInstrumentTest.getRange());
+                contentValues.put(PARTNER_INSTRUMENT_APPROVEDREJECTEDBY, partnerInstrumentTest.getApprovedRejectedBy());
+                contentValues.put(PARTNER_INSTRUMENT_APPROVEDREJECTEDSTATUS, partnerInstrumentTest.getApprovedRejectedStatus());
+                contentValues.put(PARTNER_INSTRUMENT_CHANGESTATUS, "" + partnerInstrumentTest.getChangeStatus());
 
                 if (getExistingId(tableName, PARTNER_INSTRUMENT_TEST_ID, partnerInstrumentTest.getPartnerInstrumentTestId()) > 0) {
                     db.update(tableName, contentValues, PARTNER_INSTRUMENT_TEST_ID + "=" + partnerInstrumentTest.getPartnerInstrumentTestId(), null);
@@ -1891,20 +1887,18 @@ public class ValdocDatabaseHandler extends SQLiteOpenHelper {
                 partnerInstrument.setStatus(cursor.getString(8));
                 partnerInstrument.setCertFileName(cursor.getString(9));
                 partnerInstrument.setRemarks(cursor.getString(10));
-                partnerInstrument.setLastUpdatedDate(cursor.getString(11));
-                partnerInstrument.setRange(cursor.getString(12));
-
+                partnerInstrument.setRange(cursor.getString(11));
+                partnerInstrument.setLastUpdatedDate(cursor.getString(12));
 //                partnerInstrument.setSamplingFlowRate(cursor.getString(12));
 //                partnerInstrument.setSamplingTime(cursor.getString(13));
 //                partnerInstrument.setAerosolUsed(cursor.getString(14));
 //                partnerInstrument.setAerosolGeneratorType(cursor.getString(15));
-                //Log.d(TAG, "partnerInstrument" + partnerInstrument.getpInstrumentId() + " todaysDate=" + todaysDate);
+                Log.d(TAG, "partnerInstrument" + partnerInstrument.getpInstrumentId() + " todaysDate=" + todaysDate);
                 partnerInstrumentArrayList.add(partnerInstrument);
             } while (cursor.moveToNext());
         } // return contact list return wordList; }
         return partnerInstrumentArrayList;
     }
-
     // select data from partnerInstrument table
     public String getPartnerIdFromPartnerUser(int userId) {
         String selectQuery = " SELECT " + PARTNERUSER_PARTNERID + " FROM " + PARTNERUSER_TABLE_NAME +

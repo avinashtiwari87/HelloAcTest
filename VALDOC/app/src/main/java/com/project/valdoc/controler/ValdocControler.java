@@ -300,7 +300,6 @@ public class ValdocControler {
                 isoParticleLimits.setOperationSmallParticleLimit(jsonObject.optString("operationSmallParticleLimit").toString());
                 isoParticleLimits.setOperationLargeParticleLimit(jsonObject.optString("operationLargeParticleLimit").toString());
                 isoParticleLimits.setLastUpdatedDate(jsonObject.optString("lastUpdatedDate").toString());
-                Log.d("6", "parse isoParticleLimitsData");
                 arrayList.add(isoParticleLimits);
             } catch (Exception e) {
 
@@ -321,8 +320,9 @@ public class ValdocControler {
                 partnerInstrumentTest.setPartnerInstrumentTestCode(jsonObject.optString("partner_instrument_test_code").toString());
                 partnerInstrumentTest.setPartnerInstrumentTestName(jsonObject.optString("partner_instrument_test_name").toString());
                 partnerInstrumentTest.setLastUpdatedDate(jsonObject.optString("lastUpdatedDate").toString());
-                partnerInstrumentTest.setRange(jsonObject.optString("range").toString());
-                Log.d("valdoc", "parse partnerInstrumentsTestData");
+                partnerInstrumentTest.setApprovedRejectedBy(jsonObject.optString("approvedRejectedBy").toString());
+                partnerInstrumentTest.setApprovedRejectedStatus(jsonObject.optString("approvedRejectedStatus").toString());
+                partnerInstrumentTest.setChangeStatus(jsonObject.optString("changeStatus").toString());
                 arrayList.add(partnerInstrumentTest);
             } catch (Exception e) {
 
@@ -405,7 +405,6 @@ public class ValdocControler {
                 ahuFilter.setArea(jsonObject.optDouble("area"));
                 ahuFilter.setEffectiveArea(jsonObject.optDouble("effectiveArea"));
                 ahuFilter.setLastUpdatedDate(jsonObject.optString("lastUpdatedDate"));
-                Log.d("valdoc", "parse ahuFilter");
                 arrayList.add(ahuFilter);
             } catch (Exception e) {
 
@@ -515,7 +514,7 @@ public class ValdocControler {
                 partnerInstrument.setModel(jsonObject.optString("model").toString());
                 partnerInstrument.setLastCalibrationDate(jsonObject.optString("lastCalibrationDate").toString());
                 partnerInstrument.setCalibrationDueDate(jsonObject.optString("calibrationDueDate").toString());
-                partnerInstrument.setRange(jsonObject.optString("range").toString());
+                partnerInstrument.setRange(jsonObject.optString("oprange").toString());
                 partnerInstrument.setStatus(jsonObject.optString("status").toString());
                 partnerInstrument.setCertFileName(jsonObject.optString("certFileName"));
                 partnerInstrument.setRemarks(jsonObject.optString("remarks"));

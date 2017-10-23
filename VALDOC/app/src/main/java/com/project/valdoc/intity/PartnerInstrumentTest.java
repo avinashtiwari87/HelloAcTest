@@ -10,7 +10,9 @@ public class PartnerInstrumentTest {
     private String partnerInstrumentTestCode;
     private String partnerInstrumentTestName;
     private String lastUpdatedDate;
-    private String range;
+    private String approvedRejectedBy;
+    private String approvedRejectedStatus;
+    private String changeStatus;
 
     public String getPartnerInstrumentTest() {
         return partnerInstrumentTest;
@@ -60,11 +62,27 @@ public class PartnerInstrumentTest {
         this.lastUpdatedDate = lastUpdatedDate;
     }
 
-    public String getRange() {
-        return range;
+    public String getApprovedRejectedBy() {
+        return approvedRejectedBy;
     }
 
-    public void setRange(String range) {
-        this.range = range;
+    public void setApprovedRejectedBy(String approvedRejectedBy) {
+        this.approvedRejectedBy = approvedRejectedBy;
+    }
+
+    public String getApprovedRejectedStatus() {
+        return approvedRejectedStatus;
+    }
+
+    public void setApprovedRejectedStatus(String approvedRejectedStatus) {
+        this.approvedRejectedStatus = approvedRejectedStatus;
+    }
+
+    public String getChangeStatus() {
+        return changeStatus;
+    }
+
+    public void setChangeStatus(String changeStatus) {
+        this.changeStatus = changeStatus;
     }
 }

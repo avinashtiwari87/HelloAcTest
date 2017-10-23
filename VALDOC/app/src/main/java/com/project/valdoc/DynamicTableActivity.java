@@ -14,6 +14,8 @@ import android.text.Editable;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.text.method.DigitsKeyListener;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -1510,7 +1512,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                     row.addView(textView);
                 } else {
                     //row.addView(addTextView(" 4434 | 3434 | 1341 "));
-                    EditText editText = addEditTextView(i);
+                    EditText editText = addPCTEditTextView(i);
                     ViewGroup.LayoutParams params11 = editText.getLayoutParams();
                     params11.height = getResources().getDimensionPixelSize(R.dimen.pct_text_cell_height);
                     editText.setLayoutParams(params11);
@@ -1586,7 +1588,7 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
                     textView.setEms(Utilityies.getPctCellWidth(cols));
                     row.addView(textView);
                 } else {
-                    EditText editText = addEditTextView(rows + i);
+                    EditText editText = addPCTEditTextView(rows + i);
                     ViewGroup.LayoutParams layoutParams = editText.getLayoutParams();
                     layoutParams.height = getResources().getDimensionPixelSize(R.dimen.pct_text_cell_height);
                     editText.setLayoutParams(layoutParams);
@@ -2514,6 +2516,39 @@ public class DynamicTableActivity extends AppCompatActivity implements View.OnCl
         idCountEtv++;
         return editTv;
     }
+    //PCT EditText
+    private EditText addPCTEditTextView(int rowNo) {
+        EditText editTv = new EditText(this);
+        editTv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+                TableRow.LayoutParams.WRAP_CONTENT));
+        editTv.setBackgroundResource(R.drawable.border);
+
+        ViewGroup.LayoutParams layoutParams = editTv.getLayoutParams();
+        layoutParams.height = getResources().getDimensionPixelSize(R.dimen.common_text_cell_height);
+        editTv.setLayoutParams(layoutParams);
+        editTv.setTextColor(getResources().getColor(R.color.black));
+        editTv.setTextSize(getResources().getDimension(R.dimen.normal_text_size));
+        editTv.setGravity(Gravity.CENTER);
+        //editTv.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD);
+        editTv.setEms(4);
+        editTv.setSingleLine(true);
+        editTv.setInputType(InputType.TYPE_CLASS_NUMBER);
+       // editTv.setTransformationMethod(null);
+//        editTv.setKeyListener(DigitsKeyListener.getInstance("0123456789:"));
+        editTv.setEllipsize(TextUtils.TruncateAt.END);
+        Log.d(TAG, "EditText idCountEtv " + idCountEtv);
+        editTv.setId(idCountEtv);
+        editTv.setTag(rowNo);
+        editTv.addTextChangedListener((new TextValidator(
+                DynamicTableActivity.this, idCountEtv)));
+        editTextList.add(editTv);
+        testReadingEditTextList.add(editTv.getText().toString());
+        idCountEtv++;
+        return editTv;
+    }
+//    android:inputType="number|none"
+//    android:maxLength="3"
+//    android:digits="0123456789"
 
     public class TextValidator implements TextWatcher {
 

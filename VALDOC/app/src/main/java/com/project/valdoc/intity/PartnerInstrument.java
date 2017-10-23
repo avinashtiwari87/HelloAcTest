@@ -27,6 +27,7 @@ public class PartnerInstrument implements Serializable{
 //    private String  AerosolUsed;
 //    private String  AerosolGeneratorType;
 
+
     public String getPartner_instrument() {
         return partner_instrument;
     }
